@@ -6,11 +6,29 @@ dashboard Streamlit para explorarla.
 
 ## Setup inicial
 
+### Camino rápido (PC nueva, usando el snapshot del repo)
+
+El repo trae un snapshot ya cargado (`data/proyectos.db.gz` con ~14,600 PLs +
+etiquetas del Excel ya aplicadas). En 2 comandos arrancas con todo:
+
 ```powershell
 pip install -r requirements.txt
-python -m scraper.cli init                       # crea proyectos.db + 59 comisiones
+python -m scraper.cli restaurar           # descomprime data/proyectos.db.gz -> proyectos.db
+python -m streamlit run app.py            # abre el dashboard
+```
+
+Luego corres `python -m scraper.cli update` para traer los PLs nuevos que
+hayan aparecido entre el snapshot y hoy (segundos).
+
+### Camino desde cero (sin snapshot)
+
+Si querés (re)construir desde el API:
+
+```powershell
+pip install -r requirements.txt
+python -m scraper.cli init                       # crea proyectos.db + comisiones
 python -m scraper.cli update                     # carga completa (~30-40 min, ~14,600 PLs)
-python -m scraper.cli importar-temas "C:\Users\USER\Downloads\ProyectosDeLey.xlsx"
+python -m scraper.cli importar-temas data\ProyectosDeLey.xlsx
 ```
 
 El `importar-temas` aplica las etiquetas manuales del Excel (`tema_manual=1`) y luego
@@ -18,6 +36,23 @@ corre dos pases de override:
 
 - **Farma** sobrescribe Otros / Salud cuando matchea ≥1 keyword (medicamentos, oncología, VIH, vacunación, etc.).
 - **Tecnología** sobrescribe **cualquier categoría** cuando matchea ≥1 keyword distintivo (IA, datos personales, biometría, ciberseguridad, plataforma digital, etc.).
+
+### Refrescar el snapshot del repo
+
+Cuando quieras actualizar el `data/proyectos.db.gz` para que tus compañeros
+arranquen con una DB más fresca, después de un `update`:
+
+```powershell
+# PowerShell
+$ErrorActionPreference = "Stop"
+& "$env:WINDIR\System32\WindowsPowerShell\v1.0\powershell.exe" -Command `
+  "Compress-Archive -Force -Path proyectos.db -DestinationPath data\proyectos.db.zip"
+# o más simple si tienes git bash / Python:
+python -c "import gzip,shutil; shutil.copyfileobj(open('proyectos.db','rb'), gzip.open('data/proyectos.db.gz','wb',9))"
+git add data/proyectos.db.gz
+git commit -m "snapshot DB $(Get-Date -Format yyyy-MM-dd)"
+git push
+```
 
 ## Dashboard (frontend)
 

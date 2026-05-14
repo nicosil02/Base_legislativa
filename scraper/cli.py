@@ -104,6 +104,31 @@ def cmd_query(args) -> int:
     return 0
 
 
+def cmd_restaurar(args) -> int:
+    """Descomprime data/proyectos.db.gz a proyectos.db (snapshot del repo).
+
+    Útil al clonar el repo en una PC nueva: en lugar de correr el full load
+    de 30-40 min, restauras la DB ya cargada y de ahí solo corres `update`
+    incrementales.
+    """
+    import gzip
+    import shutil
+    src = Path(__file__).parent.parent / "data" / "proyectos.db.gz"
+    dst = Path(args.db).resolve()
+    if not src.exists():
+        print(f"ERROR: no encontré {src}", file=sys.stderr)
+        return 2
+    if dst.exists() and not args.force:
+        print(f"ERROR: {dst} ya existe. Usa --force para sobrescribir.", file=sys.stderr)
+        return 2
+    print(f"Descomprimiendo {src} -> {dst} ...")
+    with gzip.open(src, "rb") as fin, open(dst, "wb") as fout:
+        shutil.copyfileobj(fin, fout)
+    size_mb = dst.stat().st_size / (1024 * 1024)
+    print(f"Listo. DB restaurada ({size_mb:.1f} MB).")
+    return 0
+
+
 def cmd_recategorizar(args) -> int:
     """Re-clasifica con el clasificador automático SOLO los proyectos sin
     etiqueta manual. Los marcados como tema_manual=1 (importados del Excel)
@@ -289,6 +314,10 @@ def build_parser() -> argparse.ArgumentParser:
     sub = p.add_subparsers(dest="cmd", required=True)
 
     sub.add_parser("init", help="crea DB y carga comisiones").set_defaults(func=cmd_init)
+
+    rs = sub.add_parser("restaurar", help="restaura proyectos.db desde el snapshot data/proyectos.db.gz")
+    rs.add_argument("--force", action="store_true", help="sobrescribe proyectos.db si ya existe")
+    rs.set_defaults(func=cmd_restaurar)
 
     up = sub.add_parser("update", help="corre sync incremental")
     up.add_argument("--full", action="store_true", help="re-enriquece todos los proyectos (no solo los cambiados)")
