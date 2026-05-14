@@ -64,7 +64,9 @@ def run_sync(
             elif estado_changed:
                 stats.actualizados += 1
 
-            need_detail = is_new or estado_changed or full
+            current = db.get_known(row["perParId"], row["pleyNum"])
+            never_fetched = current is not None and current["detail_fetched_at"] is None
+            need_detail = is_new or estado_changed or full or never_fetched
             if need_detail:
                 try:
                     data = client.get_expediente(row["perParId"], row["pleyNum"])
