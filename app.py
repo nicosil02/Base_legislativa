@@ -203,7 +203,7 @@ def load_proyectos(
             "PL": "first", "Tema": "first", "Estado": "first",
             "Presentado": "first", "Último cambio": "first",
             "Partido": "first", "Proponente": "first", "Autor(es)": "first",
-            "Comisión": lambda s: " | ".join(sorted({x for x in s if x})) or None,
+            "Comisión": lambda s: " | ".join(sorted({str(x) for x in s if isinstance(x, str) and x})) or None,
             "Título": "first", "Portal": "first", "PDF": "first",
         })
         df = df.sort_values("Presentado", ascending=False).reset_index(drop=True)
