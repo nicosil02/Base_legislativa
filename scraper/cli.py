@@ -188,6 +188,45 @@ def cmd_importar_temas(args) -> int:
         print(f"Importados: {n_match}  |  PLs no encontrados en DB: {n_unknown}  |  Filas vacías: {n_skip}")
         if skipped_temas:
             print(f"  Temas no estándar encontrados: {sorted(skipped_temas)}")
+
+        # Override post-import: rescatar PLs cliente-relevantes.
+        # - Farma: sólo desde Otros/Salud, basta 1 keyword (dominio acotado).
+        # - Tecnología: desde cualquier categoría del Excel, exige ≥2 keywords
+        #   distintos para no robarle PLs legítimos a Educación, Telecom, etc.
+        from scraper.categorias import (
+            OVERRIDE_DESDE, TECH_MIN_KEYWORDS, classify, count_matches,
+        )
+        moves_farma = 0
+        moves_tech = 0
+
+        # Pase 1: Farma — sólo en Otros/Salud, umbral 1 keyword.
+        for tema_origen, especificas in OVERRIDE_DESDE.items():
+            if tema_origen == "*" or "Farma" not in especificas:
+                continue
+            for r in db.conn.execute(
+                "SELECT per_par_id, pley_num, titulo, sumilla FROM proyectos WHERE tema=?",
+                (tema_origen,),
+            ).fetchall():
+                if count_matches(r["titulo"], r["sumilla"], "Farma") >= 1:
+                    db.set_tema(r["per_par_id"], r["pley_num"], "Farma", manual=True)
+                    moves_farma += 1
+
+        # Pase 2: Tecnología — sobre todos los PLs (excepto los que ya quedaron
+        # como Farma o Tecnología), umbral ≥ TECH_MIN_KEYWORDS keywords.
+        if "*" in OVERRIDE_DESDE and "Tecnología" in OVERRIDE_DESDE["*"]:
+            for r in db.conn.execute(
+                "SELECT per_par_id, pley_num, titulo, sumilla, tema FROM proyectos "
+                "WHERE tema NOT IN ('Tecnología', 'Farma') OR tema IS NULL"
+            ).fetchall():
+                if count_matches(r["titulo"], r["sumilla"], "Tecnología") >= TECH_MIN_KEYWORDS:
+                    db.set_tema(r["per_par_id"], r["pley_num"], "Tecnología", manual=True)
+                    moves_tech += 1
+
+        if moves_farma or moves_tech:
+            print(f"\nOverride aplicado:")
+            print(f"  -> Tecnologia: {moves_tech} PLs (umbral >= {TECH_MIN_KEYWORDS} keywords, desde cualquier categoria)")
+            print(f"  -> Farma:      {moves_farma} PLs (desde Otros/Salud)")
+
         print("\nDistribución por tema (post-import):")
         for r in db.conn.execute(
             "SELECT tema, SUM(tema_manual) AS manuales, COUNT(*) AS total "

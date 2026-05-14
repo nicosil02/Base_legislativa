@@ -24,6 +24,10 @@ import unicodedata
 
 # Orden de prioridad de desempate (más específica → más general).
 PRIORIDAD: list[str] = [
+    # Las categorías cliente-orientadas van primero: cuando un PL tiene
+    # keywords de Farma o Tecnología, ganan sobre Salud u Otros.
+    "Farma",
+    "Tecnología",
     "Pensiones",
     "Pesca",
     "Educación",
@@ -55,6 +59,30 @@ PRIORIDAD: list[str] = [
 ]
 
 
+# Override: cuando un PL del Excel está etiquetado en alguna categoría origen
+# (key) y el clasificador automático detecta fuertemente una categoría
+# específica (value), la categoría específica reemplaza al label del Excel.
+# Se usa la wildcard "*" para indicar "cualquier categoría del Excel".
+#
+# Tecnología sobrescribe cualquier categoría — porque hay PLs tech etiquetados
+# en Educación, Telecomunicaciones, Comercio, Trabajo, etc. Se exige umbral
+# alto (TECH_MIN_KEYWORDS, ver abajo) para evitar robar PLs legítimos.
+#
+# Farma sobrescribe sólo Otros y Salud (dominio acotado, basta 1 keyword).
+OVERRIDE_DESDE: dict[str, list[str]] = {
+    "*": ["Tecnología"],
+    "Otros": ["Farma"],
+    "Salud": ["Farma"],
+}
+
+# Umbral mínimo de keywords distintos para que Tecnología sobrescriba una
+# categoría legítima del Excel. Como las keywords de Tecnología son muy
+# específicas ("inteligencia artificial", "datos personales", "biometr",
+# "ciberseg"), basta 1 match para considerar el PL como tech-relevante.
+# Subir a 2 si aparecen falsos positivos.
+TECH_MIN_KEYWORDS: int = 1
+
+
 CATEGORIAS: dict[str, list[str]] = {
     "Educación": [
         "educacion", "universidad", "universidades", "universitari",
@@ -79,15 +107,16 @@ CATEGORIAS: dict[str, list[str]] = {
         "negociacion colectiva", "sunafil", "gratificacion",
     ],
     "Salud": [
+        # Salud genérico (atención, sistema sanitario, EsSalud, hospitales).
+        # Los temas farmacéuticos específicos viven en "Farma" y sobrescriben
+        # esta categoría (ver OVERRIDE_DESDE).
         "salud", "essalud", "hospital", "asistencial",
         "personal medico", "personal de salud", "minsa",
         "medico", "medicos", "enfermera", "enfermeria",
-        "medicamento", "medicamentos esenciales", "medicamentos genericos",
-        "pacientes", "cancer", "oncolog", "vih", "hepatitis",
-        "vacuna", "epidem", "pandem", "diagnostico",
+        "pacientes", "epidem", "pandem", "diagnostico",
         "establecimiento de salud", "sanitari", "psicolog",
         "discapacidad", "salud mental", "salud ocupacional",
-        "digemid", "farmaceutic", "biosimilar",
+        "atencion medica", "seguro de salud",
     ],
     "Tributos": [
         "impuesto", "impuestos", "renta", "igv", "isc",
@@ -240,6 +269,38 @@ CATEGORIAS: dict[str, list[str]] = {
         "deporte", "ipd ", "futbol", "atleta",
         "olimpico", "panamericano",
     ],
+    # === Categorías cliente-orientadas (sobrescriben Otros y Salud) ===
+    "Tecnología": [
+        "inteligencia artificial", "ia generativa", "algoritmo",
+        "datos personales", "ley 29733", "proteccion de datos",
+        "biometr", "biometria", "huella dactilar", "reconocimiento facial",
+        "ciberseguridad", "ciberseg", "ciberdelito", "ciberataque",
+        "plataforma digital", "comercio electronico", "e-commerce",
+        "ecosistema digital", "economia digital", "gobierno digital",
+        "transformacion digital", "ciudadania digital", "brecha digital",
+        "derecho al olvido", "fake news", "desinformacion", "noticias falsas",
+        "ott ", "servicios over the top", "neutralidad de red",
+        "cripto", "blockchain", "criptomoneda", "criptoactivo",
+        "firma digital", "identidad digital", "identificacion digital",
+        "redes sociales",
+        "infraestructura digital", "datos abiertos",
+        "innovacion tecnologica",
+    ],
+    "Farma": [
+        "medicamento generico", "medicamentos genericos",
+        "medicamentos esenciales", "petitorio nacional",
+        "biosimilar", "biosimilares", "ensayo clinico", "ensayos clinicos",
+        "vih", "vih/sida", "antirretroviral", "antiretroviral",
+        "hepatitis b", "hepatitis c", "hepatitis viral",
+        "oncologico", "oncologica", "cancer de mama", "cancer triple negativo",
+        "quimioterapia", "tratamiento oncologico",
+        "vacuna contra", "vacunacion",
+        "profilaxis pre exposicion", "profilaxis preexposicion",
+        "digemid", "registro sanitario", "patente farmaceutica",
+        "farmacia", "farmaceutica", "farmaceutico",
+        "industria farmaceutica",
+        "medicamento de alto costo", "medicamentos de alto costo",
+    ],
 }
 
 
@@ -282,6 +343,18 @@ def classify(titulo: str | None, sumilla: str | None = None) -> str:
         if cat in best:
             return cat
     return best[0]
+
+
+def count_matches(titulo: str | None, sumilla: str | None, categoria: str) -> int:
+    """Cuenta cuántos keywords de `categoria` matchean en titulo+sumilla.
+
+    Útil para los pases de override que exigen un umbral mínimo (ej. para
+    Tecnología sobre categorías legítimas del Excel)."""
+    patterns = _KW_RE.get(categoria)
+    if not patterns:
+        return 0
+    text = _normalize(f"{titulo or ''} {sumilla or ''}")
+    return sum(1 for p in patterns if p.search(text))
 
 
 def all_categorias() -> list[str]:
