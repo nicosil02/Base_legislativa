@@ -76,18 +76,8 @@ CREATE TABLE IF NOT EXISTS archivos (
 );
 CREATE INDEX IF NOT EXISTS idx_arch_proyecto ON archivos(per_par_id, pley_num);
 
-CREATE TABLE IF NOT EXISTS temas (
-  tema_id  INTEGER PRIMARY KEY AUTOINCREMENT,
-  nombre   TEXT NOT NULL UNIQUE
-);
-
-CREATE TABLE IF NOT EXISTS proyecto_tema (
-  per_par_id  INTEGER NOT NULL,
-  pley_num    INTEGER NOT NULL,
-  tema_id     INTEGER NOT NULL REFERENCES temas(tema_id),
-  PRIMARY KEY (per_par_id, pley_num, tema_id)
-);
-CREATE INDEX IF NOT EXISTS idx_pt_tema ON proyecto_tema(tema_id);
+-- Tablas legacy del primer diseño multi-tag (se eliminan en init_schema).
+-- proyectos ahora tiene `tema` y `tema_manual` directos (un tema por PL).
 
 CREATE TABLE IF NOT EXISTS sync_runs (
   id           INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -134,31 +124,44 @@ class Database:
             raise
 
     def init_schema(self) -> None:
-        from scraper.categorias import all_categorias
         with self.tx() as c:
             c.executescript(SCHEMA)
-            for nombre in all_categorias():
-                c.execute("INSERT OR IGNORE INTO temas (nombre) VALUES (?)", (nombre,))
+            # Migración: si la tabla `proyectos` no tiene las columnas `tema` y
+            # `tema_manual`, agregarlas. Drop de las tablas legacy de multi-tag.
+            cols = {r[1] for r in c.execute("PRAGMA table_info(proyectos)").fetchall()}
+            if "tema" not in cols:
+                c.execute("ALTER TABLE proyectos ADD COLUMN tema TEXT")
+            if "tema_manual" not in cols:
+                c.execute("ALTER TABLE proyectos ADD COLUMN tema_manual INTEGER NOT NULL DEFAULT 0")
+            # Drop legacy multi-tag.
+            c.execute("DROP TABLE IF EXISTS proyecto_tema")
+            c.execute("DROP TABLE IF EXISTS temas")
+            # Índice sobre tema para queries.
+            c.execute("CREATE INDEX IF NOT EXISTS idx_proyectos_tema ON proyectos(tema)")
 
-    def save_temas(self, per_par_id: int, pley_num: int, temas: list[str]) -> None:
+    def set_tema(self, per_par_id: int, pley_num: int, tema: str, *, manual: bool) -> None:
+        """Asigna un tema al proyecto. Si manual=True marca para que el
+        clasificador automático no lo sobrescriba luego."""
         with self.tx() as c:
             c.execute(
-                "DELETE FROM proyecto_tema WHERE per_par_id=? AND pley_num=?",
-                (per_par_id, pley_num),
+                "UPDATE proyectos SET tema=?, tema_manual=? WHERE per_par_id=? AND pley_num=?",
+                (tema, 1 if manual else 0, per_par_id, pley_num),
             )
-            for nombre in temas:
-                c.execute(
-                    """INSERT OR IGNORE INTO proyecto_tema (per_par_id, pley_num, tema_id)
-                       SELECT ?, ?, tema_id FROM temas WHERE nombre = ?""",
-                    (per_par_id, pley_num, nombre),
-                )
 
     def classify_and_save(self, per_par_id: int, pley_num: int,
-                          titulo: str | None, sumilla: str | None) -> list[str]:
+                          titulo: str | None, sumilla: str | None) -> str | None:
+        """Clasifica con el algoritmo de keywords. Respeta tema_manual=1
+        (no toca temas etiquetados a mano)."""
         from scraper.categorias import classify
-        temas = classify(titulo, sumilla)
-        self.save_temas(per_par_id, pley_num, temas)
-        return temas
+        row = self.conn.execute(
+            "SELECT tema_manual FROM proyectos WHERE per_par_id=? AND pley_num=?",
+            (per_par_id, pley_num),
+        ).fetchone()
+        if row and row["tema_manual"]:
+            return None  # respetar la etiqueta manual
+        tema = classify(titulo, sumilla)
+        self.set_tema(per_par_id, pley_num, tema, manual=False)
+        return tema
 
     # ---------- comisiones ----------
     def upsert_comisiones(self, rows: Iterable[dict]) -> int:

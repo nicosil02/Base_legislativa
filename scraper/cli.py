@@ -61,12 +61,9 @@ def cmd_query(args) -> int:
     with Database(args.db) as db:
         sql = (
             "SELECT p.per_par_id, p.pley_num, p.proyecto_ley, p.estado, p.fec_presentacion, "
-            "       p.proponente, p.grupo_parlamentario, "
+            "       p.proponente, p.grupo_parlamentario, p.tema, p.tema_manual, "
             "       (SELECT GROUP_CONCAT(pc.nombre, ' | ') FROM proyecto_comision pc "
             "        WHERE pc.per_par_id=p.per_par_id AND pc.pley_num=p.pley_num) AS comisiones, "
-            "       (SELECT GROUP_CONCAT(t.nombre, ', ') FROM proyecto_tema pt "
-            "        JOIN temas t ON t.tema_id=pt.tema_id "
-            "        WHERE pt.per_par_id=p.per_par_id AND pt.pley_num=p.pley_num) AS temas, "
             "       p.titulo "
             "FROM proyectos p"
         )
@@ -79,10 +76,7 @@ def cmd_query(args) -> int:
             )
             params.append(args.comision)
         if args.tema:
-            clauses.append(
-                "EXISTS (SELECT 1 FROM proyecto_tema pt JOIN temas t ON t.tema_id=pt.tema_id "
-                "WHERE pt.per_par_id=p.per_par_id AND pt.pley_num=p.pley_num AND t.nombre=?)"
-            )
+            clauses.append("p.tema = ?")
             params.append(args.tema)
         if args.estado:
             clauses.append("p.estado = ?")
@@ -99,10 +93,11 @@ def cmd_query(args) -> int:
         params.append(args.limit)
         rows = db.conn.execute(sql, params).fetchall()
         for r in rows:
+            tema_marker = "*" if r["tema_manual"] else " "
             print(
                 f"{r['proyecto_ley']:18s} {r['estado']:22s} {r['fec_presentacion'][:10]} "
                 f"{(r['proponente'] or '-'):12s} {(r['grupo_parlamentario'] or '-'):20s} "
-                f"<{r['temas'] or 'Otros'}> "
+                f"{tema_marker}<{r['tema'] or '-'}> "
                 f"[{r['comisiones'] or '-'}] {r['titulo'][:60]}"
             )
         print(f"\n{len(rows)} resultado(s)")
@@ -110,25 +105,98 @@ def cmd_query(args) -> int:
 
 
 def cmd_recategorizar(args) -> int:
-    """Re-clasifica todos los proyectos en DB usando título + sumilla actuales."""
+    """Re-clasifica con el clasificador automático SOLO los proyectos sin
+    etiqueta manual. Los marcados como tema_manual=1 (importados del Excel)
+    no se tocan."""
     with Database(args.db) as db:
-        db.init_schema()  # asegura que la tabla `temas` esté poblada con la taxonomía
-        rows = db.conn.execute("SELECT per_par_id, pley_num, titulo, sumilla FROM proyectos").fetchall()
+        db.init_schema()
+        if args.force:
+            with db.tx() as c:
+                c.execute("UPDATE proyectos SET tema=NULL, tema_manual=0")
+            print("--force: limpié todas las etiquetas, incluyendo manuales.")
+        rows = db.conn.execute(
+            "SELECT per_par_id, pley_num, titulo, sumilla FROM proyectos "
+            "WHERE tema_manual = 0"
+        ).fetchall()
         total = len(rows)
-        print(f"Re-clasificando {total} proyectos...")
+        print(f"Re-clasificando {total} proyectos (los manuales se respetan)...")
         for i, r in enumerate(rows, 1):
             db.classify_and_save(r["per_par_id"], r["pley_num"], r["titulo"], r["sumilla"])
             if i % 1000 == 0:
                 print(f"  {i}/{total}")
         print(f"Listo: {total} proyectos re-clasificados.")
-        # estadísticas
         print("\nDistribución por tema:")
         for r in db.conn.execute(
-            "SELECT t.nombre, COUNT(*) c FROM proyecto_tema pt "
-            "JOIN temas t ON t.tema_id=pt.tema_id GROUP BY t.nombre ORDER BY c DESC"
+            "SELECT tema, SUM(tema_manual) AS manuales, COUNT(*) AS total "
+            "FROM proyectos GROUP BY tema ORDER BY total DESC"
         ):
-            print(f"  {r['nombre']:36s} {r['c']}")
+            print(f"  {(r['tema'] or '(sin tema)'):36s} total={r['total']:5d}  manuales={r['manuales']}")
     return 0
+
+
+def cmd_importar_temas(args) -> int:
+    """Importa los temas etiquetados a mano desde un Excel.
+
+    Se esperan columnas 'PL' (número entero) y 'Tema'. Cada match se guarda
+    con tema_manual=1 para que el clasificador no lo sobrescriba.
+    """
+    try:
+        import openpyxl
+    except ImportError:
+        print("ERROR: openpyxl no instalado. Corre: pip install openpyxl", file=sys.stderr)
+        return 2
+    print(f"Leyendo {args.excel}...")
+    wb = openpyxl.load_workbook(args.excel, read_only=True, data_only=True)
+    ws = wb[args.sheet] if args.sheet else wb[wb.sheetnames[0]]
+    headers = [c.value for c in next(ws.rows)]
+    if "PL" not in headers or "Tema" not in headers:
+        print(f"ERROR: el Excel necesita columnas 'PL' y 'Tema'. Encontré: {headers}", file=sys.stderr)
+        return 2
+    i_pl = headers.index("PL")
+    i_tema = headers.index("Tema")
+
+    with Database(args.db) as db:
+        db.init_schema()
+        n_match, n_unknown, n_skip = 0, 0, 0
+        skipped_temas: set[str] = set()
+        valid = set(db.conn.execute("SELECT pley_num FROM proyectos").fetchall())
+        valid = {r[0] for r in valid}
+        for row in ws.iter_rows(min_row=2, values_only=True):
+            pl, tema = row[i_pl], row[i_tema]
+            if pl is None or tema is None:
+                n_skip += 1
+                continue
+            try:
+                pl = int(pl)
+            except (ValueError, TypeError):
+                n_skip += 1
+                continue
+            if pl not in valid:
+                n_unknown += 1
+                continue
+            db.set_tema(args.per_par_id, pl, str(tema).strip(), manual=True)
+            n_match += 1
+            if tema not in (
+                "Educación","Trabajo","Salud","Tributos","Banca","Pensiones",
+                "Ambiente","Agricultura","Horeca","Transporte","Construcción",
+                "Transporte y telecomunicaciones","Energía y minas","Pesca","Energía",
+                "Minería","Telecomunicaciones","Comercio","Saneamiento",
+                "Control de la actividad privada","Infraestructura","Mype",
+                "Inmobiliario","Informalidad","Consumo masivo","Seguros","Deporte","Otros",
+            ):
+                skipped_temas.add(str(tema))
+        print(f"Importados: {n_match}  |  PLs no encontrados en DB: {n_unknown}  |  Filas vacías: {n_skip}")
+        if skipped_temas:
+            print(f"  Temas no estándar encontrados: {sorted(skipped_temas)}")
+        print("\nDistribución por tema (post-import):")
+        for r in db.conn.execute(
+            "SELECT tema, SUM(tema_manual) AS manuales, COUNT(*) AS total "
+            "FROM proyectos GROUP BY tema ORDER BY total DESC"
+        ):
+            print(f"  {(r['tema'] or '(sin tema)'):36s} total={r['total']:5d}  manuales={r['manuales']}")
+    return 0
+
+
 
 
 def cmd_show(args) -> int:
@@ -156,13 +224,9 @@ def cmd_show(args) -> int:
         ).fetchall()
         if coms:
             print("\nComisiones: " + ", ".join(c["nombre"] for c in coms))
-        temas = db.conn.execute(
-            "SELECT t.nombre FROM proyecto_tema pt JOIN temas t ON t.tema_id=pt.tema_id "
-            "WHERE pt.per_par_id=? AND pt.pley_num=? ORDER BY t.nombre",
-            (args.per_par_id, args.pley_num),
-        ).fetchall()
-        if temas:
-            print("Temas: " + ", ".join(t["nombre"] for t in temas))
+        if row["tema"]:
+            origen = "manual (Excel)" if row["tema_manual"] else "auto"
+            print(f"Tema: {row['tema']}  [{origen}]")
         segs = db.conn.execute(
             "SELECT fecha, estado, comisiones, observacion FROM seguimientos "
             "WHERE per_par_id=? AND pley_num=? ORDER BY fecha DESC",
@@ -205,8 +269,16 @@ def build_parser() -> argparse.ArgumentParser:
     q.add_argument("--limit", type=int, default=50)
     q.set_defaults(func=cmd_query)
 
-    rc = sub.add_parser("recategorizar", help="re-aplica la taxonomía de temas a todos los proyectos en DB")
+    rc = sub.add_parser("recategorizar", help="re-aplica el clasificador automático a los PLs sin etiqueta manual")
+    rc.add_argument("--force", action="store_true",
+                    help="limpia TODAS las etiquetas (incluyendo manuales) y vuelve a correr el clasificador")
     rc.set_defaults(func=cmd_recategorizar)
+
+    it = sub.add_parser("importar-temas", help="carga temas etiquetados a mano desde un Excel (tema_manual=1)")
+    it.add_argument("excel", help="ruta al archivo .xlsx con columnas 'PL' y 'Tema'")
+    it.add_argument("--sheet", help="nombre de la hoja (por defecto la primera)")
+    it.add_argument("--per-par-id", dest="per_par_id", type=int, default=PER_PAR_ID_ACTUAL)
+    it.set_defaults(func=cmd_importar_temas)
 
     sh = sub.add_parser("show", help="muestra un proyecto e historial")
     sh.add_argument("pley_num", type=int)
