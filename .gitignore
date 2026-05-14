@@ -9,3 +9,10 @@ proyectos.json
 venv/
 .env
 .claude/
+update.log
+
+# Snapshot del estado bajo data/ (Excel y DB comprimida) sí se commitean,
+# se restauran con `python -m scraper.cli restaurar`.
+!data/
+!data/ProyectosDeLey.xlsx
+!data/proyectos.db.gz
