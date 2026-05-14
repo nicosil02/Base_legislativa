@@ -62,36 +62,72 @@ def cmd_query(args) -> int:
         sql = (
             "SELECT p.per_par_id, p.pley_num, p.proyecto_ley, p.estado, p.fec_presentacion, "
             "       p.proponente, p.grupo_parlamentario, "
-            "       GROUP_CONCAT(pc.nombre, ' | ') AS comisiones, p.titulo "
-            "FROM proyectos p "
-            "LEFT JOIN proyecto_comision pc USING (per_par_id, pley_num)"
+            "       (SELECT GROUP_CONCAT(pc.nombre, ' | ') FROM proyecto_comision pc "
+            "        WHERE pc.per_par_id=p.per_par_id AND pc.pley_num=p.pley_num) AS comisiones, "
+            "       (SELECT GROUP_CONCAT(t.nombre, ', ') FROM proyecto_tema pt "
+            "        JOIN temas t ON t.tema_id=pt.tema_id "
+            "        WHERE pt.per_par_id=p.per_par_id AND pt.pley_num=p.pley_num) AS temas, "
+            "       p.titulo "
+            "FROM proyectos p"
         )
-        where = []
+        clauses: list[str] = []
         params: list = []
         if args.comision is not None:
-            where.append("pc.comision_id = ?")
+            clauses.append(
+                "EXISTS (SELECT 1 FROM proyecto_comision pc "
+                "WHERE pc.per_par_id=p.per_par_id AND pc.pley_num=p.pley_num AND pc.comision_id=?)"
+            )
             params.append(args.comision)
+        if args.tema:
+            clauses.append(
+                "EXISTS (SELECT 1 FROM proyecto_tema pt JOIN temas t ON t.tema_id=pt.tema_id "
+                "WHERE pt.per_par_id=p.per_par_id AND pt.pley_num=p.pley_num AND t.nombre=?)"
+            )
+            params.append(args.tema)
         if args.estado:
-            where.append("p.estado = ?")
+            clauses.append("p.estado = ?")
             params.append(args.estado)
         if args.proponente:
-            where.append("p.proponente = ?")
+            clauses.append("p.proponente = ?")
             params.append(args.proponente)
         if args.partido:
-            where.append("p.grupo_parlamentario = ?")
+            clauses.append("p.grupo_parlamentario = ?")
             params.append(args.partido)
-        if where:
-            sql += " WHERE " + " AND ".join(where)
-        sql += " GROUP BY p.per_par_id, p.pley_num ORDER BY p.fec_presentacion DESC LIMIT ?"
+        if clauses:
+            sql += " WHERE " + " AND ".join(clauses)
+        sql += " ORDER BY p.fec_presentacion DESC LIMIT ?"
         params.append(args.limit)
         rows = db.conn.execute(sql, params).fetchall()
         for r in rows:
             print(
                 f"{r['proyecto_ley']:18s} {r['estado']:22s} {r['fec_presentacion'][:10]} "
-                f"{(r['proponente'] or '-'):12s} {(r['grupo_parlamentario'] or '-'):24s} "
-                f"[{r['comisiones'] or '-'}] {r['titulo'][:70]}"
+                f"{(r['proponente'] or '-'):12s} {(r['grupo_parlamentario'] or '-'):20s} "
+                f"<{r['temas'] or 'Otros'}> "
+                f"[{r['comisiones'] or '-'}] {r['titulo'][:60]}"
             )
         print(f"\n{len(rows)} resultado(s)")
+    return 0
+
+
+def cmd_recategorizar(args) -> int:
+    """Re-clasifica todos los proyectos en DB usando título + sumilla actuales."""
+    with Database(args.db) as db:
+        db.init_schema()  # asegura que la tabla `temas` esté poblada con la taxonomía
+        rows = db.conn.execute("SELECT per_par_id, pley_num, titulo, sumilla FROM proyectos").fetchall()
+        total = len(rows)
+        print(f"Re-clasificando {total} proyectos...")
+        for i, r in enumerate(rows, 1):
+            db.classify_and_save(r["per_par_id"], r["pley_num"], r["titulo"], r["sumilla"])
+            if i % 1000 == 0:
+                print(f"  {i}/{total}")
+        print(f"Listo: {total} proyectos re-clasificados.")
+        # estadísticas
+        print("\nDistribución por tema:")
+        for r in db.conn.execute(
+            "SELECT t.nombre, COUNT(*) c FROM proyecto_tema pt "
+            "JOIN temas t ON t.tema_id=pt.tema_id GROUP BY t.nombre ORDER BY c DESC"
+        ):
+            print(f"  {r['nombre']:36s} {r['c']}")
     return 0
 
 
@@ -120,6 +156,13 @@ def cmd_show(args) -> int:
         ).fetchall()
         if coms:
             print("\nComisiones: " + ", ".join(c["nombre"] for c in coms))
+        temas = db.conn.execute(
+            "SELECT t.nombre FROM proyecto_tema pt JOIN temas t ON t.tema_id=pt.tema_id "
+            "WHERE pt.per_par_id=? AND pt.pley_num=? ORDER BY t.nombre",
+            (args.per_par_id, args.pley_num),
+        ).fetchall()
+        if temas:
+            print("Temas: " + ", ".join(t["nombre"] for t in temas))
         segs = db.conn.execute(
             "SELECT fecha, estado, comisiones, observacion FROM seguimientos "
             "WHERE per_par_id=? AND pley_num=? ORDER BY fecha DESC",
@@ -158,8 +201,12 @@ def build_parser() -> argparse.ArgumentParser:
     q.add_argument("--estado")
     q.add_argument("--proponente", help="ej. Congreso, Ejecutivo, Ciudadanos, Regional")
     q.add_argument("--partido", help="grupo parlamentario exacto, ej. 'Perú Libre'")
+    q.add_argument("--tema", help="categoría temática, ej. 'Tecnología', 'Agricultura', 'Farma'")
     q.add_argument("--limit", type=int, default=50)
     q.set_defaults(func=cmd_query)
+
+    rc = sub.add_parser("recategorizar", help="re-aplica la taxonomía de temas a todos los proyectos en DB")
+    rc.set_defaults(func=cmd_recategorizar)
 
     sh = sub.add_parser("show", help="muestra un proyecto e historial")
     sh.add_argument("pley_num", type=int)

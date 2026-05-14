@@ -21,6 +21,13 @@ def export_json(db: Database, path: str | Path) -> int:
                 key,
             )
         ]
+        d["temas"] = [
+            r["nombre"] for r in db.conn.execute(
+                "SELECT t.nombre FROM proyecto_tema pt JOIN temas t ON t.tema_id=pt.tema_id "
+                "WHERE pt.per_par_id=? AND pt.pley_num=? ORDER BY t.nombre",
+                key,
+            )
+        ]
         d["seguimientos"] = [
             dict(r) for r in db.conn.execute(
                 "SELECT seguimiento_pley_id, fecha, estado, comisiones, detalle, observacion, flag_inicial "
