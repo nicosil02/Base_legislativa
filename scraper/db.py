@@ -124,10 +124,10 @@ class Database:
             raise
 
     def init_schema(self) -> None:
+        from scraper.comisiones_ordinarias import tipo_de
         with self.tx() as c:
             c.executescript(SCHEMA)
-            # Migración: si la tabla `proyectos` no tiene las columnas `tema` y
-            # `tema_manual`, agregarlas. Drop de las tablas legacy de multi-tag.
+            # Migración: proyectos.tema y proyectos.tema_manual.
             cols = {r[1] for r in c.execute("PRAGMA table_info(proyectos)").fetchall()}
             if "tema" not in cols:
                 c.execute("ALTER TABLE proyectos ADD COLUMN tema TEXT")
@@ -136,8 +136,18 @@ class Database:
             # Drop legacy multi-tag.
             c.execute("DROP TABLE IF EXISTS proyecto_tema")
             c.execute("DROP TABLE IF EXISTS temas")
-            # Índice sobre tema para queries.
             c.execute("CREATE INDEX IF NOT EXISTS idx_proyectos_tema ON proyectos(tema)")
+            # Migración: comisiones.tipo ('Ordinaria' / 'Especial').
+            cols_com = {r[1] for r in c.execute("PRAGMA table_info(comisiones)").fetchall()}
+            if "tipo" not in cols_com:
+                c.execute("ALTER TABLE comisiones ADD COLUMN tipo TEXT NOT NULL DEFAULT 'Especial'")
+            # Repoblar el tipo: 'Ordinaria' si está en la lista canónica de 24.
+            for r in c.execute("SELECT comision_id, nombre FROM comisiones").fetchall():
+                c.execute(
+                    "UPDATE comisiones SET tipo=? WHERE comision_id=?",
+                    (tipo_de(r["nombre"]), r["comision_id"]),
+                )
+            c.execute("CREATE INDEX IF NOT EXISTS idx_comisiones_tipo ON comisiones(tipo)")
 
     def set_tema(self, per_par_id: int, pley_num: int, tema: str, *, manual: bool) -> None:
         """Asigna un tema al proyecto. Si manual=True marca para que el

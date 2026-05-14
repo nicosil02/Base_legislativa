@@ -22,19 +22,17 @@ corre dos pases de override:
 ## Dashboard (frontend)
 
 ```powershell
-streamlit run app.py
+python -m streamlit run app.py
 ```
 
-Se abre una pestaña del navegador con:
+Tema claro institucional. Layout:
 
-- **KPIs** arriba (totales por estado).
-- **Sidebar** con filtros: tema, estado, partido, proponente, comisión, búsqueda libre.
-- **Tabla** con links directos al portal del Congreso y al PDF.
-- **Detalle expandible** del proyecto seleccionado (sumilla + historial de cambios).
-- Botón **Actualizar ahora** que dispara un `update` incremental en background.
+- **KPIs** arriba: Total, Presentados, En comisión, Con dictamen, Autógrafas, Ley publicada (matchea `PUBLIC...PERUANO` y variantes).
+- **Tabla AgGrid** central con **filtros multi-select por columna en el header** (click en el ícono ☰): Tema, Estado, Partido, Proponente, Comisión, Autor(es), Título. Sortable, resizable, paginada. Columnas Portal y PDF como links directos.
+- **Sidebar**: selector de **rango de fechas** (presentación) + panel **Sync** con info del último run y botón "Actualizar ahora".
+- **Comisiones**: el filtro muestra solo las **24 ordinarias** + un grupo único **"Comisiones Especiales"** que agrupa todo lo demás (especiales, subcomisiones, typos del catálogo del API). El mapeo Ordinaria/Especial vive en `scraper/comisiones_ordinarias.py` y se aplica vía la columna `comisiones.tipo` en SQLite.
 
-Las consultas a la DB se cachean 60s. Si actualizas la DB por otro lado, dale **C** o
-recarga la página para refrescar.
+Caching de queries 60s. Para refrescar manualmente: `C` o `R` en la página.
 
 ## Actualización automática cada 2 horas (Windows)
 

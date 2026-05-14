@@ -1,13 +1,14 @@
-"""Dashboard Streamlit para los proyectos de ley.
+"""Dashboard institucional de proyectos de ley.
 
 Corre con:
-    streamlit run app.py
+    python -m streamlit run app.py
 
-Lee proyectos.db (SQLite) en read-only. Filtros: tema, estado, comisión,
-partido, proponente, búsqueda por título. Botón para forzar sync incremental.
+Lee `proyectos.db` en read-only. Tabla AgGrid con filtros multi-select por
+columna en el header. Tema claro / institucional. Date range picker.
 """
 from __future__ import annotations
 
+import datetime as dt
 import sqlite3
 import subprocess
 import sys
@@ -15,16 +16,50 @@ from pathlib import Path
 
 import pandas as pd
 import streamlit as st
+from st_aggrid import AgGrid, ColumnsAutoSizeMode, GridOptionsBuilder, GridUpdateMode
 
 DB_PATH = Path(__file__).parent / "proyectos.db"
-PAGE_SIZE_DEFAULT = 50
+COMISIONES_ESPECIALES_LABEL = "Comisiones Especiales"
 
 st.set_page_config(
-    page_title="Proyectos de Ley — Congreso del Perú",
+    page_title="Base Legislativa — Proyectos de Ley",
     page_icon="📜",
     layout="wide",
+    initial_sidebar_state="expanded",
 )
 
+# ---------- CSS institucional ----------
+st.markdown(
+    """
+    <style>
+    /* Fondo claro general */
+    .stApp { background-color: #FFFFFF; }
+    section[data-testid="stSidebar"] { background-color: #F4F6F8; border-right: 1px solid #E5E7EB; }
+    /* Header del título */
+    h1 { color: #0B3E5C; font-weight: 600; letter-spacing: -0.5px; }
+    h2, h3 { color: #0B3E5C; font-weight: 500; }
+    /* Métricas como cards */
+    div[data-testid="stMetric"] {
+        background-color: #FFFFFF;
+        border: 1px solid #E5E7EB;
+        border-radius: 8px;
+        padding: 12px 16px;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+    }
+    div[data-testid="stMetricLabel"] { color: #6B7280; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+    div[data-testid="stMetricValue"] { color: #0B3E5C; font-weight: 600; }
+    /* Reducir padding superior */
+    .block-container { padding-top: 1.5rem; }
+    /* Sync info card */
+    .sync-card { background:#FFFFFF; border:1px solid #E5E7EB; border-radius:8px; padding:12px; font-size:13px; }
+    .sync-card .label { color:#6B7280; text-transform:uppercase; font-size:11px; letter-spacing:0.5px; }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
+
+
+# ============ DB helpers ============
 
 @st.cache_resource
 def get_conn() -> sqlite3.Connection:
@@ -37,98 +72,76 @@ def get_conn() -> sqlite3.Connection:
 
 
 @st.cache_data(ttl=60)
-def load_catalogs() -> dict[str, list[str]]:
+def load_catalogs() -> dict:
     conn = get_conn()
-    cats = {
-        "temas": sorted(
-            {r[0] for r in conn.execute("SELECT DISTINCT tema FROM proyectos WHERE tema IS NOT NULL")}
-        ),
-        "estados": sorted(
-            {r[0] for r in conn.execute("SELECT DISTINCT estado FROM proyectos WHERE estado IS NOT NULL")}
-        ),
-        "proponentes": sorted(
-            {r[0] for r in conn.execute("SELECT DISTINCT proponente FROM proyectos WHERE proponente IS NOT NULL")}
-        ),
-        "partidos": sorted(
-            {r[0] for r in conn.execute("SELECT DISTINCT grupo_parlamentario FROM proyectos WHERE grupo_parlamentario IS NOT NULL")}
-        ),
-        "comisiones": [
-            {"id": r["comision_id"], "nombre": r["nombre"]}
-            for r in conn.execute("SELECT comision_id, nombre FROM comisiones ORDER BY nombre")
-        ],
-    }
-    return cats
-
-
-@st.cache_data(ttl=60)
-def query_proyectos(
-    temas: tuple[str, ...],
-    estados: tuple[str, ...],
-    proponentes: tuple[str, ...],
-    partidos: tuple[str, ...],
-    comision_id: int | None,
-    texto: str,
-    limit: int,
-) -> pd.DataFrame:
-    conn = get_conn()
-    sql = """
-      SELECT p.pley_num, p.proyecto_ley, p.titulo, p.sumilla, p.estado,
-             p.proponente, p.grupo_parlamentario AS partido,
-             p.tema, p.tema_manual, p.fec_presentacion, p.last_changed_at,
-             p.url_portal, p.url_pdf,
-             (SELECT GROUP_CONCAT(pc.nombre, ' | ') FROM proyecto_comision pc
-              WHERE pc.per_par_id=p.per_par_id AND pc.pley_num=p.pley_num) AS comisiones
-      FROM proyectos p
-    """
-    clauses, params = [], []
-    if temas:
-        clauses.append(f"p.tema IN ({','.join('?' * len(temas))})")
-        params.extend(temas)
-    if estados:
-        clauses.append(f"p.estado IN ({','.join('?' * len(estados))})")
-        params.extend(estados)
-    if proponentes:
-        clauses.append(f"p.proponente IN ({','.join('?' * len(proponentes))})")
-        params.extend(proponentes)
-    if partidos:
-        clauses.append(f"p.grupo_parlamentario IN ({','.join('?' * len(partidos))})")
-        params.extend(partidos)
-    if comision_id:
-        clauses.append(
-            "EXISTS (SELECT 1 FROM proyecto_comision pc WHERE pc.per_par_id=p.per_par_id "
-            "AND pc.pley_num=p.pley_num AND pc.comision_id=?)"
+    temas = sorted(
+        r[0] for r in conn.execute("SELECT DISTINCT tema FROM proyectos WHERE tema IS NOT NULL")
+    )
+    estados = sorted(
+        r[0] for r in conn.execute("SELECT DISTINCT estado FROM proyectos WHERE estado IS NOT NULL")
+    )
+    proponentes = sorted(
+        r[0] for r in conn.execute("SELECT DISTINCT proponente FROM proyectos WHERE proponente IS NOT NULL")
+    )
+    partidos = sorted(
+        r[0] for r in conn.execute("SELECT DISTINCT grupo_parlamentario FROM proyectos WHERE grupo_parlamentario IS NOT NULL")
+    )
+    # Comisiones: sólo las Ordinarias (alfabéticamente) + grupo "Comisiones Especiales".
+    ordinarias = [
+        r[0]
+        for r in conn.execute(
+            "SELECT DISTINCT c.nombre FROM comisiones c "
+            "JOIN proyecto_comision pc USING(comision_id) "
+            "WHERE c.tipo = 'Ordinaria' ORDER BY c.nombre"
         )
-        params.append(comision_id)
-    if texto:
-        clauses.append("(LOWER(p.titulo) LIKE ? OR LOWER(p.sumilla) LIKE ?)")
-        like = f"%{texto.lower()}%"
-        params.extend([like, like])
-    if clauses:
-        sql += " WHERE " + " AND ".join(clauses)
-    sql += " ORDER BY p.fec_presentacion DESC LIMIT ?"
-    params.append(limit)
-    return pd.read_sql_query(sql, conn, params=params)
+    ]
+    # Detectar si hay PLs en comisiones Especiales (para mostrar el grupo).
+    tiene_especiales = conn.execute(
+        "SELECT 1 FROM proyecto_comision pc JOIN comisiones c USING(comision_id) "
+        "WHERE c.tipo = 'Especial' LIMIT 1"
+    ).fetchone() is not None
+    comisiones_opciones = list(ordinarias)
+    if tiene_especiales:
+        comisiones_opciones.append(COMISIONES_ESPECIALES_LABEL)
+    # Rango de fechas disponible
+    fec_min, fec_max = conn.execute(
+        "SELECT MIN(date(fec_presentacion)), MAX(date(fec_presentacion)) FROM proyectos"
+    ).fetchone()
+    return {
+        "temas": temas,
+        "estados": estados,
+        "proponentes": proponentes,
+        "partidos": partidos,
+        "comisiones": comisiones_opciones,
+        "fec_min": fec_min,
+        "fec_max": fec_max,
+    }
 
 
 @st.cache_data(ttl=60)
 def kpi_totals() -> dict[str, int]:
+    """Cuenta KPIs con LIKE flexible para Ley Publicada."""
     conn = get_conn()
     r = conn.execute(
-        "SELECT COUNT(*) c, "
-        "       SUM(CASE WHEN estado='PRESENTADO' THEN 1 ELSE 0 END) presentados, "
-        "       SUM(CASE WHEN estado='EN COMISIÓN' THEN 1 ELSE 0 END) en_comision, "
-        "       SUM(CASE WHEN estado='DICTAMEN' THEN 1 ELSE 0 END) dictamen, "
-        "       SUM(CASE WHEN estado='AUTÓGRAFA' THEN 1 ELSE 0 END) autografa, "
-        "       SUM(CASE WHEN estado='PUBLICADO EL PERUANO' OR estado='LEY PUBLICADA' THEN 1 ELSE 0 END) ley "
-        "FROM proyectos"
+        """SELECT
+             COUNT(*) AS total,
+             SUM(CASE WHEN UPPER(estado) LIKE '%PRESENTADO%' THEN 1 ELSE 0 END) AS presentados,
+             SUM(CASE WHEN UPPER(estado) LIKE '%COMISI%' THEN 1 ELSE 0 END) AS en_comision,
+             SUM(CASE WHEN UPPER(estado) LIKE '%DICTAMEN%' THEN 1 ELSE 0 END) AS dictamen,
+             SUM(CASE WHEN UPPER(estado) LIKE '%AUTOGRAFA%' OR UPPER(estado) LIKE '%AUTÓGRAFA%' THEN 1 ELSE 0 END) AS autografa,
+             SUM(CASE WHEN UPPER(estado) LIKE '%PUBLIC%PERUANO%'
+                       OR UPPER(estado) LIKE '%LEY PUBLICADA%'
+                       OR UPPER(estado) LIKE '%PUBLICACI%PERUANO%'
+                       THEN 1 ELSE 0 END) AS ley_publicada
+           FROM proyectos"""
     ).fetchone()
     return {
-        "Total": r["c"],
+        "Total proyectos": r["total"] or 0,
         "Presentados": r["presentados"] or 0,
         "En comisión": r["en_comision"] or 0,
         "Con dictamen": r["dictamen"] or 0,
         "Autógrafas": r["autografa"] or 0,
-        "Ley publicada": r["ley"] or 0,
+        "Ley publicada": r["ley_publicada"] or 0,
     }
 
 
@@ -136,57 +149,77 @@ def kpi_totals() -> dict[str, int]:
 def last_sync() -> dict | None:
     conn = get_conn()
     r = conn.execute(
-        "SELECT started_at, finished_at, proyectos_nuevos, proyectos_actualizados, errores, mensaje "
+        "SELECT started_at, finished_at, proyectos_nuevos, proyectos_actualizados, errores "
         "FROM sync_runs WHERE finished_at IS NOT NULL ORDER BY id DESC LIMIT 1"
     ).fetchone()
     return dict(r) if r else None
 
 
+@st.cache_data(ttl=60)
+def load_proyectos(
+    fec_inicio: dt.date | None,
+    fec_fin: dt.date | None,
+) -> pd.DataFrame:
+    """Carga TODOS los proyectos (filtrados sólo por rango de fechas — el resto
+    de filtros se aplican en AgGrid en el cliente)."""
+    conn = get_conn()
+    sql = """
+      SELECT p.pley_num,
+             p.proyecto_ley AS "PL",
+             p.tema AS "Tema",
+             p.estado AS "Estado",
+             date(p.fec_presentacion) AS "Presentado",
+             date(p.last_changed_at) AS "Último cambio",
+             p.grupo_parlamentario AS "Partido",
+             p.proponente AS "Proponente",
+             p.autores_raw AS "Autor(es)",
+             CASE WHEN c.tipo = 'Ordinaria' THEN c.nombre
+                  WHEN c.tipo = 'Especial'  THEN ?
+                  ELSE NULL END AS "Comisión",
+             p.titulo AS "Título",
+             p.url_portal AS "Portal",
+             p.url_pdf AS "PDF"
+      FROM proyectos p
+      LEFT JOIN proyecto_comision pc
+             ON pc.per_par_id = p.per_par_id AND pc.pley_num = p.pley_num
+      LEFT JOIN comisiones c
+             ON c.comision_id = pc.comision_id
+    """
+    where, params = [], [COMISIONES_ESPECIALES_LABEL]
+    if fec_inicio:
+        where.append("date(p.fec_presentacion) >= ?")
+        params.append(fec_inicio.isoformat())
+    if fec_fin:
+        where.append("date(p.fec_presentacion) <= ?")
+        params.append(fec_fin.isoformat())
+    if where:
+        sql += " WHERE " + " AND ".join(where)
+    sql += " ORDER BY p.fec_presentacion DESC, p.pley_num DESC"
+    df = pd.read_sql_query(sql, conn, params=params)
+    # Deduplicar: un PL puede aparecer varias veces si está en >1 comisión.
+    # Para el dashboard, colapso comisiones del mismo PL en una sola fila con "X | Y".
+    if not df.empty:
+        df = df.groupby("pley_num", as_index=False).agg({
+            "PL": "first", "Tema": "first", "Estado": "first",
+            "Presentado": "first", "Último cambio": "first",
+            "Partido": "first", "Proponente": "first", "Autor(es)": "first",
+            "Comisión": lambda s: " | ".join(sorted({x for x in s if x})) or None,
+            "Título": "first", "Portal": "first", "PDF": "first",
+        })
+        df = df.sort_values("Presentado", ascending=False).reset_index(drop=True)
+    return df
+
+
 def run_update_now() -> tuple[int, str]:
-    """Lanza el sync incremental en proceso aparte y devuelve (returncode, output)."""
     cmd = [sys.executable, "-m", "scraper.cli", "update"]
-    res = subprocess.run(cmd, cwd=str(Path(__file__).parent), capture_output=True, text=True, timeout=600)
+    res = subprocess.run(cmd, cwd=str(Path(__file__).parent), capture_output=True, text=True, timeout=900)
     return res.returncode, (res.stdout or "") + (res.stderr or "")
 
 
 # ============ UI ============
 
-st.title("📜 Proyectos de Ley — Congreso del Perú")
-st.caption("Período 2021-2026 · datos desde api.congreso.gob.pe · clasificación temática híbrida (Excel + reglas)")
-
-cats = load_catalogs()
-
-# ---------- Sidebar ----------
-with st.sidebar:
-    st.header("Filtros")
-    f_temas = st.multiselect("Tema", cats["temas"])
-    f_estados = st.multiselect("Estado", cats["estados"])
-    f_partidos = st.multiselect("Partido / Bancada", cats["partidos"])
-    f_proponentes = st.multiselect("Proponente", cats["proponentes"])
-    f_comision = st.selectbox(
-        "Comisión",
-        options=[None] + cats["comisiones"],
-        format_func=lambda x: "(todas)" if x is None else x["nombre"],
-    )
-    f_comision_id = f_comision["id"] if f_comision else None
-    f_texto = st.text_input("Buscar en título / sumilla")
-    limit = st.slider("Máximo de resultados", 50, 2000, 200, step=50)
-
-    st.markdown("---")
-    st.subheader("Sync")
-    last = last_sync()
-    if last:
-        st.caption(f"Último run: {last['started_at']}\n\nNuevos: {last['proyectos_nuevos']}  ·  Actualizados: {last['proyectos_actualizados']}  ·  Errores: {last['errores']}")
-    if st.button("🔄 Actualizar ahora"):
-        with st.spinner("Corriendo `scraper update`..."):
-            code, out = run_update_now()
-        if code == 0:
-            st.success("Sync OK")
-            st.cache_data.clear()
-        else:
-            st.error("Falló el sync — revisa el log")
-        with st.expander("Output"):
-            st.code(out)
+st.title("Base Legislativa — Proyectos de Ley del Congreso del Perú")
+st.caption("Período 2021–2026 · Fuente: api.congreso.gob.pe/spley-portal-service")
 
 # ---------- KPIs ----------
 totals = kpi_totals()
@@ -194,86 +227,114 @@ cols = st.columns(len(totals))
 for col, (label, val) in zip(cols, totals.items()):
     col.metric(label, f"{val:,}")
 
-# ---------- Tabla ----------
-df = query_proyectos(
-    tuple(f_temas),
-    tuple(f_estados),
-    tuple(f_proponentes),
-    tuple(f_partidos),
-    f_comision_id,
-    f_texto.strip(),
-    limit,
-)
+st.markdown("")
 
-st.markdown(f"### Resultados: **{len(df):,}** proyecto(s)")
+cats = load_catalogs()
+
+# ---------- Sidebar: rango de fechas + sync ----------
+with st.sidebar:
+    st.markdown("### Rango de fechas (presentación)")
+    fec_min_iso = cats["fec_min"] or "2021-07-28"
+    fec_max_iso = cats["fec_max"] or dt.date.today().isoformat()
+    fec_min = dt.date.fromisoformat(fec_min_iso)
+    fec_max = dt.date.fromisoformat(fec_max_iso)
+    rango = st.date_input(
+        "Filtrar por presentación",
+        value=(fec_min, fec_max),
+        min_value=fec_min,
+        max_value=fec_max,
+        format="YYYY-MM-DD",
+    )
+    if isinstance(rango, tuple) and len(rango) == 2:
+        f_ini, f_fin = rango
+    else:
+        f_ini, f_fin = fec_min, fec_max
+
+    st.markdown("---")
+    st.markdown("### Sync")
+    last = last_sync()
+    if last:
+        st.markdown(
+            f"""<div class="sync-card">
+            <div class="label">Último run</div>
+            <div>{last['started_at']}</div>
+            <div class="label" style="margin-top:8px">Cambios</div>
+            <div>Nuevos: <b>{last['proyectos_nuevos']}</b> · Actualizados: <b>{last['proyectos_actualizados']}</b> · Errores: <b>{last['errores']}</b></div>
+            </div>""",
+            unsafe_allow_html=True,
+        )
+    if st.button("🔄  Actualizar ahora", use_container_width=True):
+        with st.spinner("Corriendo `scraper update`..."):
+            code, out = run_update_now()
+        if code == 0:
+            st.success("Sync completado")
+            st.cache_data.clear()
+        else:
+            st.error("Falló el sync — revisa el log")
+        with st.expander("Output del sync"):
+            st.code(out)
+
+# ---------- Tabla AgGrid ----------
+df = load_proyectos(f_ini, f_fin)
+st.markdown(f"#### {len(df):,} proyecto(s) en el rango")
 
 if df.empty:
-    st.info("No hay proyectos que cumplan los filtros.")
+    st.info("Sin proyectos en el rango seleccionado.")
 else:
-    df_display = df.copy()
-    df_display["Presentado"] = pd.to_datetime(df_display["fec_presentacion"]).dt.strftime("%Y-%m-%d")
-    df_display["Último cambio"] = pd.to_datetime(df_display["last_changed_at"], errors="coerce").dt.strftime("%Y-%m-%d")
-    df_display = df_display.rename(columns={
-        "proyecto_ley": "PL",
-        "titulo": "Título",
-        "estado": "Estado",
-        "tema": "Tema",
-        "partido": "Partido",
-        "proponente": "Proponente",
-        "comisiones": "Comisión",
-        "url_portal": "Portal",
-        "url_pdf": "PDF",
-    })
-    st.dataframe(
-        df_display[["PL","Tema","Estado","Presentado","Último cambio","Partido","Proponente","Comisión","Título","Portal","PDF"]],
-        hide_index=True,
-        use_container_width=True,
-        height=520,
-        column_config={
-            "Portal": st.column_config.LinkColumn("Portal", display_text="abrir"),
-            "PDF":    st.column_config.LinkColumn("PDF",    display_text="ver"),
-            "Título": st.column_config.TextColumn("Título", width="large"),
-            "Comisión": st.column_config.TextColumn("Comisión", width="medium"),
-        },
+    gb = GridOptionsBuilder.from_dataframe(df.drop(columns=["pley_num"]))
+    # default por columna: sortable + filter + resizable
+    gb.configure_default_column(
+        filter=True,
+        sortable=True,
+        resizable=True,
+        floatingFilter=False,
+        wrapHeaderText=True,
+        autoHeaderHeight=True,
+    )
+    # multi-select por checkboxes (set filter en versión community de AgGrid)
+    set_filter_cols = ["Tema", "Estado", "Partido", "Proponente", "Comisión"]
+    for col in set_filter_cols:
+        gb.configure_column(col, filter="agSetColumnFilter")
+    gb.configure_column("Presentado", filter="agDateColumnFilter", width=120)
+    gb.configure_column("Último cambio", filter="agDateColumnFilter", width=130)
+    gb.configure_column("Título", filter="agTextColumnFilter", width=400, tooltipField="Título", wrapText=True)
+    gb.configure_column("Autor(es)", filter="agTextColumnFilter", width=220, tooltipField="Autor(es)")
+    gb.configure_column("PL", width=140, pinned="left")
+    gb.configure_column(
+        "Portal",
+        width=100,
+        cellRenderer="""function(p){return p.value?`<a href="${p.value}" target="_blank">abrir</a>`:''}""",
+    )
+    gb.configure_column(
+        "PDF",
+        width=80,
+        cellRenderer="""function(p){return p.value?`<a href="${p.value}" target="_blank">ver</a>`:''}""",
+    )
+    gb.configure_grid_options(
+        domLayout="normal",
+        pagination=True,
+        paginationPageSize=25,
+        paginationPageSizeSelector=[25, 50, 100, 200, 500],
+        suppressMenuHide=True,
+        rowSelection="single",
+        animateRows=True,
     )
 
-    # Detalle expandible
-    st.markdown("### Detalle de un proyecto")
-    pleys = df["pley_num"].astype(str).tolist()
-    pick = st.selectbox("Selecciona PL", options=pleys)
-    if pick:
-        row = df[df["pley_num"].astype(str) == pick].iloc[0]
-        st.markdown(f"**{row['proyecto_ley']}** — {row['titulo']}")
-        meta_cols = st.columns(4)
-        meta_cols[0].markdown(f"**Estado:** {row['estado']}")
-        meta_cols[1].markdown(f"**Tema:** {row['tema']} {'*' if row['tema_manual'] else ''}")
-        meta_cols[2].markdown(f"**Partido:** {row['partido'] or '-'}")
-        meta_cols[3].markdown(f"**Proponente:** {row['proponente'] or '-'}")
-        if pd.notna(row["sumilla"]) and row["sumilla"]:
-            st.markdown("**Sumilla:**")
-            st.write(row["sumilla"])
-        # seguimientos
-        conn = get_conn()
-        segs = conn.execute(
-            "SELECT fecha, estado, comisiones, observacion FROM seguimientos "
-            "WHERE per_par_id=2021 AND pley_num=? ORDER BY fecha DESC",
-            (int(row["pley_num"]),),
-        ).fetchall()
-        if segs:
-            st.markdown("**Historial:**")
-            seg_df = pd.DataFrame([dict(s) for s in segs])
-            seg_df["fecha"] = pd.to_datetime(seg_df["fecha"]).dt.strftime("%Y-%m-%d")
-            st.dataframe(seg_df, hide_index=True, use_container_width=True)
-        links_cols = st.columns(2)
-        if row.get("url_portal"):
-            links_cols[0].markdown(f"[Abrir en el portal del Congreso]({row['url_portal']})")
-        if row.get("url_pdf"):
-            links_cols[1].markdown(f"[Descargar PDF]({row['url_pdf']})")
+    AgGrid(
+        df.drop(columns=["pley_num"]),
+        gridOptions=gb.build(),
+        height=620,
+        theme="alpine",
+        update_mode=GridUpdateMode.NO_UPDATE,
+        columns_auto_size_mode=ColumnsAutoSizeMode.NO_AUTOSIZE,
+        allow_unsafe_jscode=True,
+        enable_enterprise_modules=False,
+        fit_columns_on_grid_load=False,
+    )
 
-# Footer
 st.markdown("---")
 st.caption(
+    "Filtros multi-select disponibles haciendo click en el ícono ☰ de cada columna · "
     "Datos: api.congreso.gob.pe/spley-portal-service · "
-    "Clasificación temática híbrida (Excel + reglas keyword-based con overrides Tecnología/Farma). "
-    "Repositorio: github.com/nicosil02/Base_legislativa"
+    "Clasificación temática híbrida (Excel + reglas)"
 )
