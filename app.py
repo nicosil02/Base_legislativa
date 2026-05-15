@@ -16,7 +16,6 @@ from pathlib import Path
 
 import pandas as pd
 import streamlit as st
-from st_aggrid import AgGrid, ColumnsAutoSizeMode, GridOptionsBuilder, GridUpdateMode, JsCode
 
 DB_PATH = Path(__file__).parent / "proyectos.db"
 COMISIONES_ESPECIALES_LABEL = "Comisiones Especiales"
@@ -344,9 +343,8 @@ if busqueda.strip():
 
 st.markdown(f"#### {len(df):,} proyecto(s) — de {len(df_full):,} en el rango de fechas")
 
-# Orden de columnas exacto pedido por el usuario:
-# PL, Título, Presentado, Estado, Último cambio, Proponente, Autor, Partido, Comisión.
-# Tema se agrega después (cliente lo pidió en mensaje aparte), Portal/PDF al final.
+# Orden exacto: PL, Título, Presentado, Estado, Último cambio, Proponente,
+# Autor, Partido, Comisión, Tema, Portal, PDF.
 ORDEN_COLS = [
     "PL", "Título", "Presentado", "Estado", "Último cambio",
     "Proponente", "Autor(es)", "Partido", "Comisión", "Tema",
@@ -355,74 +353,44 @@ ORDEN_COLS = [
 df_view = df.drop(columns=["pley_num", "_comisiones_all"], errors="ignore")
 df_view = df_view[[c for c in ORDEN_COLS if c in df_view.columns]]
 
-# AgGrid con text wrapping + auto-height: cada fila crece para que TODO el
-# contenido sea legible (no se trunca con "...").
-gb = GridOptionsBuilder.from_dataframe(df_view)
-gb.configure_default_column(
-    sortable=True,
-    resizable=True,
-    filter=False,
-    floatingFilter=False,
-    wrapText=True,
-    autoHeight=True,
-    wrapHeaderText=True,
-    autoHeaderHeight=True,
-    cellStyle={"line-height": "1.4", "padding-top": "6px", "padding-bottom": "6px"},
-)
-# Anchos proporcionales — PL y Título un poco más grandes que el resto.
-gb.configure_column("PL", width=130, pinned="left")
-gb.configure_column("Título", width=420)
-gb.configure_column("Presentado", width=110)
-gb.configure_column("Estado", width=180)
-gb.configure_column("Último cambio", width=120, headerName="Últ. cambio")
-gb.configure_column("Proponente", width=130)
-gb.configure_column("Autor(es)", width=220)
-gb.configure_column("Partido", width=170)
-gb.configure_column("Comisión", width=200, headerName="Comisión (princ.)",
-                    headerTooltip="Comisión principal. El filtro busca en TODAS las comisiones del PL.")
-gb.configure_column("Tema", width=140)
-gb.configure_column(
-    "Portal", width=90,
-    cellRenderer=JsCode("""function(p){return p.value?`<a href="${p.value}" target="_blank" style="color:#0B3E5C;text-decoration:underline;">abrir</a>`:''}"""),
-)
-gb.configure_column(
-    "PDF", width=80,
-    cellRenderer=JsCode("""function(p){return p.value?`<a href="${p.value}" target="_blank" style="color:#0B3E5C;text-decoration:underline;">ver</a>`:''}"""),
-)
-gb.configure_grid_options(
-    domLayout="normal",
-    pagination=True,
-    paginationPageSize=25,
-    paginationPageSizeSelector=[25, 50, 100, 200, 500],
-    rowSelection="single",
-    animateRows=True,
-    suppressMenuHide=False,
+st.caption(
+    "💡 Click en una fila para ver el detalle completo (sumilla, todas las comisiones, historial). "
+    "Click en los headers para ordenar."
 )
 
-grid_response = AgGrid(
+# Tabla nativa de Streamlit con selección de fila + row_height alto para que
+# entren al menos 2 líneas de texto por celda. Sorting integrado por header.
+tabla_event = st.dataframe(
     df_view,
-    gridOptions=gb.build(),
+    hide_index=True,
+    use_container_width=True,
     height=720,
-    theme="alpine",
-    update_mode=GridUpdateMode.SELECTION_CHANGED,
-    columns_auto_size_mode=ColumnsAutoSizeMode.NO_AUTOSIZE,
-    allow_unsafe_jscode=True,
-    enable_enterprise_modules=False,
-    fit_columns_on_grid_load=False,
+    row_height=72,
+    on_select="rerun",
+    selection_mode="single-row",
+    column_config={
+        "PL":            st.column_config.TextColumn("PL",            width="medium", pinned=True),
+        "Título":        st.column_config.TextColumn("Título",        width="large"),
+        "Presentado":    st.column_config.TextColumn("Presentado",    width="small"),
+        "Estado":        st.column_config.TextColumn("Estado",        width="medium"),
+        "Último cambio": st.column_config.TextColumn("Últ. cambio",   width="small"),
+        "Proponente":    st.column_config.TextColumn("Proponente",    width="medium"),
+        "Autor(es)":     st.column_config.TextColumn("Autor(es)",     width="medium"),
+        "Partido":       st.column_config.TextColumn("Partido",       width="medium"),
+        "Comisión":      st.column_config.TextColumn("Comisión (princ.)", width="medium",
+                                                     help="Comisión principal. El filtro busca en TODAS las comisiones del PL."),
+        "Tema":          st.column_config.TextColumn("Tema",          width="medium"),
+        "Portal":        st.column_config.LinkColumn("Portal", display_text="abrir", width="small"),
+        "PDF":           st.column_config.LinkColumn("PDF",    display_text="ver",   width="small"),
+    },
 )
 
 # ---------- Panel de detalle del PL seleccionado ----------
-selected = grid_response.get("selected_rows") if isinstance(grid_response, dict) else None
-sel_pl = None
-if isinstance(selected, list) and selected:
-    sel_pl = selected[0].get("PL")
-elif isinstance(selected, pd.DataFrame) and not selected.empty:
-    sel_pl = selected.iloc[0].get("PL")
-
-if sel_pl:
-    row_match = df[df["PL"] == sel_pl]
-    if not row_match.empty:
-        row = row_match.iloc[0]
+sel_rows = tabla_event.selection.rows if hasattr(tabla_event, "selection") else []
+if sel_rows:
+    sel_idx = sel_rows[0]
+    if sel_idx < len(df):
+        row = df.iloc[sel_idx]
         pley_num = int(row["pley_num"])
         st.markdown("---")
         st.markdown(f"### {row['PL']} — {row['Título']}")
