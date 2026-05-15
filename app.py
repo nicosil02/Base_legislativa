@@ -16,7 +16,7 @@ from pathlib import Path
 
 import pandas as pd
 import streamlit as st
-from st_aggrid import AgGrid, ColumnsAutoSizeMode, GridOptionsBuilder, GridUpdateMode
+from st_aggrid import AgGrid, ColumnsAutoSizeMode, GridOptionsBuilder, GridUpdateMode, JsCode
 
 DB_PATH = Path(__file__).parent / "proyectos.db"
 COMISIONES_ESPECIALES_LABEL = "Comisiones Especiales"
@@ -383,11 +383,11 @@ gb.configure_column("Comisión", width=200, headerName="Comisión (princ.)",
 gb.configure_column("Tema", width=140)
 gb.configure_column(
     "Portal", width=90,
-    cellRenderer="""function(p){return p.value?`<a href="${p.value}" target="_blank" style="color:#0B3E5C;text-decoration:underline;">abrir</a>`:''}""",
+    cellRenderer=JsCode("""function(p){return p.value?`<a href="${p.value}" target="_blank" style="color:#0B3E5C;text-decoration:underline;">abrir</a>`:''}"""),
 )
 gb.configure_column(
     "PDF", width=80,
-    cellRenderer="""function(p){return p.value?`<a href="${p.value}" target="_blank" style="color:#0B3E5C;text-decoration:underline;">ver</a>`:''}""",
+    cellRenderer=JsCode("""function(p){return p.value?`<a href="${p.value}" target="_blank" style="color:#0B3E5C;text-decoration:underline;">ver</a>`:''}"""),
 )
 gb.configure_grid_options(
     domLayout="normal",
