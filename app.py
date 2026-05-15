@@ -274,32 +274,73 @@ with st.sidebar:
         with st.expander("Output del sync"):
             st.code(out)
 
-# ---------- Tabla AgGrid ----------
-df = load_proyectos(f_ini, f_fin)
-st.markdown(f"#### {len(df):,} proyecto(s) en el rango")
+# ---------- Tabla con barra de filtros propios ----------
+df_full = load_proyectos(f_ini, f_fin)
+
+def _opciones(col: str) -> list[str]:
+    """Valores únicos no nulos de una columna del dataframe completo, ordenados."""
+    if col not in df_full.columns:
+        return []
+    return sorted({str(v) for v in df_full[col].dropna().unique() if str(v).strip()})
+
+
+# Fila 1: 5 dropdowns multi-select con flecha. Vacío = "Todos".
+fc = st.columns([1, 1, 1.2, 1, 1])
+sel_tema = fc[0].multiselect("Tema", _opciones("Tema"), placeholder="Todos")
+sel_estado = fc[1].multiselect("Estado", _opciones("Estado"), placeholder="Todos")
+sel_comision = fc[2].multiselect("Comisión", _opciones("Comisión"), placeholder="Todas")
+sel_partido = fc[3].multiselect("Partido", _opciones("Partido"), placeholder="Todos")
+sel_proponente = fc[4].multiselect("Proponente", _opciones("Proponente"), placeholder="Todos")
+
+# Fila 2: búsqueda libre por texto.
+busqueda = st.text_input(
+    "🔍 Buscar por PL, título o autor",
+    placeholder="ej. 14515, biometría, Cruz Mamani...",
+    label_visibility="collapsed",
+)
+
+# Aplicar filtros al dataframe.
+df = df_full
+if sel_tema:
+    df = df[df["Tema"].isin(sel_tema)]
+if sel_estado:
+    df = df[df["Estado"].isin(sel_estado)]
+if sel_comision:
+    df = df[df["Comisión"].isin(sel_comision)]
+if sel_partido:
+    df = df[df["Partido"].isin(sel_partido)]
+if sel_proponente:
+    df = df[df["Proponente"].isin(sel_proponente)]
+if busqueda.strip():
+    q = busqueda.strip().lower()
+    mask = (
+        df["PL"].astype(str).str.lower().str.contains(q, na=False)
+        | df["Título"].astype(str).str.lower().str.contains(q, na=False)
+        | df["Autor(es)"].astype(str).str.lower().str.contains(q, na=False)
+    )
+    df = df[mask]
+
+st.markdown(f"#### {len(df):,} proyecto(s) — de {len(df_full):,} en el rango de fechas")
 
 if df.empty:
-    st.info("Sin proyectos en el rango seleccionado.")
+    st.info("Sin proyectos que cumplan los filtros.")
 else:
     gb = GridOptionsBuilder.from_dataframe(df.drop(columns=["pley_num"]))
-    # default por columna: sortable + filter + resizable
+    # Por columna: sortable + resizable, SIN floating filters
+    # (los filtros viven arriba de la tabla, en Streamlit).
     gb.configure_default_column(
-        filter=True,
         sortable=True,
         resizable=True,
+        filter=False,
         floatingFilter=False,
         wrapHeaderText=True,
         autoHeaderHeight=True,
     )
-    # multi-select por checkboxes (set filter en versión community de AgGrid)
-    set_filter_cols = ["Tema", "Estado", "Partido", "Proponente", "Comisión"]
-    for col in set_filter_cols:
-        gb.configure_column(col, filter="agSetColumnFilter")
-    gb.configure_column("Presentado", filter="agDateColumnFilter", width=120)
-    gb.configure_column("Último cambio", filter="agDateColumnFilter", width=130)
-    gb.configure_column("Título", filter="agTextColumnFilter", width=400, tooltipField="Título", wrapText=True)
-    gb.configure_column("Autor(es)", filter="agTextColumnFilter", width=220, tooltipField="Autor(es)")
-    gb.configure_column("PL", width=140, pinned="left")
+    gb.configure_column("PL", width=140, pinned="left", filter="agTextColumnFilter")
+    gb.configure_column("Presentado", width=120)
+    gb.configure_column("Último cambio", width=130)
+    gb.configure_column("Título", width=400, tooltipField="Título", wrapText=True)
+    gb.configure_column("Autor(es)", width=220, tooltipField="Autor(es)")
     gb.configure_column(
         "Portal",
         width=100,
@@ -315,7 +356,6 @@ else:
         pagination=True,
         paginationPageSize=25,
         paginationPageSizeSelector=[25, 50, 100, 200, 500],
-        suppressMenuHide=True,
         rowSelection="single",
         animateRows=True,
     )
@@ -334,7 +374,8 @@ else:
 
 st.markdown("---")
 st.caption(
-    "Filtros multi-select disponibles haciendo click en el ícono ☰ de cada columna · "
+    "Filtros: dropdowns multi-select arriba (vacío = todos) y búsqueda libre · "
+    "Click en los headers de la tabla para ordenar · "
     "Datos: api.congreso.gob.pe/spley-portal-service · "
     "Clasificación temática híbrida (Excel + reglas)"
 )
