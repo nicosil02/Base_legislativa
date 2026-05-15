@@ -16,6 +16,7 @@ from pathlib import Path
 
 import pandas as pd
 import streamlit as st
+from st_aggrid import AgGrid, ColumnsAutoSizeMode, GridOptionsBuilder, GridUpdateMode
 
 DB_PATH = Path(__file__).parent / "proyectos.db"
 COMISIONES_ESPECIALES_LABEL = "Comisiones Especiales"
@@ -196,15 +197,18 @@ def load_proyectos(
     sql += " ORDER BY p.fec_presentacion DESC, p.pley_num DESC"
     df = pd.read_sql_query(sql, conn, params=params)
     # Deduplicar: un PL puede aparecer varias veces si está en >1 comisión.
-    # Para el dashboard, colapso comisiones del mismo PL en una sola fila con "X | Y".
+    # "Comisión" (visible) = la primera (principal).
+    # "_comisiones_all" (oculta) = lista completa para que el filtro busque en todas.
     if not df.empty:
         df = df.groupby("pley_num", as_index=False).agg({
             "PL": "first", "Tema": "first", "Estado": "first",
             "Presentado": "first", "Último cambio": "first",
             "Partido": "first", "Proponente": "first", "Autor(es)": "first",
-            "Comisión": lambda s: " | ".join(sorted({str(x) for x in s if isinstance(x, str) and x})) or None,
+            "Comisión": lambda s: sorted({str(x) for x in s if isinstance(x, str) and x}),
             "Título": "first", "Portal": "first", "PDF": "first",
         })
+        df["_comisiones_all"] = df["Comisión"]
+        df["Comisión"] = df["Comisión"].apply(lambda lst: lst[0] if lst else None)
         df = df.sort_values("Presentado", ascending=False).reset_index(drop=True)
     return df
 
@@ -288,12 +292,23 @@ def _opciones(col: str, label_todos: str = TODOS) -> list[str]:
     return [label_todos] + vals
 
 
+def _opciones_comision() -> list[str]:
+    """Todas las comisiones que aparecen en cualquier PL (incluso si no son la principal)."""
+    if "_comisiones_all" not in df_full.columns:
+        return [TODAS]
+    todos: set[str] = set()
+    for lst in df_full["_comisiones_all"]:
+        if isinstance(lst, list):
+            todos.update(x for x in lst if isinstance(x, str) and x.strip())
+    return [TODAS] + sorted(todos)
+
+
 # Fila 1: 6 selectboxes (single-select) con "Todos" por defecto.
 fc = st.columns([1, 1, 1, 1.2, 1, 1])
 pl_input = fc[0].text_input("PL", placeholder="ej. 14515", help="Búsqueda parcial: '143' matchea 14300-14399")
 sel_tema = fc[1].selectbox("Tema", _opciones("Tema"))
 sel_estado = fc[2].selectbox("Estado", _opciones("Estado"))
-sel_comision = fc[3].selectbox("Comisión", _opciones("Comisión", TODAS))
+sel_comision = fc[3].selectbox("Comisión", _opciones_comision())
 sel_partido = fc[4].selectbox("Partido", _opciones("Partido"))
 sel_proponente = fc[5].selectbox("Proponente", _opciones("Proponente"))
 
@@ -313,7 +328,8 @@ if sel_tema != TODOS:
 if sel_estado != TODOS:
     df = df[df["Estado"] == sel_estado]
 if sel_comision != TODAS:
-    df = df[df["Comisión"] == sel_comision]
+    # Busca en TODAS las comisiones del PL (no solo la principal mostrada).
+    df = df[df["_comisiones_all"].apply(lambda lst: isinstance(lst, list) and sel_comision in lst)]
 if sel_partido != TODOS:
     df = df[df["Partido"] == sel_partido]
 if sel_proponente != TODOS:
@@ -328,30 +344,132 @@ if busqueda.strip():
 
 st.markdown(f"#### {len(df):,} proyecto(s) — de {len(df_full):,} en el rango de fechas")
 
-# Tabla nativa de Streamlit con links y sorting integrados.
-# Siempre se renderiza, incluso vacía.
-df_view = df.drop(columns=["pley_num"]).copy()
+# Orden de columnas exacto pedido por el usuario:
+# PL, Título, Presentado, Estado, Último cambio, Proponente, Autor, Partido, Comisión.
+# Tema se agrega después (cliente lo pidió en mensaje aparte), Portal/PDF al final.
+ORDEN_COLS = [
+    "PL", "Título", "Presentado", "Estado", "Último cambio",
+    "Proponente", "Autor(es)", "Partido", "Comisión", "Tema",
+    "Portal", "PDF",
+]
+df_view = df.drop(columns=["pley_num", "_comisiones_all"], errors="ignore")
+df_view = df_view[[c for c in ORDEN_COLS if c in df_view.columns]]
 
-st.dataframe(
-    df_view,
-    hide_index=True,
-    use_container_width=True,
-    height=620,
-    column_config={
-        "PL": st.column_config.TextColumn("PL", width="small", pinned=True),
-        "Tema": st.column_config.TextColumn("Tema", width="small"),
-        "Estado": st.column_config.TextColumn("Estado", width="medium"),
-        "Presentado": st.column_config.TextColumn("Presentado", width="small"),
-        "Último cambio": st.column_config.TextColumn("Último cambio", width="small"),
-        "Partido": st.column_config.TextColumn("Partido", width="small"),
-        "Proponente": st.column_config.TextColumn("Proponente", width="small"),
-        "Autor(es)": st.column_config.TextColumn("Autor(es)", width="medium"),
-        "Comisión": st.column_config.TextColumn("Comisión", width="medium"),
-        "Título": st.column_config.TextColumn("Título", width="large"),
-        "Portal": st.column_config.LinkColumn("Portal", display_text="abrir", width="small"),
-        "PDF": st.column_config.LinkColumn("PDF", display_text="ver", width="small"),
-    },
+# AgGrid con text wrapping + auto-height: cada fila crece para que TODO el
+# contenido sea legible (no se trunca con "...").
+gb = GridOptionsBuilder.from_dataframe(df_view)
+gb.configure_default_column(
+    sortable=True,
+    resizable=True,
+    filter=False,
+    floatingFilter=False,
+    wrapText=True,
+    autoHeight=True,
+    wrapHeaderText=True,
+    autoHeaderHeight=True,
+    cellStyle={"line-height": "1.4", "padding-top": "6px", "padding-bottom": "6px"},
 )
+# Anchos proporcionales — PL y Título un poco más grandes que el resto.
+gb.configure_column("PL", width=130, pinned="left")
+gb.configure_column("Título", width=420)
+gb.configure_column("Presentado", width=110)
+gb.configure_column("Estado", width=180)
+gb.configure_column("Último cambio", width=120, headerName="Últ. cambio")
+gb.configure_column("Proponente", width=130)
+gb.configure_column("Autor(es)", width=220)
+gb.configure_column("Partido", width=170)
+gb.configure_column("Comisión", width=200, headerName="Comisión (princ.)",
+                    headerTooltip="Comisión principal. El filtro busca en TODAS las comisiones del PL.")
+gb.configure_column("Tema", width=140)
+gb.configure_column(
+    "Portal", width=90,
+    cellRenderer="""function(p){return p.value?`<a href="${p.value}" target="_blank" style="color:#0B3E5C;text-decoration:underline;">abrir</a>`:''}""",
+)
+gb.configure_column(
+    "PDF", width=80,
+    cellRenderer="""function(p){return p.value?`<a href="${p.value}" target="_blank" style="color:#0B3E5C;text-decoration:underline;">ver</a>`:''}""",
+)
+gb.configure_grid_options(
+    domLayout="normal",
+    pagination=True,
+    paginationPageSize=25,
+    paginationPageSizeSelector=[25, 50, 100, 200, 500],
+    rowSelection="single",
+    animateRows=True,
+    suppressMenuHide=False,
+)
+
+grid_response = AgGrid(
+    df_view,
+    gridOptions=gb.build(),
+    height=720,
+    theme="alpine",
+    update_mode=GridUpdateMode.SELECTION_CHANGED,
+    columns_auto_size_mode=ColumnsAutoSizeMode.NO_AUTOSIZE,
+    allow_unsafe_jscode=True,
+    enable_enterprise_modules=False,
+    fit_columns_on_grid_load=False,
+)
+
+# ---------- Panel de detalle del PL seleccionado ----------
+selected = grid_response.get("selected_rows") if isinstance(grid_response, dict) else None
+sel_pl = None
+if isinstance(selected, list) and selected:
+    sel_pl = selected[0].get("PL")
+elif isinstance(selected, pd.DataFrame) and not selected.empty:
+    sel_pl = selected.iloc[0].get("PL")
+
+if sel_pl:
+    row_match = df[df["PL"] == sel_pl]
+    if not row_match.empty:
+        row = row_match.iloc[0]
+        pley_num = int(row["pley_num"])
+        st.markdown("---")
+        st.markdown(f"### {row['PL']} — {row['Título']}")
+
+        meta_cols = st.columns(5)
+        meta_cols[0].markdown(f"**Estado**\n\n{row['Estado']}")
+        meta_cols[1].markdown(f"**Tema**\n\n{row['Tema']}")
+        meta_cols[2].markdown(f"**Partido**\n\n{row['Partido'] or '—'}")
+        meta_cols[3].markdown(f"**Proponente**\n\n{row['Proponente'] or '—'}")
+        meta_cols[4].markdown(f"**Presentado**\n\n{row['Presentado']}")
+
+        comisiones_all = row.get("_comisiones_all") or []
+        if isinstance(comisiones_all, list) and comisiones_all:
+            st.markdown(f"**Comisiones asignadas:** {' · '.join(comisiones_all)}")
+
+        conn = get_conn()
+        extra = conn.execute(
+            "SELECT sumilla, autores_raw FROM proyectos WHERE per_par_id=2021 AND pley_num=?",
+            (pley_num,),
+        ).fetchone()
+        if extra and extra["sumilla"]:
+            st.markdown("**Sumilla**")
+            st.write(extra["sumilla"])
+        if extra and extra["autores_raw"]:
+            st.markdown("**Autores (completo)**")
+            st.write(extra["autores_raw"])
+
+        segs = conn.execute(
+            "SELECT fecha, estado, comisiones, observacion FROM seguimientos "
+            "WHERE per_par_id=2021 AND pley_num=? ORDER BY fecha DESC",
+            (pley_num,),
+        ).fetchall()
+        if segs:
+            st.markdown("**Historial de cambios**")
+            seg_df = pd.DataFrame([dict(s) for s in segs])
+            seg_df["fecha"] = pd.to_datetime(seg_df["fecha"]).dt.strftime("%Y-%m-%d")
+            seg_df = seg_df.rename(columns={
+                "fecha": "Fecha", "estado": "Estado",
+                "comisiones": "Comisiones", "observacion": "Observación",
+            })
+            st.dataframe(seg_df, hide_index=True, use_container_width=True)
+
+        link_cols = st.columns(2)
+        if isinstance(row.get("Portal"), str):
+            link_cols[0].markdown(f"[Abrir expediente en el portal del Congreso]({row['Portal']})")
+        if isinstance(row.get("PDF"), str):
+            link_cols[1].markdown(f"[Descargar PDF]({row['PDF']})")
 
 st.markdown("---")
 st.caption(
