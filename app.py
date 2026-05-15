@@ -16,7 +16,6 @@ from pathlib import Path
 
 import pandas as pd
 import streamlit as st
-from st_aggrid import AgGrid, ColumnsAutoSizeMode, GridOptionsBuilder, GridUpdateMode
 
 DB_PATH = Path(__file__).parent / "proyectos.db"
 COMISIONES_ESPECIALES_LABEL = "Comisiones Especiales"
@@ -277,105 +276,87 @@ with st.sidebar:
 # ---------- Tabla con barra de filtros propios ----------
 df_full = load_proyectos(f_ini, f_fin)
 
-def _opciones(col: str) -> list[str]:
-    """Valores únicos no nulos de una columna del dataframe completo, ordenados."""
+TODOS = "Todos"
+TODAS = "Todas"
+
+
+def _opciones(col: str, label_todos: str = TODOS) -> list[str]:
+    """[label_todos] + valores únicos no nulos de la columna, ordenados."""
     if col not in df_full.columns:
-        return []
-    return sorted({str(v) for v in df_full[col].dropna().unique() if str(v).strip()})
+        return [label_todos]
+    vals = sorted({str(v) for v in df_full[col].dropna().unique() if str(v).strip()})
+    return [label_todos] + vals
 
 
-# Fila 1: 5 dropdowns multi-select con flecha. Vacío = "Todos".
-fc = st.columns([1, 1, 1.2, 1, 1])
-sel_tema = fc[0].multiselect("Tema", _opciones("Tema"), placeholder="Todos")
-sel_estado = fc[1].multiselect("Estado", _opciones("Estado"), placeholder="Todos")
-sel_comision = fc[2].multiselect("Comisión", _opciones("Comisión"), placeholder="Todas")
-sel_partido = fc[3].multiselect("Partido", _opciones("Partido"), placeholder="Todos")
-sel_proponente = fc[4].multiselect("Proponente", _opciones("Proponente"), placeholder="Todos")
+# Fila 1: 6 selectboxes (single-select) con "Todos" por defecto.
+fc = st.columns([1, 1, 1, 1.2, 1, 1])
+pl_input = fc[0].text_input("PL", placeholder="ej. 14515", help="Búsqueda parcial: '143' matchea 14300-14399")
+sel_tema = fc[1].selectbox("Tema", _opciones("Tema"))
+sel_estado = fc[2].selectbox("Estado", _opciones("Estado"))
+sel_comision = fc[3].selectbox("Comisión", _opciones("Comisión", TODAS))
+sel_partido = fc[4].selectbox("Partido", _opciones("Partido"))
+sel_proponente = fc[5].selectbox("Proponente", _opciones("Proponente"))
 
-# Fila 2: búsqueda libre por texto.
+# Fila 2: búsqueda libre por texto en título / autor.
 busqueda = st.text_input(
-    "🔍 Buscar por PL, título o autor",
-    placeholder="ej. 14515, biometría, Cruz Mamani...",
+    "Buscar en título o autor",
+    placeholder="🔍  título o nombre de autor — ej. biometría, Cruz Mamani...",
     label_visibility="collapsed",
 )
 
 # Aplicar filtros al dataframe.
 df = df_full
-if sel_tema:
-    df = df[df["Tema"].isin(sel_tema)]
-if sel_estado:
-    df = df[df["Estado"].isin(sel_estado)]
-if sel_comision:
-    df = df[df["Comisión"].isin(sel_comision)]
-if sel_partido:
-    df = df[df["Partido"].isin(sel_partido)]
-if sel_proponente:
-    df = df[df["Proponente"].isin(sel_proponente)]
+if pl_input.strip():
+    df = df[df["PL"].astype(str).str.contains(pl_input.strip(), case=False, na=False)]
+if sel_tema != TODOS:
+    df = df[df["Tema"] == sel_tema]
+if sel_estado != TODOS:
+    df = df[df["Estado"] == sel_estado]
+if sel_comision != TODAS:
+    df = df[df["Comisión"] == sel_comision]
+if sel_partido != TODOS:
+    df = df[df["Partido"] == sel_partido]
+if sel_proponente != TODOS:
+    df = df[df["Proponente"] == sel_proponente]
 if busqueda.strip():
     q = busqueda.strip().lower()
     mask = (
-        df["PL"].astype(str).str.lower().str.contains(q, na=False)
-        | df["Título"].astype(str).str.lower().str.contains(q, na=False)
+        df["Título"].astype(str).str.lower().str.contains(q, na=False)
         | df["Autor(es)"].astype(str).str.lower().str.contains(q, na=False)
     )
     df = df[mask]
 
 st.markdown(f"#### {len(df):,} proyecto(s) — de {len(df_full):,} en el rango de fechas")
 
-if df.empty:
-    st.info("Sin proyectos que cumplan los filtros.")
-else:
-    gb = GridOptionsBuilder.from_dataframe(df.drop(columns=["pley_num"]))
-    # Por columna: sortable + resizable, SIN floating filters
-    # (los filtros viven arriba de la tabla, en Streamlit).
-    gb.configure_default_column(
-        sortable=True,
-        resizable=True,
-        filter=False,
-        floatingFilter=False,
-        wrapHeaderText=True,
-        autoHeaderHeight=True,
-    )
-    gb.configure_column("PL", width=140, pinned="left", filter="agTextColumnFilter")
-    gb.configure_column("Presentado", width=120)
-    gb.configure_column("Último cambio", width=130)
-    gb.configure_column("Título", width=400, tooltipField="Título", wrapText=True)
-    gb.configure_column("Autor(es)", width=220, tooltipField="Autor(es)")
-    gb.configure_column(
-        "Portal",
-        width=100,
-        cellRenderer="""function(p){return p.value?`<a href="${p.value}" target="_blank">abrir</a>`:''}""",
-    )
-    gb.configure_column(
-        "PDF",
-        width=80,
-        cellRenderer="""function(p){return p.value?`<a href="${p.value}" target="_blank">ver</a>`:''}""",
-    )
-    gb.configure_grid_options(
-        domLayout="normal",
-        pagination=True,
-        paginationPageSize=25,
-        paginationPageSizeSelector=[25, 50, 100, 200, 500],
-        rowSelection="single",
-        animateRows=True,
-    )
+# Tabla nativa de Streamlit con links y sorting integrados.
+# Siempre se renderiza, incluso vacía.
+df_view = df.drop(columns=["pley_num"]).copy()
 
-    AgGrid(
-        df.drop(columns=["pley_num"]),
-        gridOptions=gb.build(),
-        height=620,
-        theme="alpine",
-        update_mode=GridUpdateMode.NO_UPDATE,
-        columns_auto_size_mode=ColumnsAutoSizeMode.NO_AUTOSIZE,
-        allow_unsafe_jscode=True,
-        enable_enterprise_modules=False,
-        fit_columns_on_grid_load=False,
-    )
+st.dataframe(
+    df_view,
+    hide_index=True,
+    use_container_width=True,
+    height=620,
+    column_config={
+        "PL": st.column_config.TextColumn("PL", width="small", pinned=True),
+        "Tema": st.column_config.TextColumn("Tema", width="small"),
+        "Estado": st.column_config.TextColumn("Estado", width="medium"),
+        "Presentado": st.column_config.TextColumn("Presentado", width="small"),
+        "Último cambio": st.column_config.TextColumn("Último cambio", width="small"),
+        "Partido": st.column_config.TextColumn("Partido", width="small"),
+        "Proponente": st.column_config.TextColumn("Proponente", width="small"),
+        "Autor(es)": st.column_config.TextColumn("Autor(es)", width="medium"),
+        "Comisión": st.column_config.TextColumn("Comisión", width="medium"),
+        "Título": st.column_config.TextColumn("Título", width="large"),
+        "Portal": st.column_config.LinkColumn("Portal", display_text="abrir", width="small"),
+        "PDF": st.column_config.LinkColumn("PDF", display_text="ver", width="small"),
+    },
+)
 
 st.markdown("---")
 st.caption(
-    "Filtros: dropdowns multi-select arriba (vacío = todos) y búsqueda libre · "
-    "Click en los headers de la tabla para ordenar · "
+    "Filtros: dropdowns arriba (Todos = sin filtro) · "
+    "Click en los headers de la tabla para ordenar (asc/desc) · "
     "Datos: api.congreso.gob.pe/spley-portal-service · "
     "Clasificación temática híbrida (Excel + reglas)"
 )
