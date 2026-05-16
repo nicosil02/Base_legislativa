@@ -12,7 +12,6 @@ from __future__ import annotations
 from pathlib import Path
 
 import streamlit as st
-import streamlit.components.v1 as _components
 
 
 # Logo Vali grande en el tope del sidebar.
@@ -138,90 +137,40 @@ peru = st.Page(
     url_path="peru",
 )
 
-nav = st.navigation(
-    {
-        "Portafolio de herramientas": [home],
-        "Países": [peru],
-    },
-    position="sidebar",
-)
+# Navegación FLAT (sin secciones colapsables) → no hay chevrons "expand_more".
+# Los labels "Portafolio de herramientas" / "Países" se inyectan via CSS
+# pseudo-elementos (::before) sobre los <li> del sidebar nav, manteniendo
+# la jerarquía visual sin que Streamlit dibuje los expanders rotos.
+nav = st.navigation([home, peru], position="sidebar")
 nav.run()
 
-
-# ─── JS para ocultar texto crudo de íconos Material Symbols ──────────────────
-# Cuando la fuente Material Symbols Rounded no carga, los nombres de los íconos
-# (expand_more, keyboard_double_arrow_left, etc.) aparecen como texto crudo
-# al lado de "Portafolio de herramientas" y "Países".
-#
-# CSS solo no es suficiente porque no podemos targetear elementos por su
-# textContent. Necesitamos JavaScript. Lo inyectamos via components.html
-# (iframe de 1×1 px que pusheamos fuera de la pantalla con CSS).
-#
-# El script accede a window.parent.document, busca leaf spans/i/div cuyo
-# texto matchee patrón de nombre de Material Symbol y los oculta inline.
-# Re-corre via MutationObserver cuando Streamlit re-renderiza.
-try:
-    _components.html(
-        """
-        <script>
-        (function () {
-          const ICON_RE = /^[a-z][a-z0-9_]{3,40}$/;
-          const KNOWN = new Set([
-            "expand_more","expand_less","chevron_right","chevron_left",
-            "keyboard_arrow_down","keyboard_arrow_up","unfold_more","unfold_less",
-            "keyboard_double_arrow_left","keyboard_double_arrow_right",
-            "arrow_drop_down","arrow_drop_up","navigate_before","navigate_next"
-          ]);
-          function hide(el){
-            el.style.setProperty("font-size","0","important");
-            el.style.setProperty("line-height","0","important");
-            el.style.setProperty("opacity","0","important");
-            el.style.setProperty("width","0","important");
-            el.style.setProperty("height","0","important");
-            el.style.setProperty("overflow","hidden","important");
-            el.style.setProperty("color","transparent","important");
-            el.style.setProperty("visibility","hidden","important");
-          }
-          function tick(){
-            try {
-              const doc = window.parent.document;
-              const sb = doc.querySelector('[data-testid="stSidebar"]');
-              if (!sb) return;
-              sb.querySelectorAll("span, i, div").forEach(el => {
-                if (el.children.length !== 0) return;
-                const t = (el.textContent || "").trim();
-                if (!t) return;
-                if (KNOWN.has(t) || (ICON_RE.test(t) && t.includes("_"))) hide(el);
-              });
-            } catch(e){}
-          }
-          tick();
-          setInterval(tick, 300);
-          try {
-            const doc = window.parent.document;
-            const sb = doc.querySelector('[data-testid="stSidebar"]');
-            if (sb && window.MutationObserver) {
-              new MutationObserver(tick).observe(sb, {childList:true, subtree:true, characterData:true});
-            }
-          } catch(e){}
-        })();
-        </script>
-        """,
-        height=1,
-    )
-except Exception:
-    pass
-
-# CSS para sacar el iframe vacío de la vista (lo pusheamos off-screen).
+# Labels de sección como pseudo-elementos CSS.
+# - El primer <li> del nav recibe el label "Portafolio de herramientas"
+# - El segundo <li> recibe "Países"
+# Si se agregan más páginas, se actualiza esta CSS.
 st.markdown(
     """<style>
-iframe[title="streamlit_components.v1.html.html"],
-[data-testid="stIFrame"] {
-    position: absolute !important;
-    left: -9999px !important;
-    width: 1px !important;
-    height: 1px !important;
-    visibility: hidden !important;
+[data-testid="stSidebarNav"] ul > li:first-child::before {
+    content: "Portafolio de herramientas";
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.6);
+    padding: 18px 16px 8px 16px;
+    pointer-events: none;
+}
+[data-testid="stSidebarNav"] ul > li:nth-child(2)::before {
+    content: "Países";
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.6);
+    padding: 24px 16px 8px 16px;
+    pointer-events: none;
 }
 </style>""",
     unsafe_allow_html=True,
