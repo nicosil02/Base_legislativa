@@ -115,20 +115,29 @@ st.markdown(
       color: var(--ink-mute) !important;
     }
 
-    /* === Ocultar TODO texto crudo de Material Symbols/Icons en sidebar === */
-    /* Cualquier elemento con clase relacionada a iconos Material, en sidebar */
+    /* === Material Symbols: refuerzo local (app.py ya los oculta globalmente) ===
+       Cubre el caso en que la página se cargue antes que app.py emita su CSS. */
+    [data-testid="stSidebar"] .material-symbols-rounded,
+    [data-testid="stSidebar"] .material-symbols-outlined,
+    [data-testid="stSidebar"] .material-symbols-sharp,
+    [data-testid="stSidebar"] .material-icons-round,
+    [data-testid="stSidebar"] .material-icons,
     [data-testid="stSidebar"] [class*="material-symbols"],
     [data-testid="stSidebar"] [class*="material-icons"],
     [data-testid="stSidebar"] [class*="MaterialSymbols"],
     [data-testid="stSidebar"] [class*="MaterialIcons"],
-    [data-testid="stSidebar"] span[aria-hidden="true"]:not([class*="emoji"]),
-    [data-testid="stSidebar"] i[class*="icon"] {
+    [data-testid="stSidebar"] span[aria-hidden="true"],
+    [data-testid="stSidebar"] i[aria-hidden="true"] {
       font-size: 0 !important;
-      color: transparent !important;
       line-height: 0 !important;
-      visibility: hidden !important;
+      color: transparent !important;
+      opacity: 0 !important;
+      overflow: hidden !important;
+      width: 0 !important;
+      display: inline-block !important;
+      pointer-events: none !important;
     }
-    /* Botones del header del sidebar (collapse) — esconder texto, poner icono propio */
+    /* Botones del header del sidebar (collapse) */
     [data-testid="stSidebarHeader"] button,
     [data-testid="stSidebarHeader"] button *,
     button[data-testid="stExpandSidebarButton"],
@@ -153,26 +162,13 @@ st.markdown(
       font-family: 'Inter', sans-serif !important;
     }
 
-    /* === Logo Vali: tamaño cómodo, centrado al tope === */
-    [data-testid="stSidebarHeader"] {
-      padding: 24px 16px 20px 16px !important;
-      display: flex !important;
-      justify-content: center !important;
-      align-items: center !important;
-      min-height: 220px !important;
-      background-color: var(--ink) !important;
-    }
+    /* === Logo: app.py lo inyecta como background-image del sidebar header ===
+       Aquí solo ocultamos el <img> que genera st.logo(). */
     [data-testid="stLogo"] {
-      margin: 0 auto !important;
-      display: block !important;
-    }
-    [data-testid="stLogo"] img {
-      max-height: 200px !important;
-      height: 200px !important;
-      width: auto !important;
-      max-width: 200px !important;
-      margin: 0 auto !important;
-      display: block !important;
+      display: none !important;
+      visibility: hidden !important;
+      width: 0 !important;
+      height: 0 !important;
     }
 
     /* Reduce padding superior */
