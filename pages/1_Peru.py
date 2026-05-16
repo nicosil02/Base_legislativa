@@ -642,7 +642,7 @@ st.dataframe(
     hide_index=True,
     use_container_width=True,
     height=720,
-    row_height=140,
+    row_height=170,  # más espacio vertical para que el título envuelva sin cortarse
     column_config={
         "PL":           st.column_config.LinkColumn(
             "PL",
@@ -651,11 +651,13 @@ st.dataframe(
             pinned=True,
             help="Click para abrir el expediente en el portal del Congreso.",
         ),
-        "Título":       st.column_config.TextColumn("Título", width="large"),
+        # Título: medium en vez de large → la tabla entera entra sin scroll
+        # horizontal. El texto largo envuelve verticalmente (row_height=140).
+        "Título":       st.column_config.TextColumn("Título", width="medium"),
         "Presentado":   st.column_config.TextColumn("Presentado", width="small"),
-        "Estado":       st.column_config.TextColumn("Estado", width="medium"),
-        "Autor":        st.column_config.TextColumn("Autor", width="medium"),
-        "Bancada":      st.column_config.TextColumn("Bancada", width="medium"),
+        "Estado":       st.column_config.TextColumn("Estado", width="small"),
+        "Autor":        st.column_config.TextColumn("Autor", width="small"),
+        "Bancada":      st.column_config.TextColumn("Bancada", width="small"),
         "Comisión":     st.column_config.TextColumn(
             "Comisión",
             width="medium",
