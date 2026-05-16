@@ -115,9 +115,20 @@ st.markdown(
       color: var(--ink-mute) !important;
     }
 
-    /* === Ocultar fallback de Material Symbols (keyboard_double_arrow_left,
-       expand_more, etc.) cuando la fuente no carga === */
-    /* Esconde el TEXTO de cualquier botón del header del sidebar */
+    /* === Ocultar TODO texto crudo de Material Symbols/Icons en sidebar === */
+    /* Cualquier elemento con clase relacionada a iconos Material, en sidebar */
+    [data-testid="stSidebar"] [class*="material-symbols"],
+    [data-testid="stSidebar"] [class*="material-icons"],
+    [data-testid="stSidebar"] [class*="MaterialSymbols"],
+    [data-testid="stSidebar"] [class*="MaterialIcons"],
+    [data-testid="stSidebar"] span[aria-hidden="true"]:not([class*="emoji"]),
+    [data-testid="stSidebar"] i[class*="icon"] {
+      font-size: 0 !important;
+      color: transparent !important;
+      line-height: 0 !important;
+      visibility: hidden !important;
+    }
+    /* Botones del header del sidebar (collapse) — esconder texto, poner icono propio */
     [data-testid="stSidebarHeader"] button,
     [data-testid="stSidebarHeader"] button *,
     button[data-testid="stExpandSidebarButton"],
@@ -130,42 +141,38 @@ st.markdown(
       color: transparent !important;
       line-height: 0 !important;
     }
-    /* Custom collapse icon via ::before */
     [data-testid="stSidebarHeader"] button::before,
     button[data-testid="stExpandSidebarButton"]::before,
     button[kind="header"]::before {
       content: "‹" !important;
       font-size: 18px !important;
       color: #FFFFFF !important;
+      visibility: visible !important;
       display: inline-block !important;
       line-height: 1 !important;
       font-family: 'Inter', sans-serif !important;
     }
-    /* Ocultar cualquier span dentro del sidebar nav que contenga texto
-       crudo de icono Material (expand_more, etc.) */
-    [data-testid="stSidebarNav"] span[class*="icon"]:not([class*="material-symbols"]),
-    [data-testid="stSidebar"] [class*="material-symbols"]:empty,
-    [data-testid="stSidebar"] [class*="material-icons"]:empty {
-      font-size: 0 !important;
-      color: transparent !important;
-    }
 
-    /* === Logo Vali: GRANDE y centrado al tope del sidebar === */
+    /* === Logo Vali: tamaño cómodo, centrado al tope === */
     [data-testid="stSidebarHeader"] {
-      padding-top: 16px !important;
-      padding-bottom: 12px !important;
+      padding: 24px 16px 20px 16px !important;
       display: flex !important;
       justify-content: center !important;
+      align-items: center !important;
+      min-height: 220px !important;
+      background-color: var(--ink) !important;
     }
     [data-testid="stLogo"] {
       margin: 0 auto !important;
       display: block !important;
     }
     [data-testid="stLogo"] img {
-      max-height: 120px !important;
-      height: 120px !important;
+      max-height: 200px !important;
+      height: 200px !important;
       width: auto !important;
-      max-width: 160px !important;
+      max-width: 200px !important;
+      margin: 0 auto !important;
+      display: block !important;
     }
 
     /* Reduce padding superior */
