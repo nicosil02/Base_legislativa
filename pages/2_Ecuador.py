@@ -297,10 +297,9 @@ def last_sync() -> dict | None:
     return dict(r) if r else None
 
 
-# URL pública del portal Ppless v2 — no soporta deep-link al detalle por N. Trámite
-# (es un SPA Angular que abre el detalle en un modal sin cambiar la URL). El
-# usuario tiene que pegar el N. Trámite en el filtro del portal para abrir
-# los documentos. Documentamos eso en el tooltip de la columna.
+# URL pública del portal Ppless v2 — fallback cuando el proyecto seleccionado
+# no tiene documentos enriquecidos todavía en `documentos`. Ahí el usuario
+# puede abrir el portal y descargar manualmente.
 PPLESS_URL = "https://proyectosdeley.asambleanacional.gob.ec/report"
 
 
@@ -496,11 +495,12 @@ df_view["Proponente principal"] = (
 # clickea al portal Ppless v2. Como el portal no acepta deep link al detalle,
 # guardamos el número en `display_text` y la URL es siempre la misma página.
 # El usuario abre el portal y pega el N. Trámite en el filtro "Nro. Trámite".
-df_view["_link"] = PPLESS_URL + "?n=" + df_view["N. Trámite"].astype(str)
-# PDF column queda como URL directa al fileservice; LinkColumn se renderiza
-# con "📄" como display_text si hay URL, sino vacío.
-COLS_VISIBLES = ["_link", "Título", "Presentado", "Estado",
-                 "Tipo proponente", "Proponente principal", "Comisión", "Tema", "PDF"]
+# Sin LinkColumn ni PDF column: la tabla soporta selección de fila; al
+# seleccionar una fila se muestra debajo un panel con los documentos
+# del proyecto. Esto reemplaza el deep-link al portal externo y el botón
+# de "Descargar PDF" — un solo punto de entrada vía click en la fila.
+COLS_VISIBLES = ["N. Trámite", "Título", "Presentado", "Estado",
+                 "Tipo proponente", "Proponente principal", "Comisión", "Tema"]
 df_view = df_view[[c for c in COLS_VISIBLES if c in df_view.columns]]
 
 # CSS para wrap en celdas
@@ -517,22 +517,20 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-st.dataframe(
+tabla = st.dataframe(
     df_view,
     hide_index=True,
     use_container_width=True,
     height=720,
     row_height=160,
+    on_select="rerun",
+    selection_mode="single-row",
     column_config={
-        "_link":               st.column_config.LinkColumn(
+        "N. Trámite":          st.column_config.TextColumn(
             "N. Trámite",
-            display_text=r"\?n=(.+)$",   # extrae el N. Trámite del URL para mostrar
             width="small",
             pinned=True,
-            help=("Click abre el portal Ppless v2 de la Asamblea. El portal NO "
-                  "soporta deep-link al detalle, así que pegá el N. Trámite "
-                  "en el filtro 'Nro. Trámite' del portal para abrir los "
-                  "documentos del proyecto."),
+            help="Click la fila para ver los documentos del proyecto debajo.",
         ),
         "Título":              st.column_config.TextColumn("Título", width="medium"),
         "Presentado":          st.column_config.TextColumn("Presentado", width="small"),
@@ -541,16 +539,89 @@ st.dataframe(
         "Proponente principal": st.column_config.TextColumn("Proponente", width="small"),
         "Comisión":            st.column_config.TextColumn("Comisión", width="medium"),
         "Tema":                st.column_config.TextColumn("Tema", width="small"),
-        "PDF":                 st.column_config.LinkColumn(
-            "PDF",
-            display_text="📄 Descargar",
-            width="small",
-            help=("Link directo al PDF principal del proyecto. Si está vacío es "
-                  "porque el proyecto aún no fue enriquecido con "
-                  "`python -m scraper_ec.cli enriquecer-documentos`."),
-        ),
     },
 )
+
+# ---------- Panel de documentos del proyecto seleccionado ----------
+# Cuando el usuario clickea una fila, st.dataframe devuelve los índices
+# seleccionados en .selection.rows. Recuperamos el N. Trámite y mostramos
+# debajo un panel con los documentos enriquecidos (tabla `documentos`).
+selected_rows = []
+try:
+    selected_rows = tabla.selection.rows or []
+except AttributeError:
+    pass
+
+if selected_rows:
+    row_idx = selected_rows[0]
+    if row_idx < len(df_view):
+        sel_tramite = df_view.iloc[row_idx]["N. Trámite"]
+        sel_titulo = df_view.iloc[row_idx]["Título"]
+
+        # Query docs from DB
+        conn = get_conn()
+        docs = conn.execute(
+            "SELECT fase, descripcion, url, orden FROM documentos "
+            "WHERE n_tramite = ? ORDER BY orden ASC",
+            (str(sel_tramite),),
+        ).fetchall()
+
+        st.markdown(
+            f"""<div style="margin-top: 28px; padding: 24px 28px; border: 1px solid #CFD9E0;
+                          border-radius: 12px; background: #FFFFFF;">
+            <div style="font-size: 11px; font-weight: 800; letter-spacing: 0.22em;
+                       text-transform: uppercase; color: #0A294D; margin-bottom: 10px;">
+              Documentos del proyecto
+            </div>
+            <div style="font-size: 1.2rem; font-weight: 800; line-height: 1.25;
+                       color: #0A294D; margin-bottom: 4px;">
+              N. Trámite {sel_tramite}
+            </div>
+            <div style="font-size: 0.95rem; color: #435D74; margin-bottom: 18px;
+                       line-height: 1.4;">
+              {sel_titulo}
+            </div>
+            </div>""",
+            unsafe_allow_html=True,
+        )
+
+        if not docs:
+            st.info(
+                "Este proyecto todavía no tiene documentos enriquecidos en la "
+                "base. Corré: `python -m scraper_ec.cli enriquecer-documentos "
+                f"--limit 5 --force` para procesarlo (incluyendo {sel_tramite}). "
+                "Mientras tanto podés abrir el portal oficial:\n\n"
+                f"[Abrir portal Ppless v2 →]({PPLESS_URL})"
+            )
+        else:
+            # Una tabla de docs con link directo al PDF público
+            docs_df = pd.DataFrame([dict(d) for d in docs])
+            docs_df = docs_df.rename(columns={
+                "fase": "Fase",
+                "descripcion": "Archivo",
+                "url": "Descargar",
+            })[["Fase", "Archivo", "Descargar"]]
+            st.dataframe(
+                docs_df,
+                hide_index=True,
+                use_container_width=True,
+                column_config={
+                    "Fase":      st.column_config.TextColumn("Fase", width="medium"),
+                    "Archivo":   st.column_config.TextColumn("Archivo", width="large"),
+                    "Descargar": st.column_config.LinkColumn(
+                        "Descargar",
+                        display_text="📄 PDF",
+                        width="small",
+                    ),
+                },
+            )
+else:
+    st.markdown(
+        '<div style="margin-top: 18px; font-size: 13px; color: #869FB2;">'
+        '↑ Click sobre una fila para ver los documentos del proyecto.'
+        '</div>',
+        unsafe_allow_html=True,
+    )
 
 # Footer
 st.markdown('<div class="footer-rule"></div>', unsafe_allow_html=True)
