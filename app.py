@@ -137,40 +137,73 @@ peru = st.Page(
     url_path="peru",
 )
 
-# Navegación FLAT (sin secciones colapsables) → no hay chevrons "expand_more".
-# Los labels "Portafolio de herramientas" / "Países" se inyectan via CSS
-# pseudo-elementos (::before) sobre los <li> del sidebar nav, manteniendo
-# la jerarquía visual sin que Streamlit dibuje los expanders rotos.
-nav = st.navigation([home, peru], position="sidebar")
+# Navegación con secciones colapsables (Portafolio de herramientas / Países).
+# Los chevrons "expand_more" se rendean como texto porque la fuente Material
+# Symbols Rounded de Streamlit no carga. Truco: en el CSS de abajo escondemos
+# el texto crudo (font-size: 0) y le inyectamos "▼" en un ::before. La
+# rotación que Streamlit aplica al toggle al expandir/colapsar se hereda al
+# pseudo-elemento → la flecha apunta abajo cuando está abierto y a un lado
+# cuando está cerrado, naturalmente.
+nav = st.navigation(
+    {
+        "Portafolio de herramientas": [home],
+        "Países": [peru],
+    },
+    position="sidebar",
+)
 nav.run()
 
-# Labels de sección como pseudo-elementos CSS.
-# - El primer <li> del nav recibe el label "Portafolio de herramientas"
-# - El segundo <li> recibe "Países"
-# Si se agregan más páginas, se actualiza esta CSS.
+# Reemplazo del chevron Material Symbols por una flecha unicode "▼".
+# Selectores múltiples para cubrir cualquier variante de DOM que use
+# Streamlit 1.57 para esos íconos.
 st.markdown(
     """<style>
-[data-testid="stSidebarNav"] ul > li:first-child::before {
-    content: "Portafolio de herramientas";
-    display: block;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.6);
-    padding: 18px 16px 8px 16px;
-    pointer-events: none;
+/* Esconder el texto crudo del ícono pero MANTENER el elemento visible
+   (porque el ::before se renderiza ahí). */
+[data-testid="stSidebar"] .material-symbols-rounded,
+[data-testid="stSidebar"] .material-symbols-outlined,
+[data-testid="stSidebar"] .material-symbols-sharp,
+[data-testid="stSidebar"] [class*="material-symbols"],
+[data-testid="stSidebar"] [class*="material-icons"],
+[data-testid="stSidebar"] span[style*="Material Symbols"],
+[data-testid="stSidebar"] span[style*="material-symbols"],
+[data-testid="stSidebarNav"] [aria-expanded] > span:last-child,
+[data-testid="stSidebarNav"] [aria-expanded] > div:last-child > span,
+[data-testid="stSidebarNav"] button[aria-expanded] > span:last-child {
+    font-size: 0 !important;
+    line-height: 1 !important;
+    color: transparent !important;
+    width: auto !important;
+    height: auto !important;
+    overflow: visible !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: relative !important;
+    display: inline-block !important;
 }
-[data-testid="stSidebarNav"] ul > li:nth-child(2)::before {
-    content: "Países";
-    display: block;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.6);
-    padding: 24px 16px 8px 16px;
-    pointer-events: none;
+
+/* Inyectar la flecha unicode "▼" en el ::before del ícono.
+   El font-family se fuerza a Inter/Segoe UI porque queremos que el
+   carácter Unicode renderice (no la fuente Material Symbols que falla). */
+[data-testid="stSidebar"] .material-symbols-rounded::before,
+[data-testid="stSidebar"] .material-symbols-outlined::before,
+[data-testid="stSidebar"] .material-symbols-sharp::before,
+[data-testid="stSidebar"] [class*="material-symbols"]::before,
+[data-testid="stSidebar"] [class*="material-icons"]::before,
+[data-testid="stSidebar"] span[style*="Material Symbols"]::before,
+[data-testid="stSidebar"] span[style*="material-symbols"]::before,
+[data-testid="stSidebarNav"] [aria-expanded] > span:last-child::before,
+[data-testid="stSidebarNav"] [aria-expanded] > div:last-child > span::before,
+[data-testid="stSidebarNav"] button[aria-expanded] > span:last-child::before {
+    content: "▼" !important;
+    font-size: 11px !important;
+    font-family: 'Inter', 'Segoe UI', Arial, sans-serif !important;
+    color: rgba(255,255,255,0.7) !important;
+    line-height: 1 !important;
+    display: inline-block !important;
+    vertical-align: middle !important;
+    visibility: visible !important;
+    opacity: 1 !important;
 }
 </style>""",
     unsafe_allow_html=True,
