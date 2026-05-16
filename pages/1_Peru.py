@@ -115,61 +115,9 @@ st.markdown(
       color: var(--ink-mute) !important;
     }
 
-    /* === Material Symbols: refuerzo local (app.py ya los oculta globalmente) ===
-       Cubre el caso en que la página se cargue antes que app.py emita su CSS. */
-    [data-testid="stSidebar"] .material-symbols-rounded,
-    [data-testid="stSidebar"] .material-symbols-outlined,
-    [data-testid="stSidebar"] .material-symbols-sharp,
-    [data-testid="stSidebar"] .material-icons-round,
-    [data-testid="stSidebar"] .material-icons,
-    [data-testid="stSidebar"] [class*="material-symbols"],
-    [data-testid="stSidebar"] [class*="material-icons"],
-    [data-testid="stSidebar"] [class*="MaterialSymbols"],
-    [data-testid="stSidebar"] [class*="MaterialIcons"],
-    [data-testid="stSidebar"] span[aria-hidden="true"],
-    [data-testid="stSidebar"] i[aria-hidden="true"] {
-      font-size: 0 !important;
-      line-height: 0 !important;
-      color: transparent !important;
-      opacity: 0 !important;
-      overflow: hidden !important;
-      width: 0 !important;
-      display: inline-block !important;
-      pointer-events: none !important;
-    }
-    /* Botones del header del sidebar (collapse) */
-    [data-testid="stSidebarHeader"] button,
-    [data-testid="stSidebarHeader"] button *,
-    button[data-testid="stExpandSidebarButton"],
-    button[data-testid="stExpandSidebarButton"] *,
-    button[data-testid="stSidebarCollapsedControl"],
-    button[data-testid="stSidebarCollapsedControl"] *,
-    button[kind="header"],
-    button[kind="header"] * {
-      font-size: 0 !important;
-      color: transparent !important;
-      line-height: 0 !important;
-    }
-    [data-testid="stSidebarHeader"] button::before,
-    button[data-testid="stExpandSidebarButton"]::before,
-    button[kind="header"]::before {
-      content: "‹" !important;
-      font-size: 18px !important;
-      color: #FFFFFF !important;
-      visibility: visible !important;
-      display: inline-block !important;
-      line-height: 1 !important;
-      font-family: 'Inter', sans-serif !important;
-    }
-
-    /* === Logo: app.py lo inyecta como background-image del sidebar header ===
-       Aquí solo ocultamos el <img> que genera st.logo(). */
-    [data-testid="stLogo"] {
-      display: none !important;
-      visibility: hidden !important;
-      width: 0 !important;
-      height: 0 !important;
-    }
+    /* Logo y íconos del sidebar gestionados globalmente desde app.py
+       (background-image del header + @import de Material Symbols Rounded).
+       No duplicamos las reglas para no romper la carga del ícono. */
 
     /* Reduce padding superior */
     .block-container {

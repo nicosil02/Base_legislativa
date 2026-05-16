@@ -53,60 +53,11 @@ section[data-testid="stSidebar"] [data-testid="stSidebarNav"] [aria-current="pag
   background-color: rgba(255,255,255,0.10) !important;
 }
 
-/* Material Symbols: logo y texto de iconos gestionados globalmente desde app.py.
-   Aquí reforzamos con las mismas reglas para garantizar que no aparezcan textos
-   de iconos (expand_more, keyboard_double_arrow_left, etc.) al navegar. */
-[data-testid="stSidebar"] .material-symbols-rounded,
-[data-testid="stSidebar"] .material-symbols-outlined,
-[data-testid="stSidebar"] .material-symbols-sharp,
-[data-testid="stSidebar"] .material-icons-round,
-[data-testid="stSidebar"] .material-icons,
-[data-testid="stSidebar"] [class*="material-symbols"],
-[data-testid="stSidebar"] [class*="material-icons"],
-[data-testid="stSidebar"] [class*="MaterialSymbols"],
-[data-testid="stSidebar"] [class*="MaterialIcons"],
-[data-testid="stSidebar"] span[aria-hidden="true"],
-[data-testid="stSidebar"] i[aria-hidden="true"] {
-  font-size: 0 !important;
-  line-height: 0 !important;
-  color: transparent !important;
-  opacity: 0 !important;
-  overflow: hidden !important;
-  width: 0 !important;
-  display: inline-block !important;
-  pointer-events: none !important;
-}
-[data-testid="stSidebarHeader"] button,
-[data-testid="stSidebarHeader"] button *,
-button[data-testid="stExpandSidebarButton"],
-button[data-testid="stExpandSidebarButton"] *,
-button[data-testid="stSidebarCollapsedControl"],
-button[data-testid="stSidebarCollapsedControl"] *,
-button[kind="header"],
-button[kind="header"] * {
-  font-size: 0 !important;
-  color: transparent !important;
-  line-height: 0 !important;
-}
-[data-testid="stSidebarHeader"] button::before,
-button[data-testid="stExpandSidebarButton"]::before,
-button[kind="header"]::before {
-  content: "‹" !important;
-  font-size: 18px !important;
-  color: #FFFFFF !important;
-  visibility: visible !important;
-  display: inline-block !important;
-  line-height: 1 !important;
-  font-family: 'Inter', sans-serif !important;
-}
-
-/* Logo: app.py lo inyecta como background-image — ocultar el <img> de st.logo() */
-[data-testid="stLogo"] {
-  display: none !important;
-  visibility: hidden !important;
-  width: 0 !important;
-  height: 0 !important;
-}
+/* Logo y íconos del sidebar (Material Symbols + collapse buttons) gestionados
+   globalmente desde app.py. NO duplicamos esas reglas acá para no entrar en
+   guerra de especificidad con app.py — si las repetimos con font-size:0,
+   sobreescribiríamos el approach de app.py de mostrar los íconos via @import
+   de Google Fonts. */
 
 .block-container { padding-top: 5vh; padding-bottom: 4rem; max-width: 1100px; }
 
