@@ -43,7 +43,7 @@ peru = st.Page(
 
 nav = st.navigation(
     {
-        "Radar Legislativo": [home],
+        "Portafolio de herramientas": [home],
         "Países": [peru],
     },
     position="sidebar",
