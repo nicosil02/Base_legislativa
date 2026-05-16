@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-label="Vali Consultores">
+  <rect width="400" height="400" fill="#0A294D"/>
+  <text x="200" y="245"
+        font-family="'Playfair Display', 'Georgia', 'Times New Roman', serif"
+        font-style="italic"
+        font-weight="700"
+        font-size="225"
+        fill="#FFFFFF"
+        text-anchor="middle">vali</text>
+  <circle cx="293" cy="83" r="22" fill="#BF1A1A"/>
+</svg>

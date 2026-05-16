@@ -18,19 +18,30 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
+# Logo Vali arriba del sidebar (Streamlit lo posiciona automáticamente).
+from pathlib import Path as _P
+_logo_path = _P(__file__).resolve().parent / "assets" / "vali_logo.svg"
+if _logo_path.exists():
+    try:
+        st.logo(str(_logo_path), size="large")
+    except Exception:
+        pass
+
 # ====================== CSS (mismo estilo datadaf) ======================
 st.markdown(
     """<style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
 :root {
-      --ink:        #121212;
-      --ink-soft:   #4B5563;
-      --ink-mute:   #9CA3AF;
-      --line:       #E5E7EB;
-      --line-soft:  #F3F4F6;
-      --accent:     #2563EB;
+      /* Paleta corporativa Vali Consultores */
+      --ink:        #0A294D;   /* navy principal */
+      --ink-soft:   #435D74;   /* navy medio */
+      --ink-mute:   #869FB2;   /* gris azulado */
+      --line:       #CFD9E0;
+      --line-soft:  #E3E9ED;
+      --accent:     #0A294D;
+      --accent-red: #BF1A1A;   /* rojo Vali */
       --bg:         #FFFFFF;
-      --bg-soft:    #F9FAFB;
+      --bg-soft:    #F4F6F8;
     }
     html, body, [class*="css"], .stApp {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
