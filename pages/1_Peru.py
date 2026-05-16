@@ -376,7 +376,9 @@ def load_proyectos(fec_inicio: dt.date | None, fec_fin: dt.date | None) -> pd.Da
 
 def run_update_now() -> tuple[int, str]:
     cmd = [sys.executable, "-m", "scraper.cli", "update"]
-    res = subprocess.run(cmd, cwd=str(DB_PATH.parent), capture_output=True, text=True, timeout=900)
+    db = _find_db_path()
+    cwd = str(db.parent) if db else str(Path(__file__).resolve().parent.parent)
+    res = subprocess.run(cmd, cwd=cwd, capture_output=True, text=True, timeout=900)
     return res.returncode, (res.stdout or "") + (res.stderr or "")
 
 
