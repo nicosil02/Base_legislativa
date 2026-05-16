@@ -115,34 +115,39 @@ st.markdown(
       color: var(--ink-mute) !important;
     }
 
-    /* === Material Symbols: forzar carga de la fuente para evitar que
-       aparezcan "keyboard_double_arrow_left", "expand_more" como texto === */
-    @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=block');
-    [class*="material-symbols"] {
-      font-family: 'Material Symbols Rounded' !important;
-      font-variation-settings: 'opsz' 24;
-      font-weight: normal !important;
-      font-style: normal !important;
-      letter-spacing: normal !important;
-      text-transform: none !important;
-      display: inline-block;
-      white-space: nowrap;
-      word-wrap: normal;
-      direction: ltr;
-      -webkit-font-feature-settings: 'liga';
-      -webkit-font-smoothing: antialiased;
+    /* === Ocultar fallback de Material Symbols (keyboard_double_arrow_left,
+       expand_more, etc.) cuando la fuente no carga === */
+    /* Esconde el TEXTO de cualquier botón del header del sidebar */
+    [data-testid="stSidebarHeader"] button,
+    [data-testid="stSidebarHeader"] button *,
+    button[data-testid="stExpandSidebarButton"],
+    button[data-testid="stExpandSidebarButton"] *,
+    button[data-testid="stSidebarCollapsedControl"],
+    button[data-testid="stSidebarCollapsedControl"] *,
+    button[kind="header"],
+    button[kind="header"] * {
+      font-size: 0 !important;
+      color: transparent !important;
+      line-height: 0 !important;
     }
-    /* Si por la red tarda en cargar la fuente, ocultar el placeholder texto */
-    button[data-testid="stExpandSidebarButton"] *:not(svg),
-    button[data-testid="stSidebarCollapsedControl"] *:not(svg),
-    [data-testid="stBaseButton-header"] *:not(svg),
-    [data-testid="stSidebarNav"] [class*="material-symbols"]:not(:has(*)):empty,
-    span.st-emotion-cache-* {
-      /* Sin contenido visible si la fuente no cargó */
+    /* Custom collapse icon via ::before */
+    [data-testid="stSidebarHeader"] button::before,
+    button[data-testid="stExpandSidebarButton"]::before,
+    button[kind="header"]::before {
+      content: "‹" !important;
+      font-size: 18px !important;
+      color: #FFFFFF !important;
+      display: inline-block !important;
+      line-height: 1 !important;
+      font-family: 'Inter', sans-serif !important;
     }
-    /* Stronger: hide spans whose text exactly matches known icon names */
-    [data-testid="stSidebar"] span:not([class*="material-symbols"]):not([class*="Material"]):not([class]) {
-      /* spans sin clase dentro del sidebar: probablemente label de Streamlit */
+    /* Ocultar cualquier span dentro del sidebar nav que contenga texto
+       crudo de icono Material (expand_more, etc.) */
+    [data-testid="stSidebarNav"] span[class*="icon"]:not([class*="material-symbols"]),
+    [data-testid="stSidebar"] [class*="material-symbols"]:empty,
+    [data-testid="stSidebar"] [class*="material-icons"]:empty {
+      font-size: 0 !important;
+      color: transparent !important;
     }
 
     /* === Logo Vali: GRANDE y centrado al tope del sidebar === */
