@@ -154,56 +154,71 @@ nav = st.navigation(
 nav.run()
 
 # Reemplazo del chevron Material Symbols por una flecha unicode "▼".
-# Selectores múltiples para cubrir cualquier variante de DOM que use
-# Streamlit 1.57 para esos íconos.
+#
+# Estructura DOM real en Streamlit 1.57 (encontrada inspeccionando el código
+# fuente del frontend):
+#
+#   <button aria-expanded="true|false">                       ← StyledSidebarNavSectionHeader
+#       <div class="css-XYZ-StyledChevronContainer">          ← chevron container (1er hijo!)
+#           <DynamicIcon iconValue=":material/expand_more:"/> ← acá vive el texto roto
+#       </div>
+#       <span>Portafolio de herramientas</span>               ← título
+#   </button>
+#
+# El chevron es el PRIMER hijo (no último). Streamlit aplica
+# transform: rotate(0deg) cuando expandido y rotate(-90deg) cuando colapsado
+# sobre el StyledChevronContainer. Si escondemos el contenido interno y
+# le ponemos un ::before, la rotación se hereda al pseudo-elemento.
 st.markdown(
     """<style>
-/* Esconder el texto crudo del ícono pero MANTENER el elemento visible
-   (porque el ::before se renderiza ahí). */
-[data-testid="stSidebar"] .material-symbols-rounded,
-[data-testid="stSidebar"] .material-symbols-outlined,
-[data-testid="stSidebar"] .material-symbols-sharp,
-[data-testid="stSidebar"] [class*="material-symbols"],
-[data-testid="stSidebar"] [class*="material-icons"],
-[data-testid="stSidebar"] span[style*="Material Symbols"],
-[data-testid="stSidebar"] span[style*="material-symbols"],
-[data-testid="stSidebarNav"] [aria-expanded] > span:last-child,
-[data-testid="stSidebarNav"] [aria-expanded] > div:last-child > span,
-[data-testid="stSidebarNav"] button[aria-expanded] > span:last-child {
+/* 1. El contenedor del chevron es el primer div hijo de [aria-expanded].
+      Hacemos que NO muestre el contenido roto, pero conservamos su rotación. */
+[data-testid="stSidebar"] [aria-expanded] > div:first-child,
+[data-testid="stSidebarNav"] [aria-expanded] > div:first-child {
     font-size: 0 !important;
-    line-height: 1 !important;
-    color: transparent !important;
-    width: auto !important;
-    height: auto !important;
-    overflow: visible !important;
+    line-height: 0 !important;
+    position: relative !important;
+    width: 18px !important;
+    height: 18px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
     visibility: visible !important;
     opacity: 1 !important;
-    position: relative !important;
-    display: inline-block !important;
 }
 
-/* Inyectar la flecha unicode "▼" en el ::before del ícono.
-   El font-family se fuerza a Inter/Segoe UI porque queremos que el
-   carácter Unicode renderice (no la fuente Material Symbols que falla). */
-[data-testid="stSidebar"] .material-symbols-rounded::before,
-[data-testid="stSidebar"] .material-symbols-outlined::before,
-[data-testid="stSidebar"] .material-symbols-sharp::before,
-[data-testid="stSidebar"] [class*="material-symbols"]::before,
-[data-testid="stSidebar"] [class*="material-icons"]::before,
-[data-testid="stSidebar"] span[style*="Material Symbols"]::before,
-[data-testid="stSidebar"] span[style*="material-symbols"]::before,
-[data-testid="stSidebarNav"] [aria-expanded] > span:last-child::before,
-[data-testid="stSidebarNav"] [aria-expanded] > div:last-child > span::before,
-[data-testid="stSidebarNav"] button[aria-expanded] > span:last-child::before {
+/* 2. Ocultar el DynamicIcon (o lo que sea) que vive adentro y renderea
+      ":material/expand_more:" como texto crudo. */
+[data-testid="stSidebar"] [aria-expanded] > div:first-child > *,
+[data-testid="stSidebarNav"] [aria-expanded] > div:first-child > * {
+    display: none !important;
+    visibility: hidden !important;
+}
+
+/* 3. Inyectar la flecha unicode en el ::before del contenedor. La
+      rotación del padre se aplica naturalmente al pseudo-elemento. */
+[data-testid="stSidebar"] [aria-expanded] > div:first-child::before,
+[data-testid="stSidebarNav"] [aria-expanded] > div:first-child::before {
     content: "▼" !important;
     font-size: 11px !important;
     font-family: 'Inter', 'Segoe UI', Arial, sans-serif !important;
     color: rgba(255,255,255,0.7) !important;
     line-height: 1 !important;
     display: inline-block !important;
-    vertical-align: middle !important;
     visibility: visible !important;
     opacity: 1 !important;
+}
+
+/* 4. Como fallback defensivo, también ocultamos cualquier span con clases
+      tipo material-symbols por las dudas que en otras versiones el icono
+      esté en otro lugar del DOM. */
+[data-testid="stSidebar"] .material-symbols-rounded,
+[data-testid="stSidebar"] [class*="material-symbols"] {
+    font-size: 0 !important;
+    line-height: 0 !important;
+    width: 0 !important;
+    overflow: hidden !important;
+    visibility: hidden !important;
 }
 </style>""",
     unsafe_allow_html=True,
