@@ -454,9 +454,12 @@ st.markdown(
     unsafe_allow_html=True,
 )
 st.markdown(
-    '<p class="country-subtitle">Proyectos de ley del período parlamentario 2021–2026. '
-    'Datos actualizados desde el API oficial de spley-portal. Clasificación temática híbrida '
-    '(etiquetas curadas + reglas para Tecnología y Farma).</p>',
+    '<p class="country-subtitle">Plataforma para seguir, filtrar y analizar todos los '
+    'proyectos de ley presentados ante el Congreso de la República del Perú durante el '
+    'período parlamentario 2021–2026. Pensada para equipos de asuntos públicos, '
+    'consultoras de policy y áreas regulatorias que necesitan identificar iniciativas '
+    'legislativas relevantes por tema, comisión, partido o autor — y mantener el '
+    'seguimiento de su estado.</p>',
     unsafe_allow_html=True,
 )
 
@@ -548,18 +551,32 @@ def _opciones_comision() -> list[str]:
     return [TODAS] + sorted(todos)
 
 
-# Fila de filtros: PL + 5 dropdowns
-fc = st.columns([1, 1, 1, 1.3, 1, 1])
+def _opciones_autor() -> list[str]:
+    """Lista de autores únicos extraídos del campo `autores_raw` (separados por '; ')."""
+    if "Autor(es)" not in df_full.columns:
+        return [TODOS]
+    todos: set[str] = set()
+    for s in df_full["Autor(es)"].dropna():
+        for nombre in str(s).split(";"):
+            n = nombre.strip()
+            if n:
+                todos.add(n)
+    return [TODOS] + sorted(todos)
+
+
+# Fila de filtros: PL + 6 dropdowns (Tema, Estado, Comisión, Partido, Proponente, Autor)
+fc = st.columns([0.9, 1, 1, 1.2, 1.1, 1, 1.1])
 pl_input = fc[0].text_input("PL", placeholder="ej. 14515")
 sel_tema = fc[1].selectbox("Tema", _opciones("Tema"))
 sel_estado = fc[2].selectbox("Estado", _opciones("Estado"))
 sel_comision = fc[3].selectbox("Comisión", _opciones_comision())
-sel_partido = fc[4].selectbox("Partido", _opciones("Partido"))
+sel_partido = fc[4].selectbox("Bancada", _opciones("Partido"))
 sel_proponente = fc[5].selectbox("Proponente", _opciones("Proponente"))
+sel_autor = fc[6].selectbox("Autor", _opciones_autor())
 
 busqueda = st.text_input(
-    "Buscar en título o autor",
-    placeholder="🔍  título o nombre de autor — ej. biometría, Cruz Mamani",
+    "Buscar libre en título",
+    placeholder="🔍  buscar texto en el título — ej. biometría, ciberseguridad, vacuna",
     label_visibility="collapsed",
 )
 
@@ -577,112 +594,71 @@ if sel_partido != TODOS:
     df = df[df["Partido"] == sel_partido]
 if sel_proponente != TODOS:
     df = df[df["Proponente"] == sel_proponente]
+if sel_autor != TODOS:
+    df = df[df["Autor(es)"].astype(str).str.contains(sel_autor, case=False, na=False, regex=False)]
 if busqueda.strip():
     q = busqueda.strip().lower()
-    mask = (
-        df["Título"].astype(str).str.lower().str.contains(q, na=False)
-        | df["Autor(es)"].astype(str).str.lower().str.contains(q, na=False)
-    )
-    df = df[mask]
+    df = df[df["Título"].astype(str).str.lower().str.contains(q, na=False)]
 
 st.markdown(f"##### {len(df):,} proyecto(s) de {len(df_full):,} en el rango")
-st.caption("Click en una fila para ver el detalle completo. Click en los headers para ordenar.")
 
-# Reducimos a 6 columnas visibles (entra sin scroll horizontal):
-# PL · Título · Presentado · Estado · Tema · Comisión (princ.)
-COLS_VISIBLES = ["PL", "Título", "Presentado", "Estado", "Tema", "Comisión"]
-df_view = df[COLS_VISIBLES].copy() if all(c in df.columns for c in COLS_VISIBLES) else df.copy()
+# Construcción del df de la tabla:
+# - La columna "PL" pasa a ser la URL del portal (LinkColumn) — el regex
+#   `display_text` extrae el pleyNum como label clickeable.
+# - "Partido" se renombra a "Bancada" para coincidir con la terminología pedida.
+# - Orden: PL · Título · Presentado · Estado · Autor · Bancada · Comisión · Tema.
+df_view = df.copy()
+df_view["PL"] = df_view["Portal"]  # ahora "PL" contiene la URL para LinkColumn
+df_view = df_view.rename(columns={"Partido": "Bancada", "Autor(es)": "Autor"})
+COLS_VISIBLES = ["PL", "Título", "Presentado", "Estado", "Autor", "Bancada", "Comisión", "Tema"]
+df_view = df_view[[c for c in COLS_VISIBLES if c in df_view.columns]]
 
-tabla_event = st.dataframe(
+# CSS para que el título envuelva (multi-línea) en lugar de truncar con "..."
+st.markdown(
+    """<style>
+    div[data-testid="stDataFrame"] [role="gridcell"] {
+        white-space: pre-wrap !important;
+        overflow-wrap: break-word !important;
+        line-height: 1.45 !important;
+        padding-top: 10px !important;
+        padding-bottom: 10px !important;
+    }
+    div[data-testid="stDataFrame"] [role="gridcell"] > div {
+        white-space: pre-wrap !important;
+        overflow: visible !important;
+        text-overflow: clip !important;
+    }
+    </style>""",
+    unsafe_allow_html=True,
+)
+
+st.dataframe(
     df_view,
     hide_index=True,
     use_container_width=True,
-    height=620,
-    row_height=56,
-    on_select="rerun",
-    selection_mode="single-row",
+    height=720,
+    row_height=140,
     column_config={
-        "PL":           st.column_config.TextColumn("PL",           width="small", pinned=True),
-        "Título":       st.column_config.TextColumn("Título",       width="large"),
-        "Presentado":   st.column_config.TextColumn("Presentado",   width="small"),
-        "Estado":       st.column_config.TextColumn("Estado",       width="medium"),
-        "Tema":         st.column_config.TextColumn("Tema",         width="small"),
-        "Comisión":     st.column_config.TextColumn("Comisión",     width="medium",
-                                                    help="Comisión principal. El filtro busca en TODAS las comisiones del PL."),
+        "PL":           st.column_config.LinkColumn(
+            "PL",
+            display_text=r"expediente/\d+/(\d+)",
+            width="small",
+            pinned=True,
+            help="Click para abrir el expediente en el portal del Congreso.",
+        ),
+        "Título":       st.column_config.TextColumn("Título", width="large"),
+        "Presentado":   st.column_config.TextColumn("Presentado", width="small"),
+        "Estado":       st.column_config.TextColumn("Estado", width="medium"),
+        "Autor":        st.column_config.TextColumn("Autor", width="medium"),
+        "Bancada":      st.column_config.TextColumn("Bancada", width="medium"),
+        "Comisión":     st.column_config.TextColumn(
+            "Comisión",
+            width="medium",
+            help="Comisión principal. El filtro busca en TODAS las comisiones del PL.",
+        ),
+        "Tema":         st.column_config.TextColumn("Tema", width="small"),
     },
 )
-
-# ---------- Panel de detalle ----------
-sel_rows = tabla_event.selection.rows if hasattr(tabla_event, "selection") else []
-if sel_rows:
-    sel_idx = sel_rows[0]
-    if sel_idx < len(df):
-        row = df.iloc[sel_idx]
-        pley_num = int(row["pley_num"])
-
-        st.markdown('<div class="detail-card">', unsafe_allow_html=True)
-        st.markdown('<div class="detail-eyebrow">Detalle del proyecto</div>', unsafe_allow_html=True)
-        st.markdown(f'<div class="detail-title">{row["PL"]} — {row["Título"]}</div>', unsafe_allow_html=True)
-
-        meta_cols = st.columns(5)
-        for col, (label, value) in zip(meta_cols, [
-            ("Estado", row["Estado"]),
-            ("Tema", row["Tema"]),
-            ("Partido", row["Partido"] or "—"),
-            ("Proponente", row["Proponente"] or "—"),
-            ("Presentado", row["Presentado"]),
-        ]):
-            col.markdown(
-                f'<div class="detail-meta-label">{label}</div>'
-                f'<div class="detail-meta-value">{value}</div>',
-                unsafe_allow_html=True,
-            )
-
-        st.markdown(
-            f'<div class="detail-meta-label" style="margin-top:18px">Último cambio</div>'
-            f'<div class="detail-meta-value">{row["Último cambio"]}</div>',
-            unsafe_allow_html=True,
-        )
-
-        comisiones_all = row.get("_comisiones_all") or []
-        if isinstance(comisiones_all, list) and comisiones_all:
-            st.markdown('<div class="detail-section-title">Comisiones asignadas</div>', unsafe_allow_html=True)
-            st.markdown(" · ".join(comisiones_all))
-
-        conn = get_conn()
-        extra = conn.execute(
-            "SELECT sumilla, autores_raw FROM proyectos WHERE per_par_id=2021 AND pley_num=?",
-            (pley_num,),
-        ).fetchone()
-        if extra and extra["sumilla"]:
-            st.markdown('<div class="detail-section-title">Sumilla</div>', unsafe_allow_html=True)
-            st.write(extra["sumilla"])
-        if extra and extra["autores_raw"]:
-            st.markdown('<div class="detail-section-title">Autores</div>', unsafe_allow_html=True)
-            st.write(extra["autores_raw"])
-
-        segs = conn.execute(
-            "SELECT fecha, estado, comisiones, observacion FROM seguimientos "
-            "WHERE per_par_id=2021 AND pley_num=? ORDER BY fecha DESC",
-            (pley_num,),
-        ).fetchall()
-        if segs:
-            st.markdown('<div class="detail-section-title">Historial de cambios</div>', unsafe_allow_html=True)
-            seg_df = pd.DataFrame([dict(s) for s in segs])
-            seg_df["fecha"] = pd.to_datetime(seg_df["fecha"]).dt.strftime("%Y-%m-%d")
-            seg_df = seg_df.rename(columns={
-                "fecha": "Fecha", "estado": "Estado",
-                "comisiones": "Comisiones", "observacion": "Observación",
-            })
-            st.dataframe(seg_df, hide_index=True, use_container_width=True)
-
-        link_cols = st.columns(2)
-        if isinstance(row.get("Portal"), str):
-            link_cols[0].markdown(f"[Abrir expediente en el portal del Congreso →]({row['Portal']})")
-        if isinstance(row.get("PDF"), str):
-            link_cols[1].markdown(f"[Descargar PDF →]({row['PDF']})")
-
-        st.markdown('</div>', unsafe_allow_html=True)
 
 # ---------- Footer ----------
 st.markdown('<div class="footer-rule"></div>', unsafe_allow_html=True)
