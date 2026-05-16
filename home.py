@@ -53,19 +53,35 @@ section[data-testid="stSidebar"] [data-testid="stSidebarNav"] [aria-current="pag
   background-color: rgba(255,255,255,0.10) !important;
 }
 
-/* Material Symbols: forzar carga */
-@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=block');
-[class*="material-symbols"] {
-  font-family: 'Material Symbols Rounded' !important;
-  font-variation-settings: 'opsz' 24;
-  font-weight: normal !important;
-  font-style: normal !important;
-  letter-spacing: normal !important;
-  display: inline-block;
-  white-space: nowrap;
-  direction: ltr;
-  -webkit-font-feature-settings: 'liga';
-  -webkit-font-smoothing: antialiased;
+/* Ocultar texto de Material Symbols (keyboard_double_arrow_left,
+   expand_more, etc.) que aparece cuando la fuente no carga */
+[data-testid="stSidebarHeader"] button,
+[data-testid="stSidebarHeader"] button *,
+button[data-testid="stExpandSidebarButton"],
+button[data-testid="stExpandSidebarButton"] *,
+button[data-testid="stSidebarCollapsedControl"],
+button[data-testid="stSidebarCollapsedControl"] *,
+button[kind="header"],
+button[kind="header"] * {
+  font-size: 0 !important;
+  color: transparent !important;
+  line-height: 0 !important;
+}
+[data-testid="stSidebarHeader"] button::before,
+button[data-testid="stExpandSidebarButton"]::before,
+button[kind="header"]::before {
+  content: "‹" !important;
+  font-size: 18px !important;
+  color: #FFFFFF !important;
+  display: inline-block !important;
+  line-height: 1 !important;
+  font-family: 'Inter', sans-serif !important;
+}
+[data-testid="stSidebarNav"] span[class*="icon"]:not([class*="material-symbols"]),
+[data-testid="stSidebar"] [class*="material-symbols"]:empty,
+[data-testid="stSidebar"] [class*="material-icons"]:empty {
+  font-size: 0 !important;
+  color: transparent !important;
 }
 
 /* === Logo Vali: GRANDE y centrado === */
