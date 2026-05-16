@@ -46,13 +46,8 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-# Logo Vali arriba del sidebar (Streamlit lo posiciona automáticamente).
-_logo_path = Path(__file__).resolve().parent.parent / "assets" / "vali_logo.svg"
-if _logo_path.exists():
-    try:
-        st.logo(str(_logo_path), size="large")
-    except Exception:
-        pass  # Streamlit < 1.35 no tiene st.logo; ignorar.
+# El logo Vali se setea desde app.py (entrada de navegación). No hace falta
+# repetir st.logo() en cada página.
 
 # ====================== CSS estilo datadaf ======================
 st.markdown(
@@ -79,12 +74,37 @@ st.markdown(
 
     .stApp { background-color: var(--bg); }
 
+    /* Sidebar con borde derecho navy Vali (3px) */
     section[data-testid="stSidebar"] {
       background-color: var(--bg-soft);
-      border-right: 1px solid var(--line);
+      border-right: 3px solid var(--ink) !important;
     }
     section[data-testid="stSidebar"] * {
       font-family: 'Inter', sans-serif !important;
+    }
+
+    /* Ocultar el texto "keyboard_double_arrow_left" que filtra del icono
+       Material cuando la fuente no carga a tiempo */
+    button[data-testid="stExpandSidebarButton"] span,
+    button[data-testid="stSidebarCollapsedControl"] span,
+    [data-testid="stBaseButton-header"] span {
+      font-size: 0 !important;
+    }
+
+    /* Logo Vali más grande y centrado en el tope del sidebar */
+    [data-testid="stLogo"],
+    [data-testid="stSidebarHeader"] [data-testid="stLogo"] {
+      max-height: 80px !important;
+      height: auto !important;
+      width: auto !important;
+      max-width: 180px !important;
+      margin: 8px auto 16px auto !important;
+      display: block !important;
+    }
+    [data-testid="stLogo"] img {
+      max-height: 80px !important;
+      height: 80px !important;
+      width: auto !important;
     }
 
     /* Reduce padding superior */
@@ -112,12 +132,18 @@ st.markdown(
       margin: 0 0 10px 0;
     }
     .country-title .accent { color: var(--accent); }
-    .country-subtitle {
-      font-size: 1.05rem;
+    .country-title .period {
+      font-weight: 500;
       color: var(--ink-soft);
-      max-width: 640px;
-      line-height: 1.55;
-      margin-bottom: 32px;
+      font-size: 0.7em;
+      letter-spacing: -0.01em;
+    }
+    .country-subtitle {
+      font-size: 1.15rem;
+      color: var(--ink-soft);
+      /* full-width, alineado al ancho del contenedor / tabla */
+      line-height: 1.6;
+      margin-bottom: 36px;
     }
 
     /* === KPIs === */
@@ -147,13 +173,14 @@ st.markdown(
     /* === Section titles === */
     h2, h3 { font-weight: 800; color: var(--ink); letter-spacing: -0.01em; }
 
-    /* === Filtros: labels en uppercase chiquito === */
+    /* === Filtros: labels centrados, uppercase chiquito === */
     label[data-testid="stWidgetLabel"] p {
       font-size: 10px !important;
       text-transform: uppercase;
       letter-spacing: 0.18em;
       font-weight: 700;
       color: var(--ink-soft);
+      text-align: center;
     }
 
     /* === Tabla === */
@@ -162,14 +189,20 @@ st.markdown(
       border-radius: 12px;
       overflow: hidden;
     }
-    div[data-testid="stDataFrame"] thead th {
-      background-color: var(--bg-soft) !important;
+    /* Header de tabla: fondo navy Vali + letras blancas */
+    div[data-testid="stDataFrame"] thead th,
+    div[data-testid="stDataFrame"] [role="columnheader"] {
+      background-color: var(--ink) !important;
       text-transform: uppercase;
       letter-spacing: 0.06em;
       font-size: 11px !important;
       font-weight: 700 !important;
-      color: var(--ink-soft) !important;
-      border-bottom: 2px solid var(--line) !important;
+      color: #FFFFFF !important;
+      border-bottom: 2px solid var(--ink) !important;
+    }
+    div[data-testid="stDataFrame"] thead th *,
+    div[data-testid="stDataFrame"] [role="columnheader"] * {
+      color: #FFFFFF !important;
     }
     div[data-testid="stDataFrame"] tbody td {
       font-size: 13px;
@@ -460,7 +493,7 @@ def _fmt_ago(mins: float | None) -> str:
 
 st.markdown('<div class="country-eyebrow">Radar Legislativo</div>', unsafe_allow_html=True)
 st.markdown(
-    '<h1 class="country-title"><span class="accent">Perú</span> · Congreso de la República</h1>',
+    '<h1 class="country-title"><span class="accent">Perú</span> · Congreso de la República <span class="period">(2021–2026)</span></h1>',
     unsafe_allow_html=True,
 )
 st.markdown(
