@@ -32,33 +32,58 @@ html, body, [class*="css"], .stApp {
   color: var(--ink);
   background-color: var(--bg);
 }
+/* === Sidebar navy + texto blanco === */
 section[data-testid="stSidebar"] {
-  background-color: var(--bg-soft);
-  border-right: 3px solid var(--ink) !important;
+  background-color: var(--ink) !important;
+  border-right: 0 !important;
 }
-section[data-testid="stSidebar"] * { font-family: 'Inter', sans-serif !important; }
-
-/* Hide "keyboard_double_arrow_left" Material icon text leak */
-button[data-testid="stExpandSidebarButton"] span,
-button[data-testid="stSidebarCollapsedControl"] span,
-[data-testid="stBaseButton-header"] span {
-  font-size: 0 !important;
+section[data-testid="stSidebar"] *,
+section[data-testid="stSidebar"] a,
+section[data-testid="stSidebar"] p,
+section[data-testid="stSidebar"] h1, section[data-testid="stSidebar"] h2,
+section[data-testid="stSidebar"] h3, section[data-testid="stSidebar"] label,
+section[data-testid="stSidebar"] span {
+  color: #FFFFFF !important;
+  font-family: 'Inter', sans-serif !important;
+}
+section[data-testid="stSidebar"] [data-testid="stSidebarNav"] a:hover {
+  background-color: rgba(255,255,255,0.06) !important;
+}
+section[data-testid="stSidebar"] [data-testid="stSidebarNav"] [aria-current="page"] {
+  background-color: rgba(255,255,255,0.10) !important;
 }
 
-/* Logo Vali más grande y centrado en el tope del sidebar */
-[data-testid="stLogo"],
-[data-testid="stSidebarHeader"] [data-testid="stLogo"] {
-  max-height: 80px !important;
-  height: auto !important;
-  width: auto !important;
-  max-width: 180px !important;
-  margin: 8px auto 16px auto !important;
+/* Material Symbols: forzar carga */
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=block');
+[class*="material-symbols"] {
+  font-family: 'Material Symbols Rounded' !important;
+  font-variation-settings: 'opsz' 24;
+  font-weight: normal !important;
+  font-style: normal !important;
+  letter-spacing: normal !important;
+  display: inline-block;
+  white-space: nowrap;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+}
+
+/* === Logo Vali: GRANDE y centrado === */
+[data-testid="stSidebarHeader"] {
+  padding-top: 16px !important;
+  padding-bottom: 12px !important;
+  display: flex !important;
+  justify-content: center !important;
+}
+[data-testid="stLogo"] {
+  margin: 0 auto !important;
   display: block !important;
 }
 [data-testid="stLogo"] img {
-  max-height: 80px !important;
-  height: 80px !important;
+  max-height: 120px !important;
+  height: 120px !important;
   width: auto !important;
+  max-width: 160px !important;
 }
 
 .block-container { padding-top: 5vh; padding-bottom: 4rem; max-width: 1100px; }
