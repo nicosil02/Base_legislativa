@@ -17,18 +17,34 @@ import streamlit.components.v1 as components
 
 
 # ── Logo Vali ────────────────────────────────────────────────────────────────
-# Estrategia: inyectar el SVG como background-image del header del sidebar.
+# Estrategia: inyectar la imagen como background-image del header del sidebar.
 # NO llamamos a st.logo() porque internamente genera un <img> de ~44 px que
-# Streamlit no deja sobreescribir por CSS y se veía superpuesto al fondo
-# (logo grande + "vali" chiquito encima). Con solo background-image tenemos
-# control total del tamaño y no hay imagen duplicada.
-_logo_path = Path(__file__).resolve().parent / "assets" / "vali_logo.svg"
+# Streamlit no deja sobreescribir por CSS y se veía superpuesto al fondo.
+# Aceptamos cualquiera de estos formatos en assets/, en orden de prioridad:
+#   vali_logo.png, vali_logo.jpg, vali_logo.jpeg, vali_logo.webp, vali_logo.svg
+# Así podés dropear el logo oficial (PNG) en assets/ sin tocar el código.
+_ASSETS = Path(__file__).resolve().parent / "assets"
+_MIME = {
+    ".png": "image/png",
+    ".jpg": "image/jpeg",
+    ".jpeg": "image/jpeg",
+    ".webp": "image/webp",
+    ".svg": "image/svg+xml",
+}
+_logo_path = None
+for _ext in (".png", ".jpg", ".jpeg", ".webp", ".svg"):
+    _candidate = _ASSETS / f"vali_logo{_ext}"
+    if _candidate.exists():
+        _logo_path = _candidate
+        break
+
 _logo_css_extra = ""
-if _logo_path.exists():
+if _logo_path is not None:
     try:
         _b64 = base64.b64encode(_logo_path.read_bytes()).decode()
+        _mime = _MIME[_logo_path.suffix.lower()]
         _logo_css_extra = (
-            f'background-image: url("data:image/svg+xml;base64,{_b64}") !important;'
+            f'background-image: url("data:{_mime};base64,{_b64}") !important;'
         )
     except Exception:
         pass
@@ -46,20 +62,23 @@ st.markdown(
 @import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,300..700,0..1,-50..200&display=block");
 @import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,300..700,0..1,-50..200&display=block");
 
-/* ── Logo: fondo SVG centrado en el header del sidebar ── */
+/* ── Logo: fondo (PNG/SVG) centrado en el header del sidebar ──
+   background-size: contain preserva la proporción de la imagen original
+   sin importar si es cuadrada (SVG) o rectangular (logo oficial PNG). */
 [data-testid="stSidebarHeader"] {{
   {_logo_css_extra}
-  background-size: 180px 180px !important;
+  background-size: contain !important;
   background-repeat: no-repeat !important;
   background-position: center center !important;
   height: 230px !important;
   min-height: 230px !important;
   max-height: 230px !important;
   background-color: #0A294D !important;
-  padding: 0 !important;
+  padding: 25px !important;
   margin: 0 !important;
   display: block !important;
   overflow: hidden !important;
+  box-sizing: border-box !important;
 }}
 /* Ocultar CUALQUIER <img> o <a> residual dentro del header del sidebar
    (st.logo() podría seguir generándolos en alguna versión). El background
