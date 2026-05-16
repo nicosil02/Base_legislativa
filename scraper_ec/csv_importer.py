@@ -13,6 +13,10 @@ Columnas (separadas por ';', valores entre comillas, nulls como 'null'):
   7. Comisión asignada          (texto, "No Asignado" si no hay)
   8. Fecha Calificación CAL     (YYYY-MM-DD o 'null')
   9. Proponentes                ("NAME1(TIPO1)/ NAME2(TIPO2)/ ...")
+
+Incluye también un diccionario `COMISION_TYPOS` para corregir errores
+ortográficos conocidos en el campo `Comisión asignada` del portal oficial.
+Se aplica automáticamente al importar.
 """
 from __future__ import annotations
 
@@ -20,6 +24,24 @@ import csv
 import re
 from pathlib import Path
 from typing import Iterator
+
+
+# Correcciones a errores ortográficos conocidos del portal oficial.
+# Las claves son los strings TAL CUAL aparecen en el CSV; los valores son la
+# versión corregida que se persiste en la DB. Agregar entradas nuevas a
+# medida que aparezcan typos.
+COMISION_TYPOS: dict[str, str] = {
+    "Comisión de Bodiversidad y Recursos Naturales":
+        "Comisión de Biodiversidad y Recursos Naturales",
+}
+
+
+def fix_comision_typo(nombre: str | None) -> str | None:
+    """Aplica COMISION_TYPOS si el nombre matchea exacto. Caso contrario,
+    devuelve el nombre sin cambios."""
+    if not nombre:
+        return nombre
+    return COMISION_TYPOS.get(nombre, nombre)
 
 
 # Mapeo de header del CSV → key interno usado por db.upsert_from_csv_row
@@ -124,6 +146,9 @@ def iter_rows(csv_path: str | Path) -> Iterator[dict]:
             if not row.get("fec_presentacion"):
                 continue
             row.setdefault("estado", "PROYECTO PRESENTADO")
+
+            # Aplicar correcciones de typos conocidos del portal
+            row["comision_asignada"] = fix_comision_typo(row.get("comision_asignada"))
 
             # Split proponentes
             propon = parse_proponentes(row.get("proponentes_raw"))

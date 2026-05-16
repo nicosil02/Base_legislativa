@@ -297,6 +297,13 @@ def last_sync() -> dict | None:
     return dict(r) if r else None
 
 
+# URL pública del portal Ppless v2 — no soporta deep-link al detalle por N. Trámite
+# (es un SPA Angular que abre el detalle en un modal sin cambiar la URL). El
+# usuario tiene que pegar el N. Trámite en el filtro del portal para abrir
+# los documentos. Documentamos eso en el tooltip de la columna.
+PPLESS_URL = "https://proyectosdeley.asambleanacional.gob.ec/report"
+
+
 @st.cache_data(ttl=60)
 def load_proyectos(fec_inicio: dt.date | None, fec_fin: dt.date | None) -> pd.DataFrame:
     conn = get_conn()
@@ -477,7 +484,12 @@ df_view = df.copy()
 df_view["Proponente principal"] = (
     df_view["Proponentes"].astype(str).str.split("/").str[0].str.strip()
 )
-COLS_VISIBLES = ["N. Trámite", "Título", "Presentado", "Estado",
+# La columna "N. Trámite" se renderiza como LinkColumn: muestra el número y
+# clickea al portal Ppless v2. Como el portal no acepta deep link al detalle,
+# guardamos el número en `display_text` y la URL es siempre la misma página.
+# El usuario abre el portal y pega el N. Trámite en el filtro "Nro. Trámite".
+df_view["_link"] = PPLESS_URL + "?n=" + df_view["N. Trámite"].astype(str)
+COLS_VISIBLES = ["_link", "Título", "Presentado", "Estado",
                  "Tipo proponente", "Proponente principal", "Comisión", "Tema"]
 df_view = df_view[[c for c in COLS_VISIBLES if c in df_view.columns]]
 
@@ -502,7 +514,16 @@ st.dataframe(
     height=720,
     row_height=160,
     column_config={
-        "N. Trámite":          st.column_config.TextColumn("N. Trámite", width="small", pinned=True),
+        "_link":               st.column_config.LinkColumn(
+            "N. Trámite",
+            display_text=r"\?n=(.+)$",   # extrae el N. Trámite del URL para mostrar
+            width="small",
+            pinned=True,
+            help=("Click abre el portal Ppless v2 de la Asamblea. El portal NO "
+                  "soporta deep-link al detalle, así que pegá el N. Trámite "
+                  "en el filtro 'Nro. Trámite' del portal para abrir los "
+                  "documentos del proyecto."),
+        ),
         "Título":              st.column_config.TextColumn("Título", width="medium"),
         "Presentado":          st.column_config.TextColumn("Presentado", width="small"),
         "Estado":              st.column_config.TextColumn("Estado", width="small"),

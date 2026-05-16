@@ -41,6 +41,13 @@ EXTRA_EC: dict[str, list[str]] = {
         "trabajadores ecuatorianos", "iess afiliacion", "afiliados al iess",
         "decimo tercero", "decimo cuarto", "fondo de reserva",
         "mandato constituyente 8", "mandato 8",
+        # Términos descubiertos sampleando "Otros" en la data real
+        "secap", "capacitacion profesional", "licencia por calamidad",
+        "licencia de maternidad", "licencia de paternidad",
+        "licencia por embarazo", "lactancia, maternidad",
+        "regimen del servicio publico", "servidores publicos",
+        "estabilidad laboral", "salario digno", "salario basico",
+        "afiliacion al seguro social",
     ],
     "Salud": [
         "iess", "msp", "ministerio de salud publica",
@@ -89,6 +96,16 @@ EXTRA_EC: dict[str, list[str]] = {
         "maate", "ministerio del ambiente",
         "registro forestal", "ley organica de recursos hidricos",
         "lorh", "sistema nacional de areas protegidas", "snap",
+        # Patterns ecuatorianos descubiertos: naturaleza/biodiversidad
+        "biodiversidad", "biodiversid",
+        "derechos de la naturaleza", "naturaleza frente",
+        "actividades extractivistas", "actividades extractivas",
+        "extractivismo", "extractivism",
+        "recursos naturales", "recursos hidricos",
+        "ecosistema", "ecosistem",
+        "patrimonio natural", "areas protegidas",
+        "cambio climatico", "deforestacion",
+        "fauna silvestre", "vida silvestre",
     ],
     "Telecomunicaciones": [
         "arcotel", "agencia de regulacion y control de las telecomunicaciones",
@@ -99,6 +116,14 @@ EXTRA_EC: dict[str, list[str]] = {
         "ant ", "agencia nacional de transito",
         "comision de transito del ecuador", "cte",
         "ley organica de transporte terrestre", "lottts",
+        "aeronaves no tripuladas", "vehiculos no tripulados",
+        "dron ", "drones",
+    ],
+    "Inmobiliario": [
+        # Patterns ecuatorianos descubiertos en "Otros"
+        "propiedad horizontal", "ley de propiedad horizontal",
+        "inquilinato", "arrendamiento de", "arrendatario",
+        "ley de inquilinato", "registro de la propiedad",
     ],
     "Consumo masivo": [
         "ley organica de defensa del consumidor",
@@ -119,6 +144,9 @@ EXTRA_EC: dict[str, list[str]] = {
         "comypes", "ley organica de economia popular y solidaria",
         "loeps", "seps", "superintendencia de economia popular",
         "fondo de garantia mype",
+        "economia popular y solidaria",
+        "emprendimiento", "emprendedor", "emprendimi",
+        "asociatividad", "microempresa",
     ],
     "Saneamiento": [
         "senagua", "agencia de regulacion y control del agua",
