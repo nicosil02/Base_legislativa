@@ -5,6 +5,7 @@ __pycache__/
 *.db-wal
 *.db-shm
 proyectos.json
+proyectos_ec.json
 .venv/
 venv/
 .env

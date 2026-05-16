@@ -201,17 +201,23 @@ footer { visibility: hidden; }
 
 
 # ====================== Helpers ======================
-def _find_db_path() -> Path | None:
+def _find_db_file(filename: str) -> Path | None:
+    """Busca un archivo SQLite en varias ubicaciones razonables (repo root,
+    CWD, ancestros). Funciona para `proyectos.db` y `proyectos_ec.db`."""
     here = Path(__file__).resolve().parent
-    candidates = [here / "proyectos.db", Path.cwd() / "proyectos.db"]
+    candidates = [here / filename, Path.cwd() / filename]
     cur = here
     for _ in range(5):
-        candidates.append(cur / "proyectos.db")
+        candidates.append(cur / filename)
         cur = cur.parent
     for p in candidates:
         if p.exists() and p.is_file() and p.stat().st_size > 0:
             return p.resolve()
     return None
+
+
+def _find_db_path() -> Path | None:
+    return _find_db_file("proyectos.db")
 
 
 @st.cache_data(ttl=60)
@@ -234,6 +240,25 @@ def stats_peru() -> dict:
         return {"total": None, "leyes": None}
 
 
+@st.cache_data(ttl=60)
+def stats_ecuador() -> dict:
+    db = _find_db_file("proyectos_ec.db")
+    if db is None:
+        return {"total": None, "publicados": None}
+    try:
+        conn = sqlite3.connect(f"file:{db}?mode=ro", uri=True)
+        try:
+            total = conn.execute("SELECT COUNT(*) FROM proyectos").fetchone()[0]
+            publicados = conn.execute(
+                "SELECT COUNT(*) FROM proyectos WHERE UPPER(estado) = 'REGISTRO OFICIAL'"
+            ).fetchone()[0]
+            return {"total": total, "publicados": publicados}
+        finally:
+            conn.close()
+    except Exception:
+        return {"total": None, "publicados": None}
+
+
 # ====================== UI ======================
 
 st.markdown('<div class="home-eyebrow">Monitoreo legislativo</div>', unsafe_allow_html=True)
@@ -252,6 +277,10 @@ st.markdown(
 s = stats_peru()
 total_pe = f"{s['total']:,}" if s["total"] is not None else "—"
 leyes_pe = f"{s['leyes']:,}" if s["leyes"] is not None else "—"
+
+s_ec = stats_ecuador()
+total_ec = f"{s_ec['total']:,}" if s_ec["total"] is not None else "—"
+publicados_ec = f"{s_ec['publicados']:,}" if s_ec["publicados"] is not None else "—"
 
 st.markdown('<div class="section-label">Países</div>', unsafe_allow_html=True)
 cols = st.columns([1, 1, 1])
@@ -282,24 +311,28 @@ with cols[0]:
         unsafe_allow_html=True,
     )
 
-# Ecuador — placeholder (no clickeable)
+# Ecuador — operativo, card es un link <a> clickeable
 with cols[1]:
     st.markdown(
-        """
-        <div class="country-card soon">
+        f"""
+        <a href="/ecuador" target="_self" class="country-card">
             <div class="country-header">
                 <div class="flag">🇪🇨</div>
                 <div class="name">Ecuador</div>
             </div>
-            <div class="institution">Asamblea Nacional</div>
+            <div class="institution">Asamblea Nacional · Período 2025–2029</div>
             <div class="stats">
                 <div>
-                    <div class="stat-num">—</div>
-                    <div class="stat-label">Próximamente</div>
+                    <div class="stat-num">{total_ec}</div>
+                    <div class="stat-label">Proyectos</div>
+                </div>
+                <div>
+                    <div class="stat-num">{publicados_ec}</div>
+                    <div class="stat-label">Reg. Oficial</div>
                 </div>
             </div>
-            <div class="cta">Disponible pronto</div>
-        </div>
+            <div class="cta">Ver dashboard ↗</div>
+        </a>
         """,
         unsafe_allow_html=True,
     )
