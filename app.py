@@ -33,6 +33,65 @@ if _logo_path is not None:
         pass
 
 
+# ─── CSS adicional: logo más grande + ocultar texto de íconos Material ─────
+# Aplica en todas las páginas (app.py se ejecuta antes de cada st.Page).
+# Mínimo, defensivo, sin @import ni :has() ni JS — para no romper nada.
+st.markdown(
+    """<style>
+/* Logo grande: forzar el <img> generado por st.logo() a ~140px de alto.
+   Streamlit le aplica un max-height chico por default; lo sobreescribimos. */
+[data-testid="stSidebarHeader"] {
+    min-height: 180px !important;
+    padding: 20px 16px !important;
+    background-color: #0A294D !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+[data-testid="stSidebarHeader"] [data-testid="stLogo"],
+[data-testid="stSidebarHeader"] a[data-testid="stLogo"] {
+    margin: 0 auto !important;
+    display: block !important;
+    max-width: 100% !important;
+}
+[data-testid="stSidebarHeader"] [data-testid="stLogo"] img,
+[data-testid="stSidebarHeader"] img {
+    max-height: 140px !important;
+    height: 140px !important;
+    width: auto !important;
+    max-width: 100% !important;
+    object-fit: contain !important;
+}
+
+/* Ocultar el texto crudo "expand_more" / "keyboard_double_arrow_left" / etc.
+   que aparece cuando la fuente Material Symbols Rounded de Streamlit no
+   carga. Atacamos por clase + por aria-hidden + por posición en el DOM
+   (último span dentro de un toggle expandible de la nav). */
+[data-testid="stSidebar"] [class*="material-symbols"],
+[data-testid="stSidebar"] [class*="material-icons"],
+[data-testid="stSidebar"] [class*="MaterialSymbols"],
+[data-testid="stSidebar"] [class*="MaterialIcons"],
+[data-testid="stSidebar"] span.material-symbols-rounded,
+[data-testid="stSidebar"] span.material-symbols-outlined,
+[data-testid="stSidebar"] span.material-icons-round,
+[data-testid="stSidebar"] [aria-hidden="true"]:not([class*="emoji"]):not([class*="flag"]),
+[data-testid="stSidebarNav"] [aria-expanded] > span:last-child,
+[data-testid="stSidebarNav"] button[aria-expanded] span:last-child,
+[data-testid="stSidebarNav"] [role="button"] > span:last-child {
+    font-size: 0 !important;
+    line-height: 0 !important;
+    color: transparent !important;
+    visibility: hidden !important;
+    width: 0 !important;
+    height: 0 !important;
+    overflow: hidden !important;
+    opacity: 0 !important;
+}
+</style>""",
+    unsafe_allow_html=True,
+)
+
+
 # Definir páginas explícitamente. Esto deshabilita la auto-detección de
 # `pages/` y nos da control total sobre los nombres en el sidebar.
 home = st.Page(
