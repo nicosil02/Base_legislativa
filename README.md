@@ -1,8 +1,9 @@
-# Base Legislativa — Proyectos de Ley del Congreso del Perú
+# Radar Legislativo
 
-Base de datos local de los proyectos de ley del período 2021-2026, con clasificación
-temática híbrida (etiquetas manuales del Excel + reglas para Tecnología/Farma) y un
-dashboard Streamlit para explorarla.
+Plataforma de monitoreo legislativo. Hoy cubre **Perú** (Congreso de la República,
+período 2021–2026). Diseñada como app multi-país: cada país vive en su propia página
+bajo `pages/`. Frontend en Streamlit con estética editorial-data (similar a datadaf.com),
+backend en SQLite alimentado por scraping del API oficial.
 
 ## Setup inicial
 
@@ -60,12 +61,16 @@ git push
 python -m streamlit run app.py
 ```
 
-Tema claro institucional. Layout:
+App multi-página con estética editorial-data (tipografía Inter, peso 900, acentos azules `#2563EB`).
 
-- **KPIs** arriba: Total, Presentados, En comisión, Con dictamen, Autógrafas, Ley publicada (matchea `PUBLIC...PERUANO` y variantes).
-- **Tabla AgGrid** central con **filtros multi-select por columna en el header** (click en el ícono ☰): Tema, Estado, Partido, Proponente, Comisión, Autor(es), Título. Sortable, resizable, paginada. Columnas Portal y PDF como links directos.
-- **Sidebar**: selector de **rango de fechas** (presentación) + panel **Sync** con info del último run y botón "Actualizar ahora".
-- **Comisiones**: el filtro muestra solo las **24 ordinarias** + un grupo único **"Comisiones Especiales"** que agrupa todo lo demás (especiales, subcomisiones, typos del catálogo del API). El mapeo Ordinaria/Especial vive en `scraper/comisiones_ordinarias.py` y se aplica vía la columna `comisiones.tipo` en SQLite.
+- **Home (`/`)** — `app.py`. Title "Radar Legislativo" + grid de países: 🇵🇪 Perú operativo, 🇨🇴 Colombia y 🇪🇨 Ecuador como placeholders. Cards con bordes sutiles que en hover destacan en azul.
+- **Perú (`/Peru`)** — `pages/1_Peru.py`. Dashboard con:
+  - **KPIs**: Total, Presentados, En comisión, Con dictamen, Autógrafas, Ley publicada (matchea `PUBLIC...PERUANO` y variantes).
+  - **Filtros**: PL (text), Tema, Estado, Comisión, Partido, Proponente (todos selectbox single-select con "Todos" por defecto) + búsqueda libre por título / autor.
+  - **Tabla `st.dataframe` con 6 columnas** que entran sin scroll horizontal: PL, Título, Presentado, Estado, Tema, Comisión (princ.). Click en headers para ordenar.
+  - **Panel de detalle** al hacer click en una fila: PL + título completo, metadata grid (Estado, Tema, Partido, Proponente, Presentado, Último cambio), todas las comisiones asignadas, sumilla, autores completos, historial de cambios, links Portal y PDF.
+  - **Sidebar**: rango de fechas (date range picker) + panel Sync con último run y botón "Actualizar ahora".
+- **Comisiones**: el filtro muestra solo las **24 ordinarias** + un grupo único **"Comisiones Especiales"** que agrupa el resto (especiales, subcomisiones, typos del catálogo). El mapeo está en `scraper/comisiones_ordinarias.py`.
 
 Caching de queries 60s. Para refrescar manualmente: `C` o `R` en la página.
 
