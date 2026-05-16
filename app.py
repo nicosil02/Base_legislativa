@@ -65,8 +65,7 @@ st.markdown(
 
 /* Ocultar el texto crudo "expand_more" / "keyboard_double_arrow_left" / etc.
    que aparece cuando la fuente Material Symbols Rounded de Streamlit no
-   carga. Atacamos por clase + por aria-hidden + por posición en el DOM
-   (último span dentro de un toggle expandible de la nav). */
+   carga. Selectores múltiples para cubrir todas las versiones de DOM. */
 [data-testid="stSidebar"] [class*="material-symbols"],
 [data-testid="stSidebar"] [class*="material-icons"],
 [data-testid="stSidebar"] [class*="MaterialSymbols"],
@@ -75,9 +74,18 @@ st.markdown(
 [data-testid="stSidebar"] span.material-symbols-outlined,
 [data-testid="stSidebar"] span.material-icons-round,
 [data-testid="stSidebar"] [aria-hidden="true"]:not([class*="emoji"]):not([class*="flag"]),
+/* Por inline style: a veces Streamlit setea font-family directamente */
+[data-testid="stSidebar"] [style*="Material Symbols"],
+[data-testid="stSidebar"] [style*="material-symbols"],
+[data-testid="stSidebar"] [style*="Material Icons"],
+/* Por posición DOM: el ícono toggle suele ser el último hijo de un expander */
 [data-testid="stSidebarNav"] [aria-expanded] > span:last-child,
-[data-testid="stSidebarNav"] button[aria-expanded] span:last-child,
-[data-testid="stSidebarNav"] [role="button"] > span:last-child {
+[data-testid="stSidebarNav"] [aria-expanded] > div:last-child,
+[data-testid="stSidebarNav"] button[aria-expanded] > span:last-child,
+[data-testid="stSidebarNav"] [role="button"] > span:last-child,
+/* Específicamente nav section headers (Streamlit moderno) */
+[data-testid="stSidebarNav"] li > div > span:last-child,
+[data-testid="stSidebarNav"] [data-testid*="stSidebarNavSection"] span:last-child {
     font-size: 0 !important;
     line-height: 0 !important;
     color: transparent !important;
@@ -86,6 +94,27 @@ st.markdown(
     height: 0 !important;
     overflow: hidden !important;
     opacity: 0 !important;
+}
+
+/* ─── Transición suave entre páginas ─────────────────────────────────────
+   Fade-in del contenedor principal cuando se navega entre páginas.
+   Streamlit re-renderiza todo el main al cambiar de página, así que
+   esta animación dispara en cada navegación. Sutil, 220ms, sin distraer. */
+[data-testid="stMain"] .block-container,
+section[data-testid="stMain"] > div {
+    animation: pageFadeIn 220ms ease-out;
+}
+@keyframes pageFadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Hover sutil sobre los links del sidebar nav (feedback antes del click) */
+[data-testid="stSidebarNav"] a {
+    transition: background-color 150ms ease-out, padding-left 150ms ease-out !important;
+}
+[data-testid="stSidebarNav"] a:hover {
+    padding-left: 18px !important;
 }
 </style>""",
     unsafe_allow_html=True,
