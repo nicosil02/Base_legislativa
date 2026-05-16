@@ -196,6 +196,47 @@ def cmd_fix_typos(args) -> int:
     return 0
 
 
+def cmd_enriquecer_documentos(args) -> int:
+    """Itera proyectos abriendo el modal de detalle vía Playwright para
+    capturar los URLs de PDFs."""
+    try:
+        from scraper_ec.playwright_detail import enrich_documentos
+    except ImportError:
+        print("Falta playwright. Instalá con: pip install playwright && python -m playwright install chromium")
+        return 1
+
+    db = _db(args)
+    try:
+        # Lista de N. Trámite a enriquecer
+        sql = "SELECT n_tramite FROM proyectos"
+        params: list = []
+        if args.estado:
+            sql += " WHERE estado = ?"
+            params.append(args.estado)
+        sql += " ORDER BY fec_presentacion DESC"
+        if args.limit:
+            sql += f" LIMIT {int(args.limit)}"
+        n_tramites = [r["n_tramite"] for r in db.conn.execute(sql, params).fetchall()]
+
+        def progress(ntr, idx, total):
+            print(f"[{idx}/{total}] {ntr}")
+
+        stats = enrich_documentos(
+            db,
+            n_tramites=n_tramites,
+            headless=not args.no_headless,
+            skip_with_docs=not args.force,
+            on_progress=progress,
+            sleep_between_ms=args.sleep_ms,
+        )
+        print("\nResumen:")
+        for k, v in stats.items():
+            print(f"  {k:<14} {v}")
+    finally:
+        db.close()
+    return 0
+
+
 def cmd_recategorizar(args) -> int:
     db = _db(args)
     try:
@@ -260,6 +301,20 @@ def main(argv: list[str] | None = None) -> int:
     s.set_defaults(func=cmd_show)
 
     sub.add_parser("fix-typos", help="Corrige typos conocidos en comisiones (ej: 'Bodiversidad')").set_defaults(func=cmd_fix_typos)
+
+    s = sub.add_parser(
+        "enriquecer-documentos",
+        help="Captura URLs de PDFs por proyecto via Playwright (browser headless).",
+    )
+    s.add_argument("--limit", type=int, default=None, help="Limitar a N proyectos (para testing)")
+    s.add_argument("--estado", help="Solo proyectos con este estado")
+    s.add_argument("--force", action="store_true",
+                   help="Re-enriquecer incluso proyectos con docs ya capturados")
+    s.add_argument("--no-headless", action="store_true",
+                   help="Mostrar el browser (debug). Default: headless")
+    s.add_argument("--sleep-ms", type=int, default=1000,
+                   help="Pausa entre proyectos (ms). Default 1000.")
+    s.set_defaults(func=cmd_enriquecer_documentos)
 
     sub.add_parser("recategorizar", help="Re-clasifica temas no marcados como manuales").set_defaults(func=cmd_recategorizar)
 

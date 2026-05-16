@@ -307,26 +307,34 @@ PPLESS_URL = "https://proyectosdeley.asambleanacional.gob.ec/report"
 @st.cache_data(ttl=60)
 def load_proyectos(fec_inicio: dt.date | None, fec_fin: dt.date | None) -> pd.DataFrame:
     conn = get_conn()
+    # LEFT JOIN con documentos: traemos la URL del PDF principal (el de menor
+    # orden) y el conteo total de documentos. Si el proyecto no tiene docs en
+    # la tabla (porque enriquecer-documentos no se corrió), pdf_url queda NULL.
     sql = """
-      SELECT n_tramite AS "N. Trámite",
-             titulo AS "Título",
-             date(fec_presentacion) AS "Presentado",
-             date(last_changed_at) AS "Último cambio",
-             estado AS "Estado",
-             COALESCE(NULLIF(tipo_proponente, ''), '—') AS "Tipo proponente",
-             COALESCE(NULLIF(proponentes_raw, ''), '—') AS "Proponentes",
-             COALESCE(NULLIF(comision_asignada, ''), 'No Asignado') AS "Comisión",
-             COALESCE(NULLIF(tema, ''), 'Otros') AS "Tema"
-      FROM proyectos
+      SELECT p.n_tramite AS "N. Trámite",
+             p.titulo AS "Título",
+             date(p.fec_presentacion) AS "Presentado",
+             date(p.last_changed_at) AS "Último cambio",
+             p.estado AS "Estado",
+             COALESCE(NULLIF(p.tipo_proponente, ''), '—') AS "Tipo proponente",
+             COALESCE(NULLIF(p.proponentes_raw, ''), '—') AS "Proponentes",
+             COALESCE(NULLIF(p.comision_asignada, ''), 'No Asignado') AS "Comisión",
+             COALESCE(NULLIF(p.tema, ''), 'Otros') AS "Tema",
+             (SELECT url FROM documentos
+                WHERE n_tramite = p.n_tramite
+                ORDER BY orden ASC LIMIT 1) AS "PDF",
+             (SELECT COUNT(*) FROM documentos
+                WHERE n_tramite = p.n_tramite) AS "_n_docs"
+      FROM proyectos p
     """
     where, params = [], []
     if fec_inicio:
-        where.append('date(fec_presentacion) >= ?'); params.append(fec_inicio.isoformat())
+        where.append('date(p.fec_presentacion) >= ?'); params.append(fec_inicio.isoformat())
     if fec_fin:
-        where.append('date(fec_presentacion) <= ?'); params.append(fec_fin.isoformat())
+        where.append('date(p.fec_presentacion) <= ?'); params.append(fec_fin.isoformat())
     if where:
         sql += " WHERE " + " AND ".join(where)
-    sql += " ORDER BY date(fec_presentacion) DESC, n_tramite DESC"
+    sql += " ORDER BY date(p.fec_presentacion) DESC, p.n_tramite DESC"
     return pd.read_sql_query(sql, conn, params=params)
 
 
@@ -489,8 +497,10 @@ df_view["Proponente principal"] = (
 # guardamos el número en `display_text` y la URL es siempre la misma página.
 # El usuario abre el portal y pega el N. Trámite en el filtro "Nro. Trámite".
 df_view["_link"] = PPLESS_URL + "?n=" + df_view["N. Trámite"].astype(str)
+# PDF column queda como URL directa al fileservice; LinkColumn se renderiza
+# con "📄" como display_text si hay URL, sino vacío.
 COLS_VISIBLES = ["_link", "Título", "Presentado", "Estado",
-                 "Tipo proponente", "Proponente principal", "Comisión", "Tema"]
+                 "Tipo proponente", "Proponente principal", "Comisión", "Tema", "PDF"]
 df_view = df_view[[c for c in COLS_VISIBLES if c in df_view.columns]]
 
 # CSS para wrap en celdas
@@ -531,6 +541,14 @@ st.dataframe(
         "Proponente principal": st.column_config.TextColumn("Proponente", width="small"),
         "Comisión":            st.column_config.TextColumn("Comisión", width="medium"),
         "Tema":                st.column_config.TextColumn("Tema", width="small"),
+        "PDF":                 st.column_config.LinkColumn(
+            "PDF",
+            display_text="📄 Descargar",
+            width="small",
+            help=("Link directo al PDF principal del proyecto. Si está vacío es "
+                  "porque el proyecto aún no fue enriquecido con "
+                  "`python -m scraper_ec.cli enriquecer-documentos`."),
+        ),
     },
 )
 

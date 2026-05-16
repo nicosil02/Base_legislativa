@@ -72,6 +72,22 @@ CREATE TABLE IF NOT EXISTS sync_runs (
   csv_source              TEXT,
   mensaje                 TEXT
 );
+
+-- Documentos / PDFs por proyecto. Se llena via Playwright (scraper_ec.playwright_detail)
+-- abriendo el modal "find_in_page" de cada proyecto en la SPA Ppless v2 y capturando
+-- las URLs de los blobs PDF que el frontend muestra como "attach_file".
+CREATE TABLE IF NOT EXISTS documentos (
+  id            INTEGER PRIMARY KEY AUTOINCREMENT,
+  n_tramite     TEXT NOT NULL,
+  fase          TEXT,                  -- "PROYECTO PRESENTADO", "INFORME NO VINCULANTE UTL", etc.
+  descripcion   TEXT,
+  url           TEXT NOT NULL,
+  orden         INTEGER NOT NULL DEFAULT 0,
+  captured_at   TEXT NOT NULL,
+  FOREIGN KEY (n_tramite) REFERENCES proyectos(n_tramite)
+);
+CREATE INDEX IF NOT EXISTS idx_docs_tramite ON documentos(n_tramite);
+CREATE UNIQUE INDEX IF NOT EXISTS uq_docs_tramite_url ON documentos(n_tramite, url);
 """
 
 
@@ -252,3 +268,36 @@ class Database:
 
     def count_proyectos(self) -> int:
         return self.conn.execute("SELECT COUNT(*) FROM proyectos").fetchone()[0]
+
+    # ---------- documentos (PDFs capturados via Playwright) ----------
+    def replace_documentos(self, n_tramite: str, docs: list[dict]) -> int:
+        """Reemplaza todos los documentos asociados al proyecto.
+
+        Args:
+            n_tramite: identificador del proyecto
+            docs: lista de {fase, descripcion, url} (orden = posición en la lista)
+        Returns:
+            Cantidad de documentos persistidos.
+        """
+        now = now_iso()
+        with self.tx() as c:
+            c.execute("DELETE FROM documentos WHERE n_tramite = ?", (n_tramite,))
+            for i, d in enumerate(docs):
+                url = d.get("url")
+                if not url:
+                    continue
+                c.execute(
+                    "INSERT OR IGNORE INTO documentos "
+                    "(n_tramite, fase, descripcion, url, orden, captured_at) "
+                    "VALUES (?,?,?,?,?,?)",
+                    (n_tramite, d.get("fase"), d.get("descripcion"), url, i, now),
+                )
+        return len(docs)
+
+    def get_url_principal(self, n_tramite: str) -> str | None:
+        """Devuelve la URL del PDF principal (primer documento por orden)."""
+        r = self.conn.execute(
+            "SELECT url FROM documentos WHERE n_tramite = ? ORDER BY orden ASC LIMIT 1",
+            (n_tramite,),
+        ).fetchone()
+        return r["url"] if r else None
