@@ -53,11 +53,63 @@ section[data-testid="stSidebar"] [data-testid="stSidebarNav"] [aria-current="pag
   background-color: rgba(255,255,255,0.10) !important;
 }
 
-/* Logo y íconos del sidebar (Material Symbols + collapse buttons) gestionados
-   globalmente desde app.py. NO duplicamos esas reglas acá para no entrar en
-   guerra de especificidad con app.py — si las repetimos con font-size:0,
-   sobreescribiríamos el approach de app.py de mostrar los íconos via @import
-   de Google Fonts. */
+/* Ocultar TODO texto crudo de Material Symbols/Icons en sidebar */
+[data-testid="stSidebar"] [class*="material-symbols"],
+[data-testid="stSidebar"] [class*="material-icons"],
+[data-testid="stSidebar"] [class*="MaterialSymbols"],
+[data-testid="stSidebar"] [class*="MaterialIcons"],
+[data-testid="stSidebar"] span[aria-hidden="true"]:not([class*="emoji"]),
+[data-testid="stSidebar"] i[class*="icon"] {
+  font-size: 0 !important;
+  color: transparent !important;
+  line-height: 0 !important;
+  visibility: hidden !important;
+}
+[data-testid="stSidebarHeader"] button,
+[data-testid="stSidebarHeader"] button *,
+button[data-testid="stExpandSidebarButton"],
+button[data-testid="stExpandSidebarButton"] *,
+button[data-testid="stSidebarCollapsedControl"],
+button[data-testid="stSidebarCollapsedControl"] *,
+button[kind="header"],
+button[kind="header"] * {
+  font-size: 0 !important;
+  color: transparent !important;
+  line-height: 0 !important;
+}
+[data-testid="stSidebarHeader"] button::before,
+button[data-testid="stExpandSidebarButton"]::before,
+button[kind="header"]::before {
+  content: "‹" !important;
+  font-size: 18px !important;
+  color: #FFFFFF !important;
+  visibility: visible !important;
+  display: inline-block !important;
+  line-height: 1 !important;
+  font-family: 'Inter', sans-serif !important;
+}
+
+/* === Logo Vali: 200px centrado === */
+[data-testid="stSidebarHeader"] {
+  padding: 24px 16px 20px 16px !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  min-height: 220px !important;
+  background-color: var(--ink) !important;
+}
+[data-testid="stLogo"] {
+  margin: 0 auto !important;
+  display: block !important;
+}
+[data-testid="stLogo"] img {
+  max-height: 200px !important;
+  height: 200px !important;
+  width: auto !important;
+  max-width: 200px !important;
+  margin: 0 auto !important;
+  display: block !important;
+}
 
 .block-container { padding-top: 5vh; padding-bottom: 4rem; max-width: 1100px; }
 
