@@ -374,12 +374,76 @@ def load_proyectos(fec_inicio: dt.date | None, fec_fin: dt.date | None) -> pd.Da
     return df
 
 
-def run_update_now() -> tuple[int, str]:
-    cmd = [sys.executable, "-m", "scraper.cli", "update"]
+SYNC_MIN_MINUTES = 5      # gap mínimo entre auto-syncs
+SYNC_STALE_MINUTES = 15   # un sync sin terminar después de esto se considera muerto
+
+
+def _sync_status() -> dict:
+    """Devuelve estado del último sync: minutos desde el último completado,
+    si hay uno corriendo, y métricas del último."""
+    conn = get_conn()
+    try:
+        running = conn.execute(
+            "SELECT id FROM sync_runs WHERE finished_at IS NULL "
+            "AND started_at > datetime('now', ?, 'utc') LIMIT 1",
+            (f"-{SYNC_STALE_MINUTES} minutes",),
+        ).fetchone()
+        last = conn.execute(
+            "SELECT started_at, finished_at, proyectos_nuevos, proyectos_actualizados, errores, "
+            "       (julianday('now') - julianday(finished_at)) * 24 * 60 AS mins_ago "
+            "FROM sync_runs WHERE finished_at IS NOT NULL "
+            "ORDER BY id DESC LIMIT 1"
+        ).fetchone()
+    finally:
+        conn.close()
+    return {
+        "running": running is not None,
+        "last": dict(last) if last else None,
+        "mins_ago": (last["mins_ago"] if last else None),
+    }
+
+
+def maybe_fire_background_sync() -> str:
+    """Auto-sync silencioso. Lanza `scraper update` en segundo plano si el
+    último completó hace > SYNC_MIN_MINUTES y no hay uno corriendo. Devuelve
+    el estado para mostrar en UI: 'fresh' | 'running' | 'started'."""
+    status = _sync_status()
+    if status["running"]:
+        return "running"
+    mins = status["mins_ago"]
+    if mins is not None and mins < SYNC_MIN_MINUTES:
+        return "fresh"
+    # Lanzar en segundo plano, sin esperar
     db = _find_db_path()
     cwd = str(db.parent) if db else str(Path(__file__).resolve().parent.parent)
-    res = subprocess.run(cmd, cwd=cwd, capture_output=True, text=True, timeout=900)
-    return res.returncode, (res.stdout or "") + (res.stderr or "")
+    creationflags = 0
+    if sys.platform == "win32":
+        # No abrir nueva ventana en Windows
+        creationflags = getattr(subprocess, "CREATE_NO_WINDOW", 0)
+    try:
+        subprocess.Popen(
+            [sys.executable, "-m", "scraper.cli", "update"],
+            cwd=cwd,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+            creationflags=creationflags,
+        )
+        return "started"
+    except Exception:
+        return "fresh"
+
+
+def _fmt_ago(mins: float | None) -> str:
+    if mins is None:
+        return "—"
+    if mins < 1:
+        return "hace segundos"
+    if mins < 60:
+        return f"hace {int(mins)} min"
+    h = mins / 60
+    if h < 24:
+        return f"hace {int(h)} h"
+    return f"hace {int(h / 24)} d"
 
 
 # ====================== UI ======================
@@ -426,28 +490,39 @@ with st.sidebar:
         f_ini, f_fin = fec_min, fec_max
 
     st.markdown("---")
-    st.markdown("### Sync")
-    last = last_sync()
-    if last:
+    # Auto-sync silencioso al cargar la página: si el último terminó hace
+    # > SYNC_MIN_MINUTES y no hay otro corriendo, dispara `scraper update` en
+    # segundo plano. No bloquea — la página renderiza con los datos actuales.
+    sync_state = maybe_fire_background_sync()
+    status_info = _sync_status()
+    if sync_state == "started" or status_info["running"]:
         st.markdown(
-            f"""<div class="sync-card">
-            <div class="label">Último run</div>
-            <div class="value">{last['started_at']}</div>
-            <div class="label" style="margin-top:10px">Cambios</div>
-            <div>Nuevos: <span class="value">{last['proyectos_nuevos']}</span> · Actualizados: <span class="value">{last['proyectos_actualizados']}</span> · Errores: <span class="value">{last['errores']}</span></div>
-            </div>""",
+            '<div class="sync-card"><div class="label">Estado</div>'
+            '<div class="value">🔄 Buscando nuevos proyectos…</div>'
+            '<div style="font-size:11px;color:#9CA3AF;margin-top:4px">'
+            'Recarga la página en 1–2 min para ver los cambios</div></div>',
             unsafe_allow_html=True,
         )
-    if st.button("Actualizar ahora", use_container_width=True):
-        with st.spinner("Corriendo `scraper update`..."):
-            code, out = run_update_now()
-        if code == 0:
-            st.success("Sync completado")
-            st.cache_data.clear()
+    else:
+        last = status_info["last"]
+        mins = status_info["mins_ago"]
+        if last:
+            ago = _fmt_ago(mins)
+            st.markdown(
+                f"""<div class="sync-card">
+                <div class="label">Actualizado</div>
+                <div class="value">{ago}</div>
+                <div class="label" style="margin-top:10px">Último run</div>
+                <div>Nuevos: <span class="value">{last['proyectos_nuevos']}</span> · Actualizados: <span class="value">{last['proyectos_actualizados']}</span> · Errores: <span class="value">{last['errores']}</span></div>
+                </div>""",
+                unsafe_allow_html=True,
+            )
         else:
-            st.error("Falló el sync — revisa el log")
-        with st.expander("Output"):
-            st.code(out)
+            st.markdown(
+                '<div class="sync-card"><div class="label">Estado</div>'
+                '<div class="value">Sin syncs previos</div></div>',
+                unsafe_allow_html=True,
+            )
 
 # ---------- Tabla con barra de filtros ----------
 df_full = load_proyectos(f_ini, f_fin)
