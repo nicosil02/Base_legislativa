@@ -116,6 +116,59 @@ section[data-testid="stMain"] > div {
 [data-testid="stSidebarNav"] a:hover {
     padding-left: 18px !important;
 }
+
+/* ─── Reemplazo de íconos Material Symbols por caracteres unicode ─────────
+   DOM real en Streamlit 1.57 (inspeccionado en el browser):
+   <header data-testid="stNavSectionHeader">
+     <span>Portafolio de herramientas</span>
+     <div class="...e1lpckdq7">  <- rota con transform al colapsar
+       <span><span data-testid="stIconMaterial">expand_more</span></span>
+     </div>
+   </header>
+   La rotación está en el div padre del ::before, así que se hereda. */
+[data-testid="stNavSectionHeader"] [data-testid="stIconMaterial"],
+[data-testid="stSidebarCollapseButton"] [data-testid="stIconMaterial"] {
+    font-size: 0 !important;
+    line-height: 0 !important;
+    color: transparent !important;
+    position: relative !important;
+    display: inline-block !important;
+    width: 16px !important;
+    height: 16px !important;
+}
+[data-testid="stNavSectionHeader"] [data-testid="stIconMaterial"]::before {
+    content: "▼";
+    font-size: 11px;
+    font-family: 'Segoe UI', 'Inter', Arial, sans-serif;
+    color: rgba(255,255,255,0.75);
+    line-height: 1;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+[data-testid="stSidebarCollapseButton"] [data-testid="stIconMaterial"]::before {
+    content: "‹";
+    font-size: 18px;
+    font-family: 'Segoe UI', 'Inter', Arial, sans-serif;
+    color: #FFFFFF;
+    line-height: 1;
+    font-weight: 700;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Anular ::before viejo de home.py / pages/1_Peru.py sobre el button del
+   sidebar header (causaba doble "‹ ‹" cuando colapsabas el sidebar). */
+[data-testid="stSidebarHeader"] button::before,
+button[data-testid="stExpandSidebarButton"]::before,
+button[data-testid="stSidebarCollapsedControl"]::before,
+button[kind="header"]::before {
+    content: none !important;
+    display: none !important;
+}
 </style>""",
     unsafe_allow_html=True,
 )
@@ -152,74 +205,3 @@ nav = st.navigation(
     position="sidebar",
 )
 nav.run()
-
-# Reemplazo del chevron Material Symbols por una flecha unicode "▼".
-#
-# Estructura DOM real en Streamlit 1.57 (encontrada inspeccionando el código
-# fuente del frontend):
-#
-#   <button aria-expanded="true|false">                       ← StyledSidebarNavSectionHeader
-#       <div class="css-XYZ-StyledChevronContainer">          ← chevron container (1er hijo!)
-#           <DynamicIcon iconValue=":material/expand_more:"/> ← acá vive el texto roto
-#       </div>
-#       <span>Portafolio de herramientas</span>               ← título
-#   </button>
-#
-# El chevron es el PRIMER hijo (no último). Streamlit aplica
-# transform: rotate(0deg) cuando expandido y rotate(-90deg) cuando colapsado
-# sobre el StyledChevronContainer. Si escondemos el contenido interno y
-# le ponemos un ::before, la rotación se hereda al pseudo-elemento.
-st.markdown(
-    """<style>
-/* 1. El contenedor del chevron es el primer div hijo de [aria-expanded].
-      Hacemos que NO muestre el contenido roto, pero conservamos su rotación. */
-[data-testid="stSidebar"] [aria-expanded] > div:first-child,
-[data-testid="stSidebarNav"] [aria-expanded] > div:first-child {
-    font-size: 0 !important;
-    line-height: 0 !important;
-    position: relative !important;
-    width: 18px !important;
-    height: 18px !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-}
-
-/* 2. Ocultar el DynamicIcon (o lo que sea) que vive adentro y renderea
-      ":material/expand_more:" como texto crudo. */
-[data-testid="stSidebar"] [aria-expanded] > div:first-child > *,
-[data-testid="stSidebarNav"] [aria-expanded] > div:first-child > * {
-    display: none !important;
-    visibility: hidden !important;
-}
-
-/* 3. Inyectar la flecha unicode en el ::before del contenedor. La
-      rotación del padre se aplica naturalmente al pseudo-elemento. */
-[data-testid="stSidebar"] [aria-expanded] > div:first-child::before,
-[data-testid="stSidebarNav"] [aria-expanded] > div:first-child::before {
-    content: "▼" !important;
-    font-size: 11px !important;
-    font-family: 'Inter', 'Segoe UI', Arial, sans-serif !important;
-    color: rgba(255,255,255,0.7) !important;
-    line-height: 1 !important;
-    display: inline-block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-}
-
-/* 4. Como fallback defensivo, también ocultamos cualquier span con clases
-      tipo material-symbols por las dudas que en otras versiones el icono
-      esté en otro lugar del DOM. */
-[data-testid="stSidebar"] .material-symbols-rounded,
-[data-testid="stSidebar"] [class*="material-symbols"] {
-    font-size: 0 !important;
-    line-height: 0 !important;
-    width: 0 !important;
-    overflow: hidden !important;
-    visibility: hidden !important;
-}
-</style>""",
-    unsafe_allow_html=True,
-)
