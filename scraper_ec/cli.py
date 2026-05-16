@@ -152,6 +152,50 @@ def cmd_show(args) -> int:
     return 0
 
 
+def cmd_fix_typos(args) -> int:
+    """Aplica COMISION_TYPOS a la data ya en la DB. Útil tras agregar nuevos
+    typos al diccionario, o tras una primera importación con typos viejos."""
+    from scraper_ec.csv_importer import COMISION_TYPOS
+    from scraper_ec.db import now_iso
+
+    db = _db(args)
+    try:
+        now = now_iso()
+        total_fixed = 0
+        for raw, fixed in COMISION_TYPOS.items():
+            cur = db.conn.execute(
+                "SELECT COUNT(*) FROM proyectos WHERE comision_asignada = ?",
+                (raw,),
+            ).fetchone()
+            n = cur[0]
+            if n == 0:
+                continue
+            print(f"  '{raw}' → '{fixed}' ({n} proyectos)")
+            # Update + registrar en historial_cambios
+            for r in db.conn.execute(
+                "SELECT n_tramite FROM proyectos WHERE comision_asignada = ?",
+                (raw,),
+            ).fetchall():
+                with db.tx() as c:
+                    c.execute(
+                        "UPDATE proyectos SET comision_asignada=?, last_changed_at=? WHERE n_tramite=?",
+                        (fixed, now, r["n_tramite"]),
+                    )
+                    c.execute(
+                        "INSERT INTO historial_cambios (n_tramite, changed_at, campo, valor_antes, valor_despues) "
+                        "VALUES (?,?,?,?,?)",
+                        (r["n_tramite"], now, "comision_asignada", raw, fixed),
+                    )
+            total_fixed += n
+        if total_fixed == 0:
+            print("No hay typos pendientes — DB ya limpia.")
+        else:
+            print(f"\nTotal corregido: {total_fixed} proyectos.")
+    finally:
+        db.close()
+    return 0
+
+
 def cmd_recategorizar(args) -> int:
     db = _db(args)
     try:
@@ -214,6 +258,8 @@ def main(argv: list[str] | None = None) -> int:
     s = sub.add_parser("show", help="Muestra detalle de un proyecto por N. Trámite")
     s.add_argument("n_tramite")
     s.set_defaults(func=cmd_show)
+
+    sub.add_parser("fix-typos", help="Corrige typos conocidos en comisiones (ej: 'Bodiversidad')").set_defaults(func=cmd_fix_typos)
 
     sub.add_parser("recategorizar", help="Re-clasifica temas no marcados como manuales").set_defaults(func=cmd_recategorizar)
 
