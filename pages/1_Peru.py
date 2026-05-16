@@ -46,19 +46,29 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
+# Logo Vali arriba del sidebar (Streamlit lo posiciona automáticamente).
+_logo_path = Path(__file__).resolve().parent.parent / "assets" / "vali_logo.svg"
+if _logo_path.exists():
+    try:
+        st.logo(str(_logo_path), size="large")
+    except Exception:
+        pass  # Streamlit < 1.35 no tiene st.logo; ignorar.
+
 # ====================== CSS estilo datadaf ======================
 st.markdown(
     """<style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
 :root {
-      --ink:        #121212;
-      --ink-soft:   #4B5563;
-      --ink-mute:   #9CA3AF;
-      --line:       #E5E7EB;
-      --line-soft:  #F3F4F6;
-      --accent:     #2563EB;
+      /* Paleta corporativa Vali Consultores */
+      --ink:        #0A294D;   /* navy principal — titulos y texto */
+      --ink-soft:   #435D74;   /* navy medio — texto secundario */
+      --ink-mute:   #869FB2;   /* gris azulado — texto suave / labels */
+      --line:       #CFD9E0;   /* borde y separador */
+      --line-soft:  #E3E9ED;
+      --accent:     #0A294D;   /* navy como acento institucional */
+      --accent-red: #BF1A1A;   /* rojo Vali (del puntito del logo) */
       --bg:         #FFFFFF;
-      --bg-soft:    #F9FAFB;
+      --bg-soft:    #F4F6F8;
     }
 
     html, body, [class*="css"], .stApp {
