@@ -15,8 +15,29 @@ from pathlib import Path
 import pandas as pd
 import streamlit as st
 
-DB_PATH = Path(__file__).parent.parent / "proyectos.db"
 COMISIONES_ESPECIALES_LABEL = "Comisiones Especiales"
+
+
+def _find_db_path() -> Path | None:
+    """Busca proyectos.db en varias ubicaciones razonables.
+
+    Necesario porque Streamlit puede arrancar desde directorios distintos
+    según cómo lo invocaste (raíz del repo, worktree, etc.).
+    """
+    here = Path(__file__).resolve().parent
+    candidates = [
+        here.parent / "proyectos.db",       # <repo>/proyectos.db (pages está en <repo>/pages)
+        Path.cwd() / "proyectos.db",        # CWD donde se ejecuta streamlit
+    ]
+    # Caminar hacia arriba 5 niveles desde el archivo actual
+    cur = here
+    for _ in range(5):
+        candidates.append(cur / "proyectos.db")
+        cur = cur.parent
+    for p in candidates:
+        if p.exists() and p.is_file() and p.stat().st_size > 0:
+            return p.resolve()
+    return None
 
 st.set_page_config(
     page_title="Radar Legislativo · Perú",
@@ -27,10 +48,9 @@ st.set_page_config(
 
 # ====================== CSS estilo datadaf ======================
 st.markdown(
-    """
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <style>
-    :root {
+    """<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+:root {
       --ink:        #121212;
       --ink-soft:   #4B5563;
       --ink-mute:   #9CA3AF;
@@ -235,12 +255,21 @@ st.markdown(
 
 # ============ DB helpers ============
 
-@st.cache_resource
 def get_conn() -> sqlite3.Connection:
-    if not DB_PATH.exists():
-        st.error(f"No se encontró {DB_PATH}. Corre `python -m scraper.cli restaurar` desde la carpeta del repo.")
+    """Abre una conexión fresca read-only a la DB.
+
+    No cacheamos la conexión con @st.cache_resource porque eso producía
+    'disk I/O error' cuando el handle se quedaba stale entre reruns o
+    cambios de directorio.
+    """
+    db = _find_db_path()
+    if db is None:
+        st.error(
+            "No encontré `proyectos.db`. Corre desde la carpeta raíz del repo:\n\n"
+            "```\npython -m scraper.cli restaurar\n```"
+        )
         st.stop()
-    conn = sqlite3.connect(f"file:{DB_PATH}?mode=ro", uri=True, check_same_thread=False)
+    conn = sqlite3.connect(f"file:{db}?mode=ro", uri=True, check_same_thread=False)
     conn.row_factory = sqlite3.Row
     return conn
 

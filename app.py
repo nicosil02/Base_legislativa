@@ -20,10 +20,9 @@ st.set_page_config(
 
 # ====================== CSS (mismo estilo datadaf) ======================
 st.markdown(
-    """
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <style>
-    :root {
+    """<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+:root {
       --ink:        #121212;
       --ink-soft:   #4B5563;
       --ink-mute:   #9CA3AF;
@@ -139,21 +138,40 @@ st.markdown(
 import sqlite3
 from pathlib import Path
 
-DB_PATH = Path(__file__).parent / "proyectos.db"
+
+def _find_db_path() -> Path | None:
+    """Igual que en pages/1_Peru.py: busca proyectos.db en varias ubicaciones."""
+    here = Path(__file__).resolve().parent
+    candidates = [
+        here / "proyectos.db",
+        Path.cwd() / "proyectos.db",
+    ]
+    cur = here
+    for _ in range(5):
+        candidates.append(cur / "proyectos.db")
+        cur = cur.parent
+    for p in candidates:
+        if p.exists() and p.is_file() and p.stat().st_size > 0:
+            return p.resolve()
+    return None
 
 
 @st.cache_data(ttl=60)
 def stats_peru() -> dict:
-    if not DB_PATH.exists():
+    db = _find_db_path()
+    if db is None:
         return {"total": None, "leyes": None}
     try:
-        conn = sqlite3.connect(f"file:{DB_PATH}?mode=ro", uri=True)
-        total = conn.execute("SELECT COUNT(*) FROM proyectos").fetchone()[0]
-        leyes = conn.execute(
-            "SELECT COUNT(*) FROM proyectos WHERE UPPER(estado) LIKE '%PUBLIC%PERUANO%' "
-            "OR UPPER(estado) LIKE '%LEY PUBLICADA%'"
-        ).fetchone()[0]
-        return {"total": total, "leyes": leyes}
+        conn = sqlite3.connect(f"file:{db}?mode=ro", uri=True)
+        try:
+            total = conn.execute("SELECT COUNT(*) FROM proyectos").fetchone()[0]
+            leyes = conn.execute(
+                "SELECT COUNT(*) FROM proyectos WHERE UPPER(estado) LIKE '%PUBLIC%PERUANO%' "
+                "OR UPPER(estado) LIKE '%LEY PUBLICADA%'"
+            ).fetchone()[0]
+            return {"total": total, "leyes": leyes}
+        finally:
+            conn.close()
     except Exception:
         return {"total": None, "leyes": None}
 
@@ -178,7 +196,7 @@ total_pe = f"{s['total']:,}" if s["total"] is not None else "—"
 leyes_pe = f"{s['leyes']:,}" if s["leyes"] is not None else "—"
 
 st.markdown("##### Países")
-cols = st.columns(3)
+cols = st.columns([1, 1, 1])
 
 # Perú — operativo
 with cols[0]:
@@ -200,25 +218,8 @@ with cols[0]:
         unsafe_allow_html=True,
     )
 
-# Colombia — placeholder
-with cols[1]:
-    st.markdown(
-        """
-        <div class="country-card soon">
-            <div class="flag">🇨🇴</div>
-            <div class="name">Colombia</div>
-            <div class="institution">Congreso de la República</div>
-            <div class="stats">
-                <div><div class="stat-num">—</div><div class="stat-label">Próximamente</div></div>
-            </div>
-            <div class="cta">Disponible pronto</div>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
-
 # Ecuador — placeholder
-with cols[2]:
+with cols[1]:
     st.markdown(
         """
         <div class="country-card soon">
@@ -233,6 +234,10 @@ with cols[2]:
         """,
         unsafe_allow_html=True,
     )
+
+# Espacio para que la grid no quede colgada
+with cols[2]:
+    st.markdown("&nbsp;", unsafe_allow_html=True)
 
 # Footer
 st.markdown('<div class="footer-rule"></div>', unsafe_allow_html=True)
