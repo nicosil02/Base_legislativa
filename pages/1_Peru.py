@@ -609,6 +609,11 @@ st.markdown(f"##### {len(df):,} proyecto(s) de {len(df_full):,} en el rango")
 # - Orden: PL · Título · Presentado · Estado · Autor · Bancada · Comisión · Tema.
 df_view = df.copy()
 df_view["PL"] = df_view["Portal"]  # ahora "PL" contiene la URL para LinkColumn
+# Mostramos solo el autor principal en la columna (primer nombre antes del ";").
+# El filtro de Autor sigue buscando en todos los firmantes (full string).
+df_view["Autor(es)"] = (
+    df_view["Autor(es)"].astype(str).str.split(";").str[0].str.strip().replace("nan", "")
+)
 df_view = df_view.rename(columns={"Partido": "Bancada", "Autor(es)": "Autor"})
 COLS_VISIBLES = ["PL", "Título", "Presentado", "Estado", "Autor", "Bancada", "Comisión", "Tema"]
 df_view = df_view[[c for c in COLS_VISIBLES if c in df_view.columns]]
