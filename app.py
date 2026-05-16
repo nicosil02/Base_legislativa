@@ -13,7 +13,6 @@ import base64
 from pathlib import Path
 
 import streamlit as st
-import streamlit.components.v1 as components
 
 
 # ── Logo Vali ────────────────────────────────────────────────────────────────
@@ -193,86 +192,3 @@ nav = st.navigation(
     position="sidebar",
 )
 nav.run()
-
-
-# ── Hard kill del texto de íconos Material Symbols ──────────────────────────
-# Cuando la fuente Material Symbols Rounded de Streamlit no carga (firewall,
-# adblocker, fallo de CDN), los chevrons de las secciones de st.navigation
-# aparecen como texto crudo: "expand_more", "keyboard_double_arrow_left".
-# Intentamos CSS y @import desde Google Fonts y ninguno fue suficiente.
-# Solución final: JavaScript inyectado vía un iframe de altura 0 que tiene
-# acceso a window.parent.document. Un MutationObserver detecta cualquier
-# elemento del sidebar cuyo textContent sea un identificador estilo
-# lowercase_underscore (patrón de los nombres de Material Symbols) y lo
-# colapsa por style inline. Se re-corre en cada mutación del DOM por si
-# Streamlit re-renderiza.
-components.html(
-    """
-    <script>
-    (function () {
-      const ICON_RE = /^[a-z][a-z0-9_]{3,40}$/;
-      const KNOWN = new Set([
-        "expand_more", "expand_less",
-        "chevron_right", "chevron_left",
-        "keyboard_arrow_down", "keyboard_arrow_up",
-        "keyboard_double_arrow_left", "keyboard_double_arrow_right",
-        "menu", "close", "more_vert", "more_horiz",
-        "arrow_back", "arrow_forward", "arrow_drop_down", "arrow_drop_up",
-        "search", "settings", "home", "person",
-        "first_page", "last_page", "navigate_before", "navigate_next",
-        "unfold_more", "unfold_less"
-      ]);
-
-      function hide(el) {
-        el.style.setProperty("font-size", "0", "important");
-        el.style.setProperty("line-height", "0", "important");
-        el.style.setProperty("opacity", "0", "important");
-        el.style.setProperty("width", "0", "important");
-        el.style.setProperty("height", "0", "important");
-        el.style.setProperty("overflow", "hidden", "important");
-        el.style.setProperty("color", "transparent", "important");
-        el.style.setProperty("visibility", "hidden", "important");
-      }
-
-      function scan(root) {
-        if (!root) return;
-        const nodes = root.querySelectorAll("span, i, div");
-        nodes.forEach(el => {
-          if (el.children.length !== 0) return;
-          const t = (el.textContent || "").trim();
-          if (!t) return;
-          if (KNOWN.has(t) || (ICON_RE.test(t) && t.includes("_"))) {
-            hide(el);
-          }
-        });
-      }
-
-      function tick() {
-        try {
-          const doc = window.parent.document;
-          scan(doc.querySelector('[data-testid="stSidebar"]'));
-          scan(doc.querySelector('[data-testid="stSidebarNav"]'));
-          scan(doc.querySelector('[data-testid="stSidebarHeader"]'));
-        } catch (e) { /* cross-origin? not our case but be safe */ }
-      }
-
-      // Run now + every 250ms (handles Streamlit reruns)
-      tick();
-      setInterval(tick, 250);
-
-      // Also reactive: observe DOM mutations on the sidebar
-      try {
-        const doc = window.parent.document;
-        const sb = doc.querySelector('[data-testid="stSidebar"]');
-        if (sb && window.MutationObserver) {
-          new MutationObserver(tick).observe(sb, {
-            childList: true, subtree: true, characterData: true
-          });
-        }
-      } catch (e) {}
-    })();
-    </script>
-    """,
-    height=0,
-    width=0,
-)
