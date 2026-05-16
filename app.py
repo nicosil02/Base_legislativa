@@ -189,6 +189,12 @@ peru = st.Page(
     icon="🇵🇪",
     url_path="peru",
 )
+ecuador = st.Page(
+    "pages/2_Ecuador.py",
+    title="Ecuador",
+    icon="🇪🇨",
+    url_path="ecuador",
+)
 
 # Navegación con secciones colapsables (Portafolio de herramientas / Países).
 # Los chevrons "expand_more" se rendean como texto porque la fuente Material
@@ -200,7 +206,7 @@ peru = st.Page(
 nav = st.navigation(
     {
         "Portafolio de herramientas": [home],
-        "Países": [peru],
+        "Países": [peru, ecuador],
     },
     position="sidebar",
 )
