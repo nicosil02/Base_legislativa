@@ -48,6 +48,43 @@ st.set_page_config(
 )
 
 
+# ─── BOOTSTRAP DE DBs (Streamlit Cloud no tiene filesystem persistente) ─────
+# Si las DBs no existen en disk, las restauramos desde snapshots commiteados.
+def _bootstrap_dbs():
+    import gzip
+    import shutil
+
+    repo_root = Path(__file__).resolve().parent
+
+    # Perú: decomprimir data/proyectos.db.gz (14 MB) → proyectos.db (78 MB)
+    pe_db = repo_root / "proyectos.db"
+    pe_gz = repo_root / "data" / "proyectos.db.gz"
+    if not pe_db.exists() and pe_gz.exists():
+        try:
+            with gzip.open(pe_gz, "rb") as f_in, pe_db.open("wb") as f_out:
+                shutil.copyfileobj(f_in, f_out)
+            print(f"[bootstrap] proyectos.db restored from gz ({pe_db.stat().st_size} bytes)")
+        except Exception as e:
+            print(f"[bootstrap] error restoring PE DB: {e}")
+
+    # Ecuador: importar el CSV snapshot a proyectos_ec.db
+    ec_db = repo_root / "proyectos_ec.db"
+    ec_csv = repo_root / "data" / "ppless_listado_2025-2029_snapshot.csv"
+    if not ec_db.exists() and ec_csv.exists():
+        try:
+            from scraper_ec.db import Database
+            from scraper_ec.csv_importer import import_csv
+            db = Database(str(ec_db))
+            db.init_schema()
+            import_csv(ec_csv, db)
+            db.close()
+            print("[bootstrap] proyectos_ec.db initialized from CSV snapshot")
+        except Exception as e:
+            print(f"[bootstrap] error initializing EC DB: {e}")
+
+_bootstrap_dbs()
+
+
 # ─── AUTH GATE ──────────────────────────────────────────────────────────────
 # Si el usuario no esta autenticado, la funcion renderea el login y stop.
 from auth.login import gate_or_render  # noqa: E402
