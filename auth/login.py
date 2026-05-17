@@ -10,6 +10,7 @@ from __future__ import annotations
 import base64
 import os
 import re
+import time
 import urllib.parse
 from pathlib import Path
 
@@ -28,16 +29,13 @@ COOKIE_NAME = "vi_session"
 
 
 def _get_cookie_controller():
-    """Devuelve un CookieController cacheado en session_state.
-
-    Cacheamos en session_state para no remontar el componente JS en cada rerun
-    (es caro y a veces da problemas de timing al leer cookies).
-    """
+    """Devuelve un CookieController cacheado en session_state."""
     if "_cookie_ctrl" not in st.session_state:
         try:
             from streamlit_cookies_controller import CookieController
             st.session_state["_cookie_ctrl"] = CookieController(key="vi_cookies")
-        except Exception:
+        except Exception as e:
+            print("[auth] no pude instanciar CookieController: " + str(e))
             st.session_state["_cookie_ctrl"] = None
     return st.session_state["_cookie_ctrl"]
 
@@ -48,9 +46,10 @@ def _save_session_cookie(email):
         return
     try:
         long_token = sign_token(email, ttl_seconds=SESSION_TTL_SECONDS)
+        # max_age en segundos; el component lo traduce a una Max-Age cookie attr.
         ctrl.set(COOKIE_NAME, long_token, max_age=SESSION_TTL_SECONDS)
-    except Exception:
-        pass
+    except Exception as e:
+        print("[auth] error guardando cookie: " + str(e))
 
 
 def _clear_session_cookie():
@@ -64,7 +63,13 @@ def _clear_session_cookie():
 
 
 def _restore_session_from_cookie():
-    """Si hay cookie valido, setea session_state.user_email."""
+    """Lee cookie + setea session_state.
+
+    streamlit-cookies-controller monta un component JS que lee cookies
+    asincrono — la primera vez que llamamos .get(), puede devolver None
+    porque el JS aun no terminó. Si pasa eso, hacemos UN rerun para darle
+    chance al JS, y al volver la cookie estará leida.
+    """
     if st.session_state.get("user_email"):
         return True
     ctrl = _get_cookie_controller()
@@ -75,11 +80,19 @@ def _restore_session_from_cookie():
     except Exception:
         token = None
     if not token:
+        # Patron oficial de streamlit-cookies-controller: rerun una vez
+        # despues del primer mount para que el JS lea las cookies.
+        if not st.session_state.get("_cookie_read_attempted"):
+            st.session_state["_cookie_read_attempted"] = True
+            time.sleep(0.25)
+            st.rerun()
         return False
     payload = verify_token(token)
     if not payload:
         return False
     st.session_state["user_email"] = payload["email"]
+    # Limpia el flag para que en futuras reauths funcione
+    st.session_state.pop("_cookie_read_attempted", None)
     return True
 
 
