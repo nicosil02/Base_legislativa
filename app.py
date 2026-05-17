@@ -85,12 +85,12 @@ def _bootstrap_dbs():
 _bootstrap_dbs()
 
 
-# ─── AUTH GATE ──────────────────────────────────────────────────────────────
-# Si el usuario no esta autenticado, la funcion renderea el login y stop.
-from auth.login import gate_or_render  # noqa: E402
-
-if not gate_or_render():
-    st.stop()
+# ─── AUTH GATE (DESHABILITADO temporalmente por bugs de cookies en Streamlit Cloud) ──
+# El modulo auth/ queda en el repo y se puede reactivar agregando:
+#   from auth.login import gate_or_render
+#   if not gate_or_render(): st.stop()
+# Por ahora la app es publica — los dashboards muestran data publica del
+# Congreso/Asamblea, sin info sensitiva.
 
 
 # Logo Vali grande en el tope del sidebar.
@@ -275,45 +275,7 @@ ecuador = st.Page(
 )
 
 
-# Sidebar: usuario logueado + logout
-from auth.login import current_user, logout  # noqa: E402
-
-# CSS específico para el botón "Cerrar sesión" en el sidebar — sin esto
-# el texto blanco del sidebar global lo deja invisible (white on white).
-st.markdown(
-    """<style>
-    section[data-testid="stSidebar"] [data-testid="stBaseButton-secondary"],
-    section[data-testid="stSidebar"] button[kind="secondary"] {
-        background: rgba(255,255,255,0.12) !important;
-        color: #FFFFFF !important;
-        border: 1px solid rgba(255,255,255,0.25) !important;
-        font-weight: 600 !important;
-    }
-    section[data-testid="stSidebar"] [data-testid="stBaseButton-secondary"]:hover,
-    section[data-testid="stSidebar"] button[kind="secondary"]:hover {
-        background: rgba(255,255,255,0.22) !important;
-        border-color: rgba(255,255,255,0.5) !important;
-        color: #FFFFFF !important;
-    }
-    </style>""",
-    unsafe_allow_html=True,
-)
-
-with st.sidebar:
-    _user_email = current_user() or ""
-    if _user_email:
-        st.markdown(
-            '<div style="padding:12px 8px;border-top:1px solid rgba(255,255,255,0.1);'
-            'margin-top:auto;font-size:11px;color:rgba(255,255,255,0.6);'
-            'letter-spacing:0.04em;">'
-            f'<div>Sesion activa</div>'
-            f'<div style="color:#FFFFFF;font-weight:600;margin-top:2px;'
-            f'word-break:break-all;">{_user_email}</div></div>',
-            unsafe_allow_html=True,
-        )
-        if st.button("Cerrar sesion", use_container_width=True, type="secondary"):
-            logout()
-            st.rerun()
+# Sidebar logout deshabilitado mientras el auth gate este off.
 
 
 nav = st.navigation(
