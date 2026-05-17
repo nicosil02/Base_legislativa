@@ -67,10 +67,19 @@ def _bootstrap_dbs():
         except Exception as e:
             print(f"[bootstrap] error restoring PE DB: {e}")
 
-    # Ecuador: importar el CSV snapshot a proyectos_ec.db
+    # Ecuador: preferir snapshot gzipped (incluye documentos enriquecidos).
+    # Si no existe el .gz, fallback al CSV (solo proyectos, sin documentos).
     ec_db = repo_root / "proyectos_ec.db"
+    ec_gz = repo_root / "data" / "proyectos_ec.db.gz"
     ec_csv = repo_root / "data" / "ppless_listado_2025-2029_snapshot.csv"
-    if not ec_db.exists() and ec_csv.exists():
+    if not ec_db.exists() and ec_gz.exists():
+        try:
+            with gzip.open(ec_gz, "rb") as f_in, ec_db.open("wb") as f_out:
+                shutil.copyfileobj(f_in, f_out)
+            print(f"[bootstrap] proyectos_ec.db restored from gz ({ec_db.stat().st_size} bytes)")
+        except Exception as e:
+            print(f"[bootstrap] error restoring EC DB from gz: {e}")
+    elif not ec_db.exists() and ec_csv.exists():
         try:
             from scraper_ec.db import Database
             from scraper_ec.csv_importer import import_csv
@@ -78,9 +87,9 @@ def _bootstrap_dbs():
             db.init_schema()
             import_csv(ec_csv, db)
             db.close()
-            print("[bootstrap] proyectos_ec.db initialized from CSV snapshot")
+            print("[bootstrap] proyectos_ec.db initialized from CSV snapshot (sin documentos)")
         except Exception as e:
-            print(f"[bootstrap] error initializing EC DB: {e}")
+            print(f"[bootstrap] error initializing EC DB from CSV: {e}")
 
 _bootstrap_dbs()
 
