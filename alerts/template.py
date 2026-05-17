@@ -75,15 +75,15 @@ def _country_section(country_label, country_data, label_dictamenes):
         f'text-transform:uppercase;color:#0A294D;padding-bottom:6px;">'
         f'{country_label}</td></tr></table>'
 
-        f'<h2 style="margin:18px 0 4px 0;font-size:18px;font-weight:800;'
+        '<h2 style="margin:18px 0 4px 0;font-size:18px;font-weight:800;'
+        'color:#0A294D;letter-spacing:-0.015em;'
+        'font-family:Inter,Segoe UI,Arial,sans-serif;">Proyectos de Ley</h2>'
+        + _items_html(proyectos, DOT_PROYECTO) +
+
+        f'<h2 style="margin:24px 0 4px 0;font-size:18px;font-weight:800;'
         'color:#0A294D;letter-spacing:-0.015em;'
         f'font-family:Inter,Segoe UI,Arial,sans-serif;">{label_dictamenes}</h2>'
-        + _items_html(dictamenes, DOT_DICTAMEN) +
-
-        '<h2 style="margin:24px 0 4px 0;font-size:18px;font-weight:800;'
-        'color:#0A294D;letter-spacing:-0.015em;'
-        'font-family:Inter,Segoe UI,Arial,sans-serif;">Nuevos Proyectos de Ley</h2>'
-        + _items_html(proyectos, DOT_PROYECTO)
+        + _items_html(dictamenes, DOT_DICTAMEN)
     )
 
 
@@ -92,12 +92,12 @@ def render_html(payload):
     peru_html = _country_section(
         "Peru &middot; Congreso de la Republica",
         payload.get("peru", {}),
-        "Nuevos dictamenes",
+        "Dictamenes",
     )
     ec_html = _country_section(
         "Ecuador &middot; Asamblea Nacional",
         payload.get("ecuador", {}),
-        "Nuevos informes",
+        "Informes",
     )
 
     return (
