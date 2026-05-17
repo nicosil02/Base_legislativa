@@ -62,37 +62,51 @@ def _clear_session_cookie():
         pass
 
 
+def _read_cookie_server_side(name):
+    """Lee una cookie usando st.context.cookies (Streamlit 1.36+).
+
+    Esto es SERVER-SIDE — lee de los headers HTTP del request. No tiene
+    timing issue con JS. Funciona en el primer render despues de hard-nav.
+    """
+    try:
+        # st.context.cookies puede ser un dict-like o un Mapping
+        cookies = st.context.cookies
+        if cookies:
+            return cookies.get(name)
+    except Exception:
+        pass
+    return None
+
+
 def _restore_session_from_cookie():
     """Lee cookie + setea session_state.
 
-    streamlit-cookies-controller monta un component JS que lee cookies
-    asincrono — la primera vez que llamamos .get(), puede devolver None
-    porque el JS aun no terminó. Si pasa eso, hacemos UN rerun para darle
-    chance al JS, y al volver la cookie estará leida.
+    Estrategia:
+      1) st.context.cookies (server-side, instantaneo, recomendado)
+      2) Fallback: streamlit-cookies-controller (client-side, async, lento)
     """
     if st.session_state.get("user_email"):
         return True
-    ctrl = _get_cookie_controller()
-    if ctrl is None:
-        return False
-    try:
-        token = ctrl.get(COOKIE_NAME)
-    except Exception:
-        token = None
+
+    # Path principal: leer del request HTTP. Siempre disponible.
+    token = _read_cookie_server_side(COOKIE_NAME)
+
+    # Fallback: cookie controller (puede dar None la primera vez).
     if not token:
-        # Patron oficial de streamlit-cookies-controller: rerun una vez
-        # despues del primer mount para que el JS lea las cookies.
-        if not st.session_state.get("_cookie_read_attempted"):
-            st.session_state["_cookie_read_attempted"] = True
-            time.sleep(0.25)
-            st.rerun()
+        ctrl = _get_cookie_controller()
+        if ctrl is not None:
+            try:
+                token = ctrl.get(COOKIE_NAME)
+            except Exception:
+                token = None
+
+    if not token:
         return False
+
     payload = verify_token(token)
     if not payload:
         return False
     st.session_state["user_email"] = payload["email"]
-    # Limpia el flag para que en futuras reauths funcione
-    st.session_state.pop("_cookie_read_attempted", None)
     return True
 
 
