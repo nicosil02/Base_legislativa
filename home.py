@@ -261,15 +261,23 @@ def stats_ecuador() -> dict:
 
 # ====================== UI ======================
 
-st.markdown('<div class="home-eyebrow">Monitoreo legislativo</div>', unsafe_allow_html=True)
+st.markdown('<div class="home-eyebrow">Asuntos Públicos · Vali Consultores</div>', unsafe_allow_html=True)
 st.markdown(
-    '<h1 class="home-title">Radar <span class="accent">Legislativo</span></h1>',
+    '<h1 class="home-title">Vali <span class="accent">Intelligence</span></h1>',
     unsafe_allow_html=True,
 )
 st.markdown(
-    '<p class="home-sub">Diseñado para el equipo de Asuntos Públicos y de Gobierno de '
-    'Vali Consultores. Base de datos viva de proyectos de ley con clasificación temática, '
-    'seguimiento de cambios de estado y alertas.</p>',
+    '<p class="home-sub">Suite de herramientas de inteligencia regulatoria para el equipo de '
+    'Asuntos Públicos y de Gobierno. Monitoreo legislativo, clasificación temática, '
+    'seguimiento de cambios de estado y alertas diarias automáticas.</p>',
+    unsafe_allow_html=True,
+)
+
+# Section: herramientas activas
+st.markdown('<div class="section-label">Herramientas</div>', unsafe_allow_html=True)
+st.markdown(
+    '<p style="font-size:13px;color:#869FB2;margin-bottom:18px;">Radar Legislativo · '
+    'Monitoreo de proyectos de ley</p>',
     unsafe_allow_html=True,
 )
 

@@ -102,11 +102,24 @@ def cmd_send(args):
         return 0
 
     from alerts.send import send_email
-    try:
-        recipient = send_email(subject, html_body)
-        print("[alerts] enviado a " + recipient + ": " + subject)
-    except Exception as e:
-        print("[alerts] ERROR al enviar: " + type(e).__name__ + ": " + str(e), file=sys.stderr)
+    # Lista de destinatarios = todos los usuarios registrados en users.json.
+    # Si users.json esta vacio o no existe, fallback a ALERT_RECIPIENT (legacy).
+    recipients = _list_recipients()
+    if not recipients:
+        print("[alerts] no hay usuarios registrados ni ALERT_RECIPIENT — nada que enviar.")
+        return 0
+    sent_to = []
+    errors = 0
+    for r in recipients:
+        try:
+            send_email(subject, html_body, recipient=r)
+            sent_to.append(r)
+            print("[alerts] enviado a " + r)
+        except Exception as e:
+            errors += 1
+            print("[alerts] ERROR enviando a " + r + ": " + type(e).__name__ + ": " + str(e),
+                  file=sys.stderr)
+    if errors and not sent_to:
         return 1
 
     state[today] = {
@@ -114,9 +127,28 @@ def cmd_send(args):
         "sent_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "slot": args.slot,
         "items": n,
+        "recipients": sent_to,
+        "errors": errors,
     }
     _save_state(state)
     return 0
+
+
+def _list_recipients():
+    """Devuelve la lista de emails a notificar."""
+    import json
+    import os
+    users_path = REPO_ROOT / "data" / "users.json"
+    if users_path.exists():
+        try:
+            users = json.loads(users_path.read_text(encoding="utf-8"))
+            emails = [u.get("email") for u in users if u.get("email")]
+            if emails:
+                return emails
+        except Exception:
+            pass
+    fallback = os.environ.get("ALERT_RECIPIENT")
+    return [fallback] if fallback else []
 
 
 def main(argv=None):

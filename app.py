@@ -1,17 +1,59 @@
-"""Radar Legislativo — Punto de entrada (router de navegación).
+"""Vali Intelligence — Punto de entrada (router de navegación + auth gate).
 
-Define las páginas vía `st.navigation` para que el sidebar muestre los
-nombres correctos ("Radar Legislativo" y "Perú") en lugar de los nombres
-de archivo (`app`, `1_Peru`).
+Antes de cualquier dashboard:
+  - Si la URL trae ?token=... → verifica magic link y setea sesion.
+  - Si no hay sesion activa → renderea login page y STOP.
+  - Si hay sesion → registra paginas en st.navigation y corre el router.
 
 Corre con:
     python -m streamlit run app.py
 """
 from __future__ import annotations
 
+import os
 from pathlib import Path
 
 import streamlit as st
+
+# Cargar .env local (Streamlit Cloud usa st.secrets — se mapean a env vars
+# automaticamente via [secrets] section).
+_REPO_ROOT = Path(__file__).resolve().parent
+_env_file = _REPO_ROOT / ".env"
+if _env_file.exists():
+    for _line in _env_file.read_text(encoding="utf-8").splitlines():
+        _line = _line.strip()
+        if not _line or _line.startswith("#") or "=" not in _line:
+            continue
+        _k, _, _v = _line.partition("=")
+        _k = _k.strip()
+        _v = _v.strip().strip('"').strip("'")
+        if _k and _k not in os.environ:
+            os.environ[_k] = _v
+
+# Streamlit Cloud expone los secrets en st.secrets; los proyectamos a env vars
+# para que los modulos (alerts, auth) puedan leerlos con os.environ uniforme.
+try:
+    for _k, _v in dict(st.secrets).items():
+        if isinstance(_v, str) and _k not in os.environ:
+            os.environ[_k] = _v
+except Exception:
+    pass
+
+
+st.set_page_config(
+    page_title="Vali Intelligence",
+    page_icon="🧠",
+    layout="wide",
+    initial_sidebar_state="expanded",
+)
+
+
+# ─── AUTH GATE ──────────────────────────────────────────────────────────────
+# Si el usuario no esta autenticado, la funcion renderea el login y stop.
+from auth.login import gate_or_render  # noqa: E402
+
+if not gate_or_render():
+    st.stop()
 
 
 # Logo Vali grande en el tope del sidebar.
@@ -174,12 +216,11 @@ button[kind="header"]::before {
 )
 
 
-# Definir páginas explícitamente. Esto deshabilita la auto-detección de
-# `pages/` y nos da control total sobre los nombres en el sidebar.
+# Definir páginas explícitamente.
 home = st.Page(
     "home.py",
-    title="Radar Legislativo",
-    icon="🛰️",
+    title="Inicio",
+    icon="🧠",
     default=True,
     url_path="",
 )
@@ -196,17 +237,31 @@ ecuador = st.Page(
     url_path="ecuador",
 )
 
-# Navegación con secciones colapsables (Portafolio de herramientas / Países).
-# Los chevrons "expand_more" se rendean como texto porque la fuente Material
-# Symbols Rounded de Streamlit no carga. Truco: en el CSS de abajo escondemos
-# el texto crudo (font-size: 0) y le inyectamos "▼" en un ::before. La
-# rotación que Streamlit aplica al toggle al expandir/colapsar se hereda al
-# pseudo-elemento → la flecha apunta abajo cuando está abierto y a un lado
-# cuando está cerrado, naturalmente.
+
+# Sidebar: usuario logueado + logout
+from auth.login import current_user, logout  # noqa: E402
+
+with st.sidebar:
+    _user_email = current_user() or ""
+    if _user_email:
+        st.markdown(
+            '<div style="padding:12px 8px;border-top:1px solid rgba(255,255,255,0.1);'
+            'margin-top:auto;font-size:11px;color:rgba(255,255,255,0.6);'
+            'letter-spacing:0.04em;">'
+            f'<div>Sesion activa</div>'
+            f'<div style="color:#FFFFFF;font-weight:600;margin-top:2px;'
+            f'word-break:break-all;">{_user_email}</div></div>',
+            unsafe_allow_html=True,
+        )
+        if st.button("Cerrar sesion", use_container_width=True):
+            logout()
+            st.rerun()
+
+
 nav = st.navigation(
     {
-        "Portafolio de herramientas": [home],
-        "Países": [peru, ecuador],
+        "Vali Intelligence": [home],
+        "Radar Legislativo": [peru, ecuador],
     },
     position="sidebar",
 )
