@@ -34,12 +34,8 @@ def _find_db_path() -> Path | None:
     return None
 
 
-st.set_page_config(
-    page_title="Radar Legislativo · Ecuador",
-    page_icon="🇪🇨",
-    layout="wide",
-    initial_sidebar_state="expanded",
-)
+# st.set_page_config NO se llama acá: ya lo hace app.py (entry de st.navigation).
+# Llamarlo dos veces tira StreamlitAPIException y rompe la página.
 
 
 # ====================== CSS (estética Vali, idéntica a Perú) ======================

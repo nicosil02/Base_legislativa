@@ -241,6 +241,27 @@ ecuador = st.Page(
 # Sidebar: usuario logueado + logout
 from auth.login import current_user, logout  # noqa: E402
 
+# CSS específico para el botón "Cerrar sesión" en el sidebar — sin esto
+# el texto blanco del sidebar global lo deja invisible (white on white).
+st.markdown(
+    """<style>
+    section[data-testid="stSidebar"] [data-testid="stBaseButton-secondary"],
+    section[data-testid="stSidebar"] button[kind="secondary"] {
+        background: rgba(255,255,255,0.12) !important;
+        color: #FFFFFF !important;
+        border: 1px solid rgba(255,255,255,0.25) !important;
+        font-weight: 600 !important;
+    }
+    section[data-testid="stSidebar"] [data-testid="stBaseButton-secondary"]:hover,
+    section[data-testid="stSidebar"] button[kind="secondary"]:hover {
+        background: rgba(255,255,255,0.22) !important;
+        border-color: rgba(255,255,255,0.5) !important;
+        color: #FFFFFF !important;
+    }
+    </style>""",
+    unsafe_allow_html=True,
+)
+
 with st.sidebar:
     _user_email = current_user() or ""
     if _user_email:
@@ -253,7 +274,7 @@ with st.sidebar:
             f'word-break:break-all;">{_user_email}</div></div>',
             unsafe_allow_html=True,
         )
-        if st.button("Cerrar sesion", use_container_width=True):
+        if st.button("Cerrar sesion", use_container_width=True, type="secondary"):
             logout()
             st.rerun()
 
