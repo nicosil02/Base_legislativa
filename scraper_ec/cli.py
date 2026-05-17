@@ -152,6 +152,50 @@ def cmd_show(args) -> int:
     return 0
 
 
+def cmd_snapshot(args) -> int:
+    """Comprime proyectos_ec.db a data/proyectos_ec.db.gz.
+
+    El snapshot es lo que Streamlit Cloud usa al arrancar (el filesystem
+    es efimero, no puede persistir la DB enriquecida). Despues de
+    enriquecer documentos localmente, corre este comando + commit + push.
+    """
+    import gzip
+    import shutil
+    from pathlib import Path
+
+    repo_root = Path(args.db).resolve().parent if args.db else Path.cwd()
+    db_path = Path(args.db).resolve()
+    if not db_path.exists():
+        print(f"ERROR: no encontre {db_path}")
+        return 1
+
+    # data/ esta a nivel del repo root. Buscamos el directorio data/ subiendo.
+    here = db_path.parent
+    data_dir = here / "data"
+    if not data_dir.exists():
+        # Subir hasta encontrarlo
+        for _ in range(5):
+            here = here.parent
+            if (here / "data").exists():
+                data_dir = here / "data"
+                break
+    if not data_dir.exists():
+        data_dir = db_path.parent / "data"
+        data_dir.mkdir(parents=True, exist_ok=True)
+
+    out_path = data_dir / "proyectos_ec.db.gz"
+    print(f"Comprimiendo {db_path.name} ({db_path.stat().st_size:,} bytes) → {out_path.name}...")
+    with db_path.open("rb") as f_in, gzip.open(out_path, "wb", compresslevel=9) as f_out:
+        shutil.copyfileobj(f_in, f_out)
+    print(f"Snapshot listo: {out_path} ({out_path.stat().st_size:,} bytes)")
+    print()
+    print("Para sincronizar con Streamlit Cloud:")
+    print(f"  git add {out_path.relative_to(here.parent if data_dir.parent != here else here)}")
+    print('  git commit -m "Snapshot EC con documentos enriquecidos"')
+    print("  git push")
+    return 0
+
+
 def cmd_fix_typos(args) -> int:
     """Aplica COMISION_TYPOS a la data ya en la DB. Útil tras agregar nuevos
     typos al diccionario, o tras una primera importación con typos viejos."""
@@ -301,6 +345,11 @@ def main(argv: list[str] | None = None) -> int:
     s.set_defaults(func=cmd_show)
 
     sub.add_parser("fix-typos", help="Corrige typos conocidos en comisiones (ej: 'Bodiversidad')").set_defaults(func=cmd_fix_typos)
+
+    sub.add_parser(
+        "snapshot",
+        help="Comprime proyectos_ec.db a data/proyectos_ec.db.gz para sync con Streamlit Cloud."
+    ).set_defaults(func=cmd_snapshot)
 
     s = sub.add_parser(
         "enriquecer-documentos",
