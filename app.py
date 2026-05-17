@@ -50,20 +50,40 @@ st.set_page_config(
 
 # ─── BOOTSTRAP DE DBs (Streamlit Cloud no tiene filesystem persistente) ─────
 # Si las DBs no existen en disk, las restauramos desde snapshots commiteados.
+# Si existen pero el .gz del repo es más nuevo (ej. tras un deploy con nuevo
+# snapshot generado por GH Actions), re-descomprime. Esto resuelve el bug de
+# Streamlit Cloud donde el .db quedaba "pegado" en una versión vieja porque
+# el bootstrap original solo corría cuando el .db no existía.
+# En local respeta tus updates: `scraper update` deja el .db con mtime > gz,
+# por lo que no se re-descomprime.
 def _bootstrap_dbs():
     import gzip
     import shutil
+
+    def _needs_restore(db_path: Path, gz_path: Path) -> str | None:
+        """Devuelve el motivo si hay que re-descomprimir, o None si no."""
+        if not gz_path.exists():
+            return None
+        if not db_path.exists():
+            return "missing"
+        try:
+            if gz_path.stat().st_mtime > db_path.stat().st_mtime:
+                return "stale"
+        except OSError:
+            return "missing"
+        return None
 
     repo_root = Path(__file__).resolve().parent
 
     # Perú: decomprimir data/proyectos.db.gz (14 MB) → proyectos.db (78 MB)
     pe_db = repo_root / "proyectos.db"
     pe_gz = repo_root / "data" / "proyectos.db.gz"
-    if not pe_db.exists() and pe_gz.exists():
+    reason = _needs_restore(pe_db, pe_gz)
+    if reason:
         try:
             with gzip.open(pe_gz, "rb") as f_in, pe_db.open("wb") as f_out:
                 shutil.copyfileobj(f_in, f_out)
-            print(f"[bootstrap] proyectos.db restored from gz ({pe_db.stat().st_size} bytes)")
+            print(f"[bootstrap] proyectos.db restored from gz ({reason}, {pe_db.stat().st_size} bytes)")
         except Exception as e:
             print(f"[bootstrap] error restoring PE DB: {e}")
 
@@ -72,11 +92,12 @@ def _bootstrap_dbs():
     ec_db = repo_root / "proyectos_ec.db"
     ec_gz = repo_root / "data" / "proyectos_ec.db.gz"
     ec_csv = repo_root / "data" / "ppless_listado_2025-2029_snapshot.csv"
-    if not ec_db.exists() and ec_gz.exists():
+    reason = _needs_restore(ec_db, ec_gz)
+    if reason:
         try:
             with gzip.open(ec_gz, "rb") as f_in, ec_db.open("wb") as f_out:
                 shutil.copyfileobj(f_in, f_out)
-            print(f"[bootstrap] proyectos_ec.db restored from gz ({ec_db.stat().st_size} bytes)")
+            print(f"[bootstrap] proyectos_ec.db restored from gz ({reason}, {ec_db.stat().st_size} bytes)")
         except Exception as e:
             print(f"[bootstrap] error restoring EC DB from gz: {e}")
     elif not ec_db.exists() and ec_csv.exists():
