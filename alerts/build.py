@@ -47,11 +47,15 @@ def _open_ro(path):
 
 
 def _peru_new_pls(conn, since_iso):
+    # Filtramos por fec_presentacion (fecha oficial) y no first_seen_at
+    # (cuando lo vio nuestro scraper) para evitar ruido el primer dia
+    # despues de un bootstrap masivo. Compara date() para ser tolerante a
+    # formatos ISO con timestamp vs date-only.
     rows = conn.execute(
         """SELECT per_par_id, pley_num, proyecto_ley, titulo, tema, estado,
                   fec_presentacion, url_portal
            FROM proyectos
-           WHERE first_seen_at >= ?
+           WHERE date(fec_presentacion) >= date(?)
            ORDER BY tema, fec_presentacion DESC""",
         (since_iso,),
     ).fetchall()
@@ -78,7 +82,7 @@ def _peru_new_dictamenes(conn, since_iso):
                   s.fecha AS changed_at
            FROM seguimientos s
            JOIN proyectos p ON p.per_par_id = s.per_par_id AND p.pley_num = s.pley_num
-           WHERE s.fecha >= ?
+           WHERE date(s.fecha) >= date(?)
              AND UPPER(s.estado) LIKE '%DICTAMEN%'
            ORDER BY p.tema, s.fecha DESC""",
         (since_iso,),
@@ -102,7 +106,7 @@ def _ecuador_new_pls(conn, since_iso):
     rows = conn.execute(
         """SELECT n_tramite, titulo, tema, estado, fec_presentacion
            FROM proyectos
-           WHERE first_seen_at >= ?
+           WHERE date(fec_presentacion) >= date(?)
            ORDER BY tema, fec_presentacion DESC""",
         (since_iso,),
     ).fetchall()
@@ -126,7 +130,7 @@ def _ecuador_new_dictamenes(conn, since_iso):
                    p.fec_presentacion, h.changed_at
             FROM historial_cambios h
             JOIN proyectos p ON p.n_tramite = h.n_tramite
-            WHERE h.changed_at >= ?
+            WHERE date(h.changed_at) >= date(?)
               AND h.campo = 'estado'
               AND h.valor_despues IN ({placeholders})
             ORDER BY p.tema, h.changed_at DESC""",
