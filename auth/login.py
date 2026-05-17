@@ -28,36 +28,51 @@ SESSION_TTL_SECONDS = 30 * 24 * 60 * 60
 COOKIE_NAME = "vi_session"
 
 
-def _get_cookie_controller():
-    """Devuelve un CookieController cacheado en session_state."""
-    if "_cookie_ctrl" not in st.session_state:
-        try:
-            from streamlit_cookies_controller import CookieController
-            st.session_state["_cookie_ctrl"] = CookieController(key="vi_cookies")
-        except Exception as e:
-            print("[auth] no pude instanciar CookieController: " + str(e))
-            st.session_state["_cookie_ctrl"] = None
-    return st.session_state["_cookie_ctrl"]
+def _set_cookie_via_js(name, value, max_age_seconds):
+    """Setea una cookie via JS injectado en un iframe de altura 0.
+
+    Streamlit `components.v1.html` usa srcdoc iframes, que son SAME-ORIGIN
+    con el parent. Por lo tanto `document.cookie = "..."` dentro del iframe
+    setea cookies en el dominio del parent — y `st.context.cookies` las
+    puede leer en el proximo request.
+
+    Esto reemplaza `streamlit-cookies-controller` que tenia issues de
+    origen/timing en Streamlit Cloud.
+    """
+    import streamlit.components.v1 as components
+    # SameSite=Lax permite que la cookie viaje en navegaciones top-level
+    # (incluyendo <a href> hard-nav). Secure es necesario para HTTPS.
+    safe_value = value.replace('"', '').replace(";", "")  # defensa basica
+    js = (
+        '<script>'
+        f'document.cookie = "{name}={safe_value}; '
+        f'path=/; max-age={max_age_seconds}; SameSite=Lax; Secure";'
+        '</script>'
+    )
+    components.html(js, height=0)
+
+
+def _clear_cookie_via_js(name):
+    import streamlit.components.v1 as components
+    js = (
+        '<script>'
+        f'document.cookie = "{name}=; path=/; max-age=0; SameSite=Lax; Secure";'
+        '</script>'
+    )
+    components.html(js, height=0)
 
 
 def _save_session_cookie(email):
-    ctrl = _get_cookie_controller()
-    if ctrl is None:
-        return
     try:
         long_token = sign_token(email, ttl_seconds=SESSION_TTL_SECONDS)
-        # max_age en segundos; el component lo traduce a una Max-Age cookie attr.
-        ctrl.set(COOKIE_NAME, long_token, max_age=SESSION_TTL_SECONDS)
+        _set_cookie_via_js(COOKIE_NAME, long_token, SESSION_TTL_SECONDS)
     except Exception as e:
         print("[auth] error guardando cookie: " + str(e))
 
 
 def _clear_session_cookie():
-    ctrl = _get_cookie_controller()
-    if ctrl is None:
-        return
     try:
-        ctrl.remove(COOKIE_NAME)
+        _clear_cookie_via_js(COOKIE_NAME)
     except Exception:
         pass
 
@@ -65,11 +80,10 @@ def _clear_session_cookie():
 def _read_cookie_server_side(name):
     """Lee una cookie usando st.context.cookies (Streamlit 1.36+).
 
-    Esto es SERVER-SIDE — lee de los headers HTTP del request. No tiene
-    timing issue con JS. Funciona en el primer render despues de hard-nav.
+    Server-side, lee de headers HTTP del request. No tiene timing issues
+    con JS. Funciona en el primer render incluso despues de hard-nav.
     """
     try:
-        # st.context.cookies puede ser un dict-like o un Mapping
         cookies = st.context.cookies
         if cookies:
             return cookies.get(name)
@@ -79,30 +93,12 @@ def _read_cookie_server_side(name):
 
 
 def _restore_session_from_cookie():
-    """Lee cookie + setea session_state.
-
-    Estrategia:
-      1) st.context.cookies (server-side, instantaneo, recomendado)
-      2) Fallback: streamlit-cookies-controller (client-side, async, lento)
-    """
+    """Lee la cookie via st.context.cookies + setea session_state."""
     if st.session_state.get("user_email"):
         return True
-
-    # Path principal: leer del request HTTP. Siempre disponible.
     token = _read_cookie_server_side(COOKIE_NAME)
-
-    # Fallback: cookie controller (puede dar None la primera vez).
-    if not token:
-        ctrl = _get_cookie_controller()
-        if ctrl is not None:
-            try:
-                token = ctrl.get(COOKIE_NAME)
-            except Exception:
-                token = None
-
     if not token:
         return False
-
     payload = verify_token(token)
     if not payload:
         return False
