@@ -1,19 +1,32 @@
-"""SMTP sender. Soporta Gmail/Google Workspace via app password.
+"""Email sender via Resend API (https://resend.com).
+
+Resend es un servicio transaccional moderno con free tier de 3000 emails/mes
+y 100/dia. NO requiere SMTP ni acceso a Google Workspace admin.
 
 Variables de entorno requeridas:
-    GMAIL_USER           - email del remitente
-    GMAIL_APP_PASSWORD   - app password generado en Google Account
-    ALERT_RECIPIENT      - email del destinatario (default: GMAIL_USER)
+    RESEND_API_KEY    - API key (re_XXXXX), generada en https://resend.com/api-keys
+    ALERT_RECIPIENT   - email del destinatario
+
+Variables de entorno opcionales:
+    RESEND_FROM       - direccion remitente. Por default usa el
+                        onboarding@resend.dev de Resend (no necesita
+                        verificacion de dominio). Para mandar desde
+                        @valiconsultores.com hace falta verificar el
+                        dominio en Resend con DNS records.
 
 Tambien soporta un archivo .env en la raiz del proyecto.
 """
 from __future__ import annotations
 
+import json
 import os
-import smtplib
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
+import urllib.error
+import urllib.request
 from pathlib import Path
+
+
+API_URL = "https://api.resend.com/emails"
+DEFAULT_FROM = "Radar Legislativo <onboarding@resend.dev>"
 
 
 def _load_dotenv(path):
@@ -33,32 +46,49 @@ def _load_dotenv(path):
 def _config():
     repo_root = Path(__file__).resolve().parent.parent
     _load_dotenv(repo_root / ".env")
-    user = os.environ.get("GMAIL_USER")
-    pw = os.environ.get("GMAIL_APP_PASSWORD")
-    to = os.environ.get("ALERT_RECIPIENT") or user
+    api_key = os.environ.get("RESEND_API_KEY")
+    to = os.environ.get("ALERT_RECIPIENT")
+    sender = os.environ.get("RESEND_FROM") or DEFAULT_FROM
     missing = []
-    if not user:
-        missing.append("GMAIL_USER")
-    if not pw:
-        missing.append("GMAIL_APP_PASSWORD")
+    if not api_key:
+        missing.append("RESEND_API_KEY")
+    if not to:
+        missing.append("ALERT_RECIPIENT")
     if missing:
         raise RuntimeError(
             "Faltan variables de entorno: " + ", ".join(missing) +
             ". Definilas via .env o env vars. Ver alerts/send.py docstring."
         )
-    return {"user": user, "password": pw, "recipient": to}
+    return {"api_key": api_key, "recipient": to, "sender": sender}
 
 
 def send_email(subject, html_body, recipient=None):
     cfg = _config()
-    msg = MIMEMultipart("alternative")
-    msg["Subject"] = subject
-    msg["From"] = "Radar Legislativo <" + cfg["user"] + ">"
-    msg["To"] = recipient or cfg["recipient"]
-    msg.attach(MIMEText(html_body, "html", "utf-8"))
-    plain = "Tu cliente de email no soporta HTML. Abri la version web."
-    msg.attach(MIMEText(plain, "plain", "utf-8"))
-    with smtplib.SMTP_SSL("smtp.gmail.com", 465, timeout=20) as s:
-        s.login(cfg["user"], cfg["password"])
-        s.sendmail(cfg["user"], [msg["To"]], msg.as_string())
-    return msg["To"]
+    payload = {
+        "from": cfg["sender"],
+        "to": [recipient or cfg["recipient"]],
+        "subject": subject,
+        "html": html_body,
+    }
+    body = json.dumps(payload).encode("utf-8")
+    req = urllib.request.Request(
+        API_URL,
+        data=body,
+        method="POST",
+        headers={
+            "Authorization": "Bearer " + cfg["api_key"],
+            "Content-Type": "application/json",
+        },
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=20) as resp:
+            resp_body = resp.read().decode("utf-8", errors="replace")
+            data = json.loads(resp_body) if resp_body else {}
+            email_id = data.get("id", "?")
+            print("[resend] enviado id=" + email_id)
+            return payload["to"][0]
+    except urllib.error.HTTPError as e:
+        err_body = e.read().decode("utf-8", errors="replace")
+        raise RuntimeError(
+            "Resend HTTP " + str(e.code) + ": " + err_body[:500]
+        ) from None
