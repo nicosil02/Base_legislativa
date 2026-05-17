@@ -244,22 +244,20 @@ def _enrich_single(page, n_tramite: str, archives_buffer: list[dict]) -> list[di
         except Exception:
             fase_per_index.append("")
 
-    # Click cada attach_file. Después del primer click, el modal muestra un
-    # sub-panel con los archivos que intercepta clicks subsiguientes; por eso
-    # usamos force=True (bypass actionability) y cerramos cualquier overlay
-    # extra antes de la siguiente iteración. Como el response listener corre
-    # async, capturará el archive sin importar si el click "stricto" funciona.
+    # Click cada attach_file via dispatch_event('click'), que envia el evento
+    # directamente al elemento sin chequear visibilidad/oclusion. Es el unico
+    # approach que funciona cuando el primer click abre un sub-panel que cubre
+    # a los siguientes attach_files de la lista. El response listener corre
+    # async y captura las archives sin importar si el click "visual" funciona.
     for i in range(n_attach):
         try:
-            # Re-querear el locator cada vez (el DOM puede mutar tras cada click)
             current = page.locator(SEL_MODAL_ATTACH)
             if i >= current.count():
                 break
-            current.nth(i).click(force=True, timeout=4000)
-            page.wait_for_timeout(1500)  # esperar respuesta + listener
+            # dispatch_event('click') bypassa actionability + overlays.
+            current.nth(i).dispatch_event("click", timeout=4000)
+            page.wait_for_timeout(1500)
         except Exception as e:
-            # Logueamos pero no abortamos: el archive ya pudo haber sido capturado
-            # por el listener desde el response anterior.
             print(f"    [warn] attach {i+1}/{n_attach}: {type(e).__name__}: {str(e)[:80]}")
             continue
 
