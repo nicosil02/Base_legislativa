@@ -17,3 +17,6 @@ update.log
 !data/
 !data/ProyectosDeLey.xlsx
 !data/proyectos.db.gz
+
+# Estado del scheduler de alertas (commiteado por GH Actions)
+!data/alert_sent_log.json
