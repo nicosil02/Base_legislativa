@@ -78,6 +78,8 @@ def send_email(subject, html_body, recipient=None):
         headers={
             "Authorization": "Bearer " + cfg["api_key"],
             "Content-Type": "application/json",
+            "User-Agent": "Mozilla/5.0 (RadarLegislativo) Python-urllib",
+            "Accept": "application/json",
         },
     )
     try:
