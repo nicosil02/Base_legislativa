@@ -39,12 +39,9 @@ def _find_db_path() -> Path | None:
             return p.resolve()
     return None
 
-st.set_page_config(
-    page_title="Radar Legislativo · Perú",
-    page_icon="🇵🇪",
-    layout="wide",
-    initial_sidebar_state="expanded",
-)
+# st.set_page_config NO se llama acá porque ya lo hace app.py (entry point
+# del st.navigation). Llamarlo dos veces tira StreamlitAPIException y rompe
+# el render de la página.
 
 # El logo Vali se setea desde app.py (entrada de navegación). No hace falta
 # repetir st.logo() en cada página.

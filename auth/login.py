@@ -92,14 +92,19 @@ def _render_login_styles():
         .stApp { background-color: #F4F6F8 !important; }
         section[data-testid="stSidebar"] { display: none !important; }
         [data-testid="stHeader"] { background: transparent !important; }
+        [data-testid="stToolbar"] { display: none !important; }
         .block-container {
             max-width: 480px !important;
             padding-top: 8vh !important;
             font-family: 'Inter', sans-serif !important;
         }
-        .vi-card {
-            background: #FFFFFF; border: 1px solid #CFD9E0;
-            border-radius: 16px; padding: 40px 36px; margin-top: 24px;
+        /* Estilo del st.container(border=True) — actua como card */
+        div[data-testid="stVerticalBlockBorderWrapper"] {
+            background: #FFFFFF !important;
+            border: 1px solid #CFD9E0 !important;
+            border-radius: 16px !important;
+            padding: 40px 36px !important;
+            margin-top: 24px !important;
         }
         .vi-eyebrow {
             font-size: 11px; font-weight: 800; letter-spacing: 0.28em;
@@ -173,51 +178,56 @@ def render_login_page():
         '</div>',
         unsafe_allow_html=True,
     )
-    st.markdown('<div class="vi-card">', unsafe_allow_html=True)
 
-    sent = st.session_state.get("magic_sent_to")
-    if sent:
-        st.markdown(
-            '<div class="vi-eyebrow">Link enviado</div>'
-            '<p class="vi-sub">Te mandamos un link de acceso a '
-            '<strong>' + sent + '</strong>. Revisa tu inbox (y spam) y haz '
-            'click en el boton. El link es valido por 15 minutos.</p>',
-            unsafe_allow_html=True,
-        )
-        if st.button("Usar otro email", type="secondary"):
-            del st.session_state["magic_sent_to"]
-            st.rerun()
-    else:
-        st.markdown(
-            '<div class="vi-eyebrow">Iniciar sesion / registrarse</div>'
-            '<p class="vi-sub">Ingresa tu correo corporativo '
-            '<strong>@valiconsultores.com</strong>. Te vamos a mandar un '
-            'link para acceder sin password.</p>',
-            unsafe_allow_html=True,
-        )
-        with st.form("login_form", clear_on_submit=False):
-            email = st.text_input(
-                "Email",
-                placeholder="nombre.apellido@valiconsultores.com",
-                label_visibility="collapsed",
+    # st.container con borde = card real (los widgets sí viven dentro).
+    # `<div class="vi-card">` por markdown NO funciona porque Streamlit
+    # renderea cada widget en su propio container y la card queda vacia.
+    with st.container(border=True):
+        sent = st.session_state.get("magic_sent_to")
+        if sent:
+            st.markdown(
+                '<div class="vi-eyebrow">Link enviado</div>'
+                '<p class="vi-sub">Te mandamos un link de acceso a '
+                '<strong>' + sent + '</strong>. Revisa tu inbox (y spam) y '
+                'haz click en el boton. El link es valido por 15 minutos.</p>',
+                unsafe_allow_html=True,
             )
-            submitted = st.form_submit_button("Enviar link de acceso")
-            if submitted:
-                email = (email or "").strip().lower()
-                if not EMAIL_RE.match(email):
-                    st.error("Email invalido.")
-                elif not email.endswith(ALLOWED_DOMAIN):
-                    st.error("Solo emails @valiconsultores.com pueden acceder.")
-                else:
-                    token = sign_token(email)
-                    try:
-                        _send_magic_email(email, token)
-                        st.session_state["magic_sent_to"] = email
-                        st.rerun()
-                    except Exception as e:
-                        st.error("Error mandando el link: " + str(e)[:200])
+            if st.button("Usar otro email", type="secondary",
+                         use_container_width=True):
+                del st.session_state["magic_sent_to"]
+                st.rerun()
+        else:
+            st.markdown(
+                '<div class="vi-eyebrow">Iniciar sesion / registrarse</div>'
+                '<p class="vi-sub">Ingresa tu correo corporativo '
+                '<strong>@valiconsultores.com</strong>. Te vamos a mandar un '
+                'link para acceder sin password.</p>',
+                unsafe_allow_html=True,
+            )
+            with st.form("login_form", clear_on_submit=False, border=False):
+                email = st.text_input(
+                    "Email",
+                    placeholder="nombre.apellido@valiconsultores.com",
+                    label_visibility="collapsed",
+                )
+                submitted = st.form_submit_button(
+                    "Enviar link de acceso", use_container_width=True
+                )
+                if submitted:
+                    email = (email or "").strip().lower()
+                    if not EMAIL_RE.match(email):
+                        st.error("Email invalido.")
+                    elif not email.endswith(ALLOWED_DOMAIN):
+                        st.error("Solo emails @valiconsultores.com pueden acceder.")
+                    else:
+                        token = sign_token(email)
+                        try:
+                            _send_magic_email(email, token)
+                            st.session_state["magic_sent_to"] = email
+                            st.rerun()
+                        except Exception as e:
+                            st.error("Error mandando el link: " + str(e)[:200])
 
-    st.markdown('</div>', unsafe_allow_html=True)
     st.markdown(
         '<div class="vi-footer">Vali Intelligence &middot; '
         'Asuntos Publicos y de Gobierno</div>',
