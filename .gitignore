@@ -20,3 +20,6 @@ update.log
 
 # Estado del scheduler de alertas (commiteado por GH Actions)
 !data/alert_sent_log.json
+
+# Lista de usuarios registrados (escrito por la app via GitHub API)
+!data/users.json
