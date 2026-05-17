@@ -293,12 +293,12 @@ publicados_ec = f"{s_ec['publicados']:,}" if s_ec["publicados"] is not None else
 st.markdown('<div class="section-label">Países</div>', unsafe_allow_html=True)
 cols = st.columns([1, 1, 1])
 
-# Perú — card visual (sin <a href> que hace HARD nav y rompe la sesion).
-# La navegacion la hace el st.page_link de abajo que usa SOFT nav.
+# Perú — card completa clickeable. Hard-nav del browser, pero las cookies
+# de auth (vi_session, 30 dias) preservan la sesion al rerender en /peru.
 with cols[0]:
     st.markdown(
         f"""
-        <div class="country-card">
+        <a href="/peru" target="_self" class="country-card">
             <div class="country-header">
                 <div class="flag">🇵🇪</div>
                 <div class="name">Perú</div>
@@ -314,18 +314,17 @@ with cols[0]:
                     <div class="stat-label">Publicadas</div>
                 </div>
             </div>
-        </div>
+            <div class="cta">Ver dashboard ↗</div>
+        </a>
         """,
         unsafe_allow_html=True,
     )
-    st.page_link("pages/1_Peru.py", label="Abrir dashboard de Perú",
-                 icon="🇵🇪", use_container_width=True)
 
-# Ecuador — card visual + st.page_link (soft nav)
+# Ecuador — card completa clickeable.
 with cols[1]:
     st.markdown(
         f"""
-        <div class="country-card">
+        <a href="/ecuador" target="_self" class="country-card">
             <div class="country-header">
                 <div class="flag">🇪🇨</div>
                 <div class="name">Ecuador</div>
@@ -341,12 +340,11 @@ with cols[1]:
                     <div class="stat-label">Reg. Oficial</div>
                 </div>
             </div>
-        </div>
+            <div class="cta">Ver dashboard ↗</div>
+        </a>
         """,
         unsafe_allow_html=True,
     )
-    st.page_link("pages/2_Ecuador.py", label="Abrir dashboard de Ecuador",
-                 icon="🇪🇨", use_container_width=True)
 
 with cols[2]:
     st.markdown("&nbsp;", unsafe_allow_html=True)
