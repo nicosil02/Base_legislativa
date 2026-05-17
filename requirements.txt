@@ -8,3 +8,6 @@ streamlit-aggrid>=0.3.4
 # públicas de PDFs desde el portal Ppless v2 (Angular SPA).
 # Requiere también `python -m playwright install chromium` después del pip install.
 playwright>=1.59
+# Cookies del browser para persistir la sesion del usuario (30 dias).
+# Sin esto, cada hard-nav o cierre de pestaña pierde el login.
+streamlit-cookies-controller>=0.0.4

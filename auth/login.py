@@ -1,4 +1,10 @@
-"""Magic link auth flow: render login UI + send magic email + handle callback."""
+"""Magic link auth flow: render login UI + send magic email + handle callback.
+
+Persistencia: cookie `vi_session` con un token firmado de 30 dias. El cookie
+sobrevive cierre de pestana y hard-navigations (como los <a href> de las
+country cards). Sin esto, cada hard-nav perdia el session_state y el usuario
+caia en un loop de login.
+"""
 from __future__ import annotations
 
 import base64
@@ -15,6 +21,66 @@ from auth.tokens import sign_token, verify_token
 
 ALLOWED_DOMAIN = "@valiconsultores.com"
 EMAIL_RE = re.compile(r"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$")
+
+# Token firmado de sesion (cookie): TTL 30 dias.
+SESSION_TTL_SECONDS = 30 * 24 * 60 * 60
+COOKIE_NAME = "vi_session"
+
+
+def _get_cookie_controller():
+    """Devuelve un CookieController cacheado en session_state.
+
+    Cacheamos en session_state para no remontar el componente JS en cada rerun
+    (es caro y a veces da problemas de timing al leer cookies).
+    """
+    if "_cookie_ctrl" not in st.session_state:
+        try:
+            from streamlit_cookies_controller import CookieController
+            st.session_state["_cookie_ctrl"] = CookieController(key="vi_cookies")
+        except Exception:
+            st.session_state["_cookie_ctrl"] = None
+    return st.session_state["_cookie_ctrl"]
+
+
+def _save_session_cookie(email):
+    ctrl = _get_cookie_controller()
+    if ctrl is None:
+        return
+    try:
+        long_token = sign_token(email, ttl_seconds=SESSION_TTL_SECONDS)
+        ctrl.set(COOKIE_NAME, long_token, max_age=SESSION_TTL_SECONDS)
+    except Exception:
+        pass
+
+
+def _clear_session_cookie():
+    ctrl = _get_cookie_controller()
+    if ctrl is None:
+        return
+    try:
+        ctrl.remove(COOKIE_NAME)
+    except Exception:
+        pass
+
+
+def _restore_session_from_cookie():
+    """Si hay cookie valido, setea session_state.user_email."""
+    if st.session_state.get("user_email"):
+        return True
+    ctrl = _get_cookie_controller()
+    if ctrl is None:
+        return False
+    try:
+        token = ctrl.get(COOKIE_NAME)
+    except Exception:
+        token = None
+    if not token:
+        return False
+    payload = verify_token(token)
+    if not payload:
+        return False
+    st.session_state["user_email"] = payload["email"]
+    return True
 
 
 def _app_base_url():
@@ -78,6 +144,7 @@ def _handle_token_in_url():
         st.error("Tu email no esta autorizado.")
         return False
     st.session_state["user_email"] = email
+    _save_session_cookie(email)
     try:
         st.query_params.clear()
     except Exception:
@@ -244,14 +311,23 @@ def current_user():
 
 
 def logout():
+    _clear_session_cookie()
     for k in ("user_email", "magic_sent_to"):
         st.session_state.pop(k, None)
 
 
 def gate_or_render():
-    """Devuelve True si el usuario esta autenticado. Sino, renderea login."""
+    """Devuelve True si el usuario esta autenticado. Sino, renderea login.
+
+    Orden de chequeo:
+      1. ?token=... en URL (magic link recien clickeado) → setea sesion + cookie
+      2. Cookie persistente vi_session (login previo dentro de los 30 dias)
+      3. Si nada, renderea login y devuelve False
+    """
     _handle_token_in_url()
     if is_authenticated():
+        return True
+    if _restore_session_from_cookie():
         return True
     render_login_page()
     return False
