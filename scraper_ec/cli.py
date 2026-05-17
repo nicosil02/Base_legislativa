@@ -251,12 +251,22 @@ def cmd_enriquecer_documentos(args) -> int:
 
     db = _db(args)
     try:
-        # Lista de N. Trámite a enriquecer
-        sql = "SELECT n_tramite FROM proyectos"
+        # Lista de N. Trámite a enriquecer. Por default elegimos proyectos
+        # que NO tienen documentos en la DB (los que faltan procesar),
+        # ordenados por fec_presentacion DESC (mas recientes primero — son
+        # los que mas interesan). Con --force, ignora el filtro y procesa
+        # todos los que matcheen --estado / --limit.
         params: list = []
+        sql = "SELECT n_tramite FROM proyectos"
+        where = []
         if args.estado:
-            sql += " WHERE estado = ?"
+            where.append("estado = ?")
             params.append(args.estado)
+        if not args.force:
+            # Solo proyectos sin documentos enriquecidos
+            where.append("n_tramite NOT IN (SELECT DISTINCT n_tramite FROM documentos)")
+        if where:
+            sql += " WHERE " + " AND ".join(where)
         sql += " ORDER BY fec_presentacion DESC"
         if args.limit:
             sql += f" LIMIT {int(args.limit)}"
