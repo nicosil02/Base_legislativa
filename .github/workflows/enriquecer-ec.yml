@@ -1,11 +1,16 @@
-name: Enriquecer documentos Ecuador (Playwright)
+name: Actualizar Ecuador (CSV + documentos)
 
 on:
   schedule:
-    # 03:00 UTC = 10 PM Lima/Quito (todos los dias). Procesa hasta 100 PLs
-    # sin docs. Tras ~6-7 noches, los 622 PLs quedan enriquecidos. Despues
-    # solo trabaja sobre PLs nuevos que aparezcan.
+    # 03:00 UTC = 10 PM Lima/Quito — corrida principal nocturna (full enrich).
     - cron: '0 3 * * *'
+    # 13:00 UTC = 8 AM Lima/Quito (despues que la Asamblea abre).
+    # Mantiene la lista de PLs sincronizada durante el dia + enriquece nuevos.
+    - cron: '0 13 * * *'
+    # 17:00 UTC = 12 PM Lima/Quito.
+    - cron: '0 17 * * *'
+    # 21:00 UTC = 4 PM Lima/Quito (cierre del horario habil).
+    - cron: '0 21 * * *'
   workflow_dispatch:
     inputs:
       limit:
@@ -88,7 +93,23 @@ jobs:
           total = c.execute('SELECT COUNT(*) FROM proyectos').fetchone()[0]
           con_docs = c.execute('SELECT COUNT(DISTINCT n_tramite) FROM documentos').fetchone()[0]
           docs_total = c.execute('SELECT COUNT(*) FROM documentos').fetchone()[0]
-          print(f'[stats] proyectos={total} con_docs={con_docs} docs_total={docs_total} restantes={total-con_docs}')
+          print(f'[stats inicial] proyectos={total} con_docs={con_docs} docs_total={docs_total} restantes={total-con_docs}')
+          "
+
+      - name: Actualizar lista de proyectos (CSV download via Playwright)
+        run: |
+          # Descarga el CSV fresco del portal Ppless v2 + re-importa.
+          # Captura proyectos nuevos y cambios de estado en los existentes.
+          python -X utf8 -m scraper_ec.cli actualizar-csv || echo "[warn] actualizar-csv fallo, sigue con DB actual"
+
+      - name: Stats post-actualizar-csv
+        run: |
+          python -c "
+          import sqlite3
+          c = sqlite3.connect('proyectos_ec.db')
+          total = c.execute('SELECT COUNT(*) FROM proyectos').fetchone()[0]
+          con_docs = c.execute('SELECT COUNT(DISTINCT n_tramite) FROM documentos').fetchone()[0]
+          print(f'[stats post-csv] proyectos={total} con_docs={con_docs} restantes={total-con_docs}')
           "
 
       - name: Determinar parametros

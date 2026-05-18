@@ -34,6 +34,7 @@ from urllib.parse import quote
 
 PORTAL_URL = "https://proyectosdeley.asambleanacional.gob.ec/report"
 FILESERVICE = "https://proyectosdeley.asambleanacional.gob.ec/fileservice/file/download"
+SEL_BTN_CSV = 'button:has-text("CSV")'
 
 # Selectores reales del DOM de Ppless v2 (Streamlit 1.57 / Angular ~10)
 # verificados con `playwright eval_on_selector_all`.
@@ -58,6 +59,50 @@ def _build_download_url(filename: str, subdir: str) -> str:
         f"&system=ppless"
         f"&subDirectory={quote(subdir)}"
     )
+
+
+def download_csv(output_path, *, headless: bool = True, timeout_ms: int = 60000) -> bool:
+    """Descarga el CSV fresco del portal Ppless v2.
+
+    Navega a /report, switchea al tab 2.0 y clickea el boton CSV. Captura
+    la descarga via Playwright's expect_download y la guarda en output_path.
+
+    Devuelve True si se descargo OK, False si fallo.
+    """
+    from playwright.sync_api import sync_playwright, TimeoutError as PWTimeout
+    from pathlib import Path
+
+    output_path = Path(output_path)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+
+    with sync_playwright() as pw:
+        browser = pw.chromium.launch(headless=headless)
+        ctx = browser.new_context(accept_downloads=True)
+        page = ctx.new_page()
+        page.set_default_timeout(timeout_ms)
+        try:
+            page.goto(PORTAL_URL)
+            page.wait_for_selector(SEL_TAB_20, timeout=20000)
+            page.click(SEL_TAB_20)
+            # Esperar que la tabla del tab 2.0 cargue (el boton CSV aparece al cargar la tabla)
+            page.wait_for_timeout(3500)
+            # Click CSV y capturar el download
+            with page.expect_download(timeout=30000) as dl_info:
+                page.click(SEL_BTN_CSV, force=True)
+            dl = dl_info.value
+            dl.save_as(str(output_path))
+            size = output_path.stat().st_size
+            print(f"[csv] descargado {output_path.name} ({size:,} bytes)")
+            return size > 0
+        except PWTimeout as e:
+            print(f"[csv] timeout: {e}")
+            return False
+        except Exception as e:
+            print(f"[csv] error: {type(e).__name__}: {e}")
+            return False
+        finally:
+            ctx.close()
+            browser.close()
 
 
 def _parse_archives_response(body: str) -> list[dict]:
