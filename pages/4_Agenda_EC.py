@@ -203,21 +203,32 @@ def load_catalogs() -> dict:
 @st.cache_data(ttl=60)
 def load_sesiones(fec_inicio: dt.date | None, fec_fin: dt.date | None) -> pd.DataFrame:
     conn = get_conn()
+    # "Nombre de sesión": SUMMARY con la cola "modalidad X" removida en SQL.
+    # Asi se ve igual de limpio que el de PE ("DÉCIMA TERCERA SESIÓN ORDINARIA
+    # DE LA COMISIÓN AGRARIA") y no mete "modalidad virtual" en el title.
     sql = """
       SELECT s.uid AS "UID",
              s.fecha AS "Fecha",
              s.hora_inicio AS "Hora",
-             s.nombre_comision AS "Comisión",
-             s.modalidad AS "Modalidad",
-             s.status AS "Estado",
-             s.summary AS "Título",
+             COALESCE(s.nombre_comision, '—') AS "Comisión",
+             COALESCE(s.status, '—') AS "Estado",
              (SELECT COUNT(*) FROM sesion_ec_pl_referenciado
                 WHERE uid=s.uid AND n_tramite IS NOT NULL) AS "_n_pls",
              (SELECT GROUP_CONCAT(COALESCE(p.n_tramite, m.n_tramite), ', ')
                 FROM sesion_ec_pl_referenciado m
                 LEFT JOIN proyectos p ON p.n_tramite = m.n_tramite
                 WHERE m.uid = s.uid AND m.n_tramite IS NOT NULL
-                ORDER BY m.score DESC) AS "PLs en agenda"
+                ORDER BY m.score DESC) AS "PLs en agenda",
+             -- Limpieza del SUMMARY: cortar en ", modalidad" / " modalidad"
+             TRIM(
+               CASE
+                 WHEN INSTR(LOWER(s.summary), ', modalidad') > 0
+                   THEN SUBSTR(s.summary, 1, INSTR(LOWER(s.summary), ', modalidad') - 1)
+                 WHEN INSTR(LOWER(s.summary), ' modalidad') > 0
+                   THEN SUBSTR(s.summary, 1, INSTR(LOWER(s.summary), ' modalidad') - 1)
+                 ELSE s.summary
+               END
+             ) AS "Nombre de sesión"
       FROM sesiones_ec s
     """
     where, params = [], []
@@ -364,10 +375,10 @@ elif con_pls == "Sin PLs":
 
 st.markdown(f"##### {len(df):,} sesión(es) de {len(df_full):,} en el rango")
 
-# Columnas que importan: fecha + hora + que comision + que PLs hay.
-# Modalidad (virtual/presencial) y Titulo redundantes (el titulo es el
-# nombre de la comision, ya en columna Comision).
-COLS_VISIBLES = ["Fecha", "Hora", "Comisión", "PLs en agenda"]
+# Orden + estilo de columnas espejando pages/3_Agenda_PE.py (que muestra
+# Fecha, Hora, Comision, Estado, PLs en agenda, Nombre). Sin "Modalidad"
+# (ya no nos sirve) y con Estado visible (antes solo era filtro).
+COLS_VISIBLES = ["Fecha", "Hora", "Comisión", "Estado", "PLs en agenda", "Nombre de sesión"]
 df_view = df[[c for c in COLS_VISIBLES if c in df.columns]].copy()
 
 # Reset index para que el index numerico (0..N) sea el row id que devuelve
@@ -392,7 +403,7 @@ if sel_rows:
         uid = df_with_uid.iloc[idx]["UID"]
         descripcion, location, fecha_sel, hora_sel = load_descripcion(uid)
         comision_sel = df_with_uid.iloc[idx].get("Comisión") or "—"
-        titulo_sel = df_with_uid.iloc[idx].get("Título") or "—"
+        titulo_sel = df_with_uid.iloc[idx].get("Nombre de sesión") or "—"
 
         st.markdown(
             f"""

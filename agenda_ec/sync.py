@@ -130,13 +130,39 @@ def upsert_events(conn: sqlite3.Connection, events: list[IcsEvent]) -> tuple[int
     return nuevos, actualizados
 
 
+def refresh_metadata(conn: sqlite3.Connection) -> int:
+    """Re-deriva nombre_comision y modalidad de los SUMMARY ya guardados.
+
+    Util cuando cambia la regex de extraccion: corre esto en lugar de
+    re-bajar todo el ICS.
+    """
+    rows = conn.execute(
+        "SELECT uid, summary, COALESCE(location, '') FROM sesiones_ec"
+    ).fetchall()
+    n = 0
+    with conn:
+        for uid, summary, location in rows:
+            comision = extract_comision(summary or "")
+            modalidad = extract_modalidad(summary or "", location)
+            conn.execute(
+                "UPDATE sesiones_ec SET nombre_comision=?, modalidad=? WHERE uid=?",
+                (comision, modalidad, uid),
+            )
+            n += 1
+    return n
+
+
 def rematch_all(conn: sqlite3.Connection) -> int:
     """Borra y recalcula los matches de PL para TODAS las sesiones.
+
+    Tambien refresca nombre_comision/modalidad por si cambio la regex.
 
     Precalcula la lista de proyectos y el IDF map UNA SOLA VEZ (no por
     sesion) para que sea O(N_sesiones * N_proyectos) en vez de
     O(N_sesiones * (N_proyectos * 2)).
     """
+    refresh_metadata(conn)
+    print(f"[agenda_ec] metadata refrescada (nombre_comision, modalidad)")
     pl_rows = [
         (r[0], r[1])
         for r in conn.execute(

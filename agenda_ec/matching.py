@@ -240,30 +240,55 @@ def find_matches(
 # ---------- Extracion de comision + modalidad desde SUMMARY ----------
 
 _MODALIDAD_RE = re.compile(r"\b(virtual|presencial|semi-?presencial|mixta)\b", re.IGNORECASE)
-_COMISION_RE = re.compile(
-    r"(?:Ses[ií]on\s+(?:de\s+la\s+)?Comisi[oó]n(?:\s+de\s+la\s+)?\s+(?:de\s+|del\s+)?)"
-    r"(.+?)(?:[\.,]|$|modalidad|virtual|presencial)",
-    re.IGNORECASE,
+# Encuentra la palabra "Comisión" y captura todo lo que viene despues.
+# El procesamiento adicional (cortar en delimitadores, limpiar prefijos)
+# se hace en codigo para mantener la regex simple y predecible.
+_COMISION_RE = re.compile(r"Comisi[oó]n\s+(.+)", re.IGNORECASE)
+# Stopwords del comienzo del nombre extraido (luego de "Comisión ")
+_PREFIX_DE_RE = re.compile(r"^(de\s+la\s+|de\s+los\s+|del\s+|de\s+)", re.IGNORECASE)
+# Delimitadores que cierran el nombre de la comision (lo que sigue es
+# modalidad, lugar, o info adicional que no es parte del nombre)
+_COMISION_END_TOKENS = (
+    ",", ".", ";",
+    " modalidad", " virtual", " presencial", " mixta", " semi-",
+    " en ", " - ", " – ",
 )
 
 
 def extract_comision(summary: str) -> str | None:
-    """Extrae el nombre de la comision del SUMMARY.
+    """Extrae el nombre de la comision del SUMMARY del VEVENT.
 
     Ejemplos:
       "Sesión de la Comisión de Justicia, modalidad virtual" -> "Justicia"
-      "Sesión Comisión de Educación, modalidad virtual"       -> "Educación"
-      "Continuación de la sesión N.º 965 del Pleno"           -> "Pleno"
+      "Sesión Comisión de Educación, modalidad virtual"     -> "Educación"
+      "Comisión de Soberanía Alimentaria"                   -> "Soberanía Alimentaria"
+      "Sesión de la Comisión de Transparencia y Participación Ciudadana" -> "Transparencia y Participación Ciudadana"
+      "Continuación de la sesión N.º 965 del Pleno"         -> "Pleno"
+      "Asamblea Nacional del Ecuador"                       -> None
     """
     if not summary:
         return None
-    if "pleno" in summary.lower():
+    s = summary.strip()
+    low = s.lower()
+    if "pleno" in low:
         return "Pleno"
-    m = _COMISION_RE.search(summary)
-    if m:
-        nombre = m.group(1).strip().rstrip(",;.")
-        return nombre or None
-    return None
+    if "comisi" not in low:
+        return None
+    m = _COMISION_RE.search(s)
+    if not m:
+        return None
+    rest = m.group(1)
+    # Cortar en el primer delimitador
+    rest_low = rest.lower()
+    cut_at = len(rest)
+    for tok in _COMISION_END_TOKENS:
+        idx = rest_low.find(tok)
+        if idx >= 0 and idx < cut_at:
+            cut_at = idx
+    rest = rest[:cut_at].strip()
+    # Limpiar prefijos "de la / del / de"
+    rest = _PREFIX_DE_RE.sub("", rest, count=1).strip()
+    return rest or None
 
 
 def extract_modalidad(summary: str, location: str = "") -> str | None:
@@ -278,3 +303,21 @@ def extract_modalidad(summary: str, location: str = "") -> str | None:
     if "palacio legislativo" in text or "piso" in text:
         return "presencial"
     return None
+
+
+def strip_modalidad(summary: str) -> str:
+    """Limpia el SUMMARY de la cola ", modalidad X" para mostrarlo
+    como titulo de sesion sin info redundante."""
+    if not summary:
+        return ""
+    # Cortar en ", modalidad" o ", virtual" / ", presencial"
+    s = summary.strip()
+    low = s.lower()
+    for tok in (", modalidad", ", virtual", ", presencial",
+                " modalidad virtual", " modalidad presencial",
+                "modalidad virtual", "modalidad presencial"):
+        idx = low.find(tok)
+        if idx >= 0:
+            s = s[:idx].rstrip(" ,.;")
+            low = s.lower()
+    return s
