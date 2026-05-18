@@ -81,7 +81,19 @@ def download_csv(output_path, *, headless: bool = True, timeout_ms: int = 60000)
         page = ctx.new_page()
         page.set_default_timeout(timeout_ms)
         try:
-            page.goto(PORTAL_URL)
+            # Retry de page.goto: la red del CI runner puede dar timeouts transient.
+            loaded = False
+            for attempt in (1, 2, 3):
+                try:
+                    page.goto(PORTAL_URL, timeout=60000, wait_until="domcontentloaded")
+                    loaded = True
+                    break
+                except PWTimeout as e:
+                    print(f"[csv][goto retry {attempt}/3] timeout: {e}")
+            if not loaded:
+                print("[csv] no pude cargar el portal tras 3 intentos.")
+                return False
+
             page.wait_for_selector(SEL_TAB_20, timeout=20000)
             page.click(SEL_TAB_20)
             # Esperar que la tabla del tab 2.0 cargue (el boton CSV aparece al cargar la tabla)
@@ -198,12 +210,33 @@ def enrich_documentos(
 
         context.on("response", on_response)
 
-        # 1. Cargar portal, switchear a tab 2.0
-        page.goto(PORTAL_URL)
+        # 1. Cargar portal con retry — page.goto puede timeout-ear si la red
+        # del runner CI esta lenta o el portal responde tarde. Reintentamos
+        # hasta 3 veces con wait_until=domcontentloaded (mas rapido que el
+        # default 'load' que espera todos los assets).
+        loaded = False
+        for attempt in (1, 2, 3):
+            try:
+                page.goto(PORTAL_URL, timeout=60000, wait_until="domcontentloaded")
+                loaded = True
+                break
+            except PWTimeout as e:
+                print(f"[goto retry {attempt}/3] timeout: {e}")
+        if not loaded:
+            print("Timeout cargando portal Ppless v2 tras 3 intentos — abortando.")
+            context.close()
+            browser.close()
+            stats["errores"] = len(targets)
+            return stats
+
         try:
-            page.wait_for_selector(SEL_TAB_20, timeout=15000)
+            page.wait_for_selector(SEL_TAB_20, timeout=20000)
             page.click(SEL_TAB_20)
-            page.wait_for_load_state("networkidle", timeout=15000)
+            # networkidle puede tardar mucho; un timeout chico + tolerar el fallo
+            try:
+                page.wait_for_load_state("networkidle", timeout=15000)
+            except PWTimeout:
+                page.wait_for_timeout(3000)  # fallback: sleep absoluto
         except PWTimeout:
             print("Timeout esperando tab 2.0 — abortando.")
             context.close()
