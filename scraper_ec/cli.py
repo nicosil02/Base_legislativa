@@ -152,6 +152,44 @@ def cmd_show(args) -> int:
     return 0
 
 
+def cmd_actualizar_csv(args) -> int:
+    """Descarga CSV fresco del portal Ppless v2 (Playwright) y re-importa.
+
+    Asi se sincroniza la lista de proyectos con el portal: aparecen nuevos
+    PLs y se actualizan los existentes. Equivalente a hacer en local:
+       1) Abrir Ppless v2, clickear tab 2.0, clickear boton CSV
+       2) python -m scraper_ec.cli importar-csv <archivo>
+    """
+    from pathlib import Path
+    from scraper_ec.playwright_detail import download_csv
+    from scraper_ec.csv_importer import import_csv
+
+    repo_root = Path(__file__).resolve().parent.parent
+    csv_path = repo_root / "data" / "ppless_listado_2025-2029_snapshot.csv"
+
+    print(f"[actualizar-csv] descargando CSV fresco a {csv_path.name}...")
+    ok = download_csv(csv_path, headless=not args.no_headless)
+    if not ok:
+        print("[actualizar-csv] FALLO la descarga. Aborto.")
+        return 1
+
+    db = _db(args)
+    try:
+        print("[actualizar-csv] importando a DB...")
+        stats = import_csv(csv_path, db)
+        print(f"  vistos:        {stats['vistos']:>5}")
+        print(f"  nuevos:        {stats['nuevos']:>5}")
+        print(f"  actualizados:  {stats['actualizados']:>5}")
+        print(f"  errores:       {stats['errores']:>5}")
+        if stats["cambios_por_campo"]:
+            print("\n  Cambios por campo:")
+            for campo, n in sorted(stats["cambios_por_campo"].items(), key=lambda x: -x[1]):
+                print(f"    {campo:<25} {n}")
+    finally:
+        db.close()
+    return 0
+
+
 def cmd_snapshot(args) -> int:
     """Comprime proyectos_ec.db a data/proyectos_ec.db.gz.
 
@@ -367,6 +405,14 @@ def main(argv: list[str] | None = None) -> int:
     s.set_defaults(func=cmd_show)
 
     sub.add_parser("fix-typos", help="Corrige typos conocidos en comisiones (ej: 'Bodiversidad')").set_defaults(func=cmd_fix_typos)
+
+    s = sub.add_parser(
+        "actualizar-csv",
+        help="Descarga CSV fresco del portal Ppless v2 (Playwright) y re-importa la lista de proyectos."
+    )
+    s.add_argument("--no-headless", action="store_true",
+                   help="Mostrar el browser (debug). Default: headless")
+    s.set_defaults(func=cmd_actualizar_csv)
 
     sub.add_parser(
         "snapshot",
