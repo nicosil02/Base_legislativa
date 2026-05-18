@@ -358,16 +358,13 @@ def _opciones(col: str) -> list[str]:
         return [TODOS]
     return [TODOS] + sorted({str(v) for v in df_full[col].dropna().unique() if str(v).strip()})
 
-fc = st.columns([1.6, 1, 1])
+fc = st.columns([1.6, 1])
 sel_comision = fc[0].selectbox("Comisión", _opciones("Comisión"))
-sel_estado = fc[1].selectbox("Estado", _opciones("Estado"))
-con_pls = fc[2].selectbox("Con PLs en agenda", ["Todas", "Solo con PLs", "Sin PLs"])
+con_pls = fc[1].selectbox("Con PLs en agenda", ["Todas", "Solo con PLs", "Sin PLs"])
 
 df = df_full
 if sel_comision != TODOS:
     df = df[df["Comisión"] == sel_comision]
-if sel_estado != TODOS:
-    df = df[df["Estado"] == sel_estado]
 if con_pls == "Solo con PLs":
     df = df[df["_n_pls"] > 0]
 elif con_pls == "Sin PLs":
@@ -375,10 +372,9 @@ elif con_pls == "Sin PLs":
 
 st.markdown(f"##### {len(df):,} sesión(es) de {len(df_full):,} en el rango")
 
-# Orden + estilo de columnas espejando pages/3_Agenda_PE.py (que muestra
-# Fecha, Hora, Comision, Estado, PLs en agenda, Nombre). Sin "Modalidad"
-# (ya no nos sirve) y con Estado visible (antes solo era filtro).
-COLS_VISIBLES = ["Fecha", "Hora", "Comisión", "Estado", "PLs en agenda", "Nombre de sesión"]
+# Columnas: Fecha, Hora, Comision, PLs en agenda, Nombre de sesion.
+# (Sin Estado — solo confunde, todas las sesiones del feed son CONFIRMED)
+COLS_VISIBLES = ["Fecha", "Hora", "Comisión", "PLs en agenda", "Nombre de sesión"]
 df_view = df[[c for c in COLS_VISIBLES if c in df.columns]].copy()
 
 # Reset index para que el index numerico (0..N) sea el row id que devuelve
