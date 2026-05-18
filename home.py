@@ -286,6 +286,36 @@ def stats_agenda() -> dict:
 
 
 @st.cache_data(ttl=60)
+def stats_agenda_ec() -> dict:
+    """Sesiones EC para HOY y proximas. Lee proyectos_ec.db (tabla sesiones_ec
+    poblada por agenda_ec.cli desde el ICS de Zimbra)."""
+    import datetime as _dt
+    db = _find_db_file("proyectos_ec.db")
+    if db is None:
+        return {"hoy": None, "proximas": None}
+    try:
+        conn = sqlite3.connect(f"file:{db}?mode=ro", uri=True)
+        try:
+            existe = conn.execute(
+                "SELECT name FROM sqlite_master WHERE type='table' AND name='sesiones_ec'"
+            ).fetchone()
+            if not existe:
+                return {"hoy": 0, "proximas": 0}
+            hoy = _dt.date.today().isoformat()
+            sesiones_hoy = conn.execute(
+                "SELECT COUNT(*) FROM sesiones_ec WHERE fecha = ?", (hoy,)
+            ).fetchone()[0]
+            proximas = conn.execute(
+                "SELECT COUNT(*) FROM sesiones_ec WHERE fecha >= ?", (hoy,)
+            ).fetchone()[0]
+            return {"hoy": sesiones_hoy, "proximas": proximas}
+        finally:
+            conn.close()
+    except Exception:
+        return {"hoy": None, "proximas": None}
+
+
+@st.cache_data(ttl=60)
 def stats_ecuador() -> dict:
     db = _find_db_file("proyectos_ec.db")
     if db is None:
@@ -330,6 +360,10 @@ publicados_ec = f"{s_ec['publicados']:,}" if s_ec["publicados"] is not None else
 s_ag = stats_agenda()
 hoy_ag = f"{s_ag['hoy']:,}" if s_ag["hoy"] is not None else "—"
 proximas_ag = f"{s_ag['proximas']:,}" if s_ag["proximas"] is not None else "—"
+
+s_ag_ec = stats_agenda_ec()
+hoy_ag_ec = f"{s_ag_ec['hoy']:,}" if s_ag_ec["hoy"] is not None else "—"
+proximas_ag_ec = f"{s_ag_ec['proximas']:,}" if s_ag_ec["proximas"] is not None else "—"
 
 # ====================== Herramienta 1: Radar Legislativo ======================
 st.markdown('<div class="section-label">Herramienta</div>', unsafe_allow_html=True)
@@ -435,7 +469,29 @@ with ag_cols[0]:
         unsafe_allow_html=True,
     )
 with ag_cols[1]:
-    st.markdown("&nbsp;", unsafe_allow_html=True)
+    st.markdown(
+        f"""
+        <a href="/ecuador-agenda" target="_self" class="country-card">
+            <div class="country-header">
+                <div class="flag">🇪🇨</div>
+                <div class="name">Ecuador</div>
+            </div>
+            <div class="institution">Asamblea Nacional · Período 2025–2029</div>
+            <div class="stats">
+                <div>
+                    <div class="stat-num">{hoy_ag_ec}</div>
+                    <div class="stat-label">Sesiones hoy</div>
+                </div>
+                <div>
+                    <div class="stat-num">{proximas_ag_ec}</div>
+                    <div class="stat-label">Próximas</div>
+                </div>
+            </div>
+            <div class="cta">Ver agenda ↗</div>
+        </a>
+        """,
+        unsafe_allow_html=True,
+    )
 with ag_cols[2]:
     st.markdown("&nbsp;", unsafe_allow_html=True)
 
