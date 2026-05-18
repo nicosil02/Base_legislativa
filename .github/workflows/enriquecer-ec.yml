@@ -135,6 +135,15 @@ jobs:
         run: |
           python -X utf8 -m scraper_ec.cli enriquecer-documentos ${{ steps.params.outputs.args }} || echo "[warn] enriquecer termino con errores, sigue al snapshot"
 
+      - name: Actualizar agenda parlamentaria (ICS de Zimbra + matching PLs)
+        run: |
+          # Descarga el calendario publico de la Asamblea (Zimbra ICS feed),
+          # parsea VEVENTs, los upserta en sesiones_ec, y rematchea PLs por
+          # substring del titulo contra DESCRIPTION. ~5 seg, sin Playwright.
+          python -X utf8 -m agenda_ec.cli --db proyectos_ec.db update \
+              --days-back 60 --days-fwd 120 \
+              || echo "[warn] agenda_ec update fallo, sigue al snapshot"
+
       - name: Stats final
         run: |
           python -c "
