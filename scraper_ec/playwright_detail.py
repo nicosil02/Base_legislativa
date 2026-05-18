@@ -249,14 +249,49 @@ def _enrich_single(page, n_tramite: str, archives_buffer: list[dict]) -> list[di
     # approach que funciona cuando el primer click abre un sub-panel que cubre
     # a los siguientes attach_files de la lista. El response listener corre
     # async y captura las archives sin importar si el click "visual" funciona.
+    #
+    # Para asociar correctamente cada archivo capturado a su fase: antes de
+    # cada click, leemos el texto del row padre del attach (que contiene el
+    # nombre de la fase). Marcamos el size del buffer pre-click; los archives
+    # que aparezcan después pertenecen a este click. Asi evitamos el bug del
+    # fallback `fase_per_index[i]`, que fallaba cuando una fase generaba >1
+    # archivo y los indices del buffer dejaban de calzar con los rows.
     for i in range(n_attach):
         try:
             current = page.locator(SEL_MODAL_ATTACH)
             if i >= current.count():
                 break
+
+            attach = current.nth(i)
+
+            # Leer fase del row padre ANTES del click (despues del click el
+            # DOM puede cambiar). xpath: el primer mat-row o tr.mat-row hacia
+            # arriba en el arbol.
+            fase_i: str | None = None
+            try:
+                row = attach.locator(
+                    "xpath=ancestor::mat-row[1] | ancestor::tr[1]"
+                ).first
+                if row.count() > 0:
+                    txt = row.inner_text(timeout=1500)
+                    fase_i = txt.split("\t")[0].split("\n")[0].strip() or None
+            except Exception:
+                pass
+            # Fallback: si no se pudo leer el row, usar el indice por fila
+            # del modal recolectado al principio (sirve cuando hay 1:1).
+            if not fase_i and i < len(fase_per_index):
+                fase_i = fase_per_index[i] or None
+
+            # Marcar el buffer antes del click; los archives que aparezcan
+            # despues son los de este click.
+            start = len(archives_buffer)
             # dispatch_event('click') bypassa actionability + overlays.
-            current.nth(i).dispatch_event("click", timeout=4000)
+            attach.dispatch_event("click", timeout=4000)
             page.wait_for_timeout(1500)
+
+            # Etiquetar los archives recien capturados con la fase del click.
+            for a in archives_buffer[start:]:
+                a["_fase_click"] = fase_i
         except Exception as e:
             print(f"    [warn] attach {i+1}/{n_attach}: {type(e).__name__}: {str(e)[:80]}")
             continue
@@ -271,15 +306,16 @@ def _enrich_single(page, n_tramite: str, archives_buffer: list[dict]) -> list[di
 
     # 5. Devolver los archives acumulados. Si hay duplicados por (filename, subdirectory),
     # quedarse solo con uno.
+    # Prioridad para la fase: fase del click (asociada en el loop) > descripcion
+    # del API (a veces tiene la fase) > None.
     seen: set[tuple[str, str]] = set()
     docs: list[dict] = []
-    for i, a in enumerate(archives_buffer):
+    for a in archives_buffer:
         key = (a["filename"], a["subdirectory"])
         if key in seen:
             continue
         seen.add(key)
-        # Inferir fase si no vino del API: usar índice de fase si tiene sentido
-        fase = a.get("descripcion") or (fase_per_index[i] if i < len(fase_per_index) else None)
+        fase = a.get("_fase_click") or a.get("descripcion") or None
         docs.append({
             "fase": fase,
             "descripcion": a["filename"],

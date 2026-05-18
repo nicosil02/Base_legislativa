@@ -262,8 +262,16 @@ def cmd_enriquecer_documentos(args) -> int:
         if args.estado:
             where.append("estado = ?")
             params.append(args.estado)
-        if not args.force:
-            # Solo proyectos sin documentos enriquecidos
+        if getattr(args, "solo_sin_fase", False):
+            # Modo quirurgico: solo proyectos con al menos 1 doc cuya fase
+            # quedo nula (bug viejo del fallback fase_per_index). Re-procesa
+            # esos para que el fix nuevo asigne la fase correctamente.
+            where.append(
+                "n_tramite IN (SELECT DISTINCT n_tramite FROM documentos "
+                "WHERE fase IS NULL OR fase = '')"
+            )
+        elif not args.force:
+            # Default: solo proyectos sin documentos enriquecidos
             where.append("n_tramite NOT IN (SELECT DISTINCT n_tramite FROM documentos)")
         if where:
             sql += " WHERE " + " AND ".join(where)
@@ -275,11 +283,15 @@ def cmd_enriquecer_documentos(args) -> int:
         def progress(ntr, idx, total):
             print(f"[{idx}/{total}] {ntr}")
 
+        # En modo --solo-sin-fase o --force, no skipear los que ya tienen docs:
+        # justamente queremos re-procesar para sobrescribir las fases mal asignadas.
+        skip_with_docs = not (args.force or getattr(args, "solo_sin_fase", False))
+
         stats = enrich_documentos(
             db,
             n_tramites=n_tramites,
             headless=not args.no_headless,
-            skip_with_docs=not args.force,
+            skip_with_docs=skip_with_docs,
             on_progress=progress,
             sleep_between_ms=args.sleep_ms,
         )
@@ -369,6 +381,9 @@ def main(argv: list[str] | None = None) -> int:
     s.add_argument("--estado", help="Solo proyectos con este estado")
     s.add_argument("--force", action="store_true",
                    help="Re-enriquecer incluso proyectos con docs ya capturados")
+    s.add_argument("--solo-sin-fase", dest="solo_sin_fase", action="store_true",
+                   help="Re-procesa solo proyectos con docs cuya fase quedo nula "
+                        "(targeted fix tras bug del fallback fase_per_index)")
     s.add_argument("--no-headless", action="store_true",
                    help="Mostrar el browser (debug). Default: headless")
     s.add_argument("--sleep-ms", type=int, default=1000,
