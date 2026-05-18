@@ -209,25 +209,75 @@ st.markdown(
     opacity: 0 !important;
 }
 
-/* ─── Transición suave entre páginas ─────────────────────────────────────
-   Fade-in del contenedor principal cuando se navega entre páginas.
-   Streamlit re-renderiza todo el main al cambiar de página, así que
-   esta animación dispara en cada navegación. Sutil, 220ms, sin distraer. */
-[data-testid="stMain"] .block-container,
-section[data-testid="stMain"] > div {
-    animation: pageFadeIn 220ms ease-out;
+/* ─── Transición de página ──────────────────────────────────────────────
+   Streamlit re-renderiza el main al navegar — no podemos hacer exit
+   animations (la pagina vieja desaparece instantaneamente). Pero sí
+   podemos hacer un entry suave y elegante.
+
+   Curva: cubic-bezier(.16,1,.3,1) — "expo-out", la mas elegante para
+   UI moderna (Apple/Linear/Vercel la usan). Acelera al inicio y se
+   asienta despacio al final, no se siente forzado.
+
+   Duracion: 360ms, suficiente para que el ojo lo registre como
+   transicion (no flicker) pero rapido para no sentir lag. */
+[data-testid="stMain"] .block-container {
+    animation: pageEnter 360ms cubic-bezier(.16,1,.3,1) both;
 }
-@keyframes pageFadeIn {
-    from { opacity: 0; transform: translateY(4px); }
-    to   { opacity: 1; transform: translateY(0); }
+@keyframes pageEnter {
+    from {
+        opacity: 0;
+        transform: translateY(8px) scale(.995);
+        filter: blur(2px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+    }
 }
 
 /* Hover sutil sobre los links del sidebar nav (feedback antes del click) */
 [data-testid="stSidebarNav"] a {
-    transition: background-color 150ms ease-out, padding-left 150ms ease-out !important;
+    transition: background-color 180ms cubic-bezier(.16,1,.3,1),
+                padding-left 180ms cubic-bezier(.16,1,.3,1) !important;
 }
 [data-testid="stSidebarNav"] a:hover {
     padding-left: 18px !important;
+}
+[data-testid="stSidebarNav"] a:active {
+    transform: scale(.98);
+}
+
+/* ─── Country-card press feedback ────────────────────────────────────────
+   Cuando clickeas la card del home, antes de navegar mostramos una
+   contraccion sutil + sombra interna. Eso le da "peso" al click y
+   suaviza la sensacion de cambio de pagina (porque el browser tarda
+   ~200-400ms en empezar a renderear la pagina nueva). */
+a.country-card {
+    transition: border-color 220ms cubic-bezier(.16,1,.3,1),
+                transform 220ms cubic-bezier(.16,1,.3,1),
+                box-shadow 220ms cubic-bezier(.16,1,.3,1) !important;
+    will-change: transform;
+}
+a.country-card:active {
+    transform: translateY(-1px) scale(.985) !important;
+    box-shadow: 0 2px 8px rgba(10,41,77,.12) !important;
+    transition-duration: 80ms !important;
+}
+
+/* ─── Stagger de cards al entrar a la pagina ─────────────────────────────
+   Cuando carga el home, las cards aparecen con un pequeño delay entre
+   ellas (50-100ms cada una) creando una cascada visual. Sutil pero
+   marca diferencia vs aparecer todas a la vez. */
+.country-card {
+    animation: cardEnter 420ms cubic-bezier(.16,1,.3,1) both;
+}
+[data-testid="stColumn"]:nth-child(1) .country-card { animation-delay: 60ms; }
+[data-testid="stColumn"]:nth-child(2) .country-card { animation-delay: 140ms; }
+[data-testid="stColumn"]:nth-child(3) .country-card { animation-delay: 220ms; }
+@keyframes cardEnter {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
 }
 
 /* ─── Reemplazo de íconos Material Symbols por caracteres unicode ─────────
