@@ -242,35 +242,35 @@ def stats_peru() -> dict:
 
 @st.cache_data(ttl=60)
 def stats_agenda() -> dict:
-    """Conteo de sesiones futuras (CONVOCADAs >= hoy) y PLs unicos
-    referenciados en agenda. Se lee desde la misma proyectos.db de PE."""
+    """Sesiones para HOY (comisiones + pleno) y proximas convocadas.
+    Se lee de proyectos.db (tabla sesiones, alimentada por el scraper PE)."""
     import datetime as _dt
     db = _find_db_path()
     if db is None:
-        return {"proximas": None, "pls": None}
+        return {"hoy": None, "proximas": None}
     try:
         conn = sqlite3.connect(f"file:{db}?mode=ro", uri=True)
         try:
-            # Tablas pueden no existir si la DB es muy vieja
             existe = conn.execute(
                 "SELECT name FROM sqlite_master WHERE type='table' AND name='sesiones'"
             ).fetchone()
             if not existe:
-                return {"proximas": 0, "pls": 0}
+                return {"hoy": 0, "proximas": 0}
             hoy = _dt.date.today().isoformat()
+            sesiones_hoy = conn.execute(
+                "SELECT COUNT(*) FROM sesiones WHERE fecha = ?",
+                (hoy,),
+            ).fetchone()[0]
             proximas = conn.execute(
                 "SELECT COUNT(*) FROM sesiones "
                 "WHERE UPPER(estado)='CONVOCADA' AND fecha >= ?",
                 (hoy,),
             ).fetchone()[0]
-            pls = conn.execute(
-                "SELECT COUNT(DISTINCT pley_num) FROM sesion_pl_referenciado"
-            ).fetchone()[0]
-            return {"proximas": proximas, "pls": pls}
+            return {"hoy": sesiones_hoy, "proximas": proximas}
         finally:
             conn.close()
     except Exception:
-        return {"proximas": None, "pls": None}
+        return {"hoy": None, "proximas": None}
 
 
 @st.cache_data(ttl=60)
@@ -324,8 +324,8 @@ total_ec = f"{s_ec['total']:,}" if s_ec["total"] is not None else "—"
 publicados_ec = f"{s_ec['publicados']:,}" if s_ec["publicados"] is not None else "—"
 
 s_ag = stats_agenda()
+hoy_ag = f"{s_ag['hoy']:,}" if s_ag["hoy"] is not None else "—"
 proximas_ag = f"{s_ag['proximas']:,}" if s_ag["proximas"] is not None else "—"
-pls_ag = f"{s_ag['pls']:,}" if s_ag["pls"] is not None else "—"
 
 st.markdown('<div class="section-label">Países</div>', unsafe_allow_html=True)
 cols = st.columns([1, 1, 1])
@@ -383,24 +383,36 @@ with cols[1]:
         unsafe_allow_html=True,
     )
 
-# Agenda parlamentaria Peru — card clickeable hacia /peru-agenda.
 with cols[2]:
+    st.markdown("&nbsp;", unsafe_allow_html=True)
+
+# ====================== Agenda parlamentaria (seccion aparte) ======================
+st.markdown('<div style="height:24px"></div>', unsafe_allow_html=True)
+st.markdown('<div class="section-label">Agenda parlamentaria</div>', unsafe_allow_html=True)
+st.markdown(
+    '<p style="font-size:13px;color:#869FB2;margin-bottom:18px;">Sesiones convocadas '
+    'y realizadas de comisiones, Subcomisión, Permanente y Pleno</p>',
+    unsafe_allow_html=True,
+)
+
+ag_cols = st.columns([1, 1, 1])
+with ag_cols[0]:
     st.markdown(
         f"""
         <a href="/peru-agenda" target="_self" class="country-card">
             <div class="country-header">
-                <div class="flag">📅</div>
-                <div class="name">Agenda PE</div>
+                <div class="flag">🇵🇪</div>
+                <div class="name">Perú</div>
             </div>
-            <div class="institution">Sesiones de comisiones · Congreso del Perú</div>
+            <div class="institution">Congreso de la República · Período 2021–2026</div>
             <div class="stats">
+                <div>
+                    <div class="stat-num">{hoy_ag}</div>
+                    <div class="stat-label">Sesiones hoy</div>
+                </div>
                 <div>
                     <div class="stat-num">{proximas_ag}</div>
                     <div class="stat-label">Próximas</div>
-                </div>
-                <div>
-                    <div class="stat-num">{pls_ag}</div>
-                    <div class="stat-label">PLs en agenda</div>
                 </div>
             </div>
             <div class="cta">Ver agenda ↗</div>
@@ -408,6 +420,10 @@ with cols[2]:
         """,
         unsafe_allow_html=True,
     )
+with ag_cols[1]:
+    st.markdown("&nbsp;", unsafe_allow_html=True)
+with ag_cols[2]:
+    st.markdown("&nbsp;", unsafe_allow_html=True)
 
 # Footer
 st.markdown('<div class="footer-rule"></div>', unsafe_allow_html=True)
