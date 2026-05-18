@@ -132,6 +132,18 @@ button[kind="header"]::before {
   font-size: 11px; font-weight: 800; letter-spacing: 0.22em;
   text-transform: uppercase; color: var(--ink-mute); margin-bottom: 14px;
 }
+/* Titulo grande de cada herramienta (ej "Radar Legislativo", "Agenda
+   parlamentaria"). Mas pesado que un h3 para dar jerarquia visual clara
+   debajo del headline "Vali Intelligence". */
+.tool-title {
+  font-size: 1.75rem; font-weight: 800; letter-spacing: -0.02em;
+  color: var(--ink); margin: 0 0 6px 0; line-height: 1.1;
+}
+.tool-sub {
+  font-size: 14px; color: var(--ink-soft); line-height: 1.55;
+  margin-bottom: 22px; max-width: 720px;
+}
+.tool-block { margin-top: 36px; }
 
 /* Country card — single clickable element */
 a.country-card, div.country-card {
@@ -306,15 +318,7 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# Section: herramientas activas
-st.markdown('<div class="section-label">Herramientas</div>', unsafe_allow_html=True)
-st.markdown(
-    '<p style="font-size:13px;color:#869FB2;margin-bottom:18px;">Radar Legislativo · '
-    'Monitoreo de proyectos de ley</p>',
-    unsafe_allow_html=True,
-)
-
-# Country grid
+# Stats por herramienta
 s = stats_peru()
 total_pe = f"{s['total']:,}" if s["total"] is not None else "—"
 leyes_pe = f"{s['leyes']:,}" if s["leyes"] is not None else "—"
@@ -327,6 +331,14 @@ s_ag = stats_agenda()
 hoy_ag = f"{s_ag['hoy']:,}" if s_ag["hoy"] is not None else "—"
 proximas_ag = f"{s_ag['proximas']:,}" if s_ag["proximas"] is not None else "—"
 
+# ====================== Herramienta 1: Radar Legislativo ======================
+st.markdown('<div class="section-label">Herramienta</div>', unsafe_allow_html=True)
+st.markdown('<h2 class="tool-title">Radar Legislativo</h2>', unsafe_allow_html=True)
+st.markdown(
+    '<p class="tool-sub">Monitoreo de proyectos de ley: clasificación temática, '
+    'cambios de estado, comisiones dictaminadoras y publicación en Registro Oficial.</p>',
+    unsafe_allow_html=True,
+)
 st.markdown('<div class="section-label">Países</div>', unsafe_allow_html=True)
 cols = st.columns([1, 1, 1])
 
@@ -386,15 +398,17 @@ with cols[1]:
 with cols[2]:
     st.markdown("&nbsp;", unsafe_allow_html=True)
 
-# ====================== Agenda parlamentaria (seccion aparte) ======================
-st.markdown('<div style="height:24px"></div>', unsafe_allow_html=True)
-st.markdown('<div class="section-label">Agenda parlamentaria</div>', unsafe_allow_html=True)
+# ====================== Herramienta 2: Agenda parlamentaria ======================
+st.markdown('<div class="tool-block"></div>', unsafe_allow_html=True)
+st.markdown('<div class="section-label">Herramienta</div>', unsafe_allow_html=True)
+st.markdown('<h2 class="tool-title">Agenda parlamentaria</h2>', unsafe_allow_html=True)
 st.markdown(
-    '<p style="font-size:13px;color:#869FB2;margin-bottom:18px;">Sesiones convocadas '
-    'y realizadas de comisiones, Subcomisión, Permanente y Pleno</p>',
+    '<p class="tool-sub">Sesiones convocadas y realizadas de comisiones ordinarias, '
+    'investigadoras, especiales, Subcomisión de Acusaciones Constitucionales, '
+    'Comisión Permanente y Pleno.</p>',
     unsafe_allow_html=True,
 )
-
+st.markdown('<div class="section-label">Países</div>', unsafe_allow_html=True)
 ag_cols = st.columns([1, 1, 1])
 with ag_cols[0]:
     st.markdown(
