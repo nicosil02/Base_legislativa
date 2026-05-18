@@ -274,7 +274,13 @@ def _enrich_single(page, n_tramite: str, archives_buffer: list[dict]) -> list[di
                 ).first
                 if row.count() > 0:
                     txt = row.inner_text(timeout=1500)
-                    fase_i = txt.split("\t")[0].split("\n")[0].strip() or None
+                    raw = txt.split("\t")[0].split("\n")[0].strip()
+                    # El inner_text incluye el texto del icono Material
+                    # ("attach_file") cuando la fuente no carga. Lo removemos
+                    # para no contaminar el nombre de la fase.
+                    if raw.endswith("attach_file"):
+                        raw = raw[: -len("attach_file")].rstrip()
+                    fase_i = raw or None
             except Exception:
                 pass
             # Fallback: si no se pudo leer el row, usar el indice por fila
