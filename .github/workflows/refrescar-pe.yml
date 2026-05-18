@@ -1,0 +1,135 @@
+name: Actualizar Peru (PLs + snapshot)
+
+on:
+  schedule:
+    # 13:00 UTC = 08:00 Lima — Congreso recien abre
+    - cron: '0 13 * * *'
+    # 17:00 UTC = 12:00 Lima — mitad de la jornada
+    - cron: '0 17 * * *'
+    # 21:00 UTC = 16:00 Lima — cierre horario habil
+    - cron: '0 21 * * *'
+    # 03:00 UTC = 22:00 Lima — corrida nocturna (catch-up dia completo)
+    - cron: '0 3 * * *'
+  workflow_dispatch:
+    inputs:
+      force_full_sync:
+        description: 'Forzar sync completo (no incremental)'
+        required: false
+        default: 'false'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refrescar-pe-${{ github.workflow }}
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+
+      - name: Cache de DB Peru (persiste entre runs)
+        id: cache-db
+        uses: actions/cache@v5
+        with:
+          path: proyectos.db
+          key: pe-db-${{ github.run_id }}
+          restore-keys: |
+            pe-db-
+
+      - name: Cache pip
+        uses: actions/cache@v5
+        with:
+          path: ~/.cache/pip
+          key: pip-${{ runner.os }}-${{ hashFiles('requirements.txt') }}
+
+      - name: Instalar dependencias
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests pycryptodome openpyxl pandas
+
+      - name: Bootstrap DB Peru desde snapshot gz (solo si no hay cache)
+        if: hashFiles('proyectos.db') == ''
+        run: |
+          if [ -f data/proyectos.db.gz ]; then
+            echo "[bootstrap] descomprimiendo data/proyectos.db.gz"
+            gunzip -kc data/proyectos.db.gz > proyectos.db
+            ls -lh proyectos.db
+          else
+            echo "[bootstrap] sin snapshot — la DB se construira desde cero (lento)"
+          fi
+
+      - name: Stats inicial
+        run: |
+          python -c "
+          import sqlite3, os
+          if not os.path.exists('proyectos.db'):
+              print('[stats] sin DB todavia')
+          else:
+              c = sqlite3.connect('proyectos.db')
+              total = c.execute('SELECT COUNT(*) FROM proyectos').fetchone()[0]
+              print(f'[stats inicial] proyectos={total}')
+          "
+
+      - name: Sync incremental
+        run: |
+          # Timeout 40 min (margen para sync completo si por algun motivo
+          # se quedo desfasado). Normalmente termina en <2 min.
+          timeout 2400 python -m scraper.cli update || echo "[warn] sync PE timeout — sigo con DB actual"
+
+      - name: Stats final
+        run: |
+          python -c "
+          import sqlite3
+          c = sqlite3.connect('proyectos.db')
+          total = c.execute('SELECT COUNT(*) FROM proyectos').fetchone()[0]
+          print(f'[stats final] proyectos={total}')
+          "
+
+      - name: Generar snapshot gz
+        run: |
+          # Comprimir con gzip -9 para minimizar tamano del .gz en el repo.
+          # -k mantiene el .db original para que el cache de la proxima corrida
+          # lo encuentre.
+          gzip -9kf proyectos.db
+          mv proyectos.db.gz data/proyectos.db.gz
+          ls -lh data/proyectos.db.gz
+
+      - name: Auto-commit snapshot si cambio
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/proyectos.db.gz
+          if git diff --staged --quiet; then
+            echo "Sin cambios en el snapshot PE."
+            exit 0
+          fi
+          git commit -m "PE: auto-refresh PLs $(date -u +%Y-%m-%d-%H%M) [skip ci]"
+          # Retry-on-conflict: el workflow de Ecuador puede pushear en
+          # paralelo y dejar nuestro push outdated. Rebaseamos y reintentamos.
+          for i in 1 2 3; do
+            if git push; then
+              echo "Push OK (intento $i)"
+              exit 0
+            fi
+            echo "Push fallo (intento $i), rebaseando con origin/main..."
+            git fetch origin main
+            git rebase -X theirs origin/main || {
+              echo "Rebase fallo, abortando intento $i"
+              git rebase --abort
+              sleep 5
+            }
+          done
+          echo "Push fallo despues de 3 intentos."
+          exit 1
