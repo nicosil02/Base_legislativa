@@ -149,7 +149,64 @@ def _ecuador_new_dictamenes(conn, since_iso):
     ]
 
 
-def build_alert(now=None, window_hours=24, db_pe_path=None, db_ec_path=None):
+def _peru_sesiones_proximas(conn, days_ahead=2):
+    """Sesiones convocadas para hoy + N dias siguientes con sus PLs en agenda.
+
+    Devuelve una lista de dicts agrupables: {comision, fecha, hora, nombre,
+    estado, link_teams, pls=[{pley_num, proyecto_ley, titulo, tema, estado}]}.
+    Si la tabla `sesiones` no existe (porque sesiones/ no esta inicializado),
+    devuelve lista vacia sin error.
+    """
+    # Validar que la tabla exista
+    try:
+        conn.execute("SELECT 1 FROM sesiones LIMIT 1")
+    except Exception:
+        return []
+    today = datetime.now(timezone.utc).date()
+    hasta = (today + timedelta(days=days_ahead)).isoformat()
+    desde = today.isoformat()
+    rows = conn.execute(
+        """SELECT s.id_sesion, s.fecha, s.hora_inicio, s.hora_fin,
+                  s.nombre_comision, s.nombre_sesion, s.estado, s.link_teams
+           FROM sesiones s
+           WHERE s.fecha >= ? AND s.fecha <= ?
+             AND UPPER(COALESCE(s.estado,'')) = 'CONVOCADA'
+           ORDER BY s.fecha, s.hora_inicio""",
+        (desde, hasta),
+    ).fetchall()
+    out = []
+    for r in rows:
+        pls = conn.execute(
+            """SELECT pr.pley_num, p.proyecto_ley, p.titulo, p.tema, p.estado
+               FROM sesion_pl_referenciado pr
+               LEFT JOIN proyectos p ON p.pley_num = pr.pley_num AND p.per_par_id = pr.per_par_id
+               WHERE pr.id_sesion = ? ORDER BY pr.pley_num""",
+            (r["id_sesion"],),
+        ).fetchall()
+        out.append({
+            "id_sesion": r["id_sesion"],
+            "fecha": r["fecha"],
+            "hora": r["hora_inicio"],
+            "comision": r["nombre_comision"],
+            "nombre": r["nombre_sesion"],
+            "estado": r["estado"],
+            "link_teams": r["link_teams"],
+            "pls": [
+                {
+                    "pley_num": pl["pley_num"],
+                    "proyecto_ley": pl["proyecto_ley"],
+                    "titulo": pl["titulo"],
+                    "tema": pl["tema"] or "Otros",
+                    "estado": pl["estado"],
+                }
+                for pl in pls
+            ],
+        })
+    return out
+
+
+def build_alert(now=None, window_hours=24, db_pe_path=None, db_ec_path=None,
+                sesiones_days_ahead=2):
     now = now or datetime.now(timezone.utc)
     since = now - timedelta(hours=window_hours)
     since_iso = since.strftime("%Y-%m-%dT%H:%M:%SZ")
@@ -157,7 +214,7 @@ def build_alert(now=None, window_hours=24, db_pe_path=None, db_ec_path=None):
     payload = {
         "fecha": now.strftime("%Y-%m-%d"),
         "since": since_iso,
-        "peru":    {"dictamenes": [], "proyectos": []},
+        "peru":    {"dictamenes": [], "proyectos": [], "sesiones_proximas": []},
         "ecuador": {"dictamenes": [], "proyectos": []},
     }
 
@@ -168,6 +225,9 @@ def build_alert(now=None, window_hours=24, db_pe_path=None, db_ec_path=None):
             try:
                 payload["peru"]["dictamenes"] = _peru_new_dictamenes(conn, since_iso)
                 payload["peru"]["proyectos"] = _peru_new_pls(conn, since_iso)
+                payload["peru"]["sesiones_proximas"] = _peru_sesiones_proximas(
+                    conn, days_ahead=sesiones_days_ahead
+                )
             finally:
                 conn.close()
         except Exception as e:
@@ -189,16 +249,27 @@ def build_alert(now=None, window_hours=24, db_pe_path=None, db_ec_path=None):
 
 
 def has_content(payload):
-    return any(
+    if any(
         len(payload[country][section]) > 0
         for country in ("peru", "ecuador")
         for section in ("dictamenes", "proyectos")
+    ):
+        return True
+    # Sesiones proximas con al menos 1 PL en agenda tambien cuentan como contenido
+    return any(
+        len(s.get("pls") or []) > 0
+        for s in payload.get("peru", {}).get("sesiones_proximas", []) or []
     )
 
 
 def count_items(payload):
-    return sum(
+    base = sum(
         len(payload[country][section])
         for country in ("peru", "ecuador")
         for section in ("dictamenes", "proyectos")
     )
+    sesiones_con_pls = sum(
+        1 for s in payload.get("peru", {}).get("sesiones_proximas", []) or []
+        if (s.get("pls") or [])
+    )
+    return base + sesiones_con_pls

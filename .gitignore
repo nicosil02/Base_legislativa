@@ -24,3 +24,4 @@ update.log
 # Lista de usuarios registrados (escrito por la app via GitHub API)
 !data/users.json
 !data/proyectos_ec.db.gz
+scripts/recon_agenda_output.json

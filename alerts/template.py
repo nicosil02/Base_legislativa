@@ -15,6 +15,7 @@ from itertools import groupby
 
 DOT_DICTAMEN = "#21A179"
 DOT_PROYECTO = "#F4B942"
+DOT_SESION   = "#2563EB"
 
 
 def _escape(s):
@@ -58,14 +59,73 @@ def _items_html(items, dot_color):
     return "".join(chunks)
 
 
-def _country_section(country_label, country_data, label_dictamenes):
+def _sesiones_proximas_html(sesiones):
+    """Bloque con sesiones convocadas para los proximos dias con PLs en agenda.
+
+    Cada sesion: titulo (Comision + fecha + hora) + lista compacta de PLs.
+    Si una sesion no tiene PLs en agenda, NO se incluye (no agrega valor).
+    """
+    sesiones_con_pls = [s for s in sesiones if s.get("pls")]
+    if not sesiones_con_pls:
+        return ""
+    chunks = [
+        '<h2 style="margin:24px 0 4px 0;font-size:18px;font-weight:800;'
+        'color:#0A294D;letter-spacing:-0.015em;'
+        'font-family:Inter,Segoe UI,Arial,sans-serif;">Próximas sesiones con PLs en agenda</h2>'
+    ]
+    for s in sesiones_con_pls:
+        comision = _escape(s.get("comision") or "")
+        fecha = _escape(s.get("fecha") or "")
+        hora = _escape(s.get("hora") or "")
+        pls = s.get("pls") or []
+        pls_html_items = []
+        for pl in pls[:8]:  # cap a 8 PLs por sesion en el correo
+            pl_id = _escape(pl.get("proyecto_ley") or f"PL {pl.get('pley_num','')}")
+            titulo = _escape((pl.get("titulo") or "")[:90])
+            tema = _escape(pl.get("tema") or "Otros")
+            pls_html_items.append(
+                f'<li style="margin:3px 0;font-size:13px;color:#435D74;'
+                f'font-family:Inter,Segoe UI,Arial,sans-serif;">'
+                f'<strong style="color:#0A294D;">{pl_id}</strong> '
+                f'<span style="color:#869FB2;">[{tema}]</span> {titulo}</li>'
+            )
+        more = ""
+        if len(pls) > 8:
+            more = (f'<li style="margin:3px 0;font-size:12px;color:#869FB2;'
+                    f'font-family:Inter,Segoe UI,Arial,sans-serif;">'
+                    f'... y {len(pls)-8} PL(s) más en agenda.</li>')
+        chunks.append(
+            '<table cellpadding="0" cellspacing="0" border="0" width="100%" '
+            'style="margin:10px 0 14px 0;font-family:Inter,Segoe UI,Arial,sans-serif;">'
+            '<tr><td valign="top" width="14" style="padding-top:6px;">'
+            f'<span style="display:inline-block;width:8px;height:8px;'
+            f'border-radius:50%;background:{DOT_SESION};"></span>'
+            '</td><td valign="top" style="padding-left:6px;">'
+            f'<div style="font-size:14px;font-weight:700;color:#0A294D;line-height:1.3;">'
+            f'{comision}</div>'
+            f'<div style="font-size:12px;color:#869FB2;margin-top:2px;">'
+            f'{fecha} · {hora}</div>'
+            f'<ul style="margin:8px 0 0 18px;padding:0;">{"".join(pls_html_items)}{more}</ul>'
+            '</td></tr></table>'
+        )
+    return "".join(chunks)
+
+
+def _country_section(country_label, country_data, label_dictamenes,
+                     include_sesiones=False):
     """Renderiza la seccion de un pais: header + dictamenes + proyectos.
 
     Ambas subsecciones SIEMPRE se renderizan (con placeholder si estan vacias)
     para que cada email tenga la misma estructura predecible.
+
+    Si include_sesiones=True, suma un bloque de "Proximas sesiones con PLs"
+    despues de los proyectos.
     """
     dictamenes = country_data.get("dictamenes", [])
     proyectos = country_data.get("proyectos", [])
+    sesiones = country_data.get("sesiones_proximas", []) if include_sesiones else []
+
+    sesiones_block = _sesiones_proximas_html(sesiones) if sesiones else ""
 
     return (
         '<table cellpadding="0" cellspacing="0" border="0" width="100%" '
@@ -84,6 +144,7 @@ def _country_section(country_label, country_data, label_dictamenes):
         'color:#0A294D;letter-spacing:-0.015em;'
         f'font-family:Inter,Segoe UI,Arial,sans-serif;">{label_dictamenes}</h2>'
         + _items_html(dictamenes, DOT_DICTAMEN)
+        + sesiones_block
     )
 
 
@@ -93,6 +154,7 @@ def render_html(payload):
         "Peru &middot; Congreso de la Republica",
         payload.get("peru", {}),
         "Dictamenes",
+        include_sesiones=True,
     )
     ec_html = _country_section(
         "Ecuador &middot; Asamblea Nacional",
