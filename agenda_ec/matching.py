@@ -207,25 +207,41 @@ def find_matches(
                 continue
 
         # --- Pasada 2: token overlap ponderado por IDF ---
+        # Idea: el TOKEN MAS RARO del kernel debe estar en el overlap.
+        # Si la palabra mas distintiva del titulo aparece en la descripcion,
+        # es match. Si no, descartamos sin importar cuanto se compartan
+        # palabras comunes como "organica", "reformatoria", "codigo".
+        #
+        # Ejemplo: titulo "...EDUCACION FINANCIERA EN EL SISTEMA EDUCATIVO
+        # NACIONAL" donde el max-IDF es "financiera". Si la sesion menciona
+        # "Educacion Financiera" la pillamos aunque el titulo tenga mas
+        # palabras que la sesion no repite.
         kernel_tokens = _significant_tokens(kernel)
-        if len(kernel_tokens) < 3:
+        if len(kernel_tokens) < 2:
             continue
         overlap = kernel_tokens & haystack_tokens
-        if len(overlap) < 3:
+        if len(overlap) < 2:
             continue
-        # Suma de IDF ponderada
+        # Token mas raro del kernel
+        rarest = max(kernel_tokens, key=lambda t: idf.get(t, 0.0))
+        rarest_idf = idf.get(rarest, 0.0)
+        # Si el max-IDF del kernel es < 3.0, el titulo no tiene una palabra
+        # realmente distintiva → skip para evitar matches genericos.
+        if rarest_idf < 3.0:
+            continue
+        # El token mas raro DEBE estar en el overlap
+        if rarest not in overlap:
+            continue
+        # Score: ratio idf overlap/kernel ponderado por la rareza del max
         overlap_idf = sum(idf.get(t, 1.0) for t in overlap)
         kernel_idf_total = sum(idf.get(t, 1.0) for t in kernel_tokens)
         if kernel_idf_total <= 0:
             continue
         idf_ratio = overlap_idf / kernel_idf_total
-        if idf_ratio < 0.65:
+        # Ratio minimo bajo (30%) porque el max-IDF ya garantiza calidad
+        if idf_ratio < 0.30:
             continue
-        # Ademas requerir al menos UN token "raro" (idf >= 2.0) en el overlap.
-        # Esto bloquea falsos positivos compuestos solo de palabras comunes.
-        if not any(idf.get(t, 1.0) >= 2.0 for t in overlap):
-            continue
-        score = idf_ratio * 0.5  # ponderacion menor que pasada 1
+        score = idf_ratio * 0.5
         prev = matches.get(n_tramite)
         if prev is None or prev.score < score:
             matches[n_tramite] = PlMatch(
