@@ -14,7 +14,7 @@ import urllib.request
 from datetime import datetime, timedelta, timezone
 
 from .ics_parser import IcsEvent, parse_events
-from .matching import extract_comision, extract_modalidad, find_matches
+from .matching import build_idf, extract_comision, extract_modalidad, find_matches
 from .schema import SCHEMA_AGENDA_EC
 
 
@@ -133,8 +133,20 @@ def upsert_events(conn: sqlite3.Connection, events: list[IcsEvent]) -> tuple[int
 def rematch_all(conn: sqlite3.Connection) -> int:
     """Borra y recalcula los matches de PL para TODAS las sesiones.
 
-    Devuelve el numero total de matches encontrados.
+    Precalcula la lista de proyectos y el IDF map UNA SOLA VEZ (no por
+    sesion) para que sea O(N_sesiones * N_proyectos) en vez de
+    O(N_sesiones * (N_proyectos * 2)).
     """
+    pl_rows = [
+        (r[0], r[1])
+        for r in conn.execute(
+            "SELECT n_tramite, titulo FROM proyectos "
+            "WHERE titulo IS NOT NULL AND length(titulo) >= 20"
+        ).fetchall()
+    ]
+    idf = build_idf(pl_rows)
+    print(f"[agenda_ec] indice IDF: {len(pl_rows)} proyectos, {len(idf)} tokens unicos")
+
     total_matches = 0
     with conn:
         conn.execute("DELETE FROM sesion_ec_pl_referenciado")
@@ -142,7 +154,10 @@ def rematch_all(conn: sqlite3.Connection) -> int:
             "SELECT uid, summary, descripcion FROM sesiones_ec"
         ).fetchall()
         for uid, summary, descripcion in rows:
-            matches = find_matches(conn, descripcion or "", summary or "")
+            matches = find_matches(
+                conn, descripcion or "", summary or "",
+                idf=idf, pl_rows=pl_rows,
+            )
             for m in matches:
                 conn.execute(
                     """
