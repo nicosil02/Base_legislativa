@@ -303,6 +303,12 @@ ecuador = st.Page(
     icon="🇪🇨",
     url_path="ecuador",
 )
+agenda_pe = st.Page(
+    "pages/3_Agenda_PE.py",
+    title="Perú · Agenda",
+    icon="📅",
+    url_path="peru-agenda",
+)
 
 
 # Sidebar logout deshabilitado mientras el auth gate este off.
@@ -312,6 +318,7 @@ nav = st.navigation(
     {
         "Vali Intelligence": [home],
         "Radar Legislativo": [peru, ecuador],
+        "Agenda parlamentaria": [agenda_pe],
     },
     position="sidebar",
 )
