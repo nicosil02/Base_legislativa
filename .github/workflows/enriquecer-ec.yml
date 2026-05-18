@@ -157,7 +157,24 @@ jobs:
           git add data/proyectos_ec.db.gz
           if git diff --staged --quiet; then
             echo "Sin cambios en el snapshot."
-          else
-            git commit -m "EC: auto-refresh documentos $(date -u +%Y-%m-%d) [skip ci]"
-            git push
+            exit 0
           fi
+          git commit -m "EC: auto-refresh documentos $(date -u +%Y-%m-%d) [skip ci]"
+          # Retry-on-conflict loop: si otro commit llego al remote entremedio,
+          # rebaseamos y reintentamos. Hasta 3 intentos.
+          for i in 1 2 3; do
+            if git push; then
+              echo "Push OK (intento $i)"
+              exit 0
+            fi
+            echo "Push fallo (intento $i), rebaseando con origin/main..."
+            git fetch origin main
+            # rebase con "their" preferido por si hay conflicto en el snapshot
+            git rebase -X theirs origin/main || {
+              echo "Rebase fallo, abortando intento $i"
+              git rebase --abort
+              sleep 5
+            }
+          done
+          echo "Push fallo despues de 3 intentos."
+          exit 1
