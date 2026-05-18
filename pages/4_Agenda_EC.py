@@ -246,9 +246,14 @@ def load_sesiones(fec_inicio: dt.date | None, fec_fin: dt.date | None) -> pd.Dat
 
 @st.cache_data(ttl=60)
 def load_pls_de_sesion(uid: str) -> pd.DataFrame:
+    """Devuelve los PLs identificados en una sesion, con el N. Tramite
+    como URL clickeable al portal Ppless v2. El portal no acepta deep
+    link al detalle del proyecto, asi que linkeamos al home — el usuario
+    pega el N. Tramite en el filtro del portal."""
     conn = get_conn()
     sql = """
-      SELECT m.n_tramite AS "Nº trámite",
+      SELECT 'https://proyectosdeley.asambleanacional.gob.ec/report?n=' || m.n_tramite
+               AS "Nº trámite",
              COALESCE(p.titulo, '(no en DB)') AS "Título",
              COALESCE(p.estado, '—') AS "Estado",
              COALESCE(p.comision_asignada, '—') AS "Comisión asignada",
@@ -342,17 +347,14 @@ def _opciones(col: str) -> list[str]:
         return [TODOS]
     return [TODOS] + sorted({str(v) for v in df_full[col].dropna().unique() if str(v).strip()})
 
-fc = st.columns([1.6, 1, 1, 1])
+fc = st.columns([1.6, 1, 1])
 sel_comision = fc[0].selectbox("Comisión", _opciones("Comisión"))
-sel_modalidad = fc[1].selectbox("Modalidad", _opciones("Modalidad"))
-sel_estado = fc[2].selectbox("Estado", _opciones("Estado"))
-con_pls = fc[3].selectbox("Con PLs en agenda", ["Todas", "Solo con PLs", "Sin PLs"])
+sel_estado = fc[1].selectbox("Estado", _opciones("Estado"))
+con_pls = fc[2].selectbox("Con PLs en agenda", ["Todas", "Solo con PLs", "Sin PLs"])
 
 df = df_full
 if sel_comision != TODOS:
     df = df[df["Comisión"] == sel_comision]
-if sel_modalidad != TODOS:
-    df = df[df["Modalidad"] == sel_modalidad]
 if sel_estado != TODOS:
     df = df[df["Estado"] == sel_estado]
 if con_pls == "Solo con PLs":
@@ -362,7 +364,10 @@ elif con_pls == "Sin PLs":
 
 st.markdown(f"##### {len(df):,} sesión(es) de {len(df_full):,} en el rango")
 
-COLS_VISIBLES = ["Fecha", "Hora", "Comisión", "Modalidad", "PLs en agenda", "Título"]
+# Columnas que importan: fecha + hora + que comision + que PLs hay.
+# Modalidad (virtual/presencial) y Titulo redundantes (el titulo es el
+# nombre de la comision, ya en columna Comision).
+COLS_VISIBLES = ["Fecha", "Hora", "Comisión", "PLs en agenda"]
 df_view = df[[c for c in COLS_VISIBLES if c in df.columns]].copy()
 
 # Reset index para que el index numerico (0..N) sea el row id que devuelve
@@ -411,6 +416,19 @@ if sel_rows:
                 df_pls.drop(columns=["_score"], errors="ignore"),
                 hide_index=True,
                 use_container_width=True,
+                column_config={
+                    "Nº trámite": st.column_config.LinkColumn(
+                        "Nº trámite",
+                        # Extrae el numero (despues de "?n=") para mostrarlo como texto
+                        display_text=r".*\?n=(\d+)",
+                        help="Click para abrir el portal Ppless v2 con el filtro aplicado",
+                    ),
+                },
+            )
+            st.caption(
+                "💡 Click en el Nº trámite abre el portal Ppless v2 de la Asamblea. "
+                "El portal no acepta deep link al detalle: pegá el número en el "
+                "filtro \"Nro. Trámite\" del portal para ver el proyecto."
             )
         else:
             st.info("No se identificaron PLs específicos en esta sesión "
