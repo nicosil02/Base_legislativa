@@ -241,6 +241,39 @@ def stats_peru() -> dict:
 
 
 @st.cache_data(ttl=60)
+def stats_agenda() -> dict:
+    """Conteo de sesiones futuras (CONVOCADAs >= hoy) y PLs unicos
+    referenciados en agenda. Se lee desde la misma proyectos.db de PE."""
+    import datetime as _dt
+    db = _find_db_path()
+    if db is None:
+        return {"proximas": None, "pls": None}
+    try:
+        conn = sqlite3.connect(f"file:{db}?mode=ro", uri=True)
+        try:
+            # Tablas pueden no existir si la DB es muy vieja
+            existe = conn.execute(
+                "SELECT name FROM sqlite_master WHERE type='table' AND name='sesiones'"
+            ).fetchone()
+            if not existe:
+                return {"proximas": 0, "pls": 0}
+            hoy = _dt.date.today().isoformat()
+            proximas = conn.execute(
+                "SELECT COUNT(*) FROM sesiones "
+                "WHERE UPPER(estado)='CONVOCADA' AND fecha >= ?",
+                (hoy,),
+            ).fetchone()[0]
+            pls = conn.execute(
+                "SELECT COUNT(DISTINCT pley_num) FROM sesion_pl_referenciado"
+            ).fetchone()[0]
+            return {"proximas": proximas, "pls": pls}
+        finally:
+            conn.close()
+    except Exception:
+        return {"proximas": None, "pls": None}
+
+
+@st.cache_data(ttl=60)
 def stats_ecuador() -> dict:
     db = _find_db_file("proyectos_ec.db")
     if db is None:
@@ -289,6 +322,10 @@ leyes_pe = f"{s['leyes']:,}" if s["leyes"] is not None else "—"
 s_ec = stats_ecuador()
 total_ec = f"{s_ec['total']:,}" if s_ec["total"] is not None else "—"
 publicados_ec = f"{s_ec['publicados']:,}" if s_ec["publicados"] is not None else "—"
+
+s_ag = stats_agenda()
+proximas_ag = f"{s_ag['proximas']:,}" if s_ag["proximas"] is not None else "—"
+pls_ag = f"{s_ag['pls']:,}" if s_ag["pls"] is not None else "—"
 
 st.markdown('<div class="section-label">Países</div>', unsafe_allow_html=True)
 cols = st.columns([1, 1, 1])
@@ -346,8 +383,31 @@ with cols[1]:
         unsafe_allow_html=True,
     )
 
+# Agenda parlamentaria Peru — card clickeable hacia /peru-agenda.
 with cols[2]:
-    st.markdown("&nbsp;", unsafe_allow_html=True)
+    st.markdown(
+        f"""
+        <a href="/peru-agenda" target="_self" class="country-card">
+            <div class="country-header">
+                <div class="flag">📅</div>
+                <div class="name">Agenda PE</div>
+            </div>
+            <div class="institution">Sesiones de comisiones · Congreso del Perú</div>
+            <div class="stats">
+                <div>
+                    <div class="stat-num">{proximas_ag}</div>
+                    <div class="stat-label">Próximas</div>
+                </div>
+                <div>
+                    <div class="stat-num">{pls_ag}</div>
+                    <div class="stat-label">PLs en agenda</div>
+                </div>
+            </div>
+            <div class="cta">Ver agenda ↗</div>
+        </a>
+        """,
+        unsafe_allow_html=True,
+    )
 
 # Footer
 st.markdown('<div class="footer-rule"></div>', unsafe_allow_html=True)

@@ -47,6 +47,18 @@ section[data-testid="stSidebar"] { background-color:var(--ink) !important; borde
 section[data-testid="stSidebar"] *, section[data-testid="stSidebar"] a {
   color:#FFFFFF !important; font-family:'Inter',sans-serif !important;
 }
+/* Date input en sidebar: caja blanca con texto navy (override del * blanco
+   de arriba). Mismo patron que pages/1_Peru.py para consistencia visual. */
+section[data-testid="stSidebar"] [data-testid="stDateInput"] input {
+  background-color:#FFFFFF !important;
+  color:var(--ink) !important;
+}
+section[data-testid="stSidebar"] [data-testid="stDateInputField"],
+section[data-testid="stSidebar"] [data-testid="stDateInput"] [role="presentation"],
+section[data-testid="stSidebar"] [data-testid="stDateInput"] svg {
+  color:var(--ink) !important;
+  fill:var(--ink) !important;
+}
 .block-container { padding-top:2rem; padding-bottom:4rem; max-width:1400px; }
 
 .country-eyebrow {
@@ -216,7 +228,20 @@ def load_sesiones(fec_inicio: dt.date | None, fec_fin: dt.date | None) -> pd.Dat
         where.append("s.fecha <= ?"); params.append(fec_fin.isoformat())
     if where:
         sql += " WHERE " + " AND ".join(where)
-    sql += " ORDER BY s.fecha DESC, s.hora_inicio DESC"
+    # Orden: dia mas reciente primero, y dentro del dia por hora ascendente
+    # (cronologico). Normalizamos hora_inicio para evitar que "9:00" se ordene
+    # despues de "14:00" (sort lexicografico). NULL al final.
+    sql += """
+      ORDER BY s.fecha DESC,
+        CASE
+          WHEN s.hora_inicio IS NULL OR TRIM(s.hora_inicio) = '' THEN 1
+          ELSE 0
+        END,
+        CASE
+          WHEN length(s.hora_inicio) = 4 THEN '0' || s.hora_inicio
+          ELSE s.hora_inicio
+        END ASC
+    """
     return pd.read_sql_query(sql, conn, params=params)
 
 
