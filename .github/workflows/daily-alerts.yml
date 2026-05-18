@@ -128,7 +128,23 @@ jobs:
           git add data/alert_sent_log.json 2>/dev/null || true
           if git diff --staged --quiet; then
             echo "Sin cambios en alert_sent_log.json"
-          else
-            git commit -m "auto: alert_sent_log $(date -u +%Y-%m-%d) [skip ci]"
-            git push
+            exit 0
           fi
+          git commit -m "auto: alert_sent_log $(date -u +%Y-%m-%d) [skip ci]"
+          # Retry-on-conflict: si otro commit llego al remote entremedio,
+          # rebaseamos y reintentamos hasta 3 veces.
+          for i in 1 2 3; do
+            if git push; then
+              echo "Push OK (intento $i)"
+              exit 0
+            fi
+            echo "Push fallo (intento $i), rebaseando..."
+            git fetch origin main
+            git rebase -X theirs origin/main || {
+              echo "Rebase fallo, abortando intento $i"
+              git rebase --abort
+              sleep 5
+            }
+          done
+          echo "Push fallo despues de 3 intentos."
+          exit 1
