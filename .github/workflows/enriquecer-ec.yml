@@ -16,6 +16,10 @@ on:
         description: 'Re-procesar PLs que ya tienen docs (true/false)'
         required: false
         default: 'false'
+      solo_sin_fase:
+        description: 'Solo re-procesa PLs cuyos docs tienen fase nula (true/false)'
+        required: false
+        default: 'false'
       estado:
         description: 'Filtrar por estado (opcional)'
         required: false
@@ -92,10 +96,14 @@ jobs:
         run: |
           LIMIT="${{ inputs.limit || '100' }}"
           FORCE="${{ inputs.force || 'false' }}"
+          SOLO_SIN_FASE="${{ inputs.solo_sin_fase || 'false' }}"
           ESTADO="${{ inputs.estado || '' }}"
           ARGS="--limit $LIMIT"
           if [ "$FORCE" = "true" ]; then
             ARGS="$ARGS --force"
+          fi
+          if [ "$SOLO_SIN_FASE" = "true" ]; then
+            ARGS="$ARGS --solo-sin-fase"
           fi
           if [ -n "$ESTADO" ]; then
             ARGS="$ARGS --estado "$ESTADO""
