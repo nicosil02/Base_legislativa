@@ -4,5 +4,15 @@
     "sent_at": "2026-05-17T16:31:45Z",
     "slot": "manual",
     "items": 641
+  },
+  "2026-05-18": {
+    "sent": true,
+    "sent_at": "2026-05-18T16:44:57Z",
+    "slot": "manual",
+    "items": 1,
+    "recipients": [
+      "nicolas.silva@valiconsultores.com"
+    ],
+    "errors": 0
   }
 }
