@@ -40,9 +40,13 @@ except Exception:
     pass
 
 
+# Favicon: usamos el logo oficial de Vali (assets/vali_favicon.png, 192x192).
+# Streamlit acepta path string en page_icon y lo sirve como favicon en todas
+# las pestanas. Fallback al emoji si el archivo no esta.
+_favicon = Path(__file__).resolve().parent / "assets" / "vali_favicon.png"
 st.set_page_config(
     page_title="Vali Intelligence",
-    page_icon="🧠",
+    page_icon=str(_favicon) if _favicon.exists() else "🧠",
     layout="wide",
     initial_sidebar_state="expanded",
 )
