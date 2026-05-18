@@ -196,7 +196,15 @@ def load_sesiones(fec_inicio: dt.date | None, fec_fin: dt.date | None) -> pd.Dat
              s.tipo_comision AS "Tipo",
              s.estado AS "Estado",
              s.nombre_sesion AS "Nombre",
-             (SELECT COUNT(*) FROM sesion_pl_referenciado WHERE id_sesion=s.id_sesion) AS "PLs",
+             (SELECT COUNT(*) FROM sesion_pl_referenciado WHERE id_sesion=s.id_sesion) AS "_n_pls",
+             (SELECT GROUP_CONCAT(
+                       COALESCE(p.proyecto_ley, pr.proyecto_ley_raw, 'PL ' || pr.pley_num),
+                       ', ')
+                FROM sesion_pl_referenciado pr
+                LEFT JOIN proyectos p ON p.pley_num = pr.pley_num AND p.per_par_id = pr.per_par_id
+                WHERE pr.id_sesion = s.id_sesion
+                ORDER BY pr.pley_num
+              ) AS "PLs en agenda",
              s.link_teams AS "_link_teams",
              s.link_video AS "_link_video"
       FROM sesiones s
@@ -217,20 +225,55 @@ def load_pls_de_sesion(id_sesion: int) -> pd.DataFrame:
     conn = get_conn()
     sql = """
       SELECT pr.pley_num AS pley_num,
-             p.proyecto_ley AS "PL",
-             p.tema AS "Tema",
-             p.estado AS "Estado",
-             p.grupo_parlamentario AS "Bancada",
-             p.titulo AS "Título",
-             p.url_portal AS "Portal",
-             pr.contexto AS "Contexto",
-             pr.proyecto_ley_raw AS "Raw"
+             COALESCE(p.proyecto_ley, pr.proyecto_ley_raw, 'PL ' || pr.pley_num) AS "Nº PL",
+             COALESCE(p.url_portal,
+                      'https://wb2server.congreso.gob.pe/spley-portal/#/expediente/'
+                      || COALESCE(pr.per_par_id, 2021) || '/' || pr.pley_num) AS "Link",
+             COALESCE(p.tema, '—') AS "Tema",
+             COALESCE(p.estado, '(no en DB)') AS "Estado",
+             COALESCE(p.grupo_parlamentario, '—') AS "Bancada",
+             COALESCE(p.titulo, pr.contexto, '(sin título)') AS "Título",
+             pr.contexto AS "_Contexto",
+             pr.proyecto_ley_raw AS "_Raw"
       FROM sesion_pl_referenciado pr
       LEFT JOIN proyectos p ON p.pley_num = pr.pley_num AND p.per_par_id = pr.per_par_id
       WHERE pr.id_sesion=?
       ORDER BY pr.pley_num
     """
     return pd.read_sql_query(sql, conn, params=(id_sesion,))
+
+
+@st.cache_data(ttl=60)
+def load_pls_por_comision(fec_inicio: dt.date | None, fec_fin: dt.date | None) -> pd.DataFrame:
+    """Agrega PLs únicos referenciados por comisión en el rango de fechas.
+    Cada fila es 1 PL en 1 comisión (un mismo PL puede aparecer en varias)."""
+    conn = get_conn()
+    sql = """
+      SELECT s.nombre_comision AS "Comisión",
+             pr.pley_num AS pley_num,
+             COALESCE(p.proyecto_ley, pr.proyecto_ley_raw, 'PL ' || pr.pley_num) AS "Nº PL",
+             COALESCE(p.url_portal,
+                      'https://wb2server.congreso.gob.pe/spley-portal/#/expediente/'
+                      || COALESCE(pr.per_par_id, 2021) || '/' || pr.pley_num) AS "Link",
+             COALESCE(p.tema, '—') AS "Tema",
+             COALESCE(p.estado, '(no en DB)') AS "Estado del PL",
+             COALESCE(p.titulo, '(sin título)') AS "Título",
+             COUNT(DISTINCT s.id_sesion) AS "Sesiones",
+             MIN(s.fecha) AS "Primera",
+             MAX(s.fecha) AS "Última"
+      FROM sesion_pl_referenciado pr
+      JOIN sesiones s ON s.id_sesion = pr.id_sesion
+      LEFT JOIN proyectos p ON p.pley_num = pr.pley_num AND p.per_par_id = pr.per_par_id
+      WHERE 1=1
+    """
+    params: list = []
+    if fec_inicio:
+        sql += " AND s.fecha >= ?"; params.append(fec_inicio.isoformat())
+    if fec_fin:
+        sql += " AND s.fecha <= ?"; params.append(fec_fin.isoformat())
+    sql += """ GROUP BY s.nombre_comision, pr.pley_num
+              ORDER BY s.nombre_comision, "Sesiones" DESC, pr.pley_num """
+    return pd.read_sql_query(sql, conn, params=params)
 
 
 @st.cache_data(ttl=60)
@@ -324,35 +367,37 @@ if sel_tipo != TODOS:
 if sel_estado != TODOS:
     df = df[df["Estado"] == sel_estado]
 if con_pls == "Solo con PLs":
-    df = df[df["PLs"] > 0]
+    df = df[df["_n_pls"] > 0]
 elif con_pls == "Sin PLs":
-    df = df[df["PLs"] == 0]
+    df = df[df["_n_pls"] == 0]
 
 st.markdown(f"##### {len(df):,} sesión(es) de {len(df_full):,} en el rango")
 
-# Columnas visibles
-COLS_VISIBLES = ["ID", "Fecha", "Hora", "Comisión", "Tipo", "Estado", "PLs", "Nombre"]
-df_view = df[[c for c in COLS_VISIBLES if c in df.columns]]
+# Mostramos los PLs inline en la tabla (string concatenado) para que se vean
+# sin necesidad de clickear cada fila. La columna "PLs en agenda" viene del
+# GROUP_CONCAT del SQL.
+COLS_VISIBLES = ["ID", "Fecha", "Hora", "Comisión", "Estado", "PLs en agenda", "Nombre"]
+df_view = df[[c for c in COLS_VISIBLES if c in df.columns]].copy()
 
 tabla = st.dataframe(
     df_view,
     hide_index=True,
     use_container_width=True,
     height=620,
-    row_height=110,
+    row_height=140,
     on_select="rerun",
     selection_mode="single-row",
     column_config={
         "ID":       st.column_config.NumberColumn("ID", width="small", pinned=True,
-            help="ID interno de la sesión. Click la fila para ver agenda + PLs."),
+            help="ID interno de la sesión. Click la fila para ver detalle con links a portal."),
         "Fecha":    st.column_config.TextColumn("Fecha", width="small"),
         "Hora":     st.column_config.TextColumn("Hora", width="small"),
         "Comisión": st.column_config.TextColumn("Comisión", width="medium"),
-        "Tipo":     st.column_config.TextColumn("Tipo", width="small"),
         "Estado":   st.column_config.TextColumn("Estado", width="small"),
-        "PLs":      st.column_config.NumberColumn("PLs en agenda", width="small",
-            help="Cantidad de proyectos de ley identificados en el orden del día."),
-        "Nombre":   st.column_config.TextColumn("Nombre de sesión", width="large"),
+        "PLs en agenda": st.column_config.TextColumn(
+            "PLs en agenda", width="large",
+            help="Proyectos de ley detectados en el orden del día. Click la fila para ver títulos y links."),
+        "Nombre":   st.column_config.TextColumn("Nombre de sesión", width="medium"),
     },
 )
 
@@ -393,20 +438,22 @@ if selected and selected[0] < len(df_view):
     df_pls = load_pls_de_sesion(id_sesion)
     if not df_pls.empty:
         st.markdown(f"##### Proyectos de Ley en agenda ({len(df_pls)})")
-        df_pls_show = df_pls.drop(columns=["Raw", "Contexto", "pley_num"])
+        df_pls_show = df_pls.drop(columns=["pley_num", "_Contexto", "_Raw"])
         st.dataframe(
             df_pls_show,
             hide_index=True,
             use_container_width=True,
+            row_height=80,
             column_config={
-                "PL":      st.column_config.LinkColumn("PL",
-                    display_text=r"expediente/\d+/(\d+)",
-                    width="small", pinned=True),
+                "Nº PL":   st.column_config.TextColumn("Nº PL", width="small", pinned=True,
+                    help="Número formal del PL (ej. 14093/2025-CR)."),
+                "Link":    st.column_config.LinkColumn("Portal",
+                    display_text="Abrir ↗", width="small",
+                    help="Abre el expediente en wb2server.congreso.gob.pe"),
                 "Tema":    st.column_config.TextColumn("Tema", width="small"),
                 "Estado":  st.column_config.TextColumn("Estado", width="small"),
                 "Bancada": st.column_config.TextColumn("Bancada", width="small"),
                 "Título":  st.column_config.TextColumn("Título", width="large"),
-                "Portal":  None,  # ocultar (el link está en PL)
             },
         )
 
@@ -425,6 +472,63 @@ else:
         '↑ Click sobre una fila para ver agenda + PLs cruzados de la sesión.'
         '</div>',
         unsafe_allow_html=True,
+    )
+
+# ---------- Vista por comisión ----------
+st.markdown("---")
+st.markdown("### Vista por comisión")
+st.markdown(
+    '<p style="font-size:13px;color:#869FB2;margin-bottom:14px;">'
+    'PLs únicos referenciados en agendas, agrupados por comisión. '
+    'Cuenta cuántas sesiones discutieron cada PL en el rango seleccionado.</p>',
+    unsafe_allow_html=True,
+)
+
+df_por_com = load_pls_por_comision(f_ini, f_fin)
+if df_por_com.empty:
+    st.info("No hay PLs en agenda en el rango seleccionado.")
+else:
+    # Comisiones únicas con count de PLs
+    resumen = (df_por_com.groupby("Comisión")
+               .agg(pls_unicos=("pley_num", "nunique"),
+                    sesiones=("Sesiones", "sum"))
+               .sort_values("pls_unicos", ascending=False)
+               .reset_index())
+    # Comisiones donde elegir
+    todas_comisiones = ["(todas)"] + resumen["Comisión"].tolist()
+    sel_com_v = st.selectbox(
+        "Comisión a inspeccionar",
+        todas_comisiones,
+        format_func=lambda x: (
+            x if x == "(todas)"
+            else f"{x} — {resumen.loc[resumen['Comisión']==x,'pls_unicos'].iloc[0]} PLs únicos"
+        ),
+    )
+    if sel_com_v == "(todas)":
+        df_show = df_por_com
+    else:
+        df_show = df_por_com[df_por_com["Comisión"] == sel_com_v]
+
+    st.markdown(f"##### {len(df_show):,} PL(s) en agenda · {df_show['pley_num'].nunique():,} únicos")
+    st.dataframe(
+        df_show.drop(columns=["pley_num"]),
+        hide_index=True,
+        use_container_width=True,
+        height=520,
+        row_height=70,
+        column_config={
+            "Comisión":     st.column_config.TextColumn("Comisión", width="medium"),
+            "Nº PL":        st.column_config.TextColumn("Nº PL", width="small"),
+            "Link":         st.column_config.LinkColumn("Portal",
+                display_text="Abrir ↗", width="small"),
+            "Tema":         st.column_config.TextColumn("Tema", width="small"),
+            "Estado del PL":st.column_config.TextColumn("Estado del PL", width="small"),
+            "Título":       st.column_config.TextColumn("Título", width="large"),
+            "Sesiones":     st.column_config.NumberColumn("Sesiones", width="small",
+                help="Cantidad de sesiones de esta comisión donde el PL apareció en agenda."),
+            "Primera":      st.column_config.TextColumn("1ra vez", width="small"),
+            "Última":       st.column_config.TextColumn("Última", width="small"),
+        },
     )
 
 # ---------- Footer ----------
