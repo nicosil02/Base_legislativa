@@ -220,15 +220,28 @@ def load_sesiones(fec_inicio: dt.date | None, fec_fin: dt.date | None) -> pd.Dat
     return pd.read_sql_query(sql, conn, params=params)
 
 
+# La columna "Nº PL" funciona como LinkColumn donde la celda contiene la URL
+# completa al portal. Para que el TEXTO clickeable muestre el formato del PL
+# (ej "14093/2025-CR") en vez del numero crudo, codificamos el label como
+# query param ?pl=... antes del hash (el Angular del portal ignora el query
+# string y lee el path real en el fragment #/expediente/...).
+# display_text regex extrae el contenido del param ?pl=.
+URL_TEMPLATE = (
+    "https://wb2server.congreso.gob.pe/spley-portal/?pl={label}"
+    "#/expediente/{per_par_id}/{pley_num}"
+)
+
+
 @st.cache_data(ttl=60)
 def load_pls_de_sesion(id_sesion: int) -> pd.DataFrame:
     conn = get_conn()
+    # Construimos la URL en SQL para que ya venga lista con el label embebido.
     sql = """
       SELECT pr.pley_num AS pley_num,
-             COALESCE(p.proyecto_ley, pr.proyecto_ley_raw, 'PL ' || pr.pley_num) AS "Nº PL",
-             COALESCE(p.url_portal,
-                      'https://wb2server.congreso.gob.pe/spley-portal/#/expediente/'
-                      || COALESCE(pr.per_par_id, 2021) || '/' || pr.pley_num) AS "Link",
+             'https://wb2server.congreso.gob.pe/spley-portal/?pl='
+               || COALESCE(p.proyecto_ley, pr.proyecto_ley_raw, 'PL ' || pr.pley_num)
+               || '#/expediente/' || COALESCE(pr.per_par_id, 2021) || '/' || pr.pley_num
+             AS "Nº PL",
              COALESCE(p.tema, '—') AS "Tema",
              COALESCE(p.estado, '(no en DB)') AS "Estado",
              COALESCE(p.grupo_parlamentario, '—') AS "Bancada",
@@ -251,10 +264,10 @@ def load_pls_por_comision(fec_inicio: dt.date | None, fec_fin: dt.date | None) -
     sql = """
       SELECT s.nombre_comision AS "Comisión",
              pr.pley_num AS pley_num,
-             COALESCE(p.proyecto_ley, pr.proyecto_ley_raw, 'PL ' || pr.pley_num) AS "Nº PL",
-             COALESCE(p.url_portal,
-                      'https://wb2server.congreso.gob.pe/spley-portal/#/expediente/'
-                      || COALESCE(pr.per_par_id, 2021) || '/' || pr.pley_num) AS "Link",
+             'https://wb2server.congreso.gob.pe/spley-portal/?pl='
+               || COALESCE(p.proyecto_ley, pr.proyecto_ley_raw, 'PL ' || pr.pley_num)
+               || '#/expediente/' || COALESCE(pr.per_par_id, 2021) || '/' || pr.pley_num
+             AS "Nº PL",
              COALESCE(p.tema, '—') AS "Tema",
              COALESCE(p.estado, '(no en DB)') AS "Estado del PL",
              COALESCE(p.titulo, '(sin título)') AS "Título",
@@ -445,11 +458,13 @@ if selected and selected[0] < len(df_view):
             use_container_width=True,
             row_height=80,
             column_config={
-                "Nº PL":   st.column_config.TextColumn("Nº PL", width="small", pinned=True,
-                    help="Número formal del PL (ej. 14093/2025-CR)."),
-                "Link":    st.column_config.LinkColumn("Portal",
-                    display_text="Abrir ↗", width="small",
-                    help="Abre el expediente en wb2server.congreso.gob.pe"),
+                # Nº PL: el valor de la celda es la URL al portal; display_text
+                # con regex extrae el formato "NNNNN/YYYY-XX" del query param
+                # ?pl=... para mostrarlo como label clickeable.
+                "Nº PL":   st.column_config.LinkColumn("Nº PL",
+                    display_text=r"\?pl=([^#]+)",
+                    width="small", pinned=True,
+                    help="Click para abrir el expediente en el portal del Congreso."),
                 "Tema":    st.column_config.TextColumn("Tema", width="small"),
                 "Estado":  st.column_config.TextColumn("Estado", width="small"),
                 "Bancada": st.column_config.TextColumn("Bancada", width="small"),
@@ -518,9 +533,11 @@ else:
         row_height=70,
         column_config={
             "Comisión":     st.column_config.TextColumn("Comisión", width="medium"),
-            "Nº PL":        st.column_config.TextColumn("Nº PL", width="small"),
-            "Link":         st.column_config.LinkColumn("Portal",
-                display_text="Abrir ↗", width="small"),
+            # Nº PL clickeable al portal (formato extraido del query param ?pl=)
+            "Nº PL":        st.column_config.LinkColumn("Nº PL",
+                display_text=r"\?pl=([^#]+)",
+                width="small",
+                help="Click para abrir el expediente en el portal del Congreso."),
             "Tema":         st.column_config.TextColumn("Tema", width="small"),
             "Estado del PL":st.column_config.TextColumn("Estado del PL", width="small"),
             "Título":       st.column_config.TextColumn("Título", width="large"),
