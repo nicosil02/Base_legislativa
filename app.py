@@ -305,8 +305,8 @@ ecuador = st.Page(
 )
 agenda_pe = st.Page(
     "pages/3_Agenda_PE.py",
-    title="Perú · Agenda",
-    icon="📅",
+    title="Perú",
+    icon="🇵🇪",
     url_path="peru-agenda",
 )
 
