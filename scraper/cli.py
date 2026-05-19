@@ -37,6 +37,89 @@ def cmd_init(args) -> int:
     return 0
 
 
+# IDs basura conocidos en la API oficial del Congreso (alguien creo estos
+# como tests). Los descartamos en cada refresh.
+COMISIONES_BLACKLIST = {
+    57,   # "cremas al tetra"
+    58,   # "poiuy9h0ipohjui0pj"
+}
+
+# Heuristica conservadora: en castellano nunca hay 5+ consonantes
+# consecutivas. Si vemos eso, es keyboard-mashing. NO marcamos por
+# longitud corta (Agraria, Pesca, Mype son validas).
+import re as _re
+_BASURA_RE = _re.compile(r"[bcdfghjklmnpqrstvwxyz]{5,}", _re.IGNORECASE)
+
+
+def _es_basura_comision(nombre: str | None, cid: int) -> bool:
+    """Detecta basura: blacklist explicito + keyboard-mashing.
+
+    Solo marcamos como basura lo OBVIO. Falsos positivos son peores
+    que falsos negativos — si una basura nueva aparece, se agrega
+    manualmente a COMISIONES_BLACKLIST.
+    """
+    if cid in COMISIONES_BLACKLIST:
+        return True
+    if not nombre or not nombre.strip():
+        return True
+    return bool(_BASURA_RE.search(nombre))
+
+
+def cmd_refresh_comisiones(args) -> int:
+    """Refresca el catalogo de comisiones desde la API del Congreso.
+
+    Filtra entradas basura (creadas como tests en el sistema oficial) y
+    limpia las que ya esten en la DB local. Las Ordinarias (1-24) nunca
+    se borran — son las del catalogo permanente del Congreso.
+    """
+    with Database(args.db) as db:
+        db.init_schema()
+        print("[refresh-comisiones] consultando API Congreso...")
+        client = ApiClient()
+        comis = client.list_comisiones()
+        print(f"[refresh-comisiones] API devolvio {len(comis)} comisiones")
+
+        # 1) Identificar basura tanto en la API como en local
+        api_basura = [c for c in comis if _es_basura_comision(c.get("nombreComision"), c["comisionId"])]
+        comis_limpias = [c for c in comis if not _es_basura_comision(c.get("nombreComision"), c["comisionId"])]
+        if api_basura:
+            print(f"[refresh-comisiones] basura filtrada en respuesta API ({len(api_basura)}):")
+            for c in api_basura:
+                print(f"  - [{c['comisionId']}] {c.get('nombreComision')!r}")
+
+        # 2) Basura ya guardada en local (puede no estar en la API actual)
+        local = db.conn.execute(
+            "SELECT comision_id, nombre, tipo FROM comisiones"
+        ).fetchall()
+        basura_local = []
+        for cid, nombre, tipo in local:
+            # Nunca tocar Ordinarias (catalogo permanente del Congreso PE)
+            if (tipo or "").lower() == "ordinaria":
+                continue
+            if _es_basura_comision(nombre, cid):
+                basura_local.append((cid, nombre))
+        if basura_local:
+            print(f"[refresh-comisiones] basura ya en DB local para borrar ({len(basura_local)}):")
+            for cid, nombre in basura_local:
+                print(f"  - [{cid}] {nombre!r}")
+
+        # 3) Aplicar cambios
+        if args.dry_run:
+            print("[refresh-comisiones] DRY RUN — no se aplicaron cambios")
+        else:
+            with db.tx() as c:
+                for cid, _ in basura_local:
+                    c.execute("DELETE FROM comisiones WHERE comision_id = ?", (cid,))
+                    c.execute("DELETE FROM proyecto_comision WHERE comision_id = ?", (cid,))
+            if basura_local:
+                print(f"[refresh-comisiones] {len(basura_local)} basuras borradas")
+            n = db.upsert_comisiones(comis_limpias)
+            print(f"[refresh-comisiones] {n} comisiones upserteadas (limpias)")
+
+        print(f"[refresh-comisiones] total en catalogo ahora: {db.count_comisiones()}")
+    return 0
+
+
 def cmd_update(args) -> int:
     with Database(args.db) as db:
         db.init_schema()
@@ -314,6 +397,12 @@ def build_parser() -> argparse.ArgumentParser:
     sub = p.add_subparsers(dest="cmd", required=True)
 
     sub.add_parser("init", help="crea DB y carga comisiones").set_defaults(func=cmd_init)
+
+    rc = sub.add_parser("refresh-comisiones",
+        help="re-baja el catalogo de comisiones del Congreso (limpia basura especial)")
+    rc.add_argument("--dry-run", action="store_true",
+        help="no modifica la DB, solo muestra que cambiaria")
+    rc.set_defaults(func=cmd_refresh_comisiones)
 
     rs = sub.add_parser("restaurar", help="restaura proyectos.db desde el snapshot data/proyectos.db.gz")
     rs.add_argument("--force", action="store_true", help="sobrescribe proyectos.db si ya existe")
