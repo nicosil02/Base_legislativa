@@ -95,6 +95,17 @@ jobs:
         run: |
           timeout 1500 python -m scraper.cli update || echo "[warn] sync PE timeout — sigo con DB actual"
 
+      - name: Heartbeat START (workflow arranco)
+        run: |
+          # Registra que el workflow arranco — antes de cualquier step que
+          # pueda fallar. Si vemos started pero no ok, sabemos donde se
+          # rompio.
+          python -X utf8 -m sistema.heartbeat --db proyectos.db --source alertas_diarias --status started
+          echo "Schedule trigger: '${{ github.event.schedule }}'"
+          echo "Event name: '${{ github.event_name }}'"
+          echo "Run number: ${{ github.run_number }}"
+          date -u
+
       - name: Determinar slot horario
         id: slot
         run: |
@@ -145,13 +156,19 @@ jobs:
           fi
           python -X utf8 -m alerts.cli send --slot ${{ steps.slot.outputs.slot }} ${{ steps.slot.outputs.force_flag }}
 
-      - name: Heartbeat (registra corrida exitosa)
-        if: success()
+      - name: Heartbeat OK (envio exitoso)
+        if: steps.send.outcome == 'success'
         run: |
-          # Heartbeat para el dashboard de frescura: el step de envio paso OK,
-          # entonces escribimos el timestamp. Si esto no se ejecuta despues
-          # de varios crones consecutivos, sabemos que el workflow se rompio.
-          python -X utf8 -m sistema.heartbeat --db proyectos.db --source alertas_diarias
+          # Step de envio paso OK -> sobrescribimos started con ok.
+          python -X utf8 -m sistema.heartbeat --db proyectos.db --source alertas_diarias --status ok
+
+      - name: Heartbeat FAILED (envio fallo)
+        if: steps.send.outcome == 'failure'
+        run: |
+          # Step de envio fallo. Dejamos heartbeat con status=failed para
+          # que el dashboard muestre dot rojo y el usuario sepa de inmediato.
+          python -X utf8 -m sistema.heartbeat --db proyectos.db --source alertas_diarias --status failed
+          echo "::error::Daily alert failed — revisa el log del step 'Construir y enviar alerta'"
 
       - name: Commit log de alertas (si cambio)
         run: |
