@@ -527,6 +527,59 @@ SYNC_MIN_MINUTES = 5      # gap mínimo entre auto-syncs
 SYNC_STALE_MINUTES = 15   # un sync sin terminar después de esto se considera muerto
 
 
+def _upsert_live_pls(nuevos_api: list[dict], per_par_id: int = 2021) -> int:
+    """Inserta PLs detectados en la API que no estan en la DB local.
+
+    En Streamlit Cloud la DB es ephemeral, pero los writes persisten
+    durante el runtime. El proximo cron de GH Actions hace el sync
+    completo con todos los campos (sumilla, autores, comisiones, etc) y
+    los reescribe correctamente. Mientras tanto, estos inserts ligeros
+    hacen que el usuario vea los PLs en la tabla principal de inmediato.
+
+    Campos disponibles del endpoint /lista-con-filtro:
+      pleyNum, titulo (o descTitulo), estado, fecPresentacion
+    Campos sin valor (NULL): sumilla, proponente, grupo_parlamentario,
+      autores_raw, url_portal, url_pdf, comisiones. Se completan en el
+      proximo cron via /expediente.
+    """
+    db = _find_db_path()
+    if db is None:
+        return 0
+    from datetime import datetime, timezone
+    now = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    inserted = 0
+    try:
+        conn = sqlite3.connect(str(db), check_same_thread=False)
+        try:
+            for p in nuevos_api:
+                pley_num = p.get("pleyNum")
+                if not pley_num:
+                    continue
+                titulo = p.get("titulo") or p.get("descTitulo") or "(sin titulo)"
+                estado = p.get("estado") or "PRESENTADO"
+                fec_pres = p.get("fecPresentacion") or ""
+                # INSERT OR IGNORE — si ya esta (race con cron), no pisa
+                conn.execute(
+                    """INSERT OR IGNORE INTO proyectos
+                       (per_par_id, pley_num, titulo, estado, fec_presentacion,
+                        first_seen_at, last_seen_at, last_changed_at,
+                        tema, tema_manual)
+                       VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'Otros', 0)""",
+                    (per_par_id, pley_num, titulo, estado, fec_pres,
+                     now, now, now),
+                )
+                if conn.total_changes > inserted:
+                    inserted += 1
+            conn.commit()
+        finally:
+            conn.close()
+    except sqlite3.OperationalError as e:
+        # DB locked (otra escritura en curso) o readonly — ignorar silente
+        print(f"[live-upsert] skip: {e}")
+        return 0
+    return inserted
+
+
 @st.cache_data(ttl=300)  # cache 5 min: tras la primera carga del dia,
                           # los siguientes 5 min son instant para todos
 def fetch_live_pe(per_par_id: int = 2021) -> dict:
@@ -567,22 +620,17 @@ def fetch_live_pe(per_par_id: int = 2021) -> dict:
     api_pleynums = {p.get("pleyNum") for p in api_pls if p.get("pleyNum")}
     nuevos_nums = api_pleynums - db_pleynums
 
-    nuevos = [
-        {
-            "pley_num": p.get("pleyNum"),
-            "titulo": p.get("titulo") or p.get("descTitulo") or "(sin título)",
-            "estado": p.get("estado") or "—",
-            "fec_presentacion": p.get("fecPresentacion") or "—",
-        }
-        for p in api_pls
-        if p.get("pleyNum") in nuevos_nums
-    ]
-    nuevos.sort(key=lambda x: x["pley_num"] or 0, reverse=True)
+    # Items raw para upsert directo a la DB (no solo display)
+    nuevos_raw = [p for p in api_pls if p.get("pleyNum") in nuevos_nums]
+    # AUTO-UPSERT: escribir los nuevos a la DB ya mismo para que aparezcan
+    # integrados en la tabla principal (sin necesidad de banner separado).
+    inserted = _upsert_live_pls(nuevos_raw, per_par_id=per_par_id)
 
     return {
         "total_api": len(api_pleynums),
         "total_db": len(db_pleynums),
-        "nuevos": nuevos,
+        "nuevos_count": len(nuevos_raw),
+        "inserted": inserted,
         "error": None,
     }
 
@@ -669,49 +717,28 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# ---------- Live banner (tiempo real automatico) ----------
-# Auto-fetch al cargar la pagina: consulta la API del Congreso y compara
-# con la DB. Cache 5 min compartido entre TODOS los usuarios → la primera
-# carga del periodo tarda ~30s, las siguientes 5 min son instant.
-# Si hay PLs nuevos no sincronizados, mostramos banner amarillo.
-_live_placeholder = st.empty()
-with _live_placeholder.container():
-    with st.spinner("Verificando actualización en vivo con el Congreso..."):
-        try:
-            _live = fetch_live_pe(per_par_id=2021)
-        except Exception as _e:
-            _live = {"error": str(_e), "nuevos": [], "total_api": 0, "total_db": 0}
+# ---------- Live sync automatico ----------
+# Al cargar la pagina consulta la API del Congreso. Si hay PLs nuevos
+# que no estan en la DB, los inserta directamente para que aparezcan
+# integrados en la tabla principal (sin banner separado, sin clic).
+# Cache 5 min compartido entre todos los users → primera carga ~30s
+# (spinner), siguientes son instant.
+with st.spinner("Sincronizando con el Congreso en tiempo real..."):
+    try:
+        _live = fetch_live_pe(per_par_id=2021)
+    except Exception as _e:
+        _live = {"error": str(_e), "nuevos_count": 0, "inserted": 0,
+                 "total_api": 0, "total_db": 0}
 
-# Renderizar banner segun resultado
-_live_placeholder.empty()
-if _live.get("error"):
-    pass  # silencioso, no mostrar nada si falla la API
-elif _live.get("nuevos"):
-    _n = len(_live["nuevos"])
-    st.markdown(
-        f'<div style="background:#FFFBEB;border:1px solid #F59E0B;border-radius:8px;'
-        f'padding:10px 14px;margin-bottom:8px;font-size:13px;color:#78350F;">'
-        f'⚡ <strong>{_n} PL{"s" if _n != 1 else ""} nuevo{"s" if _n != 1 else ""}</strong> '
-        f'detectado{"s" if _n != 1 else ""} en la API · '
-        f'se sincronizarán en el próximo cron (max 1h):</div>',
-        unsafe_allow_html=True,
-    )
-    st.dataframe(
-        pd.DataFrame(_live["nuevos"]),
-        hide_index=True, use_container_width=True,
-    )
-    st.markdown(
-        f'<p style="font-size:11px;color:#869FB2;margin-bottom:18px;">'
-        f'API: {_live["total_api"]:,} PLs · DB: {_live["total_db"]:,} PLs</p>',
-        unsafe_allow_html=True,
-    )
-else:
-    st.markdown(
-        f'<div style="background:#ECFDF5;border:1px solid #10B981;border-radius:8px;'
-        f'padding:8px 14px;margin-bottom:18px;font-size:13px;color:#065F46;">'
-        f'✓ Sincronizado en tiempo real con el Congreso · '
-        f'<strong>{_live["total_api"]:,}</strong> PLs.</div>',
-        unsafe_allow_html=True,
+# Limpiar el cache de Streamlit para que load_proyectos relea desde la
+# DB y los nuevos PLs aparezcan en la tabla. Solo si insertamos algo.
+if _live.get("inserted", 0) > 0:
+    st.cache_data.clear()
+    st.toast(
+        f"⚡ {_live['inserted']} PL{'s' if _live['inserted'] != 1 else ''} "
+        f"nuevo{'s' if _live['inserted'] != 1 else ''} sincronizado{'s' if _live['inserted'] != 1 else ''} "
+        f"en vivo desde la API",
+        icon="✓",
     )
 
 # ---------- KPIs ----------
