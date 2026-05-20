@@ -144,6 +144,13 @@ jobs:
               --days-back 60 --days-fwd 120 \
               || echo "[warn] agenda_ec update fallo, sigue al snapshot"
 
+      - name: Heartbeats (registra corrida exitosa)
+        run: |
+          # Independiente de si hubo cambios reales en proyectos/agenda EC,
+          # registra timestamp para el dashboard de frescura de la UI.
+          python -X utf8 -m sistema.heartbeat --db proyectos_ec.db --source ec_proyectos
+          python -X utf8 -m sistema.heartbeat --db proyectos_ec.db --source ec_agenda
+
       - name: Stats final
         run: |
           python -c "

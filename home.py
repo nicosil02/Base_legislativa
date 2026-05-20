@@ -302,60 +302,88 @@ def _human_delta(iso_str: str | None) -> tuple[str, str]:
 def get_freshness() -> dict:
     """Devuelve el ultimo timestamp de actualizacion de cada fuente.
 
-    Lee de las tablas sync_runs (PE proyectos, PE sesiones, EC proyectos)
-    y del file mtime para datos sin tabla (EC agenda usa captured_at del
-    propio ICS).
+    Estrategia (en orden de prioridad):
+      1. Tabla `system_heartbeats` (escrita por cada workflow exitoso,
+         independiente de si hubo cambios en los datos).
+      2. Fallback: tablas sync_runs (PE proyectos, sesiones; EC proyectos),
+         que se escriben solo cuando hay cambios reales.
+      3. Fallback final: MAX(captured_at) de la tabla de datos.
     """
-    out = {}
+    out = {"pe_proyectos": None, "pe_sesiones": None,
+           "ec_proyectos": None, "ec_agenda": None}
 
-    # PE proyectos: sync_runs en proyectos.db
+    # 1) Heartbeats (preferido)
     db_pe = _find_db_path()
     if db_pe:
         try:
-            conn = sqlite3.connect(f"file:{db_pe}?mode=ro", uri=True)
-            try:
-                r = conn.execute(
-                    "SELECT finished_at FROM sync_runs "
-                    "WHERE finished_at IS NOT NULL ORDER BY id DESC LIMIT 1"
-                ).fetchone()
-                out["pe_proyectos"] = r[0] if r else None
-            except sqlite3.OperationalError:
-                out["pe_proyectos"] = None
-            # PE sesiones
-            try:
-                r = conn.execute(
-                    "SELECT finished_at FROM sesiones_sync_runs "
-                    "WHERE finished_at IS NOT NULL ORDER BY id DESC LIMIT 1"
-                ).fetchone()
-                out["pe_sesiones"] = r[0] if r else None
-            except sqlite3.OperationalError:
-                out["pe_sesiones"] = None
-            conn.close()
+            from sistema.heartbeat import get_all
+            for src, (ts, _status) in get_all(str(db_pe)).items():
+                if src in out:
+                    out[src] = ts
         except Exception:
             pass
 
-    # EC proyectos: sync_runs en proyectos_ec.db
     db_ec = _find_db_file("proyectos_ec.db")
     if db_ec:
         try:
+            from sistema.heartbeat import get_all
+            for src, (ts, _status) in get_all(str(db_ec)).items():
+                if src in out:
+                    out[src] = ts
+        except Exception:
+            pass
+
+    # 2) Fallback a sync_runs / max(captured_at) si heartbeats no existe todavia
+    if db_pe and (out["pe_proyectos"] is None or out["pe_sesiones"] is None):
+        try:
+            conn = sqlite3.connect(f"file:{db_pe}?mode=ro", uri=True)
+            try:
+                if out["pe_proyectos"] is None:
+                    try:
+                        r = conn.execute(
+                            "SELECT finished_at FROM sync_runs "
+                            "WHERE finished_at IS NOT NULL ORDER BY id DESC LIMIT 1"
+                        ).fetchone()
+                        out["pe_proyectos"] = r[0] if r else None
+                    except sqlite3.OperationalError:
+                        pass
+                if out["pe_sesiones"] is None:
+                    try:
+                        r = conn.execute(
+                            "SELECT finished_at FROM sesiones_sync_runs "
+                            "WHERE finished_at IS NOT NULL ORDER BY id DESC LIMIT 1"
+                        ).fetchone()
+                        out["pe_sesiones"] = r[0] if r else None
+                    except sqlite3.OperationalError:
+                        pass
+            finally:
+                conn.close()
+        except Exception:
+            pass
+
+    if db_ec and (out["ec_proyectos"] is None or out["ec_agenda"] is None):
+        try:
             conn = sqlite3.connect(f"file:{db_ec}?mode=ro", uri=True)
             try:
-                r = conn.execute(
-                    "SELECT finished_at FROM sync_runs "
-                    "WHERE finished_at IS NOT NULL ORDER BY id DESC LIMIT 1"
-                ).fetchone()
-                out["ec_proyectos"] = r[0] if r else None
-            except sqlite3.OperationalError:
-                out["ec_proyectos"] = None
-            # EC agenda: usar max(captured_at) de sesiones_ec
-            try:
-                r = conn.execute(
-                    "SELECT MAX(captured_at) FROM sesiones_ec"
-                ).fetchone()
-                out["ec_agenda"] = r[0] if r and r[0] else None
-            except sqlite3.OperationalError:
-                out["ec_agenda"] = None
-            conn.close()
+                if out["ec_proyectos"] is None:
+                    try:
+                        r = conn.execute(
+                            "SELECT finished_at FROM sync_runs "
+                            "WHERE finished_at IS NOT NULL ORDER BY id DESC LIMIT 1"
+                        ).fetchone()
+                        out["ec_proyectos"] = r[0] if r else None
+                    except sqlite3.OperationalError:
+                        pass
+                if out["ec_agenda"] is None:
+                    try:
+                        r = conn.execute(
+                            "SELECT MAX(captured_at) FROM sesiones_ec"
+                        ).fetchone()
+                        out["ec_agenda"] = r[0] if r and r[0] else None
+                    except sqlite3.OperationalError:
+                        pass
+            finally:
+                conn.close()
         except Exception:
             pass
 
