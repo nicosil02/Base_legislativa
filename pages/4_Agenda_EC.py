@@ -401,21 +401,24 @@ if _live.get("error"):
     pass
 elif _live.get("nuevas"):
     _n = len(_live["nuevas"])
-    with st.expander(
-        f"⚡ {_n} sesión{'es' if _n != 1 else ''} nueva{'s' if _n != 1 else ''} "
-        f"detectada{'s' if _n != 1 else ''} en el feed que aún no está{'n' if _n != 1 else ''} "
-        f"en nuestra base — clic para ver",
-        expanded=False,
-    ):
-        st.dataframe(
-            pd.DataFrame(_live["nuevas"]),
-            hide_index=True, use_container_width=True,
-        )
-        st.caption(
-            f"Feed Zimbra: {_live['total_api']:,} sesiones (ventana ±2 meses) · "
-            f"DB local: {_live['total_db']:,} totales · "
-            f"Se sincronizarán en el próximo cron (max 6h)."
-        )
+    st.markdown(
+        f'<div style="background:#FFFBEB;border:1px solid #F59E0B;border-radius:8px;'
+        f'padding:10px 14px;margin-bottom:8px;font-size:13px;color:#78350F;">'
+        f'⚡ <strong>{_n} sesión{"es" if _n != 1 else ""} nueva{"s" if _n != 1 else ""}</strong> '
+        f'detectada{"s" if _n != 1 else ""} en el feed · '
+        f'se sincronizarán en el próximo cron (max 6h):</div>',
+        unsafe_allow_html=True,
+    )
+    st.dataframe(
+        pd.DataFrame(_live["nuevas"]),
+        hide_index=True, use_container_width=True,
+    )
+    st.markdown(
+        f'<p style="font-size:11px;color:#869FB2;margin-bottom:18px;">'
+        f'Feed Zimbra (ventana ±2 meses): {_live["total_api"]:,} sesiones · '
+        f'DB local: {_live["total_db"]:,}</p>',
+        unsafe_allow_html=True,
+    )
 else:
     st.markdown(
         f'<div style="background:#ECFDF5;border:1px solid #10B981;border-radius:8px;'
