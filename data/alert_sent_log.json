@@ -24,5 +24,15 @@
       "nicolas.silva@valiconsultores.com"
     ],
     "errors": 0
+  },
+  "2026-05-20": {
+    "sent": true,
+    "sent_at": "2026-05-20T17:45:59Z",
+    "slot": "manual",
+    "items": 92,
+    "recipients": [
+      "nicolas.silva@valiconsultores.com"
+    ],
+    "errors": 0
   }
 }
