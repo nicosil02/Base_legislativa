@@ -486,6 +486,65 @@ SYNC_MIN_MINUTES = 5      # gap mínimo entre auto-syncs
 SYNC_STALE_MINUTES = 15   # un sync sin terminar después de esto se considera muerto
 
 
+@st.cache_data(ttl=120)  # cache 2 min: si 100 users clickean en 2 min, 1 API call
+def fetch_live_pe(per_par_id: int = 2021) -> dict:
+    """Consulta la API del Congreso PE en TIEMPO REAL y devuelve la lista
+    actual de PLs. Compara con la DB local para identificar los que no
+    estan sincronizados todavia.
+
+    Tarda ~30 seg porque el endpoint /lista-con-filtro devuelve todos los
+    PLs del periodo en una sola respuesta (~8 MB).
+
+    Returns:
+        {
+            "total_api": int,
+            "total_db": int,
+            "nuevos": [{"pley_num", "titulo", "estado", "fec_presentacion"}, ...],
+            "error": str | None,
+        }
+    """
+    try:
+        from scraper.api import ApiClient
+        client = ApiClient()
+        api_pls = client.list_all_proyectos(per_par_id=per_par_id)
+    except Exception as e:
+        return {"total_api": 0, "total_db": 0, "nuevos": [], "error": str(e)}
+
+    # Set de pley_num que tenemos en DB
+    conn = get_conn()
+    try:
+        db_pleynums = {
+            r[0] for r in conn.execute(
+                "SELECT pley_num FROM proyectos WHERE per_par_id = ?",
+                (per_par_id,),
+            )
+        }
+    finally:
+        conn.close()
+
+    api_pleynums = {p.get("pleyNum") for p in api_pls if p.get("pleyNum")}
+    nuevos_nums = api_pleynums - db_pleynums
+
+    nuevos = [
+        {
+            "pley_num": p.get("pleyNum"),
+            "titulo": p.get("titulo") or p.get("descTitulo") or "(sin título)",
+            "estado": p.get("estado") or "—",
+            "fec_presentacion": p.get("fecPresentacion") or "—",
+        }
+        for p in api_pls
+        if p.get("pleyNum") in nuevos_nums
+    ]
+    nuevos.sort(key=lambda x: x["pley_num"] or 0, reverse=True)
+
+    return {
+        "total_api": len(api_pleynums),
+        "total_db": len(db_pleynums),
+        "nuevos": nuevos,
+        "error": None,
+    }
+
+
 def _sync_status() -> dict:
     """Devuelve estado del último sync: minutos desde el último completado,
     si hay uno corriendo, y métricas del último."""
@@ -634,6 +693,42 @@ with st.sidebar:
                 '<div class="value">Sin syncs previos</div></div>',
                 unsafe_allow_html=True,
             )
+
+    st.markdown("---")
+    # Botón de live check: consulta la API del Congreso directamente y
+    # compara con la DB. Útil para confirmar que no se perdio ningun PL
+    # entre crones. Cache 2 min en fetch_live_pe → un solo API call aunque
+    # multiples users hagan click cerca en el tiempo.
+    live_clicked = st.button(
+        "Buscar PLs nuevos en vivo",
+        help="Consulta la API del Congreso en tiempo real y muestra los PLs "
+             "que aún no están en nuestra base. Tarda ~30 segundos.",
+        use_container_width=True,
+    )
+
+# ---------- Live check (fuera del sidebar) ----------
+if live_clicked:
+    with st.spinner("Consultando API del Congreso (~30 seg)…"):
+        live = fetch_live_pe(per_par_id=2021)
+    if live["error"]:
+        st.error(f"Error consultando API del Congreso: {live['error']}")
+    elif live["nuevos"]:
+        st.success(
+            f"**{len(live['nuevos'])} PLs nuevos** detectados en la API que "
+            f"aún no están en nuestra DB. El próximo cron los va a sincronizar, "
+            f"pero ya los podés ver acá:"
+        )
+        df_nuevos = pd.DataFrame(live["nuevos"])
+        st.dataframe(df_nuevos, hide_index=True, use_container_width=True)
+        st.caption(
+            f"API: {live['total_api']} PLs · DB local: {live['total_db']} PLs · "
+            f"diferencia: {len(live['nuevos'])} pendientes de sincronizar."
+        )
+    else:
+        st.info(
+            f"✅ Sincronización al día. API y DB tienen los mismos "
+            f"**{live['total_api']:,} PLs**."
+        )
 
 # ---------- Tabla con barra de filtros ----------
 df_full = load_proyectos(f_ini, f_fin)
