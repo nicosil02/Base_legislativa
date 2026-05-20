@@ -113,13 +113,33 @@ jobs:
           fi
 
       - name: Construir y enviar alerta
+        id: send
         env:
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
           RESEND_FROM: ${{ secrets.RESEND_FROM }}
           ALERT_RECIPIENT: ${{ secrets.ALERT_RECIPIENT }}
           PYTHONIOENCODING: utf-8
         run: |
+          # Validacion temprana de secrets — si faltan, fail fast con mensaje claro
+          # (asi GitHub no deshabilita el cron silenciosamente por fallos opacos).
+          missing=""
+          [ -z "$RESEND_API_KEY" ] && missing="$missing RESEND_API_KEY"
+          [ -z "$RESEND_FROM" ]    && missing="$missing RESEND_FROM"
+          [ -z "$ALERT_RECIPIENT" ] && missing="$missing ALERT_RECIPIENT"
+          if [ -n "$missing" ]; then
+            echo "::error::Faltan secrets en el repo:$missing"
+            echo "Ir a Settings > Secrets and variables > Actions y agregarlos"
+            exit 1
+          fi
           python -X utf8 -m alerts.cli send --slot ${{ steps.slot.outputs.slot }} ${{ steps.slot.outputs.force_flag }}
+
+      - name: Heartbeat (registra corrida exitosa)
+        if: success()
+        run: |
+          # Heartbeat para el dashboard de frescura: el step de envio paso OK,
+          # entonces escribimos el timestamp. Si esto no se ejecuta despues
+          # de varios crones consecutivos, sabemos que el workflow se rompio.
+          python -X utf8 -m sistema.heartbeat --db proyectos.db --source alertas_diarias
 
       - name: Commit log de alertas (si cambio)
         run: |

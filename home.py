@@ -310,7 +310,8 @@ def get_freshness() -> dict:
       3. Fallback final: MAX(captured_at) de la tabla de datos.
     """
     out = {"pe_proyectos": None, "pe_sesiones": None,
-           "ec_proyectos": None, "ec_agenda": None}
+           "ec_proyectos": None, "ec_agenda": None,
+           "alertas_diarias": None}
 
     # 1) Heartbeats (preferido)
     db_pe = _find_db_path()
@@ -668,6 +669,7 @@ _sources = [
     ("PE · Agenda de comisiones", _fresh.get("pe_sesiones")),
     ("EC · Proyectos de ley",   _fresh.get("ec_proyectos")),
     ("EC · Agenda parlamentaria", _fresh.get("ec_agenda")),
+    ("Alertas diarias (email 9 AM)", _fresh.get("alertas_diarias")),
 ]
 _cards_html = []
 for _label, _ts in _sources:
