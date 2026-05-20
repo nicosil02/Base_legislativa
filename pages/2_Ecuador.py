@@ -284,7 +284,25 @@ def kpi_totals() -> dict[str, int]:
 
 @st.cache_data(ttl=60)
 def last_sync() -> dict | None:
+    """Devuelve info de la ultima actualizacion.
+
+    Prioridad: heartbeat del workflow (corre cada 4h aunque no haya
+    cambios) → fallback a sync_runs (escrito solo si hubo cambios).
+    El segundo puede ser de hace varios dias si los datos no cambiaron.
+    """
     conn = get_conn()
+    # 1) Heartbeat del workflow (mas fresco, refleja "el workflow corrio")
+    try:
+        r = conn.execute(
+            "SELECT last_run, last_status FROM system_heartbeats "
+            "WHERE source = 'ec_proyectos'"
+        ).fetchone()
+        if r:
+            return {"finished_at": r[0], "started_at": r[0],
+                    "status": r[1], "source": "heartbeat"}
+    except Exception:
+        pass
+    # 2) Fallback a sync_runs (solo si hubo cambios)
     r = conn.execute(
         "SELECT started_at, finished_at, proyectos_vistos, proyectos_nuevos, "
         "       proyectos_actualizados, errores, csv_source "
