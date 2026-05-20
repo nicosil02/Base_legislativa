@@ -4,6 +4,11 @@ openpyxl>=3.1
 streamlit>=1.34
 pandas>=2.0
 streamlit-aggrid>=0.3.4
+# Clasificador ML para temas de PLs (modulo clasificador/):
+# TF-IDF + LogisticRegression, entrenado con 14,589 PLs etiquetados a mano.
+# scikit-learn pesa ~12 MB instalado, joblib persiste el modelo en ~2 MB.
+scikit-learn>=1.4
+joblib>=1.3
 # Ecuador-only: usado por scraper_ec.playwright_detail para extraer URLs
 # públicas de PDFs desde el portal Ppless v2 (Angular SPA).
 # Requiere también `python -m playwright install chromium` después del pip install.
