@@ -442,6 +442,14 @@ st.markdown(f"##### {len(df):,} sesión(es) de {len(df_full):,} en el rango")
 COLS_VISIBLES = ["ID", "Fecha", "Hora", "Comisión", "PLs en agenda", "Nombre"]
 df_view = df[[c for c in COLS_VISIBLES if c in df.columns]].copy()
 
+# "Celda extendida" visual: blanqueamos la fecha repetida cuando es igual
+# a la fila anterior. Streamlit no soporta rowspan en st.dataframe, pero
+# el efecto visual de "merged cell" funciona bien al ojo cuando el sort
+# agrupa por fecha (que es nuestro caso: fecha DESC, hora DESC).
+if "Fecha" in df_view.columns and len(df_view) > 1:
+    _prev = df_view["Fecha"].shift(1)
+    df_view.loc[df_view["Fecha"] == _prev, "Fecha"] = ""
+
 tabla = st.dataframe(
     df_view,
     hide_index=True,
