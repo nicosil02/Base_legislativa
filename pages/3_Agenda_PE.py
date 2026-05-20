@@ -175,6 +175,55 @@ def get_conn() -> sqlite3.Connection:
     return conn
 
 
+@st.cache_data(ttl=300)
+def fetch_live_agenda_pe(periodo_par: int = 2021, periodo_leg: int = 2026) -> dict:
+    """Consulta la API visor-sesiones en VIVO. Mucho mas liviano que el de
+    proyectos: ~1-2 seg porque solo trae las sesiones del periodo legislativo
+    actual. Compara con la DB local.
+
+    Returns:
+      {"total_api", "total_db", "nuevas": [{id, fecha, comision, ...}], "error"}
+    """
+    try:
+        from sesiones.api import ApiClient
+        client = ApiClient()
+        api_sesiones = client.list_sesiones(
+            periodo_parlamentario=periodo_par,
+            periodo_legislativo=periodo_leg,
+        )
+    except Exception as e:
+        return {"total_api": 0, "total_db": 0, "nuevas": [], "error": str(e)}
+
+    conn = get_conn()
+    try:
+        db_ids = {r[0] for r in conn.execute(
+            "SELECT id_sesion FROM sesiones WHERE id_sesion IS NOT NULL"
+        )}
+    finally:
+        conn.close()
+
+    api_ids = {s.get("idSesion") for s in api_sesiones if s.get("idSesion")}
+    new_ids = api_ids - db_ids
+    nuevas = [
+        {
+            "id_sesion": s.get("idSesion"),
+            "fecha": s.get("fecha") or "—",
+            "hora": s.get("horaInicio") or "—",
+            "comision": s.get("nombreComision") or "—",
+            "estado": s.get("estado") or "—",
+        }
+        for s in api_sesiones
+        if s.get("idSesion") in new_ids
+    ]
+    nuevas.sort(key=lambda x: x.get("fecha") or "", reverse=True)
+    return {
+        "total_api": len(api_ids),
+        "total_db": len(db_ids),
+        "nuevas": nuevas,
+        "error": None,
+    }
+
+
 @st.cache_data(ttl=60)
 def has_sesiones_table() -> bool:
     conn = get_conn()
@@ -378,6 +427,43 @@ if not has_sesiones_table():
         "```\npython -m sesiones.cli init\npython -m sesiones.cli update\n```"
     )
     st.stop()
+
+# ---------- Live banner (tiempo real) ----------
+# API visor-sesiones es liviana (~1-2 seg), cacheada 5 min compartido.
+import datetime as _dt
+_anio_actual = _dt.date.today().year
+with st.spinner("Verificando agenda en vivo con el Congreso..."):
+    try:
+        _live = fetch_live_agenda_pe(periodo_par=2021, periodo_leg=_anio_actual)
+    except Exception as _e:
+        _live = {"error": str(_e), "nuevas": [], "total_api": 0, "total_db": 0}
+
+if _live.get("error"):
+    pass  # silencio si la API falla
+elif _live.get("nuevas"):
+    _n = len(_live["nuevas"])
+    with st.expander(
+        f"⚡ {_n} sesión{'es' if _n != 1 else ''} nueva{'s' if _n != 1 else ''} "
+        f"detectada{'s' if _n != 1 else ''} en la API que aún no está{'n' if _n != 1 else ''} "
+        f"en nuestra base — clic para ver",
+        expanded=False,
+    ):
+        st.dataframe(
+            pd.DataFrame(_live["nuevas"]),
+            hide_index=True, use_container_width=True,
+        )
+        st.caption(
+            f"API: {_live['total_api']:,} sesiones · DB: {_live['total_db']:,} · "
+            f"Se sincronizarán en el próximo cron (max 1h)."
+        )
+else:
+    st.markdown(
+        f'<div style="background:#ECFDF5;border:1px solid #10B981;border-radius:8px;'
+        f'padding:8px 14px;margin-bottom:18px;font-size:13px;color:#065F46;">'
+        f'✓ Agenda sincronizada en tiempo real · '
+        f'<strong>{_live["total_api"]:,}</strong> sesiones del año {_anio_actual}.</div>',
+        unsafe_allow_html=True,
+    )
 
 # ---------- KPIs ----------
 totals = kpi_totals()
