@@ -167,6 +167,57 @@ def get_conn() -> sqlite3.Connection:
     return conn
 
 
+@st.cache_data(ttl=300)
+def fetch_live_agenda_ec() -> dict:
+    """Consulta el ICS publico de Zimbra (Asamblea Nacional) en VIVO.
+    Filtro de fecha epoch ms para traer solo ventana de ±2 meses (~500 KB,
+    ~2 seg). Compara con la DB local.
+
+    Returns:
+      {"total_api", "total_db", "nuevas": [...], "error"}
+    """
+    try:
+        from agenda_ec.sync import download_ics
+        from agenda_ec.ics_parser import parse_events
+        text = download_ics(days_back=30, days_fwd=60, timeout=30)
+        events = list(parse_events(text))
+    except Exception as e:
+        return {"total_api": 0, "total_db": 0, "nuevas": [], "error": str(e)}
+
+    conn = get_conn()
+    try:
+        db_uids = {r[0] for r in conn.execute("SELECT uid FROM sesiones_ec")}
+    finally:
+        conn.close()
+
+    api_events = [e for e in events if e.uid and e.dtstart]
+    api_uids = {e.uid for e in api_events}
+    new_uids = api_uids - db_uids
+    nuevas = []
+    for e in api_events:
+        if e.uid not in new_uids:
+            continue
+        # Limpiar summary de "modalidad X" para mostrar limpio
+        summary = e.summary or "(sin titulo)"
+        for tok in (", modalidad", " modalidad"):
+            idx = summary.lower().find(tok)
+            if idx >= 0:
+                summary = summary[:idx].rstrip(" ,.;")
+                break
+        nuevas.append({
+            "fecha": e.dtstart.strftime("%Y-%m-%d"),
+            "hora": e.dtstart.strftime("%H:%M"),
+            "comision_o_evento": summary[:80],
+        })
+    nuevas.sort(key=lambda x: (x["fecha"], x["hora"]), reverse=True)
+    return {
+        "total_api": len(api_uids),
+        "total_db": len(db_uids),
+        "nuevas": nuevas,
+        "error": None,
+    }
+
+
 @st.cache_data(ttl=60)
 def has_sesiones_table() -> bool:
     conn = get_conn()
@@ -336,6 +387,42 @@ if not has_sesiones_table():
         "python -m agenda_ec.cli --db proyectos_ec.db update\n```"
     )
     st.stop()
+
+# ---------- Live banner (tiempo real) ----------
+# ICS publico Zimbra de la Asamblea Nacional (~500 KB con filtro ±2 meses,
+# ~2 seg). Cache 5 min compartido.
+with st.spinner("Verificando agenda en vivo con la Asamblea Nacional..."):
+    try:
+        _live = fetch_live_agenda_ec()
+    except Exception as _e:
+        _live = {"error": str(_e), "nuevas": [], "total_api": 0, "total_db": 0}
+
+if _live.get("error"):
+    pass
+elif _live.get("nuevas"):
+    _n = len(_live["nuevas"])
+    with st.expander(
+        f"⚡ {_n} sesión{'es' if _n != 1 else ''} nueva{'s' if _n != 1 else ''} "
+        f"detectada{'s' if _n != 1 else ''} en el feed que aún no está{'n' if _n != 1 else ''} "
+        f"en nuestra base — clic para ver",
+        expanded=False,
+    ):
+        st.dataframe(
+            pd.DataFrame(_live["nuevas"]),
+            hide_index=True, use_container_width=True,
+        )
+        st.caption(
+            f"Feed Zimbra: {_live['total_api']:,} sesiones (ventana ±2 meses) · "
+            f"DB local: {_live['total_db']:,} totales · "
+            f"Se sincronizarán en el próximo cron (max 6h)."
+        )
+else:
+    st.markdown(
+        f'<div style="background:#ECFDF5;border:1px solid #10B981;border-radius:8px;'
+        f'padding:8px 14px;margin-bottom:18px;font-size:13px;color:#065F46;">'
+        f'✓ Agenda sincronizada en tiempo real con la Asamblea Nacional.</div>',
+        unsafe_allow_html=True,
+    )
 
 # ---------- KPIs ----------
 totals = kpi_totals()

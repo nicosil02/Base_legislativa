@@ -381,8 +381,20 @@ st.markdown(
 st.markdown(
     '<p class="country-subtitle">Plataforma para seguir, filtrar y analizar todos los '
     'proyectos de ley presentados ante la Asamblea Nacional del Ecuador durante el '
-    'período legislativo 2025–2029. Datos del portal Ppless v2 de la Asamblea, '
-    'actualizable manualmente cuando se descarga el CSV oficial.</p>',
+    'período legislativo 2025–2029.</p>',
+    unsafe_allow_html=True,
+)
+
+# ---------- Banner: no hay live para EC proyectos ----------
+# El portal Ppless v2 es un Angular SPA que requiere Playwright para el
+# CSV download. Playwright no funciona en Streamlit Cloud (sin Chromium).
+# Por eso EC proyectos solo se actualiza via cron (cada 4-6h) en CI.
+st.markdown(
+    '<div style="background:#FFF8EB;border:1px solid #F59E0B;border-radius:8px;'
+    'padding:8px 14px;margin-bottom:18px;font-size:13px;color:#78350F;">'
+    'ℹ️ Sincronizado automáticamente <strong>cada 4-6 horas</strong> via workflow. '
+    'No hay modo live para Ecuador porque el portal Ppless v2 requiere Playwright '
+    '(Chromium headless), que no corre en Streamlit Cloud.</div>',
     unsafe_allow_html=True,
 )
 
