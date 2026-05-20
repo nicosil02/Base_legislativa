@@ -121,6 +121,24 @@ jobs:
           # Confianza 0.70-0.85 queda como sugerencia pendiente para review.
           python -X utf8 -m clasificador.cli reclassify --apply || echo "[warn] reclassify fallo, sigo"
 
+      - name: Envio de alerta diaria (backup del daily-alerts.yml)
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          RESEND_FROM: ${{ secrets.RESEND_FROM }}
+          ALERT_RECIPIENT: ${{ secrets.ALERT_RECIPIENT }}
+          PYTHONIOENCODING: utf-8
+        run: |
+          # Backup confiable del workflow daily-alerts.yml — sus crones tienen
+          # latencias muy variables (>3h en GitHub Actions). Este workflow
+          # corre 4x/dia con timing mas consistente. Si la alerta ya se envio
+          # hoy (slot=09, slot=10 o slot=cron), alerts.cli skip via
+          # already_sent_today. Si no, envia.
+          if [ -z "$RESEND_API_KEY" ]; then
+            echo "[alert-backup] sin RESEND_API_KEY, skip"
+          else
+            python -X utf8 -m alerts.cli send --slot cron || echo "[warn] alert send fallo, sigo"
+          fi
+
       - name: Heartbeats (registra corrida exitosa)
         run: |
           # Registra que el workflow corrio (independiente de si hubo
