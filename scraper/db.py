@@ -160,16 +160,39 @@ class Database:
 
     def classify_and_save(self, per_par_id: int, pley_num: int,
                           titulo: str | None, sumilla: str | None) -> str | None:
-        """Clasifica con el algoritmo de keywords. Respeta tema_manual=1
-        (no toca temas etiquetados a mano)."""
-        from scraper.categorias import classify
+        """Clasifica el PL. Respeta tema_manual=1 (no toca etiquetas manuales).
+
+        Prioridad de clasificador:
+          1. ML (clasificador.predict.predict_tema): entrenado con 14,589
+             labels manuales. Solo aplicamos si confidence >= 0.5 para
+             evitar asignaciones cuestionables que llenarian de noise el
+             dataset (es preferible "Otros" sobre una etiqueta dudosa).
+          2. Fallback keywords (scraper/categorias.py): si el modelo no
+             esta disponible o confidence < 0.5.
+        """
         row = self.conn.execute(
             "SELECT tema_manual FROM proyectos WHERE per_par_id=? AND pley_num=?",
             (per_par_id, pley_num),
         ).fetchone()
         if row and row["tema_manual"]:
             return None  # respetar la etiqueta manual
-        tema = classify(titulo, sumilla)
+
+        # Intentar ML primero
+        tema = None
+        try:
+            from clasificador.predict import predict_tema
+            tema_ml, conf = predict_tema(titulo, sumilla)
+            if conf >= 0.5:
+                tema = tema_ml
+        except Exception:
+            # Modelo no entrenado / sklearn no disponible / archivo missing
+            pass
+
+        # Fallback al clasificador keywords si ML no aplico
+        if tema is None:
+            from scraper.categorias import classify
+            tema = classify(titulo, sumilla)
+
         self.set_tema(per_par_id, pley_num, tema, manual=False)
         return tema
 
