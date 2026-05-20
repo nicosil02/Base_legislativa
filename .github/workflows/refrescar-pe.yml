@@ -121,6 +121,15 @@ jobs:
           # Confianza 0.70-0.85 queda como sugerencia pendiente para review.
           python -X utf8 -m clasificador.cli reclassify --apply || echo "[warn] reclassify fallo, sigo"
 
+      - name: Heartbeats (registra corrida exitosa)
+        run: |
+          # Registra que el workflow corrio (independiente de si hubo
+          # cambios en los datos). La UI lee de esta tabla para mostrar
+          # "actualizado hace X min" — refleja salud del workflow, no
+          # actividad del Congreso.
+          python -X utf8 -m sistema.heartbeat --db proyectos.db --source pe_proyectos
+          python -X utf8 -m sistema.heartbeat --db proyectos.db --source pe_sesiones
+
       - name: Stats final
         run: |
           python -c "
