@@ -112,6 +112,28 @@ st.markdown(
       color: var(--ink-mute) !important;
     }
 
+    /* Botones del sidebar (ej "Buscar PLs nuevos en vivo"): fondo blanco,
+       texto navy con peso. Sin esto los * { color: #FFFFFF } heredan al texto
+       del boton y queda invisible sobre fondo blanco. */
+    section[data-testid="stSidebar"] .stButton > button {
+      background-color: #FFFFFF !important;
+      color: var(--ink) !important;
+      border: 1px solid var(--line) !important;
+      font-weight: 700 !important;
+      font-family: 'Inter', sans-serif !important;
+      transition: background-color 180ms, border-color 180ms, transform 80ms !important;
+    }
+    section[data-testid="stSidebar"] .stButton > button > * {
+      color: var(--ink) !important;
+    }
+    section[data-testid="stSidebar"] .stButton > button:hover {
+      background-color: var(--bg-soft) !important;
+      border-color: var(--accent) !important;
+    }
+    section[data-testid="stSidebar"] .stButton > button:active {
+      transform: scale(.98);
+    }
+
     /* === Ocultar TODO texto crudo de Material Symbols/Icons en sidebar === */
     /* Cualquier elemento con clase relacionada a iconos Material, en sidebar */
     [data-testid="stSidebar"] [class*="material-symbols"],
