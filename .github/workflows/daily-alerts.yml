@@ -135,14 +135,14 @@ jobs:
           ALERT_RECIPIENT: ${{ secrets.ALERT_RECIPIENT }}
           PYTHONIOENCODING: utf-8
         run: |
-          # Validacion temprana de secrets — si faltan, fail fast con mensaje claro
-          # (asi GitHub no deshabilita el cron silenciosamente por fallos opacos).
+          # Validar solo los secrets REQUERIDOS (RESEND_API_KEY + ALERT_RECIPIENT).
+          # RESEND_FROM es opcional — alerts/send.py usa default onboarding@resend.dev
+          # si no esta seteado. No bloqueamos por su ausencia.
           missing=""
-          [ -z "$RESEND_API_KEY" ] && missing="$missing RESEND_API_KEY"
-          [ -z "$RESEND_FROM" ]    && missing="$missing RESEND_FROM"
+          [ -z "$RESEND_API_KEY" ]  && missing="$missing RESEND_API_KEY"
           [ -z "$ALERT_RECIPIENT" ] && missing="$missing ALERT_RECIPIENT"
           if [ -n "$missing" ]; then
-            echo "::error::Faltan secrets en el repo:$missing"
+            echo "::error::Faltan secrets requeridos:$missing"
             echo "Ir a Settings > Secrets and variables > Actions y agregarlos"
             exit 1
           fi
