@@ -78,8 +78,8 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--source", required=True,
         help="identificador de la fuente (ej. pe_proyectos)")
     p.add_argument("--status", default="ok",
-        choices=["ok", "partial", "failed"],
-        help="estado de la corrida")
+        choices=["ok", "started", "partial", "failed"],
+        help="estado de la corrida: started al iniciar, ok al terminar exitoso")
     args = p.parse_args(argv)
     record(args.db, args.source, args.status)
     print(f"[heartbeat] {args.source} -> {args.status} @ {now_iso()}")
