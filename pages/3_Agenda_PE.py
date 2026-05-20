@@ -600,6 +600,18 @@ else:
 # ---------- Footer ----------
 st.markdown('<div class="footer-rule"></div>', unsafe_allow_html=True)
 st.markdown(
+    '<p style="font-size:12px;color:var(--ink-soft);line-height:1.55;'
+    'max-width:760px;margin-bottom:14px;">'
+    '<strong style="color:var(--ink);">Cobertura temporal:</strong> '
+    'la agenda incluye sesiones desde el <strong>15 de agosto de 2023</strong> '
+    'hasta hoy. El módulo <em>visor-sesiones</em> del Congreso del Perú '
+    '(<code>service-portal-publico-ext</code>) se implementó en esa fecha, '
+    'por lo que sesiones anteriores no están disponibles vía API. '
+    'Las actas históricas (2021–2023) existen como PDFs en el archivo del '
+    'Congreso pero no son consumibles automáticamente.</p>',
+    unsafe_allow_html=True,
+)
+st.markdown(
     '<div class="footer-text">Fuente · wb2server.congreso.gob.pe/service-portal-publico-ext · '
     'Radar Legislativo</div>',
     unsafe_allow_html=True,
