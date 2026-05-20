@@ -167,14 +167,32 @@ def get_conn() -> sqlite3.Connection:
     return conn
 
 
+def _upsert_live_sesiones_ec(events_new) -> int:
+    """Inserta sesiones EC nuevas a la DB usando el mismo pipeline del
+    sync regular (upsert_events + rematch). Asi quedan con metadata y
+    matching de PLs igual que las del cron."""
+    db = _find_db_path()
+    if db is None or not events_new:
+        return 0
+    try:
+        from agenda_ec.sync import upsert_events, rematch_all
+        conn = sqlite3.connect(str(db), check_same_thread=False)
+        try:
+            nuevos, _act = upsert_events(conn, events_new)
+            if nuevos > 0:
+                rematch_all(conn)
+            return nuevos
+        finally:
+            conn.close()
+    except Exception as e:
+        print(f"[live-upsert-agenda-ec] skip: {e}")
+        return 0
+
+
 @st.cache_data(ttl=300)
 def fetch_live_agenda_ec() -> dict:
     """Consulta el ICS publico de Zimbra (Asamblea Nacional) en VIVO.
-    Filtro de fecha epoch ms para traer solo ventana de ±2 meses (~500 KB,
-    ~2 seg). Compara con la DB local.
-
-    Returns:
-      {"total_api", "total_db", "nuevas": [...], "error"}
+    Auto-upsert a la DB para que aparezcan en la tabla principal.
     """
     try:
         from agenda_ec.sync import download_ics
@@ -182,7 +200,7 @@ def fetch_live_agenda_ec() -> dict:
         text = download_ics(days_back=30, days_fwd=60, timeout=30)
         events = list(parse_events(text))
     except Exception as e:
-        return {"total_api": 0, "total_db": 0, "nuevas": [], "error": str(e)}
+        return {"total_api": 0, "total_db": 0, "inserted": 0, "error": str(e)}
 
     conn = get_conn()
     try:
@@ -191,29 +209,12 @@ def fetch_live_agenda_ec() -> dict:
         conn.close()
 
     api_events = [e for e in events if e.uid and e.dtstart]
-    api_uids = {e.uid for e in api_events}
-    new_uids = api_uids - db_uids
-    nuevas = []
-    for e in api_events:
-        if e.uid not in new_uids:
-            continue
-        # Limpiar summary de "modalidad X" para mostrar limpio
-        summary = e.summary or "(sin titulo)"
-        for tok in (", modalidad", " modalidad"):
-            idx = summary.lower().find(tok)
-            if idx >= 0:
-                summary = summary[:idx].rstrip(" ,.;")
-                break
-        nuevas.append({
-            "fecha": e.dtstart.strftime("%Y-%m-%d"),
-            "hora": e.dtstart.strftime("%H:%M"),
-            "comision_o_evento": summary[:80],
-        })
-    nuevas.sort(key=lambda x: (x["fecha"], x["hora"]), reverse=True)
+    new_events = [e for e in api_events if e.uid not in db_uids]
+    inserted = _upsert_live_sesiones_ec(new_events)
     return {
-        "total_api": len(api_uids),
+        "total_api": len(api_events),
         "total_db": len(db_uids),
-        "nuevas": nuevas,
+        "inserted": inserted,
         "error": None,
     }
 
@@ -388,43 +389,22 @@ if not has_sesiones_table():
     )
     st.stop()
 
-# ---------- Live banner (tiempo real) ----------
-# ICS publico Zimbra de la Asamblea Nacional (~500 KB con filtro ±2 meses,
-# ~2 seg). Cache 5 min compartido.
-with st.spinner("Verificando agenda en vivo con la Asamblea Nacional..."):
+# ---------- Live sync (tiempo real automatico) ----------
+# Lee feed Zimbra, auto-upsert sesiones nuevas a la DB → aparecen en la
+# tabla principal sin clic.
+with st.spinner("Sincronizando agenda en vivo con la Asamblea Nacional..."):
     try:
         _live = fetch_live_agenda_ec()
     except Exception as _e:
-        _live = {"error": str(_e), "nuevas": [], "total_api": 0, "total_db": 0}
+        _live = {"error": str(_e), "inserted": 0, "total_api": 0, "total_db": 0}
 
-if _live.get("error"):
-    pass
-elif _live.get("nuevas"):
-    _n = len(_live["nuevas"])
-    st.markdown(
-        f'<div style="background:#FFFBEB;border:1px solid #F59E0B;border-radius:8px;'
-        f'padding:10px 14px;margin-bottom:8px;font-size:13px;color:#78350F;">'
-        f'⚡ <strong>{_n} sesión{"es" if _n != 1 else ""} nueva{"s" if _n != 1 else ""}</strong> '
-        f'detectada{"s" if _n != 1 else ""} en el feed · '
-        f'se sincronizarán en el próximo cron (max 6h):</div>',
-        unsafe_allow_html=True,
-    )
-    st.dataframe(
-        pd.DataFrame(_live["nuevas"]),
-        hide_index=True, use_container_width=True,
-    )
-    st.markdown(
-        f'<p style="font-size:11px;color:#869FB2;margin-bottom:18px;">'
-        f'Feed Zimbra (ventana ±2 meses): {_live["total_api"]:,} sesiones · '
-        f'DB local: {_live["total_db"]:,}</p>',
-        unsafe_allow_html=True,
-    )
-else:
-    st.markdown(
-        f'<div style="background:#ECFDF5;border:1px solid #10B981;border-radius:8px;'
-        f'padding:8px 14px;margin-bottom:18px;font-size:13px;color:#065F46;">'
-        f'✓ Agenda sincronizada en tiempo real con la Asamblea Nacional.</div>',
-        unsafe_allow_html=True,
+if _live.get("inserted", 0) > 0:
+    st.cache_data.clear()
+    st.toast(
+        f"⚡ {_live['inserted']} sesión{'es' if _live['inserted'] != 1 else ''} "
+        f"nueva{'s' if _live['inserted'] != 1 else ''} sincronizada{'s' if _live['inserted'] != 1 else ''} "
+        f"en vivo desde la Asamblea",
+        icon="✓",
     )
 
 # ---------- KPIs ----------

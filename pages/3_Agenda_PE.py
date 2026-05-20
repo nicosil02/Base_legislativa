@@ -175,14 +175,65 @@ def get_conn() -> sqlite3.Connection:
     return conn
 
 
+def _upsert_live_sesiones_pe(nuevas_api: list[dict],
+                              periodo_par: int = 2021,
+                              periodo_leg: int = 2026) -> int:
+    """Inserta sesiones detectadas en vivo a la DB. Auto-write para que
+    aparezcan en la tabla principal sin tener que esperar al cron."""
+    db = _find_db_path()
+    if db is None:
+        return 0
+    # Convertir fecha DD/MM/YYYY -> YYYY-MM-DD (formato que usa la DB)
+    def _norm_fecha(s):
+        if not s or not isinstance(s, str):
+            return None
+        parts = s.split("/")
+        if len(parts) == 3 and len(parts[2]) == 4:
+            return f"{parts[2]}-{parts[1].zfill(2)}-{parts[0].zfill(2)}"
+        return s
+    inserted = 0
+    try:
+        conn = sqlite3.connect(str(db), check_same_thread=False)
+        try:
+            for s in nuevas_api:
+                id_sesion = s.get("idSesion")
+                if not id_sesion:
+                    continue
+                conn.execute(
+                    """INSERT OR IGNORE INTO sesiones
+                       (id_sesion, comision_id, nombre_comision, tipo_comision,
+                        nombre_sesion, fecha, hora_inicio, hora_fin, estado,
+                        periodo_parlamentario, periodo_legislativo)
+                       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+                    (
+                        id_sesion,
+                        s.get("comisionId"),
+                        s.get("nombreComision"),
+                        s.get("tipoComision"),
+                        s.get("nombreSesion"),
+                        _norm_fecha(s.get("fecha")),
+                        s.get("horaInicio"),
+                        s.get("horaFin"),
+                        s.get("estado"),
+                        periodo_par,
+                        periodo_leg,
+                    ),
+                )
+                if conn.total_changes > inserted:
+                    inserted += 1
+            conn.commit()
+        finally:
+            conn.close()
+    except sqlite3.OperationalError as e:
+        print(f"[live-upsert-agenda-pe] skip: {e}")
+        return 0
+    return inserted
+
+
 @st.cache_data(ttl=300)
 def fetch_live_agenda_pe(periodo_par: int = 2021, periodo_leg: int = 2026) -> dict:
-    """Consulta la API visor-sesiones en VIVO. Mucho mas liviano que el de
-    proyectos: ~1-2 seg porque solo trae las sesiones del periodo legislativo
-    actual. Compara con la DB local.
-
-    Returns:
-      {"total_api", "total_db", "nuevas": [{id, fecha, comision, ...}], "error"}
+    """Consulta la API visor-sesiones en VIVO. Auto-upsert a la DB para que
+    las nuevas sesiones aparezcan integradas en la tabla principal.
     """
     try:
         from sesiones.api import ApiClient
@@ -192,7 +243,7 @@ def fetch_live_agenda_pe(periodo_par: int = 2021, periodo_leg: int = 2026) -> di
             periodo_legislativo=periodo_leg,
         )
     except Exception as e:
-        return {"total_api": 0, "total_db": 0, "nuevas": [], "error": str(e)}
+        return {"total_api": 0, "total_db": 0, "inserted": 0, "error": str(e)}
 
     conn = get_conn()
     try:
@@ -204,22 +255,14 @@ def fetch_live_agenda_pe(periodo_par: int = 2021, periodo_leg: int = 2026) -> di
 
     api_ids = {s.get("idSesion") for s in api_sesiones if s.get("idSesion")}
     new_ids = api_ids - db_ids
-    nuevas = [
-        {
-            "id_sesion": s.get("idSesion"),
-            "fecha": s.get("fecha") or "—",
-            "hora": s.get("horaInicio") or "—",
-            "comision": s.get("nombreComision") or "—",
-            "estado": s.get("estado") or "—",
-        }
-        for s in api_sesiones
-        if s.get("idSesion") in new_ids
-    ]
-    nuevas.sort(key=lambda x: x.get("fecha") or "", reverse=True)
+    nuevas_raw = [s for s in api_sesiones if s.get("idSesion") in new_ids]
+    inserted = _upsert_live_sesiones_pe(
+        nuevas_raw, periodo_par=periodo_par, periodo_leg=periodo_leg
+    )
     return {
         "total_api": len(api_ids),
         "total_db": len(db_ids),
-        "nuevas": nuevas,
+        "inserted": inserted,
         "error": None,
     }
 
@@ -428,44 +471,24 @@ if not has_sesiones_table():
     )
     st.stop()
 
-# ---------- Live banner (tiempo real) ----------
-# API visor-sesiones es liviana (~1-2 seg), cacheada 5 min compartido.
+# ---------- Live sync (tiempo real automatico) ----------
+# Al cargar, consulta API visor-sesiones y auto-upsert los nuevos a la
+# DB → aparecen en la tabla principal sin clic.
 import datetime as _dt
 _anio_actual = _dt.date.today().year
-with st.spinner("Verificando agenda en vivo con el Congreso..."):
+with st.spinner("Sincronizando agenda en vivo con el Congreso..."):
     try:
         _live = fetch_live_agenda_pe(periodo_par=2021, periodo_leg=_anio_actual)
     except Exception as _e:
-        _live = {"error": str(_e), "nuevas": [], "total_api": 0, "total_db": 0}
+        _live = {"error": str(_e), "inserted": 0, "total_api": 0, "total_db": 0}
 
-if _live.get("error"):
-    pass  # silencio si la API falla
-elif _live.get("nuevas"):
-    _n = len(_live["nuevas"])
-    st.markdown(
-        f'<div style="background:#FFFBEB;border:1px solid #F59E0B;border-radius:8px;'
-        f'padding:10px 14px;margin-bottom:8px;font-size:13px;color:#78350F;">'
-        f'⚡ <strong>{_n} sesión{"es" if _n != 1 else ""} nueva{"s" if _n != 1 else ""}</strong> '
-        f'detectada{"s" if _n != 1 else ""} en la API · '
-        f'se sincronizarán en el próximo cron (max 1h):</div>',
-        unsafe_allow_html=True,
-    )
-    st.dataframe(
-        pd.DataFrame(_live["nuevas"]),
-        hide_index=True, use_container_width=True,
-    )
-    st.markdown(
-        f'<p style="font-size:11px;color:#869FB2;margin-bottom:18px;">'
-        f'API: {_live["total_api"]:,} sesiones · DB: {_live["total_db"]:,}</p>',
-        unsafe_allow_html=True,
-    )
-else:
-    st.markdown(
-        f'<div style="background:#ECFDF5;border:1px solid #10B981;border-radius:8px;'
-        f'padding:8px 14px;margin-bottom:18px;font-size:13px;color:#065F46;">'
-        f'✓ Agenda sincronizada en tiempo real · '
-        f'<strong>{_live["total_api"]:,}</strong> sesiones del año {_anio_actual}.</div>',
-        unsafe_allow_html=True,
+if _live.get("inserted", 0) > 0:
+    st.cache_data.clear()
+    st.toast(
+        f"⚡ {_live['inserted']} sesión{'es' if _live['inserted'] != 1 else ''} "
+        f"nueva{'s' if _live['inserted'] != 1 else ''} sincronizada{'s' if _live['inserted'] != 1 else ''} "
+        f"en vivo desde la API",
+        icon="✓",
     )
 
 # ---------- KPIs ----------
