@@ -654,36 +654,6 @@ with ag_cols[1]:
 with ag_cols[2]:
     st.markdown("&nbsp;", unsafe_allow_html=True)
 
-# ====================== Status: actualizado hace cuánto ======================
-st.markdown('<div class="tool-block"></div>', unsafe_allow_html=True)
-st.markdown('<div class="section-label">Estado del sistema</div>', unsafe_allow_html=True)
-st.markdown(
-    '<p style="font-size:13px;color:#869FB2;margin-bottom:6px;">Actualizado '
-    'automáticamente 4 veces al día (08:00, 12:00, 16:00, 22:00 hora Lima)</p>',
-    unsafe_allow_html=True,
-)
-
-_fresh = get_freshness()
-_sources = [
-    ("PE · Proyectos de ley",   _fresh.get("pe_proyectos")),
-    ("PE · Agenda de comisiones", _fresh.get("pe_sesiones")),
-    ("EC · Proyectos de ley",   _fresh.get("ec_proyectos")),
-    ("EC · Agenda parlamentaria", _fresh.get("ec_agenda")),
-]
-_cards_html = []
-for _label, _ts in _sources:
-    _txt, _estado = _human_delta(_ts)
-    _cards_html.append(
-        f'<div class="freshness-card">'
-        f'<div class="label">{_label}</div>'
-        f'<div class="value"><span class="dot {_estado}"></span>{_txt}</div>'
-        f'</div>'
-    )
-st.markdown(
-    '<div class="freshness-grid">' + "".join(_cards_html) + '</div>',
-    unsafe_allow_html=True,
-)
-
 # Footer
 st.markdown('<div class="footer-rule"></div>', unsafe_allow_html=True)
 st.markdown(

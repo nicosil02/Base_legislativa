@@ -527,7 +527,8 @@ SYNC_MIN_MINUTES = 5      # gap mínimo entre auto-syncs
 SYNC_STALE_MINUTES = 15   # un sync sin terminar después de esto se considera muerto
 
 
-@st.cache_data(ttl=120)  # cache 2 min: si 100 users clickean en 2 min, 1 API call
+@st.cache_data(ttl=300)  # cache 5 min: tras la primera carga del dia,
+                          # los siguientes 5 min son instant para todos
 def fetch_live_pe(per_par_id: int = 2021) -> dict:
     """Consulta la API del Congreso PE en TIEMPO REAL y devuelve la lista
     actual de PLs. Compara con la DB local para identificar los que no
@@ -664,12 +665,51 @@ st.markdown(
 st.markdown(
     '<p class="country-subtitle">Plataforma para seguir, filtrar y analizar todos los '
     'proyectos de ley presentados ante el Congreso de la República del Perú durante el '
-    'período parlamentario 2021–2026. Pensada para equipos de asuntos públicos, '
-    'consultoras de policy y áreas regulatorias que necesitan identificar iniciativas '
-    'legislativas relevantes por tema, comisión, partido o autor — y mantener el '
-    'seguimiento de su estado.</p>',
+    'período parlamentario 2021–2026.</p>',
     unsafe_allow_html=True,
 )
+
+# ---------- Live banner (tiempo real automatico) ----------
+# Auto-fetch al cargar la pagina: consulta la API del Congreso y compara
+# con la DB. Cache 5 min compartido entre TODOS los usuarios → la primera
+# carga del periodo tarda ~30s, las siguientes 5 min son instant.
+# Si hay PLs nuevos no sincronizados, mostramos banner amarillo.
+_live_placeholder = st.empty()
+with _live_placeholder.container():
+    with st.spinner("Verificando actualización en vivo con el Congreso..."):
+        try:
+            _live = fetch_live_pe(per_par_id=2021)
+        except Exception as _e:
+            _live = {"error": str(_e), "nuevos": [], "total_api": 0, "total_db": 0}
+
+# Renderizar banner segun resultado
+_live_placeholder.empty()
+if _live.get("error"):
+    pass  # silencioso, no mostrar nada si falla la API
+elif _live.get("nuevos"):
+    _n = len(_live["nuevos"])
+    with st.expander(
+        f"⚡ {_n} PL{'s' if _n != 1 else ''} nuevo{'s' if _n != 1 else ''} "
+        f"detectado{'s' if _n != 1 else ''} en la API que aún no está{'n' if _n != 1 else ''} "
+        f"en nuestra base — clic para ver",
+        expanded=False,
+    ):
+        st.dataframe(
+            pd.DataFrame(_live["nuevos"]),
+            hide_index=True, use_container_width=True,
+        )
+        st.caption(
+            f"API: {_live['total_api']:,} PLs · DB: {_live['total_db']:,} PLs · "
+            f"Se sincronizarán en el próximo cron (max 1h)."
+        )
+else:
+    st.markdown(
+        f'<div style="background:#ECFDF5;border:1px solid #10B981;border-radius:8px;'
+        f'padding:8px 14px;margin-bottom:18px;font-size:13px;color:#065F46;">'
+        f'✓ Sincronizado en tiempo real con el Congreso · '
+        f'<strong>{_live["total_api"]:,}</strong> PLs.</div>',
+        unsafe_allow_html=True,
+    )
 
 # ---------- KPIs ----------
 totals = kpi_totals()
