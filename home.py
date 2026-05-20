@@ -198,6 +198,34 @@ a.country-card:hover {
 .country-card.soon .cta { color: var(--ink-mute); }
 .country-card.soon .stat-num { color: var(--ink-mute); }
 
+/* ─── Status dashboard de frescura ─────────────────────────────────────
+   Pequeno grid de badges abajo del home mostrando "hace X min/hr"
+   para cada fuente. Verde = fresco, amarillo = stale, gris = unknown. */
+.freshness-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px; margin-top: 14px; margin-bottom: 32px;
+}
+.freshness-card {
+  border: 1px solid var(--line); border-radius: 10px;
+  padding: 12px 14px; background: var(--bg);
+  display: flex; flex-direction: column; gap: 4px;
+}
+.freshness-card .label {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--ink-mute);
+}
+.freshness-card .value {
+  font-size: 14px; font-weight: 700; color: var(--ink);
+}
+.freshness-card .dot {
+  display: inline-block; width: 8px; height: 8px; border-radius: 50%;
+  margin-right: 6px; vertical-align: middle;
+}
+.freshness-card .dot.fresh   { background: #10B981; }
+.freshness-card .dot.stale   { background: #F59E0B; }
+.freshness-card .dot.cold    { background: #EF4444; }
+.freshness-card .dot.unknown { background: #CFD9E0; }
+
 .footer-rule {
   width: 32px; height: 2px; background: var(--ink);
   margin: 80px 0 14px 0;
@@ -230,6 +258,108 @@ def _find_db_file(filename: str) -> Path | None:
 
 def _find_db_path() -> Path | None:
     return _find_db_file("proyectos.db")
+
+
+# ====================== Freshness helpers ======================
+def _human_delta(iso_str: str | None) -> tuple[str, str]:
+    """Convierte un timestamp ISO en ('hace X min/hr/días', estado).
+
+    Estado: 'fresh' (<6h), 'stale' (<24h), 'cold' (>24h), 'unknown'.
+    Las fuentes corren 4x/dia con cron, asi que < 6 hr es saludable.
+    """
+    import datetime as _dt
+    if not iso_str:
+        return ("—", "unknown")
+    try:
+        # Normalizar: aceptar "YYYY-MM-DD HH:MM:SS" y formato ISO con Z
+        s = iso_str.replace("Z", "+00:00").replace(" ", "T")
+        ts = _dt.datetime.fromisoformat(s)
+        if ts.tzinfo is None:
+            ts = ts.replace(tzinfo=_dt.timezone.utc)
+        now = _dt.datetime.now(_dt.timezone.utc)
+        delta = now - ts
+        secs = int(delta.total_seconds())
+        if secs < 60:
+            txt = "hace <1 min"
+        elif secs < 3600:
+            txt = f"hace {secs // 60} min"
+        elif secs < 86400:
+            txt = f"hace {secs // 3600} h"
+        else:
+            txt = f"hace {secs // 86400} d"
+        if secs < 6 * 3600:
+            estado = "fresh"
+        elif secs < 24 * 3600:
+            estado = "stale"
+        else:
+            estado = "cold"
+        return (txt, estado)
+    except (ValueError, TypeError):
+        return ("—", "unknown")
+
+
+@st.cache_data(ttl=60)
+def get_freshness() -> dict:
+    """Devuelve el ultimo timestamp de actualizacion de cada fuente.
+
+    Lee de las tablas sync_runs (PE proyectos, PE sesiones, EC proyectos)
+    y del file mtime para datos sin tabla (EC agenda usa captured_at del
+    propio ICS).
+    """
+    out = {}
+
+    # PE proyectos: sync_runs en proyectos.db
+    db_pe = _find_db_path()
+    if db_pe:
+        try:
+            conn = sqlite3.connect(f"file:{db_pe}?mode=ro", uri=True)
+            try:
+                r = conn.execute(
+                    "SELECT finished_at FROM sync_runs "
+                    "WHERE finished_at IS NOT NULL ORDER BY id DESC LIMIT 1"
+                ).fetchone()
+                out["pe_proyectos"] = r[0] if r else None
+            except sqlite3.OperationalError:
+                out["pe_proyectos"] = None
+            # PE sesiones
+            try:
+                r = conn.execute(
+                    "SELECT finished_at FROM sesiones_sync_runs "
+                    "WHERE finished_at IS NOT NULL ORDER BY id DESC LIMIT 1"
+                ).fetchone()
+                out["pe_sesiones"] = r[0] if r else None
+            except sqlite3.OperationalError:
+                out["pe_sesiones"] = None
+            conn.close()
+        except Exception:
+            pass
+
+    # EC proyectos: sync_runs en proyectos_ec.db
+    db_ec = _find_db_file("proyectos_ec.db")
+    if db_ec:
+        try:
+            conn = sqlite3.connect(f"file:{db_ec}?mode=ro", uri=True)
+            try:
+                r = conn.execute(
+                    "SELECT finished_at FROM sync_runs "
+                    "WHERE finished_at IS NOT NULL ORDER BY id DESC LIMIT 1"
+                ).fetchone()
+                out["ec_proyectos"] = r[0] if r else None
+            except sqlite3.OperationalError:
+                out["ec_proyectos"] = None
+            # EC agenda: usar max(captured_at) de sesiones_ec
+            try:
+                r = conn.execute(
+                    "SELECT MAX(captured_at) FROM sesiones_ec"
+                ).fetchone()
+                out["ec_agenda"] = r[0] if r and r[0] else None
+            except sqlite3.OperationalError:
+                out["ec_agenda"] = None
+            conn.close()
+        except Exception:
+            pass
+
+    return out
 
 
 @st.cache_data(ttl=60)
@@ -494,6 +624,36 @@ with ag_cols[1]:
     )
 with ag_cols[2]:
     st.markdown("&nbsp;", unsafe_allow_html=True)
+
+# ====================== Status: actualizado hace cuánto ======================
+st.markdown('<div class="tool-block"></div>', unsafe_allow_html=True)
+st.markdown('<div class="section-label">Estado del sistema</div>', unsafe_allow_html=True)
+st.markdown(
+    '<p style="font-size:13px;color:#869FB2;margin-bottom:6px;">Actualizado '
+    'automáticamente 4 veces al día (08:00, 12:00, 16:00, 22:00 hora Lima)</p>',
+    unsafe_allow_html=True,
+)
+
+_fresh = get_freshness()
+_sources = [
+    ("PE · Proyectos de ley",   _fresh.get("pe_proyectos")),
+    ("PE · Agenda de comisiones", _fresh.get("pe_sesiones")),
+    ("EC · Proyectos de ley",   _fresh.get("ec_proyectos")),
+    ("EC · Agenda parlamentaria", _fresh.get("ec_agenda")),
+]
+_cards_html = []
+for _label, _ts in _sources:
+    _txt, _estado = _human_delta(_ts)
+    _cards_html.append(
+        f'<div class="freshness-card">'
+        f'<div class="label">{_label}</div>'
+        f'<div class="value"><span class="dot {_estado}"></span>{_txt}</div>'
+        f'</div>'
+    )
+st.markdown(
+    '<div class="freshness-grid">' + "".join(_cards_html) + '</div>',
+    unsafe_allow_html=True,
+)
 
 # Footer
 st.markdown('<div class="footer-rule"></div>', unsafe_allow_html=True)
