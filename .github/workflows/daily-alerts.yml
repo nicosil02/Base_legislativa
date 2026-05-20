@@ -101,15 +101,20 @@ jobs:
               echo "force_flag=" >> $GITHUB_OUTPUT
             fi
           else
-            HOUR_UTC=$(date -u +%H)
-            if [ "$HOUR_UTC" = "14" ]; then
-              echo "slot=09" >> $GITHUB_OUTPUT
-            elif [ "$HOUR_UTC" = "15" ]; then
-              echo "slot=10" >> $GITHUB_OUTPUT
-            else
-              echo "slot=manual" >> $GITHUB_OUTPUT
-            fi
+            # Usar el CRON SCHEDULE que dispara este run, NO la hora UTC actual.
+            # GitHub Actions atrasa crons 0-3h en horas pico → si calculamos
+            # por hora actual, cron de 14:00 que corre a las 16:30 daria
+            # HOUR_UTC=16 (ni 14 ni 15) → slot=manual erroneamente.
+            # github.event.schedule devuelve la expresion cron exacta que
+            # dispara el run.
+            SCHEDULE="${{ github.event.schedule }}"
+            case "$SCHEDULE" in
+              "0 14 * * *") echo "slot=09" >> $GITHUB_OUTPUT ;;
+              "0 15 * * *") echo "slot=10" >> $GITHUB_OUTPUT ;;
+              *)            echo "slot=cron" >> $GITHUB_OUTPUT ;;
+            esac
             echo "force_flag=" >> $GITHUB_OUTPUT
+            echo "Cron schedule: $SCHEDULE"
           fi
 
       - name: Construir y enviar alerta
