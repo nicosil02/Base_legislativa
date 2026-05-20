@@ -325,9 +325,9 @@ def load_proyectos(fec_inicio: dt.date | None, fec_fin: dt.date | None) -> pd.Da
     # la tabla (porque enriquecer-documentos no se corrió), pdf_url queda NULL.
     sql = """
       SELECT p.n_tramite AS "_n_tramite_label",
-             -- N. Tramite como URL clickeable directa al PDF del proyecto
-             -- presentado (o cualquier doc si no hay especifico). Fallback
-             -- al portal home si todavia no enriquecimos los documentos.
+             -- URL clickeable directa al PDF (o portal home si no hay docs).
+             -- Append '#<n_tramite>' al final para que el LinkColumn pueda
+             -- extraer el numero como display_text via regex.
              COALESCE(
                (SELECT url FROM documentos
                   WHERE n_tramite = p.n_tramite
@@ -337,7 +337,7 @@ def load_proyectos(fec_inicio: dt.date | None, fec_fin: dt.date | None) -> pd.Da
                   WHERE n_tramite = p.n_tramite
                   ORDER BY orden ASC LIMIT 1),
                'https://proyectosdeley.asambleanacional.gob.ec/report?n=' || p.n_tramite
-             ) AS "N. Trámite",
+             ) || '#' || p.n_tramite AS "N. Trámite",
              p.titulo AS "Título",
              date(p.fec_presentacion) AS "Presentado",
              date(p.last_changed_at) AS "Último cambio",
@@ -588,7 +588,9 @@ tabla = st.dataframe(
             "N. Trámite",
             width="small",
             pinned=True,
-            display_text="_n_tramite_label",
+            # Extrae el n_tramite del fragment '#XXX' al final de la URL.
+            # Soporta numeros (480824) y alfanumericos (AN-GBJL-2024-0092-M).
+            display_text=r"#([A-Z0-9\-]+)$",
             help="Click abre el PDF del proyecto directamente (o el portal "
                  "Ppless v2 si todavía no enriquecimos sus documentos).",
         ),

@@ -330,32 +330,27 @@ def load_sesiones(fec_inicio: dt.date | None, fec_fin: dt.date | None) -> pd.Dat
 @st.cache_data(ttl=60)
 def load_pls_de_sesion(uid: str) -> pd.DataFrame:
     """Devuelve los PLs identificados en una sesion. La columna "Nº tramite"
-    es una URL clickeable que apunta al PDF directo del proyecto cuando
-    existe (via fileservice publico de la Asamblea, sin auth), o al portal
-    Ppless v2 home como fallback si todavia no enriquecimos los documentos
-    para ese PL.
+    es URL al PDF directo (fileservice publico, sin auth) o al portal home
+    como fallback. Append '#<n_tramite>' al final para que el LinkColumn
+    pueda extraer el numero como display_text via regex.
     """
     conn = get_conn()
     sql = """
       SELECT
         COALESCE(
-          -- 1) PDF directo del "PROYECTO PRESENTADO" si lo tenemos enriquecido
           (SELECT url FROM documentos
              WHERE n_tramite = m.n_tramite
                AND UPPER(COALESCE(fase, '')) LIKE '%PROYECTO%PRESENTADO%'
              ORDER BY orden ASC LIMIT 1),
-          -- 2) Cualquier otro documento si hay
           (SELECT url FROM documentos
              WHERE n_tramite = m.n_tramite
              ORDER BY orden ASC LIMIT 1),
-          -- 3) Fallback al portal home (el usuario pega el numero)
           'https://proyectosdeley.asambleanacional.gob.ec/report?n=' || m.n_tramite
-        ) AS "Nº trámite",
+        ) || '#' || m.n_tramite AS "Nº trámite",
         COALESCE(p.titulo, '(no en DB)') AS "Título",
         COALESCE(p.estado, '—') AS "Estado",
         COALESCE(p.comision_asignada, '—') AS "Comisión asignada",
         COALESCE(p.tema, '—') AS "Tema",
-        m.n_tramite AS "_tramite_display",
         m.score AS "_score"
       FROM sesion_ec_pl_referenciado m
       LEFT JOIN proyectos p ON p.n_tramite = m.n_tramite
@@ -524,27 +519,20 @@ if sel_rows:
         df_pls = load_pls_de_sesion(uid)
         if not df_pls.empty:
             st.markdown(f"##### PLs identificados ({len(df_pls)})")
-            # Para el display_text mostramos el n_tramite directo (esta en
-            # la col helper _tramite_display). LinkColumn de Streamlit
-            # acepta display_text como string fijo via la columna que
-            # apuntamos con display_text="<colname>". Trick: usar regex
-            # generica que matchee cualquier URL y muestre el n_tramite
-            # como label. Mejor: hacemos el display a mano via formato.
-            df_display = df_pls.drop(columns=["_score"], errors="ignore").copy()
-            # Renombrar _tramite_display como display, ocultarla luego
             st.dataframe(
-                df_display,
+                df_pls.drop(columns=["_score"], errors="ignore"),
                 hide_index=True,
                 use_container_width=True,
                 column_config={
                     "Nº trámite": st.column_config.LinkColumn(
                         "Nº trámite",
-                        # Mostrar el n_tramite (col separada) como label
-                        display_text="_tramite_display",
+                        # Extrae el n_tramite del fragment '#XXX' al final
+                        # de la URL. Soporta numeros (480824) y alfanumericos
+                        # (AN-GBJL-2024-0092-M).
+                        display_text=r"#([A-Z0-9\-]+)$",
                         help="Abre el PDF del proyecto directamente (o el portal si "
                              "aun no enriquecimos sus documentos)",
                     ),
-                    "_tramite_display": None,  # ocultar la col helper
                 },
             )
             st.caption(
