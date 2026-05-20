@@ -402,6 +402,14 @@ df_view = df[[c for c in COLS_VISIBLES if c in df.columns]].copy()
 df_view = df_view.reset_index(drop=True)
 df_with_uid = df.reset_index(drop=True)  # paralelo, contiene UID para lookup
 
+# "Celda extendida" visual: blanqueamos la fecha repetida cuando es igual
+# a la fila anterior. Streamlit no soporta rowspan en st.dataframe, pero
+# el efecto visual de "merged cell" funciona bien al ojo cuando el sort
+# agrupa por fecha (fecha DESC, hora DESC).
+if "Fecha" in df_view.columns and len(df_view) > 1:
+    _prev = df_view["Fecha"].shift(1)
+    df_view.loc[df_view["Fecha"] == _prev, "Fecha"] = ""
+
 tabla = st.dataframe(
     df_view,
     hide_index=True,

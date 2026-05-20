@@ -48,19 +48,24 @@ def normalize(s: str) -> str:
 
 # Stopwords cortas frecuentes que no aportan al match
 _PL_PREFIX_RE = re.compile(
-    r"^(proyecto\s+de\s+|ley\s+|proyecto\s+)",
+    r"^(proyecto\s+de\s+|ley\s+|proyecto\s+|de\s+)",
     re.IGNORECASE,
 )
+# Algunos titulos en proyectos_ec tienen el n_tramite pegado al final
+# tipo "PROYECTO DE LEY DE EXTRADICION (469222)". Lo removemos.
+_TRAMITE_SUFFIX_RE = re.compile(r"\s*\(\d+\)\s*$")
 
 
 def _titulo_kernel(titulo: str) -> str:
     """Devuelve el "kernel" significativo del titulo para matching.
 
     El portal Ppless guarda titulos con prefijo tipo "Proyecto de Ley
-    Reformatoria a la Ley X". Removemos el prefijo "Proyecto de" y "Ley"
-    inicial para que el match sea mas robusto (las descripciones a veces
-    dicen "Ley Reformatoria..." sin el "Proyecto de Ley" delante)."""
-    norm = normalize(titulo)
+    Reformatoria a la Ley X". Removemos el prefijo "Proyecto de" / "Ley"
+    inicial para que el match sea mas robusto, y el sufijo "(NUMEROS)"
+    que algunos titulos arrastran del n_tramite."""
+    # Primero quitar el sufijo (NUMEROS) si existe
+    cleaned = _TRAMITE_SUFFIX_RE.sub("", titulo or "")
+    norm = normalize(cleaned)
     # Remover prefijos comunes iterativamente
     while True:
         new = _PL_PREFIX_RE.sub("", norm, count=1).strip()
@@ -108,7 +113,14 @@ def find_matches(
     conn: sqlite3.Connection,
     descripcion: str,
     summary: str = "",
-    min_titulo_len: int = 20,
+    min_titulo_len: int = 8,   # bajamos hasta 8 para captar leyes de
+                                # nombres muy cortos: "Ley de Extradicion"
+                                # (kernel "extradicion" = 11 chars), o
+                                # "Ley de Salud Digital" (kernel "salud
+                                # digital" = 13). Pasada 1 exige el kernel
+                                # COMPLETO substring del haystack, asi que
+                                # kernels muy cortos solo matchean si la
+                                # palabra aparece literal en la descripcion.
     min_score: float = 0.04,
     idf: dict[str, float] | None = None,
     pl_rows: list[tuple[str, str]] | None = None,
