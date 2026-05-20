@@ -669,7 +669,6 @@ _sources = [
     ("PE · Agenda de comisiones", _fresh.get("pe_sesiones")),
     ("EC · Proyectos de ley",   _fresh.get("ec_proyectos")),
     ("EC · Agenda parlamentaria", _fresh.get("ec_agenda")),
-    ("Alertas diarias (email 9 AM)", _fresh.get("alertas_diarias")),
 ]
 _cards_html = []
 for _label, _ts in _sources:
