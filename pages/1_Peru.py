@@ -113,25 +113,38 @@ st.markdown(
     }
 
     /* Botones del sidebar (ej "Buscar PLs nuevos en vivo"): fondo blanco,
-       texto navy con peso. Sin esto los * { color: #FFFFFF } heredan al texto
-       del boton y queda invisible sobre fondo blanco. */
-    section[data-testid="stSidebar"] .stButton > button {
+       texto navy con peso. Selectores multiples porque Streamlit cambia
+       el DOM entre versiones (button[kind], data-testid, baseweb). */
+    section[data-testid="stSidebar"] button,
+    section[data-testid="stSidebar"] [data-testid="stBaseButton-secondary"],
+    section[data-testid="stSidebar"] [data-testid="stBaseButton-primary"],
+    section[data-testid="stSidebar"] [data-testid="stButton"] button,
+    section[data-testid="stSidebar"] .stButton button {
       background-color: #FFFFFF !important;
       color: var(--ink) !important;
       border: 1px solid var(--line) !important;
       font-weight: 700 !important;
       font-family: 'Inter', sans-serif !important;
-      transition: background-color 180ms, border-color 180ms, transform 80ms !important;
     }
-    section[data-testid="stSidebar"] .stButton > button > * {
+    section[data-testid="stSidebar"] button p,
+    section[data-testid="stSidebar"] button span,
+    section[data-testid="stSidebar"] button div,
+    section[data-testid="stSidebar"] [data-testid="stButton"] *,
+    section[data-testid="stSidebar"] .stButton * {
       color: var(--ink) !important;
     }
-    section[data-testid="stSidebar"] .stButton > button:hover {
+    section[data-testid="stSidebar"] button:hover,
+    section[data-testid="stSidebar"] [data-testid="stButton"] button:hover {
       background-color: var(--bg-soft) !important;
       border-color: var(--accent) !important;
     }
-    section[data-testid="stSidebar"] .stButton > button:active {
-      transform: scale(.98);
+    /* Excepciones: NO aplicar este estilo al boton del header (collapse
+       del sidebar) que tiene fondo navy y texto blanco. */
+    section[data-testid="stSidebar"] [data-testid="stSidebarHeader"] button,
+    section[data-testid="stSidebar"] [data-testid="stSidebarHeader"] button * {
+      background-color: transparent !important;
+      color: #FFFFFF !important;
+      border: 0 !important;
     }
 
     /* === Ocultar TODO texto crudo de Material Symbols/Icons en sidebar === */
