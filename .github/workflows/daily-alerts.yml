@@ -2,15 +2,13 @@ name: Alertas diarias Radar Legislativo
 
 on:
   schedule:
-    # GitHub Actions atrasa crons 2-3h en horas pico. Para que el correo
-    # llegue cerca de las 9 AM Lima (UTC-5), disparamos a las 11 UTC
-    # (= 6 AM Lima). Con atraso tipico GH llega entre 7-9 AM Lima.
-    # Dedup via already_sent_today previene envios duplicados si el primero
-    # llega rapido y el retry no lo necesita.
-    - cron: '0 11 * * *'    # 6 AM Lima — primer intento
-    - cron: '30 11 * * *'   # 6:30 AM Lima — segundo intento
-    - cron: '0 12 * * *'    # 7 AM Lima — retry (slot=10)
-    - cron: '0 13 * * *'    # 8 AM Lima — ultimo retry por si todos los anteriores se atrasaron
+    # GH Actions cron tiene atraso 0-3h. Disparamos temprano para que con
+    # atraso llegue cerca de 9 AM Lima.
+    #   11 UTC (6 AM Lima) + ~2-3h atraso = 8-9 AM Lima
+    # already_sent_today previene duplicados. Si este workflow falla,
+    # refrescar-pe.yml envia la alerta como backup en su corrida de
+    # 13 UTC (que tambien llega cerca de 8-9 AM Lima con atraso).
+    - cron: '0 11 * * *'
   workflow_dispatch:
     inputs:
       slot:
@@ -123,14 +121,8 @@ jobs:
             # HOUR_UTC=16 (ni 14 ni 15) → slot=manual erroneamente.
             # github.event.schedule devuelve la expresion cron exacta que
             # dispara el run.
-            SCHEDULE="${{ github.event.schedule }}"
-            case "$SCHEDULE" in
-              "0 11 * * *")  echo "slot=09" >> $GITHUB_OUTPUT ;;      # 6 AM Lima
-              "30 11 * * *") echo "slot=09" >> $GITHUB_OUTPUT ;;      # 6:30 AM Lima
-              "0 12 * * *")  echo "slot=10" >> $GITHUB_OUTPUT ;;      # 7 AM Lima
-              "0 13 * * *")  echo "slot=10" >> $GITHUB_OUTPUT ;;      # 8 AM Lima
-              *)             echo "slot=cron" >> $GITHUB_OUTPUT ;;
-            esac
+            # Solo hay 1 cron (0 11 * * *). slot=09 nominal.
+            echo "slot=09" >> $GITHUB_OUTPUT
             echo "force_flag=" >> $GITHUB_OUTPUT
             echo "Cron schedule: $SCHEDULE"
           fi
