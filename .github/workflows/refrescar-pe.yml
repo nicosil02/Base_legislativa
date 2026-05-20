@@ -104,21 +104,13 @@ jobs:
           # el sync de proyectos. Sync incremental (~30 seg).
           timeout 600 python -X utf8 -m sesiones.cli update || echo "[warn] sesiones sync fallo, sigo"
 
-      - name: Re-entrenar clasificador ML (continuous learning)
-        run: |
-          # Re-entrena el modelo TF-IDF + LogReg sobre las labels manuales
-          # actuales. Cada vez que el equipo corrige un tema en la UI o
-          # importa nuevas etiquetas via Excel, el proximo workflow run
-          # captura esos cambios y mejora el modelo. ~30 seg en CI.
-          pip install -q scikit-learn joblib
-          python -X utf8 -m clasificador.cli train || echo "[warn] train fallo, sigo con modelo previo"
-
       - name: Reclasificar PLs en "Otros" con alta confianza
         run: |
-          # Aplica el modelo a los PLs en categoria "Otros". Mueve los de
-          # confianza >= 0.85 a su categoria predicha (tema_manual=0 para
-          # que el equipo sepa que fue cambio automatico y pueda corregir).
-          # Confianza 0.70-0.85 queda como sugerencia pendiente para review.
+          # Usa el modelo entrenado en models/clasificador_pe.joblib
+          # (re-entrenado weekly por entrenar-ml.yml). Aplica a PLs en
+          # "Otros" con confianza >= 0.85 → cambio automatico. Confianza
+          # 0.70-0.85 → sugerencia pendiente. ~10 seg.
+          pip install -q scikit-learn joblib
           python -X utf8 -m clasificador.cli reclassify --apply || echo "[warn] reclassify fallo, sigo"
 
       - name: Envio de alerta diaria (backup del daily-alerts.yml)
