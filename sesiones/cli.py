@@ -28,20 +28,42 @@ def cmd_init(args) -> int:
 
 
 def cmd_update(args) -> int:
+    """Sincroniza sesiones de uno o varios periodos legislativos.
+
+    Si --periodo-leg es entero: solo ese año. Si es 'all': itera todos
+    los periodos del periodo parlamentario actual (2021-2026 = 2021..2025).
+    """
     with Database(args.db) as db:
         db.init_schema()
-        stats = run_sync(
-            db,
-            periodo_parlamentario=args.periodo_par,
-            periodo_legislativo=args.periodo_leg,
-            full=args.full,
-            max_sesiones=args.limit,
-        )
-        print(
-            f"Sync terminado: vistas={stats.vistas} nuevas={stats.nuevas} "
-            f"actualizadas={stats.actualizadas} detail_fetches={stats.detail_fetches} "
-            f"errores={stats.errores}"
-        )
+        if args.periodo_leg == "all":
+            # Periodo parlamentario 2021-2026 = legislaturas 2021, 22, 23, 24, 25
+            anios = list(range(args.periodo_par, args.periodo_par + 5))
+        else:
+            anios = [int(args.periodo_leg)]
+
+        total_vistas = total_nuevas = total_act = total_err = 0
+        for anio in anios:
+            print(f"\n--- Sync periodo legislativo {anio} ---")
+            stats = run_sync(
+                db,
+                periodo_parlamentario=args.periodo_par,
+                periodo_legislativo=anio,
+                full=args.full,
+                max_sesiones=args.limit,
+            )
+            total_vistas += stats.vistas
+            total_nuevas += stats.nuevas
+            total_act += stats.actualizadas
+            total_err += stats.errores
+            print(
+                f"  vistas={stats.vistas} nuevas={stats.nuevas} "
+                f"actualizadas={stats.actualizadas} errores={stats.errores}"
+            )
+        if len(anios) > 1:
+            print(
+                f"\nTotal {len(anios)} periodos: vistas={total_vistas} "
+                f"nuevas={total_nuevas} actualizadas={total_act} errores={total_err}"
+            )
     return 0
 
 
@@ -164,8 +186,10 @@ def build_parser() -> argparse.ArgumentParser:
     up = sub.add_parser("update", help="corre sync incremental")
     up.add_argument("--full", action="store_true", help="re-fetchea detalle de todas")
     up.add_argument("--limit", type=int, default=None, help="max sesiones a procesar")
-    up.add_argument("--periodo-par", dest="periodo_par", type=int, default=2021)
-    up.add_argument("--periodo-leg", dest="periodo_leg", type=int, default=2025)
+    up.add_argument("--periodo-par", dest="periodo_par", type=int, default=2021,
+                    help="periodo parlamentario (default 2021)")
+    up.add_argument("--periodo-leg", dest="periodo_leg", default="2025",
+                    help="periodo legislativo: numero (2025) o 'all' para todos los del periodo parlamentario")
     up.set_defaults(func=cmd_update)
 
     sh = sub.add_parser("show", help="detalle de una sesion + PLs cruzados")
