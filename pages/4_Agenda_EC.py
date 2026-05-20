@@ -32,6 +32,28 @@ def _find_db_path() -> Path | None:
     return None
 
 
+def _hora_to_minutes(hora: str | None) -> int:
+    """Convierte hora a minutos desde medianoche para sortear.
+    EC usa 24hr ("9:00", "14:30"); aceptamos AM/PM por si acaso."""
+    if not hora or not isinstance(hora, str):
+        return -1
+    s = hora.strip().upper()
+    is_pm = s.endswith("PM")
+    is_am = s.endswith("AM")
+    if is_pm or is_am:
+        s = s[:-2].strip()
+    try:
+        h_str, m_str = s.split(":")
+        h, m = int(h_str), int(m_str)
+    except (ValueError, AttributeError):
+        return -1
+    if is_am and h == 12:
+        h = 0
+    elif is_pm and h != 12:
+        h += 12
+    return h * 60 + m
+
+
 # ====================== CSS (mismo del Agenda PE para consistencia) ======================
 st.markdown(
     """<style>
@@ -238,21 +260,19 @@ def load_sesiones(fec_inicio: dt.date | None, fec_fin: dt.date | None) -> pd.Dat
         where.append("s.fecha <= ?"); params.append(fec_fin.isoformat())
     if where:
         sql += " WHERE " + " AND ".join(where)
-    # Mismo patron que Agenda PE: dia mas reciente arriba, hora ASC para
-    # ver primero las sesiones del dia en orden cronologico. Pad cero
-    # para que "9:00" no se ordene despues de "14:00".
-    sql += """
-      ORDER BY s.fecha DESC,
-        CASE
-          WHEN s.hora_inicio IS NULL OR TRIM(s.hora_inicio) = '' THEN 1
-          ELSE 0
-        END,
-        CASE
-          WHEN length(s.hora_inicio) = 4 THEN '0' || s.hora_inicio
-          ELSE s.hora_inicio
-        END ASC
-    """
-    return pd.read_sql_query(sql, conn, params=params)
+    # Sort por fecha en SQL, por hora en pandas (helper _hora_to_minutes
+    # convierte cualquier formato — 24hr o 12hr — a numero sortable).
+    # Dentro del dia: HORA DESC (la mas tarde primero, mas temprano abajo).
+    sql += " ORDER BY s.fecha DESC"
+    df = pd.read_sql_query(sql, conn, params=params)
+    if "Hora" in df.columns:
+        df["_hora_min"] = df["Hora"].apply(_hora_to_minutes)
+        df = df.sort_values(
+            by=["Fecha", "_hora_min"],
+            ascending=[False, False],
+            kind="mergesort",
+        ).drop(columns=["_hora_min"]).reset_index(drop=True)
+    return df
 
 
 @st.cache_data(ttl=60)
