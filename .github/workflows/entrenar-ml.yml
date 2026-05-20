@@ -1,0 +1,84 @@
+name: Re-entrenar clasificador ML (weekly)
+
+on:
+  schedule:
+    # Domingo 02:00 UTC = sabado 21:00 Lima. Hora con poca carga en
+    # GH Actions, baja probabilidad de atraso del cron. Re-entrena el
+    # modelo con todas las labels manuales actuales (incluye las
+    # correcciones del equipo durante la semana).
+    - cron: '0 2 * * 0'
+  workflow_dispatch:
+    inputs:
+      evaluate:
+        description: 'Correr cross-validation antes de guardar (informativo)'
+        required: false
+        default: 'false'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: entrenar-ml-${{ github.workflow }}
+  cancel-in-progress: false
+
+jobs:
+  train:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+
+      - name: Cache pip
+        uses: actions/cache@v5
+        with:
+          path: ~/.cache/pip
+          key: pip-ml-${{ runner.os }}-${{ hashFiles('requirements.txt') }}
+
+      - name: Instalar dependencias ML
+        run: |
+          python -m pip install --upgrade pip
+          pip install scikit-learn joblib
+
+      - name: Bootstrap DB Peru desde snapshot
+        run: |
+          if [ -f data/proyectos.db.gz ]; then
+            gunzip -kc data/proyectos.db.gz > proyectos.db
+            ls -lh proyectos.db
+          else
+            echo "[bootstrap] sin snapshot, abortando"; exit 1
+          fi
+
+      - name: Entrenar modelo
+        run: |
+          python -X utf8 -m clasificador.cli train ${{ inputs.evaluate == 'true' && '--eval' || '' }}
+          ls -lh models/clasificador_pe.joblib
+
+      - name: Auto-commit modelo si cambio
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add models/clasificador_pe.joblib
+          if git diff --staged --quiet; then
+            echo "Sin cambios en el modelo."
+            exit 0
+          fi
+          git commit -m "ML: re-train weekly $(date -u +%Y-%m-%d) [skip ci]"
+          for i in 1 2 3; do
+            if git push; then
+              echo "Push OK (intento $i)"
+              exit 0
+            fi
+            git fetch origin main
+            git rebase -X theirs origin/main || git rebase --abort
+            sleep 5
+          done
+          echo "Push fallo despues de 3 intentos."
+          exit 1
