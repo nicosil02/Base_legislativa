@@ -47,16 +47,17 @@ def _open_ro(path):
 
 
 def _peru_new_pls(conn, since_iso):
-    # Filtramos por fec_presentacion (fecha oficial) y no first_seen_at
-    # (cuando lo vio nuestro scraper) para evitar ruido el primer dia
-    # despues de un bootstrap masivo. Compara date() para ser tolerante a
-    # formatos ISO con timestamp vs date-only.
+    # Filtramos por first_seen_at (cuando ENTRO a nuestra DB) en lugar
+    # de fec_presentacion. Asi cada PL sale 1 sola vez en la primera
+    # alerta despues de detectarlo — si fec_presentacion era ayer pero
+    # nuestro scraper recien lo vio hoy, sigue siendo "nuevo" para el
+    # usuario. La comparacion es precisa a nivel timestamp.
     rows = conn.execute(
         """SELECT per_par_id, pley_num, proyecto_ley, titulo, tema, estado,
                   fec_presentacion, url_portal
            FROM proyectos
-           WHERE date(fec_presentacion) >= date(?)
-           ORDER BY tema, fec_presentacion DESC""",
+           WHERE first_seen_at > ?
+           ORDER BY tema, first_seen_at DESC""",
         (since_iso,),
     ).fetchall()
     return [
@@ -75,14 +76,15 @@ def _peru_new_pls(conn, since_iso):
 
 
 def _peru_new_dictamenes(conn, since_iso):
-    # PE no tiene historial_cambios; usa la tabla seguimientos (fecha + estado por fase).
+    # seguimientos.fecha tiene hora precisa, comparamos a nivel timestamp
+    # para que cada dictamen salga 1 vez (no se repita por cambio de dia).
     rows = conn.execute(
         """SELECT p.per_par_id, p.pley_num, p.proyecto_ley, p.titulo, p.tema,
                   s.estado AS estado, p.fec_presentacion, p.url_portal,
                   s.fecha AS changed_at
            FROM seguimientos s
            JOIN proyectos p ON p.per_par_id = s.per_par_id AND p.pley_num = s.pley_num
-           WHERE date(s.fecha) >= date(?)
+           WHERE s.fecha > ?
              AND UPPER(s.estado) LIKE '%DICTAMEN%'
            ORDER BY p.tema, s.fecha DESC""",
         (since_iso,),
@@ -103,11 +105,13 @@ def _peru_new_dictamenes(conn, since_iso):
 
 
 def _ecuador_new_pls(conn, since_iso):
+    # Mismo cambio que PE: usar first_seen_at en lugar de fec_presentacion
+    # para que cada PL salga 1 sola vez.
     rows = conn.execute(
         """SELECT n_tramite, titulo, tema, estado, fec_presentacion
            FROM proyectos
-           WHERE date(fec_presentacion) >= date(?)
-           ORDER BY tema, fec_presentacion DESC""",
+           WHERE first_seen_at > ?
+           ORDER BY tema, first_seen_at DESC""",
         (since_iso,),
     ).fetchall()
     return [
@@ -125,12 +129,13 @@ def _ecuador_new_pls(conn, since_iso):
 
 def _ecuador_new_dictamenes(conn, since_iso):
     placeholders = ",".join("?" * len(EC_DICTAMEN_STATES))
+    # Comparacion timestamp precisa para que cada cambio de estado salga 1 vez
     rows = conn.execute(
         f"""SELECT p.n_tramite, p.titulo, p.tema, h.valor_despues AS estado,
                    p.fec_presentacion, h.changed_at
             FROM historial_cambios h
             JOIN proyectos p ON p.n_tramite = h.n_tramite
-            WHERE date(h.changed_at) >= date(?)
+            WHERE h.changed_at > ?
               AND h.campo = 'estado'
               AND h.valor_despues IN ({placeholders})
             ORDER BY p.tema, h.changed_at DESC""",
@@ -206,10 +211,20 @@ def _peru_sesiones_proximas(conn, days_ahead=2):
 
 
 def build_alert(now=None, window_hours=24, db_pe_path=None, db_ec_path=None,
-                sesiones_days_ahead=2):
+                sesiones_days_ahead=2, since_iso=None):
+    """Construye el payload de la alerta.
+
+    Args:
+        since_iso: timestamp ISO desde donde filtrar. Si None, calcula
+            como now - window_hours (default). El caller (cli.py) puede
+            pasar el sent_at de la ultima alerta exitosa para evitar
+            duplicar items entre corridas — cada cambio sale 1 vez en
+            la primera alerta despues de su fecha.
+    """
     now = now or datetime.now(timezone.utc)
-    since = now - timedelta(hours=window_hours)
-    since_iso = since.strftime("%Y-%m-%dT%H:%M:%SZ")
+    if since_iso is None:
+        since = now - timedelta(hours=window_hours)
+        since_iso = since.strftime("%Y-%m-%dT%H:%M:%SZ")
 
     payload = {
         "fecha": now.strftime("%Y-%m-%d"),
