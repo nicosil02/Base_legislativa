@@ -688,20 +688,23 @@ if _live.get("error"):
     pass  # silencioso, no mostrar nada si falla la API
 elif _live.get("nuevos"):
     _n = len(_live["nuevos"])
-    with st.expander(
-        f"⚡ {_n} PL{'s' if _n != 1 else ''} nuevo{'s' if _n != 1 else ''} "
-        f"detectado{'s' if _n != 1 else ''} en la API que aún no está{'n' if _n != 1 else ''} "
-        f"en nuestra base — clic para ver",
-        expanded=False,
-    ):
-        st.dataframe(
-            pd.DataFrame(_live["nuevos"]),
-            hide_index=True, use_container_width=True,
-        )
-        st.caption(
-            f"API: {_live['total_api']:,} PLs · DB: {_live['total_db']:,} PLs · "
-            f"Se sincronizarán en el próximo cron (max 1h)."
-        )
+    st.markdown(
+        f'<div style="background:#FFFBEB;border:1px solid #F59E0B;border-radius:8px;'
+        f'padding:10px 14px;margin-bottom:8px;font-size:13px;color:#78350F;">'
+        f'⚡ <strong>{_n} PL{"s" if _n != 1 else ""} nuevo{"s" if _n != 1 else ""}</strong> '
+        f'detectado{"s" if _n != 1 else ""} en la API · '
+        f'se sincronizarán en el próximo cron (max 1h):</div>',
+        unsafe_allow_html=True,
+    )
+    st.dataframe(
+        pd.DataFrame(_live["nuevos"]),
+        hide_index=True, use_container_width=True,
+    )
+    st.markdown(
+        f'<p style="font-size:11px;color:#869FB2;margin-bottom:18px;">'
+        f'API: {_live["total_api"]:,} PLs · DB: {_live["total_db"]:,} PLs</p>',
+        unsafe_allow_html=True,
+    )
 else:
     st.markdown(
         f'<div style="background:#ECFDF5;border:1px solid #10B981;border-radius:8px;'
