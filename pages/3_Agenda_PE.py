@@ -359,7 +359,7 @@ def load_puntos_agenda(id_sesion: int) -> list[dict]:
 st.markdown('<div class="country-eyebrow">Radar Legislativo · Agenda de comisiones</div>', unsafe_allow_html=True)
 st.markdown(
     '<h1 class="country-title"><span class="accent">Perú</span> · Agenda de Comisiones '
-    '<span class="period">(2025–2026)</span></h1>',
+    '<span class="period">(2023–2026)</span></h1>',
     unsafe_allow_html=True,
 )
 st.markdown(
@@ -394,7 +394,7 @@ with st.sidebar:
     st.markdown("### Rango de fechas")
     today = dt.date.today()
     default_fin = today + dt.timedelta(days=30)
-    fec_min_iso = cats["fec_min"] or "2025-08-01"
+    fec_min_iso = cats["fec_min"] or "2023-08-15"
     fec_max_iso = cats["fec_max"] or default_fin.isoformat()
     fec_min = dt.date.fromisoformat(fec_min_iso)
     fec_max = max(dt.date.fromisoformat(fec_max_iso), default_fin)
