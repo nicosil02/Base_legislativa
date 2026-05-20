@@ -419,17 +419,36 @@ with st.sidebar:
     last = last_sync()
     if last:
         src = (last.get("csv_source") or "").rsplit("/", 1)[-1].rsplit("\\", 1)[-1]
-        st.markdown(
-            f"""<div class="sync-card">
-            <div class="label">Última importación</div>
-            <div class="value">{_fmt_ago(last['finished_at'])}</div>
-            <div class="label" style="margin-top:10px">Fuente</div>
-            <div style="font-size:11px">{src or '—'}</div>
-            <div class="label" style="margin-top:10px">Último run</div>
-            <div>Nuevos: <span class="value">{last['proyectos_nuevos']}</span> · Actualizados: <span class="value">{last['proyectos_actualizados']}</span> · Errores: <span class="value">{last['errores']}</span></div>
-            </div>""",
-            unsafe_allow_html=True,
-        )
+        # last puede venir de heartbeat (sin counts) o de sync_runs (con counts).
+        # Usamos .get() con default 0 para no crashear si los counts no estan.
+        nuevos = last.get("proyectos_nuevos")
+        actualizados = last.get("proyectos_actualizados")
+        errores = last.get("errores")
+        # Si viene de heartbeat (source=heartbeat) mostramos un layout mas simple
+        # con solo el timestamp + status.
+        if last.get("source") == "heartbeat" or nuevos is None:
+            status = last.get("status", "ok")
+            st.markdown(
+                f"""<div class="sync-card">
+                <div class="label">Última corrida del workflow</div>
+                <div class="value">{_fmt_ago(last['finished_at'])}</div>
+                <div class="label" style="margin-top:10px">Estado</div>
+                <div style="font-size:13px">{status}</div>
+                </div>""",
+                unsafe_allow_html=True,
+            )
+        else:
+            st.markdown(
+                f"""<div class="sync-card">
+                <div class="label">Última importación</div>
+                <div class="value">{_fmt_ago(last['finished_at'])}</div>
+                <div class="label" style="margin-top:10px">Fuente</div>
+                <div style="font-size:11px">{src or '—'}</div>
+                <div class="label" style="margin-top:10px">Último run</div>
+                <div>Nuevos: <span class="value">{nuevos}</span> · Actualizados: <span class="value">{actualizados}</span> · Errores: <span class="value">{errores or 0}</span></div>
+                </div>""",
+                unsafe_allow_html=True,
+            )
     else:
         st.markdown(
             '<div class="sync-card"><div class="label">Estado</div>'
