@@ -2,14 +2,25 @@ name: Actualizar Peru (PLs + snapshot)
 
 on:
   schedule:
-    # 13:00 UTC = 08:00 Lima — Congreso recien abre
-    - cron: '0 13 * * *'
-    # 17:00 UTC = 12:00 Lima — mitad de la jornada
-    - cron: '0 17 * * *'
-    # 21:00 UTC = 16:00 Lima — cierre horario habil
-    - cron: '0 21 * * *'
-    # 03:00 UTC = 22:00 Lima — corrida nocturna (catch-up dia completo)
-    - cron: '0 3 * * *'
+    # Cada hora durante horas habiles 8 AM - 22 PM Lima (13-03 UTC),
+    # mas corrida nocturna a las 6 AM Lima (11 UTC) para catch-up.
+    # 15 runs/dia x ~2 min = 30 min/dia = 900 min/mes (45% del free tier).
+    # Da actualizacion casi real-time durante horas de actividad legislativa.
+    - cron: '0 13 * * *'  # 8 AM Lima
+    - cron: '0 14 * * *'  # 9 AM
+    - cron: '0 15 * * *'  # 10 AM
+    - cron: '0 16 * * *'  # 11 AM
+    - cron: '0 17 * * *'  # 12 PM
+    - cron: '0 18 * * *'  # 1 PM
+    - cron: '0 19 * * *'  # 2 PM
+    - cron: '0 20 * * *'  # 3 PM
+    - cron: '0 21 * * *'  # 4 PM
+    - cron: '0 22 * * *'  # 5 PM
+    - cron: '0 23 * * *'  # 6 PM
+    - cron: '0 0 * * *'   # 7 PM
+    - cron: '0 1 * * *'   # 8 PM
+    - cron: '0 2 * * *'   # 9 PM
+    - cron: '0 3 * * *'   # 10 PM (corrida principal nocturna)
   workflow_dispatch:
     inputs:
       force_full_sync:
