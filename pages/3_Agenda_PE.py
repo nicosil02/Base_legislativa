@@ -29,6 +29,37 @@ def _find_db_path() -> Path | None:
     return None
 
 
+def _hora_to_minutes(hora: str | None) -> int:
+    """Convierte hora del Congreso PE ("9:00AM", "2:30PM") a minutos desde
+    medianoche para sortear correctamente. NULL/vacio -> -1 (van al final
+    con sort DESC + NULLs first comportamiento de pandas via NaN).
+
+    PE usa formato 12hr con AM/PM pegado sin espacio:
+      "9:00AM"  -> 540   (9*60)
+      "12:00AM" -> 0     (medianoche)
+      "12:00PM" -> 720   (mediodia)
+      "2:30PM"  -> 870   (14:30)
+    """
+    if not hora or not isinstance(hora, str):
+        return -1
+    s = hora.strip().upper()
+    is_pm = s.endswith("PM")
+    is_am = s.endswith("AM")
+    if is_pm or is_am:
+        s = s[:-2].strip()
+    try:
+        h_str, m_str = s.split(":")
+        h = int(h_str)
+        m = int(m_str)
+    except (ValueError, AttributeError):
+        return -1
+    if is_am and h == 12:
+        h = 0
+    elif is_pm and h != 12:
+        h += 12
+    return h * 60 + m
+
+
 # ====================== CSS (estetica Vali, identica a Peru) ======================
 st.markdown(
     """<style>
@@ -228,21 +259,19 @@ def load_sesiones(fec_inicio: dt.date | None, fec_fin: dt.date | None) -> pd.Dat
         where.append("s.fecha <= ?"); params.append(fec_fin.isoformat())
     if where:
         sql += " WHERE " + " AND ".join(where)
-    # Orden: dia mas reciente primero, y dentro del dia por hora ascendente
-    # (cronologico). Normalizamos hora_inicio para evitar que "9:00" se ordene
-    # despues de "14:00" (sort lexicografico). NULL al final.
-    sql += """
-      ORDER BY s.fecha DESC,
-        CASE
-          WHEN s.hora_inicio IS NULL OR TRIM(s.hora_inicio) = '' THEN 1
-          ELSE 0
-        END,
-        CASE
-          WHEN length(s.hora_inicio) = 4 THEN '0' || s.hora_inicio
-          ELSE s.hora_inicio
-        END ASC
-    """
-    return pd.read_sql_query(sql, conn, params=params)
+    # Orden basico por fecha (DESC); el sort por hora se hace en pandas
+    # porque PE usa formato 12hr "9:00AM"/"2:00PM" que no es lexicografico-
+    # sortable. Convertimos a minutos desde medianoche y ordenamos DESC.
+    sql += " ORDER BY s.fecha DESC"
+    df = pd.read_sql_query(sql, conn, params=params)
+    if "Hora" in df.columns:
+        df["_hora_min"] = df["Hora"].apply(_hora_to_minutes)
+        df = df.sort_values(
+            by=["Fecha", "_hora_min"],
+            ascending=[False, False],
+            kind="mergesort",  # stable
+        ).drop(columns=["_hora_min"]).reset_index(drop=True)
+    return df
 
 
 # La columna "Nº PL" funciona como LinkColumn donde la celda contiene la URL
