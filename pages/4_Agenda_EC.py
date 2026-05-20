@@ -349,7 +349,6 @@ def load_pls_de_sesion(uid: str) -> pd.DataFrame:
         ) || '#' || m.n_tramite AS "Nº trámite",
         COALESCE(p.titulo, '(no en DB)') AS "Título",
         COALESCE(p.estado, '—') AS "Estado",
-        COALESCE(p.comision_asignada, '—') AS "Comisión asignada",
         COALESCE(p.tema, '—') AS "Tema",
         m.score AS "_score"
       FROM sesion_ec_pl_referenciado m
