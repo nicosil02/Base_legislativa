@@ -500,7 +500,13 @@ def load_proyectos(fec_inicio: dt.date | None, fec_fin: dt.date | None) -> pd.Da
         })
         df["_comisiones_all"] = df["Comisión"]
         df["Comisión"] = df["Comisión"].apply(lambda lst: lst[0] if lst else None)
-        df = df.sort_values("Presentado", ascending=False).reset_index(drop=True)
+        # Sort: fecha de presentacion DESC, y dentro del mismo dia pley_num
+        # DESC (el ultimo numero asignado es el mas reciente). Sin pley_num
+        # como tiebreaker, los PLs del mismo dia salian en orden inestable.
+        df = df.sort_values(
+            ["Presentado", "pley_num"],
+            ascending=[False, False],
+        ).reset_index(drop=True)
     return df
 
 
