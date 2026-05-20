@@ -329,19 +329,34 @@ def load_sesiones(fec_inicio: dt.date | None, fec_fin: dt.date | None) -> pd.Dat
 
 @st.cache_data(ttl=60)
 def load_pls_de_sesion(uid: str) -> pd.DataFrame:
-    """Devuelve los PLs identificados en una sesion, con el N. Tramite
-    como URL clickeable al portal Ppless v2. El portal no acepta deep
-    link al detalle del proyecto, asi que linkeamos al home — el usuario
-    pega el N. Tramite en el filtro del portal."""
+    """Devuelve los PLs identificados en una sesion. La columna "Nº tramite"
+    es una URL clickeable que apunta al PDF directo del proyecto cuando
+    existe (via fileservice publico de la Asamblea, sin auth), o al portal
+    Ppless v2 home como fallback si todavia no enriquecimos los documentos
+    para ese PL.
+    """
     conn = get_conn()
     sql = """
-      SELECT 'https://proyectosdeley.asambleanacional.gob.ec/report?n=' || m.n_tramite
-               AS "Nº trámite",
-             COALESCE(p.titulo, '(no en DB)') AS "Título",
-             COALESCE(p.estado, '—') AS "Estado",
-             COALESCE(p.comision_asignada, '—') AS "Comisión asignada",
-             COALESCE(p.tema, '—') AS "Tema",
-             m.score AS "_score"
+      SELECT
+        COALESCE(
+          -- 1) PDF directo del "PROYECTO PRESENTADO" si lo tenemos enriquecido
+          (SELECT url FROM documentos
+             WHERE n_tramite = m.n_tramite
+               AND UPPER(COALESCE(fase, '')) LIKE '%PROYECTO%PRESENTADO%'
+             ORDER BY orden ASC LIMIT 1),
+          -- 2) Cualquier otro documento si hay
+          (SELECT url FROM documentos
+             WHERE n_tramite = m.n_tramite
+             ORDER BY orden ASC LIMIT 1),
+          -- 3) Fallback al portal home (el usuario pega el numero)
+          'https://proyectosdeley.asambleanacional.gob.ec/report?n=' || m.n_tramite
+        ) AS "Nº trámite",
+        COALESCE(p.titulo, '(no en DB)') AS "Título",
+        COALESCE(p.estado, '—') AS "Estado",
+        COALESCE(p.comision_asignada, '—') AS "Comisión asignada",
+        COALESCE(p.tema, '—') AS "Tema",
+        m.n_tramite AS "_tramite_display",
+        m.score AS "_score"
       FROM sesion_ec_pl_referenciado m
       LEFT JOIN proyectos p ON p.n_tramite = m.n_tramite
       WHERE m.uid = ? AND m.n_tramite IS NOT NULL
@@ -509,23 +524,33 @@ if sel_rows:
         df_pls = load_pls_de_sesion(uid)
         if not df_pls.empty:
             st.markdown(f"##### PLs identificados ({len(df_pls)})")
+            # Para el display_text mostramos el n_tramite directo (esta en
+            # la col helper _tramite_display). LinkColumn de Streamlit
+            # acepta display_text como string fijo via la columna que
+            # apuntamos con display_text="<colname>". Trick: usar regex
+            # generica que matchee cualquier URL y muestre el n_tramite
+            # como label. Mejor: hacemos el display a mano via formato.
+            df_display = df_pls.drop(columns=["_score"], errors="ignore").copy()
+            # Renombrar _tramite_display como display, ocultarla luego
             st.dataframe(
-                df_pls.drop(columns=["_score"], errors="ignore"),
+                df_display,
                 hide_index=True,
                 use_container_width=True,
                 column_config={
                     "Nº trámite": st.column_config.LinkColumn(
                         "Nº trámite",
-                        # Extrae el numero (despues de "?n=") para mostrarlo como texto
-                        display_text=r".*\?n=(\d+)",
-                        help="Click para abrir el portal Ppless v2 con el filtro aplicado",
+                        # Mostrar el n_tramite (col separada) como label
+                        display_text="_tramite_display",
+                        help="Abre el PDF del proyecto directamente (o el portal si "
+                             "aun no enriquecimos sus documentos)",
                     ),
+                    "_tramite_display": None,  # ocultar la col helper
                 },
             )
             st.caption(
-                "💡 Click en el Nº trámite abre el portal Ppless v2 de la Asamblea. "
-                "El portal no acepta deep link al detalle: pegá el número en el "
-                "filtro \"Nro. Trámite\" del portal para ver el proyecto."
+                "💡 Click en el Nº trámite abre el PDF del proyecto directamente. "
+                "Si todavía no tenemos sus documentos enriquecidos, abre el "
+                "portal Ppless v2 (pegá el número en el filtro)."
             )
         else:
             st.info("No se identificaron PLs específicos en esta sesión "

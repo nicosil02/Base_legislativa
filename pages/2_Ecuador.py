@@ -324,7 +324,20 @@ def load_proyectos(fec_inicio: dt.date | None, fec_fin: dt.date | None) -> pd.Da
     # orden) y el conteo total de documentos. Si el proyecto no tiene docs en
     # la tabla (porque enriquecer-documentos no se corrió), pdf_url queda NULL.
     sql = """
-      SELECT p.n_tramite AS "N. Trámite",
+      SELECT p.n_tramite AS "_n_tramite_label",
+             -- N. Tramite como URL clickeable directa al PDF del proyecto
+             -- presentado (o cualquier doc si no hay especifico). Fallback
+             -- al portal home si todavia no enriquecimos los documentos.
+             COALESCE(
+               (SELECT url FROM documentos
+                  WHERE n_tramite = p.n_tramite
+                    AND UPPER(COALESCE(fase, '')) LIKE '%PROYECTO%PRESENTADO%'
+                  ORDER BY orden ASC LIMIT 1),
+               (SELECT url FROM documentos
+                  WHERE n_tramite = p.n_tramite
+                  ORDER BY orden ASC LIMIT 1),
+               'https://proyectosdeley.asambleanacional.gob.ec/report?n=' || p.n_tramite
+             ) AS "N. Trámite",
              p.titulo AS "Título",
              date(p.fec_presentacion) AS "Presentado",
              date(p.last_changed_at) AS "Último cambio",
@@ -513,7 +526,10 @@ busqueda = st.text_input(
 # Aplicar filtros
 df = df_full
 if tramite_input.strip():
-    df = df[df["N. Trámite"].astype(str).str.contains(tramite_input.strip(), case=False, na=False)]
+    # Filtrar por el numero (en col _n_tramite_label), no por la URL
+    df = df[df["_n_tramite_label"].astype(str).str.contains(
+        tramite_input.strip(), case=False, na=False
+    )]
 if sel_tema != TODOS:
     df = df[df["Tema"] == sel_tema]
 if sel_estado != TODOS:
@@ -536,16 +552,13 @@ df_view = df.copy()
 df_view["Proponente principal"] = (
     df_view["Proponentes"].astype(str).str.split("/").str[0].str.strip()
 )
-# La columna "N. Trámite" se renderiza como LinkColumn: muestra el número y
-# clickea al portal Ppless v2. Como el portal no acepta deep link al detalle,
-# guardamos el número en `display_text` y la URL es siempre la misma página.
-# El usuario abre el portal y pega el N. Trámite en el filtro "Nro. Trámite".
-# Sin LinkColumn ni PDF column: la tabla soporta selección de fila; al
-# seleccionar una fila se muestra debajo un panel con los documentos
-# del proyecto. Esto reemplaza el deep-link al portal externo y el botón
-# de "Descargar PDF" — un solo punto de entrada vía click en la fila.
-COLS_VISIBLES = ["N. Trámite", "Título", "Presentado", "Estado",
-                 "Tipo proponente", "Proponente principal", "Comisión", "Tema"]
+# N. Trámite ahora es LinkColumn: la celda contiene la URL al PDF directo
+# del proyecto (cuando ya esta enriquecido) o al portal Ppless v2 home
+# como fallback. La columna _n_tramite_label trae el numero para mostrar
+# como display_text.
+COLS_VISIBLES = ["N. Trámite", "_n_tramite_label", "Título", "Presentado",
+                 "Estado", "Tipo proponente", "Proponente principal",
+                 "Comisión", "Tema"]
 df_view = df_view[[c for c in COLS_VISIBLES if c in df_view.columns]]
 
 # CSS para wrap en celdas
@@ -571,12 +584,15 @@ tabla = st.dataframe(
     on_select="rerun",
     selection_mode="single-row",
     column_config={
-        "N. Trámite":          st.column_config.TextColumn(
+        "N. Trámite":          st.column_config.LinkColumn(
             "N. Trámite",
             width="small",
             pinned=True,
-            help="Click la fila para ver los documentos del proyecto debajo.",
+            display_text="_n_tramite_label",
+            help="Click abre el PDF del proyecto directamente (o el portal "
+                 "Ppless v2 si todavía no enriquecimos sus documentos).",
         ),
+        "_n_tramite_label":    None,  # ocultar la col helper del display
         "Título":              st.column_config.TextColumn("Título", width="medium"),
         "Presentado":          st.column_config.TextColumn("Presentado", width="small"),
         "Estado":              st.column_config.TextColumn("Estado", width="small"),
@@ -600,7 +616,8 @@ except AttributeError:
 if selected_rows:
     row_idx = selected_rows[0]
     if row_idx < len(df_view):
-        sel_tramite = df_view.iloc[row_idx]["N. Trámite"]
+        # Usar el numero crudo (col helper), no la URL
+        sel_tramite = df_view.iloc[row_idx]["_n_tramite_label"]
         sel_titulo = df_view.iloc[row_idx]["Título"]
 
         # Query docs from DB
