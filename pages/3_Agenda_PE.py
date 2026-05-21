@@ -587,9 +587,12 @@ with st.sidebar:
     fec_max_iso = cats["fec_max"] or default_fin.isoformat()
     fec_min = dt.date.fromisoformat(fec_min_iso)
     fec_max = max(dt.date.fromisoformat(fec_max_iso), default_fin)
+    # Default cubre todo el historico (desde 15-ago-2023) hasta proximos 30 dias.
+    # La DB tiene ~2.100 sesiones; pandas + Streamlit lo aguantan sin problema.
+    # El usuario puede arrastrar el rango si solo le interesa lo reciente.
     rango = st.date_input(
         "Sesión",
-        value=(today - dt.timedelta(days=7), today + dt.timedelta(days=30)),
+        value=(fec_min, today + dt.timedelta(days=30)),
         min_value=fec_min,
         max_value=fec_max,
         format="YYYY-MM-DD",
