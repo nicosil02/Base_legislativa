@@ -109,11 +109,13 @@ jobs:
 
       - name: Actualizar agenda de sesiones (PE)
         run: |
-          # Bug encontrado: el modulo sesiones/ existe pero NINGUN workflow lo
-          # corria, por eso la agenda de comisiones del Congreso PE no se
-          # actualizaba. Lo integramos aca para que corra 4x/dia junto con
-          # el sync de proyectos. Sync incremental (~30 seg).
-          timeout 600 python -X utf8 -m sesiones.cli update || echo "[warn] sesiones sync fallo, sigo"
+          # --periodo-leg all itera los 5 periodos legislativos del parlamento
+          # 2021-2026 (2021..2025). La API solo expone datos desde el periodo
+          # 2023 (jul-2023 en adelante); 2021/2022 devuelven 0 y se descartan
+          # solos. Antes corriamos sin flag y por default solo se sincronizaba
+          # el periodo 2025, perdiendo ~1500 sesiones historicas de 2023-2024.
+          # Sync incremental: solo re-pega detalles si el estado cambio.
+          timeout 1200 python -X utf8 -m sesiones.cli update --periodo-leg all || echo "[warn] sesiones sync fallo, sigo"
 
       - name: Reclasificar PLs en "Otros" con alta confianza
         run: |
