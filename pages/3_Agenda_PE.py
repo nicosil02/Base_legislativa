@@ -379,6 +379,33 @@ URL_TEMPLATE = (
 
 
 @st.cache_data(ttl=60)
+def buscar_pl_en_agendas(pley_num: int) -> pd.DataFrame:
+    """Para un numero de PL, devuelve todas las apariciones en agenda:
+    en que comision y cuando. Cruzado con tabla proyectos para mostrar tema/estado."""
+    conn = get_conn()
+    sql = """
+      SELECT s.fecha AS "Fecha",
+             s.hora_inicio AS "Hora",
+             s.nombre_comision AS "Comisión",
+             s.tipo_comision AS "Tipo",
+             s.estado AS "Estado sesión",
+             s.nombre_sesion AS "Sesión",
+             s.id_sesion AS "_id_sesion",
+             pr.proyecto_ley_raw AS "_raw",
+             pr.contexto AS "Contexto en agenda",
+             COALESCE(p.titulo, '(no en DB de proyectos)') AS "Título del PL",
+             COALESCE(p.tema, '—') AS "Tema",
+             COALESCE(p.estado, '—') AS "Estado del PL"
+      FROM sesion_pl_referenciado pr
+      JOIN sesiones s ON s.id_sesion = pr.id_sesion
+      LEFT JOIN proyectos p ON p.pley_num = pr.pley_num AND p.per_par_id = pr.per_par_id
+      WHERE pr.pley_num = ?
+      ORDER BY s.fecha DESC, s.hora_inicio DESC
+    """
+    return pd.read_sql_query(sql, conn, params=(pley_num,))
+
+
+@st.cache_data(ttl=60)
 def load_pls_de_sesion(id_sesion: int) -> pd.DataFrame:
     conn = get_conn()
     # Construimos la URL en SQL para que ya venga lista con el label embebido.
@@ -455,11 +482,11 @@ st.markdown(
     unsafe_allow_html=True,
 )
 st.markdown(
-    '<p class="country-subtitle">Sesiones convocadas y realizadas de las comisiones '
-    'ordinarias, investigadoras, especiales, Subcomisión de Acusaciones Constitucionales '
-    'y Comisión Permanente. Cada sesión cruza con la base de proyectos de ley para '
-    'identificar automáticamente qué PLs están en agenda y enriquecerlos con tema, '
-    'estado y bancada.</p>',
+    '<p class="country-subtitle">Sesiones convocadas y realizadas de las <strong>24 '
+    'Comisiones Ordinarias</strong> del Congreso del Perú. Cada sesión cruza con la base '
+    'de proyectos de ley para identificar automáticamente qué PLs están en agenda y '
+    'enriquecerlos con tema, estado y bancada. Las sesiones del Pleno y de la Comisión '
+    'Permanente se publican por otra vía y no están incluidas en esta vista.</p>',
     unsafe_allow_html=True,
 )
 
@@ -498,6 +525,56 @@ for col, (label, val) in zip(cols, totals.items()):
     col.metric(label, f"{val:,}")
 
 st.markdown("")
+
+# ---------- Buscador rapido por numero de PL ----------
+# Escribe un numero (ej. "1000") y muestra todas las sesiones donde ese PL
+# aparecio en agenda: comision, fecha, contexto. Atajo para la pregunta
+# "¿en que comision se vio el PL X y cuando?".
+st.markdown("##### Buscar Proyecto de Ley en agendas")
+sb = st.columns([1.5, 5])
+pl_query = sb[0].text_input(
+    "Nº de PL", value="", placeholder="ej. 1000",
+    label_visibility="collapsed",
+    help="Ingresa el número del proyecto de ley (solo el número, sin /año-grupo). "
+         "Muestra en qué comisión y cuándo apareció en agenda.",
+)
+if pl_query.strip():
+    try:
+        pl_num = int(pl_query.strip().split("/")[0])
+    except ValueError:
+        sb[1].warning(f"'{pl_query}' no es un número válido. Ingresa solo dígitos (ej. 1000).")
+    else:
+        df_pl = buscar_pl_en_agendas(pl_num)
+        if df_pl.empty:
+            sb[1].info(f"PL {pl_num} no aparece en ninguna sesión registrada.")
+        else:
+            n_com = df_pl["Comisión"].nunique()
+            titulo = df_pl["Título del PL"].iloc[0]
+            sb[1].markdown(
+                f"**PL {pl_num}** · {len(df_pl)} aparición(es) en {n_com} comisión(es)  \n"
+                f"<span style='color:#435D74;font-size:13px'>{titulo}</span>",
+                unsafe_allow_html=True,
+            )
+            st.dataframe(
+                df_pl.drop(columns=["_id_sesion", "_raw"]),
+                hide_index=True,
+                use_container_width=True,
+                height=min(420, 90 + 55 * len(df_pl)),
+                row_height=60,
+                column_config={
+                    "Fecha":          st.column_config.TextColumn("Fecha", width="small"),
+                    "Hora":           st.column_config.TextColumn("Hora", width="small"),
+                    "Comisión":       st.column_config.TextColumn("Comisión", width="medium"),
+                    "Tipo":           st.column_config.TextColumn("Tipo", width="small"),
+                    "Estado sesión":  st.column_config.TextColumn("Estado sesión", width="small"),
+                    "Sesión":         st.column_config.TextColumn("Sesión", width="medium"),
+                    "Contexto en agenda": st.column_config.TextColumn("Contexto", width="large"),
+                    "Título del PL":  st.column_config.TextColumn("Título", width="large"),
+                    "Tema":           st.column_config.TextColumn("Tema", width="small"),
+                    "Estado del PL":  st.column_config.TextColumn("Estado PL", width="small"),
+                },
+            )
+    st.markdown("---")
 
 cats = load_catalogs()
 
@@ -715,12 +792,17 @@ st.markdown(
     '<p style="font-size:12px;color:var(--ink-soft);line-height:1.55;'
     'max-width:760px;margin-bottom:14px;">'
     '<strong style="color:var(--ink);">Cobertura temporal:</strong> '
-    'la agenda incluye sesiones desde el <strong>15 de agosto de 2023</strong> '
-    'hasta hoy. El módulo <em>visor-sesiones</em> del Congreso del Perú '
-    '(<code>service-portal-publico-ext</code>) se implementó en esa fecha, '
-    'por lo que sesiones anteriores no están disponibles vía API. '
-    'Las actas históricas (2021–2023) existen como PDFs en el archivo del '
-    'Congreso pero no son consumibles automáticamente.</p>',
+    'la agenda incluye sesiones desde el <strong>27 de julio de 2023</strong> '
+    '(inicio del periodo legislativo 2023–2024) hasta hoy. El módulo '
+    '<em>visor-sesiones</em> del Congreso del Perú (<code>service-portal-publico-ext</code>) '
+    'no expone sesiones anteriores. Las actas del periodo 2021–2023 existen como PDFs '
+    'en el archivo del Congreso pero no son consumibles vía API.<br><br>'
+    '<strong style="color:var(--ink);">Cobertura de órganos:</strong> '
+    'la API expone solo las <strong>24 Comisiones Ordinarias</strong>. '
+    'Las sesiones del <strong>Pleno</strong>, de la <strong>Comisión Permanente</strong>, '
+    'de la <strong>Subcomisión de Acusaciones Constitucionales</strong> y de las '
+    'comisiones investigadoras/especiales no se publican por esta vía y por tanto no '
+    'figuran en esta vista.</p>',
     unsafe_allow_html=True,
 )
 st.markdown(
