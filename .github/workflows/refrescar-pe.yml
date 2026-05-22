@@ -117,6 +117,16 @@ jobs:
           # Sync incremental: solo re-pega detalles si el estado cambio.
           timeout 1200 python -X utf8 -m sesiones.cli update --periodo-leg all || echo "[warn] sesiones sync fallo, sigo"
 
+      - name: Actualizar agendas del Pleno (PE)
+        run: |
+          # Sync de agendas del Pleno via API adp-portal-service. Cobertura
+          # del periodo parlamentario actual (2021-2026, ~177 agendas). Sync
+          # incremental: solo re-pega detalles si cambio el titulo/url.
+          # Primera corrida ~5 min (fetchea detalle de cada agenda); las
+          # siguientes son rapidas (~30 seg) porque solo procesa la del
+          # jueves nuevo + cualquier actualizacion.
+          timeout 900 python -X utf8 -m pleno.cli update --periodo 2021-2026 || echo "[warn] pleno sync fallo, sigo"
+
       - name: Reclasificar PLs en "Otros" con alta confianza
         run: |
           # Usa el modelo entrenado en models/clasificador_pe.joblib
@@ -152,6 +162,7 @@ jobs:
           # actividad del Congreso.
           python -X utf8 -m sistema.heartbeat --db proyectos.db --source pe_proyectos
           python -X utf8 -m sistema.heartbeat --db proyectos.db --source pe_sesiones
+          python -X utf8 -m sistema.heartbeat --db proyectos.db --source pe_pleno || echo "[warn] heartbeat pleno fallo"
 
       - name: Stats final
         run: |
@@ -169,6 +180,12 @@ jobs:
               print(f'[stats] proyectos={total} comisiones={comis} sesiones={sesiones} futuras={futuras} max_fecha={max_fecha}')
           except sqlite3.OperationalError:
               print(f'[stats] proyectos={total} comisiones={comis} (sin tablas sesiones todavia)')
+          try:
+              pleno = c.execute('SELECT COUNT(*) FROM pleno_sesiones').fetchone()[0]
+              pleno_pls = c.execute('SELECT COUNT(*) FROM pleno_pl_referenciado').fetchone()[0]
+              print(f'[stats] pleno_agendas={pleno} pleno_refs_pl={pleno_pls}')
+          except sqlite3.OperationalError:
+              print('[stats] (sin tablas pleno todavia — el primer sync las creara)')
           "
 
       - name: Generar snapshot gz
