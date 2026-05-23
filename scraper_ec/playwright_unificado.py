@@ -177,18 +177,45 @@ def _ir_a_siguiente_pagina(page) -> bool:
         return False
 
 
-def _upsert_grupo(db: Database, grupo: dict, existentes: set[str]) -> tuple[bool, int]:
-    """Crea o re-crea un grupo source='portal'. Devuelve (creado_bool, n_miembros)."""
+def _upsert_grupo(db: Database, grupo: dict, existentes: set[str],
+                   now_iso: str) -> tuple[bool, int, int]:
+    """Crea o re-crea un grupo source='portal'.
+
+    Para miembros que no existen en proyectos (PLs externos pre-2025),
+    crea stub rows con titulo='(PL externo - no en DB local)' para no
+    perder el grupo completo. La FK se respeta y la UI muestra los
+    PLs externos como '(no en DB)' via COALESCE.
+
+    Returns: (creado_bool, n_miembros, n_stubs_creados)
+    """
     principal = (grupo.get("n_tramite_principal") or "").strip()
     miembros = [str(m).strip() for m in (grupo.get("miembros") or []) if str(m).strip()]
     if not principal or not miembros:
-        return False, 0
+        return False, 0, 0
 
-    # Solo incluir miembros que existan en proyectos (FK constraint)
     n_tramites = list(dict.fromkeys([principal] + miembros))
-    n_validos = [n for n in n_tramites if n in existentes]
-    if len(n_validos) < 2:
-        return False, 0
+    faltantes = [n for n in n_tramites if n not in existentes]
+
+    # Crear stubs para los faltantes
+    stubs_creados = 0
+    if faltantes:
+        with db.tx() as c:
+            for n in faltantes:
+                c.execute(
+                    """INSERT OR IGNORE INTO proyectos
+                       (n_tramite, titulo, estado, fec_presentacion,
+                        periodo, first_seen_at, last_seen_at, last_changed_at,
+                        tema, tema_manual)
+                       VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'Otros', 0)""",
+                    (n,
+                     "(PL externo unificado - no en DB local)",
+                     "EXTERNO",
+                     "1900-01-01",
+                     "pre-2025",
+                     now_iso, now_iso, now_iso),
+                )
+                existentes.add(n)
+                stubs_creados += 1
 
     nombre = (grupo.get("titulo") or "")[:200]
     descripcion = (
@@ -197,13 +224,13 @@ def _upsert_grupo(db: Database, grupo: dict, existentes: set[str]) -> tuple[bool
         f"Fecha unif: {grupo.get('fecha_unif', '?')}"
     )
     db.crear_grupo_unificacion(
-        n_tramites=n_validos,
+        n_tramites=n_tramites,
         nombre=nombre,
         descripcion=descripcion,
-        n_tramite_principal=principal if principal in existentes else n_validos[0],
+        n_tramite_principal=principal,
         source="portal",
     )
-    return True, len(n_validos)
+    return True, len(n_tramites), stubs_creados
 
 
 def scrapear_unificados(
@@ -240,7 +267,8 @@ def scrapear_unificados(
             log.info("borrados %d grupos source='portal' previos", len(old_ids))
 
     stats = {"paginas": 0, "grupos_creados": 0, "memberships": 0,
-             "miembros_no_existentes": 0, "errores": 0}
+             "stubs_creados": 0, "errores": 0}
+    now_iso = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
     with sync_playwright() as pw:
         browser = pw.chromium.launch(headless=headless)
@@ -265,16 +293,13 @@ def scrapear_unificados(
 
             for g in grupos:
                 try:
-                    creado, n_miembros = _upsert_grupo(db, g, existentes)
+                    creado, n_miembros, n_stubs = _upsert_grupo(
+                        db, g, existentes, now_iso
+                    )
                     if creado:
                         stats["grupos_creados"] += 1
                         stats["memberships"] += n_miembros
-                        # Contar miembros que vinieron del portal pero no estan
-                        # en la DB local (escaparon al sync de CSV)
-                        miembros_raw = [g.get("n_tramite_principal")] + (g.get("miembros") or [])
-                        stats["miembros_no_existentes"] += sum(
-                            1 for m in miembros_raw if m and m not in existentes
-                        )
+                        stats["stubs_creados"] += n_stubs
                 except Exception as e:
                     log.warning("error upsert grupo %s: %s",
                                 g.get("n_tramite_principal"), e)
@@ -289,8 +314,8 @@ def scrapear_unificados(
     db.close()
     log.info(
         "Terminado: paginas=%d grupos=%d memberships=%d "
-        "miembros_no_en_db=%d errores=%d",
+        "stubs_creados=%d errores=%d",
         stats["paginas"], stats["grupos_creados"], stats["memberships"],
-        stats["miembros_no_existentes"], stats["errores"],
+        stats["stubs_creados"], stats["errores"],
     )
     return stats

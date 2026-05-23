@@ -359,17 +359,15 @@ def cmd_recategorizar(args) -> int:
 
 def cmd_importar_unificaciones(args) -> int:
     """Importa grupos de unificacion desde un JSON (formato del scraping
-    del portal Ppless via Claude in Chrome). Cada item del array tiene:
-      - fecha_unif
-      - titulo
-      - n_tramite_principal  (codigo tipo AN-XXX-YYYY-NNNN-M)
-      - miembros  (lista de n_tramites numericos)
-      - comision
-      - estado
-    Crea un grupo por cada item, con n_tramite_principal como lider y
-    los miembros + el principal como integrantes. Source='portal'.
+    del portal Ppless via Claude in Chrome).
+
+    Para miembros que NO existen en la tabla proyectos (porque son de
+    periodos pre-2025 que no estan en nuestro sync de CSV), crea stub
+    rows con n_tramite + titulo='(PL externo - no en DB local)' para
+    preservar la integridad referencial y mostrar el grupo completo.
     """
     import json
+    from datetime import datetime, timezone
     from pathlib import Path
     db = _db(args)
     try:
@@ -381,11 +379,6 @@ def cmd_importar_unificaciones(args) -> int:
         if not isinstance(data, list):
             print(f"Error: JSON debe ser array. Got: {type(data).__name__}")
             return 1
-
-        # Mapeo de n_tramites existentes en proyectos (para validar)
-        existentes = {
-            r[0] for r in db.conn.execute("SELECT n_tramite FROM proyectos")
-        }
 
         # Borrar grupos source='portal' anteriores (re-import limpio)
         if args.replace:
@@ -404,50 +397,69 @@ def cmd_importar_unificaciones(args) -> int:
                     )
                     print(f"[replace] borrados {len(old_ids)} grupos source='portal' previos")
 
+        # Mapeo de n_tramites existentes (refrescamos despues de cada stub creado)
+        existentes = {
+            r[0] for r in db.conn.execute("SELECT n_tramite FROM proyectos")
+        }
+        now = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+
         creados = 0
         skipped = 0
         miembros_total = 0
-        miembros_no_existentes = 0
+        stubs_creados = 0
+
         for item in data:
             principal = (item.get("n_tramite_principal") or "").strip()
             miembros = [str(m).strip() for m in (item.get("miembros") or []) if str(m).strip()]
             if not principal or not miembros:
                 skipped += 1
                 continue
+
             # Lista completa: principal + miembros (deduplicado)
             n_tramites = list(dict.fromkeys([principal] + miembros))
-            # Solo insertamos miembros que existan en proyectos (los demas
-            # se loguean pero no se incluyen — la FK fallaria)
-            n_validos = []
-            for n in n_tramites:
-                if n in existentes:
-                    n_validos.append(n)
-                else:
-                    miembros_no_existentes += 1
-            if len(n_validos) < 2:
-                # No tiene sentido un "grupo" de menos de 2 PLs validos
-                skipped += 1
-                continue
+
+            # Para los que no existan: crear stub row en proyectos.
+            # Asi el grupo se ve completo y la FK no falla.
+            faltantes = [n for n in n_tramites if n not in existentes]
+            if faltantes:
+                with db.tx() as c:
+                    for n in faltantes:
+                        c.execute(
+                            """INSERT OR IGNORE INTO proyectos
+                               (n_tramite, titulo, estado, fec_presentacion,
+                                periodo, first_seen_at, last_seen_at, last_changed_at,
+                                tema, tema_manual)
+                               VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'Otros', 0)""",
+                            (n,
+                             "(PL externo unificado - no en DB local)",
+                             "EXTERNO",
+                             "1900-01-01",  # fecha placeholder
+                             "pre-2025",
+                             now, now, now),
+                        )
+                        existentes.add(n)
+                        stubs_creados += 1
+
             try:
                 db.crear_grupo_unificacion(
-                    n_tramites=n_validos,
+                    n_tramites=n_tramites,
                     nombre=(item.get("titulo") or "")[:200],
                     descripcion=f"Estado: {item.get('estado', '?')} | "
                                 f"Comision: {item.get('comision', '?')} | "
                                 f"Fecha unif: {item.get('fecha_unif', '?')}",
-                    n_tramite_principal=principal if principal in existentes else n_validos[0],
+                    n_tramite_principal=principal,
                     source="portal",
                 )
                 creados += 1
-                miembros_total += len(n_validos)
+                miembros_total += len(n_tramites)
             except Exception as e:
                 print(f"[error] grupo {principal}: {e}")
                 skipped += 1
 
         print(f"\n[importar] {creados} grupos creados, "
               f"{miembros_total} memberships, "
-              f"{miembros_no_existentes} miembros no existian en proyectos (skipeados), "
-              f"{skipped} grupos skipeados (incompletos)")
+              f"{stubs_creados} stubs creados (PLs externos pre-2025), "
+              f"{skipped} grupos skipeados")
     finally:
         db.close()
     return 0
