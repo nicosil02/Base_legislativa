@@ -144,6 +144,16 @@ jobs:
               --days-back 60 --days-fwd 120 \
               || echo "[warn] agenda_ec update fallo, sigue al snapshot"
 
+      - name: Scrapear grupos de unificacion del portal Ppless
+        run: |
+          # Activa el toggle "Unificados" del portal y extrae todos los
+          # grupos visibles con sus miembros. Borra los grupos source='portal'
+          # previos y los re-crea con la data actual — asi detecta cuando
+          # se unifica algo nuevo y cuando se desunifica.
+          # ~2-3 min para iterar las ~25 paginas via Playwright headless.
+          timeout 600 python -X utf8 -m scraper_ec.cli scrapear-unificados \
+              || echo "[warn] scrapear-unificados fallo, sigue al snapshot"
+
       - name: Heartbeats (registra corrida exitosa)
         run: |
           # Independiente de si hubo cambios reales en proyectos/agenda EC,
