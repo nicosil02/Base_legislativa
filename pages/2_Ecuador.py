@@ -323,7 +323,21 @@ def load_proyectos(fec_inicio: dt.date | None, fec_fin: dt.date | None) -> pd.Da
     # LEFT JOIN con documentos: traemos la URL del PDF principal (el de menor
     # orden) y el conteo total de documentos. Si el proyecto no tiene docs en
     # la tabla (porque enriquecer-documentos no se corrió), pdf_url queda NULL.
-    sql = """
+    # Chequeo defensivo: si la tabla unificacion_pl no existe todavia (DB
+    # vieja sin la migracion), devolvemos NULL en lugar de joinear. Evita
+    # OperationalError "no such table: unificacion_pl".
+    has_unif = conn.execute(
+        "SELECT 1 FROM sqlite_master WHERE type='table' AND name='unificacion_pl'"
+    ).fetchone() is not None
+    unif_col = (
+        """(SELECT GROUP_CONCAT(up2.n_tramite, ', ')
+              FROM unificacion_pl up1
+              JOIN unificacion_pl up2 ON up2.grupo_id = up1.grupo_id
+                                     AND up2.n_tramite != up1.n_tramite
+              WHERE up1.n_tramite = p.n_tramite)"""
+        if has_unif else "NULL"
+    )
+    sql = f"""
       SELECT p.n_tramite AS "_n_tramite_label",
              -- URL clickeable directa al PDF (o portal home si no hay docs).
              -- Append '#<n_tramite>' al final para que el LinkColumn pueda
@@ -338,14 +352,7 @@ def load_proyectos(fec_inicio: dt.date | None, fec_fin: dt.date | None) -> pd.Da
                   ORDER BY orden ASC LIMIT 1),
                'https://proyectosdeley.asambleanacional.gob.ec/report?n=' || p.n_tramite
              ) || '#' || p.n_tramite AS "N. Trámite",
-             -- Unificacion: si el PL pertenece a un grupo, listamos los otros
-             -- miembros separados por coma. NULL si no esta unificado.
-             (SELECT GROUP_CONCAT(up2.n_tramite, ', ')
-                FROM unificacion_pl up1
-                JOIN unificacion_pl up2 ON up2.grupo_id = up1.grupo_id
-                                       AND up2.n_tramite != up1.n_tramite
-                WHERE up1.n_tramite = p.n_tramite
-             ) AS "Unificado con",
+             {unif_col} AS "Unificado con",
              p.titulo AS "Título",
              date(p.fec_presentacion) AS "Presentado",
              date(p.last_changed_at) AS "Último cambio",
@@ -653,17 +660,23 @@ if selected_rows:
             (str(sel_tramite),),
         ).fetchall()
 
-        # Info de unificacion: si el PL pertenece a un grupo, traer datos
-        unif = conn.execute(
-            """SELECT g.id, g.nombre, g.descripcion, g.n_tramite_principal,
-                      GROUP_CONCAT(up2.n_tramite, ',') AS miembros
-               FROM unificacion_pl up
-               JOIN unificacion_grupos g ON g.id = up.grupo_id
-               JOIN unificacion_pl up2 ON up2.grupo_id = up.grupo_id
-               WHERE up.n_tramite = ?
-               GROUP BY g.id""",
-            (str(sel_tramite),),
-        ).fetchone()
+        # Info de unificacion (defensivo: si tabla no existe, unif=None)
+        has_unif_tbl = conn.execute(
+            "SELECT 1 FROM sqlite_master WHERE type='table' AND name='unificacion_pl'"
+        ).fetchone() is not None
+        if has_unif_tbl:
+            unif = conn.execute(
+                """SELECT g.id, g.nombre, g.descripcion, g.n_tramite_principal,
+                          GROUP_CONCAT(up2.n_tramite, ',') AS miembros
+                   FROM unificacion_pl up
+                   JOIN unificacion_grupos g ON g.id = up.grupo_id
+                   JOIN unificacion_pl up2 ON up2.grupo_id = up.grupo_id
+                   WHERE up.n_tramite = ?
+                   GROUP BY g.id""",
+                (str(sel_tramite),),
+            ).fetchone()
+        else:
+            unif = None
 
         # Badge de unificacion (HTML compacto)
         unif_badge = ""

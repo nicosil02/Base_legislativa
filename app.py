@@ -116,6 +116,20 @@ def _bootstrap_dbs():
         except Exception as e:
             print(f"[bootstrap] error initializing EC DB from CSV: {e}")
 
+    # Garantizar que el schema completo (incluyendo tablas nuevas como
+    # unificacion_*) existe en la DB EC. Necesario porque los snapshots
+    # commiteados por workflows viejos pueden no tenerlas. init_schema usa
+    # CREATE TABLE IF NOT EXISTS, asi que es idempotente y seguro.
+    if ec_db.exists():
+        try:
+            from scraper_ec.db import Database
+            db = Database(str(ec_db))
+            db.init_schema()
+            db.close()
+        except Exception as e:
+            print(f"[bootstrap] no se pudo asegurar schema EC: {e}")
+
+
 _bootstrap_dbs()
 
 
