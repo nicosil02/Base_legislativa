@@ -357,6 +357,73 @@ def cmd_recategorizar(args) -> int:
     return 0
 
 
+def cmd_scrapear_unificados(args) -> int:
+    """Abre el portal Ppless v2 con Playwright e itera todas las paginas
+    para capturar el estado del checkbox 'Unificado' de cada PL. Actualiza
+    es_unificado en la tabla proyectos."""
+    import logging
+    logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
+    from scraper_ec.playwright_unificado import scrapear_unificados
+    stats = scrapear_unificados(
+        db_path=args.db,
+        headless=not args.no_headless,
+        limit=args.limit,
+        sleep_ms=args.sleep_ms,
+    )
+    print(f"\n[scrapear-unificados] stats: {stats}")
+    return 0
+
+
+def cmd_detectar_unificaciones(args) -> int:
+    """Detecta candidatos a unificacion por similitud de titulos +
+    misma comision asignada. NO los inserta automaticamente — los reporta
+    para revision manual. Con --apply marca los de mayor confianza
+    (jaccard >= threshold_high) directamente.
+    """
+    from scraper_ec.detectar_unificaciones import detectar
+    db = _db(args)
+    try:
+        candidatos = detectar(
+            db.conn,
+            min_jaccard=args.min_jaccard,
+            min_rare_idf=args.min_rare_idf,
+        )
+        if not candidatos:
+            print("Sin candidatos detectados con los parametros actuales.")
+            print("Probar bajar --min-jaccard (default 0.5) o --min-rare-idf (default 2.0).")
+            return 0
+        print(f"\n{len(candidatos)} grupo(s) candidato(s):\n")
+        for i, c in enumerate(candidatos, 1):
+            score = c.jaccard * c.rare_idf
+            print(f"[{i}] {len(c.pls)} PLs · jaccard={c.jaccard:.2f} · "
+                  f"token_raro='{c.rare_token}' (idf={c.rare_idf:.2f}) · "
+                  f"score={score:.2f}")
+            print(f"    comision: {c.comision}")
+            for n in c.pls:
+                titulo = c.titulos.get(n, "")
+                print(f"    - {n}  {titulo}")
+            print()
+        if args.apply:
+            # Aplicar solo los de alta confianza
+            aplicados = 0
+            for c in candidatos:
+                if c.jaccard >= args.threshold_high:
+                    nombre = f"Auto: {c.rare_token} (jaccard={c.jaccard:.2f})"
+                    db.crear_grupo_unificacion(
+                        n_tramites=list(c.pls),
+                        nombre=nombre,
+                        source="inferido",
+                    )
+                    aplicados += 1
+            print(f"\n[apply] {aplicados} grupos aplicados (jaccard >= {args.threshold_high}).")
+            if aplicados < len(candidatos):
+                print(f"  {len(candidatos) - aplicados} candidatos quedaron sin aplicar (debajo del threshold).")
+                print("  Revisalos y aplica manualmente con `marcar-unificacion`.")
+    finally:
+        db.close()
+    return 0
+
+
 def cmd_marcar_unificacion(args) -> int:
     """Crea un grupo de unificacion con los PLs dados.
 
@@ -513,6 +580,33 @@ def main(argv: list[str] | None = None) -> int:
     sub.add_parser("recategorizar", help="Re-clasifica temas no marcados como manuales").set_defaults(func=cmd_recategorizar)
 
     # ---------- unificaciones ----------
+    s = sub.add_parser(
+        "scrapear-unificados",
+        help="Scrapea con Playwright la columna 'Unificado' del portal Ppless. "
+             "Marca es_unificado=1 para los PLs con el checkbox marcado.",
+    )
+    s.add_argument("--no-headless", action="store_true",
+                   help="Mostrar el browser (debug). Default: headless")
+    s.add_argument("--limit", type=int, default=None,
+                   help="Limitar a N PLs procesados (testing)")
+    s.add_argument("--sleep-ms", type=int, default=500,
+                   help="Pausa entre paginas (ms). Default 500.")
+    s.set_defaults(func=cmd_scrapear_unificados)
+
+    s = sub.add_parser(
+        "detectar-unificaciones",
+        help="Detecta candidatos a unificacion por similitud de titulos + comision.",
+    )
+    s.add_argument("--min-jaccard", type=float, default=0.5,
+                   help="Jaccard minimo de tokens (default 0.5). Bajar para mas candidatos.")
+    s.add_argument("--min-rare-idf", type=float, default=2.0,
+                   help="IDF minimo del token mas raro compartido (default 2.0).")
+    s.add_argument("--apply", action="store_true",
+                   help="Aplica los de alta confianza (jaccard >= threshold-high).")
+    s.add_argument("--threshold-high", type=float, default=0.75,
+                   help="Threshold para aplicar automaticamente con --apply (default 0.75).")
+    s.set_defaults(func=cmd_detectar_unificaciones)
+
     s = sub.add_parser(
         "marcar-unificacion",
         help="Crea un grupo de unificacion con N proyectos (manual).",

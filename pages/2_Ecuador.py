@@ -337,6 +337,9 @@ def load_proyectos(fec_inicio: dt.date | None, fec_fin: dt.date | None) -> pd.Da
               WHERE up1.n_tramite = p.n_tramite)"""
         if has_unif else "NULL"
     )
+    # Chequeo defensivo para columna es_unificado (puede no existir aun)
+    cols_proy = [r[1] for r in conn.execute("PRAGMA table_info(proyectos)")]
+    has_es_unif = "es_unificado" in cols_proy
     sql = f"""
       SELECT p.n_tramite AS "_n_tramite_label",
              -- URL clickeable directa al PDF (o portal home si no hay docs).
@@ -353,6 +356,9 @@ def load_proyectos(fec_inicio: dt.date | None, fec_fin: dt.date | None) -> pd.Da
                'https://proyectosdeley.asambleanacional.gob.ec/report?n=' || p.n_tramite
              ) || '#' || p.n_tramite AS "N. Trámite",
              {unif_col} AS "Unificado con",
+             -- Flag del portal: TRUE si el checkbox "Unificado" esta marcado
+             -- (scrapeado con scrapear-unificados via Playwright)
+             {"COALESCE(p.es_unificado, 0)" if has_es_unif else "0"} AS "_es_unificado_portal",
              p.titulo AS "Título",
              date(p.fec_presentacion) AS "Presentado",
              date(p.last_changed_at) AS "Último cambio",
@@ -559,15 +565,20 @@ if busqueda.strip():
     q = busqueda.strip().lower()
     df = df[df["Título"].astype(str).str.lower().str.contains(q, na=False)]
 
-# Filtro adicional: solo PLs unificados
+# Filtro adicional: solo PLs unificados (marcados en el portal O en grupo manual)
 solo_unif = st.checkbox(
-    "Solo PLs unificados con otros",
+    "Solo PLs unificados",
     value=False,
-    help="Filtra los proyectos que estan acumulados en un grupo de unificacion. "
-         "Use 'python -m scraper_ec.cli marcar-unificacion' para crear grupos.",
+    help="Filtra los proyectos marcados como unificados en el portal de la Asamblea "
+         "(checkbox 'Unificado' en Ppless) o en un grupo manual de unificacion. "
+         "Para scrapear el flag: `python -m scraper_ec.cli scrapear-unificados`. "
+         "Para crear grupos: `python -m scraper_ec.cli marcar-unificacion`.",
 )
 if solo_unif:
-    df = df[df["Unificado con"].notna() & (df["Unificado con"] != "")]
+    df = df[
+        (df["_es_unificado_portal"].fillna(0).astype(int) == 1)
+        | (df["Unificado con"].notna() & (df["Unificado con"] != ""))
+    ]
 
 st.markdown(f"##### {len(df):,} proyecto(s) de {len(df_full):,} en el rango")
 
@@ -678,21 +689,44 @@ if selected_rows:
         else:
             unif = None
 
+        # Flag del portal (independiente del grupo manual)
+        es_unif_portal = False
+        try:
+            r = conn.execute(
+                "SELECT COALESCE(es_unificado, 0) FROM proyectos WHERE n_tramite = ?",
+                (str(sel_tramite),),
+            ).fetchone()
+            es_unif_portal = bool(r and r[0])
+        except sqlite3.OperationalError:
+            pass
+
         # Badge de unificacion (HTML compacto)
-        unif_badge = ""
+        badges = []
         if unif:
             miembros = [m for m in (unif["miembros"] or "").split(",") if m]
             n_otros = len([m for m in miembros if m != str(sel_tramite)])
             es_principal = unif["n_tramite_principal"] == str(sel_tramite)
             label = "PRINCIPAL" if es_principal else "ACUMULADO"
             color_bg = "#0A294D" if es_principal else "#F59E0B"
-            unif_badge = (
-                f'<div style="display:inline-block; padding:4px 10px; border-radius:6px; '
+            badges.append(
+                f'<span style="display:inline-block; padding:4px 10px; border-radius:6px; '
                 f'background:{color_bg}; color:#FFF; font-size:11px; font-weight:700; '
-                f'letter-spacing:0.08em; margin-bottom:10px; margin-right:8px;">'
-                f'⛓️ UNIFICADO ({n_otros + 1} PLs) · {label}'
-                f'</div>'
+                f'letter-spacing:0.08em; margin-right:8px;">'
+                f'⛓️ GRUPO UNIFICADO ({n_otros + 1} PLs) · {label}'
+                f'</span>'
             )
+        if es_unif_portal:
+            badges.append(
+                '<span style="display:inline-block; padding:4px 10px; border-radius:6px; '
+                'background:#10B981; color:#FFF; font-size:11px; font-weight:700; '
+                'letter-spacing:0.08em; margin-right:8px;">'
+                '✓ MARCADO UNIFICADO EN PORTAL'
+                '</span>'
+            )
+        unif_badge = (
+            f'<div style="margin-bottom:10px;">{"".join(badges)}</div>'
+            if badges else ""
+        )
 
         st.markdown(
             f"""<div style="margin-top: 28px; padding: 24px 28px; border: 1px solid #CFD9E0;
