@@ -454,17 +454,18 @@ def cmd_importar_unificaciones(args) -> int:
 
 
 def cmd_scrapear_unificados(args) -> int:
-    """Abre el portal Ppless v2 con Playwright e itera todas las paginas
-    para capturar el estado del checkbox 'Unificado' de cada PL. Actualiza
-    es_unificado en la tabla proyectos."""
+    """Abre el portal Ppless v2 con Playwright, activa el toggle 'Unificados',
+    y extrae todos los grupos visibles (con sus miembros). Los inserta como
+    grupos source='portal' (borrando los anteriores para mantener el
+    estado del portal como verdad)."""
     import logging
-    logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
+    logging.basicConfig(level=logging.INFO,
+                        format="%(asctime)s %(levelname)s %(message)s")
     from scraper_ec.playwright_unificado import scrapear_unificados
     stats = scrapear_unificados(
         db_path=args.db,
         headless=not args.no_headless,
-        limit=args.limit,
-        sleep_ms=args.sleep_ms,
+        max_pages=args.max_pages,
     )
     print(f"\n[scrapear-unificados] stats: {stats}")
     return 0
@@ -688,15 +689,14 @@ def main(argv: list[str] | None = None) -> int:
 
     s = sub.add_parser(
         "scrapear-unificados",
-        help="Scrapea con Playwright la columna 'Unificado' del portal Ppless. "
-             "Marca es_unificado=1 para los PLs con el checkbox marcado.",
+        help="Scrapea con Playwright los grupos de unificacion del portal "
+             "Ppless v2 (toggle 'Unificados'). Borra grupos source='portal' "
+             "previos y los re-crea con la data actual del portal.",
     )
     s.add_argument("--no-headless", action="store_true",
                    help="Mostrar el browser (debug). Default: headless")
-    s.add_argument("--limit", type=int, default=None,
-                   help="Limitar a N PLs procesados (testing)")
-    s.add_argument("--sleep-ms", type=int, default=500,
-                   help="Pausa entre paginas (ms). Default 500.")
+    s.add_argument("--max-pages", type=int, default=100,
+                   help="Limite de seguridad en paginas (default 100, real ~25)")
     s.set_defaults(func=cmd_scrapear_unificados)
 
     s = sub.add_parser(
