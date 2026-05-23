@@ -159,6 +159,19 @@ class Database:
     def init_schema(self) -> None:
         with self.tx() as c:
             c.executescript(SCHEMA)
+            # Migracion idempotente: agregar columna es_unificado si no existe
+            try:
+                cols = [r[1] for r in c.execute("PRAGMA table_info(proyectos)")]
+                if "es_unificado" not in cols:
+                    c.execute(
+                        "ALTER TABLE proyectos ADD COLUMN es_unificado INTEGER NOT NULL DEFAULT 0"
+                    )
+                if "unificado_at" not in cols:
+                    c.execute(
+                        "ALTER TABLE proyectos ADD COLUMN unificado_at TEXT"
+                    )
+            except Exception:
+                pass
 
     # ---------- unificaciones ----------
     def crear_grupo_unificacion(
