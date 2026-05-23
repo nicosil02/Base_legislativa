@@ -338,6 +338,14 @@ def load_proyectos(fec_inicio: dt.date | None, fec_fin: dt.date | None) -> pd.Da
                   ORDER BY orden ASC LIMIT 1),
                'https://proyectosdeley.asambleanacional.gob.ec/report?n=' || p.n_tramite
              ) || '#' || p.n_tramite AS "N. Trámite",
+             -- Unificacion: si el PL pertenece a un grupo, listamos los otros
+             -- miembros separados por coma. NULL si no esta unificado.
+             (SELECT GROUP_CONCAT(up2.n_tramite, ', ')
+                FROM unificacion_pl up1
+                JOIN unificacion_pl up2 ON up2.grupo_id = up1.grupo_id
+                                       AND up2.n_tramite != up1.n_tramite
+                WHERE up1.n_tramite = p.n_tramite
+             ) AS "Unificado con",
              p.titulo AS "Título",
              date(p.fec_presentacion) AS "Presentado",
              date(p.last_changed_at) AS "Último cambio",
@@ -544,6 +552,16 @@ if busqueda.strip():
     q = busqueda.strip().lower()
     df = df[df["Título"].astype(str).str.lower().str.contains(q, na=False)]
 
+# Filtro adicional: solo PLs unificados
+solo_unif = st.checkbox(
+    "Solo PLs unificados con otros",
+    value=False,
+    help="Filtra los proyectos que estan acumulados en un grupo de unificacion. "
+         "Use 'python -m scraper_ec.cli marcar-unificacion' para crear grupos.",
+)
+if solo_unif:
+    df = df[df["Unificado con"].notna() & (df["Unificado con"] != "")]
+
 st.markdown(f"##### {len(df):,} proyecto(s) de {len(df_full):,} en el rango")
 
 # Columnas visibles en la tabla principal
@@ -558,7 +576,7 @@ df_view["Proponente principal"] = (
 # como display_text.
 COLS_VISIBLES = ["N. Trámite", "_n_tramite_label", "Título", "Presentado",
                  "Estado", "Tipo proponente", "Proponente principal",
-                 "Comisión", "Tema"]
+                 "Comisión", "Tema", "Unificado con"]
 df_view = df_view[[c for c in COLS_VISIBLES if c in df_view.columns]]
 
 # CSS para wrap en celdas
@@ -602,6 +620,11 @@ tabla = st.dataframe(
         "Proponente principal": st.column_config.TextColumn("Proponente", width="small"),
         "Comisión":            st.column_config.TextColumn("Comisión", width="medium"),
         "Tema":                st.column_config.TextColumn("Tema", width="small"),
+        "Unificado con":       st.column_config.TextColumn(
+            "Unificado con", width="small",
+            help="Otros PLs del mismo grupo de unificacion. Vacio si el PL "
+                 "no esta unificado con ningun otro.",
+        ),
     },
 )
 
@@ -630,6 +653,34 @@ if selected_rows:
             (str(sel_tramite),),
         ).fetchall()
 
+        # Info de unificacion: si el PL pertenece a un grupo, traer datos
+        unif = conn.execute(
+            """SELECT g.id, g.nombre, g.descripcion, g.n_tramite_principal,
+                      GROUP_CONCAT(up2.n_tramite, ',') AS miembros
+               FROM unificacion_pl up
+               JOIN unificacion_grupos g ON g.id = up.grupo_id
+               JOIN unificacion_pl up2 ON up2.grupo_id = up.grupo_id
+               WHERE up.n_tramite = ?
+               GROUP BY g.id""",
+            (str(sel_tramite),),
+        ).fetchone()
+
+        # Badge de unificacion (HTML compacto)
+        unif_badge = ""
+        if unif:
+            miembros = [m for m in (unif["miembros"] or "").split(",") if m]
+            n_otros = len([m for m in miembros if m != str(sel_tramite)])
+            es_principal = unif["n_tramite_principal"] == str(sel_tramite)
+            label = "PRINCIPAL" if es_principal else "ACUMULADO"
+            color_bg = "#0A294D" if es_principal else "#F59E0B"
+            unif_badge = (
+                f'<div style="display:inline-block; padding:4px 10px; border-radius:6px; '
+                f'background:{color_bg}; color:#FFF; font-size:11px; font-weight:700; '
+                f'letter-spacing:0.08em; margin-bottom:10px; margin-right:8px;">'
+                f'⛓️ UNIFICADO ({n_otros + 1} PLs) · {label}'
+                f'</div>'
+            )
+
         st.markdown(
             f"""<div style="margin-top: 28px; padding: 24px 28px; border: 1px solid #CFD9E0;
                           border-radius: 12px; background: #FFFFFF;">
@@ -641,13 +692,44 @@ if selected_rows:
                        color: #0A294D; margin-bottom: 4px;">
               N. Trámite {sel_tramite}
             </div>
-            <div style="font-size: 0.95rem; color: #435D74; margin-bottom: 18px;
+            <div style="font-size: 0.95rem; color: #435D74; margin-bottom: 12px;
                        line-height: 1.4;">
               {sel_titulo}
             </div>
+            {unif_badge}
             </div>""",
             unsafe_allow_html=True,
         )
+
+        # Detalle del grupo de unificacion (si aplica)
+        if unif:
+            nombre = unif["nombre"] or "(sin nombre)"
+            miembros_list = [m for m in (unif["miembros"] or "").split(",") if m]
+            with st.expander(
+                f"⛓️ Grupo de unificación: {nombre} ({len(miembros_list)} PLs)",
+                expanded=False,
+            ):
+                if unif["descripcion"]:
+                    st.markdown(f"*{unif['descripcion']}*")
+                miembros_data = conn.execute(
+                    f"""SELECT n_tramite, titulo, estado
+                        FROM proyectos
+                        WHERE n_tramite IN ({','.join('?'*len(miembros_list))})""",
+                    miembros_list,
+                ).fetchall()
+                import pandas as _pd
+                df_miembros = _pd.DataFrame(
+                    [
+                        {
+                            "Es principal": "★" if m["n_tramite"] == unif["n_tramite_principal"] else "",
+                            "N. Trámite": m["n_tramite"],
+                            "Título": (m["titulo"] or "")[:160],
+                            "Estado": m["estado"] or "—",
+                        }
+                        for m in miembros_data
+                    ]
+                )
+                st.dataframe(df_miembros, hide_index=True, use_container_width=True)
 
         if not docs:
             st.info(
