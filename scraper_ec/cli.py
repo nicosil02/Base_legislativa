@@ -357,6 +357,80 @@ def cmd_recategorizar(args) -> int:
     return 0
 
 
+def cmd_marcar_unificacion(args) -> int:
+    """Crea un grupo de unificacion con los PLs dados.
+
+    Uso:
+      python -m scraper_ec.cli marcar-unificacion --pls 480824,480825,480826
+          --nombre "Reformas a Inquilinato"
+          --principal 480824   (opcional, default primero)
+    """
+    db = _db(args)
+    try:
+        n_tramites = [s.strip() for s in args.pls.split(",") if s.strip()]
+        if not n_tramites:
+            print("Error: --pls vacio")
+            return 1
+        # Validar que todos existan
+        existentes = {
+            r[0] for r in db.conn.execute(
+                f"SELECT n_tramite FROM proyectos WHERE n_tramite IN ({','.join('?'*len(n_tramites))})",
+                n_tramites,
+            )
+        }
+        no_existen = [n for n in n_tramites if n not in existentes]
+        if no_existen:
+            print(f"[warn] PLs no encontrados en la DB: {no_existen}")
+        validos = [n for n in n_tramites if n in existentes]
+        if not validos:
+            print("Error: ningun PL valido")
+            return 1
+        grupo_id = db.crear_grupo_unificacion(
+            n_tramites=validos,
+            nombre=args.nombre,
+            descripcion=args.descripcion,
+            n_tramite_principal=args.principal,
+        )
+        print(f"Grupo {grupo_id} creado con {len(validos)} PLs:")
+        for n in validos:
+            marca = " (principal)" if n == (args.principal or validos[0]) else ""
+            print(f"  - {n}{marca}")
+    finally:
+        db.close()
+    return 0
+
+
+def cmd_listar_unificaciones(args) -> int:
+    """Lista todos los grupos de unificacion con sus miembros."""
+    db = _db(args)
+    try:
+        grupos = db.listar_grupos_unificacion()
+        if not grupos:
+            print("No hay grupos de unificacion registrados.")
+            return 0
+        print(f"{len(grupos)} grupo(s) de unificacion:\n")
+        for g in grupos:
+            nombre = g.get("nombre") or "(sin nombre)"
+            print(f"  #{g['id']:3d}  [{g['n_pls']:2d} PLs]  {nombre}")
+            print(f"        principal: {g['n_tramite_principal']}")
+            print(f"        miembros: {g['miembros']}")
+            print(f"        source={g['source']}  created={g['created_at']}")
+            print()
+    finally:
+        db.close()
+    return 0
+
+
+def cmd_borrar_unificacion(args) -> int:
+    db = _db(args)
+    try:
+        db.borrar_grupo_unificacion(args.grupo_id)
+        print(f"Grupo {args.grupo_id} borrado.")
+    finally:
+        db.close()
+    return 0
+
+
 def cmd_export(args) -> int:
     db = _db(args)
     out_path = Path(args.out).resolve()
@@ -437,6 +511,30 @@ def main(argv: list[str] | None = None) -> int:
     s.set_defaults(func=cmd_enriquecer_documentos)
 
     sub.add_parser("recategorizar", help="Re-clasifica temas no marcados como manuales").set_defaults(func=cmd_recategorizar)
+
+    # ---------- unificaciones ----------
+    s = sub.add_parser(
+        "marcar-unificacion",
+        help="Crea un grupo de unificacion con N proyectos (manual).",
+    )
+    s.add_argument("--pls", required=True,
+                   help="N. tramites separados por coma. Ej: 480824,480825,480826")
+    s.add_argument("--nombre", help="Nombre descriptivo del grupo (opcional)")
+    s.add_argument("--descripcion", help="Descripcion mas larga (opcional)")
+    s.add_argument("--principal", help="N. tramite del PL principal (default: primero)")
+    s.set_defaults(func=cmd_marcar_unificacion)
+
+    sub.add_parser(
+        "listar-unificaciones",
+        help="Lista todos los grupos de unificacion con sus miembros.",
+    ).set_defaults(func=cmd_listar_unificaciones)
+
+    s = sub.add_parser(
+        "borrar-unificacion",
+        help="Borra un grupo de unificacion por su id.",
+    )
+    s.add_argument("grupo_id", type=int)
+    s.set_defaults(func=cmd_borrar_unificacion)
 
     s = sub.add_parser("export", help="Exporta a JSON")
     s.add_argument("--out", default="proyectos_ec.json")
