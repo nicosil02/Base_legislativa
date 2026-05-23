@@ -357,6 +357,102 @@ def cmd_recategorizar(args) -> int:
     return 0
 
 
+def cmd_importar_unificaciones(args) -> int:
+    """Importa grupos de unificacion desde un JSON (formato del scraping
+    del portal Ppless via Claude in Chrome). Cada item del array tiene:
+      - fecha_unif
+      - titulo
+      - n_tramite_principal  (codigo tipo AN-XXX-YYYY-NNNN-M)
+      - miembros  (lista de n_tramites numericos)
+      - comision
+      - estado
+    Crea un grupo por cada item, con n_tramite_principal como lider y
+    los miembros + el principal como integrantes. Source='portal'.
+    """
+    import json
+    from pathlib import Path
+    db = _db(args)
+    try:
+        path = Path(args.json_file).resolve()
+        if not path.exists():
+            print(f"Error: archivo no encontrado: {path}")
+            return 1
+        data = json.loads(path.read_text(encoding="utf-8"))
+        if not isinstance(data, list):
+            print(f"Error: JSON debe ser array. Got: {type(data).__name__}")
+            return 1
+
+        # Mapeo de n_tramites existentes en proyectos (para validar)
+        existentes = {
+            r[0] for r in db.conn.execute("SELECT n_tramite FROM proyectos")
+        }
+
+        # Borrar grupos source='portal' anteriores (re-import limpio)
+        if args.replace:
+            with db.tx() as c:
+                old_ids = [r[0] for r in c.execute(
+                    "SELECT id FROM unificacion_grupos WHERE source = 'portal'"
+                )]
+                if old_ids:
+                    c.execute(
+                        f"DELETE FROM unificacion_grupos WHERE id IN ({','.join('?'*len(old_ids))})",
+                        old_ids,
+                    )
+                    c.execute(
+                        f"DELETE FROM unificacion_pl WHERE grupo_id IN ({','.join('?'*len(old_ids))})",
+                        old_ids,
+                    )
+                    print(f"[replace] borrados {len(old_ids)} grupos source='portal' previos")
+
+        creados = 0
+        skipped = 0
+        miembros_total = 0
+        miembros_no_existentes = 0
+        for item in data:
+            principal = (item.get("n_tramite_principal") or "").strip()
+            miembros = [str(m).strip() for m in (item.get("miembros") or []) if str(m).strip()]
+            if not principal or not miembros:
+                skipped += 1
+                continue
+            # Lista completa: principal + miembros (deduplicado)
+            n_tramites = list(dict.fromkeys([principal] + miembros))
+            # Solo insertamos miembros que existan en proyectos (los demas
+            # se loguean pero no se incluyen — la FK fallaria)
+            n_validos = []
+            for n in n_tramites:
+                if n in existentes:
+                    n_validos.append(n)
+                else:
+                    miembros_no_existentes += 1
+            if len(n_validos) < 2:
+                # No tiene sentido un "grupo" de menos de 2 PLs validos
+                skipped += 1
+                continue
+            try:
+                db.crear_grupo_unificacion(
+                    n_tramites=n_validos,
+                    nombre=(item.get("titulo") or "")[:200],
+                    descripcion=f"Estado: {item.get('estado', '?')} | "
+                                f"Comision: {item.get('comision', '?')} | "
+                                f"Fecha unif: {item.get('fecha_unif', '?')}",
+                    n_tramite_principal=principal if principal in existentes else n_validos[0],
+                    source="portal",
+                )
+                creados += 1
+                miembros_total += len(n_validos)
+            except Exception as e:
+                print(f"[error] grupo {principal}: {e}")
+                skipped += 1
+
+        print(f"\n[importar] {creados} grupos creados, "
+              f"{miembros_total} memberships, "
+              f"{miembros_no_existentes} miembros no existian en proyectos (skipeados), "
+              f"{skipped} grupos skipeados (incompletos)")
+    finally:
+        db.close()
+    return 0
+
+
 def cmd_scrapear_unificados(args) -> int:
     """Abre el portal Ppless v2 con Playwright e itera todas las paginas
     para capturar el estado del checkbox 'Unificado' de cada PL. Actualiza
@@ -580,6 +676,16 @@ def main(argv: list[str] | None = None) -> int:
     sub.add_parser("recategorizar", help="Re-clasifica temas no marcados como manuales").set_defaults(func=cmd_recategorizar)
 
     # ---------- unificaciones ----------
+    s = sub.add_parser(
+        "importar-unificaciones",
+        help="Importa grupos de unificacion desde un JSON (scrapeado del portal "
+             "via Chrome MCP o navegacion manual).",
+    )
+    s.add_argument("json_file", help="Path al JSON con array de grupos")
+    s.add_argument("--replace", action="store_true",
+                   help="Borra grupos source='portal' previos antes de importar")
+    s.set_defaults(func=cmd_importar_unificaciones)
+
     s = sub.add_parser(
         "scrapear-unificados",
         help="Scrapea con Playwright la columna 'Unificado' del portal Ppless. "
