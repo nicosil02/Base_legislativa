@@ -160,6 +160,7 @@ def render_html(payload):
         "Ecuador &middot; Asamblea Nacional",
         payload.get("ecuador", {}),
         "Informes",
+        include_sesiones=True,
     )
 
     return (

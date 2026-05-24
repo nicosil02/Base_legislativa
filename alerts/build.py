@@ -210,6 +210,61 @@ def _peru_sesiones_proximas(conn, days_ahead=2):
     return out
 
 
+def _ecuador_sesiones_proximas(conn, days_ahead=2):
+    """Sesiones de la Asamblea Nacional EC para hoy + N dias siguientes.
+    Similar a _peru_sesiones_proximas pero usando tablas sesiones_ec /
+    sesion_ec_pl_referenciado."""
+    try:
+        conn.execute("SELECT 1 FROM sesiones_ec LIMIT 1")
+    except Exception:
+        return []
+    today = datetime.now(timezone.utc).date()
+    hasta = (today + timedelta(days=days_ahead)).isoformat()
+    desde = today.isoformat()
+    rows = conn.execute(
+        """SELECT s.uid, s.fecha, s.hora_inicio, s.hora_fin,
+                  s.nombre_comision, s.summary
+           FROM sesiones_ec s
+           WHERE s.fecha >= ? AND s.fecha <= ?
+           ORDER BY s.fecha, s.hora_inicio""",
+        (desde, hasta),
+    ).fetchall()
+    out = []
+    for r in rows:
+        pls = conn.execute(
+            """SELECT m.n_tramite, p.titulo, p.tema, p.estado
+               FROM sesion_ec_pl_referenciado m
+               LEFT JOIN proyectos p ON p.n_tramite = m.n_tramite
+               WHERE m.uid = ? AND m.n_tramite IS NOT NULL
+               ORDER BY m.score DESC""",
+            (r["uid"],),
+        ).fetchall()
+        # Limpiar "modalidad X" del summary
+        nombre = (r["summary"] or "").strip()
+        for tok in (", modalidad", " modalidad"):
+            idx = nombre.lower().find(tok)
+            if idx >= 0:
+                nombre = nombre[:idx].rstrip(" ,.;")
+                break
+        out.append({
+            "uid": r["uid"],
+            "fecha": r["fecha"],
+            "hora": r["hora_inicio"],
+            "comision": r["nombre_comision"] or "—",
+            "nombre": nombre,
+            "pls": [
+                {
+                    "n_tramite": pl["n_tramite"],
+                    "titulo": pl["titulo"],
+                    "tema": pl["tema"] or "Otros",
+                    "estado": pl["estado"],
+                }
+                for pl in pls
+            ],
+        })
+    return out
+
+
 def build_alert(now=None, window_hours=24, db_pe_path=None, db_ec_path=None,
                 sesiones_days_ahead=2, since_iso=None):
     """Construye el payload de la alerta.
@@ -230,7 +285,7 @@ def build_alert(now=None, window_hours=24, db_pe_path=None, db_ec_path=None,
         "fecha": now.strftime("%Y-%m-%d"),
         "since": since_iso,
         "peru":    {"dictamenes": [], "proyectos": [], "sesiones_proximas": []},
-        "ecuador": {"dictamenes": [], "proyectos": []},
+        "ecuador": {"dictamenes": [], "proyectos": [], "sesiones_proximas": []},
     }
 
     db_pe = db_pe_path or _find_db_file("proyectos.db")
@@ -255,6 +310,9 @@ def build_alert(now=None, window_hours=24, db_pe_path=None, db_ec_path=None,
             try:
                 payload["ecuador"]["dictamenes"] = _ecuador_new_dictamenes(conn, since_iso)
                 payload["ecuador"]["proyectos"] = _ecuador_new_pls(conn, since_iso)
+                payload["ecuador"]["sesiones_proximas"] = _ecuador_sesiones_proximas(
+                    conn, days_ahead=sesiones_days_ahead
+                )
             finally:
                 conn.close()
         except Exception as e:
@@ -270,11 +328,14 @@ def has_content(payload):
         for section in ("dictamenes", "proyectos")
     ):
         return True
-    # Sesiones proximas con al menos 1 PL en agenda tambien cuentan como contenido
-    return any(
-        len(s.get("pls") or []) > 0
-        for s in payload.get("peru", {}).get("sesiones_proximas", []) or []
-    )
+    # Sesiones proximas con al menos 1 PL en agenda (en cualquier pais) cuentan
+    for country in ("peru", "ecuador"):
+        if any(
+            len(s.get("pls") or []) > 0
+            for s in payload.get(country, {}).get("sesiones_proximas", []) or []
+        ):
+            return True
+    return False
 
 
 def count_items(payload):
@@ -284,7 +345,9 @@ def count_items(payload):
         for section in ("dictamenes", "proyectos")
     )
     sesiones_con_pls = sum(
-        1 for s in payload.get("peru", {}).get("sesiones_proximas", []) or []
+        1
+        for country in ("peru", "ecuador")
+        for s in payload.get(country, {}).get("sesiones_proximas", []) or []
         if (s.get("pls") or [])
     )
     return base + sesiones_con_pls

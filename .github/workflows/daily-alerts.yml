@@ -2,13 +2,19 @@ name: Alertas diarias Radar Legislativo
 
 on:
   schedule:
-    # GH Actions cron tiene atraso 0-3h. Disparamos temprano para que con
-    # atraso llegue cerca de 9 AM Lima.
-    #   11 UTC (6 AM Lima) + ~2-3h atraso = 8-9 AM Lima
-    # already_sent_today previene duplicados. Si este workflow falla,
-    # refrescar-pe.yml envia la alerta como backup en su corrida de
-    # 13 UTC (que tambien llega cerca de 8-9 AM Lima con atraso).
-    - cron: '0 11 * * *'
+    # Triple-trigger para maximizar probabilidad de llegada cerca de 9 AM Lima.
+    # GH Actions cron atrasa 0-3h aleatorio. already_sent_today previene
+    # duplicados: el primero que llegue envia, los demas son no-ops.
+    #
+    #   12 UTC (7 AM Lima) + 0-3h atraso = 7-10 AM Lima  ← primer intento
+    #   13 UTC (8 AM Lima) + 0-3h atraso = 8-11 AM Lima  ← retry
+    #   14 UTC (9 AM Lima) + 0-3h atraso = 9-12 PM Lima  ← ultimo retry
+    #
+    # En la practica casi siempre llega entre 8-10 AM Lima. Si los 3 fallan,
+    # refrescar-pe.yml envia como backup en su corrida de 13 UTC.
+    - cron: '0 12 * * *'
+    - cron: '0 13 * * *'
+    - cron: '0 14 * * *'
   workflow_dispatch:
     inputs:
       slot:
