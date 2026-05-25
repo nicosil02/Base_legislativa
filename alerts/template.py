@@ -111,21 +111,77 @@ def _sesiones_proximas_html(sesiones):
     return "".join(chunks)
 
 
+def _mesas_proximas_html(mesas):
+    """Bloque con mesas de trabajo + eventos del Congreso PE proximos.
+    Formato compacto: tipo + tema + organiza + hora + lugar."""
+    if not mesas:
+        return ""
+    chunks = [
+        '<h2 style="margin:24px 0 4px 0;font-size:18px;font-weight:800;'
+        'color:#0A294D;letter-spacing:-0.015em;'
+        'font-family:Inter,Segoe UI,Arial,sans-serif;">Mesas de trabajo + eventos</h2>'
+        '<p style="margin:0 0 12px 0;font-size:12px;color:#869FB2;'
+        'font-family:Inter,Segoe UI,Arial,sans-serif;">'
+        'Convocatorias publicadas por congresistas/comisiones — no aparecen '
+        'en el visor de sesiones formales.</p>'
+    ]
+    for m in mesas[:25]:  # cap a 25 mesas en el correo
+        tipo = _escape(m.get("tipo") or "Evento")
+        tema = _escape((m.get("tema") or "")[:160])
+        fecha = _escape(m.get("fecha") or "")
+        hora = _escape(m.get("hora") or "")
+        organiza = _escape(m.get("congresista") or m.get("organiza") or "")
+        bancada = _escape(m.get("bancada") or "")
+        comision = _escape(m.get("comision") or "")
+        lugar = _escape((m.get("lugar") or "")[:120])
+        url = _escape(m.get("url") or "#")
+        chunks.append(
+            '<table cellpadding="0" cellspacing="0" border="0" width="100%" '
+            'style="margin:8px 0 10px 0;font-family:Inter,Segoe UI,Arial,sans-serif;">'
+            '<tr><td valign="top" width="14" style="padding-top:6px;">'
+            f'<span style="display:inline-block;width:8px;height:8px;'
+            f'border-radius:50%;background:#7C3AED;"></span>'
+            '</td><td valign="top" style="padding-left:6px;">'
+            f'<div style="font-size:12px;color:#7C3AED;font-weight:700;'
+            f'text-transform:uppercase;letter-spacing:0.06em;">{tipo}</div>'
+            f'<a href="{url}" target="_blank" rel="noopener" '
+            f'style="font-size:14px;font-weight:700;color:#0A294D;'
+            f'text-decoration:none;line-height:1.3;display:block;margin-top:2px;">'
+            f'{tema}</a>'
+            f'<div style="font-size:12px;color:#435D74;margin-top:4px;">'
+            f'{fecha} · {hora}'
+            + (f' · {organiza}' if organiza else '')
+            + (f' <span style="color:#869FB2;">({bancada})</span>' if bancada else '')
+            + '</div>'
+            + (f'<div style="font-size:11px;color:#869FB2;margin-top:2px;">'
+               f'{comision}</div>' if comision else '')
+            + (f'<div style="font-size:11px;color:#869FB2;margin-top:2px;">'
+               f'📍 {lugar}</div>' if lugar else '')
+            + '</td></tr></table>'
+        )
+    if len(mesas) > 25:
+        chunks.append(
+            f'<p style="margin:4px 0 0 18px;font-size:12px;color:#869FB2;'
+            f'font-family:Inter,Segoe UI,Arial,sans-serif;">'
+            f'... y {len(mesas)-25} mesa(s)/evento(s) más.</p>'
+        )
+    return "".join(chunks)
+
+
 def _country_section(country_label, country_data, label_dictamenes,
-                     include_sesiones=False):
+                     include_sesiones=False, include_mesas=False):
     """Renderiza la seccion de un pais: header + dictamenes + proyectos.
 
-    Ambas subsecciones SIEMPRE se renderizan (con placeholder si estan vacias)
-    para que cada email tenga la misma estructura predecible.
-
-    Si include_sesiones=True, suma un bloque de "Proximas sesiones con PLs"
-    despues de los proyectos.
+    Si include_sesiones=True, suma un bloque de "Proximas sesiones con PLs".
+    Si include_mesas=True, suma un bloque de "Mesas de trabajo + eventos".
     """
     dictamenes = country_data.get("dictamenes", [])
     proyectos = country_data.get("proyectos", [])
     sesiones = country_data.get("sesiones_proximas", []) if include_sesiones else []
+    mesas = country_data.get("mesas_proximas", []) if include_mesas else []
 
     sesiones_block = _sesiones_proximas_html(sesiones) if sesiones else ""
+    mesas_block = _mesas_proximas_html(mesas) if mesas else ""
 
     return (
         '<table cellpadding="0" cellspacing="0" border="0" width="100%" '
@@ -145,6 +201,7 @@ def _country_section(country_label, country_data, label_dictamenes,
         f'font-family:Inter,Segoe UI,Arial,sans-serif;">{label_dictamenes}</h2>'
         + _items_html(dictamenes, DOT_DICTAMEN)
         + sesiones_block
+        + mesas_block
     )
 
 
@@ -155,6 +212,7 @@ def render_html(payload):
         payload.get("peru", {}),
         "Dictamenes",
         include_sesiones=True,
+        include_mesas=True,
     )
     ec_html = _country_section(
         "Ecuador &middot; Asamblea Nacional",
