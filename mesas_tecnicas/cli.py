@@ -114,6 +114,7 @@ def build_parser() -> argparse.ArgumentParser:
                     help="no leer /agenda/ del dia (skip merge de hora real)")
     sy.set_defaults(func=cmd_sync)
 
+
     ls = sub.add_parser("list", help="lista los items")
     ls.add_argument("--desde", help="YYYY-MM-DD")
     ls.add_argument("--limit", type=int, default=30)
