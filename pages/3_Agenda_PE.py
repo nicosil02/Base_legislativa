@@ -1025,15 +1025,8 @@ def load_mesas(limit: int = 80) -> pd.DataFrame:
         conn, params=(limit,),
     )
 
-    # Convertir pub_date RFC822 ("Thu, 21 May 2026 13:00:00 +0000") a ISO
-    # y preferir fecha del evento cuando esta presente.
-    MES_ES = {
-        "01": "enero", "02": "febrero", "03": "marzo", "04": "abril",
-        "05": "mayo", "06": "junio", "07": "julio", "08": "agosto",
-        "09": "septiembre", "10": "octubre", "11": "noviembre", "12": "diciembre",
-    }
+    # Fecha en formato ISO YYYY-MM-DD, mismo que el resto de la app.
     def _safe_str(v) -> str:
-        """Convierte cualquier valor (incluyendo NaN, None) a string seguro."""
         if v is None:
             return ""
         try:
@@ -1043,30 +1036,26 @@ def load_mesas(limit: int = 80) -> pd.DataFrame:
             pass
         return str(v)
 
-    def _fmt_fecha_es(fecha_iso, pub_date) -> str:
-        # Preferir fecha del evento (formato YYYY-MM-DD)
+    def _fmt_fecha_iso(fecha_iso, pub_date) -> str:
+        # Preferir fecha del evento (ya en YYYY-MM-DD)
         iso = _safe_str(fecha_iso)[:10]
+        if iso and len(iso) == 10:
+            return iso
         pub = _safe_str(pub_date)
-        if not iso and pub:
+        if pub:
             # Parse RFC822: "Thu, 21 May 2026 13:00:00 +0000"
             try:
                 dt = _dt.datetime.strptime(
                     pub[:25].strip(),
                     "%a, %d %b %Y %H:%M:%S",
                 )
-                iso = dt.strftime("%Y-%m-%d")
+                return dt.strftime("%Y-%m-%d")
             except Exception:
-                iso = pub[:10]
-        if not iso or len(iso) < 10:
-            return ""
-        try:
-            y, m, d = iso.split("-")
-            return f"{int(d):d} de {MES_ES.get(m, m)} de {y}"
-        except Exception:
-            return iso
+                return pub[:10]
+        return ""
 
     df["Fecha"] = df.apply(
-        lambda r: _fmt_fecha_es(r["fecha"], r["pub_date"]), axis=1
+        lambda r: _fmt_fecha_iso(r["fecha"], r["pub_date"]), axis=1
     )
     df["Hora"] = df["hora"].fillna("")
     df["Tipo"] = df["tipo"]

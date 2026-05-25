@@ -300,20 +300,44 @@ def run_sync(db, *, max_pages_rss: int = 5, fetch_details: bool = True,
     session = requests.Session()
     session.headers.update(HEADERS)
 
-    # Mapa titulo -> hora/fecha del listado de hoy (para merge)
-    listado_hoy = {}
+    # Lista de eventos del listado de hoy (para merge por substring matching).
+    # No es dict porque el matching no es exacto — buscamos texto entre comillas
+    # del post dentro del texto del listado.
+    eventos_hoy: list[dict] = []
     if include_listing_hoy:
         try:
             eventos_hoy = fetch_listing_hoy(session=session)
-            for ev in eventos_hoy:
-                # Usar el inicio del tema como key (las primeras 80 chars)
-                key = (ev.get("tema") or "")[:80].strip().lower()
-                if key:
-                    listado_hoy[key] = ev
             log.info("listado /agenda/ del dia: %d eventos", len(eventos_hoy))
         except Exception as e:
             log.warning("no pude leer /agenda/ del dia: %s", e)
             stats["errores"] += 1
+
+    def _normalize_for_match(s: str) -> str:
+        """Normaliza un texto para matching: lowercase, sin comillas
+        curvas, sin doble espacio. Mantiene solo lo esencial."""
+        if not s:
+            return ""
+        # Reemplazar comillas curvas/rectas por nada
+        s = s.replace("“", "").replace("”", "")  # " "
+        s = s.replace("‘", "").replace("’", "")  # ' '
+        s = s.replace('"', "").replace("'", "")
+        s = re.sub(r"\s+", " ", s).strip().lower()
+        return s
+
+    def _find_match(tema_post: str) -> dict | None:
+        """Busca un evento del listado_hoy cuyo tema contenga el del post.
+        Retorna el evento si hay match, None si no."""
+        norm_post = _normalize_for_match(tema_post)
+        if not norm_post or len(norm_post) < 20:  # texto muy corto = match poco confiable
+            return None
+        for ev in eventos_hoy:
+            norm_ev = _normalize_for_match(ev.get("tema") or "")
+            if norm_post in norm_ev or norm_ev.endswith(norm_post):
+                return ev
+            # Fallback: si la primera mitad del post esta en el listado, match
+            if len(norm_post) >= 40 and norm_post[:40] in norm_ev:
+                return ev
+        return None
 
     # Iterar RSS
     for paged in range(1, max_pages_rss + 1):
@@ -349,12 +373,15 @@ def run_sync(db, *, max_pages_rss: int = 5, fetch_details: bool = True,
                     stats["errores"] += 1
                     continue
 
-            # Mergear con listado de hoy (matching por tema)
-            tema = (row.get("tema") or "")[:80].strip().lower()
-            if tema in listado_hoy:
-                ev = listado_hoy[tema]
-                row.setdefault("fecha", ev.get("fecha"))
-                row.setdefault("hora", ev.get("hora"))
+            # Mergear con listado de hoy: substring match (el listado tiene
+            # "Mesa de trabajo 'X'" y el post solo "'X'"). Buscamos el post
+            # dentro del listado del dia.
+            ev = _find_match(row.get("tema") or "")
+            if ev:
+                row["hora"] = ev.get("hora")
+                # Solo poner fecha si no la teniamos del post
+                if not row.get("fecha"):
+                    row["fecha"] = ev.get("fecha")
                 if not row.get("lugar"):
                     row["lugar"] = ev.get("lugar")
 
