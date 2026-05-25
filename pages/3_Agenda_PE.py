@@ -1062,12 +1062,20 @@ def load_mesas(limit: int = 80) -> pd.DataFrame:
     df["Tema"] = df["tema"]
     # Quitar prefijo "Congresista " del organiza
     df["Organiza"] = df["organiza_raw"].apply(
-        lambda s: _re.sub(r"^\s*congresista\s+", "", str(s or ""),
+        lambda s: _re.sub(r"^\s*congresista\s+", "", _safe_str(s),
                           flags=_re.IGNORECASE)
     )
-    df["Bancada"] = df["bancada"]
+    # Quitar prefijo "Grupo Parlamentario " de la bancada
+    df["Bancada"] = df["bancada"].apply(
+        lambda s: _re.sub(r"^\s*grupo\s+parlamentario\s+", "",
+                          _safe_str(s), flags=_re.IGNORECASE)
+    )
     df["Comisión"] = df["comision"]
     df["Enlace"] = df["url"]
+    # Sort final por fecha DESC (la SQL puede no haber ordenado bien por
+    # pub_date RFC822 vs fecha ISO mezclados). Re-ordenamos sobre Fecha
+    # calculada que ya esta en ISO consistente.
+    df = df.sort_values("Fecha", ascending=False, kind="stable").reset_index(drop=True)
     # Devolver solo las cols finales en el orden deseado
     return df[["Fecha", "Hora", "Tipo", "Tema", "Organiza", "Bancada",
                 "Comisión", "Enlace"]]
