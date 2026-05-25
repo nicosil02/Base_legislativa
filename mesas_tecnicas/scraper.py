@@ -247,28 +247,54 @@ def fetch_post_detail(url: str,
 # ---------- Parser del listado para fecha+hora ----------
 
 def fetch_listing_hoy(session: requests.Session | None = None) -> list[dict]:
-    """Lee /agenda/ (filtra al dia actual por default del site) y devuelve
-    una lista de eventos con fecha+hora+tema+organiza+lugar.
+    """Lee /agenda/ (dia actual por default) y devuelve eventos."""
+    return _fetch_listing_url(f"{BASE}/agenda/", session=session)
 
-    Util como complemento del RSS porque tiene la HORA del evento real
-    (no la del post)."""
+
+def fetch_listing_dia(fecha_iso: str,
+                       session: requests.Session | None = None) -> list[dict]:
+    """Lee /agenda/YYYY/M/D/ (URL especifica de WordPress) y devuelve
+    eventos de ese dia. Aunque la respuesta HTTP es 404, el body si
+    contiene la data correcta — el portal renderea la pagina pero con
+    status 404 (peculiaridad de su WP).
+
+    fecha_iso: 'YYYY-MM-DD'
+    """
+    try:
+        y, m, d = fecha_iso.split("-")
+        # WordPress espera mes/dia SIN zero-padding en el path
+        url = f"{BASE}/agenda/{int(y)}/{int(m)}/{int(d)}/"
+    except (ValueError, AttributeError):
+        return []
+    return _fetch_listing_url(url, fecha_iso_hint=fecha_iso, session=session)
+
+
+def _fetch_listing_url(url: str,
+                       fecha_iso_hint: str | None = None,
+                       session: requests.Session | None = None) -> list[dict]:
+    """Helper interno: fetch + parse del listado en una URL dada.
+
+    Ignora status 404 (WordPress devuelve 404 para URLs por fecha pero
+    igual renderea el contenido correcto en el body)."""
     s = session or requests.Session()
     s.headers.update(HEADERS)
-    r = s.get(f"{BASE}/agenda/", timeout=20)
-    r.raise_for_status()
+    r = s.get(url, timeout=20)
+    if r.status_code not in (200, 404):
+        r.raise_for_status()
     txt = _strip_html(r.text)
-    # Fecha
-    m_f = _LISTING_FECHA.search(txt)
-    fecha_iso = None
-    if m_f:
-        dia = int(m_f.group(2))
-        mes = MES_NUM.get(m_f.group(3).lower(), 0)
-        if mes:
-            year = datetime.now(timezone.utc).year
-            try:
-                fecha_iso = f"{year:04d}-{mes:02d}-{dia:02d}"
-            except Exception:
-                pass
+    # Fecha del header
+    fecha_iso = fecha_iso_hint
+    if not fecha_iso:
+        m_f = _LISTING_FECHA.search(txt)
+        if m_f:
+            dia = int(m_f.group(2))
+            mes = MES_NUM.get(m_f.group(3).lower(), 0)
+            if mes:
+                year = datetime.now(timezone.utc).year
+                try:
+                    fecha_iso = f"{year:04d}-{mes:02d}-{dia:02d}"
+                except Exception:
+                    pass
     eventos = []
     for m in _LISTING_EVENT.finditer(txt):
         eventos.append({
@@ -279,6 +305,150 @@ def fetch_listing_hoy(session: requests.Session | None = None) -> list[dict]:
             "lugar": m.group("lugar").strip(),
         })
     return eventos
+
+
+# ---------- Sync de horas por ventana de dias ----------
+
+def _normalize_for_match(s: str) -> str:
+    if not s:
+        return ""
+    s = s.replace("“", "").replace("”", "")
+    s = s.replace("‘", "").replace("’", "")
+    s = s.replace('"', "").replace("'", "")
+    s = re.sub(r"\s+", " ", s).strip().lower()
+    return s
+
+
+def run_sync_dias(db, *, days_back: int = 7, days_fwd: int = 14) -> dict:
+    """Itera dias [hoy-back, hoy+fwd] y enriquece mesas existentes con
+    hora/fecha/lugar. Tambien crea nuevos registros si encuentra eventos
+    que no tienen contraparte en el RSS (eventos pasados o muy futuros).
+
+    Para los eventos sin url al post individual (no estan en el RSS),
+    creamos una URL sintetica: "synthetic://YYYY-MM-DD/HH:MM/<hash>".
+    """
+    from datetime import date, timedelta
+    import hashlib
+
+    stats = {"dias": 0, "eventos": 0, "actualizados": 0, "nuevos": 0,
+             "errores": 0}
+
+    today = date.today()
+    fechas = [today + timedelta(days=d)
+              for d in range(-days_back, days_fwd + 1)]
+
+    # Cargar todas las mesas existentes para matching por tema
+    rows = db.conn.execute(
+        "SELECT url, tema FROM mesas_tecnicas WHERE tema IS NOT NULL"
+    ).fetchall()
+    mesa_index = {}
+    for r in rows:
+        norm = _normalize_for_match(r["tema"])
+        if norm and len(norm) >= 15:
+            mesa_index[norm] = r["url"]
+
+    session = requests.Session()
+    session.headers.update(HEADERS)
+
+    for f in fechas:
+        iso = f.isoformat()
+        try:
+            eventos = fetch_listing_dia(iso, session=session)
+        except Exception as e:
+            log.warning("dia %s fallo: %s", iso, e)
+            stats["errores"] += 1
+            continue
+        stats["dias"] += 1
+        if not eventos:
+            continue
+        stats["eventos"] += len(eventos)
+        log.info("[%s] %d eventos", iso, len(eventos))
+
+        for ev in eventos:
+            norm_ev = _normalize_for_match(ev.get("tema") or "")
+            if not norm_ev:
+                continue
+            # Buscar match en index existente
+            matched_url = None
+            for norm_mesa, url in mesa_index.items():
+                if norm_mesa in norm_ev or norm_ev.endswith(norm_mesa):
+                    matched_url = url
+                    break
+                if len(norm_mesa) >= 40 and norm_mesa[:40] in norm_ev:
+                    matched_url = url
+                    break
+
+            # Parsear organiza para extraer congresista/bancada
+            organiza_txt = ev.get("organiza") or ""
+            congresista = None
+            bancada = None
+            comision = None
+            m_pres = re.search(
+                r"(?:presidenta|presidente):\s*(.+?)(?:\.|$|\s+y\s+)",
+                organiza_txt, re.IGNORECASE,
+            )
+            if m_pres:
+                # Lo que sigue a "Presidenta:" es congresista (Bancada)
+                resto = m_pres.group(1).strip()
+                m_b = re.search(r"\((.*?)\)", resto)
+                if m_b:
+                    bancada = m_b.group(1).strip()
+                    congresista = resto.split("(", 1)[0].strip()
+                else:
+                    congresista = resto
+            else:
+                # Quizas sea "Congresista X (Bancada)" sin "Presidenta:"
+                m_b = re.search(r"\((.*?)\)", organiza_txt)
+                if m_b:
+                    bancada = m_b.group(1).strip()
+                    congresista = organiza_txt.split("(", 1)[0].strip()
+                    congresista = re.sub(r"^\s*congresista\s+", "",
+                                          congresista, flags=re.IGNORECASE).strip()
+            # Comision: si el texto menciona "Comision" antes del congresista
+            m_com = re.search(r"\b(Comisi[óo]n[^.]*?)(?:\s+Presidenta|\s+Presidente|$)",
+                               organiza_txt, re.IGNORECASE)
+            if m_com:
+                comision = m_com.group(1).strip().rstrip(".,;")
+
+            row = {
+                "tipo": ev.get("tipo", "Otro"),
+                "tema": ev.get("tema"),
+                "fecha": ev.get("fecha"),
+                "hora": ev.get("hora"),
+                "organiza": organiza_txt,
+                "congresista": congresista,
+                "bancada": bancada,
+                "comision": comision,
+                "lugar": ev.get("lugar"),
+            }
+
+            if matched_url:
+                # Actualizar registro existente
+                row["url"] = matched_url
+                try:
+                    is_new, changed = db.upsert(row)
+                    if changed:
+                        stats["actualizados"] += 1
+                except Exception as e:
+                    log.warning("update fallo: %s", e)
+                    stats["errores"] += 1
+            else:
+                # Crear nuevo registro con URL sintetica (no esta en RSS)
+                h = hashlib.md5(
+                    f"{iso}|{ev.get('hora')}|{norm_ev[:80]}".encode()
+                ).hexdigest()[:12]
+                row["url"] = f"synthetic://{iso}/{ev.get('hora','')}/{h}"
+                row["titulo"] = (ev.get("tema") or "")[:200]
+                try:
+                    is_new, _ = db.upsert(row)
+                    if is_new:
+                        stats["nuevos"] += 1
+                        # Agregar al index para evitar duplicar en el mismo run
+                        mesa_index[norm_ev[:200]] = row["url"]
+                except Exception as e:
+                    log.warning("insert fallo: %s", e)
+                    stats["errores"] += 1
+    return stats
 
 
 # ---------- Sync principal ----------

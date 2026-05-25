@@ -54,6 +54,21 @@ def cmd_sync(args) -> int:
     return 0
 
 
+def cmd_sync_dias(args) -> int:
+    """Itera dias y enriquece horas usando URL directa /agenda/Y/M/D/.
+    No requiere Playwright — HTTP simple."""
+    from mesas_tecnicas.scraper import run_sync_dias
+    with Database(args.db) as db:
+        db.init_schema()
+        stats = run_sync_dias(
+            db,
+            days_back=args.days_back,
+            days_fwd=args.days_fwd,
+        )
+        print(f"\n[sync-dias] stats: {stats}")
+    return 0
+
+
 def cmd_list(args) -> int:
     with Database(args.db) as db:
         sql = "SELECT * FROM mesas_tecnicas WHERE 1=1"
@@ -114,6 +129,12 @@ def build_parser() -> argparse.ArgumentParser:
                     help="no leer /agenda/ del dia (skip merge de hora real)")
     sy.set_defaults(func=cmd_sync)
 
+
+    sd = sub.add_parser("sync-dias",
+        help="itera dias usando URL directa /agenda/Y/M/D (sin Playwright)")
+    sd.add_argument("--days-back", type=int, default=14)
+    sd.add_argument("--days-fwd", type=int, default=21)
+    sd.set_defaults(func=cmd_sync_dias)
 
     ls = sub.add_parser("list", help="lista los items")
     ls.add_argument("--desde", help="YYYY-MM-DD")

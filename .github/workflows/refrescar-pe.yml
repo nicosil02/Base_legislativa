@@ -129,12 +129,17 @@ jobs:
 
       - name: Actualizar mesas de trabajo + eventos del Congreso PE
         run: |
-          # Scrapea comunicaciones.congreso.gob.pe/agenda/ (WordPress) via
-          # RSS feed + parse de cada post individual. Captura mesas de
-          # trabajo, ceremonias, eventos puntuales — convocados por
-          # congresistas individuales o comisiones especificas, que NO
-          # aparecen en la API visor-sesiones. Sync incremental, ~30 seg.
-          timeout 300 python -X utf8 -m mesas_tecnicas.cli sync --pages 5 || echo "[warn] mesas_tecnicas sync fallo, sigo"
+          # 1) RSS feed: captura los ultimos posts publicados con URL real
+          #    (para tener el enlace al post individual completo)
+          timeout 300 python -X utf8 -m mesas_tecnicas.cli sync --pages 5 \
+              || echo "[warn] mesas_tecnicas sync RSS fallo, sigo"
+          # 2) Listado por dia: itera /agenda/YYYY/M/D/ para los ultimos
+          #    14 dias y 21 dias futuros, capturando HORA real de cada
+          #    evento. Reemplaza el approach con date input JS que no
+          #    funcionaba. ~30 seg.
+          timeout 300 python -X utf8 -m mesas_tecnicas.cli sync-dias \
+              --days-back 14 --days-fwd 21 \
+              || echo "[warn] mesas_tecnicas sync-dias fallo, sigo"
 
       - name: Reclasificar PLs en "Otros" con alta confianza
         run: |
