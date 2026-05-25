@@ -1003,24 +1003,73 @@ def has_mesas_table() -> bool:
 
 @st.cache_data(ttl=60)
 def load_mesas(limit: int = 80) -> pd.DataFrame:
+    """Carga mesas + eventos con campos ya normalizados para display."""
+    import datetime as _dt
+    import re as _re
     conn = get_conn()
-    return pd.read_sql_query(
+    df = pd.read_sql_query(
         """SELECT
-             COALESCE(fecha, substr(pub_date, 1, 10), '') AS "Fecha",
-             COALESCE(hora, '') AS "Hora",
-             tipo AS "Tipo",
-             tema AS "Tema",
-             COALESCE(congresista, organiza, '') AS "Organiza",
-             COALESCE(bancada, '') AS "Bancada",
-             COALESCE(comision, '') AS "Comisión",
-             COALESCE(lugar, '') AS "Lugar",
-             url AS "_url"
+             fecha,
+             pub_date,
+             hora,
+             tipo,
+             tema,
+             COALESCE(congresista, organiza, '') AS organiza_raw,
+             COALESCE(bancada, '') AS bancada,
+             COALESCE(comision, '') AS comision,
+             url
            FROM mesas_tecnicas
            ORDER BY COALESCE(fecha, substr(pub_date, 1, 10)) DESC,
                     pub_date DESC
            LIMIT ?""",
         conn, params=(limit,),
     )
+
+    # Convertir pub_date RFC822 ("Thu, 21 May 2026 13:00:00 +0000") a ISO
+    # y preferir fecha del evento cuando esta presente.
+    MES_ES = {
+        "01": "enero", "02": "febrero", "03": "marzo", "04": "abril",
+        "05": "mayo", "06": "junio", "07": "julio", "08": "agosto",
+        "09": "septiembre", "10": "octubre", "11": "noviembre", "12": "diciembre",
+    }
+    def _fmt_fecha_es(fecha_iso: str, pub_date: str) -> str:
+        # Preferir fecha del evento (formato YYYY-MM-DD)
+        iso = (fecha_iso or "")[:10]
+        if not iso and pub_date:
+            # Parse RFC822: "Thu, 21 May 2026 13:00:00 +0000"
+            try:
+                dt = _dt.datetime.strptime(
+                    pub_date[:25].strip(),
+                    "%a, %d %b %Y %H:%M:%S",
+                )
+                iso = dt.strftime("%Y-%m-%d")
+            except Exception:
+                iso = pub_date[:10]
+        if not iso or len(iso) < 10:
+            return ""
+        try:
+            y, m, d = iso.split("-")
+            return f"{int(d):d} de {MES_ES.get(m, m)} de {y}"
+        except Exception:
+            return iso
+
+    df["Fecha"] = df.apply(
+        lambda r: _fmt_fecha_es(r["fecha"], r["pub_date"]), axis=1
+    )
+    df["Hora"] = df["hora"].fillna("")
+    df["Tipo"] = df["tipo"]
+    df["Tema"] = df["tema"]
+    # Quitar prefijo "Congresista " del organiza
+    df["Organiza"] = df["organiza_raw"].apply(
+        lambda s: _re.sub(r"^\s*congresista\s+", "", str(s or ""),
+                          flags=_re.IGNORECASE)
+    )
+    df["Bancada"] = df["bancada"]
+    df["Comisión"] = df["comision"]
+    df["Enlace"] = df["url"]
+    # Devolver solo las cols finales en el orden deseado
+    return df[["Fecha", "Hora", "Tipo", "Tema", "Organiza", "Bancada",
+                "Comisión", "Enlace"]]
 
 
 if has_mesas_table():
@@ -1042,21 +1091,25 @@ if has_mesas_table():
         st.markdown(f'<p style="font-size:13px;color:var(--ink-soft);">'
                     f'{len(df_mesas):,} eventos recientes</p>',
                     unsafe_allow_html=True)
-        df_view = df_mesas.drop(columns=["_url"]).copy()
         st.dataframe(
-            df_view,
+            df_mesas,
             hide_index=True,
             use_container_width=True,
             height=420,
             column_config={
-                "Fecha":    st.column_config.TextColumn("Fecha", width="small"),
+                "Fecha":    st.column_config.TextColumn("Fecha", width="medium"),
                 "Hora":     st.column_config.TextColumn("Hora", width="small"),
                 "Tipo":     st.column_config.TextColumn("Tipo", width="small"),
                 "Tema":     st.column_config.TextColumn("Tema", width="large"),
                 "Organiza": st.column_config.TextColumn("Organiza", width="medium"),
                 "Bancada":  st.column_config.TextColumn("Bancada", width="small"),
                 "Comisión": st.column_config.TextColumn("Comisión", width="medium"),
-                "Lugar":    st.column_config.TextColumn("Lugar", width="medium"),
+                "Enlace":   st.column_config.LinkColumn(
+                    "Enlace",
+                    width="small",
+                    display_text="Ver noticia ↗",
+                    help="Abre la convocatoria publicada en comunicaciones.congreso.gob.pe",
+                ),
             },
         )
 
