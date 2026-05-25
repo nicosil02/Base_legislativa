@@ -127,6 +127,15 @@ jobs:
           # jueves nuevo + cualquier actualizacion.
           timeout 900 python -X utf8 -m pleno.cli update --periodo 2021-2026 || echo "[warn] pleno sync fallo, sigo"
 
+      - name: Actualizar mesas de trabajo + eventos del Congreso PE
+        run: |
+          # Scrapea comunicaciones.congreso.gob.pe/agenda/ (WordPress) via
+          # RSS feed + parse de cada post individual. Captura mesas de
+          # trabajo, ceremonias, eventos puntuales — convocados por
+          # congresistas individuales o comisiones especificas, que NO
+          # aparecen en la API visor-sesiones. Sync incremental, ~30 seg.
+          timeout 300 python -X utf8 -m mesas_tecnicas.cli sync --pages 5 || echo "[warn] mesas_tecnicas sync fallo, sigo"
+
       - name: Reclasificar PLs en "Otros" con alta confianza
         run: |
           # Usa el modelo entrenado en models/clasificador_pe.joblib

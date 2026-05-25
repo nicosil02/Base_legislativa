@@ -210,6 +210,46 @@ def _peru_sesiones_proximas(conn, days_ahead=2):
     return out
 
 
+def _peru_mesas_tecnicas_proximas(conn, days_ahead=2):
+    """Mesas de trabajo + eventos del Congreso PE para hoy + N dias.
+    Lee mesas_tecnicas (scrapeado de comunicaciones.congreso.gob.pe)."""
+    try:
+        conn.execute("SELECT 1 FROM mesas_tecnicas LIMIT 1")
+    except Exception:
+        return []
+    today = datetime.now(timezone.utc).date()
+    hasta = (today + timedelta(days=days_ahead)).isoformat()
+    desde = today.isoformat()
+    # Asegurar row_factory para acceso por nombre
+    prev_factory = conn.row_factory
+    conn.row_factory = sqlite3.Row
+    rows = conn.execute(
+        """SELECT url, titulo, tipo, tema, fecha, hora, organiza,
+                  congresista, bancada, comision, lugar, pub_date
+           FROM mesas_tecnicas
+           WHERE COALESCE(fecha, substr(pub_date, 1, 10)) >= ?
+             AND COALESCE(fecha, substr(pub_date, 1, 10)) <= ?
+           ORDER BY COALESCE(fecha, substr(pub_date, 1, 10)), hora""",
+        (desde, hasta),
+    ).fetchall()
+    conn.row_factory = prev_factory
+    return [
+        {
+            "url": r["url"],
+            "tipo": r["tipo"],
+            "tema": r["tema"] or r["titulo"],
+            "fecha": r["fecha"] or (r["pub_date"] or "")[:10],
+            "hora": r["hora"],
+            "organiza": r["organiza"],
+            "congresista": r["congresista"],
+            "bancada": r["bancada"],
+            "comision": r["comision"],
+            "lugar": r["lugar"],
+        }
+        for r in rows
+    ]
+
+
 def _ecuador_sesiones_proximas(conn, days_ahead=2):
     """Sesiones de la Asamblea Nacional EC para hoy + N dias siguientes.
     Similar a _peru_sesiones_proximas pero usando tablas sesiones_ec /
@@ -284,7 +324,8 @@ def build_alert(now=None, window_hours=24, db_pe_path=None, db_ec_path=None,
     payload = {
         "fecha": now.strftime("%Y-%m-%d"),
         "since": since_iso,
-        "peru":    {"dictamenes": [], "proyectos": [], "sesiones_proximas": []},
+        "peru":    {"dictamenes": [], "proyectos": [],
+                    "sesiones_proximas": [], "mesas_proximas": []},
         "ecuador": {"dictamenes": [], "proyectos": [], "sesiones_proximas": []},
     }
 
@@ -296,6 +337,9 @@ def build_alert(now=None, window_hours=24, db_pe_path=None, db_ec_path=None,
                 payload["peru"]["dictamenes"] = _peru_new_dictamenes(conn, since_iso)
                 payload["peru"]["proyectos"] = _peru_new_pls(conn, since_iso)
                 payload["peru"]["sesiones_proximas"] = _peru_sesiones_proximas(
+                    conn, days_ahead=sesiones_days_ahead
+                )
+                payload["peru"]["mesas_proximas"] = _peru_mesas_tecnicas_proximas(
                     conn, days_ahead=sesiones_days_ahead
                 )
             finally:
@@ -350,4 +394,5 @@ def count_items(payload):
         for s in payload.get(country, {}).get("sesiones_proximas", []) or []
         if (s.get("pls") or [])
     )
-    return base + sesiones_con_pls
+    mesas = len(payload.get("peru", {}).get("mesas_proximas", []) or [])
+    return base + sesiones_con_pls + mesas

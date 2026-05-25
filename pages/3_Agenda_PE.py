@@ -985,6 +985,82 @@ else:
         },
     )
 
+# ---------- Mesas de trabajo + eventos ----------
+@st.cache_data(ttl=60)
+def has_mesas_table() -> bool:
+    conn = get_conn()
+    try:
+        r = conn.execute(
+            "SELECT name FROM sqlite_master WHERE type='table' AND name='mesas_tecnicas'"
+        ).fetchone()
+        if not r:
+            return False
+        n = conn.execute("SELECT COUNT(*) FROM mesas_tecnicas").fetchone()[0]
+        return n > 0
+    except Exception:
+        return False
+
+
+@st.cache_data(ttl=60)
+def load_mesas(limit: int = 80) -> pd.DataFrame:
+    conn = get_conn()
+    return pd.read_sql_query(
+        """SELECT
+             COALESCE(fecha, substr(pub_date, 1, 10), '') AS "Fecha",
+             COALESCE(hora, '') AS "Hora",
+             tipo AS "Tipo",
+             tema AS "Tema",
+             COALESCE(congresista, organiza, '') AS "Organiza",
+             COALESCE(bancada, '') AS "Bancada",
+             COALESCE(comision, '') AS "Comisión",
+             COALESCE(lugar, '') AS "Lugar",
+             url AS "_url"
+           FROM mesas_tecnicas
+           ORDER BY COALESCE(fecha, substr(pub_date, 1, 10)) DESC,
+                    pub_date DESC
+           LIMIT ?""",
+        conn, params=(limit,),
+    )
+
+
+if has_mesas_table():
+    st.markdown("---")
+    st.markdown(
+        '<h2 style="margin-top:30px;">Mesas de trabajo + eventos</h2>'
+        '<p style="font-size:13px;color:var(--ink-soft);">'
+        'Convocatorias publicadas por congresistas y comisiones en '
+        '<code>comunicaciones.congreso.gob.pe/agenda/</code>. Incluye mesas '
+        'técnicas, ceremonias, sesiones descentralizadas y otros eventos que '
+        '<strong>no aparecen en el visor de sesiones formales</strong>. '
+        'Sincronizado automáticamente cada hora.</p>',
+        unsafe_allow_html=True,
+    )
+    df_mesas = load_mesas(limit=120)
+    if df_mesas.empty:
+        st.info("Sin mesas/eventos registrados todavía.")
+    else:
+        st.markdown(f'<p style="font-size:13px;color:var(--ink-soft);">'
+                    f'{len(df_mesas):,} eventos recientes</p>',
+                    unsafe_allow_html=True)
+        df_view = df_mesas.drop(columns=["_url"]).copy()
+        st.dataframe(
+            df_view,
+            hide_index=True,
+            use_container_width=True,
+            height=420,
+            column_config={
+                "Fecha":    st.column_config.TextColumn("Fecha", width="small"),
+                "Hora":     st.column_config.TextColumn("Hora", width="small"),
+                "Tipo":     st.column_config.TextColumn("Tipo", width="small"),
+                "Tema":     st.column_config.TextColumn("Tema", width="large"),
+                "Organiza": st.column_config.TextColumn("Organiza", width="medium"),
+                "Bancada":  st.column_config.TextColumn("Bancada", width="small"),
+                "Comisión": st.column_config.TextColumn("Comisión", width="medium"),
+                "Lugar":    st.column_config.TextColumn("Lugar", width="medium"),
+            },
+        )
+
+
 # ---------- Footer ----------
 st.markdown('<div class="footer-rule"></div>', unsafe_allow_html=True)
 st.markdown(
