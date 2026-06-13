@@ -234,5 +234,15 @@
       "nicolas.silva@valiconsultores.com"
     ],
     "errors": 0
+  },
+  "2026-06-13": {
+    "sent": true,
+    "sent_at": "2026-06-13T13:47:27Z",
+    "slot": "09",
+    "items": 19,
+    "recipients": [
+      "nicolas.silva@valiconsultores.com"
+    ],
+    "errors": 0
   }
 }
