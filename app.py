@@ -383,6 +383,18 @@ agenda_ec = st.Page(
     icon="🇪🇨",
     url_path="ecuador-agenda",
 )
+noticias_pe = st.Page(
+    "pages/5_Noticias_PE.py",
+    title="Perú",
+    icon="🇵🇪",
+    url_path="peru-noticias",
+)
+noticias_ec = st.Page(
+    "pages/6_Noticias_EC.py",
+    title="Ecuador",
+    icon="🇪🇨",
+    url_path="ecuador-noticias",
+)
 
 
 # Sidebar logout deshabilitado mientras el auth gate este off.
@@ -393,6 +405,7 @@ nav = st.navigation(
         "Vali Intelligence": [home],
         "Radar Legislativo": [peru, ecuador],
         "Agenda parlamentaria": [agenda_pe, agenda_ec],
+        "Noticias y coyuntura": [noticias_pe, noticias_ec],
     },
     position="sidebar",
 )

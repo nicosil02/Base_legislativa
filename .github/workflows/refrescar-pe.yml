@@ -141,6 +141,22 @@ jobs:
               --days-back 14 --days-fwd 21 \
               || echo "[warn] mesas_tecnicas sync-dias fallo, sigo"
 
+      - name: Actualizar noticias y coyuntura (PE + EC)
+        run: |
+          # Seed idempotente del catalogo de fuentes + sync RSS de los
+          # ~84 medios/instituciones/gremios mapeados. Captura noticias
+          # de Coyuntura Politica, Instituciones, Salud, Tech, Agrarios,
+          # KYC/AML. Para Ecuador tambien aprovecha que el cron de
+          # refrescar-pe corre 15x/dia (mas frecuente que enriquecer-ec).
+          timeout 600 python -X utf8 -m noticias.cli seed \
+              || echo "[warn] noticias seed fallo, sigo"
+          timeout 600 python -X utf8 -m noticias.cli sync \
+              || echo "[warn] noticias sync fallo, sigo"
+          # Purge: la UI muestra por defecto solo "hoy"; conservamos 7d
+          # como buffer historico para evitar que la DB crezca infinito.
+          timeout 120 python -X utf8 -m noticias.cli purge --dias 7 \
+              || echo "[warn] noticias purge fallo, sigo"
+
       - name: Reclasificar PLs en "Otros" con alta confianza
         run: |
           # Usa el modelo entrenado en models/clasificador_pe.joblib
