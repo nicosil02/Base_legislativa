@@ -323,8 +323,42 @@ def load_proyectos(fec_inicio: dt.date | None, fec_fin: dt.date | None) -> pd.Da
     # LEFT JOIN con documentos: traemos la URL del PDF principal (el de menor
     # orden) y el conteo total de documentos. Si el proyecto no tiene docs en
     # la tabla (porque enriquecer-documentos no se corrió), pdf_url queda NULL.
-    sql = """
-      SELECT p.n_tramite AS "N. Trámite",
+    # Chequeo defensivo: si la tabla unificacion_pl no existe todavia (DB
+    # vieja sin la migracion), devolvemos NULL en lugar de joinear. Evita
+    # OperationalError "no such table: unificacion_pl".
+    has_unif = conn.execute(
+        "SELECT 1 FROM sqlite_master WHERE type='table' AND name='unificacion_pl'"
+    ).fetchone() is not None
+    unif_col = (
+        """(SELECT GROUP_CONCAT(up2.n_tramite, ', ')
+              FROM unificacion_pl up1
+              JOIN unificacion_pl up2 ON up2.grupo_id = up1.grupo_id
+                                     AND up2.n_tramite != up1.n_tramite
+              WHERE up1.n_tramite = p.n_tramite)"""
+        if has_unif else "NULL"
+    )
+    # Chequeo defensivo para columna es_unificado (puede no existir aun)
+    cols_proy = [r[1] for r in conn.execute("PRAGMA table_info(proyectos)")]
+    has_es_unif = "es_unificado" in cols_proy
+    sql = f"""
+      SELECT p.n_tramite AS "_n_tramite_label",
+             -- URL clickeable directa al PDF (o portal home si no hay docs).
+             -- Append '#<n_tramite>' al final para que el LinkColumn pueda
+             -- extraer el numero como display_text via regex.
+             COALESCE(
+               (SELECT url FROM documentos
+                  WHERE n_tramite = p.n_tramite
+                    AND UPPER(COALESCE(fase, '')) LIKE '%PROYECTO%PRESENTADO%'
+                  ORDER BY orden ASC LIMIT 1),
+               (SELECT url FROM documentos
+                  WHERE n_tramite = p.n_tramite
+                  ORDER BY orden ASC LIMIT 1),
+               'https://proyectosdeley.asambleanacional.gob.ec/report?n=' || p.n_tramite
+             ) || '#' || p.n_tramite AS "N. Trámite",
+             {unif_col} AS "Unificado con",
+             -- Flag del portal: TRUE si el checkbox "Unificado" esta marcado
+             -- (scrapeado con scrapear-unificados via Playwright)
+             {"COALESCE(p.es_unificado, 0)" if has_es_unif else "0"} AS "_es_unificado_portal",
              p.titulo AS "Título",
              date(p.fec_presentacion) AS "Presentado",
              date(p.last_changed_at) AS "Último cambio",
@@ -381,8 +415,20 @@ st.markdown(
 st.markdown(
     '<p class="country-subtitle">Plataforma para seguir, filtrar y analizar todos los '
     'proyectos de ley presentados ante la Asamblea Nacional del Ecuador durante el '
-    'período legislativo 2025–2029. Datos del portal Ppless v2 de la Asamblea, '
-    'actualizable manualmente cuando se descarga el CSV oficial.</p>',
+    'período legislativo 2025–2029.</p>',
+    unsafe_allow_html=True,
+)
+
+# ---------- Banner: no hay live para EC proyectos ----------
+# El portal Ppless v2 es un Angular SPA que requiere Playwright para el
+# CSV download. Playwright no funciona en Streamlit Cloud (sin Chromium).
+# Por eso EC proyectos solo se actualiza via cron (cada 4-6h) en CI.
+st.markdown(
+    '<div style="background:#FFF8EB;border:1px solid #F59E0B;border-radius:8px;'
+    'padding:8px 14px;margin-bottom:18px;font-size:13px;color:#78350F;">'
+    'ℹ️ Sincronizado automáticamente <strong>cada 4-6 horas</strong> via workflow. '
+    'No hay modo live para Ecuador porque el portal Ppless v2 requiere Playwright '
+    '(Chromium headless), que no corre en Streamlit Cloud.</div>',
     unsafe_allow_html=True,
 )
 
@@ -419,17 +465,36 @@ with st.sidebar:
     last = last_sync()
     if last:
         src = (last.get("csv_source") or "").rsplit("/", 1)[-1].rsplit("\\", 1)[-1]
-        st.markdown(
-            f"""<div class="sync-card">
-            <div class="label">Última importación</div>
-            <div class="value">{_fmt_ago(last['finished_at'])}</div>
-            <div class="label" style="margin-top:10px">Fuente</div>
-            <div style="font-size:11px">{src or '—'}</div>
-            <div class="label" style="margin-top:10px">Último run</div>
-            <div>Nuevos: <span class="value">{last['proyectos_nuevos']}</span> · Actualizados: <span class="value">{last['proyectos_actualizados']}</span> · Errores: <span class="value">{last['errores']}</span></div>
-            </div>""",
-            unsafe_allow_html=True,
-        )
+        # last puede venir de heartbeat (sin counts) o de sync_runs (con counts).
+        # Usamos .get() con default 0 para no crashear si los counts no estan.
+        nuevos = last.get("proyectos_nuevos")
+        actualizados = last.get("proyectos_actualizados")
+        errores = last.get("errores")
+        # Si viene de heartbeat (source=heartbeat) mostramos un layout mas simple
+        # con solo el timestamp + status.
+        if last.get("source") == "heartbeat" or nuevos is None:
+            status = last.get("status", "ok")
+            st.markdown(
+                f"""<div class="sync-card">
+                <div class="label">Última corrida del workflow</div>
+                <div class="value">{_fmt_ago(last['finished_at'])}</div>
+                <div class="label" style="margin-top:10px">Estado</div>
+                <div style="font-size:13px">{status}</div>
+                </div>""",
+                unsafe_allow_html=True,
+            )
+        else:
+            st.markdown(
+                f"""<div class="sync-card">
+                <div class="label">Última importación</div>
+                <div class="value">{_fmt_ago(last['finished_at'])}</div>
+                <div class="label" style="margin-top:10px">Fuente</div>
+                <div style="font-size:11px">{src or '—'}</div>
+                <div class="label" style="margin-top:10px">Último run</div>
+                <div>Nuevos: <span class="value">{nuevos}</span> · Actualizados: <span class="value">{actualizados}</span> · Errores: <span class="value">{errores or 0}</span></div>
+                </div>""",
+                unsafe_allow_html=True,
+            )
     else:
         st.markdown(
             '<div class="sync-card"><div class="label">Estado</div>'
@@ -482,7 +547,10 @@ busqueda = st.text_input(
 # Aplicar filtros
 df = df_full
 if tramite_input.strip():
-    df = df[df["N. Trámite"].astype(str).str.contains(tramite_input.strip(), case=False, na=False)]
+    # Filtrar por el numero (en col _n_tramite_label), no por la URL
+    df = df[df["_n_tramite_label"].astype(str).str.contains(
+        tramite_input.strip(), case=False, na=False
+    )]
 if sel_tema != TODOS:
     df = df[df["Tema"] == sel_tema]
 if sel_estado != TODOS:
@@ -497,6 +565,21 @@ if busqueda.strip():
     q = busqueda.strip().lower()
     df = df[df["Título"].astype(str).str.lower().str.contains(q, na=False)]
 
+# Filtro adicional: solo PLs unificados (marcados en el portal O en grupo manual)
+solo_unif = st.checkbox(
+    "Solo PLs unificados",
+    value=False,
+    help="Filtra los proyectos marcados como unificados en el portal de la Asamblea "
+         "(checkbox 'Unificado' en Ppless) o en un grupo manual de unificacion. "
+         "Para scrapear el flag: `python -m scraper_ec.cli scrapear-unificados`. "
+         "Para crear grupos: `python -m scraper_ec.cli marcar-unificacion`.",
+)
+if solo_unif:
+    df = df[
+        (df["_es_unificado_portal"].fillna(0).astype(int) == 1)
+        | (df["Unificado con"].notna() & (df["Unificado con"] != ""))
+    ]
+
 st.markdown(f"##### {len(df):,} proyecto(s) de {len(df_full):,} en el rango")
 
 # Columnas visibles en la tabla principal
@@ -505,16 +588,13 @@ df_view = df.copy()
 df_view["Proponente principal"] = (
     df_view["Proponentes"].astype(str).str.split("/").str[0].str.strip()
 )
-# La columna "N. Trámite" se renderiza como LinkColumn: muestra el número y
-# clickea al portal Ppless v2. Como el portal no acepta deep link al detalle,
-# guardamos el número en `display_text` y la URL es siempre la misma página.
-# El usuario abre el portal y pega el N. Trámite en el filtro "Nro. Trámite".
-# Sin LinkColumn ni PDF column: la tabla soporta selección de fila; al
-# seleccionar una fila se muestra debajo un panel con los documentos
-# del proyecto. Esto reemplaza el deep-link al portal externo y el botón
-# de "Descargar PDF" — un solo punto de entrada vía click en la fila.
-COLS_VISIBLES = ["N. Trámite", "Título", "Presentado", "Estado",
-                 "Tipo proponente", "Proponente principal", "Comisión", "Tema"]
+# N. Trámite ahora es LinkColumn: la celda contiene la URL al PDF directo
+# del proyecto (cuando ya esta enriquecido) o al portal Ppless v2 home
+# como fallback. La columna _n_tramite_label trae el numero para mostrar
+# como display_text.
+COLS_VISIBLES = ["N. Trámite", "_n_tramite_label", "Título", "Presentado",
+                 "Estado", "Tipo proponente", "Proponente principal",
+                 "Comisión", "Tema", "Unificado con"]
 df_view = df_view[[c for c in COLS_VISIBLES if c in df_view.columns]]
 
 # CSS para wrap en celdas
@@ -540,12 +620,17 @@ tabla = st.dataframe(
     on_select="rerun",
     selection_mode="single-row",
     column_config={
-        "N. Trámite":          st.column_config.TextColumn(
+        "N. Trámite":          st.column_config.LinkColumn(
             "N. Trámite",
             width="small",
             pinned=True,
-            help="Click la fila para ver los documentos del proyecto debajo.",
+            # Extrae el n_tramite del fragment '#XXX' al final de la URL.
+            # Soporta numeros (480824) y alfanumericos (AN-GBJL-2024-0092-M).
+            display_text=r"#([A-Z0-9\-]+)$",
+            help="Click abre el PDF del proyecto directamente (o el portal "
+                 "Ppless v2 si todavía no enriquecimos sus documentos).",
         ),
+        "_n_tramite_label":    None,  # ocultar la col helper del display
         "Título":              st.column_config.TextColumn("Título", width="medium"),
         "Presentado":          st.column_config.TextColumn("Presentado", width="small"),
         "Estado":              st.column_config.TextColumn("Estado", width="small"),
@@ -553,6 +638,11 @@ tabla = st.dataframe(
         "Proponente principal": st.column_config.TextColumn("Proponente", width="small"),
         "Comisión":            st.column_config.TextColumn("Comisión", width="medium"),
         "Tema":                st.column_config.TextColumn("Tema", width="small"),
+        "Unificado con":       st.column_config.TextColumn(
+            "Unificado con", width="small",
+            help="Otros PLs del mismo grupo de unificacion. Vacio si el PL "
+                 "no esta unificado con ningun otro.",
+        ),
     },
 )
 
@@ -569,7 +659,8 @@ except AttributeError:
 if selected_rows:
     row_idx = selected_rows[0]
     if row_idx < len(df_view):
-        sel_tramite = df_view.iloc[row_idx]["N. Trámite"]
+        # Usar el numero crudo (col helper), no la URL
+        sel_tramite = df_view.iloc[row_idx]["_n_tramite_label"]
         sel_titulo = df_view.iloc[row_idx]["Título"]
 
         # Query docs from DB
@@ -579,6 +670,63 @@ if selected_rows:
             "WHERE n_tramite = ? ORDER BY orden ASC",
             (str(sel_tramite),),
         ).fetchall()
+
+        # Info de unificacion (defensivo: si tabla no existe, unif=None)
+        has_unif_tbl = conn.execute(
+            "SELECT 1 FROM sqlite_master WHERE type='table' AND name='unificacion_pl'"
+        ).fetchone() is not None
+        if has_unif_tbl:
+            unif = conn.execute(
+                """SELECT g.id, g.nombre, g.descripcion, g.n_tramite_principal,
+                          GROUP_CONCAT(up2.n_tramite, ',') AS miembros
+                   FROM unificacion_pl up
+                   JOIN unificacion_grupos g ON g.id = up.grupo_id
+                   JOIN unificacion_pl up2 ON up2.grupo_id = up.grupo_id
+                   WHERE up.n_tramite = ?
+                   GROUP BY g.id""",
+                (str(sel_tramite),),
+            ).fetchone()
+        else:
+            unif = None
+
+        # Flag del portal (independiente del grupo manual)
+        es_unif_portal = False
+        try:
+            r = conn.execute(
+                "SELECT COALESCE(es_unificado, 0) FROM proyectos WHERE n_tramite = ?",
+                (str(sel_tramite),),
+            ).fetchone()
+            es_unif_portal = bool(r and r[0])
+        except sqlite3.OperationalError:
+            pass
+
+        # Badge de unificacion (HTML compacto)
+        badges = []
+        if unif:
+            miembros = [m for m in (unif["miembros"] or "").split(",") if m]
+            n_otros = len([m for m in miembros if m != str(sel_tramite)])
+            es_principal = unif["n_tramite_principal"] == str(sel_tramite)
+            label = "PRINCIPAL" if es_principal else "ACUMULADO"
+            color_bg = "#0A294D" if es_principal else "#F59E0B"
+            badges.append(
+                f'<span style="display:inline-block; padding:4px 10px; border-radius:6px; '
+                f'background:{color_bg}; color:#FFF; font-size:11px; font-weight:700; '
+                f'letter-spacing:0.08em; margin-right:8px;">'
+                f'⛓️ GRUPO UNIFICADO ({n_otros + 1} PLs) · {label}'
+                f'</span>'
+            )
+        if es_unif_portal:
+            badges.append(
+                '<span style="display:inline-block; padding:4px 10px; border-radius:6px; '
+                'background:#10B981; color:#FFF; font-size:11px; font-weight:700; '
+                'letter-spacing:0.08em; margin-right:8px;">'
+                '✓ MARCADO UNIFICADO EN PORTAL'
+                '</span>'
+            )
+        unif_badge = (
+            f'<div style="margin-bottom:10px;">{"".join(badges)}</div>'
+            if badges else ""
+        )
 
         st.markdown(
             f"""<div style="margin-top: 28px; padding: 24px 28px; border: 1px solid #CFD9E0;
@@ -591,13 +739,44 @@ if selected_rows:
                        color: #0A294D; margin-bottom: 4px;">
               N. Trámite {sel_tramite}
             </div>
-            <div style="font-size: 0.95rem; color: #435D74; margin-bottom: 18px;
+            <div style="font-size: 0.95rem; color: #435D74; margin-bottom: 12px;
                        line-height: 1.4;">
               {sel_titulo}
             </div>
+            {unif_badge}
             </div>""",
             unsafe_allow_html=True,
         )
+
+        # Detalle del grupo de unificacion (si aplica)
+        if unif:
+            nombre = unif["nombre"] or "(sin nombre)"
+            miembros_list = [m for m in (unif["miembros"] or "").split(",") if m]
+            with st.expander(
+                f"⛓️ Grupo de unificación: {nombre} ({len(miembros_list)} PLs)",
+                expanded=False,
+            ):
+                if unif["descripcion"]:
+                    st.markdown(f"*{unif['descripcion']}*")
+                miembros_data = conn.execute(
+                    f"""SELECT n_tramite, titulo, estado
+                        FROM proyectos
+                        WHERE n_tramite IN ({','.join('?'*len(miembros_list))})""",
+                    miembros_list,
+                ).fetchall()
+                import pandas as _pd
+                df_miembros = _pd.DataFrame(
+                    [
+                        {
+                            "Es principal": "★" if m["n_tramite"] == unif["n_tramite_principal"] else "",
+                            "N. Trámite": m["n_tramite"],
+                            "Título": (m["titulo"] or "")[:160],
+                            "Estado": m["estado"] or "—",
+                        }
+                        for m in miembros_data
+                    ]
+                )
+                st.dataframe(df_miembros, hide_index=True, use_container_width=True)
 
         if not docs:
             st.info(

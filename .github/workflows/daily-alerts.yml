@@ -2,15 +2,19 @@ name: Alertas diarias Radar Legislativo
 
 on:
   schedule:
-    # GitHub Actions atrasa crons 2-3h en horas pico. Para que el correo
-    # llegue cerca de las 9 AM Lima (UTC-5), disparamos a las 11 UTC
-    # (= 6 AM Lima). Con atraso tipico GH llega entre 7-9 AM Lima.
-    # Dedup via already_sent_today previene envios duplicados si el primero
-    # llega rapido y el retry no lo necesita.
-    - cron: '0 11 * * *'    # 6 AM Lima — primer intento
-    - cron: '30 11 * * *'   # 6:30 AM Lima — segundo intento
-    - cron: '0 12 * * *'    # 7 AM Lima — retry (slot=10)
-    - cron: '0 13 * * *'    # 8 AM Lima — ultimo retry por si todos los anteriores se atrasaron
+    # Triple-trigger para maximizar probabilidad de llegada cerca de 9 AM Lima.
+    # GH Actions cron atrasa 0-3h aleatorio. already_sent_today previene
+    # duplicados: el primero que llegue envia, los demas son no-ops.
+    #
+    #   12 UTC (7 AM Lima) + 0-3h atraso = 7-10 AM Lima  ← primer intento
+    #   13 UTC (8 AM Lima) + 0-3h atraso = 8-11 AM Lima  ← retry
+    #   14 UTC (9 AM Lima) + 0-3h atraso = 9-12 PM Lima  ← ultimo retry
+    #
+    # En la practica casi siempre llega entre 8-10 AM Lima. Si los 3 fallan,
+    # refrescar-pe.yml envia como backup en su corrida de 13 UTC.
+    - cron: '0 12 * * *'
+    - cron: '0 13 * * *'
+    - cron: '0 14 * * *'
   workflow_dispatch:
     inputs:
       slot:
@@ -123,14 +127,8 @@ jobs:
             # HOUR_UTC=16 (ni 14 ni 15) → slot=manual erroneamente.
             # github.event.schedule devuelve la expresion cron exacta que
             # dispara el run.
-            SCHEDULE="${{ github.event.schedule }}"
-            case "$SCHEDULE" in
-              "0 11 * * *")  echo "slot=09" >> $GITHUB_OUTPUT ;;      # 6 AM Lima
-              "30 11 * * *") echo "slot=09" >> $GITHUB_OUTPUT ;;      # 6:30 AM Lima
-              "0 12 * * *")  echo "slot=10" >> $GITHUB_OUTPUT ;;      # 7 AM Lima
-              "0 13 * * *")  echo "slot=10" >> $GITHUB_OUTPUT ;;      # 8 AM Lima
-              *)             echo "slot=cron" >> $GITHUB_OUTPUT ;;
-            esac
+            # Solo hay 1 cron (0 11 * * *). slot=09 nominal.
+            echo "slot=09" >> $GITHUB_OUTPUT
             echo "force_flag=" >> $GITHUB_OUTPUT
             echo "Cron schedule: $SCHEDULE"
           fi
@@ -143,14 +141,14 @@ jobs:
           ALERT_RECIPIENT: ${{ secrets.ALERT_RECIPIENT }}
           PYTHONIOENCODING: utf-8
         run: |
-          # Validacion temprana de secrets — si faltan, fail fast con mensaje claro
-          # (asi GitHub no deshabilita el cron silenciosamente por fallos opacos).
+          # Validar solo los secrets REQUERIDOS (RESEND_API_KEY + ALERT_RECIPIENT).
+          # RESEND_FROM es opcional — alerts/send.py usa default onboarding@resend.dev
+          # si no esta seteado. No bloqueamos por su ausencia.
           missing=""
-          [ -z "$RESEND_API_KEY" ] && missing="$missing RESEND_API_KEY"
-          [ -z "$RESEND_FROM" ]    && missing="$missing RESEND_FROM"
+          [ -z "$RESEND_API_KEY" ]  && missing="$missing RESEND_API_KEY"
           [ -z "$ALERT_RECIPIENT" ] && missing="$missing ALERT_RECIPIENT"
           if [ -n "$missing" ]; then
-            echo "::error::Faltan secrets en el repo:$missing"
+            echo "::error::Faltan secrets requeridos:$missing"
             echo "Ir a Settings > Secrets and variables > Actions y agregarlos"
             exit 1
           fi

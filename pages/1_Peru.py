@@ -112,6 +112,41 @@ st.markdown(
       color: var(--ink-mute) !important;
     }
 
+    /* Botones del sidebar (ej "Buscar PLs nuevos en vivo"): fondo blanco,
+       texto navy con peso. Selectores multiples porque Streamlit cambia
+       el DOM entre versiones (button[kind], data-testid, baseweb). */
+    section[data-testid="stSidebar"] button,
+    section[data-testid="stSidebar"] [data-testid="stBaseButton-secondary"],
+    section[data-testid="stSidebar"] [data-testid="stBaseButton-primary"],
+    section[data-testid="stSidebar"] [data-testid="stButton"] button,
+    section[data-testid="stSidebar"] .stButton button {
+      background-color: #FFFFFF !important;
+      color: var(--ink) !important;
+      border: 1px solid var(--line) !important;
+      font-weight: 700 !important;
+      font-family: 'Inter', sans-serif !important;
+    }
+    section[data-testid="stSidebar"] button p,
+    section[data-testid="stSidebar"] button span,
+    section[data-testid="stSidebar"] button div,
+    section[data-testid="stSidebar"] [data-testid="stButton"] *,
+    section[data-testid="stSidebar"] .stButton * {
+      color: var(--ink) !important;
+    }
+    section[data-testid="stSidebar"] button:hover,
+    section[data-testid="stSidebar"] [data-testid="stButton"] button:hover {
+      background-color: var(--bg-soft) !important;
+      border-color: var(--accent) !important;
+    }
+    /* Excepciones: NO aplicar este estilo al boton del header (collapse
+       del sidebar) que tiene fondo navy y texto blanco. */
+    section[data-testid="stSidebar"] [data-testid="stSidebarHeader"] button,
+    section[data-testid="stSidebar"] [data-testid="stSidebarHeader"] button * {
+      background-color: transparent !important;
+      color: #FFFFFF !important;
+      border: 0 !important;
+    }
+
     /* === Ocultar TODO texto crudo de Material Symbols/Icons en sidebar === */
     /* Cualquier elemento con clase relacionada a iconos Material, en sidebar */
     [data-testid="stSidebar"] [class*="material-symbols"],
@@ -478,12 +513,126 @@ def load_proyectos(fec_inicio: dt.date | None, fec_fin: dt.date | None) -> pd.Da
         })
         df["_comisiones_all"] = df["Comisión"]
         df["Comisión"] = df["Comisión"].apply(lambda lst: lst[0] if lst else None)
-        df = df.sort_values("Presentado", ascending=False).reset_index(drop=True)
+        # Sort: fecha de presentacion DESC, y dentro del mismo dia pley_num
+        # DESC (el ultimo numero asignado es el mas reciente). Sin pley_num
+        # como tiebreaker, los PLs del mismo dia salian en orden inestable.
+        df = df.sort_values(
+            ["Presentado", "pley_num"],
+            ascending=[False, False],
+        ).reset_index(drop=True)
     return df
 
 
 SYNC_MIN_MINUTES = 5      # gap mínimo entre auto-syncs
 SYNC_STALE_MINUTES = 15   # un sync sin terminar después de esto se considera muerto
+
+
+def _upsert_live_pls(nuevos_api: list[dict], per_par_id: int = 2021) -> int:
+    """Inserta PLs detectados en la API que no estan en la DB local.
+
+    En Streamlit Cloud la DB es ephemeral, pero los writes persisten
+    durante el runtime. El proximo cron de GH Actions hace el sync
+    completo con todos los campos (sumilla, autores, comisiones, etc) y
+    los reescribe correctamente. Mientras tanto, estos inserts ligeros
+    hacen que el usuario vea los PLs en la tabla principal de inmediato.
+
+    Campos disponibles del endpoint /lista-con-filtro:
+      pleyNum, titulo (o descTitulo), estado, fecPresentacion
+    Campos sin valor (NULL): sumilla, proponente, grupo_parlamentario,
+      autores_raw, url_portal, url_pdf, comisiones. Se completan en el
+      proximo cron via /expediente.
+    """
+    db = _find_db_path()
+    if db is None:
+        return 0
+    from datetime import datetime, timezone
+    now = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    inserted = 0
+    try:
+        conn = sqlite3.connect(str(db), check_same_thread=False)
+        try:
+            for p in nuevos_api:
+                pley_num = p.get("pleyNum")
+                if not pley_num:
+                    continue
+                titulo = p.get("titulo") or p.get("descTitulo") or "(sin titulo)"
+                estado = p.get("estado") or "PRESENTADO"
+                fec_pres = p.get("fecPresentacion") or ""
+                # INSERT OR IGNORE — si ya esta (race con cron), no pisa
+                conn.execute(
+                    """INSERT OR IGNORE INTO proyectos
+                       (per_par_id, pley_num, titulo, estado, fec_presentacion,
+                        first_seen_at, last_seen_at, last_changed_at,
+                        tema, tema_manual)
+                       VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'Otros', 0)""",
+                    (per_par_id, pley_num, titulo, estado, fec_pres,
+                     now, now, now),
+                )
+                if conn.total_changes > inserted:
+                    inserted += 1
+            conn.commit()
+        finally:
+            conn.close()
+    except sqlite3.OperationalError as e:
+        # DB locked (otra escritura en curso) o readonly — ignorar silente
+        print(f"[live-upsert] skip: {e}")
+        return 0
+    return inserted
+
+
+@st.cache_data(ttl=300)  # cache 5 min: tras la primera carga del dia,
+                          # los siguientes 5 min son instant para todos
+def fetch_live_pe(per_par_id: int = 2021) -> dict:
+    """Consulta la API del Congreso PE en TIEMPO REAL y devuelve la lista
+    actual de PLs. Compara con la DB local para identificar los que no
+    estan sincronizados todavia.
+
+    Tarda ~30 seg porque el endpoint /lista-con-filtro devuelve todos los
+    PLs del periodo en una sola respuesta (~8 MB).
+
+    Returns:
+        {
+            "total_api": int,
+            "total_db": int,
+            "nuevos": [{"pley_num", "titulo", "estado", "fec_presentacion"}, ...],
+            "error": str | None,
+        }
+    """
+    try:
+        from scraper.api import ApiClient
+        client = ApiClient()
+        api_pls = client.list_all_proyectos(per_par_id=per_par_id)
+    except Exception as e:
+        return {"total_api": 0, "total_db": 0, "nuevos": [], "error": str(e)}
+
+    # Set de pley_num que tenemos en DB
+    conn = get_conn()
+    try:
+        db_pleynums = {
+            r[0] for r in conn.execute(
+                "SELECT pley_num FROM proyectos WHERE per_par_id = ?",
+                (per_par_id,),
+            )
+        }
+    finally:
+        conn.close()
+
+    api_pleynums = {p.get("pleyNum") for p in api_pls if p.get("pleyNum")}
+    nuevos_nums = api_pleynums - db_pleynums
+
+    # Items raw para upsert directo a la DB (no solo display)
+    nuevos_raw = [p for p in api_pls if p.get("pleyNum") in nuevos_nums]
+    # AUTO-UPSERT: escribir los nuevos a la DB ya mismo para que aparezcan
+    # integrados en la tabla principal (sin necesidad de banner separado).
+    inserted = _upsert_live_pls(nuevos_raw, per_par_id=per_par_id)
+
+    return {
+        "total_api": len(api_pleynums),
+        "total_db": len(db_pleynums),
+        "nuevos_count": len(nuevos_raw),
+        "inserted": inserted,
+        "error": None,
+    }
 
 
 def _sync_status() -> dict:
@@ -564,12 +713,33 @@ st.markdown(
 st.markdown(
     '<p class="country-subtitle">Plataforma para seguir, filtrar y analizar todos los '
     'proyectos de ley presentados ante el Congreso de la República del Perú durante el '
-    'período parlamentario 2021–2026. Pensada para equipos de asuntos públicos, '
-    'consultoras de policy y áreas regulatorias que necesitan identificar iniciativas '
-    'legislativas relevantes por tema, comisión, partido o autor — y mantener el '
-    'seguimiento de su estado.</p>',
+    'período parlamentario 2021–2026.</p>',
     unsafe_allow_html=True,
 )
+
+# ---------- Live sync automatico ----------
+# Al cargar la pagina consulta la API del Congreso. Si hay PLs nuevos
+# que no estan en la DB, los inserta directamente para que aparezcan
+# integrados en la tabla principal (sin banner separado, sin clic).
+# Cache 5 min compartido entre todos los users → primera carga ~30s
+# (spinner), siguientes son instant.
+with st.spinner("Sincronizando con el Congreso en tiempo real..."):
+    try:
+        _live = fetch_live_pe(per_par_id=2021)
+    except Exception as _e:
+        _live = {"error": str(_e), "nuevos_count": 0, "inserted": 0,
+                 "total_api": 0, "total_db": 0}
+
+# Limpiar el cache de Streamlit para que load_proyectos relea desde la
+# DB y los nuevos PLs aparezcan en la tabla. Solo si insertamos algo.
+if _live.get("inserted", 0) > 0:
+    st.cache_data.clear()
+    st.toast(
+        f"⚡ {_live['inserted']} PL{'s' if _live['inserted'] != 1 else ''} "
+        f"nuevo{'s' if _live['inserted'] != 1 else ''} sincronizado{'s' if _live['inserted'] != 1 else ''} "
+        f"en vivo desde la API",
+        icon="✓",
+    )
 
 # ---------- KPIs ----------
 totals = kpi_totals()
@@ -634,6 +804,42 @@ with st.sidebar:
                 '<div class="value">Sin syncs previos</div></div>',
                 unsafe_allow_html=True,
             )
+
+    st.markdown("---")
+    # Botón de live check: consulta la API del Congreso directamente y
+    # compara con la DB. Útil para confirmar que no se perdio ningun PL
+    # entre crones. Cache 2 min en fetch_live_pe → un solo API call aunque
+    # multiples users hagan click cerca en el tiempo.
+    live_clicked = st.button(
+        "Buscar PLs nuevos en vivo",
+        help="Consulta la API del Congreso en tiempo real y muestra los PLs "
+             "que aún no están en nuestra base. Tarda ~30 segundos.",
+        use_container_width=True,
+    )
+
+# ---------- Live check (fuera del sidebar) ----------
+if live_clicked:
+    with st.spinner("Consultando API del Congreso (~30 seg)…"):
+        live = fetch_live_pe(per_par_id=2021)
+    if live["error"]:
+        st.error(f"Error consultando API del Congreso: {live['error']}")
+    elif live["nuevos"]:
+        st.success(
+            f"**{len(live['nuevos'])} PLs nuevos** detectados en la API que "
+            f"aún no están en nuestra DB. El próximo cron los va a sincronizar, "
+            f"pero ya los podés ver acá:"
+        )
+        df_nuevos = pd.DataFrame(live["nuevos"])
+        st.dataframe(df_nuevos, hide_index=True, use_container_width=True)
+        st.caption(
+            f"API: {live['total_api']} PLs · DB local: {live['total_db']} PLs · "
+            f"diferencia: {len(live['nuevos'])} pendientes de sincronizar."
+        )
+    else:
+        st.info(
+            f"✅ Sincronización al día. API y DB tienen los mismos "
+            f"**{live['total_api']:,} PLs**."
+        )
 
 # ---------- Tabla con barra de filtros ----------
 df_full = load_proyectos(f_ini, f_fin)

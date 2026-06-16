@@ -47,16 +47,17 @@ def _open_ro(path):
 
 
 def _peru_new_pls(conn, since_iso):
-    # Filtramos por fec_presentacion (fecha oficial) y no first_seen_at
-    # (cuando lo vio nuestro scraper) para evitar ruido el primer dia
-    # despues de un bootstrap masivo. Compara date() para ser tolerante a
-    # formatos ISO con timestamp vs date-only.
+    # Filtramos por first_seen_at (cuando ENTRO a nuestra DB) en lugar
+    # de fec_presentacion. Asi cada PL sale 1 sola vez en la primera
+    # alerta despues de detectarlo — si fec_presentacion era ayer pero
+    # nuestro scraper recien lo vio hoy, sigue siendo "nuevo" para el
+    # usuario. La comparacion es precisa a nivel timestamp.
     rows = conn.execute(
         """SELECT per_par_id, pley_num, proyecto_ley, titulo, tema, estado,
                   fec_presentacion, url_portal
            FROM proyectos
-           WHERE date(fec_presentacion) >= date(?)
-           ORDER BY tema, fec_presentacion DESC""",
+           WHERE first_seen_at > ?
+           ORDER BY tema, first_seen_at DESC""",
         (since_iso,),
     ).fetchall()
     return [
@@ -75,14 +76,15 @@ def _peru_new_pls(conn, since_iso):
 
 
 def _peru_new_dictamenes(conn, since_iso):
-    # PE no tiene historial_cambios; usa la tabla seguimientos (fecha + estado por fase).
+    # seguimientos.fecha tiene hora precisa, comparamos a nivel timestamp
+    # para que cada dictamen salga 1 vez (no se repita por cambio de dia).
     rows = conn.execute(
         """SELECT p.per_par_id, p.pley_num, p.proyecto_ley, p.titulo, p.tema,
                   s.estado AS estado, p.fec_presentacion, p.url_portal,
                   s.fecha AS changed_at
            FROM seguimientos s
            JOIN proyectos p ON p.per_par_id = s.per_par_id AND p.pley_num = s.pley_num
-           WHERE date(s.fecha) >= date(?)
+           WHERE s.fecha > ?
              AND UPPER(s.estado) LIKE '%DICTAMEN%'
            ORDER BY p.tema, s.fecha DESC""",
         (since_iso,),
@@ -103,11 +105,13 @@ def _peru_new_dictamenes(conn, since_iso):
 
 
 def _ecuador_new_pls(conn, since_iso):
+    # Mismo cambio que PE: usar first_seen_at en lugar de fec_presentacion
+    # para que cada PL salga 1 sola vez.
     rows = conn.execute(
         """SELECT n_tramite, titulo, tema, estado, fec_presentacion
            FROM proyectos
-           WHERE date(fec_presentacion) >= date(?)
-           ORDER BY tema, fec_presentacion DESC""",
+           WHERE first_seen_at > ?
+           ORDER BY tema, first_seen_at DESC""",
         (since_iso,),
     ).fetchall()
     return [
@@ -125,12 +129,13 @@ def _ecuador_new_pls(conn, since_iso):
 
 def _ecuador_new_dictamenes(conn, since_iso):
     placeholders = ",".join("?" * len(EC_DICTAMEN_STATES))
+    # Comparacion timestamp precisa para que cada cambio de estado salga 1 vez
     rows = conn.execute(
         f"""SELECT p.n_tramite, p.titulo, p.tema, h.valor_despues AS estado,
                    p.fec_presentacion, h.changed_at
             FROM historial_cambios h
             JOIN proyectos p ON p.n_tramite = h.n_tramite
-            WHERE date(h.changed_at) >= date(?)
+            WHERE h.changed_at > ?
               AND h.campo = 'estado'
               AND h.valor_despues IN ({placeholders})
             ORDER BY p.tema, h.changed_at DESC""",
@@ -205,17 +210,123 @@ def _peru_sesiones_proximas(conn, days_ahead=2):
     return out
 
 
+def _peru_mesas_tecnicas_proximas(conn, days_ahead=2):
+    """Mesas de trabajo + eventos del Congreso PE para hoy + N dias.
+    Lee mesas_tecnicas (scrapeado de comunicaciones.congreso.gob.pe)."""
+    try:
+        conn.execute("SELECT 1 FROM mesas_tecnicas LIMIT 1")
+    except Exception:
+        return []
+    today = datetime.now(timezone.utc).date()
+    hasta = (today + timedelta(days=days_ahead)).isoformat()
+    desde = today.isoformat()
+    # Asegurar row_factory para acceso por nombre
+    prev_factory = conn.row_factory
+    conn.row_factory = sqlite3.Row
+    rows = conn.execute(
+        """SELECT url, titulo, tipo, tema, fecha, hora, organiza,
+                  congresista, bancada, comision, lugar, pub_date
+           FROM mesas_tecnicas
+           WHERE COALESCE(fecha, substr(pub_date, 1, 10)) >= ?
+             AND COALESCE(fecha, substr(pub_date, 1, 10)) <= ?
+           ORDER BY COALESCE(fecha, substr(pub_date, 1, 10)), hora""",
+        (desde, hasta),
+    ).fetchall()
+    conn.row_factory = prev_factory
+    return [
+        {
+            "url": r["url"],
+            "tipo": r["tipo"],
+            "tema": r["tema"] or r["titulo"],
+            "fecha": r["fecha"] or (r["pub_date"] or "")[:10],
+            "hora": r["hora"],
+            "organiza": r["organiza"],
+            "congresista": r["congresista"],
+            "bancada": r["bancada"],
+            "comision": r["comision"],
+            "lugar": r["lugar"],
+        }
+        for r in rows
+    ]
+
+
+def _ecuador_sesiones_proximas(conn, days_ahead=2):
+    """Sesiones de la Asamblea Nacional EC para hoy + N dias siguientes.
+    Similar a _peru_sesiones_proximas pero usando tablas sesiones_ec /
+    sesion_ec_pl_referenciado."""
+    try:
+        conn.execute("SELECT 1 FROM sesiones_ec LIMIT 1")
+    except Exception:
+        return []
+    today = datetime.now(timezone.utc).date()
+    hasta = (today + timedelta(days=days_ahead)).isoformat()
+    desde = today.isoformat()
+    rows = conn.execute(
+        """SELECT s.uid, s.fecha, s.hora_inicio, s.hora_fin,
+                  s.nombre_comision, s.summary
+           FROM sesiones_ec s
+           WHERE s.fecha >= ? AND s.fecha <= ?
+           ORDER BY s.fecha, s.hora_inicio""",
+        (desde, hasta),
+    ).fetchall()
+    out = []
+    for r in rows:
+        pls = conn.execute(
+            """SELECT m.n_tramite, p.titulo, p.tema, p.estado
+               FROM sesion_ec_pl_referenciado m
+               LEFT JOIN proyectos p ON p.n_tramite = m.n_tramite
+               WHERE m.uid = ? AND m.n_tramite IS NOT NULL
+               ORDER BY m.score DESC""",
+            (r["uid"],),
+        ).fetchall()
+        # Limpiar "modalidad X" del summary
+        nombre = (r["summary"] or "").strip()
+        for tok in (", modalidad", " modalidad"):
+            idx = nombre.lower().find(tok)
+            if idx >= 0:
+                nombre = nombre[:idx].rstrip(" ,.;")
+                break
+        out.append({
+            "uid": r["uid"],
+            "fecha": r["fecha"],
+            "hora": r["hora_inicio"],
+            "comision": r["nombre_comision"] or "—",
+            "nombre": nombre,
+            "pls": [
+                {
+                    "n_tramite": pl["n_tramite"],
+                    "titulo": pl["titulo"],
+                    "tema": pl["tema"] or "Otros",
+                    "estado": pl["estado"],
+                }
+                for pl in pls
+            ],
+        })
+    return out
+
+
 def build_alert(now=None, window_hours=24, db_pe_path=None, db_ec_path=None,
-                sesiones_days_ahead=2):
+                sesiones_days_ahead=2, since_iso=None):
+    """Construye el payload de la alerta.
+
+    Args:
+        since_iso: timestamp ISO desde donde filtrar. Si None, calcula
+            como now - window_hours (default). El caller (cli.py) puede
+            pasar el sent_at de la ultima alerta exitosa para evitar
+            duplicar items entre corridas — cada cambio sale 1 vez en
+            la primera alerta despues de su fecha.
+    """
     now = now or datetime.now(timezone.utc)
-    since = now - timedelta(hours=window_hours)
-    since_iso = since.strftime("%Y-%m-%dT%H:%M:%SZ")
+    if since_iso is None:
+        since = now - timedelta(hours=window_hours)
+        since_iso = since.strftime("%Y-%m-%dT%H:%M:%SZ")
 
     payload = {
         "fecha": now.strftime("%Y-%m-%d"),
         "since": since_iso,
-        "peru":    {"dictamenes": [], "proyectos": [], "sesiones_proximas": []},
-        "ecuador": {"dictamenes": [], "proyectos": []},
+        "peru":    {"dictamenes": [], "proyectos": [],
+                    "sesiones_proximas": [], "mesas_proximas": []},
+        "ecuador": {"dictamenes": [], "proyectos": [], "sesiones_proximas": []},
     }
 
     db_pe = db_pe_path or _find_db_file("proyectos.db")
@@ -226,6 +337,9 @@ def build_alert(now=None, window_hours=24, db_pe_path=None, db_ec_path=None,
                 payload["peru"]["dictamenes"] = _peru_new_dictamenes(conn, since_iso)
                 payload["peru"]["proyectos"] = _peru_new_pls(conn, since_iso)
                 payload["peru"]["sesiones_proximas"] = _peru_sesiones_proximas(
+                    conn, days_ahead=sesiones_days_ahead
+                )
+                payload["peru"]["mesas_proximas"] = _peru_mesas_tecnicas_proximas(
                     conn, days_ahead=sesiones_days_ahead
                 )
             finally:
@@ -240,6 +354,9 @@ def build_alert(now=None, window_hours=24, db_pe_path=None, db_ec_path=None,
             try:
                 payload["ecuador"]["dictamenes"] = _ecuador_new_dictamenes(conn, since_iso)
                 payload["ecuador"]["proyectos"] = _ecuador_new_pls(conn, since_iso)
+                payload["ecuador"]["sesiones_proximas"] = _ecuador_sesiones_proximas(
+                    conn, days_ahead=sesiones_days_ahead
+                )
             finally:
                 conn.close()
         except Exception as e:
@@ -255,11 +372,14 @@ def has_content(payload):
         for section in ("dictamenes", "proyectos")
     ):
         return True
-    # Sesiones proximas con al menos 1 PL en agenda tambien cuentan como contenido
-    return any(
-        len(s.get("pls") or []) > 0
-        for s in payload.get("peru", {}).get("sesiones_proximas", []) or []
-    )
+    # Sesiones proximas con al menos 1 PL en agenda (en cualquier pais) cuentan
+    for country in ("peru", "ecuador"):
+        if any(
+            len(s.get("pls") or []) > 0
+            for s in payload.get(country, {}).get("sesiones_proximas", []) or []
+        ):
+            return True
+    return False
 
 
 def count_items(payload):
@@ -269,7 +389,10 @@ def count_items(payload):
         for section in ("dictamenes", "proyectos")
     )
     sesiones_con_pls = sum(
-        1 for s in payload.get("peru", {}).get("sesiones_proximas", []) or []
+        1
+        for country in ("peru", "ecuador")
+        for s in payload.get(country, {}).get("sesiones_proximas", []) or []
         if (s.get("pls") or [])
     )
-    return base + sesiones_con_pls
+    mesas = len(payload.get("peru", {}).get("mesas_proximas", []) or [])
+    return base + sesiones_con_pls + mesas

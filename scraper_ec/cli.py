@@ -357,6 +357,256 @@ def cmd_recategorizar(args) -> int:
     return 0
 
 
+def cmd_importar_unificaciones(args) -> int:
+    """Importa grupos de unificacion desde un JSON (formato del scraping
+    del portal Ppless via Claude in Chrome).
+
+    Para miembros que NO existen en la tabla proyectos (porque son de
+    periodos pre-2025 que no estan en nuestro sync de CSV), crea stub
+    rows con n_tramite + titulo='(PL externo - no en DB local)' para
+    preservar la integridad referencial y mostrar el grupo completo.
+    """
+    import json
+    from datetime import datetime, timezone
+    from pathlib import Path
+    db = _db(args)
+    try:
+        path = Path(args.json_file).resolve()
+        if not path.exists():
+            print(f"Error: archivo no encontrado: {path}")
+            return 1
+        data = json.loads(path.read_text(encoding="utf-8"))
+        if not isinstance(data, list):
+            print(f"Error: JSON debe ser array. Got: {type(data).__name__}")
+            return 1
+
+        # Borrar grupos source='portal' anteriores (re-import limpio)
+        if args.replace:
+            with db.tx() as c:
+                old_ids = [r[0] for r in c.execute(
+                    "SELECT id FROM unificacion_grupos WHERE source = 'portal'"
+                )]
+                if old_ids:
+                    c.execute(
+                        f"DELETE FROM unificacion_grupos WHERE id IN ({','.join('?'*len(old_ids))})",
+                        old_ids,
+                    )
+                    c.execute(
+                        f"DELETE FROM unificacion_pl WHERE grupo_id IN ({','.join('?'*len(old_ids))})",
+                        old_ids,
+                    )
+                    print(f"[replace] borrados {len(old_ids)} grupos source='portal' previos")
+
+        # Mapeo de n_tramites existentes (refrescamos despues de cada stub creado)
+        existentes = {
+            r[0] for r in db.conn.execute("SELECT n_tramite FROM proyectos")
+        }
+        now = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+        creados = 0
+        skipped = 0
+        miembros_total = 0
+        stubs_creados = 0
+
+        for item in data:
+            principal = (item.get("n_tramite_principal") or "").strip()
+            miembros = [str(m).strip() for m in (item.get("miembros") or []) if str(m).strip()]
+            if not principal or not miembros:
+                skipped += 1
+                continue
+
+            # Lista completa: principal + miembros (deduplicado)
+            n_tramites = list(dict.fromkeys([principal] + miembros))
+
+            # Para los que no existan: crear stub row en proyectos.
+            # Asi el grupo se ve completo y la FK no falla.
+            faltantes = [n for n in n_tramites if n not in existentes]
+            if faltantes:
+                with db.tx() as c:
+                    for n in faltantes:
+                        c.execute(
+                            """INSERT OR IGNORE INTO proyectos
+                               (n_tramite, titulo, estado, fec_presentacion,
+                                periodo, first_seen_at, last_seen_at, last_changed_at,
+                                tema, tema_manual)
+                               VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'Otros', 0)""",
+                            (n,
+                             "(PL externo unificado - no en DB local)",
+                             "EXTERNO",
+                             "1900-01-01",  # fecha placeholder
+                             "pre-2025",
+                             now, now, now),
+                        )
+                        existentes.add(n)
+                        stubs_creados += 1
+
+            try:
+                db.crear_grupo_unificacion(
+                    n_tramites=n_tramites,
+                    nombre=(item.get("titulo") or "")[:200],
+                    descripcion=f"Estado: {item.get('estado', '?')} | "
+                                f"Comision: {item.get('comision', '?')} | "
+                                f"Fecha unif: {item.get('fecha_unif', '?')}",
+                    n_tramite_principal=principal,
+                    source="portal",
+                )
+                creados += 1
+                miembros_total += len(n_tramites)
+            except Exception as e:
+                print(f"[error] grupo {principal}: {e}")
+                skipped += 1
+
+        print(f"\n[importar] {creados} grupos creados, "
+              f"{miembros_total} memberships, "
+              f"{stubs_creados} stubs creados (PLs externos pre-2025), "
+              f"{skipped} grupos skipeados")
+    finally:
+        db.close()
+    return 0
+
+
+def cmd_scrapear_unificados(args) -> int:
+    """Abre el portal Ppless v2 con Playwright, activa el toggle 'Unificados',
+    y extrae todos los grupos visibles (con sus miembros). Los inserta como
+    grupos source='portal' (borrando los anteriores para mantener el
+    estado del portal como verdad)."""
+    import logging
+    logging.basicConfig(level=logging.INFO,
+                        format="%(asctime)s %(levelname)s %(message)s")
+    from scraper_ec.playwright_unificado import scrapear_unificados
+    stats = scrapear_unificados(
+        db_path=args.db,
+        headless=not args.no_headless,
+        max_pages=args.max_pages,
+    )
+    print(f"\n[scrapear-unificados] stats: {stats}")
+    return 0
+
+
+def cmd_detectar_unificaciones(args) -> int:
+    """Detecta candidatos a unificacion por similitud de titulos +
+    misma comision asignada. NO los inserta automaticamente — los reporta
+    para revision manual. Con --apply marca los de mayor confianza
+    (jaccard >= threshold_high) directamente.
+    """
+    from scraper_ec.detectar_unificaciones import detectar
+    db = _db(args)
+    try:
+        candidatos = detectar(
+            db.conn,
+            min_jaccard=args.min_jaccard,
+            min_rare_idf=args.min_rare_idf,
+        )
+        if not candidatos:
+            print("Sin candidatos detectados con los parametros actuales.")
+            print("Probar bajar --min-jaccard (default 0.5) o --min-rare-idf (default 2.0).")
+            return 0
+        print(f"\n{len(candidatos)} grupo(s) candidato(s):\n")
+        for i, c in enumerate(candidatos, 1):
+            score = c.jaccard * c.rare_idf
+            print(f"[{i}] {len(c.pls)} PLs · jaccard={c.jaccard:.2f} · "
+                  f"token_raro='{c.rare_token}' (idf={c.rare_idf:.2f}) · "
+                  f"score={score:.2f}")
+            print(f"    comision: {c.comision}")
+            for n in c.pls:
+                titulo = c.titulos.get(n, "")
+                print(f"    - {n}  {titulo}")
+            print()
+        if args.apply:
+            # Aplicar solo los de alta confianza
+            aplicados = 0
+            for c in candidatos:
+                if c.jaccard >= args.threshold_high:
+                    nombre = f"Auto: {c.rare_token} (jaccard={c.jaccard:.2f})"
+                    db.crear_grupo_unificacion(
+                        n_tramites=list(c.pls),
+                        nombre=nombre,
+                        source="inferido",
+                    )
+                    aplicados += 1
+            print(f"\n[apply] {aplicados} grupos aplicados (jaccard >= {args.threshold_high}).")
+            if aplicados < len(candidatos):
+                print(f"  {len(candidatos) - aplicados} candidatos quedaron sin aplicar (debajo del threshold).")
+                print("  Revisalos y aplica manualmente con `marcar-unificacion`.")
+    finally:
+        db.close()
+    return 0
+
+
+def cmd_marcar_unificacion(args) -> int:
+    """Crea un grupo de unificacion con los PLs dados.
+
+    Uso:
+      python -m scraper_ec.cli marcar-unificacion --pls 480824,480825,480826
+          --nombre "Reformas a Inquilinato"
+          --principal 480824   (opcional, default primero)
+    """
+    db = _db(args)
+    try:
+        n_tramites = [s.strip() for s in args.pls.split(",") if s.strip()]
+        if not n_tramites:
+            print("Error: --pls vacio")
+            return 1
+        # Validar que todos existan
+        existentes = {
+            r[0] for r in db.conn.execute(
+                f"SELECT n_tramite FROM proyectos WHERE n_tramite IN ({','.join('?'*len(n_tramites))})",
+                n_tramites,
+            )
+        }
+        no_existen = [n for n in n_tramites if n not in existentes]
+        if no_existen:
+            print(f"[warn] PLs no encontrados en la DB: {no_existen}")
+        validos = [n for n in n_tramites if n in existentes]
+        if not validos:
+            print("Error: ningun PL valido")
+            return 1
+        grupo_id = db.crear_grupo_unificacion(
+            n_tramites=validos,
+            nombre=args.nombre,
+            descripcion=args.descripcion,
+            n_tramite_principal=args.principal,
+        )
+        print(f"Grupo {grupo_id} creado con {len(validos)} PLs:")
+        for n in validos:
+            marca = " (principal)" if n == (args.principal or validos[0]) else ""
+            print(f"  - {n}{marca}")
+    finally:
+        db.close()
+    return 0
+
+
+def cmd_listar_unificaciones(args) -> int:
+    """Lista todos los grupos de unificacion con sus miembros."""
+    db = _db(args)
+    try:
+        grupos = db.listar_grupos_unificacion()
+        if not grupos:
+            print("No hay grupos de unificacion registrados.")
+            return 0
+        print(f"{len(grupos)} grupo(s) de unificacion:\n")
+        for g in grupos:
+            nombre = g.get("nombre") or "(sin nombre)"
+            print(f"  #{g['id']:3d}  [{g['n_pls']:2d} PLs]  {nombre}")
+            print(f"        principal: {g['n_tramite_principal']}")
+            print(f"        miembros: {g['miembros']}")
+            print(f"        source={g['source']}  created={g['created_at']}")
+            print()
+    finally:
+        db.close()
+    return 0
+
+
+def cmd_borrar_unificacion(args) -> int:
+    db = _db(args)
+    try:
+        db.borrar_grupo_unificacion(args.grupo_id)
+        print(f"Grupo {args.grupo_id} borrado.")
+    finally:
+        db.close()
+    return 0
+
+
 def cmd_export(args) -> int:
     db = _db(args)
     out_path = Path(args.out).resolve()
@@ -437,6 +687,66 @@ def main(argv: list[str] | None = None) -> int:
     s.set_defaults(func=cmd_enriquecer_documentos)
 
     sub.add_parser("recategorizar", help="Re-clasifica temas no marcados como manuales").set_defaults(func=cmd_recategorizar)
+
+    # ---------- unificaciones ----------
+    s = sub.add_parser(
+        "importar-unificaciones",
+        help="Importa grupos de unificacion desde un JSON (scrapeado del portal "
+             "via Chrome MCP o navegacion manual).",
+    )
+    s.add_argument("json_file", help="Path al JSON con array de grupos")
+    s.add_argument("--replace", action="store_true",
+                   help="Borra grupos source='portal' previos antes de importar")
+    s.set_defaults(func=cmd_importar_unificaciones)
+
+    s = sub.add_parser(
+        "scrapear-unificados",
+        help="Scrapea con Playwright los grupos de unificacion del portal "
+             "Ppless v2 (toggle 'Unificados'). Borra grupos source='portal' "
+             "previos y los re-crea con la data actual del portal.",
+    )
+    s.add_argument("--no-headless", action="store_true",
+                   help="Mostrar el browser (debug). Default: headless")
+    s.add_argument("--max-pages", type=int, default=100,
+                   help="Limite de seguridad en paginas (default 100, real ~25)")
+    s.set_defaults(func=cmd_scrapear_unificados)
+
+    s = sub.add_parser(
+        "detectar-unificaciones",
+        help="Detecta candidatos a unificacion por similitud de titulos + comision.",
+    )
+    s.add_argument("--min-jaccard", type=float, default=0.5,
+                   help="Jaccard minimo de tokens (default 0.5). Bajar para mas candidatos.")
+    s.add_argument("--min-rare-idf", type=float, default=2.0,
+                   help="IDF minimo del token mas raro compartido (default 2.0).")
+    s.add_argument("--apply", action="store_true",
+                   help="Aplica los de alta confianza (jaccard >= threshold-high).")
+    s.add_argument("--threshold-high", type=float, default=0.75,
+                   help="Threshold para aplicar automaticamente con --apply (default 0.75).")
+    s.set_defaults(func=cmd_detectar_unificaciones)
+
+    s = sub.add_parser(
+        "marcar-unificacion",
+        help="Crea un grupo de unificacion con N proyectos (manual).",
+    )
+    s.add_argument("--pls", required=True,
+                   help="N. tramites separados por coma. Ej: 480824,480825,480826")
+    s.add_argument("--nombre", help="Nombre descriptivo del grupo (opcional)")
+    s.add_argument("--descripcion", help="Descripcion mas larga (opcional)")
+    s.add_argument("--principal", help="N. tramite del PL principal (default: primero)")
+    s.set_defaults(func=cmd_marcar_unificacion)
+
+    sub.add_parser(
+        "listar-unificaciones",
+        help="Lista todos los grupos de unificacion con sus miembros.",
+    ).set_defaults(func=cmd_listar_unificaciones)
+
+    s = sub.add_parser(
+        "borrar-unificacion",
+        help="Borra un grupo de unificacion por su id.",
+    )
+    s.add_argument("grupo_id", type=int)
+    s.set_defaults(func=cmd_borrar_unificacion)
 
     s = sub.add_parser("export", help="Exporta a JSON")
     s.add_argument("--out", default="proyectos_ec.json")
