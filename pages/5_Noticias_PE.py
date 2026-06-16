@@ -16,6 +16,8 @@ from pathlib import Path
 import pandas as pd
 import streamlit as st
 
+from noticias.temas import clasificar, todos_los_temas
+
 
 PAIS = "PE"
 PAIS_LABEL = "Perú"
@@ -135,12 +137,17 @@ def get_conn() -> sqlite3.Connection:
     return conn
 
 
+# IMPORTANTE: pasamos `pais` como argumento a TODAS las funciones cacheadas
+# (st.cache_data cachea por args; si pais quedara como variable global, las
+# 2 paginas compartirian cache y veriamos las mismas noticias en PE y EC).
+
+
 @st.cache_data(ttl=60)
-def has_tables() -> bool:
+def has_tables(pais: str) -> bool:
     conn = get_conn()
     try:
         n = conn.execute(
-            "SELECT COUNT(*) FROM noticias_fuentes WHERE pais=?", (PAIS,)
+            "SELECT COUNT(*) FROM noticias_fuentes WHERE pais=?", (pais,)
         ).fetchone()[0]
         return n > 0
     except sqlite3.OperationalError:
@@ -148,40 +155,43 @@ def has_tables() -> bool:
 
 
 @st.cache_data(ttl=60)
-def load_categorias() -> list[str]:
+def load_categorias_fuente(pais: str) -> list[str]:
     conn = get_conn()
     rows = conn.execute(
         "SELECT DISTINCT categoria FROM noticias_fuentes WHERE pais=? "
-        "ORDER BY categoria", (PAIS,),
+        "ORDER BY categoria", (pais,),
     ).fetchall()
     return [r[0] for r in rows]
 
 
 @st.cache_data(ttl=60)
-def load_fuentes() -> list[str]:
+def load_fuentes(pais: str) -> list[str]:
     conn = get_conn()
     rows = conn.execute(
         "SELECT DISTINCT nombre FROM noticias_fuentes WHERE pais=? AND activa=1 "
-        "ORDER BY nombre", (PAIS,),
+        "ORDER BY nombre", (pais,),
     ).fetchall()
     return [r[0] for r in rows]
 
 
 @st.cache_data(ttl=60)
-def load_kpis() -> dict:
+def load_kpis(pais: str) -> dict:
+    """KPIs estrictos sobre fecha_pub (no first_seen_at, que es solo cuando
+    nuestro scraper la vio por primera vez — una noticia vieja recien
+    scrapeada NO es noticia de hoy)."""
     conn = get_conn()
     r = conn.execute(
         """SELECT
              COUNT(DISTINCT f.id) AS n_fuentes,
-             SUM(CASE WHEN date(COALESCE(n.fecha_pub, n.first_seen_at)) = date('now')
+             SUM(CASE WHEN date(n.fecha_pub) = date('now')
                      THEN 1 ELSE 0 END) AS hoy,
-             SUM(CASE WHEN date(COALESCE(n.fecha_pub, n.first_seen_at)) >= date('now', '-1 days')
+             SUM(CASE WHEN date(n.fecha_pub) >= date('now', '-1 days')
                      THEN 1 ELSE 0 END) AS ultimas_24h,
-             SUM(CASE WHEN date(COALESCE(n.fecha_pub, n.first_seen_at)) >= date('now', '-3 days')
+             SUM(CASE WHEN date(n.fecha_pub) >= date('now', '-3 days')
                      THEN 1 ELSE 0 END) AS ultimos_3d
            FROM noticias_fuentes f
            LEFT JOIN noticias n ON n.fuente_id = f.id
-           WHERE f.pais=? AND f.activa=1""", (PAIS,),
+           WHERE f.pais=? AND f.activa=1""", (pais,),
     ).fetchone()
     return {
         "Fuentes activas": r["n_fuentes"] or 0,
@@ -200,36 +210,47 @@ VENTANAS = {
 
 
 @st.cache_data(ttl=60)
-def load_noticias(ventana_sql: str,
-                   categoria: str | None = None,
+def load_noticias(pais: str,
+                   ventana_sql: str,
+                   categoria_fuente: str | None = None,
                    fuente: str | None = None,
                    busqueda: str | None = None,
                    limit: int = 300) -> pd.DataFrame:
+    """Carga noticias y clasifica cada una por tema (keywords).
+    Filtro estricto: fecha_pub debe existir y caer en la ventana."""
     conn = get_conn()
     sql = f"""
       SELECT n.url AS "Enlace",
              n.titulo AS "Título",
              n.resumen AS "Resumen",
-             COALESCE(n.fecha_pub, n.first_seen_at) AS "Fecha",
+             n.fecha_pub AS "Fecha",
              f.nombre AS "Fuente",
-             f.categoria AS "Categoría"
+             f.categoria AS "Categoría fuente"
       FROM noticias n
       JOIN noticias_fuentes f ON f.id = n.fuente_id
       WHERE f.pais = ? AND f.activa = 1
-        AND date(COALESCE(n.fecha_pub, n.first_seen_at)) >= {ventana_sql}
+        AND n.fecha_pub IS NOT NULL
+        AND date(n.fecha_pub) >= {ventana_sql}
     """
-    params: list = [PAIS]
-    if categoria:
-        sql += " AND f.categoria = ?"; params.append(categoria)
+    params: list = [pais]
+    if categoria_fuente:
+        sql += " AND f.categoria = ?"; params.append(categoria_fuente)
     if fuente:
         sql += " AND f.nombre = ?"; params.append(fuente)
     if busqueda:
         sql += " AND (LOWER(n.titulo) LIKE ? OR LOWER(COALESCE(n.resumen,'')) LIKE ?)"
         q = f"%{busqueda.lower()}%"
         params.extend([q, q])
-    sql += " ORDER BY COALESCE(n.fecha_pub, n.first_seen_at) DESC LIMIT ?"
+    sql += " ORDER BY n.fecha_pub DESC LIMIT ?"
     params.append(limit)
-    return pd.read_sql_query(sql, conn, params=params)
+    df = pd.read_sql_query(sql, conn, params=params)
+    if not df.empty:
+        df["Temas"] = df.apply(
+            lambda row: clasificar(row["Título"], row["Resumen"]), axis=1
+        )
+    else:
+        df["Temas"] = []
+    return df
 
 
 # ====================== UI ======================
@@ -247,7 +268,7 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-if not has_tables():
+if not has_tables(PAIS):
     st.warning(
         "Las tablas de noticias todavía no existen en la DB. "
         "Inicializá corriendo:\n\n"
@@ -258,7 +279,7 @@ if not has_tables():
     st.stop()
 
 # KPIs
-kpis = load_kpis()
+kpis = load_kpis(PAIS)
 cols = st.columns(len(kpis))
 for col, (label, val) in zip(cols, kpis.items()):
     col.metric(label, f"{val:,}")
@@ -266,72 +287,113 @@ for col, (label, val) in zip(cols, kpis.items()):
 st.markdown("")
 
 # Filtros
-categorias = load_categorias()
-fuentes = load_fuentes()
+categorias_fuente = load_categorias_fuente(PAIS)
+fuentes = load_fuentes(PAIS)
+temas = todos_los_temas()
 
-fc = st.columns([1.1, 1.4, 1.4, 1.5])
+fc1 = st.columns([1.1, 1.4, 1.4])
 TODAS = "Todas"
 TODOS = "Todos"
-sel_ventana = fc[0].selectbox("Ventana", list(VENTANAS.keys()), index=0)
-sel_cat = fc[1].selectbox("Categoría", [TODAS] + categorias)
-sel_fuente = fc[2].selectbox("Fuente", [TODAS] + fuentes)
-busqueda = fc[3].text_input("Buscar en título o resumen", placeholder="ej. AFP, IA, agricultura")
+sel_ventana = fc1[0].selectbox("Ventana", list(VENTANAS.keys()), index=0)
+sel_tema = fc1[1].selectbox("Tema", [TODAS] + temas,
+    help="Clasificación por contenido (título + resumen). Una noticia puede tener varios temas.")
+sel_cat = fc1[2].selectbox("Categoría de fuente", [TODAS] + categorias_fuente,
+    help="Categoría del medio que publica (no del contenido)")
+
+fc2 = st.columns([1.4, 2.5])
+sel_fuente = fc2[0].selectbox("Fuente", [TODAS] + fuentes)
+busqueda = fc2[1].text_input("Buscar en título o resumen",
+    placeholder="ej. AFP, IA, agricultura")
 
 df = load_noticias(
+    pais=PAIS,
     ventana_sql=VENTANAS[sel_ventana],
-    categoria=sel_cat if sel_cat != TODAS else None,
+    categoria_fuente=sel_cat if sel_cat != TODAS else None,
     fuente=sel_fuente if sel_fuente != TODAS else None,
     busqueda=busqueda.strip() if busqueda.strip() else None,
     limit=300,
 )
 
-st.markdown(f"##### {len(df):,} noticia(s) · {sel_ventana.lower()}")
+# Filtro de tema (en pandas, post-clasificación)
+if sel_tema != TODAS and not df.empty:
+    df = df[df["Temas"].apply(lambda lst: sel_tema in (lst or []))]
+
+st.markdown(f"##### {len(df):,} noticia(s) · {sel_ventana.lower()}"
+    + (f" · tema: **{sel_tema}**" if sel_tema != TODAS else ""))
+
+
+def _chips(temas_list: list[str]) -> str:
+    if not temas_list:
+        return ""
+    bg = "background:#EEF2F6;color:var(--ink);"
+    chips = "".join(
+        f'<span style="display:inline-block;{bg}font-size:10px;'
+        'font-weight:700;letter-spacing:.04em;padding:2px 8px;border-radius:999px;'
+        f'margin-right:6px;margin-top:6px;">{t}</span>'
+        for t in temas_list
+    )
+    return f'<div style="margin-top:6px;">{chips}</div>'
+
+
+def _render_card(n) -> None:
+    fecha = _s(n["Fecha"])[:10]
+    titulo = _s(n["Título"]).strip()
+    resumen = _s(n["Resumen"]).strip()
+    if len(resumen) > 240:
+        resumen = resumen[:240] + "…"
+    temas_list = n.get("Temas") if isinstance(n, dict) else n["Temas"]
+    if not isinstance(temas_list, list):
+        temas_list = []
+    st.markdown(
+        f'<div class="noticia-card">'
+        f'<div class="noticia-fuente">{n["Fuente"]} · {fecha}</div>'
+        f'<div class="noticia-titulo">'
+        f'<a href="{n["Enlace"]}" target="_blank" rel="noopener">{titulo}</a>'
+        f'</div>'
+        + (f'<div class="noticia-resumen">{resumen}</div>' if resumen else '')
+        + _chips(temas_list)
+        + '</div>',
+        unsafe_allow_html=True,
+    )
+
 
 if df.empty:
-    st.info("Sin noticias con esos filtros. Probá ajustar la búsqueda o "
-            "ampliar la categoría.")
+    st.info("Sin noticias con esos filtros. Probá ampliar la **Ventana**, "
+            "cambiar el **Tema** a *Todas*, o limpiar la búsqueda.")
 else:
-    # Render como cards (no como dataframe — mejor UX para texto largo)
-    # Agrupar por categoria para visualizacion
-    if sel_cat == TODAS:
-        for cat in df["Categoría"].unique():
-            st.markdown(f'<div class="categoria-eyebrow">{cat}</div>',
-                        unsafe_allow_html=True)
-            sub = df[df["Categoría"] == cat].head(40)
-            for _, n in sub.iterrows():
-                fecha = _s(n["Fecha"])[:10]
-                titulo = _s(n["Título"]).strip()
-                resumen = _s(n["Resumen"]).strip()
-                if len(resumen) > 220:
-                    resumen = resumen[:220] + "…"
-                st.markdown(
-                    f'<div class="noticia-card">'
-                    f'<div class="noticia-fuente">{n["Fuente"]} · {fecha}</div>'
-                    f'<div class="noticia-titulo">'
-                    f'<a href="{n["Enlace"]}" target="_blank" rel="noopener">{titulo}</a>'
-                    f'</div>'
-                    + (f'<div class="noticia-resumen">{resumen}</div>' if resumen else '')
-                    + '</div>',
-                    unsafe_allow_html=True,
-                )
+    if sel_tema != TODAS or sel_cat != TODAS:
+        # Filtro específico: lista plana
+        for _, n in df.head(150).iterrows():
+            _render_card(n)
     else:
-        # Filtro por categoría específica: mostrar sin agrupar
-        for _, n in df.head(80).iterrows():
-            fecha = _s(n["Fecha"])[:10]
-            titulo = _s(n["Título"]).strip()
-            resumen = _s(n["Resumen"]).strip()
-            if len(resumen) > 240:
-                resumen = resumen[:240] + "…"
-            st.markdown(
-                f'<div class="noticia-card">'
-                f'<div class="noticia-fuente">{n["Fuente"]} · {fecha}</div>'
-                f'<div class="noticia-titulo">'
-                f'<a href="{n["Enlace"]}" target="_blank" rel="noopener">{titulo}</a>'
-                f'</div>'
-                + (f'<div class="noticia-resumen">{resumen}</div>' if resumen else '')
-                + '</div>',
-                unsafe_allow_html=True,
-            )
+        # Vista por defecto: agrupar por TEMA detectado en el contenido.
+        # Una noticia con varios temas aparece en cada grupo.
+        from collections import defaultdict
+        grupos: dict[str, list] = defaultdict(list)
+        sin_tema: list = []
+        for _, n in df.iterrows():
+            tlist = n["Temas"] if isinstance(n["Temas"], list) else []
+            if tlist:
+                for t in tlist:
+                    grupos[t].append(n)
+            else:
+                sin_tema.append(n)
+        # Orden: igual que en TEMAS (declarado), luego "Sin tema"
+        for tema in temas:
+            if tema in grupos:
+                st.markdown(f'<div class="categoria-eyebrow">{tema} '
+                    f'<span style="color:var(--ink-mute);font-weight:500;">'
+                    f'· {len(grupos[tema])}</span></div>',
+                    unsafe_allow_html=True)
+                for n in grupos[tema][:30]:
+                    _render_card(n)
+        if sin_tema:
+            st.markdown(f'<div class="categoria-eyebrow">Otros '
+                f'<span style="color:var(--ink-mute);font-weight:500;">'
+                f'· {len(sin_tema)}</span></div>',
+                unsafe_allow_html=True)
+            for n in sin_tema[:20]:
+                _render_card(n)
 
 
 # ---------- Footer ----------
