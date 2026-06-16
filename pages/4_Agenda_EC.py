@@ -167,6 +167,58 @@ def get_conn() -> sqlite3.Connection:
     return conn
 
 
+def _upsert_live_sesiones_ec(events_new) -> int:
+    """Inserta sesiones EC nuevas a la DB usando el mismo pipeline del
+    sync regular (upsert_events + rematch). Asi quedan con metadata y
+    matching de PLs igual que las del cron."""
+    db = _find_db_path()
+    if db is None or not events_new:
+        return 0
+    try:
+        from agenda_ec.sync import upsert_events, rematch_all
+        conn = sqlite3.connect(str(db), check_same_thread=False)
+        try:
+            nuevos, _act = upsert_events(conn, events_new)
+            if nuevos > 0:
+                rematch_all(conn)
+            return nuevos
+        finally:
+            conn.close()
+    except Exception as e:
+        print(f"[live-upsert-agenda-ec] skip: {e}")
+        return 0
+
+
+@st.cache_data(ttl=300)
+def fetch_live_agenda_ec() -> dict:
+    """Consulta el ICS publico de Zimbra (Asamblea Nacional) en VIVO.
+    Auto-upsert a la DB para que aparezcan en la tabla principal.
+    """
+    try:
+        from agenda_ec.sync import download_ics
+        from agenda_ec.ics_parser import parse_events
+        text = download_ics(days_back=30, days_fwd=60, timeout=30)
+        events = list(parse_events(text))
+    except Exception as e:
+        return {"total_api": 0, "total_db": 0, "inserted": 0, "error": str(e)}
+
+    conn = get_conn()
+    try:
+        db_uids = {r[0] for r in conn.execute("SELECT uid FROM sesiones_ec")}
+    finally:
+        conn.close()
+
+    api_events = [e for e in events if e.uid and e.dtstart]
+    new_events = [e for e in api_events if e.uid not in db_uids]
+    inserted = _upsert_live_sesiones_ec(new_events)
+    return {
+        "total_api": len(api_events),
+        "total_db": len(db_uids),
+        "inserted": inserted,
+        "error": None,
+    }
+
+
 @st.cache_data(ttl=60)
 def has_sesiones_table() -> bool:
     conn = get_conn()
@@ -277,19 +329,28 @@ def load_sesiones(fec_inicio: dt.date | None, fec_fin: dt.date | None) -> pd.Dat
 
 @st.cache_data(ttl=60)
 def load_pls_de_sesion(uid: str) -> pd.DataFrame:
-    """Devuelve los PLs identificados en una sesion, con el N. Tramite
-    como URL clickeable al portal Ppless v2. El portal no acepta deep
-    link al detalle del proyecto, asi que linkeamos al home — el usuario
-    pega el N. Tramite en el filtro del portal."""
+    """Devuelve los PLs identificados en una sesion. La columna "Nº tramite"
+    es URL al PDF directo (fileservice publico, sin auth) o al portal home
+    como fallback. Append '#<n_tramite>' al final para que el LinkColumn
+    pueda extraer el numero como display_text via regex.
+    """
     conn = get_conn()
     sql = """
-      SELECT 'https://proyectosdeley.asambleanacional.gob.ec/report?n=' || m.n_tramite
-               AS "Nº trámite",
-             COALESCE(p.titulo, '(no en DB)') AS "Título",
-             COALESCE(p.estado, '—') AS "Estado",
-             COALESCE(p.comision_asignada, '—') AS "Comisión asignada",
-             COALESCE(p.tema, '—') AS "Tema",
-             m.score AS "_score"
+      SELECT
+        COALESCE(
+          (SELECT url FROM documentos
+             WHERE n_tramite = m.n_tramite
+               AND UPPER(COALESCE(fase, '')) LIKE '%PROYECTO%PRESENTADO%'
+             ORDER BY orden ASC LIMIT 1),
+          (SELECT url FROM documentos
+             WHERE n_tramite = m.n_tramite
+             ORDER BY orden ASC LIMIT 1),
+          'https://proyectosdeley.asambleanacional.gob.ec/report?n=' || m.n_tramite
+        ) || '#' || m.n_tramite AS "Nº trámite",
+        COALESCE(p.titulo, '(no en DB)') AS "Título",
+        COALESCE(p.estado, '—') AS "Estado",
+        COALESCE(p.tema, '—') AS "Tema",
+        m.score AS "_score"
       FROM sesion_ec_pl_referenciado m
       LEFT JOIN proyectos p ON p.n_tramite = m.n_tramite
       WHERE m.uid = ? AND m.n_tramite IS NOT NULL
@@ -336,6 +397,24 @@ if not has_sesiones_table():
         "python -m agenda_ec.cli --db proyectos_ec.db update\n```"
     )
     st.stop()
+
+# ---------- Live sync (tiempo real automatico) ----------
+# Lee feed Zimbra, auto-upsert sesiones nuevas a la DB → aparecen en la
+# tabla principal sin clic.
+with st.spinner("Sincronizando agenda en vivo con la Asamblea Nacional..."):
+    try:
+        _live = fetch_live_agenda_ec()
+    except Exception as _e:
+        _live = {"error": str(_e), "inserted": 0, "total_api": 0, "total_db": 0}
+
+if _live.get("inserted", 0) > 0:
+    st.cache_data.clear()
+    st.toast(
+        f"⚡ {_live['inserted']} sesión{'es' if _live['inserted'] != 1 else ''} "
+        f"nueva{'s' if _live['inserted'] != 1 else ''} sincronizada{'s' if _live['inserted'] != 1 else ''} "
+        f"en vivo desde la Asamblea",
+        icon="✓",
+    )
 
 # ---------- KPIs ----------
 totals = kpi_totals()
@@ -446,16 +525,19 @@ if sel_rows:
                 column_config={
                     "Nº trámite": st.column_config.LinkColumn(
                         "Nº trámite",
-                        # Extrae el numero (despues de "?n=") para mostrarlo como texto
-                        display_text=r".*\?n=(\d+)",
-                        help="Click para abrir el portal Ppless v2 con el filtro aplicado",
+                        # Extrae el n_tramite del fragment '#XXX' al final
+                        # de la URL. Soporta numeros (480824) y alfanumericos
+                        # (AN-GBJL-2024-0092-M).
+                        display_text=r"#([A-Z0-9\-]+)$",
+                        help="Abre el PDF del proyecto directamente (o el portal si "
+                             "aun no enriquecimos sus documentos)",
                     ),
                 },
             )
             st.caption(
-                "💡 Click en el Nº trámite abre el portal Ppless v2 de la Asamblea. "
-                "El portal no acepta deep link al detalle: pegá el número en el "
-                "filtro \"Nro. Trámite\" del portal para ver el proyecto."
+                "💡 Click en el Nº trámite abre el PDF del proyecto directamente. "
+                "Si todavía no tenemos sus documentos enriquecidos, abre el "
+                "portal Ppless v2 (pegá el número en el filtro)."
             )
         else:
             st.info("No se identificaron PLs específicos en esta sesión "

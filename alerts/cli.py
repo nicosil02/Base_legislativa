@@ -54,12 +54,31 @@ def cmd_send(args):
     from alerts.build import build_alert, has_content, count_items
     from alerts.template import render_html, render_subject
 
-    payload = build_alert()
-    n = count_items(payload)
-    has = has_content(payload)
     today = _today_str()
     state = _load_state()
     already_sent_today = state.get(today, {}).get("sent", False)
+
+    # Filtro "desde la ultima alerta": en vez de fijo 24h hacia atras,
+    # buscamos el sent_at de la entrada mas reciente con sent=True.
+    # Asi cada cambio sale 1 vez en la primera alerta despues de su
+    # fecha — sin solapar dias si la corrida diaria es regular, y sin
+    # perder cambios si fallo algun dia (los acumula hasta la proxima).
+    # Fallback: si no hay entradas previas, build_alert usa 24h default.
+    since_iso = None
+    sent_entries = [
+        e for e in state.values()
+        if isinstance(e, dict) and e.get("sent") and e.get("sent_at")
+    ]
+    if sent_entries:
+        sent_entries.sort(key=lambda e: e["sent_at"], reverse=True)
+        since_iso = sent_entries[0]["sent_at"]
+        print(f"[alerts] filtro desde ultima alerta: since={since_iso}")
+    else:
+        print("[alerts] sin alerta previa, usando window default 24h")
+
+    payload = build_alert(since_iso=since_iso)
+    n = count_items(payload)
+    has = has_content(payload)
 
     print("[alerts] fecha=" + today + " slot=" + args.slot +
           " contenido=" + str(n) + " items already_sent_today=" + str(already_sent_today))

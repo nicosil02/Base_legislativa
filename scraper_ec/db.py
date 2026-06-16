@@ -88,6 +88,34 @@ CREATE TABLE IF NOT EXISTS documentos (
 );
 CREATE INDEX IF NOT EXISTS idx_docs_tramite ON documentos(n_tramite);
 CREATE UNIQUE INDEX IF NOT EXISTS uq_docs_tramite_url ON documentos(n_tramite, url);
+
+-- Unificaciones de proyectos de ley (Asamblea Nacional EC).
+-- Cuando varios PLs sobre la misma materia se unifican para tratamiento
+-- conjunto, los marcamos como miembros de un mismo "grupo". Un PL puede
+-- estar en 0 o 1 grupo (FK NULL = no unificado).
+--
+-- Fuente:
+--   - Manual via CLI (marcar-unificacion) mientras no scrapeamos el portal
+--   - Futuro: Playwright en el detalle del PL en Ppless v2
+CREATE TABLE IF NOT EXISTS unificacion_grupos (
+  id              INTEGER PRIMARY KEY AUTOINCREMENT,
+  nombre          TEXT,                          -- "Reformas a Inquilinato", etc.
+  descripcion     TEXT,
+  n_tramite_principal TEXT,                      -- el "lead" del grupo (opcional)
+  created_at      TEXT NOT NULL,
+  updated_at      TEXT NOT NULL,
+  source          TEXT NOT NULL DEFAULT 'manual' -- manual | portal | inferido
+);
+
+CREATE TABLE IF NOT EXISTS unificacion_pl (
+  grupo_id        INTEGER NOT NULL,
+  n_tramite       TEXT NOT NULL,
+  agregado_at     TEXT NOT NULL,
+  PRIMARY KEY (grupo_id, n_tramite),
+  FOREIGN KEY (grupo_id) REFERENCES unificacion_grupos(id) ON DELETE CASCADE,
+  FOREIGN KEY (n_tramite) REFERENCES proyectos(n_tramite)
+);
+CREATE INDEX IF NOT EXISTS idx_unif_pl_tramite ON unificacion_pl(n_tramite);
 """
 
 
@@ -131,6 +159,93 @@ class Database:
     def init_schema(self) -> None:
         with self.tx() as c:
             c.executescript(SCHEMA)
+            # Migracion idempotente: agregar columna es_unificado si no existe
+            try:
+                cols = [r[1] for r in c.execute("PRAGMA table_info(proyectos)")]
+                if "es_unificado" not in cols:
+                    c.execute(
+                        "ALTER TABLE proyectos ADD COLUMN es_unificado INTEGER NOT NULL DEFAULT 0"
+                    )
+                if "unificado_at" not in cols:
+                    c.execute(
+                        "ALTER TABLE proyectos ADD COLUMN unificado_at TEXT"
+                    )
+            except Exception:
+                pass
+
+    # ---------- unificaciones ----------
+    def crear_grupo_unificacion(
+        self,
+        n_tramites: list[str],
+        nombre: str | None = None,
+        descripcion: str | None = None,
+        n_tramite_principal: str | None = None,
+        source: str = "manual",
+    ) -> int:
+        """Crea un grupo de unificacion con N proyectos. Si alguno ya
+        pertenece a otro grupo, se lo saca de el primero.
+
+        Returns: grupo_id (INT) creado.
+        """
+        if not n_tramites:
+            raise ValueError("Se requiere al menos 1 n_tramite")
+        n_tramites = list(dict.fromkeys(n_tramites))  # dedupe preservando orden
+        if n_tramite_principal and n_tramite_principal not in n_tramites:
+            n_tramites = [n_tramite_principal] + n_tramites
+        now = now_iso()
+        with self.tx() as c:
+            cur = c.execute(
+                """INSERT INTO unificacion_grupos
+                   (nombre, descripcion, n_tramite_principal, created_at,
+                    updated_at, source)
+                   VALUES (?, ?, ?, ?, ?, ?)""",
+                (nombre, descripcion, n_tramite_principal or n_tramites[0],
+                 now, now, source),
+            )
+            grupo_id = cur.lastrowid
+            for n in n_tramites:
+                # Si el PL ya esta en otro grupo, removerlo
+                c.execute("DELETE FROM unificacion_pl WHERE n_tramite = ?", (n,))
+                c.execute(
+                    """INSERT INTO unificacion_pl (grupo_id, n_tramite, agregado_at)
+                       VALUES (?, ?, ?)""",
+                    (grupo_id, n, now),
+                )
+        return grupo_id
+
+    def listar_grupos_unificacion(self) -> list[dict]:
+        """Devuelve todos los grupos con sus miembros y conteo."""
+        rows = self.conn.execute(
+            """SELECT g.id, g.nombre, g.descripcion, g.n_tramite_principal,
+                      g.source, g.created_at,
+                      COUNT(up.n_tramite) AS n_pls,
+                      GROUP_CONCAT(up.n_tramite, ',') AS miembros
+               FROM unificacion_grupos g
+               LEFT JOIN unificacion_pl up ON up.grupo_id = g.id
+               GROUP BY g.id
+               ORDER BY n_pls DESC, g.id DESC"""
+        ).fetchall()
+        return [dict(r) for r in rows]
+
+    def borrar_grupo_unificacion(self, grupo_id: int) -> None:
+        with self.tx() as c:
+            c.execute("DELETE FROM unificacion_grupos WHERE id = ?", (grupo_id,))
+            # CASCADE deberia borrar unificacion_pl, pero por si acaso:
+            c.execute("DELETE FROM unificacion_pl WHERE grupo_id = ?", (grupo_id,))
+
+    def get_unificacion_de(self, n_tramite: str) -> dict | None:
+        """Devuelve el grupo (con miembros) al que pertenece un PL, o None."""
+        r = self.conn.execute(
+            """SELECT g.id, g.nombre, g.descripcion, g.n_tramite_principal,
+                      GROUP_CONCAT(up2.n_tramite, ',') AS miembros
+               FROM unificacion_pl up
+               JOIN unificacion_grupos g ON g.id = up.grupo_id
+               JOIN unificacion_pl up2 ON up2.grupo_id = up.grupo_id
+               WHERE up.n_tramite = ?
+               GROUP BY g.id""",
+            (n_tramite,),
+        ).fetchone()
+        return dict(r) if r else None
 
     # ---------- proyectos ----------
     def get_known(self, n_tramite: str) -> sqlite3.Row | None:

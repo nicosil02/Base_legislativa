@@ -654,7 +654,6 @@ with ag_cols[1]:
 with ag_cols[2]:
     st.markdown("&nbsp;", unsafe_allow_html=True)
 
-
 # ====================== Herramienta 3: Noticias y coyuntura ======================
 @st.cache_data(ttl=60)
 def stats_noticias(pais: str) -> dict:
