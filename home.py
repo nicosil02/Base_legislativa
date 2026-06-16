@@ -654,36 +654,106 @@ with ag_cols[1]:
 with ag_cols[2]:
     st.markdown("&nbsp;", unsafe_allow_html=True)
 
-# ====================== Status: actualizado hace cuánto ======================
-st.markdown('<div class="tool-block"></div>', unsafe_allow_html=True)
-st.markdown('<div class="section-label">Estado del sistema</div>', unsafe_allow_html=True)
-st.markdown(
-    '<p style="font-size:13px;color:#869FB2;margin-bottom:6px;">Actualizado '
-    'automáticamente 4 veces al día (08:00, 12:00, 16:00, 22:00 hora Lima)</p>',
-    unsafe_allow_html=True,
-)
 
-_fresh = get_freshness()
-_sources = [
-    ("PE · Proyectos de ley",   _fresh.get("pe_proyectos")),
-    ("PE · Agenda de comisiones", _fresh.get("pe_sesiones")),
-    ("EC · Proyectos de ley",   _fresh.get("ec_proyectos")),
-    ("EC · Agenda parlamentaria", _fresh.get("ec_agenda")),
-    ("Alertas diarias (email 9 AM)", _fresh.get("alertas_diarias")),
-]
-_cards_html = []
-for _label, _ts in _sources:
-    _txt, _estado = _human_delta(_ts)
-    _cards_html.append(
-        f'<div class="freshness-card">'
-        f'<div class="label">{_label}</div>'
-        f'<div class="value"><span class="dot {_estado}"></span>{_txt}</div>'
-        f'</div>'
-    )
+# ====================== Herramienta 3: Noticias y coyuntura ======================
+@st.cache_data(ttl=60)
+def stats_noticias(pais: str) -> dict:
+    """Cuenta fuentes activas + noticias capturadas para un pais."""
+    db = _find_db_path()
+    if db is None:
+        return {"fuentes": None, "noticias": None}
+    try:
+        conn = sqlite3.connect(f"file:{db}?mode=ro", uri=True)
+        try:
+            existe = conn.execute(
+                "SELECT name FROM sqlite_master WHERE type='table' AND name='noticias_fuentes'"
+            ).fetchone()
+            if not existe:
+                return {"fuentes": 0, "noticias": 0}
+            fuentes = conn.execute(
+                "SELECT COUNT(*) FROM noticias_fuentes WHERE pais=? AND activa=1",
+                (pais,),
+            ).fetchone()[0]
+            noticias = conn.execute(
+                "SELECT COUNT(n.id) FROM noticias n JOIN noticias_fuentes f "
+                "ON f.id=n.fuente_id WHERE f.pais=?", (pais,),
+            ).fetchone()[0]
+            return {"fuentes": fuentes, "noticias": noticias}
+        finally:
+            conn.close()
+    except Exception:
+        return {"fuentes": None, "noticias": None}
+
+
+_st_pe = stats_noticias("PE")
+fuentes_pe = f"{_st_pe['fuentes']:,}" if _st_pe["fuentes"] is not None else "—"
+noticias_pe = f"{_st_pe['noticias']:,}" if _st_pe["noticias"] is not None else "—"
+
+_st_ec = stats_noticias("EC")
+fuentes_ec = f"{_st_ec['fuentes']:,}" if _st_ec["fuentes"] is not None else "—"
+noticias_ec = f"{_st_ec['noticias']:,}" if _st_ec["noticias"] is not None else "—"
+
+st.markdown('<div class="tool-block"></div>', unsafe_allow_html=True)
+st.markdown('<div class="section-label">Herramienta</div>', unsafe_allow_html=True)
+st.markdown('<h2 class="tool-title">Noticias y coyuntura</h2>', unsafe_allow_html=True)
 st.markdown(
-    '<div class="freshness-grid">' + "".join(_cards_html) + '</div>',
+    '<p class="tool-sub">Mapeo de medios, instituciones, ministerios, agencias '
+    'regulatorias y gremios sectoriales. Cobertura de Coyuntura Política, '
+    'Salud, Agrarios, Tech, KYC/AML.</p>',
     unsafe_allow_html=True,
 )
+st.markdown('<div class="section-label">Países</div>', unsafe_allow_html=True)
+nt_cols = st.columns([1, 1, 1])
+with nt_cols[0]:
+    st.markdown(
+        f"""
+        <a href="/peru-noticias" target="_self" class="country-card">
+            <div class="country-header">
+                <div class="flag">🇵🇪</div>
+                <div class="name">Perú</div>
+            </div>
+            <div class="institution">Medios, instituciones, gremios sectoriales</div>
+            <div class="stats">
+                <div>
+                    <div class="stat-num">{fuentes_pe}</div>
+                    <div class="stat-label">Fuentes</div>
+                </div>
+                <div>
+                    <div class="stat-num">{noticias_pe}</div>
+                    <div class="stat-label">Noticias</div>
+                </div>
+            </div>
+            <div class="cta">Ver noticias ↗</div>
+        </a>
+        """,
+        unsafe_allow_html=True,
+    )
+with nt_cols[1]:
+    st.markdown(
+        f"""
+        <a href="/ecuador-noticias" target="_self" class="country-card">
+            <div class="country-header">
+                <div class="flag">🇪🇨</div>
+                <div class="name">Ecuador</div>
+            </div>
+            <div class="institution">Medios, instituciones, gremios sectoriales</div>
+            <div class="stats">
+                <div>
+                    <div class="stat-num">{fuentes_ec}</div>
+                    <div class="stat-label">Fuentes</div>
+                </div>
+                <div>
+                    <div class="stat-num">{noticias_ec}</div>
+                    <div class="stat-label">Noticias</div>
+                </div>
+            </div>
+            <div class="cta">Ver noticias ↗</div>
+        </a>
+        """,
+        unsafe_allow_html=True,
+    )
+with nt_cols[2]:
+    st.markdown("&nbsp;", unsafe_allow_html=True)
 
 # Footer
 st.markdown('<div class="footer-rule"></div>', unsafe_allow_html=True)

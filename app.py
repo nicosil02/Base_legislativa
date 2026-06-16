@@ -116,6 +116,20 @@ def _bootstrap_dbs():
         except Exception as e:
             print(f"[bootstrap] error initializing EC DB from CSV: {e}")
 
+    # Garantizar que el schema completo (incluyendo tablas nuevas como
+    # unificacion_*) existe en la DB EC. Necesario porque los snapshots
+    # commiteados por workflows viejos pueden no tenerlas. init_schema usa
+    # CREATE TABLE IF NOT EXISTS, asi que es idempotente y seguro.
+    if ec_db.exists():
+        try:
+            from scraper_ec.db import Database
+            db = Database(str(ec_db))
+            db.init_schema()
+            db.close()
+        except Exception as e:
+            print(f"[bootstrap] no se pudo asegurar schema EC: {e}")
+
+
 _bootstrap_dbs()
 
 
@@ -369,6 +383,18 @@ agenda_ec = st.Page(
     icon="🇪🇨",
     url_path="ecuador-agenda",
 )
+noticias_pe = st.Page(
+    "pages/5_Noticias_PE.py",
+    title="Perú",
+    icon="🇵🇪",
+    url_path="peru-noticias",
+)
+noticias_ec = st.Page(
+    "pages/6_Noticias_EC.py",
+    title="Ecuador",
+    icon="🇪🇨",
+    url_path="ecuador-noticias",
+)
 
 
 # Sidebar logout deshabilitado mientras el auth gate este off.
@@ -379,6 +405,7 @@ nav = st.navigation(
         "Vali Intelligence": [home],
         "Radar Legislativo": [peru, ecuador],
         "Agenda parlamentaria": [agenda_pe, agenda_ec],
+        "Noticias y coyuntura": [noticias_pe, noticias_ec],
     },
     position="sidebar",
 )
