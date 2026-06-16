@@ -2,14 +2,25 @@ name: Actualizar Peru (PLs + snapshot)
 
 on:
   schedule:
-    # 13:00 UTC = 08:00 Lima — Congreso recien abre
-    - cron: '0 13 * * *'
-    # 17:00 UTC = 12:00 Lima — mitad de la jornada
-    - cron: '0 17 * * *'
-    # 21:00 UTC = 16:00 Lima — cierre horario habil
-    - cron: '0 21 * * *'
-    # 03:00 UTC = 22:00 Lima — corrida nocturna (catch-up dia completo)
-    - cron: '0 3 * * *'
+    # Cada hora durante horas habiles 8 AM - 22 PM Lima (13-03 UTC),
+    # mas corrida nocturna a las 6 AM Lima (11 UTC) para catch-up.
+    # 15 runs/dia x ~2 min = 30 min/dia = 900 min/mes (45% del free tier).
+    # Da actualizacion casi real-time durante horas de actividad legislativa.
+    - cron: '0 13 * * *'  # 8 AM Lima
+    - cron: '0 14 * * *'  # 9 AM
+    - cron: '0 15 * * *'  # 10 AM
+    - cron: '0 16 * * *'  # 11 AM
+    - cron: '0 17 * * *'  # 12 PM
+    - cron: '0 18 * * *'  # 1 PM
+    - cron: '0 19 * * *'  # 2 PM
+    - cron: '0 20 * * *'  # 3 PM
+    - cron: '0 21 * * *'  # 4 PM
+    - cron: '0 22 * * *'  # 5 PM
+    - cron: '0 23 * * *'  # 6 PM
+    - cron: '0 0 * * *'   # 7 PM
+    - cron: '0 1 * * *'   # 8 PM
+    - cron: '0 2 * * *'   # 9 PM
+    - cron: '0 3 * * *'   # 10 PM (corrida principal nocturna)
   workflow_dispatch:
     inputs:
       force_full_sync:
@@ -98,11 +109,53 @@ jobs:
 
       - name: Actualizar agenda de sesiones (PE)
         run: |
-          # Bug encontrado: el modulo sesiones/ existe pero NINGUN workflow lo
-          # corria, por eso la agenda de comisiones del Congreso PE no se
-          # actualizaba. Lo integramos aca para que corra 4x/dia junto con
-          # el sync de proyectos. Sync incremental (~30 seg).
-          timeout 600 python -X utf8 -m sesiones.cli update || echo "[warn] sesiones sync fallo, sigo"
+          # --periodo-leg all itera los 5 periodos legislativos del parlamento
+          # 2021-2026 (2021..2025). La API solo expone datos desde el periodo
+          # 2023 (jul-2023 en adelante); 2021/2022 devuelven 0 y se descartan
+          # solos. Antes corriamos sin flag y por default solo se sincronizaba
+          # el periodo 2025, perdiendo ~1500 sesiones historicas de 2023-2024.
+          # Sync incremental: solo re-pega detalles si el estado cambio.
+          timeout 1200 python -X utf8 -m sesiones.cli update --periodo-leg all || echo "[warn] sesiones sync fallo, sigo"
+
+      - name: Actualizar agendas del Pleno (PE)
+        run: |
+          # Sync de agendas del Pleno via API adp-portal-service. Cobertura
+          # del periodo parlamentario actual (2021-2026, ~177 agendas). Sync
+          # incremental: solo re-pega detalles si cambio el titulo/url.
+          # Primera corrida ~5 min (fetchea detalle de cada agenda); las
+          # siguientes son rapidas (~30 seg) porque solo procesa la del
+          # jueves nuevo + cualquier actualizacion.
+          timeout 900 python -X utf8 -m pleno.cli update --periodo 2021-2026 || echo "[warn] pleno sync fallo, sigo"
+
+      - name: Actualizar mesas de trabajo + eventos del Congreso PE
+        run: |
+          # 1) RSS feed: captura los ultimos posts publicados con URL real
+          #    (para tener el enlace al post individual completo)
+          timeout 300 python -X utf8 -m mesas_tecnicas.cli sync --pages 5 \
+              || echo "[warn] mesas_tecnicas sync RSS fallo, sigo"
+          # 2) Listado por dia: itera /agenda/YYYY/M/D/ para los ultimos
+          #    14 dias y 21 dias futuros, capturando HORA real de cada
+          #    evento. Reemplaza el approach con date input JS que no
+          #    funcionaba. ~30 seg.
+          timeout 300 python -X utf8 -m mesas_tecnicas.cli sync-dias \
+              --days-back 14 --days-fwd 21 \
+              || echo "[warn] mesas_tecnicas sync-dias fallo, sigo"
+
+      - name: Actualizar noticias y coyuntura (PE + EC)
+        run: |
+          # Seed idempotente del catalogo de fuentes + sync RSS de los
+          # ~84 medios/instituciones/gremios mapeados. Captura noticias
+          # de Coyuntura Politica, Instituciones, Salud, Tech, Agrarios,
+          # KYC/AML. Para Ecuador tambien aprovecha que el cron de
+          # refrescar-pe corre 15x/dia (mas frecuente que enriquecer-ec).
+          timeout 600 python -X utf8 -m noticias.cli seed \
+              || echo "[warn] noticias seed fallo, sigo"
+          timeout 600 python -X utf8 -m noticias.cli sync \
+              || echo "[warn] noticias sync fallo, sigo"
+          # Purge: la UI muestra por defecto solo "hoy"; conservamos 7d
+          # como buffer historico para evitar que la DB crezca infinito.
+          timeout 120 python -X utf8 -m noticias.cli purge --dias 7 \
+              || echo "[warn] noticias purge fallo, sigo"
 
       - name: Reclasificar PLs en "Otros" con alta confianza
         run: |
@@ -139,6 +192,7 @@ jobs:
           # actividad del Congreso.
           python -X utf8 -m sistema.heartbeat --db proyectos.db --source pe_proyectos
           python -X utf8 -m sistema.heartbeat --db proyectos.db --source pe_sesiones
+          python -X utf8 -m sistema.heartbeat --db proyectos.db --source pe_pleno || echo "[warn] heartbeat pleno fallo"
 
       - name: Stats final
         run: |
@@ -156,6 +210,12 @@ jobs:
               print(f'[stats] proyectos={total} comisiones={comis} sesiones={sesiones} futuras={futuras} max_fecha={max_fecha}')
           except sqlite3.OperationalError:
               print(f'[stats] proyectos={total} comisiones={comis} (sin tablas sesiones todavia)')
+          try:
+              pleno = c.execute('SELECT COUNT(*) FROM pleno_sesiones').fetchone()[0]
+              pleno_pls = c.execute('SELECT COUNT(*) FROM pleno_pl_referenciado').fetchone()[0]
+              print(f'[stats] pleno_agendas={pleno} pleno_refs_pl={pleno_pls}')
+          except sqlite3.OperationalError:
+              print('[stats] (sin tablas pleno todavia — el primer sync las creara)')
           "
 
       - name: Generar snapshot gz
