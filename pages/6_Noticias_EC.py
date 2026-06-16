@@ -21,6 +21,13 @@ PAIS = "EC"
 PAIS_LABEL = "Ecuador"
 
 
+def _s(v) -> str:
+    """str() seguro: convierte NaN/None a string vacio."""
+    if v is None or (isinstance(v, float) and pd.isna(v)):
+        return ""
+    return str(v)
+
+
 def _find_db_path() -> Path | None:
     here = Path(__file__).resolve().parent
     candidates = [here.parent / "proyectos.db", Path.cwd() / "proyectos.db"]
@@ -292,9 +299,9 @@ else:
                         unsafe_allow_html=True)
             sub = df[df["Categoría"] == cat].head(40)
             for _, n in sub.iterrows():
-                fecha = (n["Fecha"] or "")[:10]
-                titulo = (n["Título"] or "").strip()
-                resumen = (n["Resumen"] or "").strip()
+                fecha = _s(n["Fecha"])[:10]
+                titulo = _s(n["Título"]).strip()
+                resumen = _s(n["Resumen"]).strip()
                 if len(resumen) > 220:
                     resumen = resumen[:220] + "…"
                 st.markdown(
@@ -310,9 +317,9 @@ else:
     else:
         # Filtro por categoría específica: mostrar sin agrupar
         for _, n in df.head(80).iterrows():
-            fecha = (n["Fecha"] or "")[:10]
-            titulo = (n["Título"] or "").strip()
-            resumen = (n["Resumen"] or "").strip()
+            fecha = _s(n["Fecha"])[:10]
+            titulo = _s(n["Título"]).strip()
+            resumen = _s(n["Resumen"]).strip()
             if len(resumen) > 240:
                 resumen = resumen[:240] + "…"
             st.markdown(
