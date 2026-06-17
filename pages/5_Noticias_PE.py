@@ -16,7 +16,7 @@ from pathlib import Path
 import pandas as pd
 import streamlit as st
 
-from noticias.temas import clasificar, todos_los_temas
+from noticias.temas import clasificar, es_normativa, todos_los_temas
 
 
 PAIS = "PE"
@@ -248,8 +248,12 @@ def load_noticias(pais: str,
         df["Temas"] = df.apply(
             lambda row: clasificar(row["Título"], row["Resumen"]), axis=1
         )
+        df["EsNormativa"] = df.apply(
+            lambda row: es_normativa(row["Título"], row["Resumen"]), axis=1
+        )
     else:
         df["Temas"] = []
+        df["EsNormativa"] = False
     return df
 
 
@@ -300,10 +304,12 @@ sel_tema = fc1[1].selectbox("Tema", [TODAS] + temas,
 sel_cat = fc1[2].selectbox("Categoría de fuente", [TODAS] + categorias_fuente,
     help="Categoría del medio que publica (no del contenido)")
 
-fc2 = st.columns([1.4, 2.5])
+fc2 = st.columns([1.4, 2.5, 1.0])
 sel_fuente = fc2[0].selectbox("Fuente", [TODAS] + fuentes)
 busqueda = fc2[1].text_input("Buscar en título o resumen",
     placeholder="ej. AFP, IA, agricultura")
+solo_norma = fc2[2].checkbox("📋 Solo normativa",
+    help="Decretos, resoluciones, leyes, reglamentos publicados")
 
 df = load_noticias(
     pais=PAIS,
@@ -314,25 +320,42 @@ df = load_noticias(
     limit=300,
 )
 
-# Filtro de tema (en pandas, post-clasificación)
+# Filtros post-clasificación (en pandas)
 if sel_tema != TODAS and not df.empty:
     df = df[df["Temas"].apply(lambda lst: sel_tema in (lst or []))]
+if solo_norma and not df.empty:
+    df = df[df["EsNormativa"] == True]  # noqa: E712
 
+_extras = []
+if sel_tema != TODAS:
+    _extras.append(f"tema: **{sel_tema}**")
+if solo_norma:
+    _extras.append("**📋 normativa**")
 st.markdown(f"##### {len(df):,} noticia(s) · {sel_ventana.lower()}"
-    + (f" · tema: **{sel_tema}**" if sel_tema != TODAS else ""))
+    + (" · " + " · ".join(_extras) if _extras else ""))
 
 
-def _chips(temas_list: list[str]) -> str:
-    if not temas_list:
+def _chips(temas_list: list[str], es_norma: bool) -> str:
+    chips_html = []
+    if es_norma:
+        chips_html.append(
+            '<span style="display:inline-block;'
+            'background:#FFE6E6;color:var(--accent-red);'
+            'font-size:10px;font-weight:800;letter-spacing:.04em;'
+            'padding:2px 8px;border-radius:999px;'
+            'margin-right:6px;margin-top:6px;">📋 Normativa</span>'
+        )
+    for t in temas_list or []:
+        chips_html.append(
+            f'<span style="display:inline-block;'
+            'background:#EEF2F6;color:var(--ink);'
+            'font-size:10px;font-weight:700;letter-spacing:.04em;'
+            'padding:2px 8px;border-radius:999px;'
+            f'margin-right:6px;margin-top:6px;">{t}</span>'
+        )
+    if not chips_html:
         return ""
-    bg = "background:#EEF2F6;color:var(--ink);"
-    chips = "".join(
-        f'<span style="display:inline-block;{bg}font-size:10px;'
-        'font-weight:700;letter-spacing:.04em;padding:2px 8px;border-radius:999px;'
-        f'margin-right:6px;margin-top:6px;">{t}</span>'
-        for t in temas_list
-    )
-    return f'<div style="margin-top:6px;">{chips}</div>'
+    return f'<div style="margin-top:6px;">{"".join(chips_html)}</div>'
 
 
 def _render_card(n) -> None:
@@ -341,9 +364,8 @@ def _render_card(n) -> None:
     resumen = _s(n["Resumen"]).strip()
     if len(resumen) > 240:
         resumen = resumen[:240] + "…"
-    temas_list = n.get("Temas") if isinstance(n, dict) else n["Temas"]
-    if not isinstance(temas_list, list):
-        temas_list = []
+    temas_list = n["Temas"] if isinstance(n["Temas"], list) else []
+    es_norma = bool(n.get("EsNormativa") if isinstance(n, dict) else n["EsNormativa"])
     st.markdown(
         f'<div class="noticia-card">'
         f'<div class="noticia-fuente">{n["Fuente"]} · {fecha}</div>'
@@ -351,7 +373,7 @@ def _render_card(n) -> None:
         f'<a href="{n["Enlace"]}" target="_blank" rel="noopener">{titulo}</a>'
         f'</div>'
         + (f'<div class="noticia-resumen">{resumen}</div>' if resumen else '')
-        + _chips(temas_list)
+        + _chips(temas_list, es_norma)
         + '</div>',
         unsafe_allow_html=True,
     )
