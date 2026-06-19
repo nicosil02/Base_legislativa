@@ -17,7 +17,7 @@ import logging
 import re
 from datetime import datetime, timezone
 from email.utils import parsedate_to_datetime
-from urllib.parse import urljoin
+from urllib.parse import urljoin, urlparse
 
 import requests
 
@@ -181,43 +181,180 @@ _RE_TIME_TAG = re.compile(
 )
 
 
+_RE_ANCHOR_LINK = re.compile(
+    r'<a\b[^>]*?href=[\'"]([^\'"#]+)[\'"][^>]*>(.*?)</a>',
+    re.DOTALL | re.IGNORECASE,
+)
+# URLs que claramente no son noticias (nav, login, categorias, social, etc.)
+_NAV_BLACKLIST = (
+    "/category/", "/categoria/", "/categorias/", "/tag/", "/etiqueta/",
+    "/login", "/wp-login", "/contacto", "/contact", "javascript:", "mailto:",
+    "/author/", "/autor/", "/page/", "/feed", "/rss", ".pdf", ".jpg", ".png",
+    "facebook.com", "twitter.com", "x.com", "instagram.com", "youtube.com",
+    "linkedin.com", "whatsapp", "/buscar", "/search", "/nosotros", "/quienes",
+)
+
+
+def _has_slug(url: str) -> bool:
+    """True si algún segmento del path parece slug de artículo (multi-palabra
+    con guiones, p.ej. .../despachos-via-maritima-concentraron). Distingue
+    noticias reales de links de menú (/, /quienes-somos, /noticias)."""
+    path = urlparse(url).path
+    return any(seg.count("-") >= 2 for seg in path.split("/"))
+
+
+def _add_item(out: list, seen: set, url: str, titulo: str, base_url: str,
+              min_len: int, min_words: int, same_domain: bool = False,
+              require_slug: bool = False) -> None:
+    """Valida + normaliza un (url, titulo) candidato y lo agrega a `out`."""
+    titulo = _strip_html(titulo)
+    if not titulo or len(titulo) < min_len:
+        return
+    if min_words and len(titulo.split()) < min_words:
+        return
+    if not url or url.startswith(("javascript:", "#", "mailto:")):
+        return
+    if not url.startswith("http"):
+        url = urljoin(base_url, url)
+    if any(s in url.lower() for s in _NAV_BLACKLIST):
+        return
+    # same_domain: en la pasada laxa solo aceptamos enlaces del propio sitio.
+    # Los portales gob.ec (JS-rendered) no traen noticias en el HTML estatico
+    # pero sí decenas de links a servicios cross-domain (Quipux, Aduana, etc.);
+    # exigir mismo dominio descarta esa basura y deja los artículos reales.
+    if same_domain:
+        host = urlparse(url).netloc.lower().replace("www.", "")
+        base = urlparse(base_url).netloc.lower().replace("www.", "")
+        if host and base and host != base:
+            return
+    if require_slug and not _has_slug(url):
+        return
+    if url in seen:
+        return
+    seen.add(url)
+    out.append({
+        "url": url, "titulo": titulo[:500], "resumen": None,
+        "fecha_pub": None, "autor": None, "tags": None,
+    })
+
+
 def parse_html_listing(html_text: str, base_url: str,
                        max_items: int = 30) -> list[dict]:
-    """Scraping HTML genérico: extrae headings con link dentro de article-like
-    containers. No reemplaza RSS pero da cobertura razonable para sitios sin feed."""
+    """Scraping HTML genérico. Dos pasadas, de mayor a menor precisión:
+      1) <h1-4> con <a> dentro (titulares semánticos clásicos).
+      2) Fallback: cualquier <a href>texto largo</a> que parezca titular.
+         Muchos medios (p.ej. Agraria.pe) ponen el título en el <a> directo,
+         sin heading — la pasada 1 no los ve. La pasada 2 los recupera con
+         filtros estrictos (largo + nº palabras + blacklist de nav) para no
+         meter basura. No funciona en sitios JS-rendered (gob.ec, El Peruano
+         Normas): ahí el HTML estático no trae los artículos."""
     out: list[dict] = []
     seen_urls: set[str] = set()
-    # Buscar todos los <h1-4> con un <a> dentro (titulos clickeables)
+    # Pasada 1: <hN><a>
     for m in _RE_HEADING_LINK.finditer(html_text):
-        url = m.group(1)
-        titulo = _strip_html(m.group(2))
-        if not titulo or len(titulo) < 8:
-            continue
-        if "javascript:" in url.lower() or "#" == url:
-            continue
-        # Resolver URL relativa
-        if not url.startswith("http"):
-            url = urljoin(base_url, url)
-        # Filtrar URLs que claramente no son noticias (categorias, login, etc.)
-        if any(s in url.lower() for s in (
-            "/category/", "/categoria/", "/login", "/wp-login",
-            "/contacto", "/contact", "javascript:", "mailto:"
-        )):
-            continue
-        if url in seen_urls:
-            continue
-        seen_urls.add(url)
-        out.append({
-            "url": url,
-            "titulo": titulo[:500],
-            "resumen": None,
-            "fecha_pub": None,
-            "autor": None,
-            "tags": None,
-        })
+        _add_item(out, seen_urls, m.group(1), m.group(2), base_url,
+                  min_len=8, min_words=0)
+        if len(out) >= max_items:
+            return out
+    # Pasada 2: <a href>titulo largo</a> del MISMO dominio (evita nav/portal)
+    for m in _RE_ANCHOR_LINK.finditer(html_text):
+        _add_item(out, seen_urls, m.group(1), m.group(2), base_url,
+                  min_len=35, min_words=5, same_domain=True, require_slug=True)
         if len(out) >= max_items:
             break
     return out
+
+
+# ============================================================
+# gob.pe: API JSON unificada (noticias + normas) por institucion
+# ============================================================
+# Los portales gob.pe son Angular (JS) — el HTML estatico no trae noticias,
+# pero exponen busquedas.json. Un solo adaptador cubre TODAS las instituciones
+# (MINSA, MIDAGRI, PRODUCE, SENASA, MEF, ...). El slug sale del path de la url.
+
+GOBPE_API = "https://www.gob.pe/busquedas.json"
+_MESES = {m: i for i, m in enumerate(
+    ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto",
+     "septiembre", "octubre", "noviembre", "diciembre"], 1)}
+
+
+def _gobpe_slug(url: str | None) -> str | None:
+    m = re.search(r"/institucion/([^/?#]+)", url or "")
+    if m:
+        return m.group(1)
+    m = re.search(r"gob\.pe/([^/?#]+)", url or "")  # forma corta gob.pe/minsa
+    return m.group(1) if m else None
+
+
+def _parse_gobpe_date(s: str | None) -> str | None:
+    """ '2 de diciembre de 2024 - 6:29 p. m.' -> '2024-12-02T00:00:00Z'.
+    Descarta la hora (suficiente para monitoreo diario)."""
+    if not s:
+        return None
+    m = re.search(r"(\d{1,2})\s+de\s+([a-zñ]+)\s+de\s+(\d{4})", s.lower())
+    if not m:
+        return None
+    mes = _MESES.get(m.group(2))
+    if not mes:
+        return None
+    return f"{int(m.group(3)):04d}-{mes:02d}-{int(m.group(1)):02d}T00:00:00Z"
+
+
+def fetch_gobpe(fuente: dict, session: requests.Session,
+                timeout: int = 20) -> list[dict]:
+    slug = _gobpe_slug(fuente.get("url"))
+    if not slug:
+        return []
+    # normas solo para reguladores (salud/agro/financiero); el resto seria ruido.
+    cat = (fuente.get("categoria") or "").lower()
+    tipos = ["noticias"]
+    if any(k in cat for k in ("salud", "agrari", "kyc", "aml")):
+        tipos.append("normas")
+    out: list[dict] = []
+    for tipo in tipos:
+        params = [("contenido[]", tipo), ("institucion[]", slug),
+                  ("sort_by", "published_date")]
+        try:
+            r = session.get(GOBPE_API, params=params, timeout=timeout)
+            r.raise_for_status()
+            results = r.json()["data"]["attributes"]["results"]
+        except Exception as e:
+            log.warning("gobpe %s/%s: %s", slug, tipo, e)
+            continue
+        for it in results:
+            href = re.search(r'href=[\'"]([^\'"]+)', it.get("url", "") or "")
+            titulo = _strip_html(it.get("name_with_parent") or "")
+            if not href or not titulo:
+                continue
+            out.append({
+                "url": urljoin("https://www.gob.pe", href.group(1)),
+                "titulo": titulo[:500],
+                "resumen": (_strip_html(it.get("content") or "")[:500]) or None,
+                "fecha_pub": _parse_gobpe_date(it.get("publication")),
+                "autor": None,
+                "tags": tipo,  # 'noticias' | 'normas' (para badge/filtro en UI)
+            })
+    return out
+
+
+def _discover_rss(html_text: str, base_url: str,
+                  session: requests.Session, timeout: int) -> str | None:
+    """Autodiscovery: <link rss> o /feed/ (WordPress). Auto-sana feeds rotos."""
+    m = re.search(
+        r'<link[^>]+type=["\']application/(?:rss|atom)\+xml["\'][^>]*>',
+        html_text, re.IGNORECASE)
+    if m:
+        h = re.search(r'href=["\']([^"\']+)', m.group(0))
+        if h:
+            return urljoin(base_url, h.group(1))
+    feed = urljoin(base_url, "/feed/")
+    try:
+        r = session.get(feed, timeout=timeout)
+        if r.ok and ("<rss" in r.text[:400] or "<feed" in r.text[:400]):
+            return feed
+    except Exception:
+        pass
+    return None
 
 
 # ============================================================
@@ -232,6 +369,8 @@ def fetch_fuente(fuente: dict, session: requests.Session | None = None,
     tipo = (fuente.get("tipo") or "manual").lower()
     if tipo == "manual":
         return []
+    if tipo in ("gobpe", "api"):
+        return fetch_gobpe(fuente, s, timeout=timeout)
     if tipo == "rss":
         url = fuente.get("rss_url") or fuente.get("url")
         if not url:
@@ -239,10 +378,24 @@ def fetch_fuente(fuente: dict, session: requests.Session | None = None,
         try:
             r = s.get(url, timeout=timeout)
             r.raise_for_status()
-            return parse_rss_feed(r.text)
+            items = parse_rss_feed(r.text)
+            if items:
+                return items
         except Exception as e:
             log.warning("RSS fail %s (%s): %s", fuente["nombre"], url, e)
-            return []
+        # Feed vacio o roto: intentar autodiscovery desde la pagina principal.
+        page = fuente.get("url")
+        if page and page != url:
+            try:
+                r = s.get(page, timeout=timeout)
+                feed = _discover_rss(r.text, page, s, timeout)
+                if feed:
+                    r2 = s.get(feed, timeout=timeout)
+                    r2.raise_for_status()
+                    return parse_rss_feed(r2.text)
+            except Exception as e:
+                log.warning("autodiscover fail %s: %s", fuente["nombre"], e)
+        return []
     if tipo == "html":
         url = fuente.get("url")
         if not url:
