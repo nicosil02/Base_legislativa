@@ -127,7 +127,7 @@ class Database:
         if solo_activas:
             sql += " AND activa=1"
         if solo_scrapeables:
-            sql += " AND tipo IN ('rss','html','api')"
+            sql += " AND tipo IN ('rss','html','api','gobpe')"
         sql += " ORDER BY categoria, nombre"
         return [dict(r) for r in self.conn.execute(sql, params)]
 

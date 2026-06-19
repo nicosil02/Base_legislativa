@@ -25,3 +25,6 @@ update.log
 !data/users.json
 !data/proyectos_ec.db.gz
 scripts/recon_agenda_output.json
+
+# Proyecto aparte (mapas electorales geopandas), creado aquí por error
+mapa_electoral/

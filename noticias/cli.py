@@ -42,7 +42,7 @@ def cmd_list_fuentes(args) -> int:
             solo_activas=not args.todas,
         )
         if args.scrapeables:
-            fuentes = [f for f in fuentes if f["tipo"] in ("rss", "html", "api")]
+            fuentes = [f for f in fuentes if f["tipo"] in ("rss", "html", "api", "gobpe")]
         if not fuentes:
             print("Sin fuentes con esos filtros.")
             return 0
@@ -54,7 +54,7 @@ def cmd_list_fuentes(args) -> int:
                 cat_actual = f["categoria"]
                 print(f"\n=== {cat_actual} ===")
             tipo_marker = {
-                "rss": "📡", "html": "🌐", "api": "⚙️",
+                "rss": "📡", "html": "🌐", "api": "⚙️", "gobpe": "⚙️",
                 "twitter": "🐦", "manual": "✋",
             }.get(f["tipo"], "?")
             print(f"  {tipo_marker} [{f['pais']}] {f['nombre']}")
@@ -189,7 +189,7 @@ def build_parser() -> argparse.ArgumentParser:
     su.add_argument("--nombre", required=True)
     su.add_argument("--url")
     su.add_argument("--rss")
-    su.add_argument("--tipo", choices=["rss", "html", "api", "twitter", "manual"])
+    su.add_argument("--tipo", choices=["rss", "html", "api", "gobpe", "twitter", "manual"])
     su.set_defaults(func=cmd_set_url)
 
     return p
