@@ -312,8 +312,11 @@ def fetch_gobpe(fuente: dict, session: requests.Session,
         tipos.append("normas")
     out: list[dict] = []
     for tipo in tipos:
+        # OJO: sort_by=published_date NO ordena por fecha (devuelve normas de
+        # 2020/2024). sort_by=recent sí trae lo más nuevo primero — crítico
+        # para que las normas caigan dentro de la ventana y no las purgue.
         params = [("contenido[]", tipo), ("institucion[]", slug),
-                  ("sort_by", "published_date")]
+                  ("sort_by", "recent")]
         try:
             r = session.get(GOBPE_API, params=params, timeout=timeout)
             r.raise_for_status()
