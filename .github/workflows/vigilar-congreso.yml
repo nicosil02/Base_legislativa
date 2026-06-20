@@ -1,0 +1,53 @@
+name: Vigilar Congreso en vivo (Fase 0)
+
+# Detecta cuando el Pleno o una comision ordinaria entra EN VIVO en YouTube
+# y avisa por WhatsApp. Repo publico => minutos de Actions gratis.
+# NOTA: el cron de GitHub se atrasa 0-15 min en horas pico; como las sesiones
+# duran horas, igual se capturan. Para pruebas usar "Run workflow" (dispatch).
+
+on:
+  schedule:
+    # Cada 10 min en horario de actividad parlamentaria (Lima = UTC-5).
+    # 13:00-03:00 UTC = 8 AM - 10 PM Lima.
+    - cron: '*/10 13-23 * * 1-5'
+    - cron: '*/10 0-3 * * 2-6'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: vigilar-congreso
+  cancel-in-progress: false
+
+jobs:
+  vigilar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Instalar deps
+        run: pip install -q yt-dlp requests
+
+      - name: Detectar y notificar
+        env:
+          CALLMEBOT_PHONE: ${{ secrets.CALLMEBOT_PHONE }}
+          CALLMEBOT_APIKEY: ${{ secrets.CALLMEBOT_APIKEY }}
+          PYTHONIOENCODING: utf-8
+        run: python -X utf8 -m congreso_live.cli check || echo "[warn] check fallo, sigo"
+
+      - name: Commitear estado (dedupe + log de sesiones)
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if [ -n "$(git status --porcelain data/congreso_live_state.json)" ]; then
+            git add data/congreso_live_state.json
+            git commit -m "Congreso live: estado $(date -u +%Y-%m-%d-%H%M) [skip ci]"
+            git push || echo "[warn] push fallo, sigo"
+          else
+            echo "sin cambios de estado"
+          fi
