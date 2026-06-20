@@ -65,6 +65,29 @@ def test_solo_noticias_si_no_es_regulador():
     assert len(items) == 1 and items[0]["tags"] == "noticias", items
 
 
+def test_normas_titulo_legible():
+    """En normas, name_with_parent es solo el codigo -> titulo = codigo + content."""
+    sample = {"data": {"attributes": {"results": [
+        {"name_with_parent": "0397-2024-MIDAGRI",
+         "content": "Autorizar el registro del plaguicida X",
+         "publication": "1 de marzo de 2026",
+         "url": '<a href="/institucion/midagri/normas/9-x">x</a>'}]}}}
+
+    class R:
+        status_code = 200
+        def raise_for_status(self): pass
+        def json(self): return sample
+    class Sx:
+        def get(self, *a, **k): return R()
+
+    items = S.fetch_gobpe(
+        {"url": "https://www.gob.pe/institucion/midagri/noticias",
+         "categoria": "Temas Agrarios"}, Sx())
+    # categoria agraria -> 2 pasadas; la de normas debe unir codigo + desc
+    norma = [i for i in items if i["tags"] == "normas"][0]
+    assert norma["titulo"] == "0397-2024-MIDAGRI — Autorizar el registro del plaguicida X", norma["titulo"]
+
+
 if __name__ == "__main__":
     for name, fn in sorted(globals().items()):
         if name.startswith("test_") and callable(fn):

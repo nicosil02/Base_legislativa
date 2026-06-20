@@ -323,13 +323,21 @@ def fetch_gobpe(fuente: dict, session: requests.Session,
             continue
         for it in results:
             href = re.search(r'href=[\'"]([^\'"]+)', it.get("url", "") or "")
-            titulo = _strip_html(it.get("name_with_parent") or "")
+            nombre = _strip_html(it.get("name_with_parent") or "")
+            content = _strip_html(it.get("content") or "")
+            # En normas, name_with_parent es solo el codigo (ej "0397-2024-MIDAGRI");
+            # la descripcion real esta en content. Mostramos "codigo — descripcion"
+            # para que el titulo sea legible y clasificable por tema.
+            if tipo == "normas":
+                titulo = f"{nombre} — {content}" if (nombre and content) else (content or nombre)
+            else:
+                titulo = nombre
             if not href or not titulo:
                 continue
             out.append({
                 "url": urljoin("https://www.gob.pe", href.group(1)),
                 "titulo": titulo[:500],
-                "resumen": (_strip_html(it.get("content") or "")[:500]) or None,
+                "resumen": content[:500] or None,
                 "fecha_pub": _parse_gobpe_date(it.get("publication")),
                 "autor": None,
                 "tags": tipo,  # 'noticias' | 'normas' (para badge/filtro en UI)
