@@ -225,7 +225,8 @@ def load_noticias(pais: str,
              n.resumen AS "Resumen",
              n.fecha_pub AS "Fecha",
              f.nombre AS "Fuente",
-             f.categoria AS "Categoría fuente"
+             f.categoria AS "Categoría fuente",
+             n.tags AS "Tags"
       FROM noticias n
       JOIN noticias_fuentes f ON f.id = n.fuente_id
       WHERE f.pais = ? AND f.activa = 1
@@ -249,7 +250,10 @@ def load_noticias(pais: str,
             lambda row: clasificar(row["Título"], row["Resumen"]), axis=1
         )
         df["EsNormativa"] = df.apply(
-            lambda row: es_normativa(row["Título"], row["Resumen"]), axis=1
+            # tags=="normas" viene del endpoint de normas de gob.pe (señal
+            # autoritativa); el keyword es fallback para RSS/HTML.
+            lambda row: row.get("Tags") == "normas"
+            or es_normativa(row["Título"], row["Resumen"]), axis=1
         )
     else:
         df["Temas"] = []
