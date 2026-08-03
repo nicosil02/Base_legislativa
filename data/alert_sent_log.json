@@ -294,5 +294,205 @@
       "nicolas.silva@valiconsultores.com"
     ],
     "errors": 0
+  },
+  "2026-06-20": {
+    "sent": true,
+    "sent_at": "2026-06-20T13:48:29Z",
+    "slot": "09",
+    "items": 4,
+    "recipients": [
+      "nicolas.silva@valiconsultores.com"
+    ],
+    "errors": 0
+  },
+  "2026-06-22": {
+    "sent": true,
+    "sent_at": "2026-06-22T16:44:31Z",
+    "slot": "09",
+    "items": 10,
+    "recipients": [
+      "nicolas.silva@valiconsultores.com"
+    ],
+    "errors": 0
+  },
+  "2026-06-23": {
+    "sent": true,
+    "sent_at": "2026-06-23T14:36:14Z",
+    "slot": "09",
+    "items": 3,
+    "recipients": [
+      "nicolas.silva@valiconsultores.com"
+    ],
+    "errors": 0
+  },
+  "2026-06-24": {
+    "sent": true,
+    "sent_at": "2026-06-24T14:22:08Z",
+    "slot": "09",
+    "items": 17,
+    "recipients": [
+      "nicolas.silva@valiconsultores.com"
+    ],
+    "errors": 0
+  },
+  "2026-06-25": {
+    "sent": true,
+    "sent_at": "2026-06-25T14:19:45Z",
+    "slot": "09",
+    "items": 18,
+    "recipients": [
+      "nicolas.silva@valiconsultores.com"
+    ],
+    "errors": 0
+  },
+  "2026-06-26": {
+    "sent": true,
+    "sent_at": "2026-06-26T15:20:30Z",
+    "slot": "09",
+    "items": 1,
+    "recipients": [
+      "nicolas.silva@valiconsultores.com"
+    ],
+    "errors": 0
+  },
+  "2026-06-27": {
+    "sent": true,
+    "sent_at": "2026-06-27T13:20:30Z",
+    "slot": "09",
+    "items": 3,
+    "recipients": [
+      "nicolas.silva@valiconsultores.com"
+    ],
+    "errors": 0
+  },
+  "2026-06-30": {
+    "sent": true,
+    "sent_at": "2026-06-30T15:23:00Z",
+    "slot": "09",
+    "items": 1,
+    "recipients": [
+      "nicolas.silva@valiconsultores.com"
+    ],
+    "errors": 0
+  },
+  "2026-07-01": {
+    "sent": true,
+    "sent_at": "2026-07-01T14:27:28Z",
+    "slot": "09",
+    "items": 1,
+    "recipients": [
+      "nicolas.silva@valiconsultores.com"
+    ],
+    "errors": 0
+  },
+  "2026-07-02": {
+    "sent": true,
+    "sent_at": "2026-07-02T13:45:36Z",
+    "slot": "09",
+    "items": 1,
+    "recipients": [
+      "nicolas.silva@valiconsultores.com"
+    ],
+    "errors": 0
+  },
+  "2026-07-03": {
+    "sent": true,
+    "sent_at": "2026-07-03T13:50:47Z",
+    "slot": "09",
+    "items": 12,
+    "recipients": [
+      "nicolas.silva@valiconsultores.com"
+    ],
+    "errors": 0
+  },
+  "2026-07-04": {
+    "sent": true,
+    "sent_at": "2026-07-04T13:09:52Z",
+    "slot": "09",
+    "items": 4,
+    "recipients": [
+      "nicolas.silva@valiconsultores.com"
+    ],
+    "errors": 0
+  },
+  "2026-07-07": {
+    "sent": true,
+    "sent_at": "2026-07-07T14:16:23Z",
+    "slot": "09",
+    "items": 2,
+    "recipients": [
+      "nicolas.silva@valiconsultores.com"
+    ],
+    "errors": 0
+  },
+  "2026-07-08": {
+    "sent": true,
+    "sent_at": "2026-07-08T13:49:11Z",
+    "slot": "09",
+    "items": 2,
+    "recipients": [
+      "nicolas.silva@valiconsultores.com"
+    ],
+    "errors": 0
+  },
+  "2026-07-11": {
+    "sent": true,
+    "sent_at": "2026-07-11T13:04:29Z",
+    "slot": "09",
+    "items": 1,
+    "recipients": [
+      "nicolas.silva@valiconsultores.com"
+    ],
+    "errors": 0
+  },
+  "2026-07-14": {
+    "sent": true,
+    "sent_at": "2026-07-14T13:19:32Z",
+    "slot": "09",
+    "items": 1,
+    "recipients": [
+      "nicolas.silva@valiconsultores.com"
+    ],
+    "errors": 0
+  },
+  "2026-07-16": {
+    "sent": true,
+    "sent_at": "2026-07-16T15:40:56Z",
+    "slot": "09",
+    "items": 1,
+    "recipients": [
+      "nicolas.silva@valiconsultores.com"
+    ],
+    "errors": 0
+  },
+  "2026-07-18": {
+    "sent": true,
+    "sent_at": "2026-07-18T13:00:25Z",
+    "slot": "09",
+    "items": 1,
+    "recipients": [
+      "nicolas.silva@valiconsultores.com"
+    ],
+    "errors": 0
+  },
+  "2026-07-21": {
+    "sent": true,
+    "sent_at": "2026-07-21T13:24:24Z",
+    "slot": "09",
+    "items": 1,
+    "recipients": [
+      "nicolas.silva@valiconsultores.com"
+    ],
+    "errors": 0
+  },
+  "2026-07-23": {
+    "sent": true,
+    "sent_at": "2026-07-23T13:41:42Z",
+    "slot": "09",
+    "items": 1,
+    "recipients": [
+      "nicolas.silva@valiconsultores.com"
+    ],
+    "errors": 0
   }
 }
