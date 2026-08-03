@@ -223,15 +223,14 @@ def load_noticias(pais: str,
       SELECT n.url AS "Enlace",
              n.titulo AS "Título",
              n.resumen AS "Resumen",
-             n.fecha_pub AS "Fecha",
+             COALESCE(n.fecha_pub, n.first_seen_at) AS "Fecha",
              f.nombre AS "Fuente",
              f.categoria AS "Categoría fuente",
              n.tags AS "Tags"
       FROM noticias n
       JOIN noticias_fuentes f ON f.id = n.fuente_id
       WHERE f.pais = ? AND f.activa = 1
-        AND n.fecha_pub IS NOT NULL
-        AND date(n.fecha_pub) >= {ventana_sql}
+        AND date(COALESCE(n.fecha_pub, n.first_seen_at)) >= {ventana_sql}
     """
     params: list = [pais]
     if categoria_fuente:
@@ -242,13 +241,34 @@ def load_noticias(pais: str,
         sql += " AND (LOWER(n.titulo) LIKE ? OR LOWER(COALESCE(n.resumen,'')) LIKE ?)"
         q = f"%{busqueda.lower()}%"
         params.extend([q, q])
-    sql += " ORDER BY n.fecha_pub DESC LIMIT ?"
+    sql += " ORDER BY COALESCE(n.fecha_pub, n.first_seen_at) DESC LIMIT ?"
     params.append(limit)
     df = pd.read_sql_query(sql, conn, params=params)
     if not df.empty:
-        df["Temas"] = df.apply(
-            lambda row: clasificar(row["Título"], row["Resumen"]), axis=1
-        )
+        import unicodedata as _ud
+        def _norm_titulo(t: str) -> str:
+            t = (t or "").lower()
+            t = "".join(c for c in _ud.normalize("NFD", t)
+                        if _ud.category(c) != "Mn")
+            t = " ".join(t.split())
+            return t[:80]
+        df["_dedup_key"] = df["Título"].map(_norm_titulo)
+        df = df.drop_duplicates(subset="_dedup_key", keep="first")
+        df = df.drop(columns="_dedup_key")
+
+        _CAT_A_TEMA = {
+            "Temas Salud": "Salud",
+            "Temas Agrarios": "Crop",
+            "Temas Tech": "Tech / Digital",
+            "Temas KYC/AML": "KYC / AML / Financiero",
+        }
+        def _temas_de_noticia(row):
+            temas = clasificar(row["Título"], row["Resumen"])
+            tema_fuente = _CAT_A_TEMA.get(row.get("Categoría fuente"))
+            if tema_fuente and tema_fuente not in temas:
+                temas = [tema_fuente] + temas
+            return temas
+        df["Temas"] = df.apply(_temas_de_noticia, axis=1)
         df["EsNormativa"] = df.apply(
             # tags=="normas" viene del endpoint de normas de gob.pe (señal
             # autoritativa); el keyword es fallback para RSS/HTML.

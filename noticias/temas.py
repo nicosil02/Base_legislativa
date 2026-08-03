@@ -21,16 +21,45 @@ import unicodedata
 
 TEMAS: dict[str, list[str]] = {
     "Coyuntura política": [
-        "presidente", "presidenta", "congreso", "ministro", "ministra",
-        "gobierno", "gabinete", "premier", "vicepresidente",
-        "vicepresidenta", "vacancia", "interpelacion", "interpelación",
-        "moción de censura", "moción", "denuncia constitucional",
-        "fiscalía", "fiscalia", "fiscal", "ejecutivo", "legislativo",
-        "asamblea nacional", "diputado", "diputada", "senador",
-        "senadora", "oposición", "oposicion", "oficialismo",
-        "elecciones", "comicios", "JNE", "ONPE", "RENIEC", "CNE",
-        "candidato", "candidata", "partido político", "partido politico",
-        "campaña electoral", "Boluarte", "Noboa", "PCM",
+        # Instituciones y roles del poder (relevantes cuando el foco es
+        # política; asumimos que el usuario prefiere cobertura amplia).
+        "presidente", "presidenta", "vicepresidente", "vicepresidenta",
+        "premier", "gabinete", "consejo de ministros",
+        "ministro", "ministra", "congreso", "asamblea nacional",
+        "fiscal", "fiscalía", "fiscalia", "fiscal de la nación",
+        "diputado", "diputada", "senador", "senadora",
+        "ejecutivo", "legislativo", "PCM",
+        # Procesos políticos
+        "vacancia", "interpelacion", "interpelación",
+        "moción de censura", "denuncia constitucional",
+        "cambio de gabinete", "juramentación", "juramentacion",
+        "oposición", "oposicion", "oficialismo",
+        "elecciones", "comicios", "campaña electoral",
+        "JNE", "ONPE", "RENIEC", "CNE",
+        "candidato", "candidata",
+        "partido político", "partido politico",
+        # Gobierno actual PE (Keiko Fujimori 2026-2031, gabinete Galarreta).
+        # Cuando cambie, actualizar acá.
+        "Keiko Fujimori", "Keiko", "Fujimori",
+        "Fuerza Popular",
+        "Galarreta",   # premier
+        # Ministros del gabinete Galarreta (apellidos únicos)
+        "Espá",         # RREE
+        "Belaúnde Llosa",  # Defensa
+        "Elmer Cuba", "Cuba Bustinza",  # MEF
+        "Astudillo",   # Interior
+        "Álvarez Miranda", "Alvarez Miranda",  # Justicia
+        "Chang Escobedo",  # Educación
+        "Sheput",      # Trabajo
+        "Requejo",     # Producción
+        "Shinno",      # Energía y Minas
+        "Rafael Rey",  # MTC
+        "Arnillas",    # Vivienda
+        "Seminario Marón",  # Mujer
+        "Beingolea",   # Cultura
+        "Canales Martínez",  # MIDIS
+        # EC actual
+        "Noboa",
     ],
     "Salud": [
         # Sistema de salud / instituciones
@@ -52,6 +81,8 @@ TEMAS: dict[str, list[str]] = {
         "esperantra", "lazo rosado", "alafar", "ALAFAR",
         "pacientes ecuador", "edicion medica", "edición médica",
         "enfermedades raras", "FEPPER",
+        # Ministro de Salud actual (gabinete Galarreta)
+        "Luis Dyer", "Dyer Fernández", "Dyer Fernandez",
     ],
     "Tech / Digital": [
         "digital", "tecnología", "tecnologia", "ciberseguridad",
@@ -65,6 +96,24 @@ TEMAS: dict[str, list[str]] = {
         "transformación digital", "transformacion digital",
         "INDECOPI", "Niubox", "Hiperderecho", "ALAI",
         "MinTel", "DPL", "Forbes Digital", "CECE",
+        # Autoridad de datos PE (MINJUS/MINJUSDH)
+        "ANPD", "APDP", "MINJUS", "MINJUSDH",
+        "DGTAIPD",           # nombre viejo, sigue apareciendo
+        "Ley 29733", "Ley Nº 29733",
+        "oficial de protección de datos", "oficial de proteccion de datos",
+        "ODP",
+        "bancodatos",
+        "sanción ANPD", "sancion ANPD", "multa ANPD",
+        "procedimiento sancionador",
+        # Gobierno digital PE (dentro de PCM)
+        "SGTD", "Secretaría de Gobierno Digital",
+        "Secretaria de Gobierno Digital",
+        "Secretaría de Gobierno y Transformación Digital",
+        "Secretaria de Gobierno y Transformacion Digital",
+        # Ministro de Justicia y de Comercio Exterior actuales
+        # (gabinete Galarreta) — políticamente relevantes para digital.
+        "Álvarez Miranda", "Alvarez Miranda",   # Justicia → dueño de ANPD
+        "Rogers Valencia",                       # MINCETUR
     ],
     "Crop": [
         "agricultura", "agrícola", "agricola", "agropecuario",
@@ -76,6 +125,9 @@ TEMAS: dict[str, list[str]] = {
         "OGM", "fertilizantes", "campesino", "campesina", "agro",
         "INIAP", "MAG", "MAGAP", "produccion agropecuaria",
         "producción agropecuaria",
+        # Ministros actuales de sector (gabinete Galarreta)
+        "Vinelli",     # MIDAGRI (agro)
+        "Huaroc",      # MINAM (ambiente)
     ],
     "KYC / AML / Financiero": [
         "lavado de activos", "prevención de lavado",

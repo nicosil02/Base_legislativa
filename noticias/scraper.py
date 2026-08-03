@@ -24,11 +24,14 @@ import requests
 log = logging.getLogger(__name__)
 
 HEADERS = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
-                  "(KHTML, like Gecko) Chrome/120.0 Safari/537.36",
+    # UA de Linux Chrome: menos filtrado por firewalls como CEPES/CONAIE que
+    # bloquean con el UA de Windows viejo. Referer=google.com ayuda con Wordfence.
+    "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
+                  "(KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
     "Accept": "application/rss+xml, application/xml, application/atom+xml, "
               "text/html;q=0.9,*/*;q=0.8",
     "Accept-Language": "es-419,es;q=0.9,en;q=0.8",
+    "Referer": "https://www.google.com/",
 }
 
 
