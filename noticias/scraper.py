@@ -21,6 +21,21 @@ from urllib.parse import urljoin, urlparse
 
 import requests
 
+# cloudscraper resuelve el challenge JS de Cloudflare (usado por El Productor,
+# CONAIE, Criptonoticias, etc.). Es drop-in de requests.Session: para sitios
+# sin CF funciona igual que requests, para sitios con CF hace el bypass
+# automatico. Fallback a requests si cloudscraper no esta instalado.
+try:
+    import cloudscraper as _cs
+
+    def _make_session() -> requests.Session:
+        return _cs.create_scraper(
+            browser={"browser": "chrome", "platform": "windows", "desktop": True},
+        )
+except ImportError:
+    def _make_session() -> requests.Session:
+        return requests.Session()
+
 log = logging.getLogger(__name__)
 
 HEADERS = {
@@ -378,7 +393,7 @@ def _discover_rss(html_text: str, base_url: str,
 def fetch_fuente(fuente: dict, session: requests.Session | None = None,
                   timeout: int = 20) -> list[dict]:
     """Fetch + parse de una fuente. Devuelve list de items o [] si falla."""
-    s = session or requests.Session()
+    s = session or _make_session()
     s.headers.update(HEADERS)
     tipo = (fuente.get("tipo") or "manual").lower()
     if tipo == "manual":
@@ -437,7 +452,7 @@ def run_sync(db, pais: str | None = None,
         pais=pais, categoria=categoria,
         solo_activas=True, solo_scrapeables=True,
     )
-    session = requests.Session()
+    session = _make_session()
     session.headers.update(HEADERS)
     for fuente in fuentes:
         stats["fuentes"] += 1

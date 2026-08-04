@@ -298,7 +298,7 @@ FUENTES_EC: list[dict] = [
     {"categoria": "Temas Agrarios", "pais": "EC", "nombre": "El Productor",
      "url": "https://elproductor.com/",
      "rss_url": "https://elproductor.com/feed/", "tipo": "rss",
-     "activa": 0, "notas": "Cloudflare bloquea con 403 - cubierto por Google News"},
+     "notas": "Cloudflare bypass via cloudscraper (en scraper.py)"},
     {"categoria": "Temas Agrarios", "pais": "EC",
      "nombre": "Observatorio de Cambio Rural",
      "url": "https://ocaru.org.ec/",
