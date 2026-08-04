@@ -16,3 +16,4 @@ playwright>=1.59
 # Cookies para persistir sesion: implementado via JS inyectado en
 # components.html (iframe srcdoc same-origin) + lectura via st.context.cookies.
 # No requiere libreria externa.
+cloudscraper
