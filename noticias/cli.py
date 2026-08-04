@@ -78,9 +78,8 @@ def cmd_sync(args) -> int:
             db.finish_sync_run(run_id, errores=1, mensaje=str(e)[:500])
             print(f"Error: {e}", file=sys.stderr)
             return 1
-        # Pipeline custom: Registro Oficial EC (índice de suplementos +
-        # clasificación por sector). Solo si no se filtró por país o el
-        # país es EC. Errores acá no rompen el sync principal.
+        # Pipelines custom (Registro Oficial EC + El Peruano PE). Errores
+        # acá no rompen el sync principal.
         ro_stats = None
         if not args.pais or args.pais == "EC":
             try:
@@ -91,6 +90,20 @@ def cmd_sync(args) -> int:
                 stats["errores"] += ro_stats["errores"]
             except Exception as e:
                 print(f"WARN Registro Oficial EC falló: {e}", file=sys.stderr)
+                stats["errores"] += 1
+
+        ep_stats = None
+        if not args.pais or args.pais == "PE":
+            try:
+                from noticias.el_peruano import run_sync as ep_run_sync
+                # dias=2 cubre normas del día y del anterior (por si el
+                # sync se ejecuta cerca de medianoche).
+                ep_stats = ep_run_sync(db, dias=2)
+                stats["nuevos"] += ep_stats["nuevas"]
+                stats["actualizados"] += ep_stats["actualizadas"]
+                stats["errores"] += ep_stats["errores"]
+            except Exception as e:
+                print(f"WARN El Peruano falló: {e}", file=sys.stderr)
                 stats["errores"] += 1
 
         db.finish_sync_run(run_id, **{
@@ -108,6 +121,11 @@ def cmd_sync(args) -> int:
             print(
                 f"  Registro Oficial EC: ediciones={ro_stats['editions']} "
                 f"matches={ro_stats['matches']} nuevas={ro_stats['nuevas']}"
+            )
+        if ep_stats:
+            print(
+                f"  El Peruano PE: items={ep_stats['items_totales']} "
+                f"matches={ep_stats['matches']} nuevas={ep_stats['nuevas']}"
             )
     return 0
 
