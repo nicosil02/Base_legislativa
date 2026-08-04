@@ -78,6 +78,21 @@ def cmd_sync(args) -> int:
             db.finish_sync_run(run_id, errores=1, mensaje=str(e)[:500])
             print(f"Error: {e}", file=sys.stderr)
             return 1
+        # Pipeline custom: Registro Oficial EC (índice de suplementos +
+        # clasificación por sector). Solo si no se filtró por país o el
+        # país es EC. Errores acá no rompen el sync principal.
+        ro_stats = None
+        if not args.pais or args.pais == "EC":
+            try:
+                from noticias.registro_oficial_ec import run_sync as ro_run_sync
+                ro_stats = ro_run_sync(db, max_editions=20)
+                stats["nuevos"] += ro_stats["nuevas"]
+                stats["actualizados"] += ro_stats["actualizadas"]
+                stats["errores"] += ro_stats["errores"]
+            except Exception as e:
+                print(f"WARN Registro Oficial EC falló: {e}", file=sys.stderr)
+                stats["errores"] += 1
+
         db.finish_sync_run(run_id, **{
             "fuentes_visitadas": stats["fuentes"],
             "noticias_nuevas": stats["nuevos"],
@@ -89,6 +104,11 @@ def cmd_sync(args) -> int:
             f"items={stats['items_vistos']} nuevos={stats['nuevos']} "
             f"actualizados={stats['actualizados']} errores={stats['errores']}"
         )
+        if ro_stats:
+            print(
+                f"  Registro Oficial EC: ediciones={ro_stats['editions']} "
+                f"matches={ro_stats['matches']} nuevas={ro_stats['nuevas']}"
+            )
     return 0
 
 
