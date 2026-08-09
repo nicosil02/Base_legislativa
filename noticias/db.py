@@ -47,11 +47,66 @@ CREATE TABLE IF NOT EXISTS noticias_sync_runs (
   errores         INTEGER DEFAULT 0,
   mensaje         TEXT
 );
+
+-- Feedback humano sobre relevancia/clasificación de una noticia.
+-- Base para retraining futuro del clasificador.
+CREATE TABLE IF NOT EXISTS noticias_feedback (
+  id              INTEGER PRIMARY KEY AUTOINCREMENT,
+  noticia_id      INTEGER NOT NULL,
+  action          TEXT NOT NULL,           -- 'descartar' | 'confirmar' | 'reclasificar'
+  tema_correcto   TEXT,                    -- solo si action='reclasificar'
+  created_at      TEXT NOT NULL,
+  FOREIGN KEY (noticia_id) REFERENCES noticias(id)
+);
+CREATE INDEX IF NOT EXISTS idx_feedback_noticia ON noticias_feedback(noticia_id);
 """
 
 
 def now_iso() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+
+import re as _re
+
+# Frases de RRSS sin contenido informativo. Match case-insensitive contra
+# el titulo entero (no substring): filtra saludos, agradecimientos, RT
+# huecos, "hola amigos", etc.
+_BASURA_PATRONES = _re.compile(
+    r"^\s*(?:"
+    r"buen(?:os|as)\s+(?:d[ií]as|tardes|noches)"
+    r"|feliz\s+(?:lunes|martes|mi[eé]rcoles|jueves|viernes|s[aá]bado|domingo|d[ií]a)"
+    r"|gracias\s+por\s+(?:seguirnos|estar)"
+    r"|s[ií]guenos"
+    r"|comparte|comparti|comparta"
+    r"|rt\b|retweet"
+    r"|hola\s+(?:amigos|a\s+todos)"
+    r"|entrevista\s+en\s+vivo"
+    r")\b",
+    _re.IGNORECASE,
+)
+
+
+_KW_NORMA_CORTA = _re.compile(
+    r"\b(?:DS|DU|DL|RM|RS|RD|Ley|Decreto|Resoluci[oó]n|Ordenanza)\b",
+    _re.I,
+)
+
+
+def _es_basura(titulo: str | None, resumen: str | None = None) -> bool:
+    """True si la 'noticia' es probablemente ruido (tweet vacio, saludo, etc.)."""
+    t = (titulo or "").strip()
+    tiene_kw_norma = bool(_KW_NORMA_CORTA.search(t))
+    # Titulos muy cortos son casi siempre basura, EXCEPTO si mencionan una norma.
+    if len(t) < 20 and not tiene_kw_norma:
+        return True
+    # Sin letras alfabéticas suficientes (solo emojis / hashtags / URLs),
+    # y sin ser referencia a una norma.
+    if not tiene_kw_norma and not _re.search(r"[a-záéíóúñ]{4,}", t, _re.I):
+        return True
+    # Frases genericas de RRSS
+    if _BASURA_PATRONES.match(t):
+        return True
+    return False
 
 
 class Database:
@@ -133,7 +188,13 @@ class Database:
 
     # ---------- noticias ----------
     def upsert_noticia(self, fuente_id: int, row: dict) -> tuple[bool, bool]:
-        """Insert nueva (key: url), update si cambio. Devuelve (is_new, changed)."""
+        """Insert nueva (key: url), update si cambio. Devuelve (is_new, changed).
+
+        Aplica filtros de basura antes de persistir: descarta items con
+        titulos cortos, solo emojis/hashtags, o frases genericas de RRSS.
+        """
+        if _es_basura(row.get("titulo"), row.get("resumen")):
+            return False, False
         url = row["url"]
         now = now_iso()
         existing = self.conn.execute(
