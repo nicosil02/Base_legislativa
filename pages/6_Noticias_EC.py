@@ -137,6 +137,34 @@ def get_conn() -> sqlite3.Connection:
     return conn
 
 
+def _feedback_descartar(noticia_id: int) -> None:
+    db = _find_db_path()
+    if not db:
+        return
+    conn = sqlite3.connect(str(db), check_same_thread=False)
+    try:
+        conn.executescript("""
+            CREATE TABLE IF NOT EXISTS noticias_feedback (
+              id INTEGER PRIMARY KEY AUTOINCREMENT,
+              noticia_id INTEGER NOT NULL,
+              action TEXT NOT NULL,
+              tema_correcto TEXT,
+              created_at TEXT NOT NULL
+            );
+            CREATE INDEX IF NOT EXISTS idx_feedback_noticia
+              ON noticias_feedback(noticia_id);
+        """)
+        conn.execute(
+            "INSERT INTO noticias_feedback (noticia_id, action, created_at) "
+            "VALUES (?, 'descartar', datetime('now'))",
+            (int(noticia_id),),
+        )
+        conn.commit()
+    finally:
+        conn.close()
+    st.cache_data.clear()
+
+
 # IMPORTANTE: pasamos `pais` como argumento a TODAS las funciones cacheadas
 # (st.cache_data cachea por args; si pais quedara como variable global, las
 # 2 paginas compartirian cache y veriamos las mismas noticias en PE y EC).
@@ -220,7 +248,8 @@ def load_noticias(pais: str,
     Filtro estricto: fecha_pub debe existir y caer en la ventana."""
     conn = get_conn()
     sql = f"""
-      SELECT n.url AS "Enlace",
+      SELECT n.id AS "ID",
+             n.url AS "Enlace",
              n.titulo AS "Título",
              n.resumen AS "Resumen",
              COALESCE(n.fecha_pub, n.first_seen_at) AS "Fecha",
@@ -231,6 +260,10 @@ def load_noticias(pais: str,
       JOIN noticias_fuentes f ON f.id = n.fuente_id
       WHERE f.pais = ? AND f.activa = 1
         AND date(COALESCE(n.fecha_pub, n.first_seen_at)) >= {ventana_sql}
+        AND NOT EXISTS (
+          SELECT 1 FROM noticias_feedback fb
+          WHERE fb.noticia_id = n.id AND fb.action = 'descartar'
+        )
     """
     params: list = [pais]
     if categoria_fuente:
@@ -390,6 +423,7 @@ def _render_card(n) -> None:
         resumen = resumen[:240] + "…"
     temas_list = n["Temas"] if isinstance(n["Temas"], list) else []
     es_norma = bool(n.get("EsNormativa") if isinstance(n, dict) else n["EsNormativa"])
+    nid = int(n["ID"]) if "ID" in n and n["ID"] is not None else None
     st.markdown(
         f'<div class="noticia-card">'
         f'<div class="noticia-fuente">{n["Fuente"]} · {fecha}</div>'
@@ -401,6 +435,12 @@ def _render_card(n) -> None:
         + '</div>',
         unsafe_allow_html=True,
     )
+    if nid is not None:
+        cols = st.columns([12, 1])
+        if cols[1].button("✕", key=f"desc_{nid}",
+                          help="Descartar: no aparecerá más y sirve como feedback"):
+            _feedback_descartar(nid)
+            st.rerun()
 
 
 if df.empty:
