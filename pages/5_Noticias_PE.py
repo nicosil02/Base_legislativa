@@ -425,7 +425,9 @@ def _chips(temas_list: list[str], es_norma: bool) -> str:
     return f'<div style="margin-top:6px;">{"".join(chips_html)}</div>'
 
 
-def _render_card(n) -> None:
+def _render_card(n, key_suffix: str = "") -> None:
+    """Render de una noticia. key_suffix distingue la misma noticia
+    cuando se renderiza en múltiples grupos (una noticia con varios temas)."""
     fecha = _s(n["Fecha"])[:10]
     titulo = _s(n["Título"]).strip()
     resumen = _s(n["Resumen"]).strip()
@@ -445,11 +447,10 @@ def _render_card(n) -> None:
         + '</div>',
         unsafe_allow_html=True,
     )
-    # Botón "descartar" (feedback humano — base para retraining futuro).
-    # Small y a la derecha para no distraer.
     if nid is not None:
         cols = st.columns([12, 1])
-        if cols[1].button("✕", key=f"desc_{nid}",
+        btn_key = f"desc_{nid}_{key_suffix}" if key_suffix else f"desc_{nid}"
+        if cols[1].button("✕", key=btn_key,
                           help="Descartar: no aparecerá más y sirve como feedback"):
             _feedback_descartar(nid)
             st.rerun()
@@ -477,21 +478,25 @@ else:
             else:
                 sin_tema.append(n)
         # Orden: igual que en TEMAS (declarado), luego "Sin tema"
+        import re as _re_sfx
+        def _slug(s: str) -> str:
+            return _re_sfx.sub(r"[^a-z0-9]+", "-", s.lower()).strip("-")
         for tema in temas:
             if tema in grupos:
                 st.markdown(f'<div class="categoria-eyebrow">{tema} '
                     f'<span style="color:var(--ink-mute);font-weight:500;">'
                     f'· {len(grupos[tema])}</span></div>',
                     unsafe_allow_html=True)
+                sfx = _slug(tema)
                 for n in grupos[tema][:30]:
-                    _render_card(n)
+                    _render_card(n, key_suffix=sfx)
         if sin_tema:
             st.markdown(f'<div class="categoria-eyebrow">Otros '
                 f'<span style="color:var(--ink-mute);font-weight:500;">'
                 f'· {len(sin_tema)}</span></div>',
                 unsafe_allow_html=True)
             for n in sin_tema[:20]:
-                _render_card(n)
+                _render_card(n, key_suffix="sin-tema")
 
 
 # ---------- Footer ----------
