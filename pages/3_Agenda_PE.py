@@ -15,7 +15,7 @@ from pathlib import Path
 import pandas as pd
 import streamlit as st
 
-from scraper.sync import PER_PAR_ID_ACTUAL
+from scraper.sync import FECHA_INICIO_BICAMERAL, PER_PAR_ID_ACTUAL
 
 
 def _find_db_path() -> Path | None:
@@ -297,29 +297,40 @@ def has_pleno_table() -> bool:
 def load_catalogs() -> dict:
     conn = get_conn()
     comisiones = [
-        {"id": r[0], "nombre": r[1]}
+        {"id": r[0], "nombre": r[1], "camara": r[2]}
         for r in conn.execute(
-            "SELECT DISTINCT comision_id, nombre_comision FROM sesiones "
-            "WHERE comision_id IS NOT NULL ORDER BY nombre_comision"
+            "SELECT DISTINCT comision_id, nombre_comision, camara FROM sesiones "
+            "WHERE comision_id IS NOT NULL AND fecha >= ? ORDER BY nombre_comision",
+            (FECHA_INICIO_BICAMERAL,),
         )
     ]
     estados = sorted({
         r[0] for r in conn.execute(
-            "SELECT DISTINCT estado FROM sesiones WHERE estado IS NOT NULL"
+            "SELECT DISTINCT estado FROM sesiones WHERE estado IS NOT NULL AND fecha >= ?",
+            (FECHA_INICIO_BICAMERAL,),
         )
     })
-    # Rango temporal: el menor entre comisiones y Pleno; el mayor idem.
+    # Rango temporal: el menor entre comisiones y Pleno; el mayor idem. Ambos
+    # acotados al Congreso bicameral vigente (ver FECHA_INICIO_BICAMERAL) —
+    # la data histórica 2021-2026 queda en la DB pero desconectada de esta
+    # página por pedido explícito de Nicolas (2026-09-11).
     fec_min, fec_max = conn.execute(
-        "SELECT MIN(fecha), MAX(fecha) FROM sesiones"
+        "SELECT MIN(fecha), MAX(fecha) FROM sesiones WHERE fecha >= ?",
+        (FECHA_INICIO_BICAMERAL,),
     ).fetchone()
     if has_pleno_table():
         pmin, pmax = conn.execute(
-            "SELECT MIN(fecha_sesion), MAX(fecha_sesion) FROM pleno_sesiones"
+            "SELECT MIN(fecha_sesion), MAX(fecha_sesion) FROM pleno_sesiones WHERE fecha_sesion >= ?",
+            (FECHA_INICIO_BICAMERAL,),
         ).fetchone()
         if pmin and (not fec_min or pmin < fec_min):
             fec_min = pmin
         if pmax and (not fec_max or pmax > fec_max):
             fec_max = pmax
+    # Fallback si todavía no hay nada en el rango bicameral (ej. Pleno sin
+    # agendas publicadas aún — ver pleno/api.py).
+    fec_min = fec_min or FECHA_INICIO_BICAMERAL
+    fec_max = fec_max or dt.date.today().isoformat()
     return {"comisiones": comisiones, "estados": estados,
             "fec_min": fec_min, "fec_max": fec_max}
 
@@ -329,13 +340,16 @@ def kpi_totals() -> dict[str, int]:
     conn = get_conn()
     today = dt.date.today().isoformat()
     r = conn.execute(
-        f"""SELECT
+        """SELECT
               COUNT(*) AS total,
-              SUM(CASE WHEN UPPER(estado)='CONVOCADA' AND fecha >= '{today}' THEN 1 ELSE 0 END) AS por_venir,
+              SUM(CASE WHEN UPPER(estado)='CONVOCADA' AND fecha >= ? THEN 1 ELSE 0 END) AS por_venir,
               SUM(CASE WHEN UPPER(estado) IN ('CELEBRADA','FINALIZADA') THEN 1 ELSE 0 END) AS realizadas,
-              (SELECT COUNT(DISTINCT pley_num) FROM sesion_pl_referenciado) AS pls_distintos,
-              (SELECT COUNT(*) FROM sesion_pl_referenciado) AS pls_referencias
-            FROM sesiones"""
+              (SELECT COUNT(DISTINCT pr.pley_num) FROM sesion_pl_referenciado pr
+                 JOIN sesiones s2 ON s2.id_sesion = pr.id_sesion WHERE s2.fecha >= ?) AS pls_distintos,
+              (SELECT COUNT(*) FROM sesion_pl_referenciado pr
+                 JOIN sesiones s2 ON s2.id_sesion = pr.id_sesion WHERE s2.fecha >= ?) AS pls_referencias
+            FROM sesiones WHERE fecha >= ?""",
+        (today, FECHA_INICIO_BICAMERAL, FECHA_INICIO_BICAMERAL, FECHA_INICIO_BICAMERAL),
     ).fetchone()
     total = (r["total"] or 0)
     por_venir = (r["por_venir"] or 0)
@@ -346,20 +360,27 @@ def kpi_totals() -> dict[str, int]:
     # "Convocada/Realizada" — clasificamos por fecha vs hoy.
     if has_pleno_table():
         rp = conn.execute(
-            f"""SELECT
+            """SELECT
                   COUNT(*) AS total,
-                  SUM(CASE WHEN fecha_sesion >= '{today}' THEN 1 ELSE 0 END) AS por_venir,
-                  SUM(CASE WHEN fecha_sesion < '{today}' THEN 1 ELSE 0 END) AS realizadas
-                FROM pleno_sesiones"""
+                  SUM(CASE WHEN fecha_sesion >= ? THEN 1 ELSE 0 END) AS por_venir,
+                  SUM(CASE WHEN fecha_sesion >= ? AND fecha_sesion < ? THEN 1 ELSE 0 END) AS realizadas
+                FROM pleno_sesiones WHERE fecha_sesion >= ?""",
+            (today, FECHA_INICIO_BICAMERAL, today, FECHA_INICIO_BICAMERAL),
         ).fetchone()
         total += (rp["total"] or 0)
         por_venir += (rp["por_venir"] or 0)
         realizadas += (rp["realizadas"] or 0)
-        # PLs unicos y referencias: combinar las dos tablas
+        # PLs unicos y referencias: combinar las dos tablas, acotadas al Congreso vigente
         rpref = conn.execute(
             """SELECT COUNT(DISTINCT pley_num) AS d, COUNT(*) AS r
-               FROM (SELECT pley_num FROM sesion_pl_referenciado
-                     UNION ALL SELECT pley_num FROM pleno_pl_referenciado)"""
+               FROM (
+                 SELECT pr.pley_num FROM sesion_pl_referenciado pr
+                   JOIN sesiones s2 ON s2.id_sesion = pr.id_sesion WHERE s2.fecha >= ?
+                 UNION ALL
+                 SELECT pp.pley_num FROM pleno_pl_referenciado pp
+                   JOIN pleno_sesiones ps ON ps.cod_agenda = pp.cod_agenda WHERE ps.fecha_sesion >= ?
+               )""",
+            (FECHA_INICIO_BICAMERAL, FECHA_INICIO_BICAMERAL),
         ).fetchone()
         pls_distintos = rpref["d"] or 0
         pls_referencias = rpref["r"] or 0
@@ -385,6 +406,7 @@ def load_sesiones(fec_inicio: dt.date | None, fec_fin: dt.date | None) -> pd.Dat
              s.fecha AS "Fecha",
              s.hora_inicio AS "Hora",
              s.nombre_comision AS "Comisión",
+             s.camara AS "Cámara",
              s.tipo_comision AS "Tipo",
              s.estado AS "Estado",
              s.nombre_sesion AS "Nombre",
@@ -429,6 +451,7 @@ def load_sesiones(fec_inicio: dt.date | None, fec_fin: dt.date | None) -> pd.Dat
                  ps.fecha_sesion AS "Fecha",
                  NULL AS "Hora",
                  'Pleno del Congreso' AS "Comisión",
+                 NULL AS "Cámara",  -- el Pleno bicameral aún no publica agenda por esta vía (ver pleno/api.py)
                  'Pleno' AS "Tipo",
                  CASE WHEN ps.fecha_sesion >= date('now') THEN 'Convocada' ELSE 'Realizada' END AS "Estado",
                  ps.titulo AS "Nombre",
@@ -500,6 +523,7 @@ def buscar_pl_en_agendas(pley_num: int) -> pd.DataFrame:
       SELECT s.fecha AS "Fecha",
              s.hora_inicio AS "Hora",
              s.nombre_comision AS "Comisión",
+             s.camara AS "Cámara",
              s.tipo_comision AS "Tipo",
              s.estado AS "Estado sesión",
              s.nombre_sesion AS "Sesión",
@@ -531,6 +555,7 @@ def buscar_pl_en_agendas(pley_num: int) -> pd.DataFrame:
           SELECT ps.fecha_sesion AS "Fecha",
                  NULL AS "Hora",
                  'Pleno del Congreso' AS "Comisión",
+                 NULL AS "Cámara",  -- el Pleno bicameral aún no publica agenda por esta vía (ver pleno/api.py)
                  'Pleno' AS "Tipo",
                  CASE WHEN ps.fecha_sesion >= date('now') THEN 'Convocada' ELSE 'Realizada' END AS "Estado sesión",
                  ps.titulo AS "Sesión",
@@ -751,11 +776,12 @@ st.markdown(
     unsafe_allow_html=True,
 )
 st.markdown(
-    '<p class="country-subtitle">Sesiones convocadas y realizadas de las <strong>24 '
-    'Comisiones Ordinarias</strong> y del <strong>Pleno</strong> del Congreso del Perú. '
-    'Cada sesión y agenda del Pleno cruza con la base de proyectos de ley para identificar '
-    'automáticamente qué PLs están en discusión y enriquecerlos con tema, estado y bancada. '
-    'Usá el filtro "Tipo" para distinguir entre comisiones y Pleno.</p>',
+    '<p class="country-subtitle">Sesiones convocadas y realizadas de las comisiones del '
+    '<strong>Senado</strong> y la <strong>Cámara de Diputados</strong> (período vigente '
+    '2026–2031) y del <strong>Pleno</strong> del Congreso del Perú. Cada sesión y agenda del '
+    'Pleno cruza con la base de proyectos de ley para identificar automáticamente qué PLs '
+    'están en discusión y enriquecerlos con tema, estado y bancada. Usá el filtro "Cámara" '
+    'para distinguir entre Senado, Diputados y Congreso/Pleno.</p>',
     unsafe_allow_html=True,
 )
 
@@ -876,17 +902,25 @@ df_full = load_sesiones(f_ini, f_fin)
 
 TODOS = "Todas"
 
-def _opciones(col: str) -> list[str]:
-    if col not in df_full.columns:
+def _opciones(col: str, base: pd.DataFrame | None = None) -> list[str]:
+    base = df_full if base is None else base
+    if col not in base.columns:
         return [TODOS]
-    return [TODOS] + sorted({str(v) for v in df_full[col].dropna().unique() if str(v).strip()})
+    return [TODOS] + sorted({str(v) for v in base[col].dropna().unique() if str(v).strip()})
 
-fc = st.columns([1.4, 1, 1])
-sel_comision = fc[0].selectbox("Comisión", _opciones("Comisión"))
-sel_tipo = fc[1].selectbox("Tipo", _opciones("Tipo"))
-con_pls = fc[2].selectbox("Con PLs en agenda", ["Todas", "Solo con PLs", "Sin PLs"])
+fc = st.columns([0.9, 1.3, 1, 1])
+sel_camara = fc[0].selectbox("Cámara", _opciones("Cámara"))
+# La opciones de Comisión se acotan a la cámara elegida — Senado y Diputados
+# tienen comisiones con el mismo nombre (ver sesiones/sync.py), así que sin
+# esto quedaban indistinguibles en el dropdown.
+_base_comision = df_full if sel_camara == TODOS else df_full[df_full["Cámara"] == sel_camara]
+sel_comision = fc[1].selectbox("Comisión", _opciones("Comisión", _base_comision))
+sel_tipo = fc[2].selectbox("Tipo", _opciones("Tipo"))
+con_pls = fc[3].selectbox("Con PLs en agenda", ["Todas", "Solo con PLs", "Sin PLs"])
 
 df = df_full
+if sel_camara != TODOS:
+    df = df[df["Cámara"] == sel_camara]
 if sel_comision != TODOS:
     df = df[df["Comisión"] == sel_comision]
 if sel_tipo != TODOS:
@@ -900,7 +934,7 @@ st.markdown(f"##### {len(df):,} sesión(es) de {len(df_full):,} en el rango")
 
 # Sin "Estado" — info redundante (las sesiones se filtran por fecha
 # naturalmente y el estado raro vale como filtro). Columnas espejan EC.
-COLS_VISIBLES = ["ID", "Fecha", "Hora", "Comisión", "PLs en agenda", "Nombre"]
+COLS_VISIBLES = ["ID", "Fecha", "Hora", "Cámara", "Comisión", "PLs en agenda", "Nombre"]
 df_view = df[[c for c in COLS_VISIBLES if c in df.columns]].copy()
 
 tabla = st.dataframe(
@@ -1211,17 +1245,21 @@ st.markdown(
     '<p style="font-size:12px;color:var(--ink-soft);line-height:1.55;'
     'max-width:760px;margin-bottom:14px;">'
     '<strong style="color:var(--ink);">Cobertura temporal:</strong> '
-    'las sesiones de <strong>comisiones</strong> están disponibles desde el '
-    '<strong>27 de julio de 2023</strong> (la API <em>visor-sesiones</em> no expone '
-    'sesiones anteriores). Las <strong>agendas del Pleno</strong> están disponibles '
-    'para el periodo parlamentario <strong>2021–2026</strong> (histórico) vía la API del '
-    'visor <em>adp-portal</em> — el Pleno del nuevo Congreso bicameral '
-    '<strong>2026–2031</strong> aún no publica agendas por esa vía.<br><br>'
+    'esta vista muestra solo el Congreso bicameral vigente (desde el '
+    '<strong>27 de julio de 2026</strong>) — la data histórica del período unicameral '
+    '2021–2026 queda guardada en la base pero desconectada de esta página. '
+    'Las <strong>agendas del Pleno</strong> bicameral aún no se publican por la API '
+    '<em>adp-portal</em> (verificado 2026-09-11) — esa sección quedará vacía hasta que '
+    'el Congreso empiece a publicarlas.<br><br>'
     '<strong style="color:var(--ink);">Cobertura de órganos:</strong> esta vista '
-    'incluye las <strong>24 Comisiones Ordinarias</strong> y el <strong>Pleno</strong> '
-    'del Congreso. La <strong>Comisión Permanente</strong>, la <strong>Subcomisión de '
+    'incluye las comisiones propias del <strong>Senado</strong> (11) y la '
+    '<strong>Cámara de Diputados</strong> (19), y el <strong>Pleno</strong> del Congreso. '
+    'La <strong>Comisión Permanente</strong>, la <strong>Subcomisión de '
     'Acusaciones Constitucionales</strong> y las comisiones investigadoras/especiales '
-    'no se publican por las APIs disponibles y no figuran aquí.</p>',
+    'no se publican por las APIs disponibles y no figuran aquí. Algunas comisiones '
+    'comparten nombre exacto entre Senado y Diputados (ej. "Justicia y Derechos '
+    'Humanos") — esas sesiones no se pueden filtrar por cámara con certeza y quedan '
+    'sin clasificar en el filtro "Cámara".</p>',
     unsafe_allow_html=True,
 )
 st.markdown(
