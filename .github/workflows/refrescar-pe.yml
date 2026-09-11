@@ -94,10 +94,17 @@ jobs:
           "
 
       - name: Sync incremental
+        env:
+          FORCE_FULL: ${{ inputs.force_full_sync }}
         run: |
           # Timeout 40 min (margen para sync completo si por algun motivo
           # se quedo desfasado). Normalmente termina en <2 min.
-          timeout 2400 python -m scraper.cli update || echo "[warn] sync PE timeout — sigo con DB actual"
+          # FORCE_FULL=true (dispatch manual) agrega --full: re-fetchea el
+          # detalle de TODOS los PLs, no solo los nuevos/cambiados. Antes
+          # este input existia pero no se usaba en ningun lado (bug).
+          FLAG=""
+          if [ "$FORCE_FULL" = "true" ]; then FLAG="--full"; fi
+          timeout 2400 python -m scraper.cli update $FLAG || echo "[warn] sync PE timeout — sigo con DB actual"
 
       - name: Refrescar catalogo de comisiones (limpia basura)
         run: |
