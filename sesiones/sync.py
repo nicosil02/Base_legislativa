@@ -20,9 +20,41 @@ class SyncStats:
     errores: int = 0
 
 
-def _build_comision_id_map(criterios: dict) -> dict[str, int]:
-    """Mapea nombreComision -> comisionId del catalogo /criterios."""
-    return {c["nombreComision"]: c["comisionId"] for c in criterios.get("comisiones", [])}
+CAMARA_LABEL = {"C": "Congreso", "D": "Diputados", "S": "Senado"}
+
+
+def _build_comision_id_map(criterios: dict) -> dict[str, tuple[int, str | None]]:
+    """Mapea nombreComision -> (comisionId, camara) del catalogo /criterios.
+
+    El catalogo trae `codTipoParl` por comisión (a diferencia del catalogo de
+    proyecto-ley que no lo trae — ver scraper/comisiones_ordinarias.py).
+    PERO: algunas comisiones del período bicameral vigente tienen el MISMO
+    nombre en Senado y Diputados (ej. "Justicia y Derechos Humanos", "Ética
+    Parlamentaria" — verificado 2026-09-11: 4 de 30 nombres colisionan). Para
+    esos nombres ambiguos, `camara` queda en None — mejor no adivinar que
+    asignar la cámara equivocada.
+
+    La detección de ambigüedad se acota al período vigente (perParId=2026,
+    Senado vs Diputados) — nombres que además coinciden con una comisión
+    legacy del período 2021 (ej. "Inteligencia", que es una de las 24
+    Ordinarias viejas Y también una comisión propia del Senado 2026, con
+    comisionId distinto en cada caso) NO cuentan como ambiguos: son épocas
+    distintas, no cámaras distintas dentro del mismo período."""
+    todas = criterios.get("comisiones", [])
+    actuales = [c for c in todas if c.get("perParId") in (2026, None)]
+    camaras_por_nombre: dict[str, set[str | None]] = {}
+    for c in actuales:
+        camaras_por_nombre.setdefault(c["nombreComision"], set()).add(
+            CAMARA_LABEL.get(c.get("codTipoParl"))
+        )
+    ambiguos = {n for n, cams in camaras_por_nombre.items() if len(cams) > 1}
+
+    out: dict[str, tuple[int, str | None]] = {}
+    for c in todas:
+        nombre = c["nombreComision"]
+        camara = None if nombre in ambiguos else CAMARA_LABEL.get(c.get("codTipoParl"))
+        out[nombre] = (c["comisionId"], camara)
+    return out
 
 
 def run_sync(

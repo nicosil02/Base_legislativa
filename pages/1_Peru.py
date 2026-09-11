@@ -17,7 +17,7 @@ from pathlib import Path
 import pandas as pd
 import streamlit as st
 
-from scraper.sync import PER_PAR_ID_ACTUAL
+from scraper.sync import FECHA_INICIO_BICAMERAL, PER_PAR_ID_ACTUAL
 
 COMISIONES_ESPECIALES_LABEL = "Comisiones Especiales"
 
@@ -430,16 +430,41 @@ def get_conn() -> sqlite3.Connection:
 @st.cache_data(ttl=60)
 def load_catalogs() -> dict:
     conn = get_conn()
-    temas = sorted(r[0] for r in conn.execute("SELECT DISTINCT tema FROM proyectos WHERE tema IS NOT NULL"))
-    estados = sorted(r[0] for r in conn.execute("SELECT DISTINCT estado FROM proyectos WHERE estado IS NOT NULL"))
-    proponentes = sorted(r[0] for r in conn.execute("SELECT DISTINCT proponente FROM proyectos WHERE proponente IS NOT NULL"))
-    partidos = sorted(r[0] for r in conn.execute("SELECT DISTINCT grupo_parlamentario FROM proyectos WHERE grupo_parlamentario IS NOT NULL"))
+    # Acotado al Congreso bicameral vigente (per_par_id actual) — el 2021-2026
+    # queda en la DB pero desconectado de esta página por pedido explícito
+    # de Nicolas (2026-09-11): "no me sirve la base histórica... desconéctala".
+    temas = sorted(r[0] for r in conn.execute(
+        "SELECT DISTINCT tema FROM proyectos WHERE tema IS NOT NULL AND per_par_id=?", (PER_PAR_ID_ACTUAL,)
+    ))
+    estados = sorted(r[0] for r in conn.execute(
+        "SELECT DISTINCT estado FROM proyectos WHERE estado IS NOT NULL AND per_par_id=?", (PER_PAR_ID_ACTUAL,)
+    ))
+    proponentes = sorted(r[0] for r in conn.execute(
+        "SELECT DISTINCT proponente FROM proyectos WHERE proponente IS NOT NULL AND per_par_id=?", (PER_PAR_ID_ACTUAL,)
+    ))
+    partidos = sorted(r[0] for r in conn.execute(
+        "SELECT DISTINCT grupo_parlamentario FROM proyectos WHERE grupo_parlamentario IS NOT NULL AND per_par_id=?",
+        (PER_PAR_ID_ACTUAL,),
+    ))
     fec_min, fec_max = conn.execute(
-        "SELECT MIN(date(fec_presentacion)), MAX(date(fec_presentacion)) FROM proyectos"
+        "SELECT MIN(date(fec_presentacion)), MAX(date(fec_presentacion)) FROM proyectos WHERE per_par_id=?",
+        (PER_PAR_ID_ACTUAL,),
     ).fetchone()
+    # Catálogo COMPLETO de comisiones por cámara (no solo las que ya tienen
+    # un PL asignado) — para que el filtro deje elegir cualquier comisión de
+    # Diputados/Senado aunque todavía no haya PLs derivados a ella.
+    comisiones_catalogo = [
+        {"nombre": r[0], "tipo": r[1]}
+        for r in conn.execute(
+            "SELECT nombre, tipo FROM comisiones "
+            "WHERE tipo IN ('Ordinaria','Senado','Diputados','Bicameral') "
+            "ORDER BY tipo, nombre"
+        )
+    ]
     return {
         "temas": temas, "estados": estados, "proponentes": proponentes,
         "partidos": partidos, "fec_min": fec_min, "fec_max": fec_max,
+        "comisiones_catalogo": comisiones_catalogo,
     }
 
 
@@ -457,7 +482,8 @@ def kpi_totals() -> dict[str, int]:
                        OR UPPER(estado) LIKE '%LEY PUBLICADA%'
                        OR UPPER(estado) LIKE '%PUBLICACI%PERUANO%'
                        THEN 1 ELSE 0 END) AS ley_publicada
-           FROM proyectos"""
+           FROM proyectos WHERE per_par_id=?""",
+        (PER_PAR_ID_ACTUAL,),
     ).fetchone()
     return {
         "Total": r["total"] or 0,
@@ -507,13 +533,14 @@ def load_proyectos(fec_inicio: dt.date | None, fec_fin: dt.date | None) -> pd.Da
       LEFT JOIN comisiones c
              ON c.comision_id = pc.comision_id
     """
-    where, params = [], [COMISIONES_ESPECIALES_LABEL]
+    # per_par_id=? acota al Congreso bicameral vigente — el histórico 2021-2026
+    # queda en la DB pero desconectado de esta página (pedido de Nicolas, 2026-09-11).
+    where, params = ["p.per_par_id = ?"], [COMISIONES_ESPECIALES_LABEL, PER_PAR_ID_ACTUAL]
     if fec_inicio:
         where.append("date(p.fec_presentacion) >= ?"); params.append(fec_inicio.isoformat())
     if fec_fin:
         where.append("date(p.fec_presentacion) <= ?"); params.append(fec_fin.isoformat())
-    if where:
-        sql += " WHERE " + " AND ".join(where)
+    sql += " WHERE " + " AND ".join(where)
     sql += " ORDER BY p.fec_presentacion DESC, p.pley_num DESC"
     df = pd.read_sql_query(sql, conn, params=params)
     if not df.empty:
@@ -769,8 +796,8 @@ st.markdown(
 st.markdown(
     '<p class="country-subtitle">Plataforma para seguir, filtrar y analizar los '
     'proyectos de ley presentados ante el Congreso de la República del Perú — '
-    'período vigente 2026–2031 (Congreso bicameral: Senado + Cámara de Diputados), '
-    'con la base histórica 2021–2026 (Congreso unicameral) disponible para consulta.</p>',
+    'período vigente 2026–2031 (Congreso bicameral: Senado + Cámara de Diputados). '
+    'La base histórica 2021–2026 (Congreso unicameral) no se muestra acá.</p>',
     unsafe_allow_html=True,
 )
 
@@ -811,7 +838,7 @@ cats = load_catalogs()
 # ---------- Sidebar: rango de fechas + sync ----------
 with st.sidebar:
     st.markdown("### Rango de fechas")
-    fec_min_iso = cats["fec_min"] or "2021-07-28"
+    fec_min_iso = cats["fec_min"] or FECHA_INICIO_BICAMERAL
     fec_max_iso = cats["fec_max"] or dt.date.today().isoformat()
     fec_min = dt.date.fromisoformat(fec_min_iso)
     fec_max = dt.date.fromisoformat(fec_max_iso)
@@ -912,20 +939,34 @@ def _opciones(col: str, label_todos: str = TODOS) -> list[str]:
     return [label_todos] + vals
 
 
+# tipos de comisión (scraper/comisiones_ordinarias.py) que corresponden a
+# cada opción del filtro "Cámara" — "Congreso" incluye las 24 Ordinarias
+# legacy (los PLs 'C' viejos siguen usándolas) y la Bicameral de Presupuesto.
+_TIPOS_POR_CAMARA = {
+    TODAS: ("Ordinaria", "Senado", "Diputados", "Bicameral"),
+    "Congreso": ("Ordinaria", "Bicameral"),
+    "Diputados": ("Diputados",),
+    "Senado": ("Senado",),
+}
+
+
 def _opciones_comision(camara: str = TODAS) -> list[str]:
-    """Lista de comisiones disponibles para filtrar. Si `camara` no es "Todas",
-    se acota a los PLs de esa cámara — Senado y Diputados tienen comisiones
-    con el MISMO nombre (ej. "Justicia y Derechos Humanos" existe en ambas),
-    así que sin esto el dropdown quedaba con nombres duplicados e
-    indistinguibles. Ver scraper/comisiones_ordinarias.py."""
-    if "_comisiones_all" not in df_full.columns:
-        return [TODAS]
-    base = df_full if camara == TODAS else df_full[df_full["Cámara"] == camara]
-    todos: set[str] = set()
-    for lst in base["_comisiones_all"]:
-        if isinstance(lst, list):
-            todos.update(x for x in lst if isinstance(x, str) and x.strip())
-    return [TODAS] + sorted(todos)
+    """Lista de comisiones disponibles para filtrar — del CATÁLOGO completo
+    (no solo lo que ya tiene un PL asignado), para poder elegir de antemano
+    una comisión de Diputados/Senado aunque todavía no haya PLs derivados a
+    ella (pedido explícito de Nicolas, 2026-09-11). Si `camara` no es
+    "Todas", se acota a las comisiones propias de esa cámara — Senado y
+    Diputados tienen comisiones con el MISMO nombre (ej. "Justicia y
+    Derechos Humanos"), así que sin esto el dropdown quedaba con nombres
+    duplicados e indistinguibles. Ver scraper/comisiones_ordinarias.py.
+    Siempre se ofrece también "Comisiones Especiales" (bucket de todo lo que
+    no es comisión ordinaria/de cámara/bicameral)."""
+    tipos = _TIPOS_POR_CAMARA.get(camara, _TIPOS_POR_CAMARA[TODAS])
+    nombres = sorted({
+        c["nombre"] for c in cats.get("comisiones_catalogo", [])
+        if c["tipo"] in tipos
+    })
+    return [TODAS] + nombres + [COMISIONES_ESPECIALES_LABEL]
 
 
 def _opciones_autor() -> list[str]:

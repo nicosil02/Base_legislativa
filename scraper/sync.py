@@ -13,6 +13,11 @@ log = logging.getLogger(__name__)
 PERIODO_UNICAMERAL_2021 = 2021    # período 2021-2026, Congreso unicameral (cerrado 2026-07-26)
 PER_PAR_ID_ACTUAL = 2026          # período 2026-2031, Congreso bicameral (Senado + Cámara de Diputados)
 
+# Fecha real de instalación del Congreso bicameral. Los módulos que NO tienen
+# columna per_par_id (sesiones/, pleno_sesiones) usan esto como corte para
+# separar "este Congreso" de la data histórica — ver pages/3_Agenda_PE.py.
+FECHA_INICIO_BICAMERAL = "2026-07-27"
+
 # Períodos que el sync recorre en cada corrida. Por pedido explícito de
 # Nicolas (2026-09-11): solo el período vigente — nada de re-sincronizar el
 # 2021 (cerrado, legislativamente muerto). La data 2021 ya recolectada queda

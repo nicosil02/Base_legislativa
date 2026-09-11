@@ -21,6 +21,7 @@ CREATE TABLE IF NOT EXISTS sesiones (
   id_comision_per_leg INTEGER,
   comision_id         INTEGER,
   nombre_comision     TEXT,
+  camara              TEXT,                   -- 'Congreso'/'Senado'/'Diputados'/NULL (ambiguo)
   tipo_comision       TEXT,
   nombre_sesion       TEXT,
   fecha               TEXT NOT NULL,          -- ISO YYYY-MM-DD
@@ -136,9 +137,12 @@ class Database:
     def init_schema(self) -> None:
         with self.tx() as c:
             c.executescript(SCHEMA)
+            cols = {r[1] for r in c.execute("PRAGMA table_info(sesiones)").fetchall()}
+            if "camara" not in cols:
+                c.execute("ALTER TABLE sesiones ADD COLUMN camara TEXT")
 
     # ---------- upsert: lista de sesiones ----------
-    def upsert_from_lista(self, row: dict, comision_id_map: dict[str, int],
+    def upsert_from_lista(self, row: dict, comision_id_map: dict[str, tuple[int, str | None]],
                           now: str) -> tuple[bool, bool]:
         """Inserta o actualiza desde la fila del listado /sesiones/busqueda.
 
@@ -151,7 +155,7 @@ class Database:
             raise ValueError(f"sesion {id_sesion}: fecha invalida {row.get('fecha')!r}")
 
         nombre_comision = row.get("nombreComision") or ""
-        comision_id = comision_id_map.get(nombre_comision)
+        comision_id, camara = comision_id_map.get(nombre_comision, (None, None))
 
         existing = self.conn.execute(
             "SELECT estado, fecha FROM sesiones WHERE id_sesion=?", (id_sesion,)
@@ -162,13 +166,13 @@ class Database:
             with self.tx() as c:
                 c.execute(
                     """INSERT INTO sesiones
-                       (id_sesion, comision_id, nombre_comision, tipo_comision,
+                       (id_sesion, comision_id, nombre_comision, camara, tipo_comision,
                         nombre_sesion, fecha, hora_inicio, hora_fin, estado,
                         flag_conjunta, flag_continuacion, flag_descentralizada,
                         first_seen_at, last_seen_at, last_changed_at)
-                       VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+                       VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
                     (
-                        id_sesion, comision_id, nombre_comision,
+                        id_sesion, comision_id, nombre_comision, camara,
                         row.get("tipoComision"),
                         row.get("nombreSesion"),
                         fecha_iso,
@@ -187,14 +191,14 @@ class Database:
         with self.tx() as c:
             c.execute(
                 """UPDATE sesiones SET
-                     nombre_comision=?, tipo_comision=?, nombre_sesion=?,
+                     nombre_comision=?, camara=?, tipo_comision=?, nombre_sesion=?,
                      hora_inicio=?, hora_fin=?, estado=?,
                      flag_conjunta=?, flag_continuacion=?, flag_descentralizada=?,
                      last_seen_at=?,
                      last_changed_at=CASE WHEN ? THEN ? ELSE last_changed_at END
                    WHERE id_sesion=?""",
                 (
-                    nombre_comision, row.get("tipoComision"),
+                    nombre_comision, camara, row.get("tipoComision"),
                     row.get("nombreSesion"),
                     row.get("horaInicio"), row.get("horaFin"),
                     nuevo_estado,
