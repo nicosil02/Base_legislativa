@@ -109,23 +109,28 @@ jobs:
 
       - name: Actualizar agenda de sesiones (PE)
         run: |
-          # --periodo-leg all itera los 5 periodos legislativos del parlamento
-          # 2021-2026 (2021..2025). La API solo expone datos desde el periodo
-          # 2023 (jul-2023 en adelante); 2021/2022 devuelven 0 y se descartan
-          # solos. Antes corriamos sin flag y por default solo se sincronizaba
-          # el periodo 2025, perdiendo ~1500 sesiones historicas de 2023-2024.
+          # --periodo-par 2026 = periodo parlamentario 2026-2031 (Congreso
+          # bicameral vigente desde 2026-07-27). --periodo-leg all itera los
+          # 5 periodos legislativos de ese parlamento (2026..2030) — sin
+          # `all`, por default solo se sincroniza UN periodo legislativo y
+          # se pierden los demas (ya nos paso una vez con el periodo 2021,
+          # perdiendo ~1500 sesiones historicas de 2023-2024).
+          # Hasta 2026-09-10 este workflow sincronizaba el periodo 2021-2026
+          # (unicameral, ya cerrado) — corregido para seguir al Congreso real.
           # Sync incremental: solo re-pega detalles si el estado cambio.
-          timeout 1200 python -X utf8 -m sesiones.cli update --periodo-leg all || echo "[warn] sesiones sync fallo, sigo"
+          timeout 1200 python -X utf8 -m sesiones.cli update --periodo-par 2026 --periodo-leg all || echo "[warn] sesiones sync fallo, sigo"
 
       - name: Actualizar agendas del Pleno (PE)
         run: |
-          # Sync de agendas del Pleno via API adp-portal-service. Cobertura
-          # del periodo parlamentario actual (2021-2026, ~177 agendas). Sync
-          # incremental: solo re-pega detalles si cambio el titulo/url.
+          # Sync de agendas del Pleno via API adp-portal-service. Cobertura de
+          # AMBOS periodos: 2021-2026 (historico, unicameral, ~180 agendas) y
+          # 2026-2031 (vigente, bicameral — al 2026-09-11 todavia sin agendas
+          # publicadas por esta API, pero se recogen solas apenas aparezcan).
+          # Sync incremental: solo re-pega detalles si cambio el titulo/url.
           # Primera corrida ~5 min (fetchea detalle de cada agenda); las
           # siguientes son rapidas (~30 seg) porque solo procesa la del
           # jueves nuevo + cualquier actualizacion.
-          timeout 900 python -X utf8 -m pleno.cli update --periodo 2021-2026 || echo "[warn] pleno sync fallo, sigo"
+          timeout 900 python -X utf8 -m pleno.cli update --periodo 2021-2026,2026-2031 || echo "[warn] pleno sync fallo, sigo"
 
       - name: Actualizar mesas de trabajo + eventos del Congreso PE
         run: |

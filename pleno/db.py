@@ -11,6 +11,8 @@ from contextlib import contextmanager
 from datetime import datetime, timezone
 from pathlib import Path
 
+from scraper.sync import PER_PAR_ID_ACTUAL
+
 SCHEMA = """
 -- Una fila por agenda del Pleno (sesion plenaria del jueves, tipicamente).
 CREATE TABLE IF NOT EXISTS pleno_sesiones (
@@ -64,7 +66,7 @@ CREATE TABLE IF NOT EXISTS pleno_pl_referenciado (
   cod_tema             INTEGER NOT NULL,
   cod_agenda           INTEGER NOT NULL,
   pley_num             INTEGER NOT NULL,
-  per_par_id           INTEGER NOT NULL DEFAULT 2021,
+  per_par_id           INTEGER NOT NULL DEFAULT 2026,
   proyecto_ley_raw     TEXT,
   origen               TEXT,                    -- 'url_canonica' | 'regex_texto'
   PRIMARY KEY (cod_tema, pley_num)
@@ -259,7 +261,7 @@ class Database:
                                VALUES (?,?,?,?,?,?)""",
                             (
                                 t["cod_tema"], cod_agenda, pl["pley_num"],
-                                pl.get("per_par_id", 2021),
+                                pl.get("per_par_id", PER_PAR_ID_ACTUAL),
                                 pl.get("raw"),
                                 pl.get("origen"),
                             ),

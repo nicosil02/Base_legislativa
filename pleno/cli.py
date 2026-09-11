@@ -2,7 +2,7 @@
 
 Uso:
   python -m pleno.cli init                                   # crea tablas pleno_* en proyectos.db
-  python -m pleno.cli update [--full] [--limit N] [--periodo 2021-2026|all]
+  python -m pleno.cli update [--full] [--limit N] [--periodo 2021-2026,2026-2031|all]
   python -m pleno.cli show <cod_agenda>                      # detalle + PLs cruzados
   python -m pleno.cli list [--desde YYYY-MM-DD] [--hasta YYYY-MM-DD]
   python -m pleno.cli stats
@@ -28,12 +28,16 @@ def cmd_init(args) -> int:
 
 
 def cmd_update(args) -> int:
-    """Sincroniza agendas del Pleno. Default periodo = '2021-2026'.
-    Para traer TODO el historico (2011-presente) pasar `--periodo all`.
+    """Sincroniza agendas del Pleno. Default periodo = histórico 2021-2026 +
+    vigente 2026-2031 (coma-separado). Para traer TODO el historico
+    (2011-presente) pasar `--periodo all`.
     """
     with Database(args.db) as db:
         db.init_schema()
-        periodo = None if args.periodo == "all" else args.periodo
+        if args.periodo == "all":
+            periodo = None
+        else:
+            periodo = tuple(p.strip() for p in args.periodo.split(",") if p.strip())
         print(f"--- Sync Pleno periodo={periodo or 'TODOS'} ---")
         stats = run_sync(
             db,
@@ -152,8 +156,9 @@ def build_parser() -> argparse.ArgumentParser:
     up = sub.add_parser("update", help="corre sync incremental")
     up.add_argument("--full", action="store_true", help="re-fetchea detalle de todas")
     up.add_argument("--limit", type=int, default=None, help="max agendas a procesar")
-    up.add_argument("--periodo", default="2021-2026",
-                    help="periodo parlamentario (default 2021-2026; usar 'all' para todo desde 2011)")
+    up.add_argument("--periodo", default="2021-2026,2026-2031",
+                    help="periodo(s) parlamentario(s), coma-separado (default histórico+vigente); "
+                         "usar 'all' para todo desde 2011")
     up.set_defaults(func=cmd_update)
 
     sh = sub.add_parser("show", help="detalle de una agenda + PLs cruzados")

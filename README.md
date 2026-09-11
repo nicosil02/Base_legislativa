@@ -1,9 +1,11 @@
 # Radar Legislativo
 
-Plataforma de monitoreo legislativo. Hoy cubre **Perú** (Congreso de la República,
-período 2021–2026). Diseñada como app multi-país: cada país vive en su propia página
-bajo `pages/`. Frontend en Streamlit con estética editorial-data (similar a datadaf.com),
-backend en SQLite alimentado por scraping del API oficial.
+Plataforma de monitoreo legislativo. Hoy cubre **Perú** (Congreso de la República —
+período vigente 2026–2031, Congreso bicameral: Senado + Cámara de Diputados, instalado
+2026-07-27; más el período histórico 2021–2026, Congreso unicameral). Diseñada como app
+multi-país: cada país vive en su propia página bajo `pages/`. Frontend en Streamlit con
+estética editorial-data (similar a datadaf.com), backend en SQLite alimentado por
+scraping del API oficial.
 
 ## Setup inicial
 
@@ -114,15 +116,31 @@ python -m scraper.cli export --out proyectos.json            # dump completo
 El portal oficial (`https://wb2server.congreso.gob.pe/spley-portal/`) es una SPA Angular
 que consume un API REST en `https://api.congreso.gob.pe/spley-portal-service`.
 
-- **Listado**: `POST /proyecto-ley/lista-con-filtro` con `{perParId: 2021, first, rows}`.
-  Devuelve los ~14,600 PLs en una sola respuesta (~30 s).
+- **Listado**: `POST /proyecto-ley/lista-con-filtro` con `{perParId, first, rows}` — el
+  sync corre esto para **cada período** en `scraper.sync.PERIODOS_SYNC` (hoy: `2021` y
+  `2026`, ver abajo). Devuelve todos los PLs del período en una sola respuesta.
 - **Detalle**: `GET /expediente/{enc(perParId)}/{enc(pleyNum)}`. Los parámetros se cifran
   con AES-128-ECB + PKCS7 (clave extraída del bundle Angular). Trae comisiones, firmantes,
   seguimientos completos y archivos PDF.
-- **Comisiones**: `GET /comisiones` (catálogo).
+- **Comisiones**: `GET /comisiones` (catálogo, no depende del período).
 
 El sync sólo llama al detalle para PLs nuevos o cuyo `desEstado` cambió → en uso
 incremental son pocas docenas de calls.
+
+### Períodos parlamentarios (`perParId`)
+
+El Congreso peruano pasó de unicameral a **bicameral** (Senado + Cámara de Diputados) el
+2026-07-27, tras la reforma constitucional de 2024. `scraper/sync.py` sincroniza ambos:
+
+| `perParId` | Período | Congreso | Estado |
+|---|---|---|---|
+| `2021` | 2021–2026 | Unicameral | Histórico (cerrado 2026-07-26) |
+| `2026` | 2026–2031 | Bicameral | **Vigente** — `PER_PAR_ID_ACTUAL` |
+
+Los demás módulos con datos period-sensibles (`sesiones/` — comisiones, `pleno/` —
+agendas del Pleno) siguen el mismo criterio; ver sus propios `__init__.py`/`README` para
+el detalle de cada API (cada una usa su propio backend del Congreso, con su propio
+catálogo de períodos).
 
 ## Esquema SQLite
 

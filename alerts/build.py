@@ -15,7 +15,8 @@ import sqlite3
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
-PE_PORTAL_URL = "https://wb2server.congreso.gob.pe/spley-portal/#/expediente/{per_par_id}/{pley_num}"
+from scraper.api import portal_url
+
 EC_PORTAL_URL = "https://proyectosdeley.asambleanacional.gob.ec/report"
 
 EC_DICTAMEN_STATES = (
@@ -53,7 +54,7 @@ def _peru_new_pls(conn, since_iso):
     # nuestro scraper recien lo vio hoy, sigue siendo "nuevo" para el
     # usuario. La comparacion es precisa a nivel timestamp.
     rows = conn.execute(
-        """SELECT per_par_id, pley_num, proyecto_ley, titulo, tema, estado,
+        """SELECT per_par_id, cod_tipo_parl, pley_num, proyecto_ley, titulo, tema, estado,
                   fec_presentacion, url_portal
            FROM proyectos
            WHERE first_seen_at > ?
@@ -67,9 +68,7 @@ def _peru_new_pls(conn, since_iso):
             "tema": r["tema"] or "Otros",
             "estado": r["estado"],
             "fecha": r["fec_presentacion"],
-            "url": r["url_portal"] or PE_PORTAL_URL.format(
-                per_par_id=r["per_par_id"], pley_num=r["pley_num"]
-            ),
+            "url": r["url_portal"] or portal_url(r["per_par_id"], r["pley_num"], r["cod_tipo_parl"]),
         }
         for r in rows
     ]
@@ -78,12 +77,18 @@ def _peru_new_pls(conn, since_iso):
 def _peru_new_dictamenes(conn, since_iso):
     # seguimientos.fecha tiene hora precisa, comparamos a nivel timestamp
     # para que cada dictamen salga 1 vez (no se repita por cambio de dia).
+    # JOIN incluye cod_tipo_parl: sin esto, un seguimiento de un PL de
+    # Diputados podía juntarse con el título/tema de un PL de Senado o
+    # Congreso que casualmente comparte pley_num (cada cámara numera desde
+    # 1) — bug real encontrado al migrar al Congreso bicameral.
     rows = conn.execute(
-        """SELECT p.per_par_id, p.pley_num, p.proyecto_ley, p.titulo, p.tema,
+        """SELECT p.per_par_id, p.cod_tipo_parl, p.pley_num, p.proyecto_ley, p.titulo, p.tema,
                   s.estado AS estado, p.fec_presentacion, p.url_portal,
                   s.fecha AS changed_at
            FROM seguimientos s
-           JOIN proyectos p ON p.per_par_id = s.per_par_id AND p.pley_num = s.pley_num
+           JOIN proyectos p ON p.per_par_id = s.per_par_id
+                            AND p.cod_tipo_parl = s.cod_tipo_parl
+                            AND p.pley_num = s.pley_num
            WHERE s.fecha > ?
              AND UPPER(s.estado) LIKE '%DICTAMEN%'
            ORDER BY p.tema, s.fecha DESC""",
@@ -96,9 +101,7 @@ def _peru_new_dictamenes(conn, since_iso):
             "tema": r["tema"] or "Otros",
             "estado": r["estado"],
             "fecha": (r["changed_at"] or r["fec_presentacion"])[:10],
-            "url": r["url_portal"] or PE_PORTAL_URL.format(
-                per_par_id=r["per_par_id"], pley_num=r["pley_num"]
-            ),
+            "url": r["url_portal"] or portal_url(r["per_par_id"], r["pley_num"], r["cod_tipo_parl"]),
         }
         for r in rows
     ]
@@ -181,10 +184,22 @@ def _peru_sesiones_proximas(conn, days_ahead=2):
     ).fetchall()
     out = []
     for r in rows:
+        # NOTA: sesion_pl_referenciado no guarda cod_tipo_parl (el parser de
+        # agenda_parser.py extrae el numero de PL de texto libre y no siempre
+        # puede saber de qué cámara es) — sin desempate, un pley_num que
+        # existe en 2+ cámaras (común en el período bicameral: D/S/C
+        # reinician numeración desde 1) hacía fan-out el JOIN y duplicaba/
+        # mezclaba títulos. Desempate determinístico: 'C' > 'D' > 'S'
+        # (alfabético), nunca más de 1 fila — la cámara elegida puede ser la
+        # incorrecta (limitación conocida), pero al menos no se duplica.
         pls = conn.execute(
             """SELECT pr.pley_num, p.proyecto_ley, p.titulo, p.tema, p.estado
                FROM sesion_pl_referenciado pr
                LEFT JOIN proyectos p ON p.pley_num = pr.pley_num AND p.per_par_id = pr.per_par_id
+                                     AND p.cod_tipo_parl = (
+                                       SELECT MIN(p2.cod_tipo_parl) FROM proyectos p2
+                                       WHERE p2.per_par_id = pr.per_par_id AND p2.pley_num = pr.pley_num
+                                     )
                WHERE pr.id_sesion = ? ORDER BY pr.pley_num""",
             (r["id_sesion"],),
         ).fetchall()

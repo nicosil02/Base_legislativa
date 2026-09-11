@@ -73,8 +73,8 @@ class ApiClient:
 
     def list_sesiones(
         self,
-        periodo_parlamentario: int = 2021,
-        periodo_legislativo: int = 2025,
+        periodo_parlamentario: int = 2026,  # 2026-2031, Congreso bicameral vigente
+        periodo_legislativo: int = 2026,
         tipo_comision: str = "",
         comision: str | int = "",
         sesion: str = "",

@@ -11,6 +11,8 @@ from contextlib import contextmanager
 from datetime import datetime, timezone
 from pathlib import Path
 
+from scraper.sync import PER_PAR_ID_ACTUAL
+
 SCHEMA = """
 -- Una fila por sesion convocada / realizada de una comision.
 CREATE TABLE IF NOT EXISTS sesiones (
@@ -60,7 +62,7 @@ CREATE INDEX IF NOT EXISTS idx_punto_sesion ON sesion_agenda_punto(id_sesion);
 CREATE TABLE IF NOT EXISTS sesion_pl_referenciado (
   id_sesion           INTEGER NOT NULL,
   pley_num            INTEGER NOT NULL,
-  per_par_id          INTEGER NOT NULL DEFAULT 2021,
+  per_par_id          INTEGER NOT NULL DEFAULT 2026,
   proyecto_ley_raw    TEXT,                   -- como aparece literal en agenda (ej. "14500/2025-CR")
   contexto            TEXT,                   -- snippet de 120 chars alrededor de la mencion
   id_orden_dia        INTEGER,                -- en que punto del orden del dia aparecio
@@ -269,7 +271,9 @@ class Database:
                                 contexto, id_orden_dia)
                                VALUES (?,?,?,?,?,?)""",
                             (id_sesion, pl["pley_num"],
-                             pl.get("per_par_id", 2021),
+                             # el parser aun no convierte "ano" en un per_par_id real
+                             # (ver sesiones/agenda_parser.py) — asume el periodo vigente.
+                             pl.get("per_par_id", PER_PAR_ID_ACTUAL),
                              pl.get("raw"),
                              pl.get("contexto"),
                              id_orden),

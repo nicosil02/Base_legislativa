@@ -18,7 +18,7 @@ from pathlib import Path
 from scraper.api import ApiClient
 from scraper.db import Database
 from scraper.export import export_json
-from scraper.sync import PER_PAR_ID_ACTUAL, env_max_proyectos, run_sync
+from scraper.sync import PER_PAR_ID_ACTUAL, PERIODO_UNICAMERAL_2021, env_max_proyectos, run_sync_periodos
 
 DEFAULT_DB = "proyectos.db"
 DEFAULT_JSON = "proyectos.json"
@@ -124,12 +124,16 @@ def cmd_update(args) -> int:
     with Database(args.db) as db:
         db.init_schema()
         max_p = args.limit if args.limit is not None else env_max_proyectos()
-        stats = run_sync(db, full=args.full, max_proyectos=max_p)
-        print(
-            f"Sync terminado: vistos={stats.vistos} nuevos={stats.nuevos} "
-            f"actualizados={stats.actualizados} detail_fetches={stats.detail_fetches} "
-            f"errores={stats.errores}"
-        )
+        por_periodo = run_sync_periodos(db, full=args.full, max_proyectos=max_p)
+        for (per_par_id, cam), stats in por_periodo.items():
+            print(
+                f"[{per_par_id}/{cam}] vistos={stats.vistos} nuevos={stats.nuevos} "
+                f"actualizados={stats.actualizados} detail_fetches={stats.detail_fetches} "
+                f"errores={stats.errores}"
+            )
+        total_nuevos = sum(s.nuevos for s in por_periodo.values())
+        total_errores = sum(s.errores for s in por_periodo.values())
+        print(f"Sync terminado — total nuevos={total_nuevos} errores={total_errores}")
     return 0
 
 
@@ -143,10 +147,11 @@ def cmd_export(args) -> int:
 def cmd_query(args) -> int:
     with Database(args.db) as db:
         sql = (
-            "SELECT p.per_par_id, p.pley_num, p.proyecto_ley, p.estado, p.fec_presentacion, "
+            "SELECT p.per_par_id, p.cod_tipo_parl, p.pley_num, p.proyecto_ley, p.estado, p.fec_presentacion, "
             "       p.proponente, p.grupo_parlamentario, p.tema, p.tema_manual, "
             "       (SELECT GROUP_CONCAT(pc.nombre, ' | ') FROM proyecto_comision pc "
-            "        WHERE pc.per_par_id=p.per_par_id AND pc.pley_num=p.pley_num) AS comisiones, "
+            "        WHERE pc.per_par_id=p.per_par_id AND pc.cod_tipo_parl=p.cod_tipo_parl "
+            "        AND pc.pley_num=p.pley_num) AS comisiones, "
             "       p.titulo "
             "FROM proyectos p"
         )
@@ -155,7 +160,8 @@ def cmd_query(args) -> int:
         if args.comision is not None:
             clauses.append(
                 "EXISTS (SELECT 1 FROM proyecto_comision pc "
-                "WHERE pc.per_par_id=p.per_par_id AND pc.pley_num=p.pley_num AND pc.comision_id=?)"
+                "WHERE pc.per_par_id=p.per_par_id AND pc.cod_tipo_parl=p.cod_tipo_parl "
+                "AND pc.pley_num=p.pley_num AND pc.comision_id=?)"
             )
             params.append(args.comision)
         if args.tema:
@@ -223,13 +229,13 @@ def cmd_recategorizar(args) -> int:
                 c.execute("UPDATE proyectos SET tema=NULL, tema_manual=0")
             print("--force: limpié todas las etiquetas, incluyendo manuales.")
         rows = db.conn.execute(
-            "SELECT per_par_id, pley_num, titulo, sumilla FROM proyectos "
+            "SELECT per_par_id, cod_tipo_parl, pley_num, titulo, sumilla FROM proyectos "
             "WHERE tema_manual = 0"
         ).fetchall()
         total = len(rows)
         print(f"Re-clasificando {total} proyectos (los manuales se respetan)...")
         for i, r in enumerate(rows, 1):
-            db.classify_and_save(r["per_par_id"], r["pley_num"], r["titulo"], r["sumilla"])
+            db.classify_and_save(r["per_par_id"], r["cod_tipo_parl"], r["pley_num"], r["titulo"], r["sumilla"])
             if i % 1000 == 0:
                 print(f"  {i}/{total}")
         print(f"Listo: {total} proyectos re-clasificados.")
@@ -267,8 +273,12 @@ def cmd_importar_temas(args) -> int:
         db.init_schema()
         n_match, n_unknown, n_skip = 0, 0, 0
         skipped_temas: set[str] = set()
-        valid = set(db.conn.execute("SELECT pley_num FROM proyectos").fetchall())
-        valid = {r[0] for r in valid}
+        valid = {
+            r[0] for r in db.conn.execute(
+                "SELECT pley_num FROM proyectos WHERE per_par_id=? AND cod_tipo_parl=?",
+                (args.per_par_id, args.cod_tipo_parl),
+            ).fetchall()
+        }
         for row in ws.iter_rows(min_row=2, values_only=True):
             pl, tema = row[i_pl], row[i_tema]
             if pl is None or tema is None:
@@ -282,7 +292,7 @@ def cmd_importar_temas(args) -> int:
             if pl not in valid:
                 n_unknown += 1
                 continue
-            db.set_tema(args.per_par_id, pl, str(tema).strip(), manual=True)
+            db.set_tema(args.per_par_id, args.cod_tipo_parl, pl, str(tema).strip(), manual=True)
             n_match += 1
             if tema not in (
                 "Educación","Trabajo","Salud","Tributos","Banca","Pensiones",
@@ -312,22 +322,22 @@ def cmd_importar_temas(args) -> int:
             if tema_origen == "*" or "Farma" not in especificas:
                 continue
             for r in db.conn.execute(
-                "SELECT per_par_id, pley_num, titulo, sumilla FROM proyectos WHERE tema=?",
+                "SELECT per_par_id, cod_tipo_parl, pley_num, titulo, sumilla FROM proyectos WHERE tema=?",
                 (tema_origen,),
             ).fetchall():
                 if count_matches(r["titulo"], r["sumilla"], "Farma") >= 1:
-                    db.set_tema(r["per_par_id"], r["pley_num"], "Farma", manual=True)
+                    db.set_tema(r["per_par_id"], r["cod_tipo_parl"], r["pley_num"], "Farma", manual=True)
                     moves_farma += 1
 
         # Pase 2: Tecnología — sobre todos los PLs (excepto los que ya quedaron
         # como Farma o Tecnología), umbral ≥ TECH_MIN_KEYWORDS keywords.
         if "*" in OVERRIDE_DESDE and "Tecnología" in OVERRIDE_DESDE["*"]:
             for r in db.conn.execute(
-                "SELECT per_par_id, pley_num, titulo, sumilla, tema FROM proyectos "
+                "SELECT per_par_id, cod_tipo_parl, pley_num, titulo, sumilla, tema FROM proyectos "
                 "WHERE tema NOT IN ('Tecnología', 'Farma') OR tema IS NULL"
             ).fetchall():
                 if count_matches(r["titulo"], r["sumilla"], "Tecnología") >= TECH_MIN_KEYWORDS:
-                    db.set_tema(r["per_par_id"], r["pley_num"], "Tecnología", manual=True)
+                    db.set_tema(r["per_par_id"], r["cod_tipo_parl"], r["pley_num"], "Tecnología", manual=True)
                     moves_tech += 1
 
         if moves_farma or moves_tech:
@@ -349,13 +359,13 @@ def cmd_importar_temas(args) -> int:
 def cmd_show(args) -> int:
     with Database(args.db) as db:
         row = db.conn.execute(
-            "SELECT * FROM proyectos WHERE per_par_id=? AND pley_num=?",
-            (args.per_par_id, args.pley_num),
+            "SELECT * FROM proyectos WHERE per_par_id=? AND cod_tipo_parl=? AND pley_num=?",
+            (args.per_par_id, args.cod_tipo_parl, args.pley_num),
         ).fetchone()
         if not row:
-            print(f"Proyecto {args.per_par_id}/{args.pley_num} no encontrado.", file=sys.stderr)
+            print(f"Proyecto {args.per_par_id}/{args.cod_tipo_parl}/{args.pley_num} no encontrado.", file=sys.stderr)
             return 1
-        print(f"Proyecto de Ley: {row['proyecto_ley']}")
+        print(f"Proyecto de Ley: {row['proyecto_ley']}  (cámara: {row['cod_tipo_parl']})")
         print(f"Título: {row['titulo']}")
         print(f"Estado: {row['estado']}  (id={row['estado_id']})")
         print(f"Presentado: {row['fec_presentacion']}")
@@ -366,8 +376,8 @@ def cmd_show(args) -> int:
         if row["sumilla"]:
             print(f"\nSumilla:\n{row['sumilla']}")
         coms = db.conn.execute(
-            "SELECT nombre FROM proyecto_comision WHERE per_par_id=? AND pley_num=?",
-            (args.per_par_id, args.pley_num),
+            "SELECT nombre FROM proyecto_comision WHERE per_par_id=? AND cod_tipo_parl=? AND pley_num=?",
+            (args.per_par_id, args.cod_tipo_parl, args.pley_num),
         ).fetchall()
         if coms:
             print("\nComisiones: " + ", ".join(c["nombre"] for c in coms))
@@ -376,8 +386,8 @@ def cmd_show(args) -> int:
             print(f"Tema: {row['tema']}  [{origen}]")
         segs = db.conn.execute(
             "SELECT fecha, estado, comisiones, observacion FROM seguimientos "
-            "WHERE per_par_id=? AND pley_num=? ORDER BY fecha DESC",
-            (args.per_par_id, args.pley_num),
+            "WHERE per_par_id=? AND cod_tipo_parl=? AND pley_num=? ORDER BY fecha DESC",
+            (args.per_par_id, args.cod_tipo_parl, args.pley_num),
         ).fetchall()
         if segs:
             print("\nHistorial:")
@@ -434,12 +444,19 @@ def build_parser() -> argparse.ArgumentParser:
     it = sub.add_parser("importar-temas", help="carga temas etiquetados a mano desde un Excel (tema_manual=1)")
     it.add_argument("excel", help="ruta al archivo .xlsx con columnas 'PL' y 'Tema'")
     it.add_argument("--sheet", help="nombre de la hoja (por defecto la primera)")
-    it.add_argument("--per-par-id", dest="per_par_id", type=int, default=PER_PAR_ID_ACTUAL)
+    # Default = 2021 (no PER_PAR_ID_ACTUAL): el Excel histórico de Nicolas
+    # (data/ProyectosDeLey.xlsx) siempre fue etiquetado sobre el período
+    # unicameral 2021-2026, sin distinción de cámara.
+    it.add_argument("--per-par-id", dest="per_par_id", type=int, default=PERIODO_UNICAMERAL_2021)
+    it.add_argument("--cod-tipo-parl", dest="cod_tipo_parl", default="C",
+                     help="cámara del PL a etiquetar (default 'C' — el período legacy no distingue)")
     it.set_defaults(func=cmd_importar_temas)
 
     sh = sub.add_parser("show", help="muestra un proyecto e historial")
     sh.add_argument("pley_num", type=int)
     sh.add_argument("--per-par-id", dest="per_par_id", type=int, default=PER_PAR_ID_ACTUAL)
+    sh.add_argument("--cod-tipo-parl", dest="cod_tipo_parl", default="C",
+                     help="cámara: C=Congreso/general, D=Diputados, S=Senado (default 'C')")
     sh.set_defaults(func=cmd_show)
 
     return p

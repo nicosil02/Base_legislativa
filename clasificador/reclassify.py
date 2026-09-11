@@ -34,6 +34,7 @@ CREATE TABLE IF NOT EXISTS clasificacion_sugerencias (
   id              INTEGER PRIMARY KEY AUTOINCREMENT,
   pley_num        INTEGER NOT NULL,
   per_par_id      INTEGER NOT NULL,
+  cod_tipo_parl   TEXT NOT NULL DEFAULT 'C',
   tema_anterior   TEXT,
   tema_sugerido   TEXT NOT NULL,
   confidence      REAL NOT NULL,
@@ -41,9 +42,9 @@ CREATE TABLE IF NOT EXISTS clasificacion_sugerencias (
   created_at      TEXT NOT NULL,
   decided_at      TEXT,
   decided_by      TEXT,
-  UNIQUE (pley_num, per_par_id, tema_sugerido)
+  UNIQUE (pley_num, per_par_id, cod_tipo_parl, tema_sugerido)
 );
-CREATE INDEX IF NOT EXISTS idx_sug_pley ON clasificacion_sugerencias(pley_num, per_par_id);
+CREATE INDEX IF NOT EXISTS idx_sug_pley ON clasificacion_sugerencias(pley_num, per_par_id, cod_tipo_parl);
 CREATE INDEX IF NOT EXISTS idx_sug_estado ON clasificacion_sugerencias(estado);
 """
 
@@ -51,6 +52,11 @@ CREATE INDEX IF NOT EXISTS idx_sug_estado ON clasificacion_sugerencias(estado);
 def init_schema(conn: sqlite3.Connection) -> None:
     with conn:
         conn.executescript(SCHEMA_SUGERENCIAS)
+        cols = {r[1] for r in conn.execute("PRAGMA table_info(clasificacion_sugerencias)").fetchall()}
+        if "cod_tipo_parl" not in cols:
+            conn.execute(
+                "ALTER TABLE clasificacion_sugerencias ADD COLUMN cod_tipo_parl TEXT NOT NULL DEFAULT 'C'"
+            )
 
 
 def reclassify_otros(
@@ -80,7 +86,7 @@ def reclassify_otros(
 
     rows = conn.execute(
         """
-        SELECT pley_num, per_par_id, titulo, sumilla
+        SELECT pley_num, per_par_id, cod_tipo_parl, titulo, sumilla
         FROM proyectos
         WHERE tema = 'Otros'
         """
@@ -97,9 +103,9 @@ def reclassify_otros(
 
     for batch_start in range(0, n, batch_size):
         batch = rows[batch_start : batch_start + batch_size]
-        textos = [f"{r[2] or ''} {r[3] or ''}" for r in batch]
+        textos = [f"{r[3] or ''} {r[4] or ''}" for r in batch]
         preds = predict_tema_batch(textos)
-        for (pley_num, per_par_id, _, _), (tema_pred, conf) in zip(batch, preds):
+        for (pley_num, per_par_id, cod_tipo_parl, _, _), (tema_pred, conf) in zip(batch, preds):
             if tema_pred == "Otros":
                 sin_cambio += 1
                 continue
@@ -108,16 +114,16 @@ def reclassify_otros(
                     with conn:
                         conn.execute(
                             "UPDATE proyectos SET tema=?, tema_manual=0 "
-                            "WHERE pley_num=? AND per_par_id=?",
-                            (tema_pred, pley_num, per_par_id),
+                            "WHERE pley_num=? AND per_par_id=? AND cod_tipo_parl=?",
+                            (tema_pred, pley_num, per_par_id, cod_tipo_parl),
                         )
                         # Tambien dejamos huella en sugerencias como 'aplicado'
                         conn.execute(
                             """INSERT OR IGNORE INTO clasificacion_sugerencias
-                               (pley_num, per_par_id, tema_anterior, tema_sugerido,
+                               (pley_num, per_par_id, cod_tipo_parl, tema_anterior, tema_sugerido,
                                 confidence, estado, created_at, decided_at, decided_by)
-                               VALUES (?,?,?,?,?,?,?,?,?)""",
-                            (pley_num, per_par_id, "Otros", tema_pred, conf,
+                               VALUES (?,?,?,?,?,?,?,?,?,?)""",
+                            (pley_num, per_par_id, cod_tipo_parl, "Otros", tema_pred, conf,
                              "aplicado", now, now, "auto-reclassify"),
                         )
                 aplicados += 1
@@ -126,10 +132,10 @@ def reclassify_otros(
                     with conn:
                         conn.execute(
                             """INSERT OR IGNORE INTO clasificacion_sugerencias
-                               (pley_num, per_par_id, tema_anterior, tema_sugerido,
+                               (pley_num, per_par_id, cod_tipo_parl, tema_anterior, tema_sugerido,
                                 confidence, estado, created_at)
-                               VALUES (?,?,?,?,?,?,?)""",
-                            (pley_num, per_par_id, "Otros", tema_pred, conf,
+                               VALUES (?,?,?,?,?,?,?,?)""",
+                            (pley_num, per_par_id, cod_tipo_parl, "Otros", tema_pred, conf,
                              "pendiente", now),
                         )
                 sugerencias += 1

@@ -28,3 +28,7 @@ scripts/recon_agenda_output.json
 
 # Proyecto aparte (mapas electorales geopandas), creado aquí por error
 mapa_electoral/
+
+# Notas y bluebooks de clientes: info de negocio confidencial, este repo es
+# público. Vive solo local.
+clientes/

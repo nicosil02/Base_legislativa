@@ -7,7 +7,7 @@ from dataclasses import dataclass
 
 from pleno.api import ApiClient
 from pleno.db import Database, now_iso
-from pleno.parser import flatten_temas, parse_tema
+from pleno.parser import flatten_temas, parse_tema, per_par_id_de_periodo
 
 log = logging.getLogger(__name__)
 
@@ -24,13 +24,14 @@ class SyncStats:
 def run_sync(
     db: Database,
     *,
-    periodo_filtro: str | None = "2021-2026",
+    periodo_filtro: str | tuple[str, ...] | None = ("2021-2026", "2026-2031"),
     full: bool = False,
     client: ApiClient | None = None,
     max_agendas: int | None = None,
 ) -> SyncStats:
     """Sync incremental:
-      - Lista todas las agendas del Pleno del periodo (default: 2021-2026).
+      - Lista todas las agendas del Pleno del periodo (default: histórico
+        2021-2026 + vigente 2026-2031 — ver pleno/api.py).
       - Por cada una: upsert con datos de la lista.
       - Si es nueva, cambio detectado, o `full=True`: llama al detalle y
         persiste temas + PLs cruzados.
@@ -63,9 +64,15 @@ def run_sync(
                 try:
                     data = client.get_agenda(row["codAgenda"])
                     temas = flatten_temas(data)
+                    # `row["dPeriodo"]` (ej. "2021-2026") es el período REAL de
+                    # esta agenda — se recorren agendas de más de un período en
+                    # la misma corrida (histórico + vigente), así que no se
+                    # puede asumir el período vigente para los PLs detectados
+                    # por regex/nomTemaCor (que no traen período en el texto).
+                    per_par_fallback = per_par_id_de_periodo(row.get("dPeriodo"))
                     temas_con_pls = []
                     for t in temas:
-                        tema_row, pls = parse_tema(t)
+                        tema_row, pls = parse_tema(t, per_par_id_fallback=per_par_fallback)
                         temas_con_pls.append({"tema_row": tema_row, "pls": pls})
                     db.upsert_detalle(data, temas_con_pls, now_iso())
                     stats.detail_fetches += 1

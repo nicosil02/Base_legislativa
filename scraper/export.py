@@ -14,10 +14,11 @@ def export_json(db: Database, path: str | Path) -> int:
     proyectos: list[dict] = []
     for row in cur.fetchall():
         d = dict(row)
-        key = (d["per_par_id"], d["pley_num"])
+        key = (d["per_par_id"], d["cod_tipo_parl"], d["pley_num"])
         d["comisiones"] = [
             dict(r) for r in db.conn.execute(
-                "SELECT comision_id, nombre FROM proyecto_comision WHERE per_par_id=? AND pley_num=?",
+                "SELECT comision_id, nombre FROM proyecto_comision "
+                "WHERE per_par_id=? AND cod_tipo_parl=? AND pley_num=?",
                 key,
             )
         ]
@@ -25,7 +26,7 @@ def export_json(db: Database, path: str | Path) -> int:
         d["seguimientos"] = [
             dict(r) for r in db.conn.execute(
                 "SELECT seguimiento_pley_id, fecha, estado, comisiones, detalle, observacion, flag_inicial "
-                "FROM seguimientos WHERE per_par_id=? AND pley_num=? ORDER BY fecha DESC",
+                "FROM seguimientos WHERE per_par_id=? AND cod_tipo_parl=? AND pley_num=? ORDER BY fecha DESC",
                 key,
             )
         ]

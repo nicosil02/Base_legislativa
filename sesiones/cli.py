@@ -31,12 +31,12 @@ def cmd_update(args) -> int:
     """Sincroniza sesiones de uno o varios periodos legislativos.
 
     Si --periodo-leg es entero: solo ese año. Si es 'all': itera todos
-    los periodos del periodo parlamentario actual (2021-2026 = 2021..2025).
+    los periodos del periodo parlamentario actual (2026-2031 = 2026..2030).
     """
     with Database(args.db) as db:
         db.init_schema()
         if args.periodo_leg == "all":
-            # Periodo parlamentario 2021-2026 = legislaturas 2021, 22, 23, 24, 25
+            # Periodo parlamentario 2026-2031 = legislaturas 2026, 27, 28, 29, 30
             anios = list(range(args.periodo_par, args.periodo_par + 5))
         else:
             anios = [int(args.periodo_leg)]
@@ -186,10 +186,10 @@ def build_parser() -> argparse.ArgumentParser:
     up = sub.add_parser("update", help="corre sync incremental")
     up.add_argument("--full", action="store_true", help="re-fetchea detalle de todas")
     up.add_argument("--limit", type=int, default=None, help="max sesiones a procesar")
-    up.add_argument("--periodo-par", dest="periodo_par", type=int, default=2021,
-                    help="periodo parlamentario (default 2021)")
-    up.add_argument("--periodo-leg", dest="periodo_leg", default="2025",
-                    help="periodo legislativo: numero (2025) o 'all' para todos los del periodo parlamentario")
+    up.add_argument("--periodo-par", dest="periodo_par", type=int, default=2026,
+                    help="periodo parlamentario (default 2026 = 2026-2031, Congreso bicameral vigente)")
+    up.add_argument("--periodo-leg", dest="periodo_leg", default="2026",
+                    help="periodo legislativo: numero (2026) o 'all' para todos los del periodo parlamentario")
     up.set_defaults(func=cmd_update)
 
     sh = sub.add_parser("show", help="detalle de una sesion + PLs cruzados")

@@ -15,6 +15,8 @@ from pathlib import Path
 import pandas as pd
 import streamlit as st
 
+from scraper.sync import PER_PAR_ID_ACTUAL
+
 
 def _find_db_path() -> Path | None:
     here = Path(__file__).resolve().parent
@@ -176,7 +178,7 @@ def get_conn() -> sqlite3.Connection:
 
 
 def _upsert_live_sesiones_pe(nuevas_api: list[dict],
-                              periodo_par: int = 2021,
+                              periodo_par: int = PER_PAR_ID_ACTUAL,
                               periodo_leg: int = 2026) -> int:
     """Inserta sesiones detectadas en vivo a la DB. Auto-write para que
     aparezcan en la tabla principal sin tener que esperar al cron."""
@@ -231,7 +233,7 @@ def _upsert_live_sesiones_pe(nuevas_api: list[dict],
 
 
 @st.cache_data(ttl=300)
-def fetch_live_agenda_pe(periodo_par: int = 2021, periodo_leg: int = 2026) -> dict:
+def fetch_live_agenda_pe(periodo_par: int = PER_PAR_ID_ACTUAL, periodo_leg: int = 2026) -> dict:
     """Consulta la API visor-sesiones en VIVO. Auto-upsert a la DB para que
     las nuevas sesiones aparezcan integradas en la tabla principal.
     """
@@ -392,6 +394,16 @@ def load_sesiones(fec_inicio: dt.date | None, fec_fin: dt.date | None) -> pd.Dat
                        ', ')
                 FROM sesion_pl_referenciado pr
                 LEFT JOIN proyectos p ON p.pley_num = pr.pley_num AND p.per_par_id = pr.per_par_id
+                        -- sesion_pl_referenciado no guarda cod_tipo_parl (el parser de
+                        -- texto libre no siempre sabe de que camara es un PL) -- sin este
+                        -- desempate, un pley_num que existe en 2+ camaras (comun en el
+                        -- periodo bicameral: D/S/C reinician numeracion desde 1) hacia
+                        -- fan-out el JOIN y duplicaba/mezclaba titulos. Desempate
+                        -- deterministico: 'C' > 'D' > 'S' (alfabetico), nunca mas de 1 fila.
+                        AND p.cod_tipo_parl = (
+                          SELECT MIN(p2.cod_tipo_parl) FROM proyectos p2
+                          WHERE p2.per_par_id = pr.per_par_id AND p2.pley_num = pr.pley_num
+                        )
                 WHERE pr.id_sesion = s.id_sesion
                 ORDER BY pr.pley_num
               ) AS "PLs en agenda",
@@ -426,6 +438,16 @@ def load_sesiones(fec_inicio: dt.date | None, fec_fin: dt.date | None) -> pd.Dat
                            ', ')
                     FROM pleno_pl_referenciado pr
                     LEFT JOIN proyectos p ON p.pley_num = pr.pley_num AND p.per_par_id = pr.per_par_id
+                        -- sesion_pl_referenciado no guarda cod_tipo_parl (el parser de
+                        -- texto libre no siempre sabe de que camara es un PL) -- sin este
+                        -- desempate, un pley_num que existe en 2+ camaras (comun en el
+                        -- periodo bicameral: D/S/C reinician numeracion desde 1) hacia
+                        -- fan-out el JOIN y duplicaba/mezclaba titulos. Desempate
+                        -- deterministico: 'C' > 'D' > 'S' (alfabetico), nunca mas de 1 fila.
+                        AND p.cod_tipo_parl = (
+                          SELECT MIN(p2.cod_tipo_parl) FROM proyectos p2
+                          WHERE p2.per_par_id = pr.per_par_id AND p2.pley_num = pr.pley_num
+                        )
                     WHERE pr.cod_agenda = ps.cod_agenda
                     ORDER BY pr.pley_num
                   ) AS "PLs en agenda",
@@ -490,6 +512,16 @@ def buscar_pl_en_agendas(pley_num: int) -> pd.DataFrame:
       FROM sesion_pl_referenciado pr
       JOIN sesiones s ON s.id_sesion = pr.id_sesion
       LEFT JOIN proyectos p ON p.pley_num = pr.pley_num AND p.per_par_id = pr.per_par_id
+                        -- sesion_pl_referenciado no guarda cod_tipo_parl (el parser de
+                        -- texto libre no siempre sabe de que camara es un PL) -- sin este
+                        -- desempate, un pley_num que existe en 2+ camaras (comun en el
+                        -- periodo bicameral: D/S/C reinician numeracion desde 1) hacia
+                        -- fan-out el JOIN y duplicaba/mezclaba titulos. Desempate
+                        -- deterministico: 'C' > 'D' > 'S' (alfabetico), nunca mas de 1 fila.
+                        AND p.cod_tipo_parl = (
+                          SELECT MIN(p2.cod_tipo_parl) FROM proyectos p2
+                          WHERE p2.per_par_id = pr.per_par_id AND p2.pley_num = pr.pley_num
+                        )
       WHERE pr.pley_num = ?
     """
     df = pd.read_sql_query(sql, conn, params=(pley_num,))
@@ -512,6 +544,16 @@ def buscar_pl_en_agendas(pley_num: int) -> pd.DataFrame:
           JOIN pleno_sesiones ps ON ps.cod_agenda = pr.cod_agenda
           LEFT JOIN pleno_tema pt ON pt.cod_tema = pr.cod_tema
           LEFT JOIN proyectos p ON p.pley_num = pr.pley_num AND p.per_par_id = pr.per_par_id
+                        -- sesion_pl_referenciado no guarda cod_tipo_parl (el parser de
+                        -- texto libre no siempre sabe de que camara es un PL) -- sin este
+                        -- desempate, un pley_num que existe en 2+ camaras (comun en el
+                        -- periodo bicameral: D/S/C reinician numeracion desde 1) hacia
+                        -- fan-out el JOIN y duplicaba/mezclaba titulos. Desempate
+                        -- deterministico: 'C' > 'D' > 'S' (alfabetico), nunca mas de 1 fila.
+                        AND p.cod_tipo_parl = (
+                          SELECT MIN(p2.cod_tipo_parl) FROM proyectos p2
+                          WHERE p2.per_par_id = pr.per_par_id AND p2.pley_num = pr.pley_num
+                        )
           WHERE pr.pley_num = ?
         """
         df_p = pd.read_sql_query(sql_pleno, conn, params=(pley_num,))
@@ -535,7 +577,7 @@ def load_pls_de_sesion(id_sesion: int, fuente: str = "comision") -> pd.DataFrame
           SELECT pr.pley_num AS pley_num,
                  'https://wb2server.congreso.gob.pe/spley-portal/?pl='
                    || COALESCE(p.proyecto_ley, pr.proyecto_ley_raw, 'PL ' || pr.pley_num)
-                   || '#/expediente/' || COALESCE(pr.per_par_id, 2021) || '/' || pr.pley_num
+                   || '#/expediente/' || COALESCE(pr.per_par_id, 2026) || '/' || pr.pley_num
                  AS "Nº PL",
                  COALESCE(p.tema, '—') AS "Tema",
                  COALESCE(p.estado, '(no en DB)') AS "Estado",
@@ -546,6 +588,16 @@ def load_pls_de_sesion(id_sesion: int, fuente: str = "comision") -> pd.DataFrame
           FROM pleno_pl_referenciado pr
           LEFT JOIN pleno_tema pt ON pt.cod_tema = pr.cod_tema
           LEFT JOIN proyectos p ON p.pley_num = pr.pley_num AND p.per_par_id = pr.per_par_id
+                        -- sesion_pl_referenciado no guarda cod_tipo_parl (el parser de
+                        -- texto libre no siempre sabe de que camara es un PL) -- sin este
+                        -- desempate, un pley_num que existe en 2+ camaras (comun en el
+                        -- periodo bicameral: D/S/C reinician numeracion desde 1) hacia
+                        -- fan-out el JOIN y duplicaba/mezclaba titulos. Desempate
+                        -- deterministico: 'C' > 'D' > 'S' (alfabetico), nunca mas de 1 fila.
+                        AND p.cod_tipo_parl = (
+                          SELECT MIN(p2.cod_tipo_parl) FROM proyectos p2
+                          WHERE p2.per_par_id = pr.per_par_id AND p2.pley_num = pr.pley_num
+                        )
           WHERE pr.cod_agenda=?
           ORDER BY pt.num_tema, pr.pley_num
         """
@@ -556,7 +608,7 @@ def load_pls_de_sesion(id_sesion: int, fuente: str = "comision") -> pd.DataFrame
       SELECT pr.pley_num AS pley_num,
              'https://wb2server.congreso.gob.pe/spley-portal/?pl='
                || COALESCE(p.proyecto_ley, pr.proyecto_ley_raw, 'PL ' || pr.pley_num)
-               || '#/expediente/' || COALESCE(pr.per_par_id, 2021) || '/' || pr.pley_num
+               || '#/expediente/' || COALESCE(pr.per_par_id, 2026) || '/' || pr.pley_num
              AS "Nº PL",
              COALESCE(p.tema, '—') AS "Tema",
              COALESCE(p.estado, '(no en DB)') AS "Estado",
@@ -566,6 +618,16 @@ def load_pls_de_sesion(id_sesion: int, fuente: str = "comision") -> pd.DataFrame
              pr.proyecto_ley_raw AS "_Raw"
       FROM sesion_pl_referenciado pr
       LEFT JOIN proyectos p ON p.pley_num = pr.pley_num AND p.per_par_id = pr.per_par_id
+                        -- sesion_pl_referenciado no guarda cod_tipo_parl (el parser de
+                        -- texto libre no siempre sabe de que camara es un PL) -- sin este
+                        -- desempate, un pley_num que existe en 2+ camaras (comun en el
+                        -- periodo bicameral: D/S/C reinician numeracion desde 1) hacia
+                        -- fan-out el JOIN y duplicaba/mezclaba titulos. Desempate
+                        -- deterministico: 'C' > 'D' > 'S' (alfabetico), nunca mas de 1 fila.
+                        AND p.cod_tipo_parl = (
+                          SELECT MIN(p2.cod_tipo_parl) FROM proyectos p2
+                          WHERE p2.per_par_id = pr.per_par_id AND p2.pley_num = pr.pley_num
+                        )
       WHERE pr.id_sesion=?
       ORDER BY pr.pley_num
     """
@@ -585,7 +647,7 @@ def load_pls_por_comision(fec_inicio: dt.date | None, fec_fin: dt.date | None) -
              pr.pley_num AS pley_num,
              'https://wb2server.congreso.gob.pe/spley-portal/?pl='
                || COALESCE(p.proyecto_ley, pr.proyecto_ley_raw, 'PL ' || pr.pley_num)
-               || '#/expediente/' || COALESCE(pr.per_par_id, 2021) || '/' || pr.pley_num
+               || '#/expediente/' || COALESCE(pr.per_par_id, 2026) || '/' || pr.pley_num
              AS "Nº PL",
              COALESCE(p.tema, '—') AS "Tema",
              COALESCE(p.estado, '(no en DB)') AS "Estado del PL",
@@ -595,6 +657,16 @@ def load_pls_por_comision(fec_inicio: dt.date | None, fec_fin: dt.date | None) -
       FROM sesion_pl_referenciado pr
       JOIN sesiones s ON s.id_sesion = pr.id_sesion
       LEFT JOIN proyectos p ON p.pley_num = pr.pley_num AND p.per_par_id = pr.per_par_id
+                        -- sesion_pl_referenciado no guarda cod_tipo_parl (el parser de
+                        -- texto libre no siempre sabe de que camara es un PL) -- sin este
+                        -- desempate, un pley_num que existe en 2+ camaras (comun en el
+                        -- periodo bicameral: D/S/C reinician numeracion desde 1) hacia
+                        -- fan-out el JOIN y duplicaba/mezclaba titulos. Desempate
+                        -- deterministico: 'C' > 'D' > 'S' (alfabetico), nunca mas de 1 fila.
+                        AND p.cod_tipo_parl = (
+                          SELECT MIN(p2.cod_tipo_parl) FROM proyectos p2
+                          WHERE p2.per_par_id = pr.per_par_id AND p2.pley_num = pr.pley_num
+                        )
       WHERE 1=1
     """)
     if fec_inicio:
@@ -608,7 +680,7 @@ def load_pls_por_comision(fec_inicio: dt.date | None, fec_fin: dt.date | None) -
                  pr.pley_num AS pley_num,
                  'https://wb2server.congreso.gob.pe/spley-portal/?pl='
                    || COALESCE(p.proyecto_ley, pr.proyecto_ley_raw, 'PL ' || pr.pley_num)
-                   || '#/expediente/' || COALESCE(pr.per_par_id, 2021) || '/' || pr.pley_num
+                   || '#/expediente/' || COALESCE(pr.per_par_id, 2026) || '/' || pr.pley_num
                  AS "Nº PL",
                  COALESCE(p.tema, '—') AS "Tema",
                  COALESCE(p.estado, '(no en DB)') AS "Estado del PL",
@@ -618,6 +690,16 @@ def load_pls_por_comision(fec_inicio: dt.date | None, fec_fin: dt.date | None) -
           FROM pleno_pl_referenciado pr
           JOIN pleno_sesiones ps ON ps.cod_agenda = pr.cod_agenda
           LEFT JOIN proyectos p ON p.pley_num = pr.pley_num AND p.per_par_id = pr.per_par_id
+                        -- sesion_pl_referenciado no guarda cod_tipo_parl (el parser de
+                        -- texto libre no siempre sabe de que camara es un PL) -- sin este
+                        -- desempate, un pley_num que existe en 2+ camaras (comun en el
+                        -- periodo bicameral: D/S/C reinician numeracion desde 1) hacia
+                        -- fan-out el JOIN y duplicaba/mezclaba titulos. Desempate
+                        -- deterministico: 'C' > 'D' > 'S' (alfabetico), nunca mas de 1 fila.
+                        AND p.cod_tipo_parl = (
+                          SELECT MIN(p2.cod_tipo_parl) FROM proyectos p2
+                          WHERE p2.per_par_id = pr.per_par_id AND p2.pley_num = pr.pley_num
+                        )
           WHERE 1=1
         """)
         if fec_inicio:
@@ -665,7 +747,7 @@ def load_puntos_agenda(id_sesion: int, fuente: str = "comision") -> list[dict]:
 st.markdown('<div class="country-eyebrow">Radar Legislativo · Agenda parlamentaria</div>', unsafe_allow_html=True)
 st.markdown(
     '<h1 class="country-title"><span class="accent">Perú</span> · Agenda parlamentaria '
-    '<span class="period">(2021–2026)</span></h1>',
+    '<span class="period">(2026–2031, bicameral)</span></h1>',
     unsafe_allow_html=True,
 )
 st.markdown(
@@ -692,7 +774,7 @@ import datetime as _dt
 _anio_actual = _dt.date.today().year
 with st.spinner("Sincronizando agenda en vivo con el Congreso..."):
     try:
-        _live = fetch_live_agenda_pe(periodo_par=2021, periodo_leg=_anio_actual)
+        _live = fetch_live_agenda_pe(periodo_leg=_anio_actual)
     except Exception as _e:
         _live = {"error": str(_e), "inserted": 0, "total_api": 0, "total_db": 0}
 
@@ -1132,8 +1214,9 @@ st.markdown(
     'las sesiones de <strong>comisiones</strong> están disponibles desde el '
     '<strong>27 de julio de 2023</strong> (la API <em>visor-sesiones</em> no expone '
     'sesiones anteriores). Las <strong>agendas del Pleno</strong> están disponibles '
-    'para todo el periodo parlamentario <strong>2021–2026</strong> vía la API del '
-    'visor <em>adp-portal</em>.<br><br>'
+    'para el periodo parlamentario <strong>2021–2026</strong> (histórico) vía la API del '
+    'visor <em>adp-portal</em> — el Pleno del nuevo Congreso bicameral '
+    '<strong>2026–2031</strong> aún no publica agendas por esa vía.<br><br>'
     '<strong style="color:var(--ink);">Cobertura de órganos:</strong> esta vista '
     'incluye las <strong>24 Comisiones Ordinarias</strong> y el <strong>Pleno</strong> '
     'del Congreso. La <strong>Comisión Permanente</strong>, la <strong>Subcomisión de '
