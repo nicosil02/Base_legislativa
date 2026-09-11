@@ -396,11 +396,58 @@ class Database:
             )
         return False, estado_changed
 
+    def _comisiones_desde_seguimientos(self, cod_tipo_parl: str, seguimientos: list[dict]) -> list[dict]:
+        """Resuelve comisiones desde el texto libre `desComisiones` de los
+        seguimientos, contra el catálogo de LA MISMA CÁMARA del PL.
+
+        Descubierto 2026-09-11: los expedientes del período bicameral ya NO
+        traen el campo estructurado `comisiones` (siempre None/vacío) — la
+        única señal es este texto libre dentro del historial. Acotar al
+        catálogo de la propia cámara del PL evita la ambigüedad de nombres
+        duplicados entre Senado/Diputados (mismo problema que en
+        sesiones/sync.py, pero acá SÍ sabemos la cámara de antemano — el PL
+        ya la trae — así que no hace falta dejar nada sin resolver).
+
+        NO se separa el texto por coma/"y": muchos nombres de comisión ya
+        traen coma y "y" adentro (ej. "Constitución, Reglamento y Relaciones
+        Exteriores") — partir el texto los hacía pedazos irreconocibles. En
+        vez de eso, se busca cada nombre del catálogo como substring del
+        texto (más largo primero, para no matchear un nombre corto que sea
+        prefijo de otro más específico)."""
+        from scraper.comisiones_ordinarias import TIPOS_POR_CAMARA, normalize
+
+        tipos = TIPOS_POR_CAMARA.get(cod_tipo_parl, ("Ordinaria", "Bicameral"))
+        placeholders = ",".join("?" * len(tipos))
+        catalogo = sorted(
+            (
+                (normalize(nombre), cid, nombre)
+                for cid, nombre in self.conn.execute(
+                    f"SELECT comision_id, nombre FROM comisiones WHERE tipo IN ({placeholders})",
+                    tipos,
+                ).fetchall()
+            ),
+            key=lambda t: -len(t[0]),
+        )
+        if not catalogo:
+            return []
+
+        vistos: dict[int, dict] = {}
+        for s in seguimientos:
+            texto = normalize(s.get("desComisiones"))
+            if not texto:
+                continue
+            for nombre_norm, cid, nombre in catalogo:
+                if nombre_norm and nombre_norm in texto:
+                    vistos[cid] = {"comisionId": cid, "nombre": nombre}
+        return list(vistos.values())
+
     # ---------- upsert: detalle (expediente) ----------
     def upsert_detalle(self, per_par_id: int, cod_tipo_parl: str, pley_num: int, data: dict, now: str) -> None:
         gen = data.get("general") or {}
         comisiones = data.get("comisiones") or []
         seguimientos = data.get("seguimientos") or []
+        if not comisiones:
+            comisiones = self._comisiones_desde_seguimientos(cod_tipo_parl, seguimientos)
 
         # primer archivo encontrado en seguimientos = PDF principal
         url_pdf = None

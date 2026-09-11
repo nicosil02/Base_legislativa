@@ -60,7 +60,7 @@ COMISIONES_ORDINARIAS: set[str] = {
 }
 
 
-def _normalize(text: str | None) -> str:
+def normalize(text: str | None) -> str:
     if not text:
         return ""
     s = text.strip().lower()
@@ -68,6 +68,20 @@ def _normalize(text: str | None) -> str:
     s = "".join(c for c in s if unicodedata.category(c) != "Mn")
     s = " ".join(s.split())
     return s
+
+
+_normalize = normalize  # alias interno, mantiene el nombre usado más abajo
+
+
+# tipos de `comisiones.tipo` que corresponden a cada cod_tipo_parl de PL —
+# usado para resolver nombres de comisión SOLO contra el catálogo de la
+# misma cámara del PL (evita la ambigüedad de nombres duplicados entre
+# Senado/Diputados — ver upsert_detalle en scraper/db.py).
+TIPOS_POR_CAMARA: dict[str, tuple[str, ...]] = {
+    "C": ("Ordinaria", "Bicameral"),
+    "D": ("Diputados",),
+    "S": ("Senado",),
+}
 
 
 _ORDINARIAS_NORM: set[str] = {_normalize(n) for n in COMISIONES_ORDINARIAS}
