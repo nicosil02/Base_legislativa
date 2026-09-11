@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import re
 
+from scraper.sync import PER_PAR_ID_ACTUAL
 from sesiones.agenda_parser import extract_pls, to_text
 
 # URL canonica del portal del PL:
@@ -42,10 +43,29 @@ def _from_url(url: str | None) -> tuple[int, int] | None:
         return None
 
 
-def parse_tema(tema: dict) -> tuple[dict, list[dict]]:
+def per_par_id_de_periodo(d_periodo: str | None) -> int:
+    """Convierte el 'dPeriodo' de una agenda del Pleno (ej. "2021-2026" o
+    "2026-2031") al per_par_id (el año de inicio). Fallback a
+    PER_PAR_ID_ACTUAL si el string no matchea el formato esperado — mejor
+    que reventar el sync por un campo inesperado."""
+    if d_periodo:
+        m = re.match(r"(\d{4})", d_periodo.strip())
+        if m:
+            return int(m.group(1))
+    return PER_PAR_ID_ACTUAL
+
+
+def parse_tema(tema: dict, per_par_id_fallback: int = PER_PAR_ID_ACTUAL) -> tuple[dict, list[dict]]:
     """Procesa un tema crudo de la API y devuelve:
       - tema_row: dict con columnas para pleno_tema
       - pls: lista deduplicada de {pley_num, per_par_id, raw, origen}
+
+    `per_par_id_fallback`: usado para los PLs detectados por regex/nomTemaCor
+    (estrategias 2 y 3), que no traen el período en el texto — el caller
+    (pleno/sync.py) debe pasar el período REAL de la agenda que se está
+    parseando (via `per_par_id_de_periodo(row["dPeriodo"])`), no asumir que
+    siempre es el período vigente: `list_agendas` por default trae agendas
+    de MÁS DE UN período (histórico + vigente) en la misma corrida.
     """
     cod_tema = tema.get("codTema")
     des_url = tema.get("desUrl") or ""
@@ -73,7 +93,7 @@ def parse_tema(tema: dict) -> tuple[dict, list[dict]]:
             continue
         pls_seen[pl["pley_num"]] = {
             "pley_num": pl["pley_num"],
-            "per_par_id": 2021,  # default: las agendas del Pleno actual son 2021-2026
+            "per_par_id": per_par_id_fallback,  # el regex no distingue periodo; usa el de la agenda
             "raw": pl["raw"],
             "origen": "regex_texto",
         }
@@ -88,7 +108,7 @@ def parse_tema(tema: dict) -> tuple[dict, list[dict]]:
                 if 1 <= pley_num <= 30000:
                     pls_seen[pley_num] = {
                         "pley_num": pley_num,
-                        "per_par_id": 2021,
+                        "per_par_id": per_par_id_fallback,
                         "raw": tema.get("nomTemaCor"),
                         "origen": "nom_tema_cor",
                     }

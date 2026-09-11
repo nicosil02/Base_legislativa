@@ -62,20 +62,30 @@ class ApiClient:
                 time.sleep(wait)
         raise RuntimeError(f"Fallo {method} {url} tras {self.max_retries} intentos: {last_err}")
 
-    def list_agendas(self, periodo_filtro: str | None = "2021-2026") -> list[dict]:
-        """Devuelve la lista plana de agendas del Pleno. Por default filtra al
-        periodo parlamentario 2021-2026 (177 agendas) para coherencia con el
-        resto de la app. Pasar `periodo_filtro=None` trae todo el historico
-        desde 2011 (571 agendas, ~234 MB si se fetchea cada detalle).
+    def list_agendas(
+        self,
+        periodo_filtro: str | tuple[str, ...] | None = ("2021-2026", "2026-2031"),
+    ) -> list[dict]:
+        """Devuelve la lista plana de agendas del Pleno. Por default filtra a
+        los periodos parlamentarios 2021-2026 (histórico, Congreso unicameral)
+        Y 2026-2031 (vigente, Congreso bicameral) para coherencia con el resto
+        de la app — así, cuando el Pleno bicameral empiece a publicar agendas
+        bajo la nueva etiqueta de periodo, aparecen solas sin tocar código.
+        Verificado en vivo (2026-09-11): la API todavía NO tiene ningún grupo
+        "2026-2031" — el Pleno bicameral aún no publicó agenda por acá.
+        Pasar `periodo_filtro=None` trae todo el historico desde 2011 (571+
+        agendas, ~234 MB si se fetchea cada detalle).
 
         Cada item: {codAgenda, dPeriodo, dLegis, fecSesion, dTitulo, dUrl}.
         """
+        if isinstance(periodo_filtro, str):
+            periodo_filtro = (periodo_filtro,)
         body = self._request("GET", "/visor/publicado")
         grupos = body.get("data") or []
         result: list[dict] = []
         for g in grupos:
             periodo = g.get("periodo", "")
-            if periodo_filtro and periodo_filtro not in periodo:
+            if periodo_filtro and not any(pf in periodo for pf in periodo_filtro):
                 continue
             for ag in (g.get("agendas") or []):
                 result.append(ag)

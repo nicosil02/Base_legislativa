@@ -1,6 +1,8 @@
-"""Radar Legislativo — Perú · Congreso de la República.
+"""Radar Legislativo — Perú · Congreso de la República (bicameral).
 
-Vista de proyectos de ley del período 2021-2026. Lee proyectos.db en read-only.
+Vista de proyectos de ley. Cubre el período 2026-2031 (vigente, Congreso
+bicameral: Senado + Cámara de Diputados) y el período 2021-2026 (histórico,
+Congreso unicameral). Lee proyectos.db en read-only.
 Diseño inspirado en datadaf.com: tipografía Inter, headings en peso 900,
 acentos azules, mucho whitespace.
 """
@@ -15,7 +17,15 @@ from pathlib import Path
 import pandas as pd
 import streamlit as st
 
+from scraper.sync import PER_PAR_ID_ACTUAL
+
 COMISIONES_ESPECIALES_LABEL = "Comisiones Especiales"
+
+# Cámara de origen del PL — 'C' (Congreso/general: Ejecutivo, Comisión
+# Permanente), 'D' (Cámara de Diputados), 'S' (Senado). Cada cámara reinicia
+# su numeración desde 1 dentro del mismo período, así que dos PLs con el
+# mismo "PL 4" pueden ser proyectos distintos — esta columna los distingue.
+CAMARA_LABEL = {"C": "Congreso", "D": "Diputados", "S": "Senado"}
 
 
 def _find_db_path() -> Path | None:
@@ -473,7 +483,9 @@ def last_sync() -> dict | None:
 def load_proyectos(fec_inicio: dt.date | None, fec_fin: dt.date | None) -> pd.DataFrame:
     conn = get_conn()
     sql = """
-      SELECT p.pley_num,
+      SELECT p.per_par_id,
+             p.cod_tipo_parl,
+             p.pley_num,
              p.proyecto_ley AS "PL",
              p.tema AS "Tema",
              p.estado AS "Estado",
@@ -490,7 +502,8 @@ def load_proyectos(fec_inicio: dt.date | None, fec_fin: dt.date | None) -> pd.Da
              p.url_pdf AS "PDF"
       FROM proyectos p
       LEFT JOIN proyecto_comision pc
-             ON pc.per_par_id = p.per_par_id AND pc.pley_num = p.pley_num
+             ON pc.per_par_id = p.per_par_id AND pc.cod_tipo_parl = p.cod_tipo_parl
+             AND pc.pley_num = p.pley_num
       LEFT JOIN comisiones c
              ON c.comision_id = pc.comision_id
     """
@@ -504,7 +517,13 @@ def load_proyectos(fec_inicio: dt.date | None, fec_fin: dt.date | None) -> pd.Da
     sql += " ORDER BY p.fec_presentacion DESC, p.pley_num DESC"
     df = pd.read_sql_query(sql, conn, params=params)
     if not df.empty:
-        df = df.groupby("pley_num", as_index=False).agg({
+        # Agrupar por (per_par_id, cod_tipo_parl, pley_num), NO solo pley_num:
+        # cada período reinicia su numeración desde 1 (bug real que hacía
+        # "desaparecer" PLs del período 2026 al fusionarse con el 2021), y
+        # DENTRO del período bicameral cada cámara (Congreso/Diputados/Senado)
+        # TAMBIÉN reinicia su propia numeración — el PL D-1, S-1 y C-1 del
+        # 2026-2031 son tres proyectos distintos que comparten número.
+        df = df.groupby(["per_par_id", "cod_tipo_parl", "pley_num"], as_index=False).agg({
             "PL": "first", "Tema": "first", "Estado": "first",
             "Presentado": "first", "Último cambio": "first",
             "Partido": "first", "Proponente": "first", "Autor(es)": "first",
@@ -513,13 +532,14 @@ def load_proyectos(fec_inicio: dt.date | None, fec_fin: dt.date | None) -> pd.Da
         })
         df["_comisiones_all"] = df["Comisión"]
         df["Comisión"] = df["Comisión"].apply(lambda lst: lst[0] if lst else None)
-        # Sort: fecha de presentacion DESC, y dentro del mismo dia pley_num
-        # DESC (el ultimo numero asignado es el mas reciente). Sin pley_num
-        # como tiebreaker, los PLs del mismo dia salian en orden inestable.
+        # Sort: fecha de presentacion DESC, y dentro del mismo dia per_par_id+
+        # pley_num DESC (el ultimo numero asignado es el mas reciente). Sin
+        # esto como tiebreaker, los PLs del mismo dia salian en orden inestable.
         df = df.sort_values(
-            ["Presentado", "pley_num"],
-            ascending=[False, False],
+            ["Presentado", "per_par_id", "cod_tipo_parl", "pley_num"],
+            ascending=[False, False, False, False],
         ).reset_index(drop=True)
+        df["Cámara"] = df["cod_tipo_parl"].map(CAMARA_LABEL).fillna(df["cod_tipo_parl"])
     return df
 
 
@@ -527,7 +547,7 @@ SYNC_MIN_MINUTES = 5      # gap mínimo entre auto-syncs
 SYNC_STALE_MINUTES = 15   # un sync sin terminar después de esto se considera muerto
 
 
-def _upsert_live_pls(nuevos_api: list[dict], per_par_id: int = 2021) -> int:
+def _upsert_live_pls(nuevos_api: list[dict], per_par_id: int = PER_PAR_ID_ACTUAL) -> int:
     """Inserta PLs detectados en la API que no estan en la DB local.
 
     En Streamlit Cloud la DB es ephemeral, pero los writes persisten
@@ -537,7 +557,7 @@ def _upsert_live_pls(nuevos_api: list[dict], per_par_id: int = 2021) -> int:
     hacen que el usuario vea los PLs en la tabla principal de inmediato.
 
     Campos disponibles del endpoint /lista-con-filtro:
-      pleyNum, titulo (o descTitulo), estado, fecPresentacion
+      pleyNum, codTipoParl, titulo (o descTitulo), estado, fecPresentacion
     Campos sin valor (NULL): sumilla, proponente, grupo_parlamentario,
       autores_raw, url_portal, url_pdf, comisiones. Se completan en el
       proximo cron via /expediente.
@@ -546,6 +566,7 @@ def _upsert_live_pls(nuevos_api: list[dict], per_par_id: int = 2021) -> int:
     if db is None:
         return 0
     from datetime import datetime, timezone
+    from scraper.api import portal_url
     now = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     inserted = 0
     try:
@@ -555,18 +576,20 @@ def _upsert_live_pls(nuevos_api: list[dict], per_par_id: int = 2021) -> int:
                 pley_num = p.get("pleyNum")
                 if not pley_num:
                     continue
+                cod_tipo_parl = p.get("codTipoParl") or "C"
                 titulo = p.get("titulo") or p.get("descTitulo") or "(sin titulo)"
                 estado = p.get("estado") or "PRESENTADO"
                 fec_pres = p.get("fecPresentacion") or ""
+                portal = portal_url(per_par_id, pley_num, cod_tipo_parl)
                 # INSERT OR IGNORE — si ya esta (race con cron), no pisa
                 conn.execute(
                     """INSERT OR IGNORE INTO proyectos
-                       (per_par_id, pley_num, titulo, estado, fec_presentacion,
-                        first_seen_at, last_seen_at, last_changed_at,
+                       (per_par_id, cod_tipo_parl, pley_num, titulo, estado, fec_presentacion,
+                        url_portal, first_seen_at, last_seen_at, last_changed_at,
                         tema, tema_manual)
-                       VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'Otros', 0)""",
-                    (per_par_id, pley_num, titulo, estado, fec_pres,
-                     now, now, now),
+                       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'Otros', 0)""",
+                    (per_par_id, cod_tipo_parl, pley_num, titulo, estado, fec_pres,
+                     portal, now, now, now),
                 )
                 if conn.total_changes > inserted:
                     inserted += 1
@@ -582,13 +605,14 @@ def _upsert_live_pls(nuevos_api: list[dict], per_par_id: int = 2021) -> int:
 
 @st.cache_data(ttl=300)  # cache 5 min: tras la primera carga del dia,
                           # los siguientes 5 min son instant para todos
-def fetch_live_pe(per_par_id: int = 2021) -> dict:
+def fetch_live_pe(per_par_id: int = PER_PAR_ID_ACTUAL) -> dict:
     """Consulta la API del Congreso PE en TIEMPO REAL y devuelve la lista
     actual de PLs. Compara con la DB local para identificar los que no
     estan sincronizados todavia.
 
-    Tarda ~30 seg porque el endpoint /lista-con-filtro devuelve todos los
-    PLs del periodo en una sola respuesta (~8 MB).
+    Recorre las 3 cámaras (Congreso/Diputados/Senado) del período bicameral
+    — sin esto, la API solo devuelve los PLs 'C' (ver scraper/sync.py,
+    camaras_de). Tarda ~10-30 seg por cámara.
 
     Returns:
         {
@@ -598,37 +622,69 @@ def fetch_live_pe(per_par_id: int = 2021) -> dict:
             "error": str | None,
         }
     """
+    from concurrent.futures import ThreadPoolExecutor
+    from scraper.sync import camaras_de
+
     try:
         from scraper.api import ApiClient
-        client = ApiClient()
-        api_pls = client.list_all_proyectos(per_par_id=per_par_id)
+        camaras = camaras_de(per_par_id)
+        # Una cámara por request y ~10-30s cada una — en paralelo (cada
+        # thread con su propio ApiClient/Session, más simple y seguro que
+        # compartir una sesión entre threads) en vez de secuencial, así el
+        # período bicameral (3 cámaras) no triplica la latencia de carga.
+        with ThreadPoolExecutor(max_workers=len(camaras) or 1) as pool:
+            resultados = pool.map(
+                lambda cam: ApiClient().list_all_proyectos(per_par_id=per_par_id, cod_tipo_parl=cam),
+                camaras,
+            )
+            api_pls: list[dict] = [p for lote in resultados for p in lote]
     except Exception as e:
         return {"total_api": 0, "total_db": 0, "nuevos": [], "error": str(e)}
 
-    # Set de pley_num que tenemos en DB
+    # Set de (cod_tipo_parl, pley_num) que ya tenemos en DB — cada cámara
+    # numera desde 1, así que pley_num solo no alcanza para el diff.
     conn = get_conn()
     try:
-        db_pleynums = {
-            r[0] for r in conn.execute(
-                "SELECT pley_num FROM proyectos WHERE per_par_id = ?",
+        db_keys = {
+            (r[0], r[1]) for r in conn.execute(
+                "SELECT cod_tipo_parl, pley_num FROM proyectos WHERE per_par_id = ?",
                 (per_par_id,),
             )
         }
     finally:
         conn.close()
 
-    api_pleynums = {p.get("pleyNum") for p in api_pls if p.get("pleyNum")}
-    nuevos_nums = api_pleynums - db_pleynums
+    api_keys = {
+        (p.get("codTipoParl") or "C", p.get("pleyNum"))
+        for p in api_pls if p.get("pleyNum")
+    }
+    nuevos_keys = api_keys - db_keys
 
     # Items raw para upsert directo a la DB (no solo display)
-    nuevos_raw = [p for p in api_pls if p.get("pleyNum") in nuevos_nums]
+    nuevos_raw = [
+        p for p in api_pls
+        if ((p.get("codTipoParl") or "C"), p.get("pleyNum")) in nuevos_keys
+    ]
     # AUTO-UPSERT: escribir los nuevos a la DB ya mismo para que aparezcan
     # integrados en la tabla principal (sin necesidad de banner separado).
     inserted = _upsert_live_pls(nuevos_raw, per_par_id=per_par_id)
 
     return {
-        "total_api": len(api_pleynums),
-        "total_db": len(db_pleynums),
+        "total_api": len(api_keys),
+        "total_db": len(db_keys),
+        # "nuevos": lista para el botón "Buscar PLs nuevos en vivo" (bug
+        # preexistente: antes solo se devolvía nuevos_count, un int, y la UI
+        # esperaba esta lista — KeyError en cada click). "nuevos_count" se
+        # mantiene por compatibilidad con quien lo estuviera leyendo.
+        "nuevos": [
+            {
+                "PL": p.get("proyectoLey") or f"{p.get('pleyNum')} ({p.get('codTipoParl') or 'C'})",
+                "titulo": p.get("titulo") or p.get("descTitulo"),
+                "estado": p.get("estado"),
+                "fec_presentacion": p.get("fecPresentacion"),
+            }
+            for p in nuevos_raw
+        ],
         "nuevos_count": len(nuevos_raw),
         "inserted": inserted,
         "error": None,
@@ -707,13 +763,14 @@ def _fmt_ago(mins: float | None) -> str:
 
 st.markdown('<div class="country-eyebrow">Radar Legislativo</div>', unsafe_allow_html=True)
 st.markdown(
-    '<h1 class="country-title"><span class="accent">Perú</span> · Congreso de la República <span class="period">(2021–2026)</span></h1>',
+    '<h1 class="country-title"><span class="accent">Perú</span> · Congreso de la República <span class="period">(2026–2031, bicameral)</span></h1>',
     unsafe_allow_html=True,
 )
 st.markdown(
-    '<p class="country-subtitle">Plataforma para seguir, filtrar y analizar todos los '
-    'proyectos de ley presentados ante el Congreso de la República del Perú durante el '
-    'período parlamentario 2021–2026.</p>',
+    '<p class="country-subtitle">Plataforma para seguir, filtrar y analizar los '
+    'proyectos de ley presentados ante el Congreso de la República del Perú — '
+    'período vigente 2026–2031 (Congreso bicameral: Senado + Cámara de Diputados), '
+    'con la base histórica 2021–2026 (Congreso unicameral) disponible para consulta.</p>',
     unsafe_allow_html=True,
 )
 
@@ -725,7 +782,7 @@ st.markdown(
 # (spinner), siguientes son instant.
 with st.spinner("Sincronizando con el Congreso en tiempo real..."):
     try:
-        _live = fetch_live_pe(per_par_id=2021)
+        _live = fetch_live_pe()
     except Exception as _e:
         _live = {"error": str(_e), "nuevos_count": 0, "inserted": 0,
                  "total_api": 0, "total_db": 0}
@@ -820,7 +877,7 @@ with st.sidebar:
 # ---------- Live check (fuera del sidebar) ----------
 if live_clicked:
     with st.spinner("Consultando API del Congreso (~30 seg)…"):
-        live = fetch_live_pe(per_par_id=2021)
+        live = fetch_live_pe()
     if live["error"]:
         st.error(f"Error consultando API del Congreso: {live['error']}")
     elif live["nuevos"]:
@@ -929,7 +986,7 @@ df_view["Autor(es)"] = (
     df_view["Autor(es)"].astype(str).str.split(";").str[0].str.strip().replace("nan", "")
 )
 df_view = df_view.rename(columns={"Partido": "Bancada", "Autor(es)": "Autor"})
-COLS_VISIBLES = ["PL", "Título", "Presentado", "Estado", "Autor", "Bancada", "Comisión", "Tema"]
+COLS_VISIBLES = ["PL", "Cámara", "Título", "Presentado", "Estado", "Autor", "Bancada", "Comisión", "Tema"]
 df_view = df_view[[c for c in COLS_VISIBLES if c in df_view.columns]]
 
 # CSS para que el título envuelva (multi-línea) en lugar de truncar con "..."
@@ -960,10 +1017,22 @@ st.dataframe(
     column_config={
         "PL":           st.column_config.LinkColumn(
             "PL",
-            display_text=r"expediente/\d+/(\d+)",
+            # Incluye el período (ej. "2026/4"), no solo el número: dos PLs
+            # de distintos períodos pueden compartir pley_num (cada período
+            # reinicia la numeración desde 1) y mostrar solo el número los
+            # hacía indistinguibles en la tabla.
+            display_text=r"expediente/(\d+/\d+)",
             width="small",
             pinned=True,
-            help="Click para abrir el expediente en el portal del Congreso.",
+            help="Click para abrir el expediente en el portal del Congreso. "
+                 "Formato: período/número — ver columna Cámara para distinguir "
+                 "PLs con el mismo número en cámaras distintas.",
+        ),
+        "Cámara":       st.column_config.TextColumn(
+            "Cámara",
+            width="small",
+            help="Congreso (Ejecutivo/Comisión Permanente), Diputados o Senado. "
+                 "Cada cámara numera sus PLs desde 1 — distingue PLs con el mismo número.",
         ),
         # Título: medium en vez de large → la tabla entera entra sin scroll
         # horizontal. El texto largo envuelve verticalmente (row_height=140).

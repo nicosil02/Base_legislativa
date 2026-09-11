@@ -545,7 +545,7 @@ with cols[0]:
                 <div class="flag">🇵🇪</div>
                 <div class="name">Perú</div>
             </div>
-            <div class="institution">Congreso de la República · Período 2021–2026</div>
+            <div class="institution">Congreso de la República · Período 2026–2031 (bicameral)</div>
             <div class="stats">
                 <div>
                     <div class="stat-num">{total_pe}</div>
@@ -611,7 +611,7 @@ with ag_cols[0]:
                 <div class="flag">🇵🇪</div>
                 <div class="name">Perú</div>
             </div>
-            <div class="institution">Congreso de la República · Período 2021–2026</div>
+            <div class="institution">Congreso de la República · Período 2026–2031 (bicameral)</div>
             <div class="stats">
                 <div>
                     <div class="stat-num">{hoy_ag}</div>

@@ -14,8 +14,15 @@ CREATE TABLE IF NOT EXISTS comisiones (
   abreviatura   TEXT
 );
 
+-- cod_tipo_parl: 'C' (Congreso/general — Ejecutivo, Comisión Permanente),
+-- 'D' (Cámara de Diputados), 'S' (Senado). Es parte de la identidad del PL
+-- porque cada cámara reinicia su propia numeración desde 1 dentro del mismo
+-- per_par_id (el PL D-1 y el PL S-1 del período 2026-2031 son proyectos
+-- DISTINTOS que casualmente comparten número). Período legacy 2021-2026:
+-- todo es 'C' (Congreso unicameral, sin esta distinción).
 CREATE TABLE IF NOT EXISTS proyectos (
   per_par_id        INTEGER NOT NULL,
+  cod_tipo_parl     TEXT NOT NULL DEFAULT 'C',
   pley_num          INTEGER NOT NULL,
   pley_id           INTEGER,
   proyecto_ley      TEXT NOT NULL,
@@ -35,17 +42,18 @@ CREATE TABLE IF NOT EXISTS proyectos (
   last_seen_at      TEXT NOT NULL,
   last_changed_at   TEXT NOT NULL,
   detail_fetched_at TEXT,
-  PRIMARY KEY (per_par_id, pley_num)
+  PRIMARY KEY (per_par_id, cod_tipo_parl, pley_num)
 );
 CREATE INDEX IF NOT EXISTS idx_proyectos_estado   ON proyectos(estado);
 CREATE INDEX IF NOT EXISTS idx_proyectos_fecha    ON proyectos(fec_presentacion);
 
 CREATE TABLE IF NOT EXISTS proyecto_comision (
   per_par_id   INTEGER NOT NULL,
+  cod_tipo_parl TEXT NOT NULL DEFAULT 'C',
   pley_num     INTEGER NOT NULL,
   comision_id  INTEGER NOT NULL,
   nombre       TEXT NOT NULL,
-  PRIMARY KEY (per_par_id, pley_num, comision_id)
+  PRIMARY KEY (per_par_id, cod_tipo_parl, pley_num, comision_id)
 );
 CREATE INDEX IF NOT EXISTS idx_pc_comision ON proyecto_comision(comision_id);
 
@@ -54,6 +62,7 @@ DROP TABLE IF EXISTS firmantes;
 CREATE TABLE IF NOT EXISTS seguimientos (
   seguimiento_pley_id INTEGER PRIMARY KEY,
   per_par_id     INTEGER NOT NULL,
+  cod_tipo_parl  TEXT NOT NULL DEFAULT 'C',
   pley_num       INTEGER NOT NULL,
   fecha          TEXT NOT NULL,
   estado         TEXT,
@@ -62,19 +71,20 @@ CREATE TABLE IF NOT EXISTS seguimientos (
   observacion    TEXT,
   flag_inicial   INTEGER
 );
-CREATE INDEX IF NOT EXISTS idx_seg_proyecto ON seguimientos(per_par_id, pley_num);
+CREATE INDEX IF NOT EXISTS idx_seg_proyecto ON seguimientos(per_par_id, cod_tipo_parl, pley_num);
 
 CREATE TABLE IF NOT EXISTS archivos (
   proyecto_archivo_id INTEGER PRIMARY KEY,
   seguimiento_pley_id INTEGER,
   per_par_id     INTEGER NOT NULL,
+  cod_tipo_parl  TEXT NOT NULL DEFAULT 'C',
   pley_num       INTEGER NOT NULL,
   fecha          TEXT,
   nombre_archivo TEXT,
   descripcion    TEXT,
   url            TEXT
 );
-CREATE INDEX IF NOT EXISTS idx_arch_proyecto ON archivos(per_par_id, pley_num);
+CREATE INDEX IF NOT EXISTS idx_arch_proyecto ON archivos(per_par_id, cod_tipo_parl, pley_num);
 
 -- Tablas legacy del primer diseño multi-tag (se eliminan en init_schema).
 -- proyectos ahora tiene `tema` y `tema_manual` directos (un tema por PL).
@@ -123,9 +133,105 @@ class Database:
             self.conn.rollback()
             raise
 
+    def _migrar_cod_tipo_parl(self, c: sqlite3.Connection) -> None:
+        """Migración one-shot: agrega `cod_tipo_parl` a la PK de proyectos/
+        proyecto_comision/seguimientos/archivos (necesario para el Congreso
+        bicameral — ver scraper/api.py). SQLite no permite ALTER de PRIMARY
+        KEY, así que reconstruye las 4 tablas si detecta el esquema viejo.
+        Todo lo existente (período 2021-2026, y cualquier PL 'C' del 2026 ya
+        sincronizado antes de este fix) se preserva con cod_tipo_parl='C',
+        que es correcto: ese período no tenía distinción de cámara.
+
+        Resumible ante un corte a mitad de camino: los statements DDL
+        (ALTER/CREATE/DROP TABLE) hacen auto-commit en sqlite3 de Python pese
+        a estar dentro de `self.tx()` — si el proceso muere entre el RENAME y
+        el DROP final (OOM, timeout de GH Actions, etc.), las tablas `_old`
+        (nunca tocadas hasta el final) quedan como fuente de verdad. Por eso
+        el chequeo de "ya migrado" exige TANTO que `cod_tipo_parl` exista
+        COMO que no haya `_old` colgadas de un intento previo — si las hay,
+        se descarta cualquier tabla nueva a medio construir y se repite la
+        copia desde `_old`, así la corrida siguiente termina el trabajo en
+        vez de asumir que ya terminó y perder los datos reales."""
+        tablas = ["proyectos", "proyecto_comision", "seguimientos", "archivos"]
+        existe = c.execute(
+            "SELECT name FROM sqlite_master WHERE type='table' AND name='proyectos'"
+        ).fetchone()
+        old_existe = c.execute(
+            "SELECT name FROM sqlite_master WHERE type='table' AND name='proyectos_old'"
+        ).fetchone()
+        if not existe and not old_existe:
+            return  # DB nueva, executescript(SCHEMA) crea todo con el esquema correcto
+        if existe:
+            cols = {r[1] for r in c.execute("PRAGMA table_info(proyectos)").fetchall()}
+            if "cod_tipo_parl" in cols and not old_existe:
+                return  # ya migrado y limpio — caso normal en cada corrida
+
+        if old_existe:
+            # Intento previo interrumpido: lo que haya en `proyectos` (con o
+            # sin `cod_tipo_parl`) puede estar vacío/incompleto — descartarlo
+            # y repetir la copia desde `_old`, que es la fuente real.
+            for t in tablas:
+                c.execute(f"DROP TABLE IF EXISTS {t}")
+        else:
+            for t in tablas:
+                c.execute(f"ALTER TABLE {t} RENAME TO {t}_old")
+
+        c.executescript(SCHEMA)  # crea las 4 tablas con el esquema nuevo (nombres libres ahora)
+
+        c.execute(
+            """INSERT INTO proyectos
+               (per_par_id, cod_tipo_parl, pley_num, pley_id, proyecto_ley, titulo,
+                sumilla, estado, estado_id, proponente, grupo_parlamentario, legislatura,
+                autores_raw, fec_presentacion, url_portal, url_pdf, observaciones,
+                first_seen_at, last_seen_at, last_changed_at, detail_fetched_at)
+               SELECT per_par_id, 'C', pley_num, pley_id, proyecto_ley, titulo,
+                      sumilla, estado, estado_id, proponente, grupo_parlamentario, legislatura,
+                      autores_raw, fec_presentacion, url_portal, url_pdf, observaciones,
+                      first_seen_at, last_seen_at, last_changed_at, detail_fetched_at
+               FROM proyectos_old"""
+        )
+        c.execute(
+            """INSERT INTO proyecto_comision (per_par_id, cod_tipo_parl, pley_num, comision_id, nombre)
+               SELECT per_par_id, 'C', pley_num, comision_id, nombre FROM proyecto_comision_old"""
+        )
+        c.execute(
+            """INSERT INTO seguimientos
+               (seguimiento_pley_id, per_par_id, cod_tipo_parl, pley_num, fecha, estado,
+                comisiones, detalle, observacion, flag_inicial)
+               SELECT seguimiento_pley_id, per_par_id, 'C', pley_num, fecha, estado,
+                      comisiones, detalle, observacion, flag_inicial
+               FROM seguimientos_old"""
+        )
+        c.execute(
+            """INSERT INTO archivos
+               (proyecto_archivo_id, seguimiento_pley_id, per_par_id, cod_tipo_parl, pley_num,
+                fecha, nombre_archivo, descripcion, url)
+               SELECT proyecto_archivo_id, seguimiento_pley_id, per_par_id, 'C', pley_num,
+                      fecha, nombre_archivo, descripcion, url
+               FROM archivos_old"""
+        )
+
+        # tema/tema_manual vivían en proyectos_old (agregadas por la migración
+        # de abajo en corridas previas) — copiarlas si existen antes de dropear.
+        cols_old = {r[1] for r in c.execute("PRAGMA table_info(proyectos_old)").fetchall()}
+        if "tema" in cols_old:
+            c.execute("ALTER TABLE proyectos ADD COLUMN tema TEXT")
+            c.execute("ALTER TABLE proyectos ADD COLUMN tema_manual INTEGER NOT NULL DEFAULT 0")
+            c.execute(
+                """UPDATE proyectos SET
+                     tema = (SELECT tema FROM proyectos_old o
+                             WHERE o.per_par_id=proyectos.per_par_id AND o.pley_num=proyectos.pley_num),
+                     tema_manual = (SELECT tema_manual FROM proyectos_old o
+                             WHERE o.per_par_id=proyectos.per_par_id AND o.pley_num=proyectos.pley_num)"""
+            )
+
+        for t in tablas:
+            c.execute(f"DROP TABLE {t}_old")
+
     def init_schema(self) -> None:
         from scraper.comisiones_ordinarias import tipo_de
         with self.tx() as c:
+            self._migrar_cod_tipo_parl(c)
             c.executescript(SCHEMA)
             # Migración: proyectos.tema y proyectos.tema_manual.
             cols = {r[1] for r in c.execute("PRAGMA table_info(proyectos)").fetchall()}
@@ -149,16 +255,16 @@ class Database:
                 )
             c.execute("CREATE INDEX IF NOT EXISTS idx_comisiones_tipo ON comisiones(tipo)")
 
-    def set_tema(self, per_par_id: int, pley_num: int, tema: str, *, manual: bool) -> None:
+    def set_tema(self, per_par_id: int, cod_tipo_parl: str, pley_num: int, tema: str, *, manual: bool) -> None:
         """Asigna un tema al proyecto. Si manual=True marca para que el
         clasificador automático no lo sobrescriba luego."""
         with self.tx() as c:
             c.execute(
-                "UPDATE proyectos SET tema=?, tema_manual=? WHERE per_par_id=? AND pley_num=?",
-                (tema, 1 if manual else 0, per_par_id, pley_num),
+                "UPDATE proyectos SET tema=?, tema_manual=? WHERE per_par_id=? AND cod_tipo_parl=? AND pley_num=?",
+                (tema, 1 if manual else 0, per_par_id, cod_tipo_parl, pley_num),
             )
 
-    def classify_and_save(self, per_par_id: int, pley_num: int,
+    def classify_and_save(self, per_par_id: int, cod_tipo_parl: str, pley_num: int,
                           titulo: str | None, sumilla: str | None) -> str | None:
         """Clasifica el PL. Respeta tema_manual=1 (no toca etiquetas manuales).
 
@@ -171,8 +277,8 @@ class Database:
              esta disponible o confidence < 0.5.
         """
         row = self.conn.execute(
-            "SELECT tema_manual FROM proyectos WHERE per_par_id=? AND pley_num=?",
-            (per_par_id, pley_num),
+            "SELECT tema_manual FROM proyectos WHERE per_par_id=? AND cod_tipo_parl=? AND pley_num=?",
+            (per_par_id, cod_tipo_parl, pley_num),
         ).fetchone()
         if row and row["tema_manual"]:
             return None  # respetar la etiqueta manual
@@ -193,7 +299,7 @@ class Database:
             from scraper.categorias import classify
             tema = classify(titulo, sumilla)
 
-        self.set_tema(per_par_id, pley_num, tema, manual=False)
+        self.set_tema(per_par_id, cod_tipo_parl, pley_num, tema, manual=False)
         return tema
 
     # ---------- comisiones ----------
@@ -213,10 +319,10 @@ class Database:
         return self.conn.execute("SELECT COUNT(*) FROM comisiones").fetchone()[0]
 
     # ---------- proyectos: estado conocido ----------
-    def get_known(self, per_par_id: int, pley_num: int) -> sqlite3.Row | None:
+    def get_known(self, per_par_id: int, cod_tipo_parl: str, pley_num: int) -> sqlite3.Row | None:
         return self.conn.execute(
-            "SELECT * FROM proyectos WHERE per_par_id=? AND pley_num=?",
-            (per_par_id, pley_num),
+            "SELECT * FROM proyectos WHERE per_par_id=? AND cod_tipo_parl=? AND pley_num=?",
+            (per_par_id, cod_tipo_parl, pley_num),
         ).fetchone()
 
     # ---------- upsert: lista (sin detalle) ----------
@@ -226,22 +332,27 @@ class Database:
         Returns (is_new, estado_changed). estado_changed indica si vale la
         pena llamar al detalle para refrescar comisiones/seguimientos.
         """
+        from scraper.api import portal_url
+
         per_par_id = row["perParId"]
         pley_num = row["pleyNum"]
-        existing = self.get_known(per_par_id, pley_num)
-        portal = f"https://wb2server.congreso.gob.pe/spley-portal/#/expediente/{per_par_id}/{pley_num}"
+        # codTipoParl solo viene poblado desde el período bicameral en
+        # adelante (ver scraper/api.py); el período legacy no lo trae -> 'C'.
+        cod_tipo_parl = row.get("codTipoParl") or "C"
+        existing = self.get_known(per_par_id, cod_tipo_parl, pley_num)
+        portal = portal_url(per_par_id, pley_num, cod_tipo_parl)
         if existing is None:
             with self.tx() as c:
                 c.execute(
                     """
                     INSERT INTO proyectos
-                      (per_par_id, pley_num, proyecto_ley, titulo, estado, proponente,
+                      (per_par_id, cod_tipo_parl, pley_num, proyecto_ley, titulo, estado, proponente,
                        autores_raw, fec_presentacion, url_portal,
                        first_seen_at, last_seen_at, last_changed_at)
-                    VALUES (?,?,?,?,?,?,?,?,?,?,?,?)
+                    VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)
                     """,
                     (
-                        per_par_id, pley_num,
+                        per_par_id, cod_tipo_parl, pley_num,
                         row.get("proyectoLey"),
                         row.get("titulo"),
                         row.get("desEstado"),
@@ -252,7 +363,7 @@ class Database:
                     ),
                 )
             # clasificación inicial sólo con título; se refina luego con sumilla en detalle
-            self.classify_and_save(per_par_id, pley_num, row.get("titulo"), None)
+            self.classify_and_save(per_par_id, cod_tipo_parl, pley_num, row.get("titulo"), None)
             return True, True
 
         nuevo_estado = row.get("desEstado")
@@ -267,7 +378,7 @@ class Database:
                   proyecto_ley=?, titulo=?, estado=?, proponente=?, autores_raw=?,
                   fec_presentacion=?, last_seen_at=?,
                   last_changed_at=CASE WHEN ? THEN ? ELSE last_changed_at END
-                WHERE per_par_id=? AND pley_num=?
+                WHERE per_par_id=? AND cod_tipo_parl=? AND pley_num=?
                 """,
                 (
                     row.get("proyectoLey"),
@@ -278,13 +389,13 @@ class Database:
                     row.get("fecPresentacion"),
                     now,
                     1 if any_change else 0, now,
-                    per_par_id, pley_num,
+                    per_par_id, cod_tipo_parl, pley_num,
                 ),
             )
         return False, estado_changed
 
     # ---------- upsert: detalle (expediente) ----------
-    def upsert_detalle(self, per_par_id: int, pley_num: int, data: dict, now: str) -> None:
+    def upsert_detalle(self, per_par_id: int, cod_tipo_parl: str, pley_num: int, data: dict, now: str) -> None:
         gen = data.get("general") or {}
         comisiones = data.get("comisiones") or []
         seguimientos = data.get("seguimientos") or []
@@ -308,7 +419,7 @@ class Database:
                   pley_id=?, sumilla=?, estado=?, estado_id=?, proponente=?,
                   grupo_parlamentario=?, legislatura=?, observaciones=?,
                   url_pdf=COALESCE(?, url_pdf), detail_fetched_at=?, last_seen_at=?
-                WHERE per_par_id=? AND pley_num=?
+                WHERE per_par_id=? AND cod_tipo_parl=? AND pley_num=?
                 """,
                 (
                     gen.get("pleyId"),
@@ -320,16 +431,20 @@ class Database:
                     gen.get("desLegis"),
                     gen.get("observaciones"),
                     url_pdf, now, now,
-                    per_par_id, pley_num,
+                    per_par_id, cod_tipo_parl, pley_num,
                 ),
             )
 
             # comisiones del proyecto (replace-all)
-            c.execute("DELETE FROM proyecto_comision WHERE per_par_id=? AND pley_num=?", (per_par_id, pley_num))
+            c.execute(
+                "DELETE FROM proyecto_comision WHERE per_par_id=? AND cod_tipo_parl=? AND pley_num=?",
+                (per_par_id, cod_tipo_parl, pley_num),
+            )
             for com in comisiones:
                 c.execute(
-                    "INSERT INTO proyecto_comision (per_par_id, pley_num, comision_id, nombre) VALUES (?,?,?,?)",
-                    (per_par_id, pley_num, com.get("comisionId"), com.get("nombre")),
+                    "INSERT INTO proyecto_comision (per_par_id, cod_tipo_parl, pley_num, comision_id, nombre) "
+                    "VALUES (?,?,?,?,?)",
+                    (per_par_id, cod_tipo_parl, pley_num, com.get("comisionId"), com.get("nombre")),
                 )
 
             # seguimientos (insert si nuevos)
@@ -339,11 +454,11 @@ class Database:
                     continue
                 c.execute(
                     """INSERT OR REPLACE INTO seguimientos
-                       (seguimiento_pley_id, per_par_id, pley_num, fecha, estado,
+                       (seguimiento_pley_id, per_par_id, cod_tipo_parl, pley_num, fecha, estado,
                         comisiones, detalle, observacion, flag_inicial)
-                       VALUES (?,?,?,?,?,?,?,?,?)""",
+                       VALUES (?,?,?,?,?,?,?,?,?,?)""",
                     (
-                        sid, per_par_id, pley_num,
+                        sid, per_par_id, cod_tipo_parl, pley_num,
                         s.get("fecha"),
                         s.get("desEstado"),
                         s.get("desComisiones"),
@@ -358,11 +473,11 @@ class Database:
                         continue
                     c.execute(
                         """INSERT OR REPLACE INTO archivos
-                           (proyecto_archivo_id, seguimiento_pley_id, per_par_id, pley_num,
+                           (proyecto_archivo_id, seguimiento_pley_id, per_par_id, cod_tipo_parl, pley_num,
                             fecha, nombre_archivo, descripcion, url)
-                           VALUES (?,?,?,?,?,?,?,?)""",
+                           VALUES (?,?,?,?,?,?,?,?,?)""",
                         (
-                            aid, sid, per_par_id, pley_num,
+                            aid, sid, per_par_id, cod_tipo_parl, pley_num,
                             a.get("fecha"),
                             a.get("nombreArchivo"),
                             a.get("descripcion"),
@@ -375,14 +490,14 @@ class Database:
                 fechas = [s.get("fecha") for s in seguimientos if s.get("fecha")]
                 if fechas:
                     c.execute(
-                        "UPDATE proyectos SET last_changed_at=? WHERE per_par_id=? AND pley_num=?",
-                        (max(fechas), per_par_id, pley_num),
+                        "UPDATE proyectos SET last_changed_at=? WHERE per_par_id=? AND cod_tipo_parl=? AND pley_num=?",
+                        (max(fechas), per_par_id, cod_tipo_parl, pley_num),
                     )
 
         # Clasificar por temas usando título + sumilla (fuera de la transacción anterior,
         # save_temas abre la suya propia).
         self.classify_and_save(
-            per_par_id, pley_num,
+            per_par_id, cod_tipo_parl, pley_num,
             gen.get("titulo"),
             gen.get("sumilla"),
         )
