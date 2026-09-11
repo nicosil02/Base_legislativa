@@ -243,15 +243,17 @@ class Database:
             c.execute("DROP TABLE IF EXISTS proyecto_tema")
             c.execute("DROP TABLE IF EXISTS temas")
             c.execute("CREATE INDEX IF NOT EXISTS idx_proyectos_tema ON proyectos(tema)")
-            # Migración: comisiones.tipo ('Ordinaria' / 'Especial').
+            # Migración: comisiones.tipo ('Ordinaria'/'Senado'/'Diputados'/
+            # 'Bicameral'/'Especial' — ver scraper/comisiones_ordinarias.py).
             cols_com = {r[1] for r in c.execute("PRAGMA table_info(comisiones)").fetchall()}
             if "tipo" not in cols_com:
                 c.execute("ALTER TABLE comisiones ADD COLUMN tipo TEXT NOT NULL DEFAULT 'Especial'")
-            # Repoblar el tipo: 'Ordinaria' si está en la lista canónica de 24.
+            # Repoblar el tipo en cada corrida: por comisionId para las cámaras
+            # del período bicameral, por nombre para las 24 ordinarias legacy.
             for r in c.execute("SELECT comision_id, nombre FROM comisiones").fetchall():
                 c.execute(
                     "UPDATE comisiones SET tipo=? WHERE comision_id=?",
-                    (tipo_de(r["nombre"]), r["comision_id"]),
+                    (tipo_de(r["comision_id"], r["nombre"]), r["comision_id"]),
                 )
             c.execute("CREATE INDEX IF NOT EXISTS idx_comisiones_tipo ON comisiones(tipo)")
 
