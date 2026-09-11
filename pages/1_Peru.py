@@ -494,7 +494,7 @@ def load_proyectos(fec_inicio: dt.date | None, fec_fin: dt.date | None) -> pd.Da
              p.grupo_parlamentario AS "Partido",
              p.proponente AS "Proponente",
              p.autores_raw AS "Autor(es)",
-             CASE WHEN c.tipo = 'Ordinaria' THEN c.nombre
+             CASE WHEN c.tipo IN ('Ordinaria', 'Senado', 'Diputados', 'Bicameral') THEN c.nombre
                   WHEN c.tipo = 'Especial'  THEN ?
                   ELSE NULL END AS "Comisión",
              p.titulo AS "Título",
@@ -912,11 +912,17 @@ def _opciones(col: str, label_todos: str = TODOS) -> list[str]:
     return [label_todos] + vals
 
 
-def _opciones_comision() -> list[str]:
+def _opciones_comision(camara: str = TODAS) -> list[str]:
+    """Lista de comisiones disponibles para filtrar. Si `camara` no es "Todas",
+    se acota a los PLs de esa cámara — Senado y Diputados tienen comisiones
+    con el MISMO nombre (ej. "Justicia y Derechos Humanos" existe en ambas),
+    así que sin esto el dropdown quedaba con nombres duplicados e
+    indistinguibles. Ver scraper/comisiones_ordinarias.py."""
     if "_comisiones_all" not in df_full.columns:
         return [TODAS]
+    base = df_full if camara == TODAS else df_full[df_full["Cámara"] == camara]
     todos: set[str] = set()
-    for lst in df_full["_comisiones_all"]:
+    for lst in base["_comisiones_all"]:
         if isinstance(lst, list):
             todos.update(x for x in lst if isinstance(x, str) and x.strip())
     return [TODAS] + sorted(todos)
@@ -935,15 +941,21 @@ def _opciones_autor() -> list[str]:
     return [TODOS] + sorted(todos)
 
 
-# Fila de filtros: PL + 6 dropdowns (Tema, Estado, Comisión, Partido, Proponente, Autor)
-fc = st.columns([0.9, 1, 1, 1.2, 1.1, 1, 1.1])
+# Fila de filtros: PL + Cámara + 6 dropdowns (Tema, Estado, Comisión, Partido, Proponente, Autor)
+fc = st.columns([0.8, 0.8, 0.9, 0.9, 1.2, 1, 0.9, 1])
 pl_input = fc[0].text_input("PL", placeholder="ej. 14515")
-sel_tema = fc[1].selectbox("Tema", _opciones("Tema"))
-sel_estado = fc[2].selectbox("Estado", _opciones("Estado"))
-sel_comision = fc[3].selectbox("Comisión", _opciones_comision())
-sel_partido = fc[4].selectbox("Bancada", _opciones("Partido"))
-sel_proponente = fc[5].selectbox("Proponente", _opciones("Proponente"))
-sel_autor = fc[6].selectbox("Autor", _opciones_autor())
+sel_camara = fc[1].selectbox("Cámara", _opciones("Cámara", TODAS))
+sel_tema = fc[2].selectbox("Tema", _opciones("Tema"))
+sel_estado = fc[3].selectbox("Estado", _opciones("Estado"))
+# El dropdown de Comisión se acota a la cámara elegida arriba (Senado y
+# Diputados tienen comisiones con el mismo nombre — sin esto eran
+# indistinguibles). Elegir una Comisión primero y cambiar de Cámara después
+# resetea la selección a "Todas" si ya no aplica (comportamiento normal de
+# Streamlit al cambiar las opciones de un selectbox).
+sel_comision = fc[4].selectbox("Comisión", _opciones_comision(sel_camara))
+sel_partido = fc[5].selectbox("Bancada", _opciones("Partido"))
+sel_proponente = fc[6].selectbox("Proponente", _opciones("Proponente"))
+sel_autor = fc[7].selectbox("Autor", _opciones_autor())
 
 busqueda = st.text_input(
     "Buscar libre en título",
@@ -955,6 +967,8 @@ busqueda = st.text_input(
 df = df_full
 if pl_input.strip():
     df = df[df["PL"].astype(str).str.contains(pl_input.strip(), case=False, na=False)]
+if sel_camara != TODAS:
+    df = df[df["Cámara"] == sel_camara]
 if sel_tema != TODOS:
     df = df[df["Tema"] == sel_tema]
 if sel_estado != TODOS:
