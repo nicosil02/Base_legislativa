@@ -68,14 +68,17 @@ jobs:
       - name: Instalar dependencias
         run: |
           python -m pip install --upgrade pip
-          pip install requests pycryptodome openpyxl pandas pymupdf pytesseract pillow
+          pip install requests pycryptodome openpyxl pandas
 
-      - name: Instalar tesseract-ocr (PDFs escaneados de Registro Oficial EC)
+      - name: Instalar dependencias de noticias (PDF/OCR Registro Oficial EC)
+        if: github.event.schedule == '0 13 * * *' || github.event_name == 'workflow_dispatch'
         run: |
+          # Solo se instala en la corrida de las 8 AM Lima (ver "Actualizar
+          # noticias" mas abajo) - no hace falta pagar este costo 15x/dia
+          # cuando las ediciones del Registro Oficial EC salen 1x/dia.
+          pip install pymupdf pytesseract pillow
           # tesseract-ocr NO viene preinstalado en el runner ubuntu-latest
-          # (confirmado contra actions/runner-images, 2026-09-12) - hay que
-          # instalarlo cada corrida. ~10-15seg, corre 15x/dia = poco costo
-          # real vs. el free tier de 2000 min/mes.
+          # (confirmado contra actions/runner-images, 2026-09-12).
           sudo apt-get update -qq && sudo apt-get install -y -qq tesseract-ocr tesseract-ocr-spa
 
       - name: Bootstrap DB Peru desde snapshot gz (solo si no hay cache)
@@ -162,12 +165,17 @@ jobs:
               || echo "[warn] mesas_tecnicas sync-dias fallo, sigo"
 
       - name: Actualizar noticias y coyuntura (PE + EC)
+        # Solo corre 1x/dia (8 AM Lima) o en dispatch manual - las fuentes que
+        # cubre (ministerios, El Peruano, Registro Oficial EC con descarga de
+        # PDF+OCR) publican a lo sumo 1x/dia, no hace falta la cadencia de
+        # 15x/dia que sí necesitan los PLs (a diferencia de antes, cuando este
+        # step corria en cada una de las 15 corridas diarias).
+        if: github.event.schedule == '0 13 * * *' || github.event_name == 'workflow_dispatch'
         run: |
           # Seed idempotente del catalogo de fuentes + sync RSS de los
           # ~84 medios/instituciones/gremios mapeados. Captura noticias
           # de Coyuntura Politica, Instituciones, Salud, Tech, Agrarios,
-          # KYC/AML. Para Ecuador tambien aprovecha que el cron de
-          # refrescar-pe corre 15x/dia (mas frecuente que enriquecer-ec).
+          # KYC/AML.
           timeout 600 python -X utf8 -m noticias.cli seed \
               || echo "[warn] noticias seed fallo, sigo"
           timeout 600 python -X utf8 -m noticias.cli sync \
