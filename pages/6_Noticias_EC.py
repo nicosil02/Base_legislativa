@@ -18,6 +18,8 @@ import streamlit as st
 
 from noticias.temas import clasificar, es_normativa, todos_los_temas
 
+CLIENTES_DIR = Path(__file__).resolve().parent.parent / "clientes"
+
 
 PAIS = "EC"
 PAIS_LABEL = "Ecuador"
@@ -202,6 +204,18 @@ def load_fuentes(pais: str) -> list[str]:
     return [r[0] for r in rows]
 
 
+@st.cache_data(ttl=300)
+def load_clientes() -> list[str]:
+    """Slugs de clientes/<slug>/ (carpeta con notas.md real) - "_plantillas"
+    no es un cliente, se excluye."""
+    if not CLIENTES_DIR.is_dir():
+        return []
+    return sorted(
+        p.name for p in CLIENTES_DIR.iterdir()
+        if p.is_dir() and not p.name.startswith("_")
+    )
+
+
 @st.cache_data(ttl=60)
 def load_kpis(pais: str) -> dict:
     """KPIs estrictos sobre fecha_pub (no first_seen_at, que es solo cuando
@@ -242,6 +256,7 @@ def load_noticias(pais: str,
                    ventana_sql: str,
                    categoria_fuente: str | None = None,
                    fuente: str | None = None,
+                   cliente: str | None = None,
                    busqueda: str | None = None,
                    limit: int = 300) -> pd.DataFrame:
     """Carga noticias y clasifica cada una por tema (keywords).
@@ -270,6 +285,11 @@ def load_noticias(pais: str,
         sql += " AND f.categoria = ?"; params.append(categoria_fuente)
     if fuente:
         sql += " AND f.nombre = ?"; params.append(fuente)
+    if cliente:
+        # "todos" (backbone legislativo/politico general) cuenta para
+        # cualquier cliente seleccionado.
+        sql += " AND (f.clientes LIKE ? OR f.clientes LIKE ?)"
+        params.extend([f"%{cliente}%", "%todos%"])
     if busqueda:
         sql += " AND (LOWER(n.titulo) LIKE ? OR LOWER(COALESCE(n.resumen,'')) LIKE ?)"
         q = f"%{busqueda.lower()}%"
@@ -350,6 +370,7 @@ st.markdown("")
 # Filtros
 categorias_fuente = load_categorias_fuente(PAIS)
 fuentes = load_fuentes(PAIS)
+clientes = load_clientes()
 temas = todos_los_temas()
 
 fc1 = st.columns([1.1, 1.4, 1.4])
@@ -361,11 +382,13 @@ sel_tema = fc1[1].selectbox("Tema", [TODAS] + temas,
 sel_cat = fc1[2].selectbox("Categoría de fuente", [TODAS] + categorias_fuente,
     help="Categoría del medio que publica (no del contenido)")
 
-fc2 = st.columns([1.4, 2.5, 1.0])
+fc2 = st.columns([1.2, 1.2, 2.1, 1.0])
 sel_fuente = fc2[0].selectbox("Fuente", [TODAS] + fuentes)
-busqueda = fc2[1].text_input("Buscar en título o resumen",
+sel_cliente = fc2[1].selectbox("Cliente", [TODOS] + clientes,
+    help="Fuentes relevantes para ese cliente (más las de interés general)")
+busqueda = fc2[2].text_input("Buscar en título o resumen",
     placeholder="ej. AFP, IA, agricultura")
-solo_norma = fc2[2].checkbox("📋 Solo normativa",
+solo_norma = fc2[3].checkbox("📋 Solo normativa",
     help="Decretos, resoluciones, leyes, reglamentos publicados")
 
 df = load_noticias(
@@ -373,6 +396,7 @@ df = load_noticias(
     ventana_sql=VENTANAS[sel_ventana],
     categoria_fuente=sel_cat if sel_cat != TODAS else None,
     fuente=sel_fuente if sel_fuente != TODAS else None,
+    cliente=sel_cliente if sel_cliente != TODOS else None,
     busqueda=busqueda.strip() if busqueda.strip() else None,
     limit=300,
 )
@@ -386,6 +410,8 @@ if solo_norma and not df.empty:
 _extras = []
 if sel_tema != TODAS:
     _extras.append(f"tema: **{sel_tema}**")
+if sel_cliente != TODOS:
+    _extras.append(f"cliente: **{sel_cliente}**")
 if solo_norma:
     _extras.append("**📋 normativa**")
 st.markdown(f"##### {len(df):,} noticia(s) · {sel_ventana.lower()}"

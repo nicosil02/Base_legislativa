@@ -11,7 +11,133 @@ Tipos:
 
 Para agregar/corregir URLs:
   python -m noticias.cli set-rss --pais PE --nombre "Gestion" --rss "https://..."
+
+Cruce fuente x cliente (ver clientes/_plantillas/matriz_monitoreo/): cada fuente
+termina con una lista `clientes` (slugs de clientes/<slug>/, o "todos" para el
+backbone legislativo/politico general) resuelta por `_clientes_de()` abajo, sin
+tener que anotar cada uno de los ~90 dicts a mano:
+  1. INSTITUCION_CLIENTES: lookup exacto por `nombre`, para las ~30 entidades
+     de gobierno donde la categoria ("Institucion", o la tematica en la que
+     viven MINSA/MEF/etc.) no alcanza para saber a quien le importa. Tags
+     copiados de la matriz de monitoreo (ya verificados ahi leyendo cada
+     clientes/<cliente>/notas.md real).
+  2. CATEGORIA_CLIENTES: fallback por categoria para el resto (medios, gremios,
+     cuentas X) - Google/Incode = tech/digital/KYC/AML + coyuntura general;
+     Bayer = Salud + Agro + coyuntura; Syngenta = Agro + coyuntura (NO Salud -
+     Syngenta es agroquimicos/semillas, no farmaceutica, confirmado en su
+     notas.md).
 """
+
+INSTITUCION_CLIENTES: dict[str, list[str]] = {
+    # --- PE: backbone legislativo/politico general ---
+    "Congreso - Proyectos de Ley": ["todos"],
+    "El Peruano": ["todos"],
+    "Google News PE — Decreto Supremo": ["todos"],
+    "Google News PE — Decreto de Urgencia": ["todos"],
+    "Google News PE — Ley promulgada": ["todos"],
+    "Google News PE — El Peruano publica": ["todos"],
+    "Canal Congreso": ["todos"],
+    "Agenda del Congreso": ["todos"],
+    "PCM": ["todos"],
+    "Presidencia": ["todos"],
+    # --- PE: ministerios/agencias con relevancia especifica (matriz 2026-09-12) ---
+    "MINSA": ["bayer"],
+    "DIGEMID": ["bayer"],
+    "Ministerio de Salud (estadisticas)": ["bayer"],
+    "MIDAGRI": ["bayer", "syngenta"],
+    "SENASA": ["bayer", "syngenta"],
+    "MINAM": ["bayer", "syngenta"],
+    # MEF: Syngenta (macro/agro) + Google (IVA a plataformas digitales via
+    # decreto MEF, explicito en su notas.md).
+    "MEF": ["syngenta", "google"],
+    "ANPD": ["google", "incode"],
+    "RREE": ["google"],
+    "MTC": ["google"],
+    "OSIPTEL": ["google"],
+    "INDECOPI": ["google", "syngenta"],
+    "MINCETUR": ["google", "bayer", "syngenta"],
+    "MINEDU": [],
+    "PRODUCE": [],
+    "Direccion de Casinos (Apuestas Deportivas)": [],
+    # --- EC: backbone legislativo/politico general ---
+    "Asamblea Nacional - Proyectos de Ley": ["todos"],
+    "Registro Oficial": ["todos"],
+    "Decretos Presidenciales": ["todos"],
+    "Google News EC — Decreto Ejecutivo": ["todos"],
+    "Google News EC — Registro Oficial": ["todos"],
+    "Google News EC — Ley Orgánica": ["todos"],
+    "Portal de la Asamblea Nacional": ["todos"],
+    "Agenda de la Asamblea Nacional": ["todos"],
+    # --- EC: ministerios/agencias con relevancia especifica ---
+    # Ministerio de Economia y Finanzas EC se fusiono en MDEP (Desarrollo
+    # Economico y Productivo, junto con Agricultura y Produccion) - la matriz
+    # ya tagea MDEP como bayer+syngenta, aplicado aca a las 3 filas viejas
+    # que fuentes.py todavia mantiene por separado (mismo dominio nuevo).
+    "Ministerio de Economia y Finanzas": ["bayer", "syngenta"],
+    "Ministerio de Agricultura y Ganaderia": ["bayer", "syngenta"],
+    "Resoluciones Ministerio de Agricultura": ["bayer", "syngenta"],
+    "Ministerio de Produccion Comercio Exterior": ["bayer", "syngenta"],
+    "Ministerio del Ambiente": ["bayer", "syngenta"],
+    "Ministerio del Ambiente - Normativa": ["bayer", "syngenta"],
+    "Agencia de Regulacion y Control Fito y Zoosanitario": ["bayer", "syngenta"],
+    "Agrocalidad - Normativa": ["bayer", "syngenta"],
+    "ARCSA (Regulacion Sanitaria)": ["bayer"],
+    "ARCSA - Normativa": ["bayer"],
+    "Proyectos normativos ARCSA": ["bayer"],
+    "Ministerio de Salud Publica": ["bayer"],
+    "Ministerio de Salud Publica - Normativa": ["bayer"],
+    "IESS (Seg. Social)": ["bayer"],
+    "Ministerio de Telecomunicaciones": ["google"],
+    "Ministerio de Telecomunicaciones - Normativa": ["google"],
+    "Superintendencia de Proteccion de Datos Personales": ["google"],
+    # Incode sigue el eje "relacion EEUU" en PE Y Ecuador (notas.md: "le
+    # interesa el eje de relacion Peru/Ecuador-EEUU en general").
+    "Ministerio de Relaciones Exteriores y Movilidad Humana": ["incode"],
+
+    # --- PE: cuentas X/Twitter institucionales (mismo tag que su fuente
+    # gob.pe hermana cuando existe, en vez de caer al default generico
+    # Institucion->todos que era impreciso para varias de estas) ---
+    "X - PCM Peru (X)": ["todos"],
+    "X - JNE Peru": [],
+    "X - RENIEC Peru": ["incode"],  # foco explicito #1 de Incode (DNI digital/Confronte)
+    "X - MIDAGRI Peru (X)": ["bayer", "syngenta"],
+    "X - MINCETUR (X)": ["google", "bayer", "syngenta"],
+    "X - Ositran": [],
+    "X - Presidencia Peru (X)": ["todos"],
+    "X - Defensoria del Pueblo": [],
+    "X - MININTER Peru": [],
+    "X - Cancilleria Peru": ["google"],
+    "X - Congreso Peru (X)": ["todos"],
+    "X - MINJUSDH Peru (X)": [],
+    "X - PRODUCE Peru (X)": [],
+    "X - MINEM Peru": [],
+    "X - SGTD Peru Digital": ["google", "incode"],  # SGTD/PCM: gobierno digital, en ambos notas.md
+}
+
+CATEGORIA_CLIENTES: dict[str, list[str]] = {
+    "Coyuntura Politica": ["todos"],
+    "Institucion": ["todos"],
+    "Temas Salud": ["bayer"],
+    "Salud": ["bayer"],
+    "Temas Agrarios": ["bayer", "syngenta"],
+    "Agro": ["bayer", "syngenta"],
+    "Temas Tech": ["google", "incode"],
+    "Digital": ["google", "incode"],
+    "Temas KYC/AML": ["google", "incode"],
+    "Financiero": ["google", "incode"],
+}
+
+
+def _clientes_de(fuente: dict) -> list[str]:
+    """Resuelve la lista de clientes de una fuente: tag explicito del dict
+    (si algun dia se agrega uno) > lookup por nombre > fallback por categoria."""
+    if "clientes" in fuente:
+        return fuente["clientes"]
+    explicito = INSTITUCION_CLIENTES.get(fuente["nombre"])
+    if explicito is not None:
+        return explicito
+    return CATEGORIA_CLIENTES.get(fuente["categoria"], [])
+
 
 # ============================================================
 # PERU
@@ -93,6 +219,10 @@ FUENTES_PE: list[dict] = [
      "url": "https://www.gob.pe/institucion/mef/noticias", "tipo": "gobpe"},
     {"categoria": "Institucion", "pais": "PE", "nombre": "PCM",
      "url": "https://www.gob.pe/institucion/pcm/noticias", "tipo": "gobpe"},
+    {"categoria": "Institucion", "pais": "PE", "nombre": "ANPD",
+     "url": "https://www.gob.pe/institucion/anpd/noticias", "tipo": "gobpe",
+     "notas": "Autoridad Nacional de Proteccion de Datos Personales - foco explicito "
+              "de Google e Incode (privacidad/proteccion de datos)"},
     {"categoria": "Institucion", "pais": "PE", "nombre": "RREE",
      "url": "https://www.gob.pe/institucion/rree/noticias", "tipo": "gobpe"},
     {"categoria": "Institucion", "pais": "PE", "nombre": "MINEDU",
@@ -823,4 +953,7 @@ FUENTES_GOOGLE_NEWS: list[dict] = [
 
 
 def all_fuentes() -> list[dict]:
-    return FUENTES_PE + FUENTES_EC + FUENTES_GOOGLE_NEWS
+    fuentes = FUENTES_PE + FUENTES_EC + FUENTES_GOOGLE_NEWS
+    for f in fuentes:
+        f.setdefault("clientes", _clientes_de(f))
+    return fuentes
