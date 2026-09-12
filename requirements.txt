@@ -17,3 +17,12 @@ playwright>=1.59
 # components.html (iframe srcdoc same-origin) + lectura via st.context.cookies.
 # No requiere libreria externa.
 cloudscraper
+# noticias.registro_oficial_ec: lee el PDF real de cada edicion (Corte
+# Constitucional EC) en vez de solo el indice en texto del post WP.
+# PyMuPDF extrae texto Y renderiza paginas a imagen sin depender de Poppler
+# (binario del sistema) - importa como `fitz`. pytesseract hace OCR de las
+# paginas que PyMuPDF no puede leer (escaneadas); requiere el binario
+# `tesseract-ocr` instalado aparte (apt-get en CI, no viene con pip).
+pymupdf>=1.24
+pytesseract>=0.3
+pillow>=10.0

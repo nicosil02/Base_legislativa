@@ -68,7 +68,15 @@ jobs:
       - name: Instalar dependencias
         run: |
           python -m pip install --upgrade pip
-          pip install requests pycryptodome openpyxl pandas
+          pip install requests pycryptodome openpyxl pandas pymupdf pytesseract pillow
+
+      - name: Instalar tesseract-ocr (PDFs escaneados de Registro Oficial EC)
+        run: |
+          # tesseract-ocr NO viene preinstalado en el runner ubuntu-latest
+          # (confirmado contra actions/runner-images, 2026-09-12) - hay que
+          # instalarlo cada corrida. ~10-15seg, corre 15x/dia = poco costo
+          # real vs. el free tier de 2000 min/mes.
+          sudo apt-get update -qq && sudo apt-get install -y -qq tesseract-ocr tesseract-ocr-spa
 
       - name: Bootstrap DB Peru desde snapshot gz (solo si no hay cache)
         if: hashFiles('proyectos.db') == ''
