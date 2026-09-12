@@ -81,7 +81,7 @@ def cmd_sync(args) -> int:
         # Pipelines custom (Registro Oficial EC + El Peruano PE). Errores
         # acá no rompen el sync principal.
         ro_stats = None
-        if not args.pais or args.pais == "EC":
+        if args.con_ro_ec and (not args.pais or args.pais == "EC"):
             try:
                 from noticias.registro_oficial_ec import run_sync as ro_run_sync
                 ro_stats = ro_run_sync(db, max_editions=20)
@@ -213,6 +213,10 @@ def build_parser() -> argparse.ArgumentParser:
     sy = sub.add_parser("sync", help="scrapea fuentes y captura noticias")
     sy.add_argument("--pais", choices=["PE", "EC"])
     sy.add_argument("--categoria")
+    sy.add_argument("--con-ro-ec", action="store_true",
+        help="incluye Registro Oficial EC (indice + PDF/OCR de ediciones y "
+             "suplementos) - publica 1x/dia, se deja opt-in para no correrlo "
+             "en cada sync intradiario")
     sy.set_defaults(func=cmd_sync)
 
     sub.add_parser("stats", help="estadisticas").set_defaults(func=cmd_stats)
