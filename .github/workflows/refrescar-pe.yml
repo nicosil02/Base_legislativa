@@ -165,20 +165,28 @@ jobs:
               || echo "[warn] mesas_tecnicas sync-dias fallo, sigo"
 
       - name: Actualizar noticias y coyuntura (PE + EC)
-        # Solo corre 1x/dia (8 AM Lima) o en dispatch manual - las fuentes que
-        # cubre (ministerios, El Peruano, Registro Oficial EC con descarga de
-        # PDF+OCR) publican a lo sumo 1x/dia, no hace falta la cadencia de
-        # 15x/dia que sí necesitan los PLs (a diferencia de antes, cuando este
-        # step corria en cada una de las 15 corridas diarias).
-        if: github.event.schedule == '0 13 * * *' || github.event_name == 'workflow_dispatch'
+        env:
+          SCHEDULE: ${{ github.event.schedule }}
+          IS_DISPATCH: ${{ github.event_name == 'workflow_dispatch' }}
         run: |
           # Seed idempotente del catalogo de fuentes + sync RSS de los
           # ~84 medios/instituciones/gremios mapeados. Captura noticias
           # de Coyuntura Politica, Instituciones, Salud, Tech, Agrarios,
-          # KYC/AML.
+          # KYC/AML - esto SIGUE corriendo cada corrida (15x/dia), como
+          # antes.
+          #
+          # Registro Oficial EC (indice + PDF/OCR de ediciones y
+          # suplementos) es distinto: publica 1x/dia, asi que --con-ro-ec
+          # solo se agrega en la corrida de las 8 AM Lima o en dispatch
+          # manual - no tiene sentido re-bajar/re-OCRear los mismos PDFs
+          # 15 veces al dia.
+          RO_FLAG=""
+          if [ "$SCHEDULE" = "0 13 * * *" ] || [ "$IS_DISPATCH" = "true" ]; then
+            RO_FLAG="--con-ro-ec"
+          fi
           timeout 600 python -X utf8 -m noticias.cli seed \
               || echo "[warn] noticias seed fallo, sigo"
-          timeout 600 python -X utf8 -m noticias.cli sync \
+          timeout 600 python -X utf8 -m noticias.cli sync $RO_FLAG \
               || echo "[warn] noticias sync fallo, sigo"
           # Purge: la UI muestra por defecto solo "hoy"; conservamos 7d
           # como buffer historico para evitar que la DB crezca infinito.
