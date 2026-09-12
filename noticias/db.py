@@ -17,6 +17,7 @@ CREATE TABLE IF NOT EXISTS noticias_fuentes (
   tipo            TEXT NOT NULL DEFAULT 'manual', -- rss | html | api | twitter | manual
   activa          INTEGER NOT NULL DEFAULT 1,
   notas           TEXT,
+  clientes        TEXT,                  -- pipe-separated slugs (ver noticias/fuentes.py); "" = ninguno, "todos" = todos
   created_at      TEXT NOT NULL,
   UNIQUE (pais, nombre)
 );
@@ -138,12 +139,19 @@ class Database:
     def init_schema(self) -> None:
         with self.tx() as c:
             c.executescript(SCHEMA)
+            # Migracion: noticias_fuentes.clientes (cruce fuente x cliente,
+            # ver noticias/fuentes.py). Tablas creadas antes de este cambio
+            # no la tienen.
+            cols_f = {r[1] for r in c.execute("PRAGMA table_info(noticias_fuentes)").fetchall()}
+            if "clientes" not in cols_f:
+                c.execute("ALTER TABLE noticias_fuentes ADD COLUMN clientes TEXT")
 
     # ---------- fuentes ----------
     def upsert_fuente(self, row: dict) -> int:
         """Insert si no existe (key: pais + nombre), update si cambio.
         Devuelve fuente_id."""
         now = now_iso()
+        clientes_str = "|".join(row.get("clientes") or [])
         existing = self.conn.execute(
             "SELECT id FROM noticias_fuentes WHERE pais=? AND nombre=?",
             (row["pais"], row["nombre"]),
@@ -152,20 +160,20 @@ class Database:
             if existing:
                 c.execute(
                     """UPDATE noticias_fuentes SET
-                       categoria=?, url=?, rss_url=?, tipo=?, activa=?, notas=?
+                       categoria=?, url=?, rss_url=?, tipo=?, activa=?, notas=?, clientes=?
                        WHERE id=?""",
                     (row["categoria"], row.get("url"), row.get("rss_url"),
                      row.get("tipo", "manual"), row.get("activa", 1),
-                     row.get("notas"), existing["id"]),
+                     row.get("notas"), clientes_str, existing["id"]),
                 )
                 return existing["id"]
             cur = c.execute(
                 """INSERT INTO noticias_fuentes
-                   (categoria, pais, nombre, url, rss_url, tipo, activa, notas, created_at)
-                   VALUES (?,?,?,?,?,?,?,?,?)""",
+                   (categoria, pais, nombre, url, rss_url, tipo, activa, notas, clientes, created_at)
+                   VALUES (?,?,?,?,?,?,?,?,?,?)""",
                 (row["categoria"], row["pais"], row["nombre"], row.get("url"),
                  row.get("rss_url"), row.get("tipo", "manual"),
-                 row.get("activa", 1), row.get("notas"), now),
+                 row.get("activa", 1), row.get("notas"), clientes_str, now),
             )
             return cur.lastrowid
 
