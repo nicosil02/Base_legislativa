@@ -876,10 +876,28 @@ FUENTES_GOOGLE_NEWS: list[dict] = [
      "rss_url": 'https://nitter.net/CNNEE/rss', "tipo": "rss",
      "notas": "X/Twitter via nitter.net (rate-limited)"},
     {"categoria": 'Coyuntura Politica', "pais": 'PE',
-     "nombre": 'X - Martin Hidalgo (periodista)',
+     "nombre": 'Martin Hidalgo (periodista, via Google News)',
      "url": 'https://x.com/martinhidalgo',
-     "rss_url": 'https://nitter.net/martinhidalgo/rss', "tipo": "rss",
-     "notas": "X/Twitter via nitter.net (rate-limited)"},
+     "rss_url": 'https://news.google.com/rss/search?q=%22Martin+Hidalgo%22+Congreso&hl=es-419&gl=PE&ceid=PE:es',
+     "tipo": "rss",
+     "notas": "nitter.net murio (X mando cese y desista a Nitter ago-2026); se sigue via Google "
+              "News (cuando un medio retoma su primicia) en vez de leer el tuit directo, sin usar "
+              "cuentas de X ni credenciales (decision de Nicolas 2026-09-12: no arriesgar su cuenta "
+              "personal para scraping no oficial)"},
+    {"categoria": 'Coyuntura Politica', "pais": 'PE',
+     "nombre": 'Erik Rivera (periodista El Comercio, via Google News)',
+     "url": 'https://x.com/ErikRivera__',
+     "rss_url": 'https://news.google.com/rss/search?q=%22Erik+Rivera%22+Congreso&hl=es-419&gl=PE&ceid=PE:es',
+     "tipo": "rss",
+     "notas": "Periodista de politica/Congreso en El Comercio. Mismo approach via Google News que "
+              "Martin Hidalgo - ver esa nota."},
+    {"categoria": 'Coyuntura Politica', "pais": 'PE',
+     "nombre": 'Adrian Sarria (periodista La Republica, via Google News)',
+     "url": 'https://x.com/AdrianSarriaMu',
+     "rss_url": 'https://news.google.com/rss/search?q=%22Adri%C3%A1n+Sarria%22&hl=es-419&gl=PE&ceid=PE:es',
+     "tipo": "rss",
+     "notas": "Periodista de la Unidad de Investigacion de La Republica (DDHH, corrupcion, gestion "
+              "publica). Mismo approach via Google News - ver nota de Martin Hidalgo."},
     {"categoria": 'Coyuntura Politica', "pais": 'PE',
      "nombre": 'X - RPP Noticias (X)',
      "url": 'https://x.com/RPPNoticias',
