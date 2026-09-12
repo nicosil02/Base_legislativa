@@ -93,6 +93,8 @@ INSTITUCION_CLIENTES: dict[str, list[str]] = {
     # Incode sigue el eje "relacion EEUU" en PE Y Ecuador (notas.md: "le
     # interesa el eje de relacion Peru/Ecuador-EEUU en general").
     "Ministerio de Relaciones Exteriores y Movilidad Humana": ["incode"],
+    "Registro Civil (DIGERCIC)": ["incode"],
+    "Google News EC — Cédula digital": ["incode"],
 
     # --- PE: cuentas X/Twitter institucionales (mismo tag que su fuente
     # gob.pe hermana cuando existe, en vez de caer al default generico
@@ -406,6 +408,15 @@ FUENTES_EC: list[dict] = [
      "url": "https://www.registroficial.gob.ec/", "tipo": "html"},
     {"categoria": "Institucion", "pais": "EC", "nombre": "Decretos Presidenciales",
      "url": "https://www.presidencia.gob.ec/decretos/", "tipo": "html"},
+    {"categoria": "Institucion", "pais": "EC", "nombre": "Registro Civil (DIGERCIC)",
+     "url": "https://www.registrocivil.gob.ec/noticias/",
+     "rss_url": "https://www.registrocivil.gob.ec/feed/", "tipo": "rss",
+     "notas": "Cedula digital - foco explicito de Incode en Ecuador (verificado en vivo 2026-09-12)"},
+    {"categoria": "Institucion", "pais": "EC",
+     "nombre": "Google News EC — Cédula digital",
+     "url": "https://news.google.com/rss/search?q=%22c%C3%A9dula+digital%22+Ecuador&hl=es-419&gl=EC&ceid=EC:es",
+     "rss_url": "https://news.google.com/rss/search?q=%22c%C3%A9dula+digital%22+Ecuador&hl=es-419&gl=EC&ceid=EC:es",
+     "tipo": "rss", "notas": "Query: 'cedula digital' Ecuador - complementa Registro Civil con cobertura de medios"},
     # Cobertura de normativa EC vía Google News
     {"categoria": "Institucion", "pais": "EC",
      "nombre": "Google News EC — Decreto Ejecutivo",
