@@ -366,6 +366,24 @@ def fetch_gobpe(fuente: dict, session: requests.Session,
     return out
 
 
+def _get(session: requests.Session, url: str, timeout: int) -> requests.Response:
+    """GET con fallback SSL: cloudscraper (la session normal de este modulo)
+    impersona un fingerprint TLS de navegador para saltar Cloudflare, pero ese
+    mismo fingerprint rompe el handshake TLS con algunos sitios .gob.ec
+    (confirmado en vivo 2026-09-12: SSLError consistente via cloudscraper,
+    200 normal con requests plano en los mismos hosts/URLs). Reintenta una vez
+    con una sesion sin cloudscraper antes de dar la fuente por muerta.
+    ponytail: una sesion plana nueva por reintento (sin pool ni reuso) porque
+    esto es la excepcion, no el camino comun - si se vuelve frecuente, cachear
+    una sesion "plana" de fallback por dominio."""
+    try:
+        return session.get(url, timeout=timeout)
+    except requests.exceptions.SSLError:
+        plain = requests.Session()
+        plain.headers.update(HEADERS)
+        return plain.get(url, timeout=timeout)
+
+
 def _discover_rss(html_text: str, base_url: str,
                   session: requests.Session, timeout: int) -> str | None:
     """Autodiscovery: <link rss> o /feed/ (WordPress). Auto-sana feeds rotos."""
@@ -378,7 +396,7 @@ def _discover_rss(html_text: str, base_url: str,
             return urljoin(base_url, h.group(1))
     feed = urljoin(base_url, "/feed/")
     try:
-        r = session.get(feed, timeout=timeout)
+        r = _get(session, feed, timeout)
         if r.ok and ("<rss" in r.text[:400] or "<feed" in r.text[:400]):
             return feed
     except Exception:
@@ -405,7 +423,7 @@ def fetch_fuente(fuente: dict, session: requests.Session | None = None,
         if not url:
             return []
         try:
-            r = s.get(url, timeout=timeout)
+            r = _get(s, url, timeout)
             r.raise_for_status()
             items = parse_rss_feed(r.text)
             if items:
@@ -416,10 +434,10 @@ def fetch_fuente(fuente: dict, session: requests.Session | None = None,
         page = fuente.get("url")
         if page and page != url:
             try:
-                r = s.get(page, timeout=timeout)
+                r = _get(s, page, timeout)
                 feed = _discover_rss(r.text, page, s, timeout)
                 if feed:
-                    r2 = s.get(feed, timeout=timeout)
+                    r2 = _get(s, feed, timeout)
                     r2.raise_for_status()
                     return parse_rss_feed(r2.text)
             except Exception as e:
@@ -430,7 +448,7 @@ def fetch_fuente(fuente: dict, session: requests.Session | None = None,
         if not url:
             return []
         try:
-            r = s.get(url, timeout=timeout)
+            r = _get(s, url, timeout)
             r.raise_for_status()
             return parse_html_listing(r.text, url)
         except Exception as e:
