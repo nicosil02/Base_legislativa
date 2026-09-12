@@ -246,7 +246,10 @@ def rankear(slug: str, pais: str | None, top: int) -> list[dict]:
         c["score"] = round(float(s), 4)
 
     seleccion = [c for c in candidatos if c["tema_match"] or c["score"] >= NL_THRESHOLD]
-    seleccion.sort(key=lambda c: c["score"], reverse=True)
+    # Nicolas pidio priorizar noticias sobre PLs (2026-09-12) - noticias
+    # primero (por score), PLs despues, en vez de un solo sort por score que
+    # dejaba que un PL con texto mas "denso" le gane a noticias reales.
+    seleccion.sort(key=lambda c: (c["tipo"] == "pl", -c["score"]))
     return seleccion[:top]
 
 
