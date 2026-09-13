@@ -34,11 +34,20 @@ mapa_electoral/
 # de cada cliente (lo que alerts/relevancia.py y el filtro Cliente necesitan
 # leer de verdad) - decision explicita de Nicolas, 2026-09-13. Todo lo demas
 # (bluebooks originales que dieron los propios clientes, clientes/chat.txt
-# con el chat interno del equipo, clientes/_plantillas/) sigue local-only,
-# nada de eso lo lee el codigo en runtime.
+# con el chat interno del equipo) sigue local-only, nada de eso lo lee el
+# codigo en runtime.
+#
+# clientes/_plantillas/whatsapp_alerta.md y ejemplos_alertas.md SI se
+# versionan aparte (bug encontrado 2026-09-13: el agente programado de
+# alertas corre en un clone fresco del repo y los necesita para redactar -
+# no son confidenciales de ningun cliente puntual, son la guia de estilo
+# propia de Vali). El resto de _plantillas/ (bluebooks de referencia,
+# matriz_monitoreo, docs sin uso en runtime) sigue local-only.
 clientes/*
 !clientes/*/
 clientes/*/*
 !clientes/*/notas.md
 !clientes/*/historial_alertas.md
 !clientes/*/formato_alertas.md
+!clientes/_plantillas/whatsapp_alerta.md
+!clientes/_plantillas/ejemplos_alertas.md
