@@ -14,6 +14,10 @@ def test_fecha():
     assert S._parse_gobpe_date("15 de enero de 2026") == "2026-01-15T00:00:00Z"
     assert S._parse_gobpe_date("sin fecha") is None
     assert S._parse_gobpe_date(None) is None
+    # Bug real (2026-09-13): gob.pe usa "setiembre" (variante peruana sin la
+    # "p") en su API real - sin este alias, TODA fecha de setiembre fallaba
+    # el parseo en silencio.
+    assert S._parse_gobpe_date("13 de setiembre de 2026 -  7:03 a. m.") == "2026-09-13T00:00:00Z"
 
 
 def test_gobpe_parse_offline():

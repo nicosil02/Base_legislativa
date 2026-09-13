@@ -312,6 +312,12 @@ GOBPE_API = "https://www.gob.pe/busquedas.json"
 _MESES = {m: i for i, m in enumerate(
     ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto",
      "septiembre", "octubre", "noviembre", "diciembre"], 1)}
+# gob.pe usa "setiembre" (variante peruana sin la "p", RAE la acepta igual
+# que "septiembre") en el campo `publication` de su API - confirmado en vivo
+# 2026-09-13 contra MINSA real. Sin este alias, TODA fecha de setiembre
+# fallaba el parseo silenciosamente (_parse_gobpe_date devolvia None), lo
+# que explicaba el 100% de fecha_pub vacio en las 474 filas tipo 'gobpe'.
+_MESES["setiembre"] = _MESES["septiembre"]
 
 
 def _gobpe_slug(url: str | None) -> str | None:
