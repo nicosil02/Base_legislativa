@@ -183,7 +183,9 @@ TEMAS_CLIENTE: dict[str, list[str]] = {
 # es su funcion misma), no necesita este filtro extra.
 PERFIL_ESTRICTO: dict[str, set[str]] = {
     "bayer": {"MINSA", "Ministerio de Salud (estadisticas)",
-              "Ministerio de Salud Publica", "Temas Salud", "Salud"},
+              "Ministerio de Salud Publica", "Temas Salud", "Salud",
+              "AgroPeru"},
+    "syngenta": {"AgroPeru"},
 }
 
 PERFIL_KEYWORDS: dict[str, list[str]] = {
@@ -193,6 +195,19 @@ PERFIL_KEYWORDS: dict[str, list[str]] = {
         "abastecimiento", "desabastecimiento", "essalud",
         "colegio de quimicos farmaceuticos", "hemofilia", "medicamento",
         "autoridad reguladora", "arcsa",
+        # Crop (compartido con syngenta, ver abajo)
+        "senasa", "plaguicida", "fitosanit", "semilla", "transgenic",
+        "organismo vivo modificado", "agroecolog", "agricultura regenerativa",
+        "agroexportacion", "autoridad nacional del agua", "biotecnolog",
+    ],
+    "syngenta": [
+        # AgroPeru trae desarrollo rural general (riego, alpacas, cafe de
+        # pequenos productores) - nada que ver con el interes real de
+        # Syngenta (agroquimicos/semillas a escala comercial, no fomento
+        # rural). Mismas keywords Crop que Bayer.
+        "senasa", "plaguicida", "fitosanit", "semilla", "transgenic",
+        "organismo vivo modificado", "agroecolog", "agricultura regenerativa",
+        "agroexportacion", "autoridad nacional del agua", "biotecnolog",
     ],
 }
 
@@ -365,8 +380,10 @@ FUENTES_PE: list[dict] = [
      "notas": "Servicios en comunicacion intercultural - foco comunidades y agro rural"},
     {"categoria": "Temas Agrarios", "pais": "PE", "nombre": "Andina (agencia oficial - agro)",
      "url": "https://andina.pe/agencia/seccion.aspx?codseccion=6",
-     "rss_url": "https://andina.pe/agencia/rss.aspx?codseccion=6", "tipo": "rss",
-     "notas": "Agencia oficial - seccion agraria (codseccion=6)"},
+     "rss_url": "https://andina.pe/agencia/rss.aspx?codseccion=6", "tipo": "rss", "activa": 0,
+     "notas": "Desactivada 2026-09-13: el parametro codseccion ya no filtra nada - probado en "
+              "vivo del 1 al 10, TODOS devuelven el mismo feed generico (futbol, cine, policia,"
+              " turismo). Estaba tageada bayer+syngenta y metia ruido real de todo tipo."},
     {"categoria": "Temas Agrarios", "pais": "PE", "nombre": "AgroNoticias Peru",
      "url": "https://agronoticias.pe/",
      "rss_url": "https://agronoticias.pe/feed/", "tipo": "rss",
@@ -430,8 +447,9 @@ FUENTES_PE: list[dict] = [
      "nombre": "Andina (agencia oficial - salud)",
      "url": "https://andina.pe/agencia/seccion.aspx?codseccion=1",
      "rss_url": "https://andina.pe/agencia/rss.aspx?codseccion=1",
-     "tipo": "rss",
-     "notas": "Agencia oficial - seccion salud"},
+     "tipo": "rss", "activa": 0,
+     "notas": "Desactivada 2026-09-13: mismo bug que la fuente agro hermana - codseccion ya "
+              "no filtra, devuelve el feed generico de Andina completo."},
 
     # --- TEMAS TECH ---
     {"categoria": "Temas Tech", "pais": "PE", "nombre": "Niubox Legal",
