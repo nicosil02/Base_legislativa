@@ -16,7 +16,10 @@ antes que ese ministro venía insinuando esa intención, esa conexión ES la ale
 
 ¿Qué pasó?
 <Una frase que resume el hecho de forma directa, simple, clara y profesional — para
-profesionales del sector que NO conocen el país en profundidad>
+profesionales del sector que NO conocen el país en profundidad. Confirmado con precedente real
+(chat.txt, 10/8/26): la primera vez que aparece una sigla/entidad (ej. EsSalud, MEF, ARCSA), aclarar
+su nombre completo entre esa primera mención — ej. "presidenta ejecutiva del Seguro Social de Salud
+(EsSalud)" — no asumir que el lector ya la conoce>
 
 Puntos a tener en cuenta
 * <bullet 1 — contexto de lo informado, info relevante para entender el evento>
