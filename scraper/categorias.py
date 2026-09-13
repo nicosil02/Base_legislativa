@@ -304,6 +304,26 @@ CATEGORIAS: dict[str, list[str]] = {
 }
 
 
+# Que categorias de PL le importan de verdad a cada cliente de Vali (mismo
+# patron que noticias/fuentes.py::CATEGORIA_CLIENTES, sacado de los notas.md
+# reales). Se usa para filtrar "PLs relevantes por cliente" en las paginas
+# Radar Legislativo (PE/EC, que reusa este mismo modulo - ver
+# scraper_ec/categorias_ec.py) y Agenda.
+#
+# ponytail: arranca angosto a proposito - NO se incluye "Salud" para Bayer
+# (solo "Farma"), porque la leccion de esta sesion con noticias/MINSA fue
+# que una categoria generica de salud publica mete PLs sin relacion con el
+# interes real (DIGEMID/registro sanitario/oncologia, no salud publica en
+# general). Sumar "Salud" despues si Nicolas confirma que se estan perdiendo
+# PLs reales de su interes.
+CATEGORIA_CLIENTES_PL: dict[str, list[str]] = {
+    "google": ["Tecnología", "Telecomunicaciones"],
+    "incode": ["Tecnología"],
+    "bayer": ["Farma", "Agricultura"],
+    "syngenta": ["Agricultura"],
+}
+
+
 def _normalize(text: str | None) -> str:
     if not text:
         return ""
