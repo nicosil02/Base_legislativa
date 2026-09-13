@@ -395,6 +395,12 @@ noticias_ec = st.Page(
     icon="🇪🇨",
     url_path="ecuador-noticias",
 )
+alertas = st.Page(
+    "pages/7_Alertas.py",
+    title="Borradores",
+    icon="📝",
+    url_path="alertas",
+)
 
 
 # Sidebar logout deshabilitado mientras el auth gate este off.
@@ -406,6 +412,7 @@ nav = st.navigation(
         "Radar Legislativo": [peru, ecuador],
         "Agenda parlamentaria": [agenda_pe, agenda_ec],
         "Noticias y coyuntura": [noticias_pe, noticias_ec],
+        "Alertas": [alertas],
     },
     position="sidebar",
 )
