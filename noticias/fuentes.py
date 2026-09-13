@@ -55,7 +55,7 @@ INSTITUCION_CLIENTES: dict[str, list[str]] = {
     # Google hasta que haya un filtro por contenido del articulo, no solo
     # por institucion (auditoria 2026-09-13, confirmado con Nicolas que
     # el ranking por TF-IDF no alcanza para esto).
-    "MEF": ["syngenta", "google"],
+    "MEF": ["syngenta", "google"],  # ver INSTITUCIONES_AMPLIAS abajo
     "ANPD": ["google", "incode"],
     # RREE: Google Y Incode comparten el mismo eje "relacion EEUU" segun sus
     # notas.md (ambas empresas norteamericanas) - antes solo tenia a Google
@@ -144,6 +144,29 @@ CATEGORIA_CLIENTES: dict[str, list[str]] = {
     # Incode, no de Google). Antes ambos entraban por error.
     "Temas KYC/AML": ["incode"],
     "Financiero": ["incode"],
+}
+
+
+# Instituciones que publican de TODO (presupuesto, RRHH, transferencias,
+# macro...) y solo tienen UN angulo real relevante para el cliente con el
+# que estan tageadas en INSTITUCION_CLIENTES (ej. MEF <-> Google es solo su
+# decreto de IVA a plataformas digitales, no el resto de lo que emite MEF).
+# Tagear la institucion entera trae ruido real (auditoria 2026-09-13). Para
+# estas, ademas de aparecer en INSTITUCION_CLIENTES, el filtro Cliente exige
+# que el TITULO+RESUMEN de la noticia matchee el tema real del cliente
+# (noticias/temas.py::clasificar) - no es un ranking difuso tipo TF-IDF, es
+# un mismo chequeo de keywords determinista/auditable que ya se usa para los
+# badges "Temas" de la UI, aplicado tambien al filtro. Ver TEMAS_CLIENTE.
+INSTITUCIONES_AMPLIAS: set[str] = {"MEF"}
+
+# Que tema(s) de noticias/temas.py::TEMAS le importan de verdad a cada
+# cliente (de sus notas.md) - usado solo para las INSTITUCIONES_AMPLIAS de
+# arriba, no reemplaza el tag por institucion/categoria de todos los demas.
+TEMAS_CLIENTE: dict[str, list[str]] = {
+    "google": ["Tech / Digital", "KYC / AML / Financiero"],
+    "incode": ["Tech / Digital", "KYC / AML / Financiero"],
+    "bayer": ["Salud", "Crop"],
+    "syngenta": ["Crop"],
 }
 
 
