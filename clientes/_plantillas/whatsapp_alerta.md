@@ -87,6 +87,13 @@ hipótesis a partir de 2-3 ejemplos:
   No esperar a que una noticia tenga un gancho regulatorio directo para considerarla relevante a estos
   clientes.
 
+## Regla de destinatario (Nicolas, 2026-09-13)
+Nunca escribir "Para Bayer, ..." / "Para Google, ..." (ni ninguna variante tipo "esto le importa a X
+porque...") dentro del texto de la alerta. Ya se sabe para qué cliente es — cada cliente tiene su propio
+canal/hilo — así que nombrarlo adentro es redundante y delata que es una plantilla genérica en vez de algo
+escrito pensando en ese cliente puntual. El interés del cliente se transmite implícito en QUÉ se elige
+contar y en el ángulo de los bullets, no diciéndolo explícito.
+
 ## Reglas de formato WhatsApp
 - Negrita con asteriscos simples: `*¿Qué pasó?*`, `*Puntos a tener en cuenta*` (WhatsApp renderiza `*texto*`
   como negrita, no `**texto**` de Markdown normal).
