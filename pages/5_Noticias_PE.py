@@ -17,6 +17,7 @@ import pandas as pd
 import streamlit as st
 
 from noticias.temas import clasificar, es_normativa, todos_los_temas
+from alerts.borradores_store import marcar_pendiente
 
 CLIENTES_DIR = Path(__file__).resolve().parent.parent / "clientes"
 
@@ -474,9 +475,19 @@ def _render_card(n, key_suffix: str = "") -> None:
         unsafe_allow_html=True,
     )
     if nid is not None:
-        cols = st.columns([12, 1])
-        btn_key = f"desc_{nid}_{key_suffix}" if key_suffix else f"desc_{nid}"
-        if cols[1].button("✕", key=btn_key,
+        sfx = f"_{nid}_{key_suffix}" if key_suffix else f"_{nid}"
+        cols = st.columns([9, 2, 1])
+        with cols[1].popover("📌 Marcar", help="Marcar para que se redacte una alerta de esto"):
+            sel = st.multiselect("¿Para qué cliente(s)?", clientes, key=f"marcar_cli{sfx}")
+            if st.button("Marcar", key=f"marcar_btn{sfx}", disabled=not sel):
+                resumen_completo = _s(n["Resumen"]).strip()
+                marcar_pendiente(
+                    clientes=sel, item_id=f"noticia_{PAIS}_{nid}", item_tipo="noticia",
+                    pais=PAIS, item_titulo=titulo, item_url=n["Enlace"],
+                    item_resumen=resumen_completo or None,
+                )
+                st.success(f"Marcado para: {', '.join(sel)}. El agente lo redacta en la próxima hora.")
+        if cols[2].button("✕", key=f"desc{sfx}",
                           help="Descartar: no aparecerá más y sirve como feedback"):
             _feedback_descartar(nid)
             st.rerun()
