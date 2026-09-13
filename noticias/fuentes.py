@@ -169,6 +169,51 @@ TEMAS_CLIENTE: dict[str, list[str]] = {
     "syngenta": ["Crop"],
 }
 
+# Instituciones/categorias donde ni siquiera el tema generico de arriba
+# alcanza - MINSA publica de todo (vacunacion infantil, campanas de anemia,
+# traslados aeromedicos...) y esas notas SI matchean el tema "Salud" de
+# temas.py porque "MINSA" es una de sus propias keywords (cualquier nota de
+# MINSA "es sobre Salud" por definicion). Bayer se quejo (2026-09-13) de
+# recibir justo ese tipo de salud publica general, que no tiene nada que ver
+# con su bluebook real (registro sanitario/DIGEMID, abastecimiento,
+# genericos, oncologia, hemofilia). Para estas, se exige ademas un match
+# contra PERFIL_KEYWORDS (mas angosto y especifico que TEMAS_CLIENTE, sacado
+# palabra por palabra del notas.md real del cliente) - DIGEMID NO esta acá:
+# todo lo que publica DIGEMID ya es on-topic para Bayer (registro sanitario
+# es su funcion misma), no necesita este filtro extra.
+PERFIL_ESTRICTO: dict[str, set[str]] = {
+    "bayer": {"MINSA", "Ministerio de Salud (estadisticas)",
+              "Ministerio de Salud Publica", "Temas Salud", "Salud"},
+}
+
+PERFIL_KEYWORDS: dict[str, list[str]] = {
+    "bayer": [
+        "digemid", "registro sanitario", "farmacovigilancia", "venta libre",
+        "generico", "oncolog", "cancer", "petitorio nacional", "pnume",
+        "abastecimiento", "desabastecimiento", "essalud",
+        "colegio de quimicos farmaceuticos", "hemofilia", "medicamento",
+        "autoridad reguladora", "arcsa",
+    ],
+}
+
+
+def _norm_kw(s: str | None) -> str:
+    import unicodedata as _ud
+    s = (s or "").lower()
+    return "".join(c for c in _ud.normalize("NFD", s) if _ud.category(c) != "Mn")
+
+
+def matchea_perfil(cliente: str, titulo: str | None, resumen: str | None) -> bool:
+    """True si el texto matchea alguna keyword del bluebook real de `cliente`
+    (PERFIL_KEYWORDS) - mas angosto que TEMAS_CLIENTE. Usado solo para
+    instituciones/categorias en PERFIL_ESTRICTO; si el cliente no tiene
+    perfil definido, no restringe (deja pasar, comportamiento previo)."""
+    kws = PERFIL_KEYWORDS.get(cliente)
+    if not kws:
+        return True
+    texto = _norm_kw(f"{titulo or ''} {resumen or ''}")
+    return any(_norm_kw(kw) in texto for kw in kws)
+
 
 def _clientes_de(fuente: dict) -> list[str]:
     """Resuelve la lista de clientes de una fuente: tag explicito del dict
