@@ -1,15 +1,24 @@
 """Radar Legislativo - Alertas - Borradores por cliente.
 
-Cola de trabajo por cliente: toma los candidatos ya rankeados por
-alerts.relevancia (noticias tageadas para ese cliente + PLs relevantes por
-tema/similitud NL contra su perfil), deja redactar un borrador ahi mismo
-y lo guarda (via alerts.borradores_store, GitHub Contents API - mismo
-backend que auth/).
+Cola de trabajo por cliente: Nicolas marca noticias desde las paginas de
+Noticias PE/EC ("Marcar" -> estado='pendiente'), el agente programado
+(cron cada hora) las redacta y las deja en estado='borrador'. Esta pagina
+solo muestra ese estado - pendientes y ya redactados - y deja editar/
+guardar el texto final a mano.
 
 OJO (decision de Nicolas, 2026-09-12): esta pagina SI persiste datos al
 repo publico (a diferencia de clientes/, que esta gitignoreado) - confirmado
 que por ahora no es un problema. No es un mecanismo de envio: nada se manda
 a ningun cliente desde aca, es solo para redactar/guardar el borrador.
+
+NOTA (2026-09-13): esta pagina tenia ademas una seccion de "candidatos"
+rankeados automaticamente por similitud de texto (alerts/relevancia.py) -
+se saco porque Nicolas confirmo que no quiere que el sistema decida solo
+que es relevante (TF-IDF matchea vocabulario, no tema real - ej. "MEF"
+tageado para Google por el angulo de IVA digital hacia que CUALQUIER
+noticia de MEF apareciera como candidata para Google, sin distinguir cual
+es la relevante de verdad). El modulo relevancia.py sigue en el repo
+(rankear/contexto_historial), pero ya no se muestra en la UI.
 """
 from __future__ import annotations
 
@@ -17,7 +26,6 @@ from pathlib import Path
 
 import streamlit as st
 
-from alerts import relevancia
 from alerts.borradores_store import guardar_borrador, list_borradores
 
 CLIENTES_DIR = Path(__file__).resolve().parent.parent / "clientes"
@@ -86,9 +94,8 @@ st.markdown(
     unsafe_allow_html=True,
 )
 st.markdown(
-    '<p class="country-subtitle">Candidatos rankeados por relevancia para un cliente (fuentes '
-    'tageadas + similitud de texto contra su perfil). Redactá el borrador acá y guardalo — '
-    'esto NO envía nada a ningún cliente, es solo para vos.</p>',
+    '<p class="country-subtitle">Lo que marcaste desde Noticias PE/EC — el agente programado lo '
+    'redacta cada hora. Editá y guardá el texto final acá — esto NO envía nada a ningún cliente.</p>',
     unsafe_allow_html=True,
 )
 
@@ -97,12 +104,7 @@ if not clientes:
     st.error("No encuentro carpetas de clientes en `clientes/`.")
     st.stop()
 
-col1, col2, col3 = st.columns([1.3, 1, 1])
-sel_cliente = col1.selectbox("Cliente", clientes)
-sel_pais = col2.selectbox("País", ["PE + EC", "PE", "EC"])
-sel_top = col3.slider("Cuántos candidatos", min_value=3, max_value=15, value=8)
-
-pais_arg = None if sel_pais == "PE + EC" else sel_pais
+sel_cliente = st.selectbox("Cliente", clientes)
 
 todos_los_guardados = list_borradores(sel_cliente)
 pendientes = [b for b in todos_los_guardados if b.get("estado") == "pendiente"]
@@ -123,78 +125,6 @@ else:
             f'</div></div>',
             unsafe_allow_html=True,
         )
-st.markdown("---")
-
-
-def _item_id(item: dict) -> str:
-    return f"{item['tipo']}_{item['pais']}_{item.get('id')}"
-
-
-def _skeleton(item: dict) -> str:
-    bandera = "🇵🇪" if item["pais"] == "PE" else "🇪🇨" if item["pais"] == "EC" else ""
-    prefijo = f"{bandera} " if sel_cliente in ("google", "incode") and bandera else ""
-    pais_label = "Perú" if item["pais"] == "PE" else "Ecuador" if item["pais"] == "EC" else item["pais"]
-    return (
-        f"{prefijo}🎯 {pais_label}: {item.get('titulo', '')[:80]}\n\n"
-        f"¿Qué pasó? \n\n"
-        f"Puntos a tener en cuenta\n"
-        f"* \n"
-        f"* \n"
-        f"* \n\n"
-        f"{item.get('url') or ''}"
-    )
-
-
-with st.spinner("Rankeando candidatos..."):
-    try:
-        candidatos = relevancia.rankear(sel_cliente, pais_arg, sel_top)
-    except Exception as e:
-        st.error(f"No pude rankear candidatos: {e}")
-        candidatos = []
-
-if not candidatos:
-    st.info("Sin candidatos en la ventana actual para este cliente/país.")
-else:
-    st.markdown(f"##### {len(candidatos)} candidato(s) para **{sel_cliente}**")
-    guardados = {b["item_id"]: b for b in list_borradores(sel_cliente)}
-
-    for item in candidatos:
-        iid = _item_id(item)
-        hist = relevancia.contexto_historial(sel_cliente, item)
-        st.markdown(
-            f'<div class="item-card">'
-            f'<div class="item-fuente">{item.get("fuente") or item["tipo"].upper()} · {item["pais"]} '
-            f'· score {item.get("score")}</div>'
-            f'<div class="item-titulo"><a href="{item.get("url") or "#"}" target="_blank">'
-            f'{item.get("titulo") or ""}</a></div>'
-            f'<div class="item-meta">{(item.get("resumen") or "")[:200]}</div>'
-            f'</div>',
-            unsafe_allow_html=True,
-        )
-        if hist:
-            st.caption(
-                "Posible antecedente en el historial: "
-                + "; ".join(f"{h['titulo']} ({h['score']})" for h in hist)
-            )
-
-        default_texto = guardados.get(iid, {}).get("texto") or _skeleton(item)
-        texto = st.text_area(
-            "Borrador", value=default_texto, height=180, key=f"txt_{iid}",
-            label_visibility="collapsed",
-        )
-        bcol1, bcol2 = st.columns([1, 5])
-        if bcol1.button("Guardar borrador", key=f"save_{iid}"):
-            try:
-                guardar_borrador(
-                    cliente=sel_cliente, item_id=iid, item_tipo=item["tipo"],
-                    pais=item["pais"], item_titulo=item.get("titulo") or "",
-                    item_url=item.get("url"), texto=texto,
-                )
-                st.success("Guardado.")
-            except Exception as e:
-                st.error(f"No se pudo guardar: {e}")
-        if iid in guardados:
-            bcol2.caption(f"Guardado por última vez: {guardados[iid].get('updated_at', '')}")
 
 st.markdown("---")
 st.markdown("##### ✅ Ya redactados para este cliente")
@@ -203,7 +133,20 @@ if not ya_redactados:
 else:
     for b in ya_redactados:
         with st.expander(f"{b.get('item_titulo', '(sin título)')[:100]} · {b.get('updated_at', '')}"):
-            st.text(b.get("texto", ""))
+            texto = st.text_area(
+                "Borrador", value=b.get("texto", ""), height=180,
+                key=f"txt_{b['item_id']}", label_visibility="collapsed",
+            )
+            if st.button("Guardar cambios", key=f"save_{b['item_id']}"):
+                try:
+                    guardar_borrador(
+                        cliente=sel_cliente, item_id=b["item_id"], item_tipo=b.get("item_tipo", ""),
+                        pais=b.get("pais", ""), item_titulo=b.get("item_titulo", ""),
+                        item_url=b.get("item_url"), texto=texto,
+                    )
+                    st.success("Guardado.")
+                except Exception as e:
+                    st.error(f"No se pudo guardar: {e}")
             if b.get("item_url"):
                 st.markdown(f"[Ver fuente]({b['item_url']})")
 
