@@ -48,10 +48,19 @@ INSTITUCION_CLIENTES: dict[str, list[str]] = {
     "SENASA": ["bayer", "syngenta"],
     "MINAM": ["bayer", "syngenta"],
     # MEF: Syngenta (macro/agro) + Google (IVA a plataformas digitales via
-    # decreto MEF, explicito en su notas.md).
+    # decreto MEF, explicito en su notas.md). ponytail: MEF publica de todo
+    # (presupuesto, transferencias de partidas, macro) - este tag es real
+    # pero de alcance angosto (una sola linea de politica digital dentro
+    # de todo lo que emite MEF), va a seguir trayendo ruido no-digital para
+    # Google hasta que haya un filtro por contenido del articulo, no solo
+    # por institucion (auditoria 2026-09-13, confirmado con Nicolas que
+    # el ranking por TF-IDF no alcanza para esto).
     "MEF": ["syngenta", "google"],
     "ANPD": ["google", "incode"],
-    "RREE": ["google"],
+    # RREE: Google Y Incode comparten el mismo eje "relacion EEUU" segun sus
+    # notas.md (ambas empresas norteamericanas) - antes solo tenia a Google
+    # (auditoria 2026-09-13).
+    "RREE": ["google", "incode"],
     "MTC": ["google"],
     "OSIPTEL": ["google"],
     "INDECOPI": ["google", "syngenta"],
@@ -87,9 +96,14 @@ INSTITUCION_CLIENTES: dict[str, list[str]] = {
     "Ministerio de Salud Publica": ["bayer"],
     "Ministerio de Salud Publica - Normativa": ["bayer"],
     "IESS (Seg. Social)": ["bayer"],
-    "Ministerio de Telecomunicaciones": ["google"],
-    "Ministerio de Telecomunicaciones - Normativa": ["google"],
-    "Superintendencia de Proteccion de Datos Personales": ["google"],
+    # Auditoria 2026-09-13: sacado "google" de estas 3 - el notas.md de
+    # Google no tiene ninguna seccion de Ecuador (a diferencia de Incode,
+    # que si distingue foco PE/EC explicitamente), asi que no hay base real
+    # para asumir que la cuenta de Google cubre EC. Quedan sin cliente
+    # hasta que Nicolas confirme si Google si tiene alcance EC.
+    "Ministerio de Telecomunicaciones": [],
+    "Ministerio de Telecomunicaciones - Normativa": [],
+    "Superintendencia de Proteccion de Datos Personales": [],
     # Incode sigue el eje "relacion EEUU" en PE Y Ecuador (notas.md: "le
     # interesa el eje de relacion Peru/Ecuador-EEUU en general").
     "Ministerio de Relaciones Exteriores y Movilidad Humana": ["incode"],
@@ -125,8 +139,11 @@ CATEGORIA_CLIENTES: dict[str, list[str]] = {
     "Agro": ["bayer", "syngenta"],
     "Temas Tech": ["google", "incode"],
     "Digital": ["google", "incode"],
-    "Temas KYC/AML": ["google", "incode"],
-    "Financiero": ["google", "incode"],
+    # Auditoria 2026-09-13: sacado "google" - su notas.md no menciona KYC/AML,
+    # lavado de activos ni fintech en ningun lado (eso es foco explicito de
+    # Incode, no de Google). Antes ambos entraban por error.
+    "Temas KYC/AML": ["incode"],
+    "Financiero": ["incode"],
 }
 
 
