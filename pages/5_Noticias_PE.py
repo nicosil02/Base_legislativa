@@ -24,6 +24,15 @@ from alerts.borradores_store import marcar_pendiente
 
 CLIENTES_DIR = Path(__file__).resolve().parent.parent / "clientes"
 
+# Una noticia con varios temas se renderiza una vez por cada grupo de tema
+# (ver el loop de mas abajo) - el checkbox "combinar" solo debe existir UNA
+# vez por noticia real (Streamlit no permite widgets con la misma key, y
+# checkboxes independientes por grupo se pisan entre si: marcar la copia de
+# "Salud" no marca la de "Coyuntura politica", y la copia sin marcar hace
+# pop() del id que la otra copia acababa de agregar). Se trackea que nid ya
+# tuvo su checkbox renderizado en esta corrida del script.
+_combinar_rendered: set[int] = set()
+
 
 PAIS = "PE"
 PAIS_LABEL = "Perú"
@@ -496,17 +505,39 @@ def _render_card(n, key_suffix: str = "") -> None:
     )
     if nid is not None:
         sfx = f"_{nid}_{key_suffix}" if key_suffix else f"_{nid}"
-        cols = st.columns([9, 2, 1])
+        full_id = f"noticia_{PAIS}_{nid}"
+        resumen_completo = _s(n["Resumen"]).strip()
+        cols = st.columns([8, 2, 1, 1])
         with cols[1].popover("📌 Marcar", help="Marcar para que se redacte una alerta de esto"):
             sel = st.multiselect("¿Para qué cliente(s)?", clientes, key=f"marcar_cli{sfx}")
             if st.button("Marcar", key=f"marcar_btn{sfx}", disabled=not sel):
-                resumen_completo = _s(n["Resumen"]).strip()
                 marcar_pendiente(
-                    clientes=sel, item_id=f"noticia_{PAIS}_{nid}", item_tipo="noticia",
+                    clientes=sel, item_id=full_id, item_tipo="noticia",
                     pais=PAIS, item_titulo=titulo, item_url=n["Enlace"],
                     item_resumen=resumen_completo or None,
                 )
                 st.success(f"Marcado para: {', '.join(sel)}. El agente lo redacta en la próxima hora.")
+        # Combinar varias noticias relacionadas en UNA sola alerta (con mas
+        # perspectiva, citando solo la fuente principal al final) - ver el
+        # panel "Combinar en una sola alerta" mas abajo en la pagina. Solo se
+        # renderiza UNA vez por noticia real, aunque el item aparezca en
+        # varios grupos de tema (ver _combinar_rendered arriba).
+        if "combinar_items" not in st.session_state:
+            st.session_state["combinar_items"] = {}
+        combinar_items = st.session_state["combinar_items"]
+        if nid not in _combinar_rendered:
+            _combinar_rendered.add(nid)
+            marcado = cols[2].checkbox(
+                "➕", key=f"combinar_chk_{nid}", value=full_id in combinar_items,
+                help="Sumar a un grupo para combinar varias noticias en una sola alerta",
+            )
+            if marcado:
+                combinar_items[full_id] = {
+                    "item_titulo": titulo, "item_url": n["Enlace"],
+                    "item_resumen": resumen_completo or None, "fuente": n["Fuente"],
+                }
+            else:
+                combinar_items.pop(full_id, None)
         if cols[2].button("✕", key=f"desc{sfx}",
                           help="Descartar: no aparecerá más y sirve como feedback"):
             _feedback_descartar(nid)
@@ -554,6 +585,42 @@ else:
                 unsafe_allow_html=True)
             for n in sin_tema[:20]:
                 _render_card(n, key_suffix="sin-tema")
+
+
+# ---------- Combinar en una sola alerta ----------
+_combinar_items = st.session_state.get("combinar_items", {})
+if _combinar_items:
+    st.markdown("---")
+    st.markdown(f"##### 🔗 Combinar en una sola alerta ({len(_combinar_items)} seleccionadas)")
+    st.caption(
+        "Para cuando varias noticias relacionadas dan mas perspectiva de un mismo hecho, "
+        "pero la alerta final cita solo una fuente (asi lo hacen ustedes)."
+    )
+    _ids = list(_combinar_items.keys())
+    _opciones = {f"{v['item_titulo'][:70]} — {v['fuente']}": k for k, v in _combinar_items.items()}
+    _principal_label = st.radio(
+        "¿Cuál es la fuente principal (la que se cita al final de la alerta)?",
+        list(_opciones.keys()), key="combinar_principal",
+    )
+    _principal_id = _opciones[_principal_label]
+    _sel_cli = st.multiselect("¿Para qué cliente(s)?", clientes, key="combinar_clientes")
+    if st.button("Combinar en una alerta", disabled=not _sel_cli, key="combinar_confirmar"):
+        _principal = _combinar_items[_principal_id]
+        _adicionales = [
+            {"item_titulo": v["item_titulo"], "item_url": v["item_url"]}
+            for k, v in _combinar_items.items() if k != _principal_id
+        ]
+        marcar_pendiente(
+            clientes=_sel_cli, item_id=_principal_id, item_tipo="noticia",
+            pais=PAIS, item_titulo=_principal["item_titulo"], item_url=_principal["item_url"],
+            item_resumen=_principal["item_resumen"], fuentes_adicionales=_adicionales or None,
+        )
+        st.session_state["combinar_items"] = {}
+        for _k in list(st.session_state.keys()):
+            if _k.startswith("combinar_chk"):
+                del st.session_state[_k]
+        st.success(f"Combinadas {len(_ids)} noticias en una alerta para: {', '.join(_sel_cli)}.")
+        st.rerun()
 
 
 # ---------- Footer ----------
