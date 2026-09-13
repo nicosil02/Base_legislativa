@@ -992,7 +992,21 @@ FUENTES_GOOGLE_NEWS: list[dict] = [
               "2026-09-12 (publico la carta de bancadas de oposicion pidiendo al oficialismo una "
               "nueva carta de facultades legislativas) pero quedo sin agregar en esa tanda - "
               "confirmado el nombre real por Nicolas 2026-09-13. Mismo approach via Google News - "
-              "ver nota de Martin Hidalgo."},
+              "ver nota de Martin Hidalgo. OJO (2026-09-13): probado en vivo, esta query por su "
+              "nombre no trae articulos reales todavia (a diferencia de Erik Rivera) - ver la "
+              "fuente 'Facultades legislativas - oposicion' de abajo, que SI engancha esta misma "
+              "cobertura por tema en vez de por firma."},
+    {"categoria": 'Coyuntura Politica', "pais": 'PE',
+     "nombre": 'Google News PE — Facultades legislativas (oposicion)',
+     "url": 'https://news.google.com/rss/search?q=bancadas+oposicion+facultades+legislativas&hl=es-419&gl=PE&ceid=PE:es',
+     "rss_url": 'https://news.google.com/rss/search?q=bancadas+oposicion+facultades+legislativas&hl=es-419&gl=PE&ceid=PE:es',
+     "tipo": "rss",
+     "notas": "Query por tema, no por periodista puntual - la busqueda por nombre de Erika Vasquez "
+              "Salazar (arriba) no trae nada en vivo, pero esta si trae la cobertura real del angulo "
+              "de la oposicion (ej. 'Oposicion pide al Gobierno presentar nuevo proyecto de "
+              "facultades legislativas centrado en seguridad y El Nino' - Infobae, verificado en "
+              "vivo 2026-09-13). Mas robusto que depender de que un medio cite a un periodista por "
+              "nombre."},
     {"categoria": 'Coyuntura Politica', "pais": 'PE',
      "nombre": 'X - RPP Noticias (X)',
      "url": 'https://x.com/RPPNoticias',
