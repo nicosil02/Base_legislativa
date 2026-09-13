@@ -379,6 +379,15 @@ def fetch_gobpe(fuente: dict, session: requests.Session,
                 titulo = nombre
             if not href or not titulo:
                 continue
+            # El buscador de gob.pe mezcla, dentro de contenido[]=noticias,
+            # paginas institucionales estaticas (Mesa de Partes, Registro de
+            # visitas, Visita virtual...) que nunca traen fecha real - se
+            # distinguen porque su URL vive bajo /pages/ en vez de /noticias/
+            # (confirmado en vivo 2026-09-13: 3 de 6 items de "Presidencia"
+            # eran paginas asi, sin fecha_pub, coladas como ruido para todos
+            # los clientes via el tag "todos").
+            if "/pages/" in href.group(1):
+                continue
             out.append({
                 "url": urljoin("https://www.gob.pe", href.group(1)),
                 "titulo": titulo[:500],
