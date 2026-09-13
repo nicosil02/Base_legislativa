@@ -18,6 +18,20 @@ import pandas as pd
 import streamlit as st
 
 from scraper.sync import FECHA_INICIO_BICAMERAL, PER_PAR_ID_ACTUAL
+from scraper.categorias import CATEGORIA_CLIENTES_PL
+from alerts.borradores_store import marcar_pendiente
+
+CLIENTES_DIR = Path(__file__).resolve().parent.parent / "clientes"
+
+
+def load_clientes() -> list[str]:
+    if not CLIENTES_DIR.is_dir():
+        return []
+    return sorted(
+        p.name for p in CLIENTES_DIR.iterdir()
+        if p.is_dir() and not p.name.startswith("_")
+    )
+
 
 COMISIONES_ESPECIALES_LABEL = "Comisiones Especiales"
 
@@ -998,6 +1012,15 @@ sel_partido = fc[5].selectbox("Bancada", _opciones("Partido"))
 sel_proponente = fc[6].selectbox("Proponente", _opciones("Proponente"))
 sel_autor = fc[7].selectbox("Autor", _opciones_autor())
 
+clientes = load_clientes()
+TODOS_CLIENTES = "Todos"
+fc2 = st.columns([1, 3])
+sel_cliente = fc2[0].selectbox(
+    "Cliente", [TODOS_CLIENTES] + clientes,
+    help="PLs cuyo Tema coincide con el interes real de ese cliente "
+         "(scraper/categorias.py::CATEGORIA_CLIENTES_PL)",
+)
+
 busqueda = st.text_input(
     "Buscar libre en título",
     placeholder="🔍  buscar texto en el título — ej. biometría, ciberseguridad, vacuna",
@@ -1012,6 +1035,9 @@ if sel_camara != TODAS:
     df = df[df["Cámara"] == sel_camara]
 if sel_tema != TODOS:
     df = df[df["Tema"] == sel_tema]
+if sel_cliente != TODOS_CLIENTES:
+    temas_cliente = CATEGORIA_CLIENTES_PL.get(sel_cliente, [])
+    df = df[df["Tema"].isin(temas_cliente)]
 if sel_estado != TODOS:
     df = df[df["Estado"] == sel_estado]
 if sel_comision != TODAS:
@@ -1104,6 +1130,29 @@ st.dataframe(
         "Tema":         st.column_config.TextColumn("Tema", width="small"),
     },
 )
+
+# ---------- Marcar PL para alerta ----------
+# Mismo mecanismo que Noticias PE/EC (alerts/borradores_store.marcar_pendiente)
+# pero para PLs - deja marcar un PL nuevo o que avanzo (ver columna "Último
+# cambio") para que el agente programado redacte una alerta. item_tipo="pl".
+if clientes and not df.empty:
+    st.markdown("##### 📌 Marcar PL para alerta")
+    opciones_pl = {
+        f"{row['PL']} · {row['Título'][:70]}": idx
+        for idx, row in df.iterrows()
+    }
+    mc = st.columns([3, 2, 1])
+    sel_pl_label = mc[0].selectbox("¿Qué PL?", list(opciones_pl.keys()), key="marcar_pl_sel")
+    sel_pl_clientes = mc[1].multiselect("¿Para qué cliente(s)?", clientes, key="marcar_pl_cli")
+    if mc[2].button("Marcar", key="marcar_pl_btn", disabled=not sel_pl_clientes):
+        row = df.loc[opciones_pl[sel_pl_label]]
+        item_id = f"pl_PE_{row['per_par_id']}_{row['cod_tipo_parl']}_{row['pley_num']}"
+        marcar_pendiente(
+            clientes=sel_pl_clientes, item_id=item_id, item_tipo="pl",
+            pais="PE", item_titulo=f"{row['PL']}: {row['Título']}",
+            item_url=row["Portal"], item_resumen=row.get("Estado"),
+        )
+        st.success(f"Marcado para: {', '.join(sel_pl_clientes)}. El agente lo redacta en la próxima hora.")
 
 # ---------- Footer ----------
 st.markdown('<div class="footer-rule"></div>', unsafe_allow_html=True)
