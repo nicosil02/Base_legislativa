@@ -30,5 +30,15 @@ scripts/recon_agenda_output.json
 mapa_electoral/
 
 # Notas y bluebooks de clientes: info de negocio confidencial, este repo es
-# público. Vive solo local.
-clientes/
+# publico. Se versiona SOLO notas.md/historial_alertas.md/formato_alertas.md
+# de cada cliente (lo que alerts/relevancia.py y el filtro Cliente necesitan
+# leer de verdad) - decision explicita de Nicolas, 2026-09-13. Todo lo demas
+# (bluebooks originales que dieron los propios clientes, clientes/chat.txt
+# con el chat interno del equipo, clientes/_plantillas/) sigue local-only,
+# nada de eso lo lee el codigo en runtime.
+clientes/*
+!clientes/*/
+clientes/*/*
+!clientes/*/notas.md
+!clientes/*/historial_alertas.md
+!clientes/*/formato_alertas.md
