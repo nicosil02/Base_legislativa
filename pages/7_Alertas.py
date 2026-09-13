@@ -104,6 +104,27 @@ sel_top = col3.slider("Cuántos candidatos", min_value=3, max_value=15, value=8)
 
 pais_arg = None if sel_pais == "PE + EC" else sel_pais
 
+todos_los_guardados = list_borradores(sel_cliente)
+pendientes = [b for b in todos_los_guardados if b.get("estado") == "pendiente"]
+ya_redactados = [b for b in todos_los_guardados if b.get("estado") != "pendiente"]
+
+st.markdown("##### ⏳ Pendientes de redactar (marcados desde Noticias)")
+if not pendientes:
+    st.caption(
+        "Ninguno. Marcá noticias con \"📌 Marcar\" en las páginas de Noticias PE/EC — "
+        "el agente programado las redacta en la próxima hora."
+    )
+else:
+    for p in pendientes:
+        st.markdown(
+            f'<div class="item-card"><div class="item-fuente">{p.get("pais")} · '
+            f'marcado {p.get("created_at","")}</div><div class="item-titulo">'
+            f'<a href="{p.get("item_url") or "#"}" target="_blank">{p.get("item_titulo")}</a>'
+            f'</div></div>',
+            unsafe_allow_html=True,
+        )
+st.markdown("---")
+
 
 def _item_id(item: dict) -> str:
     return f"{item['tipo']}_{item['pais']}_{item.get('id')}"
@@ -176,12 +197,11 @@ else:
             bcol2.caption(f"Guardado por última vez: {guardados[iid].get('updated_at', '')}")
 
 st.markdown("---")
-st.markdown("##### Borradores ya guardados para este cliente")
-guardados_lista = list_borradores(sel_cliente)
-if not guardados_lista:
+st.markdown("##### ✅ Ya redactados para este cliente")
+if not ya_redactados:
     st.caption("Ninguno todavía.")
 else:
-    for b in guardados_lista:
+    for b in ya_redactados:
         with st.expander(f"{b.get('item_titulo', '(sin título)')[:100]} · {b.get('updated_at', '')}"):
             st.text(b.get("texto", ""))
             if b.get("item_url"):

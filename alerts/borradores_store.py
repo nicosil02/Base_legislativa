@@ -103,10 +103,13 @@ def list_borradores(cliente: str | None = None) -> list[dict]:
     return sorted(items, key=lambda b: b.get("updated_at", ""), reverse=True)
 
 
-def guardar_borrador(*, cliente: str, item_id: str, item_tipo: str, pais: str,
-                     item_titulo: str, item_url: str | None, texto: str) -> bool:
-    """Guarda (crea o actualiza) el borrador de un item para un cliente.
-    Clave logica: (cliente, item_id). Devuelve True si commiteo/guardo ok."""
+def _upsert(*, cliente: str, item_id: str, item_tipo: str, pais: str,
+            item_titulo: str, item_url: str | None, item_resumen: str | None,
+            texto: str, estado: str) -> bool:
+    """Crea o actualiza una entrada. No pisa un `estado='borrador'` existente
+    con datos de un marcado nuevo (ver `marcar_pendiente`) - solo
+    `guardar_borrador` (texto real, escrito a mano o por el agente) puede
+    pasar un item a `estado='borrador'`."""
     cfg = _gh_config()
     usar_gh = bool(cfg["token"] and cfg["repo"])
     remote = _fetch_remote() if usar_gh else None
@@ -119,13 +122,20 @@ def guardar_borrador(*, cliente: str, item_id: str, item_tipo: str, pais: str,
         None,
     )
     if existente:
+        if estado == "pendiente" and existente.get("estado") == "borrador":
+            # Ya redactado - marcarlo de nuevo no debe volverlo a "pendiente".
+            return True
         existente["texto"] = texto
+        existente["estado"] = estado
         existente["updated_at"] = now
+        if item_resumen:
+            existente["item_resumen"] = item_resumen
     else:
         borradores.append({
             "cliente": cliente, "item_id": item_id, "item_tipo": item_tipo,
             "pais": pais, "item_titulo": item_titulo, "item_url": item_url,
-            "texto": texto, "created_at": now, "updated_at": now,
+            "item_resumen": item_resumen, "texto": texto, "estado": estado,
+            "created_at": now, "updated_at": now,
         })
 
     new_content = json.dumps(borradores, ensure_ascii=False, indent=2)
@@ -139,7 +149,7 @@ def guardar_borrador(*, cliente: str, item_id: str, item_tipo: str, pais: str,
         return True
 
     body = {
-        "message": f"alertas: borrador {cliente}/{item_id}",
+        "message": f"alertas: {estado} {cliente}/{item_id}",
         "content": base64.b64encode(new_content.encode("utf-8")).decode("ascii"),
         "branch": cfg["branch"],
     }
@@ -165,6 +175,33 @@ def guardar_borrador(*, cliente: str, item_id: str, item_tipo: str, pais: str,
     _cache["borradores"] = None
     _cache["fetched_at"] = 0
     return True
+
+
+def guardar_borrador(*, cliente: str, item_id: str, item_tipo: str, pais: str,
+                     item_titulo: str, item_url: str | None, texto: str,
+                     item_resumen: str | None = None) -> bool:
+    """Guarda un borrador YA REDACTADO (a mano en la UI, o por el agente
+    programado) - estado='borrador'. Clave logica: (cliente, item_id)."""
+    return _upsert(cliente=cliente, item_id=item_id, item_tipo=item_tipo,
+                   pais=pais, item_titulo=item_titulo, item_url=item_url,
+                   item_resumen=item_resumen, texto=texto, estado="borrador")
+
+
+def marcar_pendiente(*, clientes: list[str], item_id: str, item_tipo: str, pais: str,
+                     item_titulo: str, item_url: str | None,
+                     item_resumen: str | None = None) -> bool:
+    """Nicolas marca un item (tipicamente desde Noticias PE/EC) como 'vale la
+    pena redactar una alerta de esto' para uno o mas clientes - crea una
+    entrada con estado='pendiente' y texto vacio por cada cliente. El agente
+    programado busca estas entradas, las redacta, y las pasa a
+    estado='borrador' via `guardar_borrador`. Si un item ya tiene un borrador
+    real para ese cliente, no lo toca (ver `_upsert`)."""
+    ok = True
+    for cliente in clientes:
+        ok = _upsert(cliente=cliente, item_id=item_id, item_tipo=item_tipo,
+                     pais=pais, item_titulo=item_titulo, item_url=item_url,
+                     item_resumen=item_resumen, texto="", estado="pendiente") and ok
+    return ok
 
 
 # ============================================================
@@ -201,7 +238,26 @@ def _demo():
         items = list_borradores("bayer")
         assert len(items) == 1, "actualizar un borrador existente no debe crear uno nuevo"
         assert items[0]["texto"] == "Version 2 editada"
+        assert items[0]["estado"] == "borrador"
         print("OK guardar_borrador: crea y actualiza (upsert) correctamente")
+
+        ok3 = marcar_pendiente(clientes=["bayer", "syngenta"], item_id="n_2",
+                              item_tipo="noticia", pais="PE",
+                              item_titulo="Otra noticia", item_url="http://y",
+                              item_resumen="resumen crudo")
+        assert ok3
+        assert len(list_borradores("bayer")) == 2
+        pendiente = next(b for b in list_borradores("syngenta") if b["item_id"] == "n_2")
+        assert pendiente["estado"] == "pendiente" and pendiente["texto"] == ""
+        print("OK marcar_pendiente: crea una entrada pendiente por cada cliente")
+
+        marcar_pendiente(clientes=["bayer"], item_id="n_1", item_tipo="noticia",
+                         pais="PE", item_titulo="Titulo de prueba", item_url="http://x")
+        items = list_borradores("bayer")
+        n1 = next(b for b in items if b["item_id"] == "n_1")
+        assert n1["estado"] == "borrador" and n1["texto"] == "Version 2 editada", (
+            "marcar un item que ya tiene borrador real NO debe pisarlo")
+        print("OK marcar_pendiente: no pisa un borrador ya redactado")
     finally:
         _local_path = old_local_path
         if old_token is not None:
