@@ -184,11 +184,6 @@ def parse_rss_feed(xml: str, max_items: int = 100) -> list[dict]:
 # ============================================================
 
 # Patrones HTML comunes en sitios de noticias
-_RE_ARTICLE = re.compile(
-    r'<article[^>]*>.*?</article>|'
-    r'<div[^>]*?class=[\'"][^\'"]*?(?:post|entry|article|news-item|noticia)[^\'"]*?[\'"][^>]*>',
-    re.DOTALL | re.IGNORECASE,
-)
 _RE_HEADING_LINK = re.compile(
     r'<h[1-4][^>]*>\s*<a[^>]*?href=[\'"]([^\'"]+)[\'"][^>]*>(.*?)</a>',
     re.DOTALL | re.IGNORECASE,
@@ -221,9 +216,24 @@ def _has_slug(url: str) -> bool:
     return any(seg.count("-") >= 2 for seg in path.split("/"))
 
 
+def _fecha_cercana(html_text: str, pos: int, ventana: int = 200) -> str | None:
+    """Busca un <time datetime="..."> cerca de `pos` (offset del match del
+    titular/link dentro de `html_text`) y lo parsea. Las paginas de listado
+    tipicamente ponen la fecha justo antes o despues del titular/link, no
+    en un bloque <article> limpio que se pueda aislar de forma confiable -
+    por eso una ventana de caracteres alrededor, no _RE_ARTICLE (nunca
+    matcheaba nada real, quedo sin usar)."""
+    inicio = max(0, pos - ventana)
+    fin = min(len(html_text), pos + ventana)
+    m = _RE_TIME_TAG.search(html_text[inicio:fin])
+    if not m:
+        return None
+    return _parse_pubdate(m.group(1))
+
+
 def _add_item(out: list, seen: set, url: str, titulo: str, base_url: str,
               min_len: int, min_words: int, same_domain: bool = False,
-              require_slug: bool = False) -> None:
+              require_slug: bool = False, fecha_pub: str | None = None) -> None:
     """Valida + normaliza un (url, titulo) candidato y lo agrega a `out`."""
     titulo = _strip_html(titulo)
     if not titulo or len(titulo) < min_len:
@@ -252,7 +262,13 @@ def _add_item(out: list, seen: set, url: str, titulo: str, base_url: str,
     seen.add(url)
     out.append({
         "url": url, "titulo": titulo[:500], "resumen": None,
-        "fecha_pub": None, "autor": None, "tags": None,
+        # ponytail: si no hay <time> cerca en la pagina de listado, queda en
+        # None y el caller (noticias/db.py) cae a first_seen_at - eso es lo
+        # que reportaba Nicolas como "fecha del scrape, no de la noticia
+        # real" para las fuentes sin RSS. No todas las paginas de listado
+        # muestran fecha por item; para esas no hay forma barata de saber la
+        # fecha real sin visitar cada articulo (no lo hacemos hoy).
+        "fecha_pub": fecha_pub, "autor": None, "tags": None,
     })
 
 
@@ -271,13 +287,15 @@ def parse_html_listing(html_text: str, base_url: str,
     # Pasada 1: <hN><a>
     for m in _RE_HEADING_LINK.finditer(html_text):
         _add_item(out, seen_urls, m.group(1), m.group(2), base_url,
-                  min_len=8, min_words=0)
+                  min_len=8, min_words=0,
+                  fecha_pub=_fecha_cercana(html_text, m.start()))
         if len(out) >= max_items:
             return out
     # Pasada 2: <a href>titulo largo</a> del MISMO dominio (evita nav/portal)
     for m in _RE_ANCHOR_LINK.finditer(html_text):
         _add_item(out, seen_urls, m.group(1), m.group(2), base_url,
-                  min_len=35, min_words=5, same_domain=True, require_slug=True)
+                  min_len=35, min_words=5, same_domain=True, require_slug=True,
+                  fecha_pub=_fecha_cercana(html_text, m.start()))
         if len(out) >= max_items:
             break
     return out
