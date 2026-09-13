@@ -105,7 +105,7 @@ def list_borradores(cliente: str | None = None) -> list[dict]:
 
 def _upsert(*, cliente: str, item_id: str, item_tipo: str, pais: str,
             item_titulo: str, item_url: str | None, item_resumen: str | None,
-            texto: str, estado: str) -> bool:
+            texto: str, estado: str, fuentes_adicionales: list[dict] | None = None) -> bool:
     """Crea o actualiza una entrada. No pisa un `estado='borrador'` existente
     con datos de un marcado nuevo (ver `marcar_pendiente`) - solo
     `guardar_borrador` (texto real, escrito a mano o por el agente) puede
@@ -130,11 +130,14 @@ def _upsert(*, cliente: str, item_id: str, item_tipo: str, pais: str,
         existente["updated_at"] = now
         if item_resumen:
             existente["item_resumen"] = item_resumen
+        if fuentes_adicionales:
+            existente["fuentes_adicionales"] = fuentes_adicionales
     else:
         borradores.append({
             "cliente": cliente, "item_id": item_id, "item_tipo": item_tipo,
             "pais": pais, "item_titulo": item_titulo, "item_url": item_url,
             "item_resumen": item_resumen, "texto": texto, "estado": estado,
+            "fuentes_adicionales": fuentes_adicionales or [],
             "created_at": now, "updated_at": now,
         })
 
@@ -189,18 +192,26 @@ def guardar_borrador(*, cliente: str, item_id: str, item_tipo: str, pais: str,
 
 def marcar_pendiente(*, clientes: list[str], item_id: str, item_tipo: str, pais: str,
                      item_titulo: str, item_url: str | None,
-                     item_resumen: str | None = None) -> bool:
+                     item_resumen: str | None = None,
+                     fuentes_adicionales: list[dict] | None = None) -> bool:
     """Nicolas marca un item (tipicamente desde Noticias PE/EC) como 'vale la
     pena redactar una alerta de esto' para uno o mas clientes - crea una
     entrada con estado='pendiente' y texto vacio por cada cliente. El agente
     programado busca estas entradas, las redacta, y las pasa a
     estado='borrador' via `guardar_borrador`. Si un item ya tiene un borrador
-    real para ese cliente, no lo toca (ver `_upsert`)."""
+    real para ese cliente, no lo toca (ver `_upsert`).
+
+    `fuentes_adicionales` (opcional): a veces varias noticias relacionadas se
+    combinan en UNA sola alerta con mas perspectiva, pero solo se cita la
+    fuente principal al final (asi lo hace el equipo, ver chat.txt) - lista de
+    {"item_titulo", "item_url"} de contexto extra para que el agente los lea,
+    sin citarlos."""
     ok = True
     for cliente in clientes:
         ok = _upsert(cliente=cliente, item_id=item_id, item_tipo=item_tipo,
                      pais=pais, item_titulo=item_titulo, item_url=item_url,
-                     item_resumen=item_resumen, texto="", estado="pendiente") and ok
+                     item_resumen=item_resumen, texto="", estado="pendiente",
+                     fuentes_adicionales=fuentes_adicionales) and ok
     return ok
 
 
@@ -258,6 +269,13 @@ def _demo():
         assert n1["estado"] == "borrador" and n1["texto"] == "Version 2 editada", (
             "marcar un item que ya tiene borrador real NO debe pisarlo")
         print("OK marcar_pendiente: no pisa un borrador ya redactado")
+
+        marcar_pendiente(clientes=["bayer"], item_id="n_3", item_tipo="noticia",
+                         pais="PE", item_titulo="Noticia principal", item_url="http://z",
+                         fuentes_adicionales=[{"item_titulo": "Otro angulo", "item_url": "http://w"}])
+        n3 = next(b for b in list_borradores("bayer") if b["item_id"] == "n_3")
+        assert n3["fuentes_adicionales"] == [{"item_titulo": "Otro angulo", "item_url": "http://w"}]
+        print("OK marcar_pendiente: guarda fuentes_adicionales (varias noticias, una alerta)")
     finally:
         _local_path = old_local_path
         if old_token is not None:
