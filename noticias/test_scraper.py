@@ -88,6 +88,29 @@ def test_normas_titulo_legible():
     assert norma["titulo"] == "0397-2024-MIDAGRI — Autorizar el registro del plaguicida X", norma["titulo"]
 
 
+def test_html_listing_extrae_fecha_del_time_tag():
+    """Bug real reportado por Nicolas (2026-09-13): las fuentes sin RSS
+    (tipo 'html') siempre guardaban fecha_pub=None, y la app mostraba
+    first_seen_at (fecha del scrape) en vez de la fecha real de la noticia.
+    parse_html_listing ahora busca un <time datetime> cerca del titular."""
+    relleno = "<p>" + ("lorem ipsum texto de relleno para separar items " * 6) + "</p>"
+    html = f"""
+    <div class="post">
+      <time datetime="2026-09-10T14:30:00-05:00">10 de septiembre</time>
+      <h2><a href="/noticia-real-de-hoy-con-guiones">Titulo de la noticia real</a></h2>
+    </div>
+    {relleno}
+    <div class="post">
+      <h2><a href="/otra-noticia-sin-fecha-cercana">Otro titulo sin fecha</a></h2>
+    </div>
+    """
+    items = S.parse_html_listing(html, "https://ejemplo.pe/")
+    con_fecha = next(i for i in items if "noticia-real-de-hoy" in i["url"])
+    sin_fecha = next(i for i in items if "otra-noticia" in i["url"])
+    assert con_fecha["fecha_pub"] == "2026-09-10T19:30:00Z", con_fecha["fecha_pub"]
+    assert sin_fecha["fecha_pub"] is None
+
+
 if __name__ == "__main__":
     for name, fn in sorted(globals().items()):
         if name.startswith("test_") and callable(fn):
