@@ -17,6 +17,7 @@ import pandas as pd
 import streamlit as st
 
 from noticias.temas import clasificar, es_normativa, todos_los_temas
+from noticias.fuentes import INSTITUCIONES_AMPLIAS, TEMAS_CLIENTE
 from alerts.borradores_store import marcar_pendiente
 
 CLIENTES_DIR = Path(__file__).resolve().parent.parent / "clientes"
@@ -329,6 +330,14 @@ def load_noticias(pais: str,
             lambda row: row.get("Tags") == "normas"
             or es_normativa(row["Título"], row["Resumen"]), axis=1
         )
+        if cliente:
+            # Instituciones "amplias" (MEF, etc. - ver fuentes.py) solo
+            # cuentan para este cliente si el contenido matchea su tema
+            # real, no solo por estar tageada la institucion entera.
+            temas_ok = set(TEMAS_CLIENTE.get(cliente, []))
+            es_amplia = df["Fuente"].isin(INSTITUCIONES_AMPLIAS)
+            matchea_tema = df["Temas"].map(lambda ts: bool(temas_ok.intersection(ts)))
+            df = df[~es_amplia | matchea_tema]
     else:
         df["Temas"] = []
         df["EsNormativa"] = False
