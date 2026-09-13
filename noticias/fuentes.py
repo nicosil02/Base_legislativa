@@ -984,6 +984,16 @@ FUENTES_GOOGLE_NEWS: list[dict] = [
      "notas": "Periodista de la Unidad de Investigacion de La Republica (DDHH, corrupcion, gestion "
               "publica). Mismo approach via Google News - ver nota de Martin Hidalgo."},
     {"categoria": 'Coyuntura Politica', "pais": 'PE',
+     "nombre": 'Erika Vasquez Salazar (periodista La Republica, via Google News)',
+     "url": 'https://x.com/Ervasa2',
+     "rss_url": 'https://news.google.com/rss/search?q=%22Erika+V%C3%A1squez+Salazar%22+Congreso&hl=es-419&gl=PE&ceid=PE:es',
+     "tipo": "rss",
+     "notas": "Periodista de La Republica, cubre Congreso/oposicion. Mencionada por Nicolas "
+              "2026-09-12 (publico la carta de bancadas de oposicion pidiendo al oficialismo una "
+              "nueva carta de facultades legislativas) pero quedo sin agregar en esa tanda - "
+              "confirmado el nombre real por Nicolas 2026-09-13. Mismo approach via Google News - "
+              "ver nota de Martin Hidalgo."},
+    {"categoria": 'Coyuntura Politica', "pais": 'PE',
      "nombre": 'X - RPP Noticias (X)',
      "url": 'https://x.com/RPPNoticias',
      "rss_url": 'https://nitter.net/RPPNoticias/rss', "tipo": "rss",
