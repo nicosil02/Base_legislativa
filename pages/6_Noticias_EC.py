@@ -17,7 +17,9 @@ import pandas as pd
 import streamlit as st
 
 from noticias.temas import clasificar, es_normativa, todos_los_temas
-from noticias.fuentes import INSTITUCIONES_AMPLIAS, TEMAS_CLIENTE
+from noticias.fuentes import (
+    INSTITUCIONES_AMPLIAS, TEMAS_CLIENTE, PERFIL_ESTRICTO, matchea_perfil,
+)
 from alerts.borradores_store import marcar_pendiente
 
 CLIENTES_DIR = Path(__file__).resolve().parent.parent / "clientes"
@@ -338,6 +340,15 @@ def load_noticias(pais: str,
             es_amplia = df["Fuente"].isin(INSTITUCIONES_AMPLIAS)
             matchea_tema = df["Temas"].map(lambda ts: bool(temas_ok.intersection(ts)))
             df = df[~es_amplia | matchea_tema]
+            # Perfil estricto: ni el tema generico alcanza (ver fuentes.py) -
+            # exige match contra las keywords reales del bluebook del cliente.
+            estricto = PERFIL_ESTRICTO.get(cliente, set())
+            if estricto:
+                es_estricta = df["Fuente"].isin(estricto) | df["Categoría fuente"].isin(estricto)
+                ok_perfil = df.apply(
+                    lambda r: matchea_perfil(cliente, r["Título"], r["Resumen"]), axis=1
+                )
+                df = df[~es_estricta | ok_perfil]
     else:
         df["Temas"] = []
         df["EsNormativa"] = False
