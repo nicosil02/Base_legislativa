@@ -188,6 +188,16 @@ jobs:
               || echo "[warn] noticias seed fallo, sigo"
           timeout 600 python -X utf8 -m noticias.cli sync $RO_FLAG \
               || echo "[warn] noticias sync fallo, sigo"
+          # Backfill de fechas: sync solo re-toca los items MAS RECIENTES
+          # por fuente, asi que una fila que quedo con fecha_pub NULL (fix
+          # de codigo posterior a su insercion, o fuente sin <time> en su
+          # listado) nunca se corrige sola - esto la repara visitando el
+          # articulo real. --limit 300 acota el tiempo por corrida (se
+          # pusieron al dia 676 filas reales en ~90s en pruebas locales,
+          # 2026-09-13); si quedan mas de 300 nuevas de una sola vez, las
+          # sig. corridas (15x/dia) van completando el resto.
+          timeout 300 python -X utf8 -m noticias.cli backfill-fechas --limit 300 \
+              || echo "[warn] noticias backfill-fechas fallo, sigo"
           # Purge: la UI muestra por defecto solo "hoy"; conservamos 7d
           # como buffer historico para evitar que la DB crezca infinito.
           timeout 120 python -X utf8 -m noticias.cli purge --dias 7 \

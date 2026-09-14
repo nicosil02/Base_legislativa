@@ -115,6 +115,25 @@ def test_html_listing_extrae_fecha_del_time_tag():
     assert sin_fecha["fecha_pub"] is None
 
 
+def test_backfill_extrae_fecha_de_pagina_real():
+    """Bug real reportado por Nicolas (2026-09-13): el sync normal solo
+    re-toca los items MAS RECIENTES por fuente, asi que filas historicas
+    con fecha_pub NULL (de antes del fix de "setiembre", o de fuentes sin
+    <time> en el listado) nunca se corrigen solas. backfill_fechas visita
+    el articulo real - via <time>, meta tags, o texto de fecha en español
+    (soporta "setiembre" via _parse_gobpe_date compartido)."""
+    html_time = '<html><head></head><body><time datetime="2026-09-05T10:00:00-05:00">x</time></body></html>'
+    assert S._extraer_fecha_de_pagina(html_time) == "2026-09-05T15:00:00Z"
+
+    html_meta = '<html><head><meta property="article:published_time" content="2026-09-06T08:00:00-05:00"></head></html>'
+    assert S._extraer_fecha_de_pagina(html_meta) == "2026-09-06T13:00:00Z"
+
+    html_texto_es = "<html><body><p>Publicado el 12 de setiembre de 2026 a las 8am</p></body></html>"
+    assert S._extraer_fecha_de_pagina(html_texto_es) == "2026-09-12T00:00:00Z"
+
+    assert S._extraer_fecha_de_pagina("<html><body>sin fecha aca</body></html>") is None
+
+
 if __name__ == "__main__":
     for name, fn in sorted(globals().items()):
         if name.startswith("test_") and callable(fn):

@@ -7,7 +7,7 @@ import sys
 
 from noticias.db import Database
 from noticias.fuentes import all_fuentes
-from noticias.scraper import run_sync
+from noticias.scraper import backfill_fechas, run_sync
 
 
 DEFAULT_DB = "proyectos.db"
@@ -171,6 +171,22 @@ def cmd_purge(args) -> int:
     return 0
 
 
+def cmd_backfill_fechas(args) -> int:
+    """Repara noticias con fecha_pub NULL visitando el articulo real - el
+    sync normal solo re-toca los items MAS RECIENTES por fuente, asi que
+    filas historicas nulas nunca se corrigen solas. No inventa nada: si no
+    encuentra fecha real, la deja como estaba."""
+    with Database(args.db) as db:
+        db.init_schema()
+        stats = backfill_fechas(db, limit=args.limit)
+        print(
+            f"Backfill de fechas: {stats['intentadas']} intentadas, "
+            f"{stats['recuperadas']} recuperadas, "
+            f"{stats['intentadas'] - stats['recuperadas']} sin fecha real"
+        )
+    return 0
+
+
 def cmd_set_url(args) -> int:
     """Actualiza url y/o rss_url de una fuente por nombre+pais."""
     with Database(args.db) as db:
@@ -225,6 +241,12 @@ def build_parser() -> argparse.ArgumentParser:
     pu.add_argument("--dias", type=int, default=7,
                     help="dias a conservar (default 7)")
     pu.set_defaults(func=cmd_purge)
+
+    bf = sub.add_parser("backfill-fechas",
+        help="repara noticias con fecha_pub NULL visitando el articulo real")
+    bf.add_argument("--limit", type=int, default=None,
+                    help="maximo de filas a intentar (default: todas)")
+    bf.set_defaults(func=cmd_backfill_fechas)
 
     su = sub.add_parser("set-url", help="actualiza url/rss de una fuente")
     su.add_argument("--pais", required=True, choices=["PE", "EC"])
