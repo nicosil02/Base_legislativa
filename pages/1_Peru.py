@@ -1008,30 +1008,36 @@ def _opciones_autor() -> list[str]:
     return [TODOS] + sorted(todos)
 
 
-# Fila de filtros: PL + Cámara + 6 dropdowns (Tema, Estado, Comisión, Partido, Proponente, Autor)
-fc = st.columns([0.8, 0.8, 0.9, 0.9, 1.2, 1, 0.9, 1])
-pl_input = fc[0].text_input("PL", placeholder="ej. 14515")
-sel_camara = fc[1].selectbox("Cámara", _opciones("Cámara", TODAS))
-sel_tema = fc[2].selectbox("Tema", _opciones("Tema"))
-sel_estado = fc[3].selectbox("Estado", _opciones("Estado"))
-# El dropdown de Comisión se acota a la cámara elegida arriba (Senado y
-# Diputados tienen comisiones con el mismo nombre — sin esto eran
-# indistinguibles). Elegir una Comisión primero y cambiar de Cámara después
-# resetea la selección a "Todas" si ya no aplica (comportamiento normal de
-# Streamlit al cambiar las opciones de un selectbox).
-sel_comision = fc[4].selectbox("Comisión", _opciones_comision(sel_camara))
-sel_partido = fc[5].selectbox("Bancada", _opciones("Partido"))
-sel_proponente = fc[6].selectbox("Proponente", _opciones("Proponente"))
-sel_autor = fc[7].selectbox("Autor", _opciones_autor())
-
+# Fila principal: lo que se usa a diario (auditoria de UX 2026-09-13 - 8-9
+# dropdowns en una sola fila se sentia saturado, y "Cliente" quedaba pegado
+# aparte al final en vez de ser un filtro de primera clase). El resto
+# (Camara, Comision, Bancada, Proponente, Autor) es para investigacion
+# puntual, no el habito diario - se mueve a un expander colapsado.
 clientes = load_clientes()
 TODOS_CLIENTES = "Todos"
-fc2 = st.columns([1, 3])
-sel_cliente = fc2[0].selectbox(
+
+fc = st.columns([0.9, 1.3, 1, 1])
+pl_input = fc[0].text_input("PL", placeholder="ej. 14515")
+sel_cliente = fc[1].selectbox(
     "Cliente", [TODOS_CLIENTES] + clientes,
     help="PLs cuyo Tema coincide con el interes real de ese cliente "
          "(scraper/categorias.py::CATEGORIA_CLIENTES_PL)",
 )
+sel_tema = fc[2].selectbox("Tema", _opciones("Tema"))
+sel_estado = fc[3].selectbox("Estado", _opciones("Estado"))
+
+with st.expander("🔍 Más filtros (Cámara, Comisión, Bancada, Proponente, Autor)"):
+    fc2 = st.columns([0.9, 1.2, 1, 0.9, 1])
+    sel_camara = fc2[0].selectbox("Cámara", _opciones("Cámara", TODAS))
+    # El dropdown de Comisión se acota a la cámara elegida arriba (Senado y
+    # Diputados tienen comisiones con el mismo nombre — sin esto eran
+    # indistinguibles). Elegir una Comisión primero y cambiar de Cámara
+    # después resetea la selección a "Todas" si ya no aplica (comportamiento
+    # normal de Streamlit al cambiar las opciones de un selectbox).
+    sel_comision = fc2[1].selectbox("Comisión", _opciones_comision(sel_camara))
+    sel_partido = fc2[2].selectbox("Bancada", _opciones("Partido"))
+    sel_proponente = fc2[3].selectbox("Proponente", _opciones("Proponente"))
+    sel_autor = fc2[4].selectbox("Autor", _opciones_autor())
 
 busqueda = st.text_input(
     "Buscar libre en título",
