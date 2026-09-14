@@ -26,3 +26,7 @@ cloudscraper
 pymupdf>=1.24
 pytesseract>=0.3
 pillow>=10.0
+# congreso_live: deteccion de Pleno/comisiones EN VIVO en YouTube (antes
+# solo lo usaba el workflow vigilar-congreso.yml via pip install ad-hoc;
+# ahora tambien lo usa la app para el banner "en vivo ahora").
+yt-dlp>=2026.8

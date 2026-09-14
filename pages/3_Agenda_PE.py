@@ -183,6 +183,25 @@ div[data-testid="stDataFrame"] [role="gridcell"] {
   background:#EBF2FA; color:#0A294D; font-size:11px; font-weight:700;
   font-family:'Inter',monospace; letter-spacing:0.02em; margin-right:6px;
 }
+/* Banner "EN VIVO ahora" - Pleno/comisiones transmitiendo en YouTube */
+.live-banner {
+  border:1px solid #F2C4C4; background:#FDF2F2; border-radius:12px;
+  padding:16px 20px; margin-bottom:24px;
+}
+.live-banner-title {
+  font-size:11px; font-weight:800; letter-spacing:0.16em; text-transform:uppercase;
+  color:var(--accent-red); margin-bottom:10px;
+}
+.live-item { font-size:14px; color:var(--ink); padding:4px 0; }
+.live-item a { color:var(--accent-red); font-weight:700; text-decoration:none; }
+.live-item a:hover { text-decoration:underline; }
+.live-dot {
+  display:inline-block; width:8px; height:8px; border-radius:50%;
+  background:var(--accent-red); margin-right:8px; vertical-align:middle;
+  animation: livePulse 1.6s ease-in-out infinite;
+}
+@keyframes livePulse { 0%,100% { opacity:1; } 50% { opacity:.35; } }
+.live-titulo { color:var(--ink-soft); }
 footer { visibility:hidden; }
 </style>""",
     unsafe_allow_html=True,
@@ -808,6 +827,36 @@ st.markdown(
     'para distinguir entre Senado, Diputados y Congreso/Pleno.</p>',
     unsafe_allow_html=True,
 )
+
+# ---------- En vivo ahora (YouTube: Pleno + comisiones ordinarias) ----------
+@st.cache_data(ttl=90)
+def _vivos_ahora() -> list[dict]:
+    """Sesiones EN VIVO ahora mismo en el canal de YouTube del Congreso -
+    reusa congreso_live.detector (misma deteccion que ya corre cada rato
+    via GH Actions para el aviso de WhatsApp personal existente), cacheado
+    90s para no pegarle a YouTube en cada rerun de Streamlit."""
+    try:
+        from congreso_live.detector import vivos_de_interes
+        return vivos_de_interes()
+    except Exception as e:
+        print(f"[agenda-pe] no se pudo chequear en vivo: {e}")
+        return []
+
+_vivos = _vivos_ahora()
+if _vivos:
+    _items_html = "".join(
+        f'<div class="live-item"><span class="live-dot"></span>'
+        f'<a href="{v["url"]}" target="_blank">{v["tipo"]}</a>'
+        f'<span class="live-titulo"> — {v["titulo"][:90]}</span></div>'
+        for v in _vivos
+    )
+    st.markdown(
+        f'<div class="live-banner">'
+        f'<div class="live-banner-title">🔴 En vivo ahora en YouTube</div>'
+        f'{_items_html}'
+        f'</div>',
+        unsafe_allow_html=True,
+    )
 
 if not has_sesiones_table():
     st.warning(
