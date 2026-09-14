@@ -1117,7 +1117,7 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-st.dataframe(
+tabla_pls = st.dataframe(
     df_view,
     hide_index=True,
     use_container_width=True,
@@ -1157,20 +1157,56 @@ st.dataframe(
         ),
         "Tema":         st.column_config.TextColumn("Tema", width="small"),
     },
+    on_select="rerun",
+    selection_mode="single-row",
 )
 
 # ---------- Marcar PL para alerta ----------
 # Mismo mecanismo que Noticias PE/EC (alerts/borradores_store.marcar_pendiente)
 # pero para PLs - deja marcar un PL nuevo o que avanzo (ver columna "Último
 # cambio") para que el agente programado redacte una alerta. item_tipo="pl".
+#
+# Auditoria de UX 2026-09-13: este panel estaba totalmente desacoplado de la
+# tabla de arriba - un dropdown aparte que obligaba a re-buscar por texto el
+# mismo PL que ya estabas mirando. Ahora si clickeaste una fila en la tabla
+# (selection_mode="single-row" arriba), esa fila queda pre-elegida aca -
+# la busqueda por texto se deja de fallback solo para cuando no clickeaste.
+_fila_seleccionada = None
+try:
+    _sel_rows = tabla_pls.selection.rows
+    if _sel_rows and _sel_rows[0] < len(df):
+        _fila_seleccionada = df.iloc[_sel_rows[0]]
+except AttributeError:
+    pass
+
 if clientes and not df.empty:
     st.markdown("##### 📌 Marcar PL para alerta")
     opciones_pl = {
         f"{row['PL']} · {row['Título'][:70]}": idx
         for idx, row in df.iterrows()
     }
+    _opciones_labels = list(opciones_pl.keys())
+    if _fila_seleccionada is not None:
+        st.caption(
+            f"PL seleccionado en la tabla: **{_fila_seleccionada['PL']}** · "
+            f"{_fila_seleccionada['Título'][:80]}"
+        )
+        _label_preseleccionado = f"{_fila_seleccionada['PL']} · {_fila_seleccionada['Título'][:70]}"
+        # El selectbox ya tiene key="marcar_pl_sel" seteado en session_state
+        # desde el primer render - pasar `index=` en los reruns siguientes NO
+        # tiene efecto (Streamlit lo ignora una vez que el widget ya existe).
+        # Por eso, si el click en la tabla cambio, forzamos el valor a mano
+        # ANTES de crear el widget.
+        if (
+            st.session_state.get("_ultimo_pl_click") != _fila_seleccionada["PL"]
+            and _label_preseleccionado in _opciones_labels
+        ):
+            st.session_state["marcar_pl_sel"] = _label_preseleccionado
+            st.session_state["_ultimo_pl_click"] = _fila_seleccionada["PL"]
+    else:
+        st.caption("Click en una fila de la tabla para elegirla acá, o buscala manualmente:")
     mc = st.columns([3, 2, 1])
-    sel_pl_label = mc[0].selectbox("¿Qué PL?", list(opciones_pl.keys()), key="marcar_pl_sel")
+    sel_pl_label = mc[0].selectbox("¿Qué PL?", _opciones_labels, key="marcar_pl_sel")
     sel_pl_clientes = mc[1].multiselect("¿Para qué cliente(s)?", clientes,
                                          placeholder="Elegí uno o más clientes", key="marcar_pl_cli")
     if mc[2].button("Marcar", key="marcar_pl_btn", disabled=not sel_pl_clientes):
