@@ -699,18 +699,52 @@ tabla = st.dataframe(
     },
 )
 
+# Cuando el usuario clickea una fila, st.dataframe devuelve los índices
+# seleccionados en .selection.rows. Se reusa tanto para preseleccionar el
+# "Marcar PL para alerta" de abajo como para el panel de documentos.
+selected_rows = []
+try:
+    selected_rows = tabla.selection.rows or []
+except AttributeError:
+    pass
+_fila_seleccionada = None
+if selected_rows and selected_rows[0] < len(df):
+    _fila_seleccionada = df.iloc[selected_rows[0]]
+
 # ---------- Marcar PL para alerta ----------
 # Mismo mecanismo que Noticias PE/EC (alerts/borradores_store.marcar_pendiente)
 # pero para PLs - deja marcar un PL nuevo o que avanzo (ver columna "Presentado"/
 # "Estado") para que el agente programado redacte una alerta. item_tipo="pl".
+# Auditoria de UX 2026-09-13: este panel estaba desacoplado de la tabla -
+# ahora clickear una fila (selection_mode="single-row" arriba) la preselecciona.
 if clientes and not df.empty:
     st.markdown("##### 📌 Marcar PL para alerta")
     opciones_pl = {
         f"{row['_n_tramite_label']} · {row['Título'][:70]}": idx
         for idx, row in df.iterrows()
     }
+    _opciones_labels = list(opciones_pl.keys())
+    if _fila_seleccionada is not None:
+        st.caption(
+            f"PL seleccionado en la tabla: **{_fila_seleccionada['_n_tramite_label']}** · "
+            f"{_fila_seleccionada['Título'][:80]}"
+        )
+        _label_preseleccionado = (
+            f"{_fila_seleccionada['_n_tramite_label']} · {_fila_seleccionada['Título'][:70]}"
+        )
+        # Pasar index= a un selectbox con key ya inicializado en session_state
+        # no tiene efecto en los reruns siguientes - hay que setear el valor
+        # a mano, y solo cuando el click en la tabla cambio.
+        if (
+            st.session_state.get("_ultimo_pl_click_ec") != _fila_seleccionada["_n_tramite_label"]
+            and _label_preseleccionado in _opciones_labels
+        ):
+            st.session_state["marcar_pl_sel"] = _label_preseleccionado
+            st.session_state["_ultimo_pl_click_ec"] = _fila_seleccionada["_n_tramite_label"]
+    else:
+        st.caption("Click en una fila de la tabla para elegirla acá, o buscala manualmente:")
     mc = st.columns([3, 2, 1])
-    sel_pl_label = mc[0].selectbox("¿Qué PL?", list(opciones_pl.keys()), key="marcar_pl_sel")
+    sel_pl_label = mc[0].selectbox("¿Qué PL?", _opciones_labels, key="marcar_pl_sel")
     sel_pl_clientes = mc[1].multiselect("¿Para qué cliente(s)?", clientes,
                                          placeholder="Elegí uno o más clientes", key="marcar_pl_cli")
     if mc[2].button("Marcar", key="marcar_pl_btn", disabled=not sel_pl_clientes):
@@ -724,15 +758,6 @@ if clientes and not df.empty:
         st.success(f"Marcado para: {', '.join(sel_pl_clientes)}. El agente lo redacta en la próxima hora.")
 
 # ---------- Panel de documentos del proyecto seleccionado ----------
-# Cuando el usuario clickea una fila, st.dataframe devuelve los índices
-# seleccionados en .selection.rows. Recuperamos el N. Trámite y mostramos
-# debajo un panel con los documentos enriquecidos (tabla `documentos`).
-selected_rows = []
-try:
-    selected_rows = tabla.selection.rows or []
-except AttributeError:
-    pass
-
 if selected_rows:
     row_idx = selected_rows[0]
     if row_idx < len(df_view):
