@@ -669,7 +669,8 @@ else:
         }
         mca = st.columns([3, 2, 1])
         sel_pl_label = mca[0].selectbox("¿Qué PL?", list(opciones_pl.keys()), key="marcar_agenda_ec_pl_sel")
-        sel_pl_clientes = mca[1].multiselect("¿Para qué cliente(s)?", clientes, key="marcar_agenda_ec_pl_cli")
+        sel_pl_clientes = mca[1].multiselect("¿Para qué cliente(s)?", clientes,
+                                              placeholder="Elegí uno o más clientes", key="marcar_agenda_ec_pl_cli")
         if mca[2].button("Marcar", key="marcar_agenda_ec_pl_btn", disabled=not sel_pl_clientes):
             row = df_agenda_show.loc[opciones_pl[sel_pl_label]]
             # Mismo esquema "pl_EC_<n_tramite>" que pages/2_Ecuador.py, para
