@@ -210,9 +210,18 @@ jobs:
           # tardan dias en procesarse (verificado en vivo 2026-09-14), asi
           # que no tiene sentido chequear 15x/dia - alcanza con la corrida
           # de las 8 AM Lima o dispatch manual.
-          pip install -q yt-dlp
+          #
+          # Las IPs de los runners de GitHub Actions estan marcadas por el
+          # anti-bot de YouTube ("Sign in to confirm you're not a bot",
+          # verificado en vivo 2026-09-14 run #1772: 8/8 descargas fallaron).
+          # bgutil-ytdlp-pot-provider genera un PO Token valido sin cookies
+          # de cuenta real - server local via Docker, gratis.
+          docker run --name bgutil-provider -d --init \
+              -p 127.0.0.1:4416:4416 brainicism/bgutil-ytdlp-pot-provider
+          pip install -q yt-dlp bgutil-ytdlp-pot-provider
           timeout 300 python -X utf8 -m congreso_live.cli sync-transcripciones --max 20 \
               || echo "[warn] sync-transcripciones fallo, sigo"
+          docker stop bgutil-provider && docker rm bgutil-provider || true
 
       - name: Reclasificar PLs en "Otros" con alta confianza
         run: |
