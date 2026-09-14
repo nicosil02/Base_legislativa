@@ -73,16 +73,29 @@ st.set_page_config(
 # "database disk image is malformed" de forma reproducible. Un lock a
 # nivel de proceso serializa todos los intentos: el primer thread
 # restaura, los demas ven el resultado ya bueno y no hacen nada.
-_bootstrap_lock = threading.Lock()
+#
+# OJO: un `threading.Lock()` a nivel de modulo NO alcanza. Streamlit
+# reejecuta app.py entero en cada rerun de cada sesion (es como corre
+# el script), asi que una asignacion a nivel de modulo crea un Lock
+# NUEVO en cada rerun - nunca se comparte entre threads, el "fix" no
+# serializaba nada (confirmado en vivo: seguia re-restaurando "corrupto"
+# en rafaga incluso con el lock puesto). st.cache_resource si garantiza
+# un unico objeto por proceso, compartido entre reruns y sesiones -
+# es la herramienta hecha justo para esto (recursos no serializables
+# tipo locks/conexiones).
+@st.cache_resource
+def _get_bootstrap_lock() -> threading.Lock:
+    return threading.Lock()
 
 
 def _bootstrap_dbs():
-    if not _bootstrap_lock.acquire(blocking=True, timeout=60):
+    lock = _get_bootstrap_lock()
+    if not lock.acquire(blocking=True, timeout=60):
         return
     try:
         _bootstrap_dbs_impl()
     finally:
-        _bootstrap_lock.release()
+        lock.release()
 
 
 def _bootstrap_dbs_impl():
@@ -142,6 +155,8 @@ def _bootstrap_dbs_impl():
         try:
             with os.fdopen(fd, "wb") as f_out, gzip.open(gz_path, "rb") as f_in:
                 shutil.copyfileobj(f_in, f_out)
+                f_out.flush()
+                os.fsync(f_out.fileno())
             os.replace(tmp_path, db_path)
         finally:
             tmp_path.unlink(missing_ok=True)
