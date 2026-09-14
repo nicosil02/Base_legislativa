@@ -1414,7 +1414,73 @@ def load_transcripciones(limit: int = 15) -> pd.DataFrame:
         conn, params=(limit,),
     )
 
+
+@st.cache_resource(show_spinner=False)
+def _modelo_whisper():
+    """Modelo de transcripcion cargado 1 sola vez por proceso (tarda ~30s
+    la primera vez, instantaneo despues) - usado por el boton "Transcribir
+    en vivo" de la pestaña Transcripciones."""
+    from faster_whisper import WhisperModel
+    return WhisperModel("small", device="cpu", compute_type="int8")
+
+
 with tab_transcripciones:
+    # ---------- En vivo: transcribir los ultimos N segundos, bajo demanda ----------
+    # Bajo demanda (no automatico) porque capturar audio real de un stream
+    # en vivo tarda literalmente lo que dura el clip (no hay forma de ir
+    # mas rapido que tiempo real) y ademas solo funciona desde una IP
+    # local/residencial - las IPs de datacenter (GitHub Actions, muy
+    # probablemente Streamlit Cloud tambien) estan marcadas por el
+    # anti-bot de YouTube, mismo bloqueo ya documentado para el sync
+    # automatico de transcripciones pasadas. Verificado en vivo
+    # 2026-09-14: funciona perfecto desde una IP local.
+    if _vivos:
+        st.markdown("##### 🔴 Transcribir en vivo ahora")
+        for _v in _vivos:
+            with st.container(border=True):
+                cols_v = st.columns([5, 1.3])
+                cols_v[0].markdown(f"**{_v['tipo']}** — {_v['titulo'][:90]}")
+                if cols_v[1].button("Transcribir 30s", key=f"live_tr_{_v['id']}"):
+                    with st.spinner(
+                        "Escuchando los últimos 30 segundos de audio real "
+                        "(no se puede ir más rápido que tiempo real)..."
+                    ):
+                        try:
+                            from congreso_live.live_transcribe import (
+                                capturar_audio_en_vivo, transcribir_audio,
+                            )
+                        except ImportError:
+                            capturar_audio_en_vivo = None
+                        if capturar_audio_en_vivo is None:
+                            st.error(
+                                "Esta función requiere `faster-whisper` e `imageio-ffmpeg` "
+                                "instalados — deliberadamente no están en requirements.txt "
+                                "(pesan ~200 MB y esta función probablemente no funciona en "
+                                "Streamlit Cloud de todas formas, mismo bloqueo de IP que ya "
+                                "documentamos). Corré `pip install faster-whisper "
+                                "imageio-ffmpeg` para probarla localmente."
+                            )
+                        else:
+                            try:
+                                wav = capturar_audio_en_vivo(_v["id"], segundos=30)
+                                if wav is None:
+                                    st.error(
+                                        "No se pudo capturar audio. Si esto corre en un "
+                                        "servidor cloud (Streamlit Cloud, GitHub Actions), es "
+                                        "casi seguro el mismo bloqueo anti-bot de YouTube que "
+                                        "ya documentamos para el sync de transcripciones pasadas."
+                                    )
+                                else:
+                                    segs = transcribir_audio(wav, _modelo_whisper())
+                                    if not segs:
+                                        st.warning("Se capturó audio pero no se detectó habla clara.")
+                                    else:
+                                        st.success(f"Transcripto — últimos {segs[-1]['end']:.0f}s de audio real:")
+                                        st.markdown(" ".join(s["text"] for s in segs))
+                            except Exception as e:
+                                st.error(f"No se pudo transcribir: {e}")
+        st.markdown("")
+
     st.markdown(
         '<p style="font-size:13px;color:var(--ink-soft);max-width:760px;">'
         'Texto de lo discutido en sesiones ya transmitidas, a partir de los '
@@ -1432,41 +1498,46 @@ with tab_transcripciones:
     else:
         from congreso_live.resumenes_store import list_resumenes
         _resumenes = list_resumenes()
-        for _, row in df_transcripciones.iterrows():
-            _dur = row["duracion_seg"]
-            _dur_txt = f"{int(_dur) // 3600}h {(int(_dur) % 3600) // 60}min" if _dur else "—"
-            _temas_html = "".join(
-                f'<span class="pl-chip">{t}</span>'
-                for t in (row["temas"] or "").split(",") if t
-            )
-            _res = _resumenes.get(row["video_id"])
-            with st.expander(f"{row['tipo']} · {row['fecha'] or '—'} · {row['titulo'][:90]}"):
-                st.markdown(
-                    f'<div style="margin-bottom:10px;">{_temas_html}</div>'
-                    f'<div style="font-size:12px;color:var(--ink-mute);margin-bottom:10px;">'
-                    f'Duración: {_dur_txt} · '
-                    f'<a href="https://www.youtube.com/watch?v={row["video_id"]}" '
-                    f'target="_blank">Ver en YouTube ↗</a></div>',
-                    unsafe_allow_html=True,
+        # st.expander no admite expanders anidados (cada sesion ya usa uno
+        # para su propio detalle) - un toggle es el equivalente "boton que
+        # muestra/oculta" sin ese problema.
+        ver_previas = st.toggle(f"Sesiones previas ({len(df_transcripciones)})")
+        if ver_previas:
+            for _, row in df_transcripciones.iterrows():
+                _dur = row["duracion_seg"]
+                _dur_txt = f"{int(_dur) // 3600}h {(int(_dur) % 3600) // 60}min" if _dur else "—"
+                _temas_html = "".join(
+                    f'<span class="pl-chip">{t}</span>'
+                    for t in (row["temas"] or "").split(",") if t
                 )
-                if _res:
-                    _ideas_html = "".join(f"<li>{i}</li>" for i in _res.get("ideas_clave", []))
+                _res = _resumenes.get(row["video_id"])
+                with st.expander(f"{row['tipo']} · {row['fecha'] or '—'} · {row['titulo'][:90]}"):
                     st.markdown(
-                        f'<div style="border:1px solid var(--line-soft);border-radius:8px;'
-                        f'padding:12px 16px;margin-bottom:14px;background:var(--bg-soft);">'
-                        f'<div style="font-size:11px;font-weight:800;letter-spacing:0.1em;'
-                        f'text-transform:uppercase;color:var(--ink-mute);margin-bottom:6px;">Resumen</div>'
-                        f'<div style="font-size:14px;margin-bottom:8px;">{_res["resumen"]}</div>'
-                        f'<ul style="font-size:13px;color:var(--ink-soft);margin:0;padding-left:18px;">'
-                        f'{_ideas_html}</ul></div>',
+                        f'<div style="margin-bottom:10px;">{_temas_html}</div>'
+                        f'<div style="font-size:12px;color:var(--ink-mute);margin-bottom:10px;">'
+                        f'Duración: {_dur_txt} · '
+                        f'<a href="https://www.youtube.com/watch?v={row["video_id"]}" '
+                        f'target="_blank">Ver en YouTube ↗</a></div>',
                         unsafe_allow_html=True,
                     )
-                else:
-                    st.caption("Resumen pendiente de generar.")
-                st.text_area(
-                    "Transcripción completa", value=row["texto"], height=240,
-                    key=f"transcripcion_{row['video_id']}",
-                )
+                    if _res:
+                        _ideas_html = "".join(f"<li>{i}</li>" for i in _res.get("ideas_clave", []))
+                        st.markdown(
+                            f'<div style="border:1px solid var(--line-soft);border-radius:8px;'
+                            f'padding:12px 16px;margin-bottom:14px;background:var(--bg-soft);">'
+                            f'<div style="font-size:11px;font-weight:800;letter-spacing:0.1em;'
+                            f'text-transform:uppercase;color:var(--ink-mute);margin-bottom:6px;">Resumen</div>'
+                            f'<div style="font-size:14px;margin-bottom:8px;">{_res["resumen"]}</div>'
+                            f'<ul style="font-size:13px;color:var(--ink-soft);margin:0;padding-left:18px;">'
+                            f'{_ideas_html}</ul></div>',
+                            unsafe_allow_html=True,
+                        )
+                    else:
+                        st.caption("Resumen pendiente de generar.")
+                    st.text_area(
+                        "Transcripción completa", value=row["texto"], height=240,
+                        key=f"transcripcion_{row['video_id']}",
+                    )
 
 # ---------- Footer ----------
 st.markdown('<div class="footer-rule"></div>', unsafe_allow_html=True)
