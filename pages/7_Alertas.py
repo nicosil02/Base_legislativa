@@ -166,9 +166,9 @@ else:
         with st.expander(f"{titulo_corto} · {fecha}" if fecha else titulo_corto):
             texto = st.text_area(
                 "Borrador", value=b.get("texto", ""), height=180,
-                key=f"txt_{b['item_id']}", label_visibility="collapsed",
+                key=f"txt_{b['cliente']}_{b['item_id']}", label_visibility="collapsed",
             )
-            if st.button("Guardar cambios", key=f"save_{b['item_id']}"):
+            if st.button("Guardar cambios", key=f"save_{b['cliente']}_{b['item_id']}"):
                 try:
                     guardar_borrador(
                         cliente=sel_cliente, item_id=b["item_id"], item_tipo=b.get("item_tipo", ""),
