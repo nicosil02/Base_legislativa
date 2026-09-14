@@ -368,7 +368,7 @@ def get_freshness() -> dict:
     # 2) Fallback a sync_runs / max(captured_at) si heartbeats no existe todavia
     if db_pe and (out["pe_proyectos"] is None or out["pe_sesiones"] is None):
         try:
-            conn = sqlite3.connect(f"file:{db_pe}?mode=ro", uri=True)
+            conn = sqlite3.connect(f"file:{db_pe}?mode=ro&immutable=1", uri=True)
             try:
                 if out["pe_proyectos"] is None:
                     try:
@@ -395,7 +395,7 @@ def get_freshness() -> dict:
 
     if db_ec and (out["ec_proyectos"] is None or out["ec_agenda"] is None):
         try:
-            conn = sqlite3.connect(f"file:{db_ec}?mode=ro", uri=True)
+            conn = sqlite3.connect(f"file:{db_ec}?mode=ro&immutable=1", uri=True)
             try:
                 if out["ec_proyectos"] is None:
                     try:
@@ -442,7 +442,7 @@ def stats_peru() -> dict:
     if db is None:
         return {"total": None, "leyes": None}
     try:
-        conn = sqlite3.connect(f"file:{db}?mode=ro", uri=True)
+        conn = sqlite3.connect(f"file:{db}?mode=ro&immutable=1", uri=True)
         try:
             total = conn.execute("SELECT COUNT(*) FROM proyectos").fetchone()[0]
             leyes = conn.execute(
@@ -465,7 +465,7 @@ def stats_agenda() -> dict:
     if db is None:
         return {"hoy": None, "proximas": None}
     try:
-        conn = sqlite3.connect(f"file:{db}?mode=ro", uri=True)
+        conn = sqlite3.connect(f"file:{db}?mode=ro&immutable=1", uri=True)
         try:
             existe = conn.execute(
                 "SELECT name FROM sqlite_master WHERE type='table' AND name='sesiones'"
@@ -498,7 +498,7 @@ def stats_agenda_ec() -> dict:
     if db is None:
         return {"hoy": None, "proximas": None}
     try:
-        conn = sqlite3.connect(f"file:{db}?mode=ro", uri=True)
+        conn = sqlite3.connect(f"file:{db}?mode=ro&immutable=1", uri=True)
         try:
             existe = conn.execute(
                 "SELECT name FROM sqlite_master WHERE type='table' AND name='sesiones_ec'"
@@ -525,7 +525,7 @@ def stats_ecuador() -> dict:
     if db is None:
         return {"total": None, "publicados": None}
     try:
-        conn = sqlite3.connect(f"file:{db}?mode=ro", uri=True)
+        conn = sqlite3.connect(f"file:{db}?mode=ro&immutable=1", uri=True)
         try:
             total = conn.execute("SELECT COUNT(*) FROM proyectos").fetchone()[0]
             publicados = conn.execute(
@@ -743,7 +743,7 @@ def stats_noticias(pais: str) -> dict:
     if db is None:
         return {"fuentes": None, "noticias": None}
     try:
-        conn = sqlite3.connect(f"file:{db}?mode=ro", uri=True)
+        conn = sqlite3.connect(f"file:{db}?mode=ro&immutable=1", uri=True)
         try:
             existe = conn.execute(
                 "SELECT name FROM sqlite_master WHERE type='table' AND name='noticias_fuentes'"
