@@ -729,6 +729,22 @@ FUENTES_GOOGLE_NEWS: list[dict] = [
     _gn("EC", "Agro", "Agrocalidad", "Agrocalidad+plaguicidas"),
     _gn("EC", "Agro", "MAG plaguicidas", "MAG+Ecuador+plaguicidas"),
     _gn("EC", "Agro", "Bioinsumos", "bioinsumos+Ecuador+agroecologia"),
+    # Fase 3 (2026-09-13): Ecuador - las noticias se actualizan mas rapido
+    # que el portal Ppless v2 (sync cada 4-6h via workflow, sin Playwright
+    # en Streamlit Cloud). Estas queries cubren temas puntuales que las
+    # matrices de Bayer Crop/Syngenta ya trackean a mano via comentarios de
+    # actualizacion (confirmado: 0 de 2145 noticias EC citan el numero de
+    # tramite exacto - no se puede cruzar por ID, solo por tema/keyword,
+    # igual que ya hacia "Facultades legislativas" para PE). "clientes"
+    # explicito (no categoria) para no depender del fallback "Agro".
+    {**_gn("EC", "Agro", "Semillas transgenicos", "semillas+transgenicos+Ecuador+OVM"),
+     "clientes": ["bayer", "syngenta"]},
+    {**_gn("EC", "Agro", "Paramos OVM", "Ley+Paramos+Ecuador+organismos+geneticamente+modificados"),
+     "clientes": ["bayer", "syngenta"]},
+    {**_gn("EC", "Agro", "Drones agricolas", "aeronaves+no+tripuladas+Ecuador+ley"),
+     "clientes": ["bayer", "syngenta"]},
+    {**_gn("EC", "Agro", "INIAP biotecnologia", "INIAP+Ecuador+biotecnologia+ley"),
+     "clientes": ["bayer", "syngenta"]},
 
     # --- DIGITAL / TECH (Google, Niubox, INCODE) ---
     _gn("PE", "Digital", "Datos personales", "Ley+29733+proteccion+datos"),
@@ -740,6 +756,19 @@ FUENTES_GOOGLE_NEWS: list[dict] = [
     _gn("PE", "Digital", "OCDE Peru", "adhesion+OCDE+Peru+digital"),
     _gn("EC", "Digital", "MINTEL datos", "MINTEL+Ecuador+proteccion+datos"),
     _gn("EC", "Digital", "IA Ecuador", "inteligencia+artificial+Ecuador+ley"),
+    # Fase 3 (2026-09-13): igual que en Agro arriba, temas puntuales que la
+    # matriz Incode EC ya trackea a mano. "clientes" explicito = ["incode"]
+    # (NO uso la categoria "Digital", que via CATEGORIA_CLIENTES tambien
+    # tagea a google - confirmado 2026-09-12 que Google no tiene alcance
+    # EC en su notas.md, no hay base para asumirlo aca tampoco).
+    {**_gn("EC", "Digital", "Ciberseguridad ley", "Ley+Organica+Ciberseguridad+Ecuador"),
+     "clientes": ["incode"]},
+    {**_gn("EC", "Digital", "Lavado activos COIP", "COIP+lavado+activos+Ecuador+personas+juridicas"),
+     "clientes": ["incode"]},
+    {**_gn("EC", "Digital", "Proteccion menores digital", "proteccion+menores+plataformas+digitales+Ecuador"),
+     "clientes": ["incode"]},
+    {**_gn("EC", "Digital", "Identidad digital IA", "clonacion+voz+identidad+digital+IA+Ecuador"),
+     "clientes": ["incode"]},
     # INCODE regional (LATAM identity)
     _gn("PE", "Digital", "KYC LAFT", "KYC+lavado+activos+Peru"),
     _gn("PE", "Digital", "Registro SIM", "registro+chips+SIM+Peru"),
