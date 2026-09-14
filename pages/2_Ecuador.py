@@ -557,23 +557,28 @@ def _opciones_proponente() -> list[str]:
     return [TODOS] + sorted(todos)
 
 
-# Fila de filtros
-fc = st.columns([0.9, 1, 1, 1.2, 1.1, 1.1])
-tramite_input = fc[0].text_input("N. Trámite", placeholder="ej. 480824")
-sel_tema = fc[1].selectbox("Tema", _opciones("Tema"))
-sel_estado = fc[2].selectbox("Estado", _opciones("Estado"))
-sel_comision = fc[3].selectbox("Comisión", _opciones("Comisión", label_todos=TODAS))
-sel_tipo = fc[4].selectbox("Tipo proponente", _opciones("Tipo proponente"))
-sel_prop = fc[5].selectbox("Proponente", _opciones_proponente())
-
+# Fila principal: lo que se usa a diario (auditoria de UX 2026-09-13 -
+# "Cliente" quedaba pegado aparte al final en vez de ser un filtro de
+# primera clase). El resto (Comisión, Tipo proponente, Proponente) es para
+# investigación puntual - se mueve a un expander colapsado.
 clientes = load_clientes()
 TODOS_CLIENTES = "Todos"
-fc2 = st.columns([1, 3])
-sel_cliente = fc2[0].selectbox(
+
+fc = st.columns([0.9, 1.3, 1, 1])
+tramite_input = fc[0].text_input("N. Trámite", placeholder="ej. 480824")
+sel_cliente = fc[1].selectbox(
     "Cliente", [TODOS_CLIENTES] + clientes,
     help="PLs cuyo Tema coincide con el interes real de ese cliente "
          "(scraper/categorias.py::CATEGORIA_CLIENTES_PL)",
 )
+sel_tema = fc[2].selectbox("Tema", _opciones("Tema"))
+sel_estado = fc[3].selectbox("Estado", _opciones("Estado"))
+
+with st.expander("🔍 Más filtros (Comisión, Tipo proponente, Proponente)"):
+    fc2 = st.columns([1.2, 1.1, 1.1])
+    sel_comision = fc2[0].selectbox("Comisión", _opciones("Comisión", label_todos=TODAS))
+    sel_tipo = fc2[1].selectbox("Tipo proponente", _opciones("Tipo proponente"))
+    sel_prop = fc2[2].selectbox("Proponente", _opciones_proponente())
 
 busqueda = st.text_input(
     "Buscar libre en título",
