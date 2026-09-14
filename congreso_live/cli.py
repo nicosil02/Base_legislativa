@@ -16,6 +16,7 @@ from pathlib import Path
 
 from congreso_live.detector import vivos_de_interes
 from congreso_live.notify import enviar_whatsapp
+from congreso_live.transcripciones import run_sync as sync_transcripciones
 
 STATE_PATH = Path("data/congreso_live_state.json")
 MAX_LOG = 300
@@ -67,6 +68,16 @@ def cmd_check(args) -> int:
     return 0
 
 
+def cmd_sync_transcripciones(args) -> int:
+    stats = sync_transcripciones(max_candidatos=args.max)
+    print(
+        f"Transcripciones: {stats['candidatos']} sesion(es) terminadas revisadas, "
+        f"{stats['pendientes']} sin transcripcion guardada, "
+        f"{stats['nuevas']} nueva(s) descargada(s)."
+    )
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     p = argparse.ArgumentParser(prog="congreso_live")
     p.add_argument("-v", "--verbose", action="store_true")
@@ -74,6 +85,11 @@ def main(argv: list[str] | None = None) -> int:
     c = sub.add_parser("check", help="detecta en vivo y notifica lo nuevo")
     c.add_argument("--dry-run", action="store_true")
     c.set_defaults(func=cmd_check)
+    t = sub.add_parser("sync-transcripciones",
+                       help="baja transcripciones (captions YouTube) de sesiones terminadas")
+    t.add_argument("--max", type=int, default=20,
+                   help="cuantas sesiones terminadas recientes revisar (default 20)")
+    t.set_defaults(func=cmd_sync_transcripciones)
     args = p.parse_args(argv)
     logging.basicConfig(level=logging.DEBUG if args.verbose else logging.INFO,
                         format="%(asctime)s %(levelname)s %(message)s")
