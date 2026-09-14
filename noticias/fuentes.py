@@ -622,7 +622,12 @@ FUENTES_EC: list[dict] = [
     {"categoria": "Institucion", "pais": "EC",
      "nombre": "Portal de la Asamblea Nacional",
      "url": "https://www.asambleanacional.gob.ec/",
-     "rss_url": "https://www.asambleanacional.gob.ec/es/noticias/feed",
+     # Auditoria 2026-09-14 (Nicolas: "lo de noticias de la Asamblea no lo
+     # has capturado, mi companera envio alertas de hoy que no sacaste"):
+     # la URL vieja (.../es/noticias/feed) devuelve 404 en vivo - el sitio
+     # se reestructuro. Verificado en vivo: la real es /es/rss.xml
+     # (declarada como <link rel="alternate"> en la home del sitio).
+     "rss_url": "https://www.asambleanacional.gob.ec/es/rss.xml",
      "tipo": "rss"},
     {"categoria": "Institucion", "pais": "EC",
      "nombre": "Agenda de la Asamblea Nacional",
