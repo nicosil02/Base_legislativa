@@ -834,7 +834,7 @@ if _live.get("inserted", 0) > 0:
         f"⚡ {_live['inserted']} sesión{'es' if _live['inserted'] != 1 else ''} "
         f"nueva{'s' if _live['inserted'] != 1 else ''} sincronizada{'s' if _live['inserted'] != 1 else ''} "
         f"en vivo desde la API",
-        icon="✓",
+        icon="✅",
     )
 
 # ---------- KPIs ----------
@@ -1115,12 +1115,14 @@ else:
         _n_matriz = df_show["PL"].isin(matriz_cliente).sum()
         if _n_matriz:
             st.caption(f"📋 {_n_matriz} de estos PLs están en tu matriz puntual de seguimiento.")
-    st.dataframe(
+    tabla_agenda = st.dataframe(
         df_show.drop(columns=["pley_num"]),
         hide_index=True,
         use_container_width=True,
         height=520,
         row_height=70,
+        on_select="rerun",
+        selection_mode="single-row",
         column_config={
             "Comisión":     st.column_config.TextColumn("Comisión", width="medium"),
             # Nº PL clickeable al portal (formato extraido del query param ?pl=)
@@ -1138,6 +1140,13 @@ else:
             "Última":       st.column_config.TextColumn("Última", width="small"),
         },
     )
+    _fila_seleccionada = None
+    try:
+        _sel_rows = tabla_agenda.selection.rows
+        if _sel_rows and _sel_rows[0] < len(df_show):
+            _fila_seleccionada = df_show.iloc[_sel_rows[0]]
+    except AttributeError:
+        pass
 
     # ---------- Marcar PL de agenda para alerta ----------
     if clientes and not df_show.empty:
@@ -1146,8 +1155,26 @@ else:
             f"{row['PL']} · {row['Título'][:70]}": idx
             for idx, row in df_show.iterrows()
         }
+        _opciones_labels = list(opciones_pl.keys())
+        if _fila_seleccionada is not None:
+            st.caption(
+                f"PL seleccionado en la tabla: **{_fila_seleccionada['PL']}** · "
+                f"{_fila_seleccionada['Título'][:80]}"
+            )
+            _label_preseleccionado = f"{_fila_seleccionada['PL']} · {_fila_seleccionada['Título'][:70]}"
+            # Pasar index= a un selectbox con key ya inicializado en session_state
+            # no tiene efecto en los reruns siguientes - hay que setear el valor
+            # a mano, y solo cuando el click en la tabla cambio.
+            if (
+                st.session_state.get("_ultimo_pl_click_agenda_pe") != _fila_seleccionada["PL"]
+                and _label_preseleccionado in _opciones_labels
+            ):
+                st.session_state["marcar_agenda_pl_sel"] = _label_preseleccionado
+                st.session_state["_ultimo_pl_click_agenda_pe"] = _fila_seleccionada["PL"]
+        else:
+            st.caption("Click en una fila de la tabla para elegirla acá, o buscala manualmente:")
         mca = st.columns([3, 2, 1])
-        sel_pl_label = mca[0].selectbox("¿Qué PL?", list(opciones_pl.keys()), key="marcar_agenda_pl_sel")
+        sel_pl_label = mca[0].selectbox("¿Qué PL?", _opciones_labels, key="marcar_agenda_pl_sel")
         sel_pl_clientes = mca[1].multiselect("¿Para qué cliente(s)?", clientes,
                                               placeholder="Elegí uno o más clientes", key="marcar_agenda_pl_cli")
         if mca[2].button("Marcar", key="marcar_agenda_pl_btn", disabled=not sel_pl_clientes):
