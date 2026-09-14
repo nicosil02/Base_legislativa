@@ -24,7 +24,13 @@ TEMAS: dict[str, list[str]] = {
         # Instituciones y roles del poder (relevantes cuando el foco es
         # política; asumimos que el usuario prefiere cobertura amplia).
         "presidente", "presidenta", "vicepresidente", "vicepresidenta",
-        "premier", "gabinete", "consejo de ministros",
+        # ponytail (2026-09-14): "premier" solo (sin "peruano"/nombre) se
+        # sacó - matcheaba "Premier League" en cualquier nota deportiva
+        # (Manchester City, Chelsea, Liverpool...), coyuntura de futbol
+        # ingles pasando como coyuntura politica. El cargo ya se detecta
+        # via "gabinete"/"consejo de ministros"/el apellido del premier
+        # (ver "Galarreta" mas abajo).
+        "premier peruano", "premier del peru", "gabinete", "consejo de ministros",
         "ministro", "ministra", "congreso", "asamblea nacional",
         "fiscal", "fiscalía", "fiscalia", "fiscal de la nación",
         "diputado", "diputada", "senador", "senadora",
@@ -40,7 +46,11 @@ TEMAS: dict[str, list[str]] = {
         "partido político", "partido politico",
         # Gobierno actual PE (Keiko Fujimori 2026-2031, gabinete Galarreta).
         # Cuando cambie, actualizar acá.
-        "Keiko Fujimori", "Keiko", "Fujimori",
+        # ponytail (2026-09-14): "Keiko" sola (sin "Fujimori") se saco -
+        # matcheaba notas de entretenimiento sobre la orca de "Free Willy"
+        # (documental Netflix). "Fujimori" solo ya cubre la cobertura
+        # politica real sin ese choque.
+        "Keiko Fujimori", "Fujimori",
         "Fuerza Popular",
         "Galarreta",   # premier
         # Ministros del gabinete Galarreta (apellidos únicos)
