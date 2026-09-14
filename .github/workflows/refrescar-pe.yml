@@ -203,6 +203,17 @@ jobs:
           timeout 120 python -X utf8 -m noticias.cli purge --dias 7 \
               || echo "[warn] noticias purge fallo, sigo"
 
+      - name: Transcripciones de sesiones (captions YouTube, Pleno/comisiones)
+        if: github.event.schedule == '0 13 * * *' || github.event_name == 'workflow_dispatch'
+        run: |
+          # Igual que Registro Oficial EC arriba: los captions de YouTube
+          # tardan dias en procesarse (verificado en vivo 2026-09-14), asi
+          # que no tiene sentido chequear 15x/dia - alcanza con la corrida
+          # de las 8 AM Lima o dispatch manual.
+          pip install -q yt-dlp
+          timeout 300 python -X utf8 -m congreso_live.cli sync-transcripciones --max 20 \
+              || echo "[warn] sync-transcripciones fallo, sigo"
+
       - name: Reclasificar PLs en "Otros" con alta confianza
         run: |
           # Usa el modelo entrenado en models/clasificador_pe.joblib
