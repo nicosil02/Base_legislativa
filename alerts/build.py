@@ -42,7 +42,7 @@ def _find_db_file(filename, search_root=None):
 
 
 def _open_ro(path):
-    conn = sqlite3.connect(f"file:{path}?mode=ro", uri=True)
+    conn = sqlite3.connect(f"file:{path}?mode=ro&immutable=1", uri=True)
     conn.row_factory = sqlite3.Row
     return conn
 

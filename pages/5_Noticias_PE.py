@@ -148,7 +148,7 @@ def get_conn() -> sqlite3.Connection:
                  "`python -m noticias.cli init && python -m noticias.cli seed && "
                  "python -m noticias.cli sync`")
         st.stop()
-    conn = sqlite3.connect(f"file:{db}?mode=ro", uri=True, check_same_thread=False)
+    conn = sqlite3.connect(f"file:{db}?mode=ro&immutable=1", uri=True, check_same_thread=False)
     conn.row_factory = sqlite3.Row
     return conn
 
