@@ -19,6 +19,7 @@ import streamlit as st
 from noticias.temas import clasificar, es_normativa, todos_los_temas
 from noticias.fuentes import (
     INSTITUCIONES_AMPLIAS, TEMAS_CLIENTE, PERFIL_ESTRICTO, matchea_perfil,
+    FUENTES_GENERALISTAS_FILTRAR_RUIDO,
 )
 from alerts.borradores_store import marcar_pendiente
 from clientes.matrices import pls_trackeados_ec, coincide_con_noticia
@@ -362,6 +363,17 @@ def load_noticias(pais: str,
         df["PL_relacionado"] = df.apply(
             lambda row: _pl_relacionado(row["Título"], row["Resumen"]), axis=1
         )
+        # Fuentes "generalistas" (ver fuentes.py): su feed de Coyuntura
+        # Politica en realidad trae el sitio entero (deportes, espectaculos)
+        # por un feed roto/mal etiquetado - se filtra SIEMPRE, no solo con
+        # un cliente seleccionado (un partido de futbol no es Coyuntura
+        # Politica ni siquiera viendo "Todos").
+        es_generalista = (
+            df["Fuente"].isin(FUENTES_GENERALISTAS_FILTRAR_RUIDO)
+            & (df["Categoría fuente"] == "Coyuntura Politica")
+        )
+        tiene_tema_real = df["Temas"].map(lambda ts: len(ts) > 0)
+        df = df[~es_generalista | tiene_tema_real]
         if cliente:
             # Instituciones "amplias" (MEF, etc. - ver fuentes.py) solo
             # cuentan para este cliente si el contenido matchea su tema

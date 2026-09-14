@@ -159,6 +159,25 @@ CATEGORIA_CLIENTES: dict[str, list[str]] = {
 # badges "Temas" de la UI, aplicado tambien al filtro. Ver TEMAS_CLIENTE.
 INSTITUCIONES_AMPLIAS: set[str] = {"MEF"}
 
+# Fuentes "Coyuntura Politica" que en realidad traen el feed COMPLETO del
+# sitio (deportes, espectaculos, policiales) por un feed especifico roto que
+# cae a uno generico - ver noticias/scraper.py::_discover_rss ("auto-sana
+# feeds rotos"). Auditoria 2026-09-13 (Nicolas: "siguen habiendo noticias que
+# no tienen nada que ver"): verificado en vivo -
+#   - El Universo EC: su rss_url declarado (.../rss/politica/) devuelve 404
+#     ("Pagina no encontrada"), asi que cae al autodiscovery, que encuentra
+#     el feed general del sitio (arc/outboundfeeds/rss, sin filtro de
+#     seccion) - trae partidos de futbol, estrenos musicales, sucesos.
+#   - El Comercio EC: su feed declarado (elcomercio.com/feed/) SI funciona,
+#     pero es "Noticias del Ecuador y del mundo" (sitewide real, nunca fue
+#     solo politica) - mismo problema, no un feed roto sino mal etiquetado.
+# No hay un feed de solo-politica que funcione para ninguno de los dos (se
+# probaron varias URLs candidatas). Filtro: exigir que el contenido matchee
+# algun tema real (noticias/temas.py::clasificar) - independiente del
+# cliente seleccionado, aplica incluso viendo "Todos", porque un partido de
+# futbol no es "Coyuntura Politica" para nadie.
+FUENTES_GENERALISTAS_FILTRAR_RUIDO: set[str] = {"El Universo", "El Comercio"}
+
 # Que tema(s) de noticias/temas.py::TEMAS le importan de verdad a cada
 # cliente (de sus notas.md) - usado solo para las INSTITUCIONES_AMPLIAS de
 # arriba, no reemplaza el tag por institucion/categoria de todos los demas.
@@ -184,8 +203,33 @@ TEMAS_CLIENTE: dict[str, list[str]] = {
 PERFIL_ESTRICTO: dict[str, set[str]] = {
     "bayer": {"MINSA", "Ministerio de Salud (estadisticas)",
               "Ministerio de Salud Publica", "Temas Salud", "Salud",
-              "AgroPeru"},
-    "syngenta": {"AgroPeru"},
+              "AgroPeru",
+              # Auditoria 2026-09-13 (Nicolas: "siguen habiendo noticias que
+              # no tienen nada que ver"): Andina agro/salud quedaron
+              # desactivadas (codseccion roto, ver mas abajo) pero sus filas
+              # viejas siguen en la DB y no tenian este filtro - traian
+              # coyuntura politica generica ("Presidenta: este gobierno...")
+              # tageada como salud/agro por error de clasificacion.
+              "Andina (agencia oficial - agro)",
+              "Andina (agencia oficial - salud)",
+              # Mismo problema: Mundo Agropecuario (EC) es periodismo agrario
+              # global generico (jardineria, clima, mercados de otros paises)
+              # - las keywords Crop compartidas con syngenta ya filtran bien.
+              "Mundo Agropecuario"},
+    "syngenta": {"AgroPeru", "Andina (agencia oficial - agro)",
+                 "Mundo Agropecuario"},
+    # Auditoria 2026-09-13: 2 fuentes de Google News PE traen ruido real -
+    # "Menores digitales" (verificacion de edad) matchea leyes de CUALQUIER
+    # pais (Australia, Francia, Reino Unido) sin relacion con Peru/la region;
+    # "KYC LAFT" trae guias de "como comprar cripto"/apuestas deportivas, no
+    # regulacion. Mismo problema en EC: "DPL News Ecuador" (tageada KYC/AML)
+    # es noticias de negocio tech/telecom generico, no identidad/AML; y
+    # "Criptonoticias" (tageada Tech) es trading/mercado de cripto, no
+    # regulacion. Exigir alguna senal regulatoria/institucional real.
+    "google": {"Google News PE — Menores digitales", "Google News PE — KYC LAFT",
+               "Criptonoticias"},
+    "incode": {"Google News PE — Menores digitales", "Google News PE — KYC LAFT",
+               "DPL News Ecuador", "Criptonoticias"},
 }
 
 PERFIL_KEYWORDS: dict[str, list[str]] = {
@@ -208,6 +252,24 @@ PERFIL_KEYWORDS: dict[str, list[str]] = {
         "senasa", "plaguicida", "fitosanit", "semilla", "transgenic",
         "organismo vivo modificado", "agroecolog", "agricultura regenerativa",
         "agroexportacion", "autoridad nacional del agua", "biotecnolog",
+    ],
+    # Google/Incode: exige alguna senal regulatoria/institucional real (no
+    # cualquier nota de "menores + redes sociales" o "cripto" de cualquier
+    # pais - ver comentario en PERFIL_ESTRICTO arriba).
+    "google": [
+        "peru", "ecuador", "congreso", "asamblea nacional",
+        "ley ", "proyecto de ley", "reglamento", "decreto", "regulacion",
+        "sbs", "indecopi", "anpd", "mtc", "osiptel", "reniec",
+        "clave unica", "ciberseguridad", "lavado de activos",
+        "proteccion de datos", "banco central", "superintendencia",
+    ],
+    "incode": [
+        "peru", "ecuador", "congreso", "asamblea nacional",
+        "ley ", "proyecto de ley", "reglamento", "decreto", "regulacion",
+        "sbs", "indecopi", "anpd", "mtc", "osiptel", "reniec",
+        "clave unica", "ciberseguridad", "lavado de activos",
+        "kyc", "identidad digital", "verificacion de identidad", "biometria",
+        "proteccion de datos", "banco central", "superintendencia",
     ],
 }
 
