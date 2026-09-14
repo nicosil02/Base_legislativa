@@ -706,7 +706,8 @@ if clientes and not df.empty:
     }
     mc = st.columns([3, 2, 1])
     sel_pl_label = mc[0].selectbox("¿Qué PL?", list(opciones_pl.keys()), key="marcar_pl_sel")
-    sel_pl_clientes = mc[1].multiselect("¿Para qué cliente(s)?", clientes, key="marcar_pl_cli")
+    sel_pl_clientes = mc[1].multiselect("¿Para qué cliente(s)?", clientes,
+                                         placeholder="Elegí uno o más clientes", key="marcar_pl_cli")
     if mc[2].button("Marcar", key="marcar_pl_btn", disabled=not sel_pl_clientes):
         row = df.loc[opciones_pl[sel_pl_label]]
         item_id = f"pl_EC_{row['_n_tramite_label']}"

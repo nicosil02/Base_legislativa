@@ -526,9 +526,10 @@ def _render_card(n, key_suffix: str = "") -> None:
         sfx = f"_{nid}_{key_suffix}" if key_suffix else f"_{nid}"
         full_id = f"noticia_{PAIS}_{nid}"
         resumen_completo = _s(n["Resumen"]).strip()
-        cols = st.columns([7, 2, 1, 1])
+        cols = st.columns([5, 2, 2, 2])
         with cols[1].popover("📌 Marcar", help="Marcar para que se redacte una alerta de esto"):
-            sel = st.multiselect("¿Para qué cliente(s)?", clientes, key=f"marcar_cli{sfx}")
+            sel = st.multiselect("¿Para qué cliente(s)?", clientes,
+                             placeholder="Elegí uno o más clientes", key=f"marcar_cli{sfx}")
             if st.button("Marcar", key=f"marcar_btn{sfx}", disabled=not sel):
                 marcar_pendiente(
                     clientes=sel, item_id=full_id, item_tipo="noticia",
@@ -536,8 +537,8 @@ def _render_card(n, key_suffix: str = "") -> None:
                     item_resumen=resumen_completo or None,
                 )
                 st.success(f"Marcado para: {', '.join(sel)}. El agente lo redacta en la próxima hora.")
-        if cols[2].button("✕", key=f"desc{sfx}",
-                          help="Descartar: no aparecerá más y sirve como feedback"):
+        if cols[2].button("✕ Descartar", key=f"desc{sfx}",
+                          help="No aparecerá más y sirve como feedback"):
             _feedback_descartar(nid)
             st.rerun()
         # Combinar varias noticias relacionadas en UNA sola alerta (con mas
@@ -551,7 +552,7 @@ def _render_card(n, key_suffix: str = "") -> None:
         if nid not in _combinar_rendered:
             _combinar_rendered.add(nid)
             marcado = cols[3].checkbox(
-                "➕", key=f"combinar_chk_{nid}", value=full_id in combinar_items,
+                "➕ Combinar", key=f"combinar_chk_{nid}", value=full_id in combinar_items,
                 help="Sumar a un grupo para combinar varias noticias en una sola alerta",
             )
             if marcado:
@@ -622,7 +623,8 @@ if _combinar_items:
         list(_opciones.keys()), key="combinar_principal",
     )
     _principal_id = _opciones[_principal_label]
-    _sel_cli = st.multiselect("¿Para qué cliente(s)?", clientes, key="combinar_clientes")
+    _sel_cli = st.multiselect("¿Para qué cliente(s)?", clientes,
+                             placeholder="Elegí uno o más clientes", key="combinar_clientes")
     if st.button("Combinar en una alerta", disabled=not _sel_cli, key="combinar_confirmar"):
         _principal = _combinar_items[_principal_id]
         _adicionales = [
