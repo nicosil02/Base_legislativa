@@ -1415,6 +1415,26 @@ def load_transcripciones(limit: int = 15) -> pd.DataFrame:
     )
 
 
+@st.cache_data(ttl=45)
+def _estado_transcripcion_vivo(video_id: str) -> dict | None:
+    """Si `congreso_live.cli live-watch` (o el boton manual) ya viene
+    acumulando esta sesion, devuelve {duracion_seg, fetched_at}. None si
+    todavia no arranco a transcribirse. TTL corto (45s) porque esto
+    cambia mientras la sesion sigue en vivo."""
+    conn = get_conn()
+    try:
+        r = conn.execute(
+            "SELECT duracion_seg, fetched_at FROM sesiones_transcripciones "
+            "WHERE video_id=?",
+            (video_id,),
+        ).fetchone()
+    except sqlite3.OperationalError:
+        return None
+    if not r:
+        return None
+    return {"duracion_seg": r["duracion_seg"], "fetched_at": r["fetched_at"]}
+
+
 @st.cache_resource(show_spinner=False)
 def _modelo_whisper():
     """Modelo de transcripcion cargado 1 sola vez por proceso (tarda ~30s
@@ -1435,11 +1455,60 @@ with tab_transcripciones:
     # automatico de transcripciones pasadas. Verificado en vivo
     # 2026-09-14: funciona perfecto desde una IP local.
     if _vivos:
-        st.markdown("##### 🔴 Transcribir en vivo ahora")
+        st.markdown("##### 🔴 En vivo ahora")
+        st.caption(
+            "Si `python -m congreso_live.cli live-watch` está corriendo en "
+            "background, estas sesiones ya se transcriben y resumen solas — "
+            "lo último que se sabe de cada una aparece acá abajo."
+        )
+        from congreso_live.resumenes_store import list_resumenes as _list_resumenes_vivo
+        _resumenes_vivo = _list_resumenes_vivo()
         for _v in _vivos:
             with st.container(border=True):
                 cols_v = st.columns([5, 1.3])
                 cols_v[0].markdown(f"**{_v['tipo']}** — {_v['titulo'][:90]}")
+
+                _estado = _estado_transcripcion_vivo(_v["id"])
+                _res_vivo = _resumenes_vivo.get(_v["id"])
+                if _estado:
+                    _dur = _estado["duracion_seg"] or 0
+                    cols_v[0].caption(
+                        f"📡 Transcribiéndose automáticamente — "
+                        f"~{int(_dur) // 60} min cubiertos hasta ahora "
+                        f"(última actualización: {_estado['fetched_at']})."
+                    )
+                    if _res_vivo:
+                        _ideas_html_vivo = "".join(
+                            f"<li>{i}</li>" for i in _res_vivo.get("ideas_clave", []))
+                        _agenda_html = (
+                            f'<div style="font-size:12px;color:var(--ink-mute);'
+                            f'margin-top:8px;padding-top:8px;border-top:1px solid var(--line-soft);">'
+                            f'<strong>Agenda:</strong> {_res_vivo["agenda_cumplida"]}</div>'
+                            if _res_vivo.get("agenda_cumplida") else ""
+                        )
+                        st.markdown(
+                            f'<div style="border:1px solid var(--line-soft);border-radius:8px;'
+                            f'padding:12px 16px;margin-top:8px;background:var(--bg-soft);">'
+                            f'<div style="font-size:11px;font-weight:800;letter-spacing:0.1em;'
+                            f'text-transform:uppercase;color:var(--ink-mute);margin-bottom:6px;">'
+                            f'Resumen (última corrida horaria)</div>'
+                            f'<div style="font-size:14px;margin-bottom:8px;">{_res_vivo["resumen"]}</div>'
+                            f'<ul style="font-size:13px;color:var(--ink-soft);margin:0;padding-left:18px;">'
+                            f'{_ideas_html_vivo}</ul>{_agenda_html}</div>',
+                            unsafe_allow_html=True,
+                        )
+                    else:
+                        cols_v[0].caption(
+                            "Resumen pendiente — se genera en la próxima corrida "
+                            "horaria de la rutina de resúmenes."
+                        )
+                else:
+                    cols_v[0].caption(
+                        "Todavía no se está transcribiendo automáticamente. "
+                        "Corré `python -m congreso_live.cli live-watch` para "
+                        "que arranque sola, o probá un vistazo rápido acá:"
+                    )
+
                 if cols_v[1].button("Transcribir 30s", key=f"live_tr_{_v['id']}"):
                     with st.spinner(
                         "Escuchando los últimos 30 segundos de audio real "
