@@ -117,6 +117,24 @@ def cmd_live_transcribe(args) -> int:
     return 0
 
 
+def cmd_live_watch(args) -> int:
+    """Corre por detras, sin intervencion manual: detecta sola cualquier
+    sesion en vivo (Pleno de cualquier camara, o comision ordinaria) y la
+    va transcribiendo, soportando varias en simultaneo. Pensado para
+    dejar corriendo en una terminal aparte. Ctrl+C para parar."""
+    try:
+        from congreso_live.live_transcribe import watch_and_transcribe
+    except ImportError:
+        print("Falta faster-whisper/imageio-ffmpeg: "
+              "pip install faster-whisper imageio-ffmpeg")
+        return 1
+    try:
+        watch_and_transcribe(intervalo_seg=args.intervalo, poll_seg=args.poll)
+    except KeyboardInterrupt:
+        print("\n[live-watch] listo, cortado por el usuario.")
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     p = argparse.ArgumentParser(prog="congreso_live")
     p.add_argument("-v", "--verbose", action="store_true")
@@ -138,6 +156,13 @@ def main(argv: list[str] | None = None) -> int:
     lt.add_argument("--max-minutos", type=float, default=None,
                     help="corta despues de N minutos aunque la sesion siga en vivo (default: sin limite)")
     lt.set_defaults(func=cmd_live_transcribe)
+    lw = sub.add_parser("live-watch",
+                        help="corre por detras: detecta y transcribe SOLA cualquier sesion en vivo, sin intervencion manual")
+    lw.add_argument("--intervalo", type=int, default=40,
+                    help="segundos de audio real por chunk (default 40)")
+    lw.add_argument("--poll", type=int, default=60,
+                    help="cada cuantos segundos revisa si hay sesiones nuevas en vivo (default 60)")
+    lw.set_defaults(func=cmd_live_watch)
     args = p.parse_args(argv)
     logging.basicConfig(level=logging.DEBUG if args.verbose else logging.INFO,
                         format="%(asctime)s %(levelname)s %(message)s")
