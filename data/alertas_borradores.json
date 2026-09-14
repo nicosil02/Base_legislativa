@@ -11,5 +11,19 @@
     "estado": "borrador",
     "created_at": "2026-09-13T14:53:24Z",
     "updated_at": "2026-09-14T02:59:01Z"
+  },
+  {
+    "cliente": "bayer",
+    "item_id": "noticia_PE_2059629",
+    "item_tipo": "noticia",
+    "pais": "PE",
+    "item_titulo": "🔴🔵 Las bancadas de Obras, Ahora Nación y Juntos por el Perú solicitaron al Ejecutivo presentar un nuevo proyecto de facultades legislativas, tras cuestionar el alcance del pedido inicial y señalar que debe ajustarse a las prioridades de seguridad ciudadana - facebook.com",
+    "item_url": "https://news.google.com/rss/articles/CBMi6wFBVV95cUxPamFDR0FYb1JBXzlXRUs2Q3hIUGRyUDhNVFZncUdGWjI1ZVhMeUtTRTlQcWZmWUNSVkw3S1h2b3Jvd2FJVEQxYVhVNFNpYlBZTXRCV2lqVEVGVG5hQS1JUjU2a2xUQTVhZjYwVTE2T1NTcGd0VVVPWU1wNFFoR0lOQlJOR3czT29IQXRVR1VQSTNpRUFjRmYzSk5adDRNSWltTUhTclBlcUNJT19sZkZ5OTZ3R0xQdVRRVkZZZTBTeWpLckh6am51SzB4X2ItdXN6aG0wUm5zQzNfUGtzOXpEeGhDRUpvdGxlb2xr?oc=5",
+    "item_resumen": "<a href=\"https://news.google.com/rss/articles/CBMi6wFBVV95cUxPamFDR0FYb1JBXzlXRUs2Q3hIUGRyUDhNVFZncUdGWjI1ZVhMeUtTRTlQcWZmWUNSVkw3S1h2b3Jvd2FJVEQxYVhVNFNpYlBZTXRCV2lqVEVGVG5hQS1JUjU2a2xUQTVhZjYwVTE2T1NTcGd0VVVPWU1wNFFoR0lOQlJOR3czT29IQXRVR1VQSTNpRUFjRmYzSk5adDRNSWltTUhTclBlcUNJT19sZkZ5OTZ3R0xQdVRRVkZZZTBTeWpLckh6am51SzB4X2ItdXN6aG0wUm5zQzNfUGtzOXpEeGhDRUpvdGxlb2xr?oc=5\" target=\"_blank\">🔴🔵 Las bancadas de Obras, Ahora Nación y Juntos por el Perú solicitaron al Ejecutivo presentar un nuevo proyect",
+    "texto": "",
+    "estado": "pendiente",
+    "fuentes_adicionales": [],
+    "created_at": "2026-09-14T02:59:52Z",
+    "updated_at": "2026-09-14T02:59:52Z"
   }
 ]
