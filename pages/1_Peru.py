@@ -584,7 +584,7 @@ def load_proyectos(fec_inicio: dt.date | None, fec_fin: dt.date | None) -> pd.Da
             "Título": "first", "Portal": "first", "PDF": "first",
         })
         df["_comisiones_all"] = df["Comisión"]
-        df["Comisión"] = df["Comisión"].apply(lambda lst: lst[0] if lst else None)
+        df["Comisión"] = df["Comisión"].apply(lambda lst: lst[0] if lst else "—")
         # Sort: fecha de presentacion DESC, y dentro del mismo dia per_par_id+
         # pley_num DESC (el ultimo numero asignado es el mas reciente). Sin
         # esto como tiebreaker, los PLs del mismo dia salian en orden inestable.
@@ -1165,7 +1165,8 @@ if clientes and not df.empty:
     }
     mc = st.columns([3, 2, 1])
     sel_pl_label = mc[0].selectbox("¿Qué PL?", list(opciones_pl.keys()), key="marcar_pl_sel")
-    sel_pl_clientes = mc[1].multiselect("¿Para qué cliente(s)?", clientes, key="marcar_pl_cli")
+    sel_pl_clientes = mc[1].multiselect("¿Para qué cliente(s)?", clientes,
+                                         placeholder="Elegí uno o más clientes", key="marcar_pl_cli")
     if mc[2].button("Marcar", key="marcar_pl_btn", disabled=not sel_pl_clientes):
         row = df.loc[opciones_pl[sel_pl_label]]
         # item_id = "pl_PE_<proyecto_ley>" (ej. "pl_PE_00011-2026-2031-CD") -

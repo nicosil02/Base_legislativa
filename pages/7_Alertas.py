@@ -22,6 +22,8 @@ es la relevante de verdad). El modulo relevancia.py sigue en el repo
 """
 from __future__ import annotations
 
+import re
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 import streamlit as st
@@ -29,6 +31,33 @@ import streamlit as st
 from alerts.borradores_store import guardar_borrador, list_borradores
 
 CLIENTES_DIR = Path(__file__).resolve().parent.parent / "clientes"
+
+_LIMA = timezone(timedelta(hours=-5))
+_MESES_CORTO = ["ene", "feb", "mar", "abr", "may", "jun",
+                "jul", "ago", "sep", "oct", "nov", "dic"]
+
+
+def _fecha_legible(iso: str | None) -> str:
+    """'2026-09-13T15:48:00Z' -> '13 sep, 10:48' (hora Lima) - crudo en ISO
+    no es legible para Nicolas, confirmado en la auditoria de UX."""
+    if not iso:
+        return ""
+    try:
+        dt = datetime.fromisoformat(iso.replace("Z", "+00:00")).astimezone(_LIMA)
+    except ValueError:
+        return iso
+    return f"{dt.day} {_MESES_CORTO[dt.month - 1]}, {dt.strftime('%H:%M')}"
+
+
+def _vista_previa_whatsapp(texto: str) -> str:
+    """Convierte *negrita* (sintaxis de WhatsApp) a <b>negrita</b> real (HTML,
+    no markdown - esto se inyecta dentro de un <div> con unsafe_allow_html,
+    donde ** no se interpreta) para que Nicolas vea como se va a ver ANTES
+    de mandarlo - antes solo se veian los asteriscos literales. Escapa HTML
+    primero para no romper el render con < o & del texto real."""
+    import html as _html
+    texto_escapado = _html.escape(texto)
+    return re.sub(r"\*([^*\n]+?)\*", r"<b>\1</b>", texto_escapado)
 
 
 def load_clientes() -> list[str]:
@@ -120,7 +149,7 @@ else:
     for p in pendientes:
         st.markdown(
             f'<div class="item-card"><div class="item-fuente">{p.get("pais")} · '
-            f'marcado {p.get("created_at","")}</div><div class="item-titulo">'
+            f'marcado {_fecha_legible(p.get("created_at"))}</div><div class="item-titulo">'
             f'<a href="{p.get("item_url") or "#"}" target="_blank">{p.get("item_titulo")}</a>'
             f'</div></div>',
             unsafe_allow_html=True,
@@ -132,7 +161,9 @@ if not ya_redactados:
     st.caption("Ninguno todavía.")
 else:
     for b in ya_redactados:
-        with st.expander(f"{b.get('item_titulo', '(sin título)')[:100]} · {b.get('updated_at', '')}"):
+        titulo_corto = b.get('item_titulo', '(sin título)')[:100]
+        fecha = _fecha_legible(b.get('updated_at'))
+        with st.expander(f"{titulo_corto} · {fecha}" if fecha else titulo_corto):
             texto = st.text_area(
                 "Borrador", value=b.get("texto", ""), height=180,
                 key=f"txt_{b['item_id']}", label_visibility="collapsed",
@@ -147,6 +178,15 @@ else:
                     st.success("Guardado.")
                 except Exception as e:
                     st.error(f"No se pudo guardar: {e}")
+            st.caption("Vista previa (así se ve la negrita en WhatsApp):")
+            st.markdown(
+                f'<div style="border:1px solid var(--line-soft);border-radius:8px;'
+                f'padding:10px 14px;font-size:14px;white-space:pre-wrap;">'
+                f'{_vista_previa_whatsapp(texto)}</div>',
+                unsafe_allow_html=True,
+            )
+            st.caption("Copiar (icono arriba a la derecha del bloque):")
+            st.code(texto, language=None)
             if b.get("item_url"):
                 st.markdown(f"[Ver fuente]({b['item_url']})")
 
