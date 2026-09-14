@@ -18,8 +18,22 @@ import streamlit as st
 
 from scraper.categorias import CATEGORIA_CLIENTES_PL
 from alerts.borradores_store import marcar_pendiente
+from clientes.matrices import matriz_bayer_crop, matriz_incode_ec
 
 CLIENTES_DIR = Path(__file__).resolve().parent.parent / "clientes"
+
+
+@st.cache_data(ttl=60)
+def _matriz_pls_ec() -> dict[str, set[str]]:
+    """Que clientes tienen una matriz puntual de PLs para EC (mas alla del
+    filtro por categoria) - ver clientes/matrices.py. Confirmado por Nicolas
+    2026-09-13: Bayer Crop funciona 100% (Syngenta comparte el mismo angulo
+    Crop). Incode Ecuador es real, pero el estado que trae la matriz puede
+    estar desactualizado (no se usa como fuente de verdad, solo el numero
+    de PL para saber que esta en seguimiento)."""
+    bayer_ec = {f["pl_numero"] for f in matriz_bayer_crop("EC")}
+    incode_ec = {f["pl_numero"] for f in matriz_incode_ec()}
+    return {"bayer": bayer_ec, "syngenta": bayer_ec, "incode": incode_ec}
 
 
 def load_clientes() -> list[str]:
@@ -578,7 +592,11 @@ if sel_tema != TODOS:
     df = df[df["Tema"] == sel_tema]
 if sel_cliente != TODOS_CLIENTES:
     temas_cliente = CATEGORIA_CLIENTES_PL.get(sel_cliente, [])
-    df = df[df["Tema"].isin(temas_cliente)]
+    matriz_cliente = _matriz_pls_ec().get(sel_cliente, set())
+    # Union categoria-clasificador OR matriz puntual - ver misma nota en
+    # pages/1_Peru.py (el clasificador se pierde casos reales que la matriz
+    # de Nicolas si tiene identificados).
+    df = df[df["Tema"].isin(temas_cliente) | df["_n_tramite_label"].astype(str).isin(matriz_cliente)]
 if sel_estado != TODOS:
     df = df[df["Estado"] == sel_estado]
 if sel_comision != TODAS:
@@ -607,6 +625,10 @@ if solo_unif:
     ]
 
 st.markdown(f"##### {len(df):,} proyecto(s) de {len(df_full):,} en el rango")
+if sel_cliente != TODOS_CLIENTES and matriz_cliente:
+    _n_matriz = df["_n_tramite_label"].astype(str).isin(matriz_cliente).sum()
+    if _n_matriz:
+        st.caption(f"📋 {_n_matriz} de estos PLs están en tu matriz puntual de seguimiento.")
 
 # Columnas visibles en la tabla principal
 df_view = df.copy()

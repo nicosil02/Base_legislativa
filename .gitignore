@@ -51,3 +51,10 @@ clientes/*/*
 !clientes/*/formato_alertas.md
 !clientes/_plantillas/whatsapp_alerta.md
 !clientes/_plantillas/ejemplos_alertas.md
+
+# Matrices puntuales de PLs (Bayer Crop/Syngenta, Incode) - decision
+# explicita de Nicolas 2026-09-13: se versionan para que la app en
+# produccion (Streamlit Cloud) pueda leerlas (mismo trato que notas.md).
+!clientes/MatrizPLAndinos_Bayer CROP.xlsx
+!clientes/140125 - Matriz - Matriz Legislativa y Regulatoria INCODE.xlsx
+!clientes/matrices.py

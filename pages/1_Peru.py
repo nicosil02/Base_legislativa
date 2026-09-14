@@ -20,6 +20,18 @@ import streamlit as st
 from scraper.sync import FECHA_INICIO_BICAMERAL, PER_PAR_ID_ACTUAL
 from scraper.categorias import CATEGORIA_CLIENTES_PL
 from alerts.borradores_store import marcar_pendiente
+from clientes.matrices import matriz_bayer_crop
+
+
+@st.cache_data(ttl=60)
+def _matriz_pls_pe() -> dict[str, set[str]]:
+    """Que clientes tienen una matriz puntual de PLs para PE (mas alla del
+    filtro por categoria) - ver clientes/matrices.py. Confirmado por Nicolas
+    2026-09-13: Bayer Crop funciona 100%, comparte matriz con Syngenta (mismo
+    angulo Crop). Incode no tiene matriz PE vigente (la que hay esta
+    desactualizada - PLs archivados al pasar al Congreso bicameral)."""
+    numeros = {f["pl_numero"] for f in matriz_bayer_crop("PE")}
+    return {"bayer": numeros, "syngenta": numeros}
 
 CLIENTES_DIR = Path(__file__).resolve().parent.parent / "clientes"
 
@@ -1037,7 +1049,13 @@ if sel_tema != TODOS:
     df = df[df["Tema"] == sel_tema]
 if sel_cliente != TODOS_CLIENTES:
     temas_cliente = CATEGORIA_CLIENTES_PL.get(sel_cliente, [])
-    df = df[df["Tema"].isin(temas_cliente)]
+    matriz_cliente = _matriz_pls_pe().get(sel_cliente, set())
+    # Union categoria-clasificador OR matriz puntual: el clasificador solo ve
+    # el tema literal del PL y se pierde casos reales (confirmado 2026-09-13:
+    # los 4 PLs de la matriz Bayer Crop cayeron en "Consumo masivo"/
+    # "Tributos", no "Agricultura" - son leyes tributarias que afectan al
+    # agro, no leyes agrarias en si).
+    df = df[df["Tema"].isin(temas_cliente) | df["PL"].isin(matriz_cliente)]
 if sel_estado != TODOS:
     df = df[df["Estado"] == sel_estado]
 if sel_comision != TODAS:
@@ -1053,6 +1071,10 @@ if busqueda.strip():
     df = df[df["Título"].astype(str).str.lower().str.contains(q, na=False)]
 
 st.markdown(f"##### {len(df):,} proyecto(s) de {len(df_full):,} en el rango")
+if sel_cliente != TODOS_CLIENTES and matriz_cliente:
+    _n_matriz = df["PL"].isin(matriz_cliente).sum()
+    if _n_matriz:
+        st.caption(f"📋 {_n_matriz} de estos PLs están en tu matriz puntual de seguimiento.")
 
 # Construcción del df de la tabla:
 # - La columna "PL" pasa a ser la URL del portal (LinkColumn) — el regex
