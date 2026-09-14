@@ -78,6 +78,45 @@ def cmd_sync_transcripciones(args) -> int:
     return 0
 
 
+def cmd_live_transcribe(args) -> int:
+    """Requiere `faster-whisper` e `imageio-ffmpeg` (no estan en
+    requirements.txt - ver congreso_live/live_transcribe.py). Solo
+    funciona desde una IP no bloqueada por YouTube (residencial/local),
+    no desde GitHub Actions ni casi seguro Streamlit Cloud."""
+    try:
+        from congreso_live.live_transcribe import capturar_y_acumular_en_vivo
+    except ImportError:
+        print("Falta faster-whisper/imageio-ffmpeg: "
+              "pip install faster-whisper imageio-ffmpeg")
+        return 1
+
+    vivos = vivos_de_interes()
+    if args.video_id:
+        v = next((x for x in vivos if x["id"] == args.video_id), None)
+        if v is None:
+            print(f"{args.video_id} no esta en la lista de en vivo ahora mismo.")
+            return 1
+    else:
+        if not vivos:
+            print("No hay ninguna sesion en vivo ahora mismo.")
+            return 1
+        v = vivos[0]
+        if len(vivos) > 1:
+            print(f"Hay {len(vivos)} sesiones en vivo, transcribiendo la primera: "
+                  f"{v['tipo']} - {v['titulo']}")
+
+    print(f"Transcribiendo en vivo: {v['tipo']} - {v['titulo']} ({v['id']})")
+    print(f"Chunks de {args.intervalo}s, hasta que la sesion termine"
+          f"{f' o pasen {args.max_minutos} min' if args.max_minutos else ''}.")
+    resultado = capturar_y_acumular_en_vivo(
+        v["id"], v["tipo"], v["titulo"],
+        intervalo_seg=args.intervalo, max_minutos=args.max_minutos,
+    )
+    print(f"Listo: {resultado['chunks']} chunk(s) transcriptos, "
+          f"{resultado['duracion_seg']}s cubiertos, {resultado['chars']} caracteres.")
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     p = argparse.ArgumentParser(prog="congreso_live")
     p.add_argument("-v", "--verbose", action="store_true")
@@ -90,6 +129,15 @@ def main(argv: list[str] | None = None) -> int:
     t.add_argument("--max", type=int, default=20,
                    help="cuantas sesiones terminadas recientes revisar (default 20)")
     t.set_defaults(func=cmd_sync_transcripciones)
+    lt = sub.add_parser("live-transcribe",
+                        help="transcribe en vivo (bloqueante) mientras la sesion siga transmitiendo")
+    lt.add_argument("video_id", nargs="?", default=None,
+                    help="id del video a transcribir; si se omite, usa la primera sesion en vivo")
+    lt.add_argument("--intervalo", type=int, default=40,
+                    help="segundos de audio real por chunk (default 40)")
+    lt.add_argument("--max-minutos", type=float, default=None,
+                    help="corta despues de N minutos aunque la sesion siga en vivo (default: sin limite)")
+    lt.set_defaults(func=cmd_live_transcribe)
     args = p.parse_args(argv)
     logging.basicConfig(level=logging.DEBUG if args.verbose else logging.INFO,
                         format="%(asctime)s %(levelname)s %(message)s")

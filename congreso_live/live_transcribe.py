@@ -19,6 +19,7 @@ from __future__ import annotations
 
 import os
 import shutil
+import sqlite3
 import subprocess
 import sys
 import tempfile
@@ -121,6 +122,93 @@ def transcribir_audio(wav_path: Path, modelo) -> list[dict]:
     return out
 
 
+def capturar_y_acumular_en_vivo(
+    video_id: str,
+    tipo: str,
+    titulo: str,
+    intervalo_seg: int = 40,
+    max_minutos: float | None = None,
+    modelo=None,
+    db_path=None,
+) -> dict:
+    """Loop bloqueante: mientras la sesion siga en la lista de "en vivo"
+    (o hasta `max_minutos`), captura un chunk de audio real cada
+    `intervalo_seg` segundos, lo transcribe, y va ACUMULANDO el texto en
+    la fila de `sesiones_transcripciones` para este video_id - la misma
+    tabla que llenan los captions "del dia siguiente" via
+    transcripciones.run_sync(). Reusar la tabla es deliberado: la rutina
+    de resumenes ya sabe leer de ahi, no hace falta un pipeline nuevo -
+    solo que la rutina tiene que aprender a RE-resumir cuando el texto
+    crecio desde la ultima vez (ver notas del prompt de la rutina).
+
+    Uso tipico (desde una sesion de Python en la PC de alguien, con IP
+    no bloqueada por YouTube - ver docstring del modulo):
+        from congreso_live.detector import vivos_de_interes
+        from congreso_live.live_transcribe import capturar_y_acumular_en_vivo
+        v = vivos_de_interes()[0]
+        capturar_y_acumular_en_vivo(v["id"], v["tipo"], v["titulo"])
+    """
+    import time
+    from datetime import datetime, timezone
+
+    from congreso_live.detector import vivos_de_interes
+    from congreso_live.transcripciones import _find_db_path, init_schema
+    from noticias.temas import clasificar as _clasificar_temas
+
+    db_path = db_path or _find_db_path()
+    conn = sqlite3.connect(str(db_path))
+    init_schema(conn)
+
+    row = conn.execute(
+        "SELECT texto, duracion_seg FROM sesiones_transcripciones WHERE video_id=?",
+        (video_id,),
+    ).fetchone()
+    texto_acumulado = row[0] if row else ""
+    duracion_acumulada = (row[1] or 0) if row else 0
+
+    chunks_ok = 0
+    t_inicio = time.time()
+    try:
+        while True:
+            if max_minutos is not None and (time.time() - t_inicio) > max_minutos * 60:
+                break
+            vivos_ids = {v["id"] for v in vivos_de_interes()}
+            if video_id not in vivos_ids:
+                break  # la sesion termino (o nunca estuvo en vivo)
+
+            wav = capturar_audio_en_vivo(video_id, segundos=intervalo_seg)
+            if wav is None:
+                continue
+            if modelo is None:
+                from faster_whisper import WhisperModel
+                modelo = WhisperModel("small", device="cpu", compute_type="int8")
+            segs = transcribir_audio(wav, modelo)
+            nuevo_texto = " ".join(s["text"] for s in segs)
+            if not nuevo_texto:
+                continue
+
+            texto_acumulado = (texto_acumulado + " " + nuevo_texto).strip()
+            duracion_acumulada += intervalo_seg
+            chunks_ok += 1
+            temas = _clasificar_temas(titulo, texto_acumulado[:5000])
+            conn.execute(
+                """INSERT OR REPLACE INTO sesiones_transcripciones
+                   (video_id, tipo, titulo, fecha, duracion_seg, texto, temas, fetched_at)
+                   VALUES (?,?,?,?,?,?,?,?)""",
+                (video_id, tipo, titulo, datetime.now(timezone.utc).date().isoformat(),
+                 duracion_acumulada, texto_acumulado, ",".join(temas),
+                 datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")),
+            )
+            conn.commit()
+            print(f"[live-transcribe] chunk {chunks_ok}: "
+                  f"+{len(nuevo_texto)} chars (total {len(texto_acumulado)} chars, "
+                  f"{duracion_acumulada}s cubiertos)")
+    finally:
+        conn.close()
+    return {"chunks": chunks_ok, "duracion_seg": duracion_acumulada,
+            "chars": len(texto_acumulado)}
+
+
 # ============================================================
 # self-check (Ponytail: 1 chequeo ejecutable de la logica no trivial)
 # ============================================================
@@ -134,5 +222,52 @@ def _demo():
     print("OK live_transcribe: ffmpeg binario resuelto en", p)
 
 
+def _test_acumulacion():
+    """Prueba la logica de acumulacion en sesiones_transcripciones SIN
+    tocar la red - mockea captura/transcripcion/deteccion de "en vivo"
+    para verificar que el texto crece chunk a chunk y que el loop corta
+    solo cuando el video sale de la lista de en vivo."""
+    import tempfile
+    from unittest.mock import patch
+
+    import congreso_live.live_transcribe as lt
+
+    chunks_falsos = iter(["Primera parte de la sesion.",
+                          "Segunda parte, sigue hablando.",
+                          ""])  # el tercer chunk simula silencio (se ignora)
+    vivos_falsos = iter([
+        [{"id": "TEST123"}], [{"id": "TEST123"}],
+        [{"id": "TEST123"}], [],  # 4to check: la sesion ya termino
+    ])
+
+    def _fake_capturar(video_id, segundos):
+        return "fake.wav"
+
+    def _fake_transcribir(wav_path, modelo):
+        texto = next(chunks_falsos, "")
+        return [{"start": 0, "end": segundos_fake, "text": texto}] if texto else []
+
+    segundos_fake = 5
+    with tempfile.TemporaryDirectory() as td:
+        db_path = Path(td) / "test.db"
+        with patch.object(lt, "capturar_audio_en_vivo", _fake_capturar), \
+             patch.object(lt, "transcribir_audio", _fake_transcribir), \
+             patch("congreso_live.detector.vivos_de_interes", lambda: next(vivos_falsos)):
+            resultado = lt.capturar_y_acumular_en_vivo(
+                "TEST123", "Comision: Test", "Sesion de prueba",
+                intervalo_seg=segundos_fake, modelo="modelo-fake", db_path=db_path,
+            )
+
+        assert resultado["chunks"] == 2, resultado
+        conn = sqlite3.connect(str(db_path))
+        texto, temas = conn.execute(
+            "SELECT texto, temas FROM sesiones_transcripciones WHERE video_id='TEST123'"
+        ).fetchone()
+        conn.close()
+    assert texto == "Primera parte de la sesion. Segunda parte, sigue hablando.", texto
+    print("OK live_transcribe: acumulacion crece chunk a chunk y corta al terminar la sesion")
+
+
 if __name__ == "__main__":
     _demo()
+    _test_acumulacion()

@@ -1529,7 +1529,12 @@ with tab_transcripciones:
                             f'text-transform:uppercase;color:var(--ink-mute);margin-bottom:6px;">Resumen</div>'
                             f'<div style="font-size:14px;margin-bottom:8px;">{_res["resumen"]}</div>'
                             f'<ul style="font-size:13px;color:var(--ink-soft);margin:0;padding-left:18px;">'
-                            f'{_ideas_html}</ul></div>',
+                            f'{_ideas_html}</ul>'
+                            + (f'<div style="font-size:12px;color:var(--ink-mute);'
+                               f'margin-top:8px;padding-top:8px;border-top:1px solid var(--line-soft);">'
+                               f'<strong>Agenda:</strong> {_res["agenda_cumplida"]}</div>'
+                               if _res.get("agenda_cumplida") else '')
+                            + '</div>',
                             unsafe_allow_html=True,
                         )
                     else:
