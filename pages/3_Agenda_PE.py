@@ -1374,6 +1374,65 @@ if has_mesas_table():
         )
 
 
+# ---------- Transcripciones (captions de YouTube, Pleno/comisiones) ----------
+@st.cache_data(ttl=300)
+def load_transcripciones(limit: int = 15) -> pd.DataFrame:
+    conn = get_conn()
+    try:
+        existe = conn.execute(
+            "SELECT name FROM sqlite_master WHERE type='table' "
+            "AND name='sesiones_transcripciones'"
+        ).fetchone()
+    except sqlite3.OperationalError:
+        existe = None
+    if not existe:
+        return pd.DataFrame()
+    return pd.read_sql_query(
+        """SELECT video_id, tipo, titulo, fecha, duracion_seg, texto, temas
+           FROM sesiones_transcripciones
+           ORDER BY fecha DESC, video_id DESC LIMIT ?""",
+        conn, params=(limit,),
+    )
+
+
+st.markdown("---")
+st.markdown(
+    '<h2 style="margin-top:30px;">Transcripciones (Pleno + comisiones)</h2>'
+    '<p style="font-size:13px;color:var(--ink-soft);max-width:760px;">'
+    'Texto de lo discutido en sesiones ya transmitidas, a partir de los '
+    'captions automáticos de YouTube — no es tiempo real: YouTube tarda '
+    'unos días en procesarlos, así que esto muestra sesiones recientes, '
+    'no la que está en vivo ahora mismo.</p>',
+    unsafe_allow_html=True,
+)
+df_transcripciones = load_transcripciones()
+if df_transcripciones.empty:
+    st.caption(
+        "Ninguna todavía. Se sincronizan con "
+        "`python -m congreso_live.cli sync-transcripciones`."
+    )
+else:
+    for _, row in df_transcripciones.iterrows():
+        _dur = row["duracion_seg"]
+        _dur_txt = f"{int(_dur) // 3600}h {(int(_dur) % 3600) // 60}min" if _dur else "—"
+        _temas_html = "".join(
+            f'<span class="pl-chip">{t}</span>'
+            for t in (row["temas"] or "").split(",") if t
+        )
+        with st.expander(f"{row['tipo']} · {row['fecha'] or '—'} · {row['titulo'][:90]}"):
+            st.markdown(
+                f'<div style="margin-bottom:10px;">{_temas_html}</div>'
+                f'<div style="font-size:12px;color:var(--ink-mute);margin-bottom:10px;">'
+                f'Duración: {_dur_txt} · '
+                f'<a href="https://www.youtube.com/watch?v={row["video_id"]}" '
+                f'target="_blank">Ver en YouTube ↗</a></div>',
+                unsafe_allow_html=True,
+            )
+            st.text_area(
+                "Transcripción", value=row["texto"], height=240,
+                key=f"transcripcion_{row['video_id']}", label_visibility="collapsed",
+            )
+
 # ---------- Footer ----------
 st.markdown('<div class="footer-rule"></div>', unsafe_allow_html=True)
 st.markdown(
