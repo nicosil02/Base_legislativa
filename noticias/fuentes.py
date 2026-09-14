@@ -176,7 +176,14 @@ INSTITUCIONES_AMPLIAS: set[str] = {"MEF"}
 # algun tema real (noticias/temas.py::clasificar) - independiente del
 # cliente seleccionado, aplica incluso viendo "Todos", porque un partido de
 # futbol no es "Coyuntura Politica" para nadie.
-FUENTES_GENERALISTAS_FILTRAR_RUIDO: set[str] = {"El Universo", "El Comercio"}
+#
+# 2026-09-14 (Nicolas: "chequea si sigue apareciendo ruido"): se encontro un
+# 3er caso - "Bloomberg Linea Ecuador" (ya desactivada arriba, ver notas) -
+# igual se agrega aca para limpiar las filas viejas ya scrapeadas (mercados
+# LATAM/Fed/Argentina/Mexico, nada de Ecuador).
+FUENTES_GENERALISTAS_FILTRAR_RUIDO: set[str] = {
+    "El Universo", "El Comercio", "Bloomberg Linea Ecuador",
+}
 
 # Que tema(s) de noticias/temas.py::TEMAS le importan de verdad a cada
 # cliente (de sus notas.md) - usado solo para las INSTITUCIONES_AMPLIAS de
@@ -256,15 +263,21 @@ PERFIL_KEYWORDS: dict[str, list[str]] = {
     # Google/Incode: exige alguna senal regulatoria/institucional real (no
     # cualquier nota de "menores + redes sociales" o "cripto" de cualquier
     # pais - ver comentario en PERFIL_ESTRICTO arriba).
+    #
+    # ponytail (2026-09-14, Nicolas: "chequea si sigue apareciendo ruido"):
+    # "peru"/"ecuador" sueltos se sacaron - dejaban pasar guias de apuestas
+    # ("Betano verificar cuenta Peru: guia paso a paso") solo por mencionar
+    # el pais, sin ninguna senal regulatoria real. Exigir un termino
+    # institucional/legal es mas angosto pero evita ese falso positivo.
     "google": [
-        "peru", "ecuador", "congreso", "asamblea nacional",
+        "congreso", "asamblea nacional",
         "ley ", "proyecto de ley", "reglamento", "decreto", "regulacion",
         "sbs", "indecopi", "anpd", "mtc", "osiptel", "reniec",
         "clave unica", "ciberseguridad", "lavado de activos",
         "proteccion de datos", "banco central", "superintendencia",
     ],
     "incode": [
-        "peru", "ecuador", "congreso", "asamblea nacional",
+        "congreso", "asamblea nacional",
         "ley ", "proyecto de ley", "reglamento", "decreto", "regulacion",
         "sbs", "indecopi", "anpd", "mtc", "osiptel", "reniec",
         "clave unica", "ciberseguridad", "lavado de activos",
@@ -561,7 +574,15 @@ FUENTES_EC: list[dict] = [
      "nombre": "Bloomberg Linea Ecuador",
      "url": "https://www.bloomberglinea.com/ecuador/",
      "rss_url": "https://www.bloomberglinea.com/arc/outboundfeeds/rss/?outputType=xml",
-     "tipo": "rss"},
+     "tipo": "rss", "activa": 0,
+     "notas": "Auditoria 2026-09-14: el rss_url declarado NUNCA fue especifico "
+              "de Ecuador - es el feed global del sitio (mercados LATAM, Fed, "
+              "Argentina/Mexico/Colombia), verificado en vivo con 0 de 25 "
+              "titulos recientes sobre Ecuador. No se encontro una URL de "
+              "categoria Ecuador que funcione (probadas varias, todas 404). "
+              "Se muestra a TODOS los clientes via categoria->todos, asi que "
+              "traia ruido financiero global constante. Mismo patron que "
+              "Andina codseccion (ver arriba)."},
 
     # --- INSTITUCION ---
     {"categoria": "Institucion", "pais": "EC",
