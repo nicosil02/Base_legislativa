@@ -3,7 +3,13 @@ from congreso_live.detector import clasificar_titulo as C
 
 
 def test_pleno():
-    assert C("🔴 EN VIVO: Pleno del Congreso | 19 DE JUNIO") == "Pleno"
+    # Titulos reales verificados en vivo 2026-09-15 (canal del Congreso).
+    assert C("🔴EN VIVO: Sesión del Pleno de la Cámara de Diputados | 10 DE "
+              "SEPTIEMBRE DEL 2026") == "Pleno: Diputados"
+    assert C("🔴EN VIVO: Sesión del Pleno del Senado de la República | 9 DE "
+              "SEPTIEMBRE DEL 2026") == "Pleno: Senado"
+    # Sesion conjunta (sin "senado" ni "diputados" en el titulo) - fallback.
+    assert C("🔴 EN VIVO: Pleno del Congreso | 19 DE JUNIO") == "Pleno: Congreso"
 
 
 def test_ordinarias():

@@ -156,7 +156,13 @@ def capturar_y_acumular_en_vivo(
     from noticias.temas import clasificar as _clasificar_temas
 
     db_path = db_path or _find_db_path()
-    conn = sqlite3.connect(str(db_path))
+    # timeout=30: live-watch puede correr VARIAS sesiones en paralelo (hilos
+    # distintos, cada uno con su propia conexion) - SQLite serializa
+    # escrituras entre conexiones del mismo archivo, un timeout mas largo
+    # que el default (5s) evita "database is locked" si dos hilos escriben
+    # casi al mismo tiempo (poco probable con chunks de ~40s, pero barato
+    # de evitar).
+    conn = sqlite3.connect(str(db_path), timeout=30)
     init_schema(conn)
 
     row = conn.execute(
@@ -207,6 +213,62 @@ def capturar_y_acumular_en_vivo(
         conn.close()
     return {"chunks": chunks_ok, "duracion_seg": duracion_acumulada,
             "chars": len(texto_acumulado)}
+
+
+def watch_and_transcribe(intervalo_seg: int = 40, poll_seg: int = 60) -> None:
+    """Corre PARA SIEMPRE (Ctrl+C para parar) - esto es "correr por detras":
+    no hace falta pasarle un video_id a mano. Cada `poll_seg` segundos
+    revisa que sesiones estan en vivo (Pleno de cualquier camara o
+    comision ordinaria - ver detector.vivos_de_interes()); para cada una
+    que no tenga ya un hilo transcribiendola, arranca uno nuevo. Cada hilo
+    corre capturar_y_acumular_en_vivo() y termina solo cuando su sesion
+    deja de estar en vivo. Soporta varias sesiones en simultaneo (se vio
+    en vivo 2026-09-14: Constitucion y Economia transmitiendo a la vez).
+
+    Cada hilo carga su PROPIO modelo Whisper (no se comparte uno entre
+    hilos) - mas memoria si hay varias sesiones a la vez, pero evita
+    cualquier duda sobre si ctranslate2 es thread-safe para inferencia
+    concurrente sobre la misma instancia.
+
+    Pensado para dejar corriendo en una terminal aparte (o una tarea
+    programada) en una maquina con IP no bloqueada por YouTube - NO
+    funciona desde GitHub Actions ni Streamlit Cloud (bloqueo de IP ya
+    documentado en otros modulos de congreso_live)."""
+    import threading
+    import time
+
+    from congreso_live.detector import vivos_de_interes
+
+    hilos: dict[str, threading.Thread] = {}
+    print(f"[live-watch] arrancando (poll cada {poll_seg}s, chunks de "
+          f"{intervalo_seg}s). Ctrl+C para parar.")
+    while True:
+        for vid in list(hilos):
+            if not hilos[vid].is_alive():
+                print(f"[live-watch] {vid}: la sesion termino, dejo de transcribirse.")
+                del hilos[vid]
+
+        try:
+            vivos = vivos_de_interes()
+        except Exception as e:
+            print(f"[live-watch] error chequeando en vivo: {e}")
+            vivos = []
+
+        for v in vivos:
+            if v["id"] in hilos:
+                continue
+            print(f"[live-watch] nueva sesion en vivo: {v['tipo']} - {v['titulo']} ({v['id']})")
+            t = threading.Thread(
+                target=capturar_y_acumular_en_vivo,
+                kwargs=dict(video_id=v["id"], tipo=v["tipo"], titulo=v["titulo"],
+                            intervalo_seg=intervalo_seg),
+                daemon=True,
+                name=f"live-{v['id']}",
+            )
+            t.start()
+            hilos[v["id"]] = t
+
+        time.sleep(poll_seg)
 
 
 # ============================================================

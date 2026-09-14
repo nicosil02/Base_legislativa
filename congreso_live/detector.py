@@ -45,14 +45,25 @@ def _norm(s: str | None) -> str:
 
 
 def clasificar_titulo(titulo: str | None) -> str | None:
-    """Devuelve 'Pleno', 'Comision: <kw>' o None (no nos interesa)."""
+    """Devuelve 'Pleno: <camara>', 'Comision: <kw>' o None (no nos interesa).
+
+    El Congreso bicameral (vigente desde 2026) transmite el Pleno de cada
+    camara por separado - titulos reales verificados en vivo 2026-09-15:
+    "Sesion del Pleno de la Camara de Diputados" y "Sesion del Pleno del
+    Senado de la Republica". Una sesion conjunta de ambas camaras (ej.
+    mensaje presidencial) no tendria ninguna de esas dos palabras - cae
+    al fallback "Pleno: Congreso"."""
     t = _norm(titulo)
     if not t:
         return None
     if any(x in t for x in EXCLUIR):
         return None
     if "pleno" in t:
-        return "Pleno"
+        if "senado" in t:
+            return "Pleno: Senado"
+        if "diputados" in t:
+            return "Pleno: Diputados"
+        return "Pleno: Congreso"
     if "comision" in t:
         for kw in ORDINARIA_KEYWORDS:
             if kw in t:
