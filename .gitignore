@@ -11,6 +11,7 @@ venv/
 .env
 .claude/
 update.log
+live_watch.log
 
 # Snapshot del estado bajo data/ (Excel y DB comprimida) sí se commitean,
 # se restauran con `python -m scraper.cli restaurar`.
