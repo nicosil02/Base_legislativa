@@ -40,8 +40,20 @@ def list_resumenes() -> dict[str, dict]:
         return {}
 
 
-def guardar_resumen(*, video_id: str, resumen: str, ideas_clave: list[str]) -> None:
-    """Crea o actualiza (upsert por video_id)."""
+def guardar_resumen(*, video_id: str, resumen: str, ideas_clave: list[str],
+                    duracion_seg: int | None = None,
+                    agenda_cumplida: str | None = None) -> None:
+    """Crea o actualiza (upsert por video_id).
+
+    `duracion_seg` es la duracion de la transcripcion en el momento de
+    generar ESTE resumen - permite que la rutina que resume detecte que
+    una sesion sigue en vivo (la transcripcion crecio desde el ultimo
+    resumen guardado) y la vuelva a resumir en la proxima corrida, en
+    vez de tratarla como "ya resumida, no tocar" para siempre.
+
+    `agenda_cumplida` es texto libre opcional: que tanto de lo agendado
+    para la sesion efectivamente se toco, segun el cruce contra
+    sesion_agenda_punto/pleno_tema."""
     p = _local_path()
     data = []
     if p.exists():
@@ -49,16 +61,16 @@ def guardar_resumen(*, video_id: str, resumen: str, ideas_clave: list[str]) -> N
             data = json.loads(p.read_text(encoding="utf-8"))
         except Exception:
             data = []
+    entrada = {
+        "video_id": video_id, "resumen": resumen,
+        "ideas_clave": ideas_clave, "generated_at": _now_iso(),
+        "duracion_seg": duracion_seg, "agenda_cumplida": agenda_cumplida,
+    }
     existente = next((r for r in data if r.get("video_id") == video_id), None)
     if existente:
-        existente["resumen"] = resumen
-        existente["ideas_clave"] = ideas_clave
-        existente["generated_at"] = _now_iso()
+        existente.update(entrada)
     else:
-        data.append({
-            "video_id": video_id, "resumen": resumen,
-            "ideas_clave": ideas_clave, "generated_at": _now_iso(),
-        })
+        data.append(entrada)
     p.parent.mkdir(parents=True, exist_ok=True)
     p.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
 
