@@ -1444,6 +1444,30 @@ def _modelo_whisper():
     return WhisperModel("small", device="cpu", compute_type="int8")
 
 
+def _render_resumen_card(res: dict, titulo_caja: str = "Resumen") -> None:
+    """Tarjeta de resumen + ideas clave + cruce de agenda (si hay) para 1
+    transcripcion. Un solo lugar para esto - antes estaba duplicado entre
+    la seccion "en vivo" y "Sesiones previas"."""
+    ideas_html = "".join(f"<li>{i}</li>" for i in res.get("ideas_clave", []))
+    agenda_html = (
+        f'<div style="font-size:12px;color:var(--ink-mute);margin-top:8px;'
+        f'padding-top:8px;border-top:1px solid var(--line-soft);">'
+        f'<strong>Agenda:</strong> {res["agenda_cumplida"]}</div>'
+        if res.get("agenda_cumplida") else ""
+    )
+    st.markdown(
+        f'<div style="border:1px solid var(--line-soft);border-radius:8px;'
+        f'padding:12px 16px;margin-top:8px;background:var(--bg-soft);">'
+        f'<div style="font-size:11px;font-weight:800;letter-spacing:0.1em;'
+        f'text-transform:uppercase;color:var(--ink-mute);margin-bottom:6px;">'
+        f'{titulo_caja}</div>'
+        f'<div style="font-size:14px;margin-bottom:8px;">{res["resumen"]}</div>'
+        f'<ul style="font-size:13px;color:var(--ink-soft);margin:0;padding-left:18px;">'
+        f'{ideas_html}</ul>{agenda_html}</div>',
+        unsafe_allow_html=True,
+    )
+
+
 with tab_transcripciones:
     # ---------- En vivo: transcribir los ultimos N segundos, bajo demanda ----------
     # Bajo demanda (no automatico) porque capturar audio real de un stream
@@ -1478,25 +1502,7 @@ with tab_transcripciones:
                         f"(última actualización: {_estado['fetched_at']})."
                     )
                     if _res_vivo:
-                        _ideas_html_vivo = "".join(
-                            f"<li>{i}</li>" for i in _res_vivo.get("ideas_clave", []))
-                        _agenda_html = (
-                            f'<div style="font-size:12px;color:var(--ink-mute);'
-                            f'margin-top:8px;padding-top:8px;border-top:1px solid var(--line-soft);">'
-                            f'<strong>Agenda:</strong> {_res_vivo["agenda_cumplida"]}</div>'
-                            if _res_vivo.get("agenda_cumplida") else ""
-                        )
-                        st.markdown(
-                            f'<div style="border:1px solid var(--line-soft);border-radius:8px;'
-                            f'padding:12px 16px;margin-top:8px;background:var(--bg-soft);">'
-                            f'<div style="font-size:11px;font-weight:800;letter-spacing:0.1em;'
-                            f'text-transform:uppercase;color:var(--ink-mute);margin-bottom:6px;">'
-                            f'Resumen (última corrida horaria)</div>'
-                            f'<div style="font-size:14px;margin-bottom:8px;">{_res_vivo["resumen"]}</div>'
-                            f'<ul style="font-size:13px;color:var(--ink-soft);margin:0;padding-left:18px;">'
-                            f'{_ideas_html_vivo}</ul>{_agenda_html}</div>',
-                            unsafe_allow_html=True,
-                        )
+                        _render_resumen_card(_res_vivo, "Resumen (última corrida horaria)")
                     else:
                         cols_v[0].caption(
                             "Resumen pendiente — se genera en la próxima corrida "
@@ -1509,6 +1515,15 @@ with tab_transcripciones:
                         "que arranque sola, o probá un vistazo rápido acá:"
                     )
 
+                # Motivo mas probable de que este boton falle en cualquier
+                # paso (dep faltante o captura vacia): el mismo bloqueo de
+                # IP de datacenter que ya documentamos para sync-transcripciones.
+                # Un solo texto para no repetir la explicacion 2 veces.
+                _bloqueo_ip = (
+                    "Si esto corre en Streamlit Cloud o GitHub Actions, es casi seguro "
+                    "el bloqueo anti-bot de YouTube contra IPs de datacenter (mismo "
+                    "problema ya documentado para sync-transcripciones)."
+                )
                 if cols_v[1].button("Transcribir 30s", key=f"live_tr_{_v['id']}"):
                     with st.spinner(
                         "Escuchando los últimos 30 segundos de audio real "
@@ -1519,26 +1534,16 @@ with tab_transcripciones:
                                 capturar_audio_en_vivo, transcribir_audio,
                             )
                         except ImportError:
-                            capturar_audio_en_vivo = None
-                        if capturar_audio_en_vivo is None:
                             st.error(
-                                "Esta función requiere `faster-whisper` e `imageio-ffmpeg` "
-                                "instalados — deliberadamente no están en requirements.txt "
-                                "(pesan ~200 MB y esta función probablemente no funciona en "
-                                "Streamlit Cloud de todas formas, mismo bloqueo de IP que ya "
-                                "documentamos). Corré `pip install faster-whisper "
-                                "imageio-ffmpeg` para probarla localmente."
+                                "Falta `faster-whisper`/`imageio-ffmpeg` (no están en "
+                                "requirements.txt a propósito, pesan ~200 MB). "
+                                "`pip install faster-whisper imageio-ffmpeg` para probar local."
                             )
                         else:
                             try:
                                 wav = capturar_audio_en_vivo(_v["id"], segundos=30)
                                 if wav is None:
-                                    st.error(
-                                        "No se pudo capturar audio. Si esto corre en un "
-                                        "servidor cloud (Streamlit Cloud, GitHub Actions), es "
-                                        "casi seguro el mismo bloqueo anti-bot de YouTube que "
-                                        "ya documentamos para el sync de transcripciones pasadas."
-                                    )
+                                    st.error(f"No se pudo capturar audio. {_bloqueo_ip}")
                                 else:
                                     segs = transcribir_audio(wav, _modelo_whisper())
                                     if not segs:
@@ -1590,22 +1595,7 @@ with tab_transcripciones:
                         unsafe_allow_html=True,
                     )
                     if _res:
-                        _ideas_html = "".join(f"<li>{i}</li>" for i in _res.get("ideas_clave", []))
-                        st.markdown(
-                            f'<div style="border:1px solid var(--line-soft);border-radius:8px;'
-                            f'padding:12px 16px;margin-bottom:14px;background:var(--bg-soft);">'
-                            f'<div style="font-size:11px;font-weight:800;letter-spacing:0.1em;'
-                            f'text-transform:uppercase;color:var(--ink-mute);margin-bottom:6px;">Resumen</div>'
-                            f'<div style="font-size:14px;margin-bottom:8px;">{_res["resumen"]}</div>'
-                            f'<ul style="font-size:13px;color:var(--ink-soft);margin:0;padding-left:18px;">'
-                            f'{_ideas_html}</ul>'
-                            + (f'<div style="font-size:12px;color:var(--ink-mute);'
-                               f'margin-top:8px;padding-top:8px;border-top:1px solid var(--line-soft);">'
-                               f'<strong>Agenda:</strong> {_res["agenda_cumplida"]}</div>'
-                               if _res.get("agenda_cumplida") else '')
-                            + '</div>',
-                            unsafe_allow_html=True,
-                        )
+                        _render_resumen_card(_res)
                     else:
                         st.caption("Resumen pendiente de generar.")
                     st.text_area(
