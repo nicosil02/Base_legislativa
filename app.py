@@ -11,6 +11,7 @@ Corre con:
 from __future__ import annotations
 
 import os
+import threading
 from pathlib import Path
 
 import streamlit as st
@@ -60,7 +61,31 @@ st.set_page_config(
 # el bootstrap original solo corría cuando el .db no existía.
 # En local respeta tus updates: `scraper update` deja el .db con mtime > gz,
 # por lo que no se re-descomprime.
+#
+# Bug real en vivo 2026-09-14 (logs de Streamlit Cloud): decenas de
+# "restored from gz (stale...)" disparandose en rafaga, una por cada
+# sesion/rerun concurrente (Streamlit Cloud corre las sesiones como
+# threads en UN proceso) - cada thread decide "hay que restaurar" y
+# reescribe el MISMO proyectos.db al mismo tiempo. El os.replace()
+# atomico protege a un lector de ver un archivo a medio escribir, pero
+# no evita que dos threads pisen el destino en simultaneo - en el
+# filesystem no persistente de Streamlit Cloud eso termino en
+# "database disk image is malformed" de forma reproducible. Un lock a
+# nivel de proceso serializa todos los intentos: el primer thread
+# restaura, los demas ven el resultado ya bueno y no hacen nada.
+_bootstrap_lock = threading.Lock()
+
+
 def _bootstrap_dbs():
+    if not _bootstrap_lock.acquire(blocking=True, timeout=60):
+        return
+    try:
+        _bootstrap_dbs_impl()
+    finally:
+        _bootstrap_lock.release()
+
+
+def _bootstrap_dbs_impl():
     import gzip
     import os
     import shutil
