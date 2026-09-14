@@ -848,7 +848,7 @@ if _live.get("inserted", 0) > 0:
         f"⚡ {_live['inserted']} PL{'s' if _live['inserted'] != 1 else ''} "
         f"nuevo{'s' if _live['inserted'] != 1 else ''} sincronizado{'s' if _live['inserted'] != 1 else ''} "
         f"en vivo desde la API",
-        icon="✓",
+        icon="✅",
     )
 
 # ---------- KPIs ----------
