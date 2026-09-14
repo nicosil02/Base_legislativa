@@ -56,7 +56,7 @@ def get_all(db_path: str) -> dict[str, tuple[str, str]]:
     """Devuelve {source: (last_run, last_status)} de todos los heartbeats
     en la DB. Devuelve {} si la tabla no existe todavia."""
     try:
-        conn = sqlite3.connect(f"file:{db_path}?mode=ro", uri=True)
+        conn = sqlite3.connect(f"file:{db_path}?mode=ro&immutable=1", uri=True)
     except sqlite3.OperationalError:
         return {}
     try:

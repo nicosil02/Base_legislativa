@@ -110,7 +110,7 @@ def _bootstrap_dbs_impl():
         importar el mtime."""
         import sqlite3
         try:
-            conn = sqlite3.connect(f"file:{db_path}?mode=ro", uri=True)
+            conn = sqlite3.connect(f"file:{db_path}?mode=ro&immutable=1", uri=True)
             conn.execute("SELECT name FROM sqlite_master LIMIT 1").fetchone()
             conn.close()
             return False
