@@ -18,6 +18,30 @@ from pathlib import Path
 import pandas as pd
 import streamlit as st
 
+from scraper.categorias import CATEGORIA_CLIENTES_PL
+from alerts.borradores_store import marcar_pendiente
+from clientes.matrices import matriz_bayer_crop, matriz_incode_ec
+
+CLIENTES_DIR = Path(__file__).resolve().parent.parent / "clientes"
+
+
+def load_clientes() -> list[str]:
+    if not CLIENTES_DIR.is_dir():
+        return []
+    return sorted(
+        p.name for p in CLIENTES_DIR.iterdir()
+        if p.is_dir() and not p.name.startswith("_")
+    )
+
+
+@st.cache_data(ttl=60)
+def _matriz_pls_ec() -> dict[str, set[str]]:
+    """Ver misma nota en pages/2_Ecuador.py - Bayer Crop/Syngenta e Incode
+    tienen matriz puntual para EC."""
+    bayer_ec = {f["pl_numero"] for f in matriz_bayer_crop("EC")}
+    incode_ec = {f["pl_numero"] for f in matriz_incode_ec()}
+    return {"bayer": bayer_ec, "syngenta": bayer_ec, "incode": incode_ec}
+
 
 def _find_db_path() -> Path | None:
     here = Path(__file__).resolve().parent
@@ -328,6 +352,45 @@ def load_sesiones(fec_inicio: dt.date | None, fec_fin: dt.date | None) -> pd.Dat
 
 
 @st.cache_data(ttl=60)
+def load_pls_agenda_ec(fec_inicio: dt.date | None, fec_fin: dt.date | None) -> pd.DataFrame:
+    """Agrega PLs unicos referenciados en agendas EC en el rango de fechas,
+    con su Tema (para el filtro Cliente) - misma idea que
+    pages/3_Agenda_PE.py::load_pls_por_comision. Cada fila es 1 PL en 1
+    comision (un mismo PL puede aparecer en varias)."""
+    conn = get_conn()
+    sql = """
+      SELECT COALESCE(s.nombre_comision, '—') AS "Comisión",
+             m.n_tramite AS "PL",
+             COALESCE(
+               (SELECT url FROM documentos
+                  WHERE n_tramite = m.n_tramite
+                    AND UPPER(COALESCE(fase, '')) LIKE '%PROYECTO%PRESENTADO%'
+                  ORDER BY orden ASC LIMIT 1),
+               (SELECT url FROM documentos
+                  WHERE n_tramite = m.n_tramite ORDER BY orden ASC LIMIT 1),
+               'https://proyectosdeley.asambleanacional.gob.ec/report?n=' || m.n_tramite
+             ) || '#' || m.n_tramite AS "Nº trámite",
+             COALESCE(p.tema, '—') AS "Tema",
+             COALESCE(p.estado, '(no en DB)') AS "Estado del PL",
+             COALESCE(p.titulo, '(sin título)') AS "Título",
+             COUNT(DISTINCT s.uid) AS "Sesiones",
+             MIN(s.fecha) AS "Primera",
+             MAX(s.fecha) AS "Última"
+      FROM sesion_ec_pl_referenciado m
+      JOIN sesiones_ec s ON s.uid = m.uid
+      LEFT JOIN proyectos p ON p.n_tramite = m.n_tramite
+      WHERE m.n_tramite IS NOT NULL
+    """
+    params: list = []
+    if fec_inicio:
+        sql += " AND s.fecha >= ?"; params.append(fec_inicio.isoformat())
+    if fec_fin:
+        sql += " AND s.fecha <= ?"; params.append(fec_fin.isoformat())
+    sql += ' GROUP BY "Comisión", m.n_tramite ORDER BY "Comisión", "Sesiones" DESC, m.n_tramite'
+    return pd.read_sql_query(sql, conn, params=params)
+
+
+@st.cache_data(ttl=60)
 def load_pls_de_sesion(uid: str) -> pd.DataFrame:
     """Devuelve los PLs identificados en una sesion. La columna "Nº tramite"
     es URL al PDF directo (fileservice publico, sin auth) o al portal home
@@ -542,6 +605,84 @@ if sel_rows:
         else:
             st.info("No se identificaron PLs específicos en esta sesión "
                     "(la descripción puede referir a temas sin proyecto de ley registrado).")
+
+# ---------- Vista por cliente ----------
+st.markdown("---")
+st.markdown("### Vista por cliente")
+st.markdown(
+    '<p style="font-size:13px;color:#869FB2;margin-bottom:14px;">'
+    'PLs únicos referenciados en agendas, filtrados por relevancia para un cliente '
+    '(categoría automática + matriz puntual de seguimiento).</p>',
+    unsafe_allow_html=True,
+)
+
+df_agenda_cli = load_pls_agenda_ec(f_ini, f_fin)
+if df_agenda_cli.empty:
+    st.info("No hay PLs en agenda en el rango seleccionado.")
+else:
+    clientes = load_clientes()
+    TODOS_CLIENTES = "Todos"
+    sel_cliente_agenda = st.selectbox("Cliente", [TODOS_CLIENTES] + clientes, key="agenda_ec_cliente")
+    df_agenda_show = df_agenda_cli
+    matriz_cliente_agenda: set[str] = set()
+    if sel_cliente_agenda != TODOS_CLIENTES:
+        temas_cliente = CATEGORIA_CLIENTES_PL.get(sel_cliente_agenda, [])
+        matriz_cliente_agenda = _matriz_pls_ec().get(sel_cliente_agenda, set())
+        df_agenda_show = df_agenda_show[
+            df_agenda_show["Tema"].isin(temas_cliente)
+            | df_agenda_show["PL"].astype(str).isin(matriz_cliente_agenda)
+        ]
+
+    st.markdown(f"##### {len(df_agenda_show):,} PL(s) en agenda · {df_agenda_show['PL'].nunique():,} únicos")
+    if matriz_cliente_agenda:
+        _n_matriz = df_agenda_show["PL"].astype(str).isin(matriz_cliente_agenda).sum()
+        if _n_matriz:
+            st.caption(f"📋 {_n_matriz} de estos PLs están en tu matriz puntual de seguimiento.")
+    st.dataframe(
+        df_agenda_show.drop(columns=["PL"]),
+        hide_index=True,
+        use_container_width=True,
+        height=520,
+        row_height=70,
+        column_config={
+            "Comisión":      st.column_config.TextColumn("Comisión", width="medium"),
+            "Nº trámite":    st.column_config.LinkColumn("Nº trámite",
+                display_text=r"#([A-Z0-9\-]+)$",
+                width="small",
+                help="Click abre el PDF del proyecto directamente (o el portal Ppless v2)."),
+            "Tema":          st.column_config.TextColumn("Tema", width="small"),
+            "Estado del PL": st.column_config.TextColumn("Estado del PL", width="small"),
+            "Título":        st.column_config.TextColumn("Título", width="large"),
+            "Sesiones":      st.column_config.NumberColumn("Sesiones", width="small",
+                help="Cantidad de sesiones donde el PL apareció en agenda."),
+            "Primera":       st.column_config.TextColumn("1ra vez", width="small"),
+            "Última":        st.column_config.TextColumn("Última", width="small"),
+        },
+    )
+
+    # ---------- Marcar PL de agenda para alerta ----------
+    if clientes and not df_agenda_show.empty:
+        st.markdown("##### 📌 Marcar PL para alerta")
+        opciones_pl = {
+            f"{row['PL']} · {row['Título'][:70]}": idx
+            for idx, row in df_agenda_show.iterrows()
+        }
+        mca = st.columns([3, 2, 1])
+        sel_pl_label = mca[0].selectbox("¿Qué PL?", list(opciones_pl.keys()), key="marcar_agenda_ec_pl_sel")
+        sel_pl_clientes = mca[1].multiselect("¿Para qué cliente(s)?", clientes, key="marcar_agenda_ec_pl_cli")
+        if mca[2].button("Marcar", key="marcar_agenda_ec_pl_btn", disabled=not sel_pl_clientes):
+            row = df_agenda_show.loc[opciones_pl[sel_pl_label]]
+            # Mismo esquema "pl_EC_<n_tramite>" que pages/2_Ecuador.py, para
+            # que marcar el mismo PL desde cualquiera de las dos paginas
+            # caiga en la MISMA entrada (marcar_pendiente hace upsert).
+            item_id = f"pl_EC_{row['PL']}"
+            marcar_pendiente(
+                clientes=sel_pl_clientes, item_id=item_id, item_tipo="pl",
+                pais="EC", item_titulo=f"{row['PL']}: {row['Título']}",
+                item_url=str(row["Nº trámite"]).split("#")[0],
+                item_resumen=f"En agenda de {row['Comisión']} - {row['Estado del PL']}",
+            )
+            st.success(f"Marcado para: {', '.join(sel_pl_clientes)}. El agente lo redacta en la próxima hora.")
 
 # ---------- Footer ----------
 st.markdown('<div class="footer-rule"></div>', unsafe_allow_html=True)

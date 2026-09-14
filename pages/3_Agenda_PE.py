@@ -16,6 +16,28 @@ import pandas as pd
 import streamlit as st
 
 from scraper.sync import FECHA_INICIO_BICAMERAL, PER_PAR_ID_ACTUAL
+from scraper.categorias import CATEGORIA_CLIENTES_PL
+from alerts.borradores_store import marcar_pendiente
+from clientes.matrices import matriz_bayer_crop
+
+CLIENTES_DIR = Path(__file__).resolve().parent.parent / "clientes"
+
+
+def load_clientes() -> list[str]:
+    if not CLIENTES_DIR.is_dir():
+        return []
+    return sorted(
+        p.name for p in CLIENTES_DIR.iterdir()
+        if p.is_dir() and not p.name.startswith("_")
+    )
+
+
+@st.cache_data(ttl=60)
+def _matriz_pls_pe() -> dict[str, set[str]]:
+    """Ver misma nota en pages/1_Peru.py - Bayer Crop/Syngenta tienen matriz
+    puntual para PE, Incode no (la que hay esta desactualizada)."""
+    numeros = {f["pl_numero"] for f in matriz_bayer_crop("PE")}
+    return {"bayer": numeros, "syngenta": numeros}
 
 
 def _find_db_path() -> Path | None:
@@ -674,6 +696,7 @@ def load_pls_por_comision(fec_inicio: dt.date | None, fec_fin: dt.date | None) -
                || COALESCE(p.proyecto_ley, pr.proyecto_ley_raw, 'PL ' || pr.pley_num)
                || '#/expediente/' || COALESCE(pr.per_par_id, 2026) || '/' || pr.pley_num
              AS "Nº PL",
+             COALESCE(p.proyecto_ley, pr.proyecto_ley_raw, 'PL ' || pr.pley_num) AS "PL",
              COALESCE(p.tema, '—') AS "Tema",
              COALESCE(p.estado, '(no en DB)') AS "Estado del PL",
              COALESCE(p.titulo, '(sin título)') AS "Título",
@@ -707,6 +730,7 @@ def load_pls_por_comision(fec_inicio: dt.date | None, fec_fin: dt.date | None) -
                    || COALESCE(p.proyecto_ley, pr.proyecto_ley_raw, 'PL ' || pr.pley_num)
                    || '#/expediente/' || COALESCE(pr.per_par_id, 2026) || '/' || pr.pley_num
                  AS "Nº PL",
+                 COALESCE(p.proyecto_ley, pr.proyecto_ley_raw, 'PL ' || pr.pley_num) AS "PL",
                  COALESCE(p.tema, '—') AS "Tema",
                  COALESCE(p.estado, '(no en DB)') AS "Estado del PL",
                  COALESCE(p.titulo, '(sin título)') AS "Título",
@@ -733,12 +757,12 @@ def load_pls_por_comision(fec_inicio: dt.date | None, fec_fin: dt.date | None) -
             parts.append(" AND ps.fecha_sesion <= ?"); params.append(fec_fin.isoformat())
     inner = "".join(parts)
     sql = f"""
-      SELECT "Comisión", pley_num, "Nº PL", "Tema", "Estado del PL", "Título",
+      SELECT "Comisión", pley_num, "Nº PL", "PL", "Tema", "Estado del PL", "Título",
              COUNT(DISTINCT _sesion_id) AS "Sesiones",
              MIN(_fecha) AS "Primera",
              MAX(_fecha) AS "Última"
       FROM ({inner})
-      GROUP BY "Comisión", pley_num
+      GROUP BY "Comisión", pley_num, "PL"
       ORDER BY "Comisión", "Sesiones" DESC, pley_num
     """
     return pd.read_sql_query(sql, conn, params=params)
@@ -1064,7 +1088,8 @@ else:
                .reset_index())
     # Comisiones donde elegir
     todas_comisiones = ["(todas)"] + resumen["Comisión"].tolist()
-    sel_com_v = st.selectbox(
+    fcv = st.columns([2, 1])
+    sel_com_v = fcv[0].selectbox(
         "Comisión a inspeccionar",
         todas_comisiones,
         format_func=lambda x: (
@@ -1072,12 +1097,24 @@ else:
             else f"{x} — {resumen.loc[resumen['Comisión']==x,'pls_unicos'].iloc[0]} PLs únicos"
         ),
     )
+    clientes = load_clientes()
+    TODOS_CLIENTES = "Todos"
+    sel_cliente = fcv[1].selectbox("Cliente", [TODOS_CLIENTES] + clientes)
     if sel_com_v == "(todas)":
         df_show = df_por_com
     else:
         df_show = df_por_com[df_por_com["Comisión"] == sel_com_v]
+    matriz_cliente: set[str] = set()
+    if sel_cliente != TODOS_CLIENTES:
+        temas_cliente = CATEGORIA_CLIENTES_PL.get(sel_cliente, [])
+        matriz_cliente = _matriz_pls_pe().get(sel_cliente, set())
+        df_show = df_show[df_show["Tema"].isin(temas_cliente) | df_show["PL"].isin(matriz_cliente)]
 
     st.markdown(f"##### {len(df_show):,} PL(s) en agenda · {df_show['pley_num'].nunique():,} únicos")
+    if matriz_cliente:
+        _n_matriz = df_show["PL"].isin(matriz_cliente).sum()
+        if _n_matriz:
+            st.caption(f"📋 {_n_matriz} de estos PLs están en tu matriz puntual de seguimiento.")
     st.dataframe(
         df_show.drop(columns=["pley_num"]),
         hide_index=True,
@@ -1091,6 +1128,7 @@ else:
                 display_text=r"\?pl=([^#]+)",
                 width="small",
                 help="Click para abrir el expediente en el portal del Congreso."),
+            "PL": None,  # solo para cruzar contra la matriz/marcar - no se muestra
             "Tema":         st.column_config.TextColumn("Tema", width="small"),
             "Estado del PL":st.column_config.TextColumn("Estado del PL", width="small"),
             "Título":       st.column_config.TextColumn("Título", width="large"),
@@ -1100,6 +1138,26 @@ else:
             "Última":       st.column_config.TextColumn("Última", width="small"),
         },
     )
+
+    # ---------- Marcar PL de agenda para alerta ----------
+    if clientes and not df_show.empty:
+        st.markdown("##### 📌 Marcar PL para alerta")
+        opciones_pl = {
+            f"{row['PL']} · {row['Título'][:70]}": idx
+            for idx, row in df_show.iterrows()
+        }
+        mca = st.columns([3, 2, 1])
+        sel_pl_label = mca[0].selectbox("¿Qué PL?", list(opciones_pl.keys()), key="marcar_agenda_pl_sel")
+        sel_pl_clientes = mca[1].multiselect("¿Para qué cliente(s)?", clientes, key="marcar_agenda_pl_cli")
+        if mca[2].button("Marcar", key="marcar_agenda_pl_btn", disabled=not sel_pl_clientes):
+            row = df_show.loc[opciones_pl[sel_pl_label]]
+            item_id = f"pl_PE_{row['PL']}"
+            marcar_pendiente(
+                clientes=sel_pl_clientes, item_id=item_id, item_tipo="pl",
+                pais="PE", item_titulo=f"{row['PL']}: {row['Título']}",
+                item_url=row["Nº PL"], item_resumen=f"En agenda de {row['Comisión']} - {row['Estado del PL']}",
+            )
+            st.success(f"Marcado para: {', '.join(sel_pl_clientes)}. El agente lo redacta en la próxima hora.")
 
 # ---------- Mesas de trabajo + eventos ----------
 @st.cache_data(ttl=60)
