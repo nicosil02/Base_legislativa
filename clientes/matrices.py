@@ -247,6 +247,31 @@ def _parece_de_otro_pais(texto_normalizado: str) -> bool:
     return bool(palabras & _OTRO_PAIS_MARCADORES)
 
 
+# El indice del Registro Oficial mete TODO tipo de actos bajo un titulo
+# generico ("Segundo Suplemento No. 366") - acuerdos ministeriales,
+# resoluciones, ordenanzas municipales, personeria juridica de asociaciones
+# privadas... Ninguno de esos es una LEY siendo publicada, pero pueden
+# compartir vocabulario especifico con un PL si el nombre de una
+# asociacion/resolucion imita el tema (caso real 2026-09-14: una resolucion
+# que le otorga personalidad juridica a la asociacion privada "...de
+# Biodiversidad, Recursos Naturales y Biocomercio" matcheaba el PL de
+# Bioeconomia y Biocomercio solo por el nombre de la ONG). Denylist de
+# frases de tramite administrativo - las 16 ediciones reales en la DB al
+# momento de escribir esto eran todas de este tipo, ninguna era una Ley
+# real (no hay un caso positivo real todavia para calibrar el patron
+# contrario, asi que se opta por la denylist mas segura en vez de exigir
+# una frase "es ley" que no esta verificada).
+_ACTOS_NO_LEGISLATIVOS = {
+    "personeria juridica", "personalidad juridica", "se aprueba el estatuto",
+    "planificacion operativa", "ordenanza municipal",
+    "gobiernos autonomos descentralizados",
+}
+
+
+def _parece_acto_administrativo(texto_normalizado: str) -> bool:
+    return any(frase in texto_normalizado for frase in _ACTOS_NO_LEGISLATIVOS)
+
+
 def coincide_con_noticia(pl_titulo: str | None, noticia_texto: str | None, minimo_palabras: int = 3,
                           noticia_titulo: str | None = None) -> bool:
     """True si `noticia_texto` (titulo+resumen de una noticia) parece hablar
@@ -259,10 +284,14 @@ def coincide_con_noticia(pl_titulo: str | None, noticia_texto: str | None, minim
        palabras salian 248 matches (ej. "acceso"+"recursos" emparejando una
        noticia de fintech mexicano sin relacion real); con 3 bajo a 18,
        manteniendo los aciertos reales (INIAP, IA). Ademas exige que la
-       noticia no parezca ser de otro pais (ver _parece_de_otro_pais). Sigue
+       noticia no parezca ser de otro pais (ver _parece_de_otro_pais) ni un
+       acto administrativo de tramite del Registro Oficial que solo
+       coincide en vocabulario (ver _parece_acto_administrativo). Sigue
        siendo una señal para que Nicolas revise, no una alerta automatica -
        puede quedar algun falso positivo, pero ya en un volumen chico y
        revisable."""
+    if _parece_acto_administrativo(_normalizar_texto(noticia_texto)):
+        return False
     acr_pl = _acronimos(pl_titulo)
     if acr_pl and (acr_pl & _acronimos(noticia_texto)):
         return True
