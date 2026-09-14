@@ -21,6 +21,24 @@ from noticias.fuentes import (
     INSTITUCIONES_AMPLIAS, TEMAS_CLIENTE, PERFIL_ESTRICTO, matchea_perfil,
 )
 from alerts.borradores_store import marcar_pendiente
+from clientes.matrices import pls_trackeados_ec, coincide_con_noticia
+
+
+@st.cache_data(ttl=60)
+def _pls_trackeados_cache() -> list[dict]:
+    return pls_trackeados_ec()
+
+
+def _pl_relacionado(titulo: str | None, resumen: str | None) -> str | None:
+    """Si la noticia parece hablar de un PL que ya trackeamos (matriz Bayer
+    Crop/Syngenta o Incode), devuelve su titulo corto - señal temprana antes
+    de que el portal EC (que sincroniza cada 4-6h) lo refleje. Ver
+    clientes/matrices.py::coincide_con_noticia - deterministico, no TF-IDF."""
+    texto = f"{titulo or ''} {resumen or ''}"
+    for pl in _pls_trackeados_cache():
+        if coincide_con_noticia(pl.get("titulo_matriz"), texto):
+            return pl["titulo_matriz"]
+    return None
 
 CLIENTES_DIR = Path(__file__).resolve().parent.parent / "clientes"
 
@@ -341,6 +359,9 @@ def load_noticias(pais: str,
             lambda row: row.get("Tags") == "normas"
             or es_normativa(row["Título"], row["Resumen"]), axis=1
         )
+        df["PL_relacionado"] = df.apply(
+            lambda row: _pl_relacionado(row["Título"], row["Resumen"]), axis=1
+        )
         if cliente:
             # Instituciones "amplias" (MEF, etc. - ver fuentes.py) solo
             # cuentan para este cliente si el contenido matchea su tema
@@ -361,6 +382,7 @@ def load_noticias(pais: str,
     else:
         df["Temas"] = []
         df["EsNormativa"] = False
+        df["PL_relacionado"] = None
     return df
 
 
@@ -480,6 +502,14 @@ def _render_card(n, key_suffix: str = "") -> None:
     temas_list = n["Temas"] if isinstance(n["Temas"], list) else []
     es_norma = bool(n.get("EsNormativa") if isinstance(n, dict) else n["EsNormativa"])
     nid = int(n["ID"]) if "ID" in n and n["ID"] is not None else None
+    pl_relacionado = n.get("PL_relacionado") if isinstance(n, dict) else n["PL_relacionado"]
+    pl_html = ""
+    if pl_relacionado:
+        pl_html = (
+            '<div style="margin-top:6px;font-size:11px;color:#8a5a00;'
+            'background:#FFF4DE;padding:4px 8px;border-radius:6px;display:inline-block;">'
+            f'🔗 Posible relacionado a PL: {pl_relacionado[:90]}</div>'
+        )
     st.markdown(
         f'<div class="noticia-card">'
         f'<div class="noticia-fuente">{n["Fuente"]} · {fecha}</div>'
@@ -488,6 +518,7 @@ def _render_card(n, key_suffix: str = "") -> None:
         f'</div>'
         + (f'<div class="noticia-resumen">{resumen}</div>' if resumen else '')
         + _chips(temas_list, es_norma)
+        + pl_html
         + '</div>',
         unsafe_allow_html=True,
     )
