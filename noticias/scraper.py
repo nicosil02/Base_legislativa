@@ -15,6 +15,7 @@ from __future__ import annotations
 import html
 import logging
 import re
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
 from email.utils import parsedate_to_datetime
 from urllib.parse import urljoin, urlparse
@@ -528,3 +529,87 @@ def run_sync(db, pais: str | None = None,
                 log.warning("upsert fail %s: %s", item.get("url"), e)
                 stats["errores"] += 1
     return stats
+
+
+# ============================================================
+# Backfill de fechas: repara noticias con fecha_pub NULL
+# ============================================================
+# `run_sync()` solo re-toca los items MAS RECIENTES por fuente (gobpe: top
+# 25) - una fila ya insertada con fecha_pub NULL (por un bug ya corregido,
+# o por una fuente sin <time> en su pagina de listado) sale de esa ventana
+# y el sync normal nunca la vuelve a ver. Confirmado en vivo 2026-09-13:
+# el fix de "setiembre" arreglaba fetches nuevos, pero cientos de filas
+# historicas seguian NULL. Esta funcion visita cada articulo real (no el
+# listado) y extrae la fecha via <time>/meta tags/regex de fecha en
+# español - mismo mecanismo que el backfill puntual original, ahora parte
+# del pipeline en vez de un script suelto para que se auto-repare solo.
+
+_RE_META_FECHA = re.compile(
+    r'<meta[^>]*?(?:property|name)=["\'](?:article:published_time|og:published_time|'
+    r'publish-date|publish_date|date|DC\.date\.issued)["\'][^>]*?content=["\']([^"\']+)["\']',
+    re.IGNORECASE,
+)
+_RE_JSONLD_FECHA = re.compile(r'"datePublished"\s*:\s*"([^"]+)"', re.IGNORECASE)
+_RE_TEXTO_FECHA_ES = re.compile(r"\d{1,2}\s+de\s+[a-zA-Zñ]+\s+de\s+\d{4}[^.<]{0,25}")
+
+
+def _extraer_fecha_de_pagina(html_text: str) -> str | None:
+    m = _RE_TIME_TAG.search(html_text)
+    if m:
+        f = _parse_pubdate(m.group(1))
+        if f:
+            return f
+    m = _RE_META_FECHA.search(html_text)
+    if m:
+        f = _parse_pubdate(m.group(1))
+        if f:
+            return f
+    m = _RE_JSONLD_FECHA.search(html_text)
+    if m:
+        f = _parse_pubdate(m.group(1))
+        if f:
+            return f
+    texto = re.sub(r"<[^>]+>", " ", html_text)
+    texto = re.sub(r"\s+", " ", texto)
+    m = _RE_TEXTO_FECHA_ES.search(texto)
+    if m:
+        return _parse_gobpe_date(m.group(0))
+    return None
+
+
+def backfill_fechas(db, limit: int | None = None, max_workers: int = 8) -> dict:
+    """Visita cada noticia (de fuente activa) con fecha_pub NULL y trata de
+    recuperar su fecha real visitando el articulo directo. No inventa nada:
+    si no encuentra fecha real, la deja como estaba. Devuelve stats dict."""
+    rows = db.conn.execute(
+        """SELECT n.id, n.url FROM noticias n
+           JOIN noticias_fuentes f ON f.id = n.fuente_id
+           WHERE n.fecha_pub IS NULL AND f.activa = 1
+           ORDER BY n.id DESC"""
+        + (f" LIMIT {int(limit)}" if limit else "")
+    ).fetchall()
+    if not rows:
+        return {"intentadas": 0, "recuperadas": 0}
+
+    session = _make_session()
+    session.headers.update(HEADERS)
+
+    def _procesar(row_id: int, url: str) -> tuple[int, str | None]:
+        try:
+            r = _get(session, url, timeout=15)
+            if r.status_code != 200:
+                return row_id, None
+            return row_id, _extraer_fecha_de_pagina(r.text)
+        except Exception:
+            return row_id, None
+
+    recuperadas = 0
+    with ThreadPoolExecutor(max_workers=max_workers) as pool:
+        futuros = {pool.submit(_procesar, r["id"], r["url"]): r for r in rows}
+        for fut in as_completed(futuros):
+            row_id, fecha = fut.result()
+            if fecha:
+                with db.tx() as c:
+                    c.execute("UPDATE noticias SET fecha_pub=? WHERE id=?", (fecha, row_id))
+                recuperadas += 1
+    return {"intentadas": len(rows), "recuperadas": recuperadas}
