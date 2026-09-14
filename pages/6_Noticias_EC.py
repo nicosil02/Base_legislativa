@@ -37,7 +37,7 @@ def _pl_relacionado(titulo: str | None, resumen: str | None) -> str | None:
     clientes/matrices.py::coincide_con_noticia - deterministico, no TF-IDF."""
     texto = f"{titulo or ''} {resumen or ''}"
     for pl in _pls_trackeados_cache():
-        if coincide_con_noticia(pl.get("titulo_matriz"), texto):
+        if coincide_con_noticia(pl.get("titulo_matriz"), texto, noticia_titulo=titulo):
             return pl["titulo_matriz"]
     return None
 
@@ -516,7 +516,12 @@ def _render_card(n, key_suffix: str = "") -> None:
     nid = int(n["ID"]) if "ID" in n and n["ID"] is not None else None
     pl_relacionado = n.get("PL_relacionado") if isinstance(n, dict) else n["PL_relacionado"]
     pl_html = ""
-    if pl_relacionado:
+    # pandas puede convertir el None de _pl_relacionado() en NaN (float) al
+    # agrupar/deduplicar filas por tema - a diferencia de None, NaN es
+    # truthy en Python, asi que "if pl_relacionado:" sola no alcanza y
+    # nan[:90] tira TypeError (float no es subscriptable). Confirmado en
+    # vivo 2026-09-14 con una noticia real (Luisa Gonzalez).
+    if isinstance(pl_relacionado, str) and pl_relacionado:
         pl_html = (
             '<div style="margin-top:6px;font-size:11px;color:#8a5a00;'
             'background:#FFF4DE;padding:4px 8px;border-radius:6px;display:inline-block;">'

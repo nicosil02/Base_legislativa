@@ -216,7 +216,39 @@ def palabras_clave_titulo(titulo: str | None, min_len: int = 5) -> set[str]:
     }
 
 
-def coincide_con_noticia(pl_titulo: str | None, noticia_texto: str | None, minimo_palabras: int = 3) -> bool:
+# Los PLs trackeados son todos de Ecuador (ver pls_trackeados_ec) - si una
+# noticia nombra OTRO pais y nunca menciona Ecuador, el match de la via 2
+# (palabras compartidas) es casi siempre casualidad de vocabulario, no la
+# misma noticia. Caso real confirmado en vivo 2026-09-14: "Congreso de Perú
+# y Meta evalúan cooperación en inteligencia artificial y seguridad digital"
+# matcheaba un PL ecuatoriano de IA solo por compartir "inteligencia",
+# "artificial", "digital" - ninguna de esas palabras identifica al PL, son
+# genericas del tema. Mismo problema con notas de México, España y T-MEC/
+# Norteamerica encontradas en la misma auditoria. Subir minimo_palabras no
+# sirve (ya probado: mata matches reales como "... obliga a Ecuador a
+# decidir ahora" antes de sacar los falsos positivos). Solo se aplica a la
+# via 2 (palabras) - una sigla compartida (INIAP, COIP...) es una senal
+# fuerte por si sola, muy improbable que otro pais tenga la misma sigla.
+_OTRO_PAIS_MARCADORES = {
+    "peru", "mexico", "colombia", "chile", "argentina", "espana",
+    "bolivia", "venezuela", "brasil", "uruguay", "paraguay", "norteamerica",
+    "euros",  # Ecuador usa USD - "euros" es senal fuerte de nota europea
+}
+_ECUADOR_MARCADORES = {
+    "ecuador", "ecuatoriano", "ecuatoriana", "ecuatorianos", "ecuatorianas",
+    "quito", "guayaquil",
+}
+
+
+def _parece_de_otro_pais(texto_normalizado: str) -> bool:
+    palabras = set(re.findall(r"[a-z]+", texto_normalizado))
+    if palabras & _ECUADOR_MARCADORES:
+        return False
+    return bool(palabras & _OTRO_PAIS_MARCADORES)
+
+
+def coincide_con_noticia(pl_titulo: str | None, noticia_texto: str | None, minimo_palabras: int = 3,
+                          noticia_titulo: str | None = None) -> bool:
     """True si `noticia_texto` (titulo+resumen de una noticia) parece hablar
     del mismo PL. Dos vias, ambas deterministas/auditables (no es matching
     difuso tipo TF-IDF, ya descartado en esta sesion por impreciso):
@@ -226,9 +258,11 @@ def coincide_con_noticia(pl_titulo: str | None, noticia_texto: str | None, minim
        titulo - probado en vivo contra las 2145 noticias EC reales: con 2
        palabras salian 248 matches (ej. "acceso"+"recursos" emparejando una
        noticia de fintech mexicano sin relacion real); con 3 bajo a 18,
-       manteniendo los aciertos reales (INIAP, IA). Sigue siendo una señal
-       para que Nicolas revise, no una alerta automatica - puede quedar
-       algun falso positivo, pero ya en un volumen chico y revisable."""
+       manteniendo los aciertos reales (INIAP, IA). Ademas exige que la
+       noticia no parezca ser de otro pais (ver _parece_de_otro_pais). Sigue
+       siendo una señal para que Nicolas revise, no una alerta automatica -
+       puede quedar algun falso positivo, pero ya en un volumen chico y
+       revisable."""
     acr_pl = _acronimos(pl_titulo)
     if acr_pl and (acr_pl & _acronimos(noticia_texto)):
         return True
@@ -236,7 +270,16 @@ def coincide_con_noticia(pl_titulo: str | None, noticia_texto: str | None, minim
     if len(kw_pl) < minimo_palabras:
         return False
     kw_noticia = palabras_clave_titulo(noticia_texto, min_len=4)
-    return len(kw_pl & kw_noticia) >= minimo_palabras
+    if len(kw_pl & kw_noticia) < minimo_palabras:
+        return False
+    # El chequeo de "otro pais" solo mira el TITULO (no el resumen completo)
+    # - un pais nombrado de paso en el cuerpo (ej. "fondos desde Venezuela"
+    # en una nota ecuatoriana de lavado de activos) no debe descartar un
+    # match real; que el pais aparezca en el titular es señal mucho mas
+    # fuerte de que la noticia ES sobre ese pais. Si no se pasa el titulo
+    # por separado, cae al texto completo (comportamiento previo).
+    texto_pais = noticia_titulo if noticia_titulo is not None else noticia_texto
+    return not _parece_de_otro_pais(_normalizar_texto(texto_pais))
 
 
 def pls_trackeados_ec() -> list[dict]:
