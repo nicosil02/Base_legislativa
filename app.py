@@ -65,6 +65,20 @@ def _bootstrap_dbs():
     import os
     import shutil
 
+    def _esta_corrupto(db_path: Path) -> bool:
+        """Chequeo barato: si el archivo no abre ni una query trivial,
+        esta corrupto (ej. 'database disk image is malformed', visto en
+        vivo 2026-09-14 en Streamlit Cloud) y hay que re-descomprimir sin
+        importar el mtime."""
+        import sqlite3
+        try:
+            conn = sqlite3.connect(f"file:{db_path}?mode=ro", uri=True)
+            conn.execute("SELECT name FROM sqlite_master LIMIT 1").fetchone()
+            conn.close()
+            return False
+        except sqlite3.DatabaseError:
+            return True
+
     def _needs_restore(db_path: Path, gz_path: Path) -> str | None:
         """Devuelve el motivo si hay que re-descomprimir, o None si no."""
         if not gz_path.exists():
@@ -76,6 +90,8 @@ def _bootstrap_dbs():
                 return "stale"
         except OSError:
             return "missing"
+        if _esta_corrupto(db_path):
+            return "corrupto"
         return None
 
     def _descomprimir_atomico(gz_path: Path, db_path: Path) -> None:
