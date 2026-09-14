@@ -22,6 +22,7 @@ Nicolas confirmo 2026-09-13:
 from __future__ import annotations
 
 import re
+import unicodedata
 from pathlib import Path
 
 CLIENTES_DIR = Path(__file__).resolve().parent
@@ -149,6 +150,108 @@ def matriz_incode_ec() -> list[dict]:
 
 
 # ============================================================
+# Matching noticia <-> PL trackeado por PARTE DEL NOMBRE, no por numero
+# ============================================================
+# Nicolas confirmo 2026-09-13: el equipo identifica un PL por parte de su
+# nombre/titulo (ej. "Ley de Paramos", "Ley del INIAP"), nunca por el numero
+# de tramite - confirma el hallazgo empirico (0 de 2145 noticias EC citan un
+# numero de tramite exacto). Esto es la pieza real de la Fase 3: detectar
+# cuando una noticia (que se actualiza rapido) menciona el nombre de un PL
+# que ya trackeamos (matriz), como señal temprana antes que el portal.
+
+# Boilerplate legislativo/generico que NO sirve para identificar un PL
+# puntual (aparece en casi todos los titulos por igual) - se saca antes de
+# buscar coincidencias, para no matchear por "proyecto de ley organica".
+_STOPWORDS_PL = {
+    "proyecto", "proyectos", "ley", "leyes", "organica", "organico",
+    "reformatoria", "reformatorio", "reforma", "codigo", "para", "que",
+    "sobre", "con", "del", "las", "los", "una", "uno", "por", "sus", "en",
+    "de", "la", "el", "y", "a", "al", "se", "su", "e", "u", "o", "no", "es",
+    "un", "lo", "como", "mas", "integral", "nacional", "ecuador", "asamblea",
+    "diversos", "varios", "articulos", "articulo", "cuerpos", "legales",
+    "vigente", "vigentes", "cumplimiento", "fin", "efectos", "materia",
+}
+
+
+# Palabras genericas que aparecen en MUCHOS titulos de PL sin identificar
+# nada puntual (confirmado en vivo 2026-09-13: "desarrollo" solo hizo
+# matchear un PL de desarrollo agropecuario contra 1444 noticias sin
+# relacion real - cripto, deportes, narcotrafico). Se suman al stopword
+# list angosto de arriba para las palabras "normales" (no siglas).
+_PALABRAS_GENERICAS_PL = {
+    "desarrollo", "unificado", "productivo", "productiva", "general",
+    "publico", "publica", "sistema", "gestion", "fortalecimiento",
+    "proteccion", "regimen", "responsabilidad", "seguridad", "servicio",
+    "servicios", "derecho", "derechos", "modelo", "plan", "politica",
+    "sancionar", "sanciones", "control", "registro", "personas",
+}
+
+# Siglas/instituciones en MAYUSCULAS dentro del titulo ORIGINAL (antes de
+# normalizar) - "INIAP", "COIP", "OVM" identifican un PL puntual por si
+# solas, a diferencia de una palabra comun del idioma. Denylist corta para
+# los falsos positivos reales de este corpus (titulares con el pais en
+# mayusculas como dateline, ej. "ECUADOR: Comision aprueba...").
+_RE_ACRONIMO = re.compile(r"\b[A-Z]{3,}\b")
+_ACRONIMOS_IGNORAR = {"ECUADOR", "PERU", "LEY", "ASAMBLEA", "COMISION", "PROYECTO"}
+
+
+def _normalizar_texto(s: str | None) -> str:
+    s = (s or "").lower()
+    return "".join(c for c in unicodedata.normalize("NFD", s) if unicodedata.category(c) != "Mn")
+
+
+def _acronimos(texto: str | None) -> set[str]:
+    return {a for a in _RE_ACRONIMO.findall(texto or "") if a not in _ACRONIMOS_IGNORAR}
+
+
+def palabras_clave_titulo(titulo: str | None, min_len: int = 5) -> set[str]:
+    """Palabras distintivas de un titulo (sin el boilerplate legislativo
+    generico ni las palabras demasiado comunes) - lo que realmente
+    identifica a ESE PL puntual, sin contar las siglas (ver _acronimos)."""
+    texto = _normalizar_texto(titulo)
+    palabras = re.findall(r"[a-z]+", texto)
+    return {
+        p for p in palabras
+        if len(p) >= min_len and p not in _STOPWORDS_PL and p not in _PALABRAS_GENERICAS_PL
+    }
+
+
+def coincide_con_noticia(pl_titulo: str | None, noticia_texto: str | None, minimo_palabras: int = 3) -> bool:
+    """True si `noticia_texto` (titulo+resumen de una noticia) parece hablar
+    del mismo PL. Dos vias, ambas deterministas/auditables (no es matching
+    difuso tipo TF-IDF, ya descartado en esta sesion por impreciso):
+    1. Comparten una SIGLA real (INIAP, COIP, OVM...) - identificador fuerte
+       por si solo, confirmado con el caso real del PL del INIAP.
+    2. Comparten `minimo_palabras` (3 por defecto) palabras distintivas del
+       titulo - probado en vivo contra las 2145 noticias EC reales: con 2
+       palabras salian 248 matches (ej. "acceso"+"recursos" emparejando una
+       noticia de fintech mexicano sin relacion real); con 3 bajo a 18,
+       manteniendo los aciertos reales (INIAP, IA). Sigue siendo una señal
+       para que Nicolas revise, no una alerta automatica - puede quedar
+       algun falso positivo, pero ya en un volumen chico y revisable."""
+    acr_pl = _acronimos(pl_titulo)
+    if acr_pl and (acr_pl & _acronimos(noticia_texto)):
+        return True
+    kw_pl = palabras_clave_titulo(pl_titulo)
+    if len(kw_pl) < minimo_palabras:
+        return False
+    kw_noticia = palabras_clave_titulo(noticia_texto, min_len=4)
+    return len(kw_pl & kw_noticia) >= minimo_palabras
+
+
+def pls_trackeados_ec() -> list[dict]:
+    """Todos los PLs EC trackeados (Bayer Crop/Syngenta + Incode), con
+    `clientes` agregado - para chequear noticias contra el set completo de
+    una sola vez en vez de repetir la lectura del Excel por cliente."""
+    out = []
+    for f in matriz_bayer_crop("EC"):
+        out.append({**f, "clientes": ["bayer", "syngenta"]})
+    for f in matriz_incode_ec():
+        out.append({**f, "clientes": ["incode"]})
+    return out
+
+
+# ============================================================
 # self-check (Ponytail: 1 chequeo ejecutable de la logica no trivial)
 # ============================================================
 
@@ -173,6 +276,24 @@ def _demo():
         print(f"OK matriz_incode_ec(): {len(inc)} PLs")
     else:
         print("SKIP: no se encontro el Excel de Incode en este entorno")
+
+    # Matching por nombre - caso real verificado en vivo 2026-09-13: una
+    # noticia real sobre el INIAP matcheo el titulo de ese PL puntual.
+    pl_iniap = "Proyecto de ley reformatoria a la Ley Constitutiva del INIAP"
+    noticia_real = "ECUADOR: Comisión aprueba informe para reformar la Ley del INIAP"
+    noticia_no_relacionada = "Presidenta Fujimori entrega ayuda humanitaria a población de Purús"
+    assert coincide_con_noticia(pl_iniap, noticia_real), (
+        "deberia matchear - caso real verificado (INIAP)")
+    assert not coincide_con_noticia(pl_iniap, noticia_no_relacionada), (
+        "no deberia matchear - sin relacion real"
+    )
+    print("OK coincide_con_noticia: matchea el caso real (INIAP), no matchea uno sin relacion")
+
+    trackeados = pls_trackeados_ec()
+    if BAYER_CROP_XLSX.exists() or INCODE_XLSX.exists():
+        assert len(trackeados) == len(ec) + len(inc)
+        assert all("clientes" in f for f in trackeados)
+        print(f"OK pls_trackeados_ec(): {len(trackeados)} PLs con cliente asignado")
 
 
 if __name__ == "__main__":
