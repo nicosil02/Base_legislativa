@@ -1168,7 +1168,11 @@ if clientes and not df.empty:
     sel_pl_clientes = mc[1].multiselect("¿Para qué cliente(s)?", clientes, key="marcar_pl_cli")
     if mc[2].button("Marcar", key="marcar_pl_btn", disabled=not sel_pl_clientes):
         row = df.loc[opciones_pl[sel_pl_label]]
-        item_id = f"pl_PE_{row['per_par_id']}_{row['cod_tipo_parl']}_{row['pley_num']}"
+        # item_id = "pl_PE_<proyecto_ley>" (ej. "pl_PE_00011-2026-2031-CD") -
+        # mismo esquema que pages/3_Agenda_PE.py, para que marcar el mismo PL
+        # desde cualquiera de las dos paginas caiga en la MISMA entrada
+        # (marcar_pendiente hace upsert por cliente+item_id).
+        item_id = f"pl_PE_{row['PL']}"
         marcar_pendiente(
             clientes=sel_pl_clientes, item_id=item_id, item_tipo="pl",
             pais="PE", item_titulo=f"{row['PL']}: {row['Título']}",
