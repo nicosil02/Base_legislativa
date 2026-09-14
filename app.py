@@ -62,6 +62,7 @@ st.set_page_config(
 # por lo que no se re-descomprime.
 def _bootstrap_dbs():
     import gzip
+    import os
     import shutil
 
     def _needs_restore(db_path: Path, gz_path: Path) -> str | None:
@@ -77,6 +78,33 @@ def _bootstrap_dbs():
             return "missing"
         return None
 
+    def _descomprimir_atomico(gz_path: Path, db_path: Path) -> None:
+        """Descomprime a un .tmp en el mismo directorio y hace os.replace()
+        al final (atomico en el mismo filesystem, POSIX y Windows) - nunca
+        deja el archivo destino en un estado truncado/a medio escribir.
+        Bug real encontrado en vivo 2026-09-14: db_path.open("wb") trunca
+        el archivo al instante y `shutil.copyfileobj` tarda varios segundos
+        en terminar (el PE .db descomprimido pesa ~78 MB) - si otra sesion
+        de Streamlit (multiples usuarios/pestañas comparten el mismo
+        contenedor, y Streamlit Cloud corre las sesiones como threads
+        dentro de UN solo proceso - mismo PID) corre una query SELECT
+        mientras tanto, ve un sqlite truncado y tira sqlite3.DatabaseError.
+        Mas probable justo despues de un redeploy (contenedor fresco,
+        todas las sesiones bootstrapean a la vez). tempfile.mkstemp da un
+        nombre unico incluso entre threads del mismo PID, asi que dos
+        bootstraps concurrentes nunca pisan el mismo .tmp."""
+        import tempfile
+        fd, tmp_name = tempfile.mkstemp(
+            dir=db_path.parent, prefix=db_path.name + ".", suffix=".tmp",
+        )
+        tmp_path = Path(tmp_name)
+        try:
+            with os.fdopen(fd, "wb") as f_out, gzip.open(gz_path, "rb") as f_in:
+                shutil.copyfileobj(f_in, f_out)
+            os.replace(tmp_path, db_path)
+        finally:
+            tmp_path.unlink(missing_ok=True)
+
     repo_root = Path(__file__).resolve().parent
 
     # Perú: decomprimir data/proyectos.db.gz (14 MB) → proyectos.db (78 MB)
@@ -85,8 +113,7 @@ def _bootstrap_dbs():
     reason = _needs_restore(pe_db, pe_gz)
     if reason:
         try:
-            with gzip.open(pe_gz, "rb") as f_in, pe_db.open("wb") as f_out:
-                shutil.copyfileobj(f_in, f_out)
+            _descomprimir_atomico(pe_gz, pe_db)
             print(f"[bootstrap] proyectos.db restored from gz ({reason}, {pe_db.stat().st_size} bytes)")
         except Exception as e:
             print(f"[bootstrap] error restoring PE DB: {e}")
@@ -99,8 +126,7 @@ def _bootstrap_dbs():
     reason = _needs_restore(ec_db, ec_gz)
     if reason:
         try:
-            with gzip.open(ec_gz, "rb") as f_in, ec_db.open("wb") as f_out:
-                shutil.copyfileobj(f_in, f_out)
+            _descomprimir_atomico(ec_gz, ec_db)
             print(f"[bootstrap] proyectos_ec.db restored from gz ({reason}, {ec_db.stat().st_size} bytes)")
         except Exception as e:
             print(f"[bootstrap] error restoring EC DB from gz: {e}")
