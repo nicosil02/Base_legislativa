@@ -1412,6 +1412,8 @@ if df_transcripciones.empty:
         "`python -m congreso_live.cli sync-transcripciones`."
     )
 else:
+    from congreso_live.resumenes_store import list_resumenes
+    _resumenes = list_resumenes()
     for _, row in df_transcripciones.iterrows():
         _dur = row["duracion_seg"]
         _dur_txt = f"{int(_dur) // 3600}h {(int(_dur) % 3600) // 60}min" if _dur else "—"
@@ -1419,6 +1421,7 @@ else:
             f'<span class="pl-chip">{t}</span>'
             for t in (row["temas"] or "").split(",") if t
         )
+        _res = _resumenes.get(row["video_id"])
         with st.expander(f"{row['tipo']} · {row['fecha'] or '—'} · {row['titulo'][:90]}"):
             st.markdown(
                 f'<div style="margin-bottom:10px;">{_temas_html}</div>'
@@ -1428,9 +1431,23 @@ else:
                 f'target="_blank">Ver en YouTube ↗</a></div>',
                 unsafe_allow_html=True,
             )
+            if _res:
+                _ideas_html = "".join(f"<li>{i}</li>" for i in _res.get("ideas_clave", []))
+                st.markdown(
+                    f'<div style="border:1px solid var(--line-soft);border-radius:8px;'
+                    f'padding:12px 16px;margin-bottom:14px;background:var(--bg-soft);">'
+                    f'<div style="font-size:11px;font-weight:800;letter-spacing:0.1em;'
+                    f'text-transform:uppercase;color:var(--ink-mute);margin-bottom:6px;">Resumen</div>'
+                    f'<div style="font-size:14px;margin-bottom:8px;">{_res["resumen"]}</div>'
+                    f'<ul style="font-size:13px;color:var(--ink-soft);margin:0;padding-left:18px;">'
+                    f'{_ideas_html}</ul></div>',
+                    unsafe_allow_html=True,
+                )
+            else:
+                st.caption("Resumen pendiente de generar.")
             st.text_area(
-                "Transcripción", value=row["texto"], height=240,
-                key=f"transcripcion_{row['video_id']}", label_visibility="collapsed",
+                "Transcripción completa", value=row["texto"], height=240,
+                key=f"transcripcion_{row['video_id']}",
             )
 
 # ---------- Footer ----------
