@@ -322,6 +322,22 @@ jobs:
 
       - name: Generar snapshot gz
         run: |
+          # Mergear SIEMPRE sesiones_transcripciones de origin antes de
+          # generar el snapshot - bug real 2026-09-15: este workflow usa
+          # actions/cache para proyectos.db (restore-keys generico entre
+          # corridas), asi que cuando el cache trae una copia VIEJA, el
+          # push despues sale limpio (la ancestria del commit sigue
+          # siendo valida, git no mira contenido) y el fallback de merge
+          # por conflicto nunca se dispara - piso en silencio transcripciones
+          # reales que vigilar-congreso.yml/backfill-vod.yml habian
+          # guardado mientras el cache estaba desactualizado (paso 2 veces
+          # el mismo dia: Presupuesto/Transportes borrados asi).
+          git fetch origin main 2>/dev/null || true
+          if git show origin/main:data/proyectos.db.gz > /tmp/origin_proyectos.db.gz 2>/dev/null \
+              && [ -s /tmp/origin_proyectos.db.gz ]; then
+            gunzip -c /tmp/origin_proyectos.db.gz > /tmp/origin_proyectos.db
+            python -X utf8 -m congreso_live.merge_db proyectos.db /tmp/origin_proyectos.db
+          fi
           # Comprimir con gzip -9 para minimizar tamano del .gz en el repo.
           # -k mantiene el .db original para que el cache de la proxima corrida
           # lo encuentre.
