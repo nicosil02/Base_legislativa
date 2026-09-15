@@ -72,18 +72,7 @@ def clasificar_titulo(titulo: str | None) -> str | None:
 
 
 def _ydl(opts: dict):
-    base = {
-        "quiet": True, "no_warnings": True, "skip_download": True,
-        # Cliente "android" en vez del web por default: yt-dlp lo trae
-        # incluido en su fallback normal, pero forzarlo primero evita el
-        # intento inicial con el cliente web (el que dispara "Sign in to
-        # confirm you're not a bot" en las IPs de datacenter de GitHub
-        # Actions, verificado en vivo 2026-09-14/15). No soluciona el
-        # bloqueo por IP en si - YouTube igual puede rechazar el cliente
-        # android desde la misma IP marcada - pero es gratis probarlo y
-        # en muchos casos el cliente android recibe menos escrutinio.
-        "extractor_args": {"youtube": {"player_client": ["android"]}},
-    }
+    base = {"quiet": True, "no_warnings": True, "skip_download": True}
     base.update(opts)
     return yt_dlp.YoutubeDL(base)
 

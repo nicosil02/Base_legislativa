@@ -55,12 +55,6 @@ def capturar_audio_en_vivo(video_id: str, segundos: int = 30) -> Path | None:
     cmd = [
         sys.executable, "-m", "yt_dlp",
         "--ffmpeg-location", str(ffmpeg_local.parent),
-        # Cliente "android": mismo motivo que en detector._ydl() - evita
-        # el intento inicial con el cliente web, que es el que dispara
-        # el bloqueo anti-bot en IPs de datacenter (a probar en vivo si
-        # de verdad esquiva el bloqueo o si YouTube igual lo rechaza
-        # desde la misma IP marcada).
-        "--extractor-args", "youtube:player_client=android",
         "-f", "bestaudio/best",
         "-o", str(clip_path),
         f"https://www.youtube.com/watch?v={video_id}",
