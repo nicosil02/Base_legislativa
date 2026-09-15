@@ -1,0 +1,25 @@
+name: TEST - CallMeBot WhatsApp (descartar despues de probar)
+
+on:
+  workflow_dispatch: {}
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: pip install -q requests
+      - name: Mandar WhatsApp de prueba
+        env:
+          CALLMEBOT_PHONE: ${{ secrets.CALLMEBOT_PHONE }}
+          CALLMEBOT_APIKEY: ${{ secrets.CALLMEBOT_APIKEY }}
+          PYTHONIOENCODING: utf-8
+        run: |
+          python -X utf8 -c "
+          from congreso_live.notify import enviar_whatsapp
+          ok = enviar_whatsapp('Test desde GitHub Actions - vigilar-congreso.yml, secrets OK si te llego esto.')
+          print('enviado OK' if ok else 'FALLO EL ENVIO')
+          "
