@@ -81,8 +81,10 @@ def cmd_sync_transcripciones(args) -> int:
 def cmd_live_watch(args) -> int:
     """Corre por detras, sin intervencion manual: detecta sola cualquier
     sesion en vivo (Pleno de cualquier camara, o comision ordinaria) y la
-    va transcribiendo, soportando varias en simultaneo. Pensado para
-    dejar corriendo en una terminal aparte. Ctrl+C para parar."""
+    va transcribiendo, soportando varias en simultaneo. Sin --max-total-minutos
+    corre para siempre (Ctrl+C para parar) - pensado para dejar corriendo
+    en una terminal aparte. Con --max-total-minutos sale solo al llegar
+    al limite (para un workflow con tiempo maximo, ver vigilar-congreso.yml)."""
     try:
         from congreso_live.live_transcribe import watch_and_transcribe
     except ImportError:
@@ -90,23 +92,10 @@ def cmd_live_watch(args) -> int:
               "pip install faster-whisper imageio-ffmpeg")
         return 1
     try:
-        watch_and_transcribe(intervalo_seg=args.intervalo, poll_seg=args.poll)
+        watch_and_transcribe(intervalo_seg=args.intervalo, poll_seg=args.poll,
+                             max_total_minutos=args.max_total_minutos)
     except KeyboardInterrupt:
         print("\n[live-watch] listo, cortado por el usuario.")
-    return 0
-
-
-def cmd_live_watch_once(args) -> int:
-    """Version acotada de live-watch pensada para un workflow programado
-    (un "tick" - detecta, transcribe hasta --max-minutos, devuelve)."""
-    try:
-        from congreso_live.live_transcribe import watch_once
-    except ImportError:
-        print("Falta faster-whisper/imageio-ffmpeg: "
-              "pip install faster-whisper imageio-ffmpeg")
-        return 1
-    resultado = watch_once(intervalo_seg=args.intervalo, max_minutos=args.max_minutos)
-    print(f"[live-watch-once] {resultado['sesiones']} sesion(es) en vivo procesada(s).")
     return 0
 
 
@@ -128,14 +117,9 @@ def main(argv: list[str] | None = None) -> int:
                     help="segundos de audio real por chunk (default 40)")
     lw.add_argument("--poll", type=int, default=60,
                     help="cada cuantos segundos revisa si hay sesiones nuevas en vivo (default 60)")
+    lw.add_argument("--max-total-minutos", type=float, default=None,
+                    help="si se pasa, sale solo al llegar a este limite en vez de correr para siempre (para un workflow con tiempo maximo)")
     lw.set_defaults(func=cmd_live_watch)
-    lwo = sub.add_parser("live-watch-once",
-                         help="un solo 'tick' acotado de live-watch, para correr desde un workflow programado")
-    lwo.add_argument("--intervalo", type=int, default=40,
-                     help="segundos de audio real por chunk (default 40)")
-    lwo.add_argument("--max-minutos", type=float, default=8,
-                     help="minutos maximos a transcribir antes de devolver (default 8)")
-    lwo.set_defaults(func=cmd_live_watch_once)
     args = p.parse_args(argv)
     logging.basicConfig(level=logging.DEBUG if args.verbose else logging.INFO,
                         format="%(asctime)s %(levelname)s %(message)s")
