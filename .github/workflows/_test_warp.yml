@@ -1,0 +1,25 @@
+name: TEST - WARP proxy vs bloqueo YouTube (descartar despues de probar)
+
+on:
+  workflow_dispatch: {}
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Instalar Cloudflare WARP en modo proxy (SOCKS5 :40000)
+        run: |
+          bash <(curl -fsSL git.io/warp.sh) proxy
+          sleep 5
+          warp-cli --accept-tos status || true
+
+      - name: Probar yt-dlp SIN proxy (control - debe fallar con bot-check)
+        run: |
+          python3 -m pip install -q -U yt-dlp
+          echo "--- SIN proxy ---"
+          python3 -m yt_dlp --skip-download -q --print "%(title)s" "https://www.youtube.com/watch?v=EM7fr1Txae4" 2>&1 || true
+
+      - name: Probar yt-dlp CON proxy WARP (test real)
+        run: |
+          echo "--- CON proxy WARP socks5://127.0.0.1:40000 ---"
+          python3 -m yt_dlp --proxy "socks5://127.0.0.1:40000" --skip-download -q --print "%(title)s" "https://www.youtube.com/watch?v=EM7fr1Txae4" 2>&1 || true
