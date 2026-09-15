@@ -175,14 +175,33 @@ def capturar_y_acumular_en_vivo(
     duracion_acumulada = (row[1] or 0) if row else 0
 
     chunks_ok = 0
+    misses_seguidos = 0
     t_inicio = time.time()
     try:
         while True:
             if max_minutos is not None and (time.time() - t_inicio) > max_minutos * 60:
                 break
-            vivos_ids = {v["id"] for v in vivos_de_interes()}
-            if video_id not in vivos_ids:
-                break  # la sesion termino (o nunca estuvo en vivo)
+            # vivos_de_interes() vuelve a pegarle a YouTube via WARP - un
+            # fallo transitorio (bot-check, WARP cargado) NO debe cortar
+            # una captura que recien arranco. Bug real encontrado en vivo
+            # 2026-09-15 (corrida #760): los 3 hilos que arrancaron a los
+            # 96 min se murieron al toque porque este chequeo (sin
+            # try/except) volvio a fallar y la excepcion sin atrapar
+            # mataba el hilo entero - 0 segundos transcriptos pese a que
+            # la sesion SI estaba en vivo. Ahora tolera 2 fallos/misses
+            # seguidos antes de asumir que la sesion termino de verdad.
+            try:
+                vivo = video_id in {v["id"] for v in vivos_de_interes()}
+            except Exception as e:
+                print(f"[live-transcribe] {video_id}: error chequeando en vivo, sigo: {e}")
+                vivo = True
+            if not vivo:
+                misses_seguidos += 1
+                if misses_seguidos >= 2:
+                    break  # 2 chequeos seguidos sin exito: la sesion termino de verdad
+                time.sleep(intervalo_seg)  # no reintentar en caliente, misma cadencia que un chunk
+                continue
+            misses_seguidos = 0
 
             wav = capturar_audio_en_vivo(video_id, segundos=intervalo_seg)
             if wav is None:
@@ -335,8 +354,8 @@ def _test_acumulacion():
                           "Segunda parte, sigue hablando.",
                           ""])  # el tercer chunk simula silencio (se ignora)
     vivos_falsos = iter([
-        [{"id": "TEST123"}], [{"id": "TEST123"}],
-        [{"id": "TEST123"}], [],  # 4to check: la sesion ya termino
+        [{"id": "TEST123"}], [{"id": "TEST123"}], [{"id": "TEST123"}],
+        [], [],  # 2 misses SEGUIDOS: recien ahi se asume terminada
     ])
 
     def _fake_capturar(video_id, segundos):
@@ -365,6 +384,51 @@ def _test_acumulacion():
         conn.close()
     assert texto == "Primera parte de la sesion. Segunda parte, sigue hablando.", texto
     print("OK live_transcribe: acumulacion crece chunk a chunk y corta al terminar la sesion")
+
+
+def _test_tolera_fallo_transitorio():
+    """Un solo miss/excepcion de vivos_de_interes() (WARP flaqueando) NO
+    debe cortar la captura - bug real encontrado en vivo 2026-09-15
+    (corrida #760): un chequeo sin try/except mataba el hilo entero al
+    primer fallo, perdiendo 96 min de sesion real. Aca simulamos: vivo,
+    UNA excepcion, vivo de nuevo - debe seguir capturando sin cortar."""
+    import tempfile
+    from unittest.mock import patch
+
+    import congreso_live.live_transcribe as lt
+
+    chunks_falsos = iter(["Antes del fallo.", "Despues del fallo."])
+    secuencia = iter([
+        [{"id": "TEST123"}],
+        "EXCEPCION",  # WARP/bot-check falla una vez
+        [{"id": "TEST123"}],
+        [], [],  # recien ahi termina de verdad
+    ])
+
+    def _vivos_falsos():
+        v = next(secuencia)
+        if v == "EXCEPCION":
+            raise RuntimeError("Sign in to confirm you're not a bot")
+        return v
+
+    def _fake_capturar(video_id, segundos):
+        return "fake.wav"
+
+    def _fake_transcribir(wav_path, modelo):
+        texto = next(chunks_falsos, "")
+        return [{"start": 0, "end": 5, "text": texto}] if texto else []
+
+    with tempfile.TemporaryDirectory() as td:
+        db_path = Path(td) / "test.db"
+        with patch.object(lt, "capturar_audio_en_vivo", _fake_capturar), \
+             patch.object(lt, "transcribir_audio", _fake_transcribir), \
+             patch("congreso_live.detector.vivos_de_interes", _vivos_falsos):
+            resultado = lt.capturar_y_acumular_en_vivo(
+                "TEST123", "Comision: Test", "Sesion de prueba",
+                intervalo_seg=1, modelo="modelo-fake", db_path=db_path,
+            )
+    assert resultado["chunks"] == 2, resultado
+    print("OK live_transcribe: un fallo transitorio de deteccion no corta la captura")
 
 
 def _test_watch_and_transcribe_max_total():
@@ -420,5 +484,6 @@ def _test_watch_and_transcribe_idle_exit():
 if __name__ == "__main__":
     _demo()
     _test_acumulacion()
+    _test_tolera_fallo_transitorio()
     _test_watch_and_transcribe_max_total()
     _test_watch_and_transcribe_idle_exit()
