@@ -82,7 +82,7 @@ jobs:
             gunzip -kc data/proyectos.db.gz > proyectos.db
           fi
 
-      - name: Transcribir sesiones en vivo (continuo, hasta 170 min)
+      - name: Transcribir sesiones en vivo (continuo, hasta 170 min, con commits periodicos)
         env:
           PYTHONIOENCODING: utf-8
           YT_DLP_PROXY: socks5://127.0.0.1:40000
@@ -104,9 +104,33 @@ jobs:
           # de concurrency) hasta 170 min sin hacer nada - bug real
           # encontrado en vivo 2026-09-15, la corrida #696 se quedo
           # colgada ~170 min sin nada que transcribir.
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
           timeout 10500 python -X utf8 -m congreso_live.cli live-watch \
-              --max-total-minutos 170 --idle-exit-minutos 8 \
-              || echo "[warn] live-watch fallo, sigo"
+              --max-total-minutos 170 --idle-exit-minutos 8 &
+          watch_pid=$!
+
+          # Commitea el snapshot de la DB cada 5 min MIENTRAS live-watch sigue
+          # vivo, en vez de solo al final del tramo (hasta 170 min despues) -
+          # sin esto Streamlit (que lee del snapshot commiteado) queda ciego
+          # toda la sesion. sqlite hace commit por chunk (~40s) con journal
+          # por defecto, asi que el archivo en disco esta consistente fuera
+          # de una transaccion - agarrarlo aca cada 5 min es seguro.
+          while kill -0 "$watch_pid" 2>/dev/null; do
+            sleep 300
+            if [ -f proyectos.db ]; then
+              gzip -9kf proyectos.db
+              mv proyectos.db.gz data/proyectos.db.gz
+              git add data/proyectos.db.gz
+              if ! git diff --staged --quiet; then
+                git commit -m "Congreso live: transcripcion parcial $(date -u +%Y-%m-%d-%H%M) [skip ci]"
+                git push || { git fetch origin main && git rebase -X theirs origin/main && git push; } \
+                    || echo "[warn] commit parcial no se pudo pushear, sigo"
+              fi
+            fi
+          done
+          wait "$watch_pid" || echo "[warn] live-watch fallo, sigo"
 
       - name: Guardar snapshot DB si cambio
         run: |
