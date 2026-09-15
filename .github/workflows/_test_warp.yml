@@ -7,12 +7,22 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: Instalar Cloudflare WARP en modo proxy (SOCKS5 :40000)
+      - name: Instalar Cloudflare WARP (repo oficial apt, soporta Ubuntu 24.04)
         run: |
-          curl -fsSL git.io/warp.sh -o /tmp/warp.sh
-          sudo bash /tmp/warp.sh proxy
+          curl -fsSL https://pkg.cloudflareclient.com/pubkey.gpg | sudo gpg --yes --dearmor --output /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg
+          echo "deb [signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] https://pkg.cloudflareclient.com/ $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/cloudflare-client.list
+          sudo apt-get update -qq
+          sudo apt-get install -y cloudflare-warp
+          sudo systemctl enable --now warp-svc
+          sleep 3
+          warp-cli --accept-tos registration new
+          warp-cli --accept-tos mode proxy
+          warp-cli --accept-tos proxy port 40000
+          warp-cli --accept-tos connect
           sleep 5
-          warp-cli --accept-tos status || true
+          warp-cli --accept-tos status
+          echo "--- trace (deberia decir warp=on) ---"
+          curl -s https://www.cloudflare.com/cdn-cgi/trace/ | grep warp || true
 
       - name: Probar yt-dlp SIN proxy (control - debe fallar con bot-check)
         run: |
