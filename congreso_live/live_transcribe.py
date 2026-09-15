@@ -28,7 +28,19 @@ def _ffmpeg_bin() -> Path:
     """imageio_ffmpeg trae un binario portable pero con nombre raro
     (ffmpeg-win-x86_64-vX.Y.exe) - yt-dlp con --ffmpeg-location busca
     literalmente "ffmpeg"/"ffmpeg.exe", asi que lo copiamos una vez a un
-    directorio propio con el nombre esperado."""
+    directorio propio con el nombre esperado.
+
+    FFMPEG_BIN (si esta seteada) lo saltea del todo y usa ese binario
+    directo - bug real encontrado en vivo 2026-09-15, corrida #795: el
+    binario portable de imageio_ffmpeg crasheaba con SIGSEGV (code -11)
+    en CI, primero al intentar SOCKS5 (ya arreglado con privoxy) y
+    DESPUES tambien al convertir el clip ya descargado a wav - un archivo
+    LOCAL, sin red de por medio, asi que no era el proxy: es el binario
+    portable en si, fragil en este runner. El ffmpeg de apt de Ubuntu
+    (bien probado en ese mismo runner) no tiene ese problema."""
+    ffmpeg_bin_env = os.environ.get("FFMPEG_BIN")
+    if ffmpeg_bin_env and Path(ffmpeg_bin_env).exists():
+        return Path(ffmpeg_bin_env)
     import imageio_ffmpeg
     src = Path(imageio_ffmpeg.get_ffmpeg_exe())
     ffbin_dir = Path(tempfile.gettempdir()) / "vali_ffbin"
