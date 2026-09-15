@@ -120,7 +120,7 @@ jobs:
           while kill -0 "$watch_pid" 2>/dev/null; do
             sleep 300
             if [ -f proyectos.db ]; then
-              gzip -9kf proyectos.db
+              gzip -9nkf proyectos.db
               mv proyectos.db.gz data/proyectos.db.gz
               git add data/proyectos.db.gz
               if ! git diff --staged --quiet; then
@@ -135,7 +135,7 @@ jobs:
       - name: Guardar snapshot DB si cambio
         run: |
           if [ -f proyectos.db ]; then
-            gzip -9kf proyectos.db
+            gzip -9nkf proyectos.db
             mv proyectos.db.gz data/proyectos.db.gz
           fi
 

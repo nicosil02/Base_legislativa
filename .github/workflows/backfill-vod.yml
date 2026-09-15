@@ -87,7 +87,7 @@ jobs:
       - name: Guardar snapshot DB si cambio
         run: |
           if [ -f proyectos.db ]; then
-            gzip -9kf proyectos.db
+            gzip -9nkf proyectos.db
             mv proyectos.db.gz data/proyectos.db.gz
           fi
 
