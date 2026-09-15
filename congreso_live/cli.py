@@ -93,7 +93,8 @@ def cmd_live_watch(args) -> int:
         return 1
     try:
         watch_and_transcribe(intervalo_seg=args.intervalo, poll_seg=args.poll,
-                             max_total_minutos=args.max_total_minutos)
+                             max_total_minutos=args.max_total_minutos,
+                             idle_exit_minutos=args.idle_exit_minutos)
     except KeyboardInterrupt:
         print("\n[live-watch] listo, cortado por el usuario.")
     return 0
@@ -119,6 +120,8 @@ def main(argv: list[str] | None = None) -> int:
                     help="cada cuantos segundos revisa si hay sesiones nuevas en vivo (default 60)")
     lw.add_argument("--max-total-minutos", type=float, default=None,
                     help="si se pasa, sale solo al llegar a este limite en vez de correr para siempre (para un workflow con tiempo maximo)")
+    lw.add_argument("--idle-exit-minutos", type=float, default=None,
+                    help="si se pasa, sale sola si no hay NADA en vivo desde hace este tiempo, en vez de seguir poll-eando sin hacer nada hasta --max-total-minutos")
     lw.set_defaults(func=cmd_live_watch)
     args = p.parse_args(argv)
     logging.basicConfig(level=logging.DEBUG if args.verbose else logging.INFO,
