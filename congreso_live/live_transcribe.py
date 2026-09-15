@@ -101,6 +101,80 @@ def capturar_audio_en_vivo(video_id: str, segundos: int = 30) -> Path | None:
     return wav_path
 
 
+def descargar_audio_completo(video_id: str) -> Path | None:
+    """Baja el audio COMPLETO de un video YA TERMINADO (VOD) - a diferencia
+    de capturar_audio_en_vivo (pensada para clips cortos de streams en
+    vivo, con timeout de unos segundos), esta espera lo que haga falta
+    para bajar el archivo entero. Usa YT_DLP_PROXY (WARP) igual que el
+    resto del modulo - corre en CI igual que en local."""
+    ffmpeg_local = _ffmpeg_bin()
+    tmp_dir = Path(tempfile.mkdtemp(prefix="vali_vod_"))
+    audio_path = tmp_dir / "audio.m4a"
+    cmd = [
+        sys.executable, "-m", "yt_dlp",
+        "--ffmpeg-location", str(ffmpeg_local.parent),
+        "-f", "bestaudio",
+        "-o", str(audio_path),
+        f"https://www.youtube.com/watch?v={video_id}",
+    ]
+    proxy = os.environ.get("YT_DLP_PROXY")
+    if proxy:
+        cmd += ["--proxy", proxy]
+    r = subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    if r.returncode != 0 or not audio_path.exists():
+        return None
+
+    wav_path = tmp_dir / "audio.wav"
+    r = subprocess.run(
+        [str(ffmpeg_local), "-y", "-i", str(audio_path), "-ar", "16000", "-ac", "1", str(wav_path)],
+        capture_output=True,
+    )
+    if r.returncode != 0 or not wav_path.exists():
+        return None
+    return wav_path
+
+
+def transcribir_vod(video_id: str, tipo: str, titulo: str, modelo=None, db_path=None) -> dict:
+    """Sesion YA TERMINADA: baja el audio completo y lo transcribe de una
+    con Whisper, sin esperar los captions automaticos de YouTube (esos
+    tardan de horas a dias - ver transcripciones.py). Pensado para
+    recuperar una sesion que la captura EN VIVO se perdio por algun bug
+    de deteccion (ver congreso_live.cli backfill-vod) - bug real
+    encontrado en vivo 2026-09-15: la Comision de Salud estuvo casi 2h en
+    vivo sin transcribirse ni un segundo por el bug de detector.py."""
+    from datetime import datetime, timezone
+
+    from congreso_live.transcripciones import _find_db_path, init_schema
+    from noticias.temas import clasificar as _clasificar_temas
+
+    wav = descargar_audio_completo(video_id)
+    if wav is None:
+        return {"ok": False, "motivo": "no se pudo bajar/convertir el audio"}
+    if modelo is None:
+        from faster_whisper import WhisperModel
+        modelo = WhisperModel("small", device="cpu", compute_type="int8")
+    segs = transcribir_audio(wav, modelo)
+    texto = " ".join(s["text"] for s in segs)
+    if not texto:
+        return {"ok": False, "motivo": "no se detecto habla en el audio"}
+
+    db_path = db_path or _find_db_path()
+    conn = sqlite3.connect(str(db_path))
+    init_schema(conn)
+    temas = _clasificar_temas(titulo, texto[:5000])
+    duracion = int(segs[-1]["end"]) if segs else None
+    conn.execute(
+        """INSERT OR REPLACE INTO sesiones_transcripciones
+           (video_id, tipo, titulo, fecha, duracion_seg, texto, temas, fetched_at)
+           VALUES (?,?,?,?,?,?,?,?)""",
+        (video_id, tipo, titulo, datetime.now(timezone.utc).date().isoformat(),
+         duracion, texto, ",".join(temas), datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")),
+    )
+    conn.commit()
+    conn.close()
+    return {"ok": True, "chars": len(texto), "duracion_seg": duracion}
+
+
 def transcribir_audio(wav_path: Path, modelo) -> list[dict]:
     """Corre un WhisperModel (faster_whisper) ya cargado sobre el wav.
     Devuelve lista de {start, end, text}, descartando segmentos de baja
@@ -431,6 +505,41 @@ def _test_tolera_fallo_transitorio():
     print("OK live_transcribe: un fallo transitorio de deteccion no corta la captura")
 
 
+def _test_transcribir_vod():
+    """transcribir_vod() sin tocar la red - mockea la descarga y la
+    transcripcion, verifica que el texto queda guardado en
+    sesiones_transcripciones. Este es el camino de backfill cuando la
+    captura en vivo se perdio (ver congreso_live.cli backfill-vod)."""
+    import tempfile
+    from unittest.mock import patch
+
+    import congreso_live.live_transcribe as lt
+
+    def _fake_descargar(video_id):
+        return "fake.wav"
+
+    def _fake_transcribir(wav_path, modelo):
+        return [{"start": 0, "end": 10, "text": "Se discutio el proyecto de ley X."}]
+
+    with tempfile.TemporaryDirectory() as td:
+        db_path = Path(td) / "test.db"
+        with patch.object(lt, "descargar_audio_completo", _fake_descargar), \
+             patch.object(lt, "transcribir_audio", _fake_transcribir):
+            resultado = lt.transcribir_vod(
+                "VOD123", "Comision: Salud", "Sesion de prueba",
+                modelo="modelo-fake", db_path=db_path,
+            )
+        assert resultado["ok"] and resultado["chars"] > 0, resultado
+        conn = sqlite3.connect(str(db_path))
+        texto, duracion = conn.execute(
+            "SELECT texto, duracion_seg FROM sesiones_transcripciones WHERE video_id='VOD123'"
+        ).fetchone()
+        conn.close()
+    assert texto == "Se discutio el proyecto de ley X.", texto
+    assert duracion == 10, duracion
+    print("OK live_transcribe: transcribir_vod guarda el audio completo transcripto")
+
+
 def _test_watch_and_transcribe_max_total():
     """watch_and_transcribe(max_total_minutos=...) debe arrancar un hilo
     por sesion en vivo y salir SOLO (sin Ctrl+C) apenas se cumple el
@@ -485,5 +594,6 @@ if __name__ == "__main__":
     _demo()
     _test_acumulacion()
     _test_tolera_fallo_transitorio()
+    _test_transcribir_vod()
     _test_watch_and_transcribe_max_total()
     _test_watch_and_transcribe_idle_exit()
