@@ -74,7 +74,7 @@ jobs:
           CALLMEBOT_APIKEY: ${{ secrets.CALLMEBOT_APIKEY }}
           PYTHONIOENCODING: utf-8
           YT_DLP_PROXY: socks5://127.0.0.1:40000
-        run: python -X utf8 -m congreso_live.cli check || echo "[warn] check fallo, sigo"
+        run: python -X utf8 -u -m congreso_live.cli check || echo "[warn] check fallo, sigo"
 
       - name: Bootstrap DB Peru desde snapshot gz
         run: |
@@ -107,7 +107,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          timeout 10500 python -X utf8 -m congreso_live.cli live-watch \
+          timeout 10500 python -X utf8 -u -m congreso_live.cli live-watch \
               --max-total-minutos 170 --idle-exit-minutos 8 &
           watch_pid=$!
 
