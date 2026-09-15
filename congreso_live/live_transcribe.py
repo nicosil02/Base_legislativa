@@ -105,6 +105,13 @@ def capturar_audio_en_vivo(video_id: str, segundos: int = 30) -> Path | None:
     part_path = clip_path.with_suffix(clip_path.suffix + ".part")
     src = part_path if part_path.exists() else clip_path
     if not src.exists() or src.stat().st_size < 10_000:
+        # Diagnostico fino (bug real encontrado en vivo 2026-09-15: incluso
+        # con el kill del arbol de procesos ya arreglado, CADA intento
+        # seguia fallando sin pista de si yt-dlp no escribio nada, escribio
+        # poco, o el problema era otro).
+        tam = src.stat().st_size if src.exists() else None
+        print(f"[live-transcribe] {video_id}: yt-dlp no genero un archivo util "
+              f"(existe={src.exists()}, tamano={tam}, path={src})")
         return None
 
     wav_path = tmp_dir / "clip.wav"
@@ -113,6 +120,9 @@ def capturar_audio_en_vivo(video_id: str, segundos: int = 30) -> Path | None:
         capture_output=True, timeout=30,
     )
     if r.returncode != 0 or not wav_path.exists():
+        err = (r.stderr or b"").decode("utf-8", errors="replace")[-500:]
+        print(f"[live-transcribe] {video_id}: ffmpeg fallo la conversion a wav "
+              f"(returncode={r.returncode}): {err}")
         return None
     return wav_path
 
