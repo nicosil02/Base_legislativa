@@ -98,7 +98,14 @@ jobs:
           # hasta 170 min - cubre casi cualquier sesion de comision en un
           # solo tramo, sin cortes en el medio). 170 min dentro del job de
           # 180 deja margen para el setup inicial y el commit del final.
-          timeout 10500 python -X utf8 -m congreso_live.cli live-watch --max-total-minutos 170 \
+          #
+          # --idle-exit-minutos 8: si NO hay nada en vivo, sale a los 8
+          # min en vez de quedarse ocupando el job (y bloqueando la cola
+          # de concurrency) hasta 170 min sin hacer nada - bug real
+          # encontrado en vivo 2026-09-15, la corrida #696 se quedo
+          # colgada ~170 min sin nada que transcribir.
+          timeout 10500 python -X utf8 -m congreso_live.cli live-watch \
+              --max-total-minutos 170 --idle-exit-minutos 8 \
               || echo "[warn] live-watch fallo, sigo"
 
       - name: Guardar snapshot DB si cambio

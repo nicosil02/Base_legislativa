@@ -218,7 +218,8 @@ def capturar_y_acumular_en_vivo(
 
 
 def watch_and_transcribe(intervalo_seg: int = 40, poll_seg: int = 60,
-                         max_total_minutos: float | None = None) -> None:
+                         max_total_minutos: float | None = None,
+                         idle_exit_minutos: float | None = None) -> None:
     """Corre para siempre (Ctrl+C para parar) o hasta `max_total_minutos` si
     se pasa - esto es "correr por detras": no hace falta pasarle un
     video_id a mano. Cada `poll_seg` segundos revisa que sesiones estan en
@@ -236,6 +237,16 @@ def watch_and_transcribe(intervalo_seg: int = 40, poll_seg: int = 60,
     duro a las 6h): un valor bien por debajo de ese limite deja margen
     para que el workflow siga con sus pasos de commit despues.
 
+    `idle_exit_minutos` (tambien para CI): si no hay NINGUNA sesion en
+    vivo (hilos vacio) desde hace mas de este tiempo, sale sola en vez de
+    seguir poll-eando hasta max_total_minutos sin hacer nada util. Bug
+    real encontrado en vivo 2026-09-15: sin esto, una corrida sin nada
+    en vivo se quedaba ocupando el job (y bloqueando el siguiente
+    disparo en la cola de concurrency) hasta 170 min por las puras. Con
+    idle_exit_minutos, el workflow vuelve a responder rapido cuando no
+    hay sesiones, y solo se queda las horas largas cuando SI hay algo
+    que transcribir.
+
     Cada hilo carga su PROPIO modelo Whisper (no se comparte uno entre
     hilos) - mas memoria si hay varias sesiones a la vez, pero evita
     cualquier duda sobre si ctranslate2 es thread-safe para inferencia
@@ -251,13 +262,19 @@ def watch_and_transcribe(intervalo_seg: int = 40, poll_seg: int = 60,
 
     hilos: dict[str, threading.Thread] = {}
     t_inicio = time.time()
+    t_ultima_actividad = t_inicio
     print(f"[live-watch] arrancando (poll cada {poll_seg}s, chunks de "
           f"{intervalo_seg}s). Ctrl+C para parar.")
     while True:
-        if max_total_minutos is not None and (time.time() - t_inicio) > max_total_minutos * 60:
+        ahora = time.time()
+        if max_total_minutos is not None and (ahora - t_inicio) > max_total_minutos * 60:
             print(f"[live-watch] limite de {max_total_minutos} min alcanzado, cerrando.")
             for t in hilos.values():
                 t.join()
+            return
+        if (idle_exit_minutos is not None and not hilos
+                and (ahora - t_ultima_actividad) > idle_exit_minutos * 60):
+            print(f"[live-watch] sin nada en vivo desde hace {idle_exit_minutos} min, cerrando.")
             return
 
         for vid in list(hilos):
@@ -270,6 +287,9 @@ def watch_and_transcribe(intervalo_seg: int = 40, poll_seg: int = 60,
         except Exception as e:
             print(f"[live-watch] error chequeando en vivo: {e}")
             vivos = []
+
+        if hilos or vivos:
+            t_ultima_actividad = ahora
 
         for v in vivos:
             if v["id"] in hilos:
@@ -373,7 +393,32 @@ def _test_watch_and_transcribe_max_total():
     print("OK live_transcribe: watch_and_transcribe(max_total_minutos=...) transcribe y sale solo")
 
 
+def _test_watch_and_transcribe_idle_exit():
+    """Sin nada en vivo, watch_and_transcribe(idle_exit_minutos=...) debe
+    salir sola apenas se cumple el tiempo ocioso - en vez de seguir
+    poll-eando sin hacer nada hasta max_total_minutos (bug real
+    encontrado en vivo 2026-09-15: una corrida de CI sin nada en vivo se
+    quedaba ocupando el job, y bloqueando el siguiente disparo en la cola
+    de concurrency, hasta 170 min por las puras)."""
+    from unittest.mock import patch
+
+    import congreso_live.live_transcribe as lt
+
+    t0 = __import__("time").time()
+    with patch("congreso_live.detector.vivos_de_interes", lambda: []):
+        # max_total_minutos bien por encima de idle_exit_minutos - si
+        # idle_exit_minutos algun dia se rompe, el test igual termina
+        # rapido (por max_total_minutos) en vez de colgarse de verdad.
+        lt.watch_and_transcribe(intervalo_seg=1, poll_seg=1,
+                                max_total_minutos=0.1, idle_exit_minutos=1.5 / 60)
+    tardo = __import__("time").time() - t0
+
+    assert tardo < 5, f"salio por max_total_minutos, no por idle_exit_minutos ({tardo:.1f}s)"
+    print("OK live_transcribe: watch_and_transcribe(idle_exit_minutos=...) sale sola sin nada en vivo")
+
+
 if __name__ == "__main__":
     _demo()
     _test_acumulacion()
     _test_watch_and_transcribe_max_total()
+    _test_watch_and_transcribe_idle_exit()
