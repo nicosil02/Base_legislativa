@@ -9,7 +9,8 @@ jobs:
     steps:
       - name: Instalar Cloudflare WARP en modo proxy (SOCKS5 :40000)
         run: |
-          bash <(curl -fsSL git.io/warp.sh) proxy
+          curl -fsSL git.io/warp.sh -o /tmp/warp.sh
+          sudo bash /tmp/warp.sh proxy
           sleep 5
           warp-cli --accept-tos status || true
 
