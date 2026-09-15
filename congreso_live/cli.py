@@ -96,6 +96,20 @@ def cmd_live_watch(args) -> int:
     return 0
 
 
+def cmd_live_watch_once(args) -> int:
+    """Version acotada de live-watch pensada para un workflow programado
+    (un "tick" - detecta, transcribe hasta --max-minutos, devuelve)."""
+    try:
+        from congreso_live.live_transcribe import watch_once
+    except ImportError:
+        print("Falta faster-whisper/imageio-ffmpeg: "
+              "pip install faster-whisper imageio-ffmpeg")
+        return 1
+    resultado = watch_once(intervalo_seg=args.intervalo, max_minutos=args.max_minutos)
+    print(f"[live-watch-once] {resultado['sesiones']} sesion(es) en vivo procesada(s).")
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     p = argparse.ArgumentParser(prog="congreso_live")
     p.add_argument("-v", "--verbose", action="store_true")
@@ -115,6 +129,13 @@ def main(argv: list[str] | None = None) -> int:
     lw.add_argument("--poll", type=int, default=60,
                     help="cada cuantos segundos revisa si hay sesiones nuevas en vivo (default 60)")
     lw.set_defaults(func=cmd_live_watch)
+    lwo = sub.add_parser("live-watch-once",
+                         help="un solo 'tick' acotado de live-watch, para correr desde un workflow programado")
+    lwo.add_argument("--intervalo", type=int, default=40,
+                     help="segundos de audio real por chunk (default 40)")
+    lwo.add_argument("--max-minutos", type=float, default=8,
+                     help="minutos maximos a transcribir antes de devolver (default 8)")
+    lwo.set_defaults(func=cmd_live_watch_once)
     args = p.parse_args(argv)
     logging.basicConfig(level=logging.DEBUG if args.verbose else logging.INFO,
                         format="%(asctime)s %(levelname)s %(message)s")

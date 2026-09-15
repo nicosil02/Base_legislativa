@@ -7,6 +7,7 @@ programas de noticias (Congreso Noticias, etc.).
 from __future__ import annotations
 
 import logging
+import os
 import re
 import unicodedata
 
@@ -73,6 +74,19 @@ def clasificar_titulo(titulo: str | None) -> str | None:
 
 def _ydl(opts: dict):
     base = {"quiet": True, "no_warnings": True, "skip_download": True}
+    # El bloqueo de YouTube a IPs de datacenter (GitHub Actions, Streamlit
+    # Cloud) es por reputacion de IP, no por fingerprint de cliente -
+    # spoofear el cliente (android/ios) NO lo esquiva (verificado en vivo
+    # 2026-09-15, run #1780: mismo error con player_client=android). Lo
+    # que si funciona: tunelizar por Cloudflare WARP (VPN gratis, YouTube
+    # no la trata como datacenter) - verificado en vivo 2026-09-15
+    # (_test_warp.yml run #3: mismo request, sin proxy = bot-check, con
+    # proxy WARP = titulo real). YT_DLP_PROXY lo exporta el workflow que
+    # instala y arranca WARP en modo proxy (SOCKS5 :40000); en local
+    # (IP residencial) no hace falta y la variable no esta seteada.
+    proxy = os.environ.get("YT_DLP_PROXY")
+    if proxy:
+        base["proxy"] = proxy
     base.update(opts)
     return yt_dlp.YoutubeDL(base)
 
