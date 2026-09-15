@@ -155,24 +155,12 @@ jobs:
           # 8700+ de otra) que se hubiera perdido si el job se cortaba antes
           # del commit final. Con set +e + echo de cada paso, un fallo real
           # queda visible en vez de abortar mudo.
-          # git config rebase.autoStash: causa raiz real encontrada en vivo
-          # 2026-09-15 (corrida #798, commit b399e5a) - el commit periodico
-          # SI se disparo (una vez), pero el push choco contra otro workflow
-          # que habia pusheado antes (auto-refresh de PLs, mismo blob
-          # data/proyectos.db.gz), y el fallback (git rebase -X theirs)
-          # fallo con "cannot rebase: You have unstaged changes. Please
-          # commit or stash them." - la causa: data/congreso_live_state.json
-          # SI esta trackeado por git y live-watch lo reescribe todo el
-          # tiempo (dedupe + log de sesiones), pero este loop solo agregaba
-          # data/proyectos.db.gz al commit, dejando ese otro archivo
-          # modificado y sin stagear - exactamente lo que bloquea un
-          # rebase. Fix real: agregar tambien ese archivo al commit (como
-          # ya hace el paso final "Commitear estado + snapshot DB").
-          # rebase.autoStash de mas, por si en el futuro aparece otro
-          # archivo trackeado modificado que no contemplamos - autostash
-          # guarda cualquier cambio sin stagear antes del rebase y lo
-          # restaura despues, en vez de que el rebase aborte.
-          git config rebase.autoStash true
+          # data/congreso_live_state.json SI esta trackeado por git y
+          # live-watch lo reescribe todo el tiempo (dedupe + log de
+          # sesiones) - agregarlo tambien al commit (bug real 2026-09-15,
+          # corrida #798: antes solo se agregaba proyectos.db.gz, dejando
+          # ese otro archivo modificado y sin stagear, lo que rompia
+          # cualquier "git rebase" posterior).
           set +e
           tick=0
           while kill -0 "$watch_pid" 2>/dev/null; do
@@ -190,11 +178,32 @@ jobs:
                 git commit -m "Congreso live: transcripcion parcial $(date -u +%Y-%m-%d-%H%M) [skip ci]"
                 if git push; then
                   echo "[commit-loop] tick $tick: push OK"
-                elif git fetch origin main && git rebase -X theirs origin/main && git push; then
-                  echo "[commit-loop] tick $tick: push OK tras rebase"
                 else
-                  echo "[commit-loop] tick $tick: [warn] commit parcial no se pudo pushear, sigo"
-                  git rebase --abort 2>/dev/null
+                  # Causa raiz real de perdida de datos, verificada en vivo
+                  # 2026-09-15: "git rebase -X theirs" en un conflicto de
+                  # push descarta el archivo COMPLETO de un lado (proyectos.db.gz
+                  # es un blob binario compartido con refrescar-pe.yml, que
+                  # toca tablas totalmente distintas) - asi se borraron
+                  # Presupuesto/Transportes ya transcritos. Fix real: mergear
+                  # sesiones_transcripciones a nivel de filas SQL (merge_db.py)
+                  # en vez de pisar el archivo entero, y arrancar el commit
+                  # de nuevo sobre la punta real de origin (sin rebase).
+                  git fetch origin main
+                  if git show origin/main:data/proyectos.db.gz > /tmp/origin_proyectos.db.gz 2>/dev/null \
+                      && [ -s /tmp/origin_proyectos.db.gz ]; then
+                    gunzip -c /tmp/origin_proyectos.db.gz > /tmp/origin_proyectos.db
+                    python -X utf8 -m congreso_live.merge_db proyectos.db /tmp/origin_proyectos.db
+                    gzip -9nkf proyectos.db
+                    mv -f proyectos.db.gz data/proyectos.db.gz
+                    git add data/proyectos.db.gz data/congreso_live_state.json
+                  fi
+                  git reset --soft origin/main
+                  git commit -m "Congreso live: transcripcion parcial $(date -u +%Y-%m-%d-%H%M) [skip ci]"
+                  if git push; then
+                    echo "[commit-loop] tick $tick: push OK tras merge"
+                  else
+                    echo "[commit-loop] tick $tick: [warn] commit parcial no se pudo pushear, sigo"
+                  fi
                 fi
               fi
             else
@@ -227,9 +236,23 @@ jobs:
               echo "Push OK (intento $i)"
               exit 0
             fi
-            echo "Push fallo (intento $i), rebaseando con origin/main..."
+            # Mergear a nivel de filas en vez de "rebase -X theirs" (que
+            # descarta el archivo binario COMPLETO de un lado) - ver
+            # merge_db.py y el comentario del loop de commit periodico
+            # arriba para el bug real que esto arregla.
+            echo "Push fallo (intento $i), mergeando con origin/main..."
             git fetch origin main
-            git rebase -X theirs origin/main || { git rebase --abort; sleep 5; }
+            if [ -f proyectos.db ] && git show origin/main:data/proyectos.db.gz > /tmp/origin_proyectos.db.gz 2>/dev/null \
+                && [ -s /tmp/origin_proyectos.db.gz ]; then
+              gunzip -c /tmp/origin_proyectos.db.gz > /tmp/origin_proyectos.db
+              python -X utf8 -m congreso_live.merge_db proyectos.db /tmp/origin_proyectos.db
+              gzip -9nkf proyectos.db
+              mv -f proyectos.db.gz data/proyectos.db.gz
+              git add data/congreso_live_state.json data/proyectos.db.gz
+            fi
+            git reset --soft origin/main
+            git commit -m "Congreso live: estado + transcripciones $(date -u +%Y-%m-%d-%H%M) [skip ci]"
+            sleep 5
           done
           echo "Push fallo despues de 3 intentos."
           exit 1
