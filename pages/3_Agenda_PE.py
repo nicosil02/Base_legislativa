@@ -1619,6 +1619,40 @@ with tab_transcripciones:
                         key=f"transcripcion_{row['video_id']}",
                     )
 
+                    # Chat simple de preguntas sobre esta transcripcion, via
+                    # Gemini (tier gratuito - decision de Nicolas 2026-09-15
+                    # para que esto no genere costo por uso). Sin memoria
+                    # entre sesiones de usuario ni busqueda cruzada entre
+                    # transcripciones - una pregunta, un contexto: el texto
+                    # de ESTA sesion.
+                    st.markdown("**Preguntale a la transcripción**")
+                    _qa_key = f"qa_history_{row['video_id']}"
+                    if _qa_key not in st.session_state:
+                        st.session_state[_qa_key] = []
+                    for _pregunta_prev, _respuesta_prev in st.session_state[_qa_key]:
+                        st.chat_message("user").write(_pregunta_prev)
+                        st.chat_message("assistant").write(_respuesta_prev)
+                    with st.form(key=f"qa_form_{row['video_id']}", clear_on_submit=True):
+                        _pregunta_nueva = st.text_input(
+                            "Pregunta", placeholder="¿Qué se discutió sobre...?",
+                            label_visibility="collapsed",
+                            key=f"qa_input_{row['video_id']}",
+                        )
+                        _enviar = st.form_submit_button("Preguntar")
+                    if _enviar and _pregunta_nueva.strip():
+                        with st.spinner("Pensando..."):
+                            try:
+                                from congreso_live.qa_chat import preguntar
+                                _respuesta_nueva = preguntar(
+                                    _pregunta_nueva, row["texto"], titulo=row["titulo"],
+                                )
+                            except Exception as e:
+                                st.error(f"No se pudo responder: {e}")
+                            else:
+                                st.session_state[_qa_key].append(
+                                    (_pregunta_nueva, _respuesta_nueva))
+                                st.rerun()
+
 # ---------- Footer ----------
 st.markdown('<div class="footer-rule"></div>', unsafe_allow_html=True)
 with st.expander("Cobertura y limitaciones de esta vista"):
