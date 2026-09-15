@@ -16,6 +16,7 @@ from __future__ import annotations
 
 import os
 import shutil
+import signal
 import sqlite3
 import subprocess
 import sys
@@ -68,9 +69,21 @@ def capturar_audio_en_vivo(video_id: str, segundos: int = 30) -> Path | None:
     # capture_output=True se cuelga ESPERANDO EOF de un pipe que ese
     # huerfano todavia tiene abierto (bug real, encontrado en vivo
     # 2026-09-15: el boton se quedaba "cargando" para siempre). En
-    # Windows, "taskkill /T" mata el arbol de procesos completo -
-    # arregla ambos problemas de una.
-    proc = subprocess.Popen(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    # Windows, "taskkill /T" mata el arbol de procesos completo.
+    #
+    # En Linux (lo que corre GitHub Actions) faltaba el equivalente: sin
+    # start_new_session, proc.kill() solo mata a yt-dlp, el ffmpeg nieto
+    # queda huerfano y el archivo de salida nunca se cierra bien - bug
+    # real encontrado en vivo 2026-09-15, corrida #780: CADA intento de
+    # capturar un chunk fallaba (mas de 1000 veces en 11 min, para las 3
+    # sesiones en simultaneo) despues de que la deteccion ya funcionaba
+    # perfecto. start_new_session=True pone yt-dlp en su propio grupo de
+    # procesos, y os.killpg mata ese grupo entero (yt-dlp + ffmpeg nieto)
+    # de una - el equivalente real de "taskkill /T" para POSIX.
+    proc = subprocess.Popen(
+        cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+        start_new_session=(os.name != "nt"),
+    )
     try:
         proc.wait(timeout=segundos)
     except subprocess.TimeoutExpired:
@@ -80,7 +93,10 @@ def capturar_audio_en_vivo(video_id: str, segundos: int = 30) -> Path | None:
                 stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
             )
         else:
-            proc.kill()
+            try:
+                os.killpg(os.getpgid(proc.pid), signal.SIGKILL)
+            except ProcessLookupError:
+                proc.kill()
         try:
             proc.wait(timeout=10)
         except subprocess.TimeoutExpired:
@@ -422,6 +438,41 @@ def _demo():
     print("OK live_transcribe: ffmpeg binario resuelto en", p)
 
 
+def _test_killpg_mata_el_arbol_completo():
+    """Solo POSIX (se salta en Windows - ahi el kill lo hace taskkill /T,
+    ya verificado en vivo antes). Prueba que matar por process group (lo
+    que ahora hace capturar_audio_en_vivo al vencer el timeout) mata
+    tambien a un proceso NIETO, no solo al hijo directo - la razon real
+    por la que CADA intento de captura fallaba en CI (Linux) hoy
+    2026-09-15: yt-dlp lanza ffmpeg como nieto para streams HLS, y
+    proc.kill() sin start_new_session solo mataba a yt-dlp, dejando el
+    nieto huerfano y el archivo de salida sin cerrar bien."""
+    if os.name == "nt":
+        print("SKIP live_transcribe: test de killpg es solo POSIX (Windows ya usa taskkill /T)")
+        return
+    import time as _time
+
+    # "padre" que lanza un "nieto" (sleep) en background y despues espera -
+    # mismo patron que yt-dlp lanzando ffmpeg como subproceso.
+    proc = subprocess.Popen(
+        ["sh", "-c", "sleep 60 & echo $! ; wait"],
+        stdout=subprocess.PIPE, text=True, start_new_session=True,
+    )
+    nieto_pid = int(proc.stdout.readline().strip())
+    assert os.kill(nieto_pid, 0) is None, "el nieto deberia estar vivo antes del kill"
+
+    os.killpg(os.getpgid(proc.pid), signal.SIGKILL)
+    proc.wait(timeout=5)
+
+    _time.sleep(0.3)  # el kernel tarda un toque en liberar el PID
+    try:
+        os.kill(nieto_pid, 0)
+        raise AssertionError("el nieto seguia vivo despues de killpg - el arbol no se mato entero")
+    except ProcessLookupError:
+        pass  # esperado: el nieto ya no existe
+    print("OK live_transcribe: killpg mata al proceso nieto, no solo al hijo directo")
+
+
 def _test_acumulacion():
     """Prueba la logica de acumulacion en sesiones_transcripciones SIN
     tocar la red - mockea captura/transcripcion/deteccion de "en vivo"
@@ -600,6 +651,7 @@ def _test_watch_and_transcribe_idle_exit():
 
 if __name__ == "__main__":
     _demo()
+    _test_killpg_mata_el_arbol_completo()
     _test_acumulacion()
     _test_tolera_fallo_transitorio()
     _test_transcribir_vod()
