@@ -50,6 +50,7 @@ def capturar_audio_en_vivo(video_id: str, segundos: int = 30) -> Path | None:
     ffmpeg_local = _ffmpeg_bin()
     tmp_dir = Path(tempfile.mkdtemp(prefix="vali_live_"))
     clip_path = tmp_dir / "clip.mp4"
+    stderr_path = tmp_dir / "yt-dlp.stderr.log"
     cmd = [
         sys.executable, "-m", "yt_dlp",
         "--ffmpeg-location", str(ffmpeg_local.parent),
@@ -62,6 +63,21 @@ def capturar_audio_en_vivo(video_id: str, segundos: int = 30) -> Path | None:
     proxy = os.environ.get("YT_DLP_PROXY")
     if proxy:
         cmd += ["--proxy", proxy]
+        # CAUSA RAIZ real encontrada en vivo 2026-09-15 (corrida #785,
+        # confirmada con el log: "existe=False" en el 100% de mas de 100
+        # intentos, para las 3 sesiones, nunca un byte escrito): para un
+        # stream EN VIVO (a diferencia de un VOD ya grabado - el backfill
+        # de VOD SI funciono sin este flag), yt-dlp delega la descarga real
+        # a ffmpeg como downloader externo (ver comentario de mas abajo) -
+        # y ffmpeg NO soporta proxies SOCKS5 (lo que expone WARP en modo
+        # proxy). El chequeo liviano de is_live (Python puro, via
+        # requests/urllib3, que SI soporta SOCKS5) funcionaba perfecto;
+        # la descarga real, que dependia de ffmpeg, nunca llegaba a
+        # conectar - de ahi que no se creara ni un byte de archivo.
+        # --hls-prefer-native fuerza a yt-dlp a usar su propio downloader
+        # de HLS (Python, mismo proxy SOCKS5 que ya funciona) en vez de
+        # delegarle la conexion de red a ffmpeg.
+        cmd += ["--hls-prefer-native"]
     # subprocess.Popen + kill manual (no subprocess.run(timeout=...)):
     # yt-dlp lanza ffmpeg como su PROPIO subproceso para bajar streams
     # HLS. Con run(timeout=) Python mata solo el proceso hijo directo -
@@ -80,10 +96,14 @@ def capturar_audio_en_vivo(video_id: str, segundos: int = 30) -> Path | None:
     # perfecto. start_new_session=True pone yt-dlp en su propio grupo de
     # procesos, y os.killpg mata ese grupo entero (yt-dlp + ffmpeg nieto)
     # de una - el equivalente real de "taskkill /T" para POSIX.
-    proc = subprocess.Popen(
-        cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
-        start_new_session=(os.name != "nt"),
-    )
+    stderr_f = open(stderr_path, "wb")
+    try:
+        proc = subprocess.Popen(
+            cmd, stdout=subprocess.DEVNULL, stderr=stderr_f,
+            start_new_session=(os.name != "nt"),
+        )
+    finally:
+        stderr_f.close()  # el hijo ya tiene su propio fd duplicado, este puede cerrarse
     try:
         proc.wait(timeout=segundos)
     except subprocess.TimeoutExpired:
@@ -110,8 +130,9 @@ def capturar_audio_en_vivo(video_id: str, segundos: int = 30) -> Path | None:
         # seguia fallando sin pista de si yt-dlp no escribio nada, escribio
         # poco, o el problema era otro).
         tam = src.stat().st_size if src.exists() else None
+        err = stderr_path.read_text(encoding="utf-8", errors="replace")[-500:] if stderr_path.exists() else ""
         print(f"[live-transcribe] {video_id}: yt-dlp no genero un archivo util "
-              f"(existe={src.exists()}, tamano={tam}, path={src})")
+              f"(existe={src.exists()}, tamano={tam}, path={src}) stderr: {err}")
         return None
 
     wav_path = tmp_dir / "clip.wav"
