@@ -87,7 +87,7 @@ jobs:
           PYTHONIOENCODING: utf-8
           YT_DLP_PROXY: socks5://127.0.0.1:40000
         run: |
-          python -X utf8 -m congreso_live.cli backfill-vod \
+          python -X utf8 -u -m congreso_live.cli backfill-vod \
               --video-id "${{ inputs.video_id }}" \
               --tipo "${{ inputs.tipo }}" \
               --titulo "${{ inputs.titulo }}"
