@@ -149,6 +149,13 @@ jobs:
           # siguientes son rapidas (~30 seg) porque solo procesa la del
           # jueves nuevo + cualquier actualizacion.
           timeout 900 python -X utf8 -m pleno.cli update --periodo 2021-2026,2026-2031 || echo "[warn] pleno sync fallo, sigo"
+          # La API de arriba SIGUE sin agendas del periodo bicameral
+          # (verificado en vivo 2026-09-15, igual que el 09-11) - el
+          # Congreso bicameral las publica como PDF en el sitio propio de
+          # cada camara, no por esa API. pleno.agenda_pdf cubre ese
+          # backfill scrapeando senado.congreso.gob.pe y
+          # diputados.congreso.gob.pe directamente.
+          timeout 300 python -X utf8 -m pleno.agenda_pdf sync || echo "[warn] pleno agenda_pdf fallo, sigo"
 
       - name: Actualizar mesas de trabajo + eventos del Congreso PE
         run: |
