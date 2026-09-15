@@ -60,32 +60,23 @@ def capturar_audio_en_vivo(video_id: str, segundos: int = 30) -> Path | None:
     ]
     # Ver detector._ydl() para el porque: bloqueo de YouTube es por IP de
     # datacenter, WARP (gratis) lo esquiva - el workflow en CI exporta esto.
-    proxy = os.environ.get("YT_DLP_PROXY")
-    env = os.environ.copy()
+    #
+    # CAUSA RAIZ real encontrada en vivo 2026-09-15, confirmada con el
+    # stderr de yt-dlp (corridas #788 y #791, antes tirado a DEVNULL):
+    #   "ffmpeg does not support SOCKS proxies. Downloading is likely to
+    #   fail." + "ffmpeg exited with code -11" (segfault) - para un stream
+    #   EN VIVO yt-dlp SIEMPRE delega la descarga a ffmpeg (--hls-prefer-
+    #   native no lo evita), y ffmpeg no entiende socks5://.
+    # Intento anterior (env["http_proxy"]) NO alcanzo: yt-dlp le pasa SU
+    # PROPIO --proxy a ffmpeg de forma explicita (un arg, no una env var),
+    # asi que ffmpeg seguia viendo el socks5:// crudo pase lo que pase en
+    # el entorno. Fix real: si hay un puente HTTP (privoxy, ver
+    # FFMPEG_HTTP_PROXY en el workflow), usarlo COMO el --proxy de yt-dlp
+    # para esta descarga especifica - lo que yt-dlp le reenvia a ffmpeg
+    # ya es un proxy HTTP normal, que si entiende.
+    proxy = os.environ.get("FFMPEG_HTTP_PROXY") or os.environ.get("YT_DLP_PROXY")
     if proxy:
         cmd += ["--proxy", proxy, "--hls-prefer-native"]
-        # CAUSA RAIZ real encontrada en vivo 2026-09-15, confirmada con el
-        # stderr de yt-dlp (corrida #788, antes tirado a DEVNULL):
-        #   "ffmpeg does not support SOCKS proxies. Downloading is likely
-        #   to fail. Consider adding --hls-prefer-native to your command."
-        #   "ffmpeg exited with code -11" (segfault)
-        # --hls-prefer-native NO alcanza solo: para un stream EN VIVO (a
-        # diferencia de un VOD ya grabado, que nunca tuvo este problema)
-        # yt-dlp sigue delegando la descarga a ffmpeg igual. ffmpeg no
-        # entiende socks5://, y ademas crashea feo al intentarlo en vez
-        # de fallar limpio. Fix real: privoxy en el workflow hace de
-        # puente SOCKS5->HTTP (WARP :40000 -> privoxy :8118) - eso ffmpeg
-        # SI lo puede usar via las variables de entorno estandar
-        # http_proxy/https_proxy, que SI respeta para sus propias
-        # conexiones (a diferencia de --proxy de yt-dlp, que solo cubre
-        # las conexiones que hace yt-dlp mismo, no las de sus
-        # subprocesos).
-        ffmpeg_proxy = os.environ.get("FFMPEG_HTTP_PROXY")
-        if ffmpeg_proxy:
-            env["http_proxy"] = ffmpeg_proxy
-            env["https_proxy"] = ffmpeg_proxy
-            env["HTTP_PROXY"] = ffmpeg_proxy
-            env["HTTPS_PROXY"] = ffmpeg_proxy
     # subprocess.Popen + kill manual (no subprocess.run(timeout=...)):
     # yt-dlp lanza ffmpeg como su PROPIO subproceso para bajar streams
     # HLS. Con run(timeout=) Python mata solo el proceso hijo directo -
@@ -108,7 +99,7 @@ def capturar_audio_en_vivo(video_id: str, segundos: int = 30) -> Path | None:
     try:
         proc = subprocess.Popen(
             cmd, stdout=subprocess.DEVNULL, stderr=stderr_f,
-            start_new_session=(os.name != "nt"), env=env,
+            start_new_session=(os.name != "nt"),
         )
     finally:
         stderr_f.close()  # el hijo ya tiene su propio fd duplicado, este puede cerrarse
