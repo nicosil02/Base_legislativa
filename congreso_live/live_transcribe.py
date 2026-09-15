@@ -217,15 +217,24 @@ def capturar_y_acumular_en_vivo(
             "chars": len(texto_acumulado)}
 
 
-def watch_and_transcribe(intervalo_seg: int = 40, poll_seg: int = 60) -> None:
-    """Corre PARA SIEMPRE (Ctrl+C para parar) - esto es "correr por detras":
-    no hace falta pasarle un video_id a mano. Cada `poll_seg` segundos
-    revisa que sesiones estan en vivo (Pleno de cualquier camara o
-    comision ordinaria - ver detector.vivos_de_interes()); para cada una
-    que no tenga ya un hilo transcribiendola, arranca uno nuevo. Cada hilo
-    corre capturar_y_acumular_en_vivo() y termina solo cuando su sesion
-    deja de estar en vivo. Soporta varias sesiones en simultaneo (se vio
-    en vivo 2026-09-14: Constitucion y Economia transmitiendo a la vez).
+def watch_and_transcribe(intervalo_seg: int = 40, poll_seg: int = 60,
+                         max_total_minutos: float | None = None) -> None:
+    """Corre para siempre (Ctrl+C para parar) o hasta `max_total_minutos` si
+    se pasa - esto es "correr por detras": no hace falta pasarle un
+    video_id a mano. Cada `poll_seg` segundos revisa que sesiones estan en
+    vivo (Pleno de cualquier camara, o comision ordinaria - ver
+    detector.vivos_de_interes()); para cada una que no tenga ya un hilo
+    transcribiendola, arranca uno nuevo. Cada hilo corre
+    capturar_y_acumular_en_vivo() y termina solo cuando su sesion deja de
+    estar en vivo. Soporta varias sesiones en simultaneo (se vio en vivo
+    2026-09-14: Constitucion y Economia transmitiendo a la vez).
+
+    `max_total_minutos` (para CI - ver vigilar-congreso.yml): sale
+    LIMPIO (join de los hilos activos, sin cortarlos a mitad de chunk)
+    apenas se cumple el limite, en vez de quedarse corriendo para
+    siempre. Pensado para un job con tiempo maximo (GitHub Actions corta
+    duro a las 6h): un valor bien por debajo de ese limite deja margen
+    para que el workflow siga con sus pasos de commit despues.
 
     Cada hilo carga su PROPIO modelo Whisper (no se comparte uno entre
     hilos) - mas memoria si hay varias sesiones a la vez, pero evita
@@ -241,9 +250,16 @@ def watch_and_transcribe(intervalo_seg: int = 40, poll_seg: int = 60) -> None:
     from congreso_live.detector import vivos_de_interes
 
     hilos: dict[str, threading.Thread] = {}
+    t_inicio = time.time()
     print(f"[live-watch] arrancando (poll cada {poll_seg}s, chunks de "
           f"{intervalo_seg}s). Ctrl+C para parar.")
     while True:
+        if max_total_minutos is not None and (time.time() - t_inicio) > max_total_minutos * 60:
+            print(f"[live-watch] limite de {max_total_minutos} min alcanzado, cerrando.")
+            for t in hilos.values():
+                t.join()
+            return
+
         for vid in list(hilos):
             if not hilos[vid].is_alive():
                 print(f"[live-watch] {vid}: la sesion termino, dejo de transcribirse.")
@@ -270,42 +286,6 @@ def watch_and_transcribe(intervalo_seg: int = 40, poll_seg: int = 60) -> None:
             hilos[v["id"]] = t
 
         time.sleep(poll_seg)
-
-
-def watch_once(intervalo_seg: int = 40, max_minutos: float = 8) -> dict:
-    """Version acotada de watch_and_transcribe(), para correr como UN paso
-    de un workflow programado (GitHub Actions) en vez de un proceso
-    eterno: detecta las sesiones en vivo AHORA, transcribe cada una en
-    paralelo hasta `max_minutos` (o hasta que la sesion termine, lo que
-    pase primero) y devuelve. Pensado para un cron cada ~10 min - cada
-    corrida retoma donde quedo la anterior porque capturar_y_acumular_en_vivo
-    lee el texto ya guardado en sesiones_transcripciones antes de seguir
-    acumulando."""
-    import threading
-
-    from congreso_live.detector import vivos_de_interes
-
-    vivos = vivos_de_interes()
-    if not vivos:
-        print("[live-watch-once] nada en vivo ahora mismo.")
-        return {"sesiones": 0}
-
-    hilos = []
-    for v in vivos:
-        print(f"[live-watch-once] transcribiendo: {v['tipo']} - {v['titulo']} ({v['id']})")
-        t = threading.Thread(
-            target=capturar_y_acumular_en_vivo,
-            kwargs=dict(video_id=v["id"], tipo=v["tipo"], titulo=v["titulo"],
-                        intervalo_seg=intervalo_seg, max_minutos=max_minutos),
-            name=f"live-{v['id']}",
-        )
-        t.start()
-        hilos.append(t)
-
-    for t in hilos:
-        t.join(timeout=max_minutos * 60 + 60)
-
-    return {"sesiones": len(vivos)}
 
 
 # ============================================================
@@ -367,33 +347,33 @@ def _test_acumulacion():
     print("OK live_transcribe: acumulacion crece chunk a chunk y corta al terminar la sesion")
 
 
-def _test_watch_once():
-    """watch_once() debe arrancar un hilo por sesion en vivo y esperarlos
-    a todos antes de devolver - sin tocar la red (mockea vivos_de_interes
-    y capturar_y_acumular_en_vivo)."""
+def _test_watch_and_transcribe_max_total():
+    """watch_and_transcribe(max_total_minutos=...) debe arrancar un hilo
+    por sesion en vivo y salir SOLO (sin Ctrl+C) apenas se cumple el
+    limite - sin tocar la red (mockea vivos_de_interes y
+    capturar_y_acumular_en_vivo; poll_seg=1 real segundo x ~2 vueltas,
+    rapido y determinista sin mockear time.sleep - mockearlo hace que el
+    loop gire sin freno mientras dura el test, generando miles de
+    iteraciones inutiles antes de que se note el limite)."""
     from unittest.mock import patch
 
     import congreso_live.live_transcribe as lt
 
     vistos = []
 
-    def _fake_acumular(video_id, tipo, titulo, intervalo_seg, max_minutos):
+    def _fake_acumular(video_id, tipo, titulo, intervalo_seg):
         vistos.append(video_id)
 
-    vivos_falsos = [
-        {"id": "A", "tipo": "Comision: Test", "titulo": "Sesion A"},
-        {"id": "B", "tipo": "Comision: Test", "titulo": "Sesion B"},
-    ]
+    vivos_falsos = [{"id": "A", "tipo": "Comision: Test", "titulo": "Sesion A"}]
     with patch.object(lt, "capturar_y_acumular_en_vivo", _fake_acumular), \
          patch("congreso_live.detector.vivos_de_interes", lambda: vivos_falsos):
-        resultado = lt.watch_once(intervalo_seg=1, max_minutos=0.01)
+        lt.watch_and_transcribe(intervalo_seg=1, poll_seg=1, max_total_minutos=1.5 / 60)
 
-    assert resultado == {"sesiones": 2}, resultado
-    assert sorted(vistos) == ["A", "B"], vistos
-    print("OK live_transcribe: watch_once() transcribe todas las sesiones en vivo en paralelo")
+    assert vistos and set(vistos) == {"A"}, vistos
+    print("OK live_transcribe: watch_and_transcribe(max_total_minutos=...) transcribe y sale solo")
 
 
 if __name__ == "__main__":
     _demo()
     _test_acumulacion()
-    _test_watch_once()
+    _test_watch_and_transcribe_max_total()
