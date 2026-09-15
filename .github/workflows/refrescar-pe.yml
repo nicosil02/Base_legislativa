@@ -275,6 +275,27 @@ jobs:
           pip install -q scikit-learn joblib
           python -X utf8 -m clasificador.cli reclassify --apply || echo "[warn] reclassify fallo, sigo"
 
+      - name: Reclasificar temas de transcripciones con el resumen limpio
+        run: |
+          # Bug real 2026-09-15 (feedback de Nicolas: "estas clasificando
+          # mal por temas las sesiones de comisiones"): sesiones_transcripciones.
+          # temas se calculaba con noticias.temas.clasificar() sobre la
+          # TRANSCRIPCION CRUDA, que tiene cortesias protocolares
+          # ("senor diputado", en TODA sesion) y nombres de parlamentarios
+          # que a veces coinciden con keywords cortos - verificado con una
+          # sesion de Salud que citaba a la diputada "Ana Luisa Yufra
+          # Lugo" y quedaba mal clasificada como "Crop" (ANA = Autoridad
+          # Nacional del Agua). Ya se saco esa keyword ambigua de
+          # noticias/temas.py, pero ademas: la rutina horaria de resumenes
+          # (NO puede tocar proyectos.db, es de solo lectura para ella)
+          # ya deja un resumen limpio y sintetizado en
+          # data/transcripciones_resumenes.json - este paso SI puede
+          # reclasificar usando ESE texto en vez de la transcripcion
+          # cruda, mucho menos propenso a este tipo de falso positivo.
+          if [ -f proyectos.db ]; then
+            python -X utf8 -m congreso_live.reclasificar_temas run || echo "[warn] reclasificar_temas fallo, sigo"
+          fi
+
       - name: Envio de alerta diaria (backup del daily-alerts.yml)
         env:
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
