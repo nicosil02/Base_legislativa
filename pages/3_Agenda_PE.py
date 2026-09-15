@@ -1444,28 +1444,43 @@ def _modelo_whisper():
     return WhisperModel("small", device="cpu", compute_type="int8")
 
 
-def _render_resumen_card(res: dict, titulo_caja: str = "Resumen") -> None:
+def _render_resumen_card(res: dict, titulo_caja: str = "Resumen",
+                          max_ideas: int = 3) -> None:
     """Tarjeta de resumen + ideas clave + cruce de agenda (si hay) para 1
     transcripcion. Un solo lugar para esto - antes estaba duplicado entre
-    la seccion "en vivo" y "Sesiones previas"."""
-    ideas_html = "".join(f"<li>{i}</li>" for i in res.get("ideas_clave", []))
+    la seccion "en vivo" y "Sesiones previas".
+
+    Ideas clave acotadas a `max_ideas` con un toggle para ver el resto -
+    feedback real de Nicolas 2026-09-15: con 5-7 ideas por sesion y varias
+    sesiones en pantalla, la vista quedaba demasiado larga."""
+    ideas = res.get("ideas_clave", [])
     agenda_html = (
         f'<div style="font-size:12px;color:var(--ink-mute);margin-top:8px;'
         f'padding-top:8px;border-top:1px solid var(--line-soft);">'
         f'<strong>Agenda:</strong> {res["agenda_cumplida"]}</div>'
         if res.get("agenda_cumplida") else ""
     )
-    st.markdown(
-        f'<div style="border:1px solid var(--line-soft);border-radius:8px;'
-        f'padding:12px 16px;margin-top:8px;background:var(--bg-soft);">'
-        f'<div style="font-size:11px;font-weight:800;letter-spacing:0.1em;'
-        f'text-transform:uppercase;color:var(--ink-mute);margin-bottom:6px;">'
-        f'{titulo_caja}</div>'
-        f'<div style="font-size:14px;margin-bottom:8px;">{res["resumen"]}</div>'
-        f'<ul style="font-size:13px;color:var(--ink-soft);margin:0;padding-left:18px;">'
-        f'{ideas_html}</ul>{agenda_html}</div>',
-        unsafe_allow_html=True,
-    )
+    with st.container(border=True):
+        st.markdown(
+            f'<div style="font-size:11px;font-weight:800;letter-spacing:0.1em;'
+            f'text-transform:uppercase;color:var(--ink-mute);margin-bottom:6px;">'
+            f'{titulo_caja}</div>'
+            f'<div style="font-size:14px;margin-bottom:4px;">{res["resumen"]}</div>',
+            unsafe_allow_html=True,
+        )
+        ver_todas = True
+        if len(ideas) > max_ideas:
+            ver_todas = st.toggle(
+                f"Ideas clave ({len(ideas)})", value=False,
+                key=f"ideas_toggle_{res.get('video_id', titulo_caja)}",
+            )
+        ideas_mostradas = ideas if ver_todas else ideas[:max_ideas]
+        ideas_html = "".join(f"<li>{i}</li>" for i in ideas_mostradas)
+        st.markdown(
+            f'<ul style="font-size:13px;color:var(--ink-soft);margin:0;'
+            f'padding-left:18px;">{ideas_html}</ul>{agenda_html}',
+            unsafe_allow_html=True,
+        )
 
 
 with tab_transcripciones:
@@ -1502,7 +1517,8 @@ with tab_transcripciones:
                         f"(última actualización: {_estado['fetched_at']})."
                     )
                     if _res_vivo:
-                        _render_resumen_card(_res_vivo, "Resumen (última corrida horaria)")
+                        with st.expander("Ver resumen (última corrida horaria)"):
+                            _render_resumen_card(_res_vivo, "Resumen (última corrida horaria)")
                     else:
                         cols_v[0].caption(
                             "Resumen pendiente — se genera en la próxima corrida "
