@@ -67,5 +67,19 @@
     "fuentes_adicionales": [],
     "created_at": "2026-09-14T02:59:55Z",
     "updated_at": "2026-09-14T13:12:29Z"
+  },
+  {
+    "cliente": "bayer",
+    "item_id": "noticia_PE_2112123",
+    "item_tipo": "noticia",
+    "pais": "PE",
+    "item_titulo": "Fuerza Popular plantea que precio de medicamentos en establecimientos privados tome como referencia los precios de mercado publicados por Digemid - LP | Pasión por el Derecho",
+    "item_url": "https://news.google.com/rss/articles/CBMi3wFBVV95cUxQQnZYUFprZloxd1d5ajN5RFhuTEJPc1ZpWlc0UTYxWHNVWl8yRzByNFk4aXBoMEFDZVVDY2ZKb3lYOGVYX3BzcDZqMUFYMXlwdVpwS0VDcGNaOTBoZkktTVczOWRMTTYyQkdOcWhLR1lvclVyVlkteWxhZHpXdDl2QUNCVDdKWGs0cVV5UjVXU1BZckM3NWw0Q2FxcFZOVkxfekk2Tnptci01S1pUTGZwUV93elVyT3kzMmVQRDg2NWlva0s0VWcyVWM4bmhJSDQwalNqT0VlV1YzRmt0Wmtv?oc=5",
+    "item_resumen": "<a href=\"https://news.google.com/rss/articles/CBMi3wFBVV95cUxQQnZYUFprZloxd1d5ajN5RFhuTEJPc1ZpWlc0UTYxWHNVWl8yRzByNFk4aXBoMEFDZVVDY2ZKb3lYOGVYX3BzcDZqMUFYMXlwdVpwS0VDcGNaOTBoZkktTVczOWRMTTYyQkdOcWhLR1lvclVyVlkteWxhZHpXdDl2QUNCVDdKWGs0cVV5UjVXU1BZckM3NWw0Q2FxcFZOVkxfekk2Tnptci01S1pUTGZwUV93elVyT3kzMmVQRDg2NWlva0s0VWcyVWM4bmhJSDQwalNqT0VlV1YzRmt0Wmtv?oc=5\" target=\"_blank\">Fuerza Popular plantea que precio de medicamentos en establecimientos privados tome como referencia los precios de mercado publ",
+    "texto": "",
+    "estado": "pendiente",
+    "fuentes_adicionales": [],
+    "created_at": "2026-09-15T13:22:52Z",
+    "updated_at": "2026-09-15T13:22:52Z"
   }
 ]
