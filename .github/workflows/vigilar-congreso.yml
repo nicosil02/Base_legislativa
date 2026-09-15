@@ -34,7 +34,7 @@ concurrency:
 jobs:
   vigilar:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
 
@@ -82,18 +82,23 @@ jobs:
             gunzip -kc data/proyectos.db.gz > proyectos.db
           fi
 
-      - name: Transcribir sesiones en vivo (hasta 8 min)
+      - name: Transcribir sesiones en vivo (continuo, hasta 55 min)
         env:
           PYTHONIOENCODING: utf-8
           YT_DLP_PROXY: socks5://127.0.0.1:40000
         run: |
-          # El disparador externo (cron-job.org) llama cada 10 min; el
-          # setup de este job (checkout, deps, WARP) mide ~1 min en la
-          # practica (run #693), asi que 8 min de transcripcion activa
-          # deja margen real y reduce el hueco sin cobertura entre
-          # corridas de ~50% a ~15-20% del tiempo.
-          timeout 540 python -X utf8 -m congreso_live.cli live-watch-once --max-minutos 8 \
-              || echo "[warn] live-watch-once fallo, sigo"
+          # live-watch (no live-watch-once): queda transcribiendo SIN
+          # cortar mientras la sesion siga en vivo, en vez de un tick de
+          # pocos minutos cada 10 min. El disparador externo (cron-job.org,
+          # cada 10 min) llama de nuevo mientras este job sigue corriendo,
+          # pero concurrency (cancel-in-progress: false, abajo) hace que
+          # esos llamados se encolen en vez de duplicar o cortar el job -
+          # el siguiente arranca apenas este termine, asi que la cobertura
+          # es practicamente continua (~1 min de hueco entre relevos, no
+          # ~5-8 min como con el tick corto). 55 min dentro del job de 60
+          # min deja margen para el setup inicial y el commit del final.
+          timeout 3400 python -X utf8 -m congreso_live.cli live-watch --max-total-minutos 55 \
+              || echo "[warn] live-watch fallo, sigo"
 
       - name: Guardar snapshot DB si cambio
         run: |
