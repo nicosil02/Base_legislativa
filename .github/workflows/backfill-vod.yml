@@ -103,7 +103,18 @@ jobs:
 
       - name: Guardar snapshot DB si cambio
         run: |
+          # Mergear SIEMPRE lo ultimo de origin antes de generar el
+          # snapshot, no solo si el push despues choca - ver el mismo
+          # comentario en vigilar-congreso.yml (bug real 2026-09-15:
+          # refrescar-pe.yml con actions/cache viejo empuja un push
+          # limpio que pisa datos sin disparar ningun fallback).
           if [ -f proyectos.db ]; then
+            git fetch origin main 2>/dev/null || true
+            if git show origin/main:data/proyectos.db.gz > /tmp/origin_proyectos.db.gz 2>/dev/null \
+                && [ -s /tmp/origin_proyectos.db.gz ]; then
+              gunzip -c /tmp/origin_proyectos.db.gz > /tmp/origin_proyectos.db
+              python -X utf8 -m congreso_live.merge_db proyectos.db /tmp/origin_proyectos.db
+            fi
             gzip -9nkf proyectos.db
             mv proyectos.db.gz data/proyectos.db.gz
           fi
