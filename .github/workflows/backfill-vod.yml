@@ -1,0 +1,114 @@
+name: Backfill transcripcion (VOD ya terminado)
+
+# Recupera una sesion del Congreso que YA TERMINO y que la captura en
+# vivo se perdio (bug de deteccion, corte de luz, lo que sea) - baja el
+# audio COMPLETO del video ya grabado y lo transcribe con Whisper, sin
+# esperar los captions automaticos de YouTube (tardan de horas a dias,
+# ver transcripciones.py). Se dispara a mano, con el video_id/tipo/titulo
+# de la sesion perdida.
+#
+# Mismo esquema WARP que vigilar-congreso.yml (YouTube bloquea IPs de
+# datacenter, WARP lo esquiva) - grupo de concurrency propio para no
+# esperar en la cola del monitoreo continuo, que puede tardar horas.
+
+on:
+  workflow_dispatch:
+    inputs:
+      video_id:
+        description: "ID del video de YouTube (ej. uawItrs3E9U)"
+        required: true
+      tipo:
+        description: "ej. 'Comision: Salud' o 'Pleno: Diputados'"
+        required: true
+      titulo:
+        description: "Titulo tal cual aparecio en YouTube"
+        required: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: backfill-vod
+  cancel-in-progress: false
+
+jobs:
+  backfill:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Cache pip + modelo Whisper (persiste entre runs)
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/pip
+            ~/.cache/huggingface
+          key: vigilar-congreso-deps-${{ hashFiles('.github/workflows/vigilar-congreso.yml') }}
+
+      - name: Instalar deps
+        run: pip install -q yt-dlp requests faster-whisper imageio-ffmpeg
+
+      - name: Instalar Cloudflare WARP en modo proxy (SOCKS5 :40000)
+        run: |
+          curl -fsSL https://pkg.cloudflareclient.com/pubkey.gpg | sudo gpg --yes --dearmor --output /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg
+          echo "deb [signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] https://pkg.cloudflareclient.com/ $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/cloudflare-client.list
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq cloudflare-warp
+          sudo systemctl enable --now warp-svc
+          sleep 3
+          warp-cli --accept-tos registration new
+          warp-cli --accept-tos mode proxy
+          warp-cli --accept-tos proxy port 40000
+          warp-cli --accept-tos connect
+          sleep 5
+          warp-cli --accept-tos status
+
+      - name: Bootstrap DB Peru desde snapshot gz
+        run: |
+          if [ -f data/proyectos.db.gz ]; then
+            gunzip -kc data/proyectos.db.gz > proyectos.db
+          fi
+
+      - name: Bajar y transcribir el VOD completo
+        env:
+          PYTHONIOENCODING: utf-8
+          YT_DLP_PROXY: socks5://127.0.0.1:40000
+        run: |
+          python -X utf8 -m congreso_live.cli backfill-vod \
+              --video-id "${{ inputs.video_id }}" \
+              --tipo "${{ inputs.tipo }}" \
+              --titulo "${{ inputs.titulo }}"
+
+      - name: Guardar snapshot DB si cambio
+        run: |
+          if [ -f proyectos.db ]; then
+            gzip -9kf proyectos.db
+            mv proyectos.db.gz data/proyectos.db.gz
+          fi
+
+      - name: Commitear snapshot DB
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/proyectos.db.gz
+          if git diff --staged --quiet; then
+            echo "sin cambios"
+            exit 0
+          fi
+          git commit -m "Backfill VOD: transcripcion de ${{ inputs.video_id }} $(date -u +%Y-%m-%d-%H%M) [skip ci]"
+          for i in 1 2 3; do
+            if git push; then
+              echo "Push OK (intento $i)"
+              exit 0
+            fi
+            echo "Push fallo (intento $i), rebaseando con origin/main..."
+            git fetch origin main
+            git rebase -X theirs origin/main || { git rebase --abort; sleep 5; }
+          done
+          echo "Push fallo despues de 3 intentos."
+          exit 1
