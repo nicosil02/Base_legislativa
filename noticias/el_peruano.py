@@ -161,10 +161,17 @@ def run_sync(db, dias: int = 1) -> dict:
     stats["items_totales"] = len(items)
     fecha_iso = _fecha_a_iso(fin)  # Usamos la fecha_fin como pub_date aproximada
     for it in items:
+        # Guardamos TODAS las normas, sin filtrar por tema - inconsistencia
+        # real encontrada en vivo 2026-09-15: esta era la UNICA fuente
+        # "Institucion" que descartaba items sin match de tema (scraper.py,
+        # que ingesta el resto de fuentes institucionales gob.pe/RSS, no
+        # filtra nada, guarda todo). Con eso, hoy se descartaban 33 de 42
+        # normas del dia (79%) - incluyendo Decretos Supremos reales, no
+        # solo designaciones de funcionarios. clasificar() sigue corriendo
+        # para taggear el tema en la UI (badges), pero ya no decide si la
+        # norma se guarda.
         signal = f"{it['sector']} {it['tipo']} {it['titulo']}"
         temas = clasificar(signal, None)
-        if not temas:
-            continue
         stats["matches"] += 1
         try:
             is_new, changed = db.upsert_noticia(fuente_id, build_noticia(it, fecha_iso, temas))
@@ -195,10 +202,44 @@ def _demo():
     print(f"  primer item: {it['sector']} / {it['tipo']} / {it['numero']} / {it['titulo'][:60]}")
 
 
+def _test_run_sync_guarda_todo_sin_filtrar_tema():
+    """run_sync() debe guardar TODAS las normas, incluso las que no
+    matchean ningun tema de clasificar() - bug real encontrado en vivo
+    2026-09-15 (hoy descartaba 33 de 42 normas, 79%, incluyendo Decretos
+    Supremos reales). Sin tocar la red: mockea fetch_range con 1 norma
+    que matchea (agro) y 1 que no matchea nada."""
+    import tempfile
+    from pathlib import Path
+    from unittest.mock import patch
+
+    import noticias.el_peruano as ep
+    from noticias.db import Database
+
+    items_falsos = [
+        {"sector": "MIDAGRI", "url": "https://x/1", "id_dispositivo": "1-2026",
+         "tipo": "RESOLUCIÓN MINISTERIAL", "numero": "N° 1-2026-MIDIAGRI",
+         "titulo": "Aprueban norma agraria sobre semillas"},
+        {"sector": "VIVIENDA", "url": "https://x/2", "id_dispositivo": "2-2026",
+         "tipo": "RESOLUCIÓN SUPREMA", "numero": "N° 2-2026-VIVIENDA",
+         "titulo": "Designan miembro del Directorio de la SUNARP"},
+    ]
+    with tempfile.TemporaryDirectory() as td:
+        db_path = Path(td) / "test.db"
+        with patch.object(ep, "fetch_range", lambda *a, **k: items_falsos), \
+             Database(db_path) as db:
+            db.init_schema()
+            stats = ep.run_sync(db, dias=1)
+
+        assert stats["items_totales"] == 2, stats
+        assert stats["nuevas"] == 2, (
+            f"debe guardar las 2, incluso la que no matchea tema: {stats}")
+    print("OK el_peruano: run_sync guarda todas las normas, sin filtrar por tema")
+
+
 if __name__ == "__main__":
     import argparse
     p = argparse.ArgumentParser()
-    p.add_argument("cmd", choices=["sync", "demo"])
+    p.add_argument("cmd", choices=["sync", "demo", "test"])
     p.add_argument("--db", default="proyectos.db")
     p.add_argument("--dias", type=int, default=1,
                     help="dias hacia atrás para sync (default 1 = solo hoy)")
@@ -206,6 +247,8 @@ if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
     if args.cmd == "demo":
         _demo()
+    elif args.cmd == "test":
+        _test_run_sync_guarda_todo_sin_filtrar_tema()
     else:
         from noticias.db import Database
         with Database(args.db) as db:
