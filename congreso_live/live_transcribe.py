@@ -279,6 +279,13 @@ def capturar_y_acumular_en_vivo(
 
             wav = capturar_audio_en_vivo(video_id, segundos=intervalo_seg)
             if wav is None:
+                # Antes esto fallaba en silencio - sin print, no habia forma
+                # de saber desde el log si el cuello de botella era la
+                # descarga de audio en si (yt-dlp/WARP) o algo mas. Bug real
+                # encontrado en vivo 2026-09-15: con la deteccion ya
+                # arreglada, 4 sesiones arrancaron threads pero 0 chunks en
+                # 2+ min, sin ninguna pista de por que.
+                print(f"[live-transcribe] {video_id}: no se pudo capturar/convertir audio, sigo")
                 continue
             if modelo is None:
                 from faster_whisper import WhisperModel
@@ -286,6 +293,7 @@ def capturar_y_acumular_en_vivo(
             segs = transcribir_audio(wav, modelo)
             nuevo_texto = " ".join(s["text"] for s in segs)
             if not nuevo_texto:
+                print(f"[live-transcribe] {video_id}: audio capturado sin habla clara, sigo")
                 continue
 
             texto_acumulado = (texto_acumulado + " " + nuevo_texto).strip()
