@@ -1,4 +1,14 @@
 {
- "alertados": [],
- "sesiones": []
+ "alertados": [
+  "uawItrs3E9U"
+ ],
+ "sesiones": [
+  {
+   "id": "uawItrs3E9U",
+   "titulo": "🔴 EN VIVO: Sesión de la Comisión de Salud de la Cámara de Diputados | 15/09/2026",
+   "tipo": "Comision: Salud",
+   "url": "https://www.youtube.com/watch?v=uawItrs3E9U",
+   "visto_at": "2026-09-15T13:01:15Z"
+  }
+ ]
 }
