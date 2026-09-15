@@ -166,14 +166,29 @@ def _esta_en_vivo(video_id: str) -> bool:
 def vivos_de_interes() -> list[dict]:
     """Streams del Congreso EN VIVO que son Pleno o comision ordinaria.
 
-    Devuelve list de {id, titulo, tipo, url}. Hace extract completo solo para
-    los pocos candidatos que pasan el filtro de titulo (barato)."""
+    Devuelve list de {id, titulo, tipo, url}. Usa el `live_status` que ya
+    trae _streams_recientes() (extraccion flat) - CAUSA RAIZ real del
+    bloqueo "Sign in to confirm you're not a bot" encontrada en vivo
+    2026-09-15: este codigo hacia un extract_info COMPLETO (_esta_en_vivo)
+    por cada uno de los ~6 candidatos, en cada ciclo de 60s - ese patron
+    de pedidos repetidos y agresivos es lo que quemaba la reputacion de
+    WARP, no un problema de cache/reintentos como se penso primero. El
+    listado flat YA trae `live_status` ("is_live"/"is_upcoming"/
+    "was_live") con un solo pedido - verificado que coincide con el
+    chequeo completo en todos los casos probados, y transcripciones.py ya
+    confiaba en el mismo campo para "was_live" sin problema. Bajar de 6+
+    pedidos por ciclo a 1 solo corta la saturacion de raiz. _esta_en_vivo
+    queda solo como fallback si algun entry no trae el campo."""
     out: list[dict] = []
     for e in _streams_recientes():
         tipo = clasificar_titulo(e.get("title"))
         if not tipo:
             continue
-        if not _esta_en_vivo(e["id"]):
+        estado = e.get("live_status")
+        if estado is None:
+            if not _esta_en_vivo(e["id"]):
+                continue
+        elif estado != "is_live":
             continue
         out.append({
             "id": e["id"],
@@ -231,5 +246,38 @@ def _demo():
     print("OK detector: fallo se cachea corto, exito se cachea largo")
 
 
+def _test_vivos_de_interes_usa_live_status_del_flat():
+    """vivos_de_interes() NO debe llamar a _esta_en_vivo (extract completo)
+    cuando el listado flat ya trae live_status - ese era el patron de
+    pedidos repetidos que quemaba WARP (ver comentario arriba de la
+    funcion). Solo cae a _esta_en_vivo si un entry no trae el campo."""
+    from unittest.mock import patch
+
+    import congreso_live.detector as det
+
+    entries = [
+        {"id": "A", "title": "Comision de Salud en vivo", "live_status": "is_live"},
+        {"id": "B", "title": "Comision de Salud en vivo", "live_status": "is_upcoming"},
+        {"id": "C", "title": "Comision de Salud en vivo", "live_status": "was_live"},
+        {"id": "D", "title": "Comision de Salud en vivo", "live_status": None},  # sin dato -> fallback
+        {"id": "E", "title": "Video sin relacion", "live_status": "is_live"},  # filtrado por titulo, ni se chequea
+    ]
+    llamadas_esta_en_vivo = []
+
+    def _fake_esta_en_vivo(video_id):
+        llamadas_esta_en_vivo.append(video_id)
+        return video_id == "D"  # D si esta en vivo, via el fallback
+
+    with patch.object(det, "_streams_recientes", lambda: entries), \
+         patch.object(det, "_esta_en_vivo", _fake_esta_en_vivo):
+        vivos = det.vivos_de_interes()
+
+    assert llamadas_esta_en_vivo == ["D"], (
+        f"solo deberia llamar al fallback para D (sin live_status), llamo: {llamadas_esta_en_vivo}")
+    assert {v["id"] for v in vivos} == {"A", "D"}, vivos
+    print("OK detector: vivos_de_interes usa live_status del flat, solo cae a extract completo si falta")
+
+
 if __name__ == "__main__":
     _demo()
+    _test_vivos_de_interes_usa_live_status_del_flat()
