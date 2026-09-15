@@ -59,7 +59,12 @@ jobs:
           key: vigilar-congreso-deps-${{ hashFiles('.github/workflows/vigilar-congreso.yml') }}
 
       - name: Instalar deps
-        run: pip install -q yt-dlp requests faster-whisper imageio-ffmpeg
+        run: |
+          pip install -q yt-dlp requests faster-whisper imageio-ffmpeg
+          # Ver vigilar-congreso.yml: el binario portable de imageio-ffmpeg
+          # crasheaba (SIGSEGV) en runners de GitHub Actions - el de apt
+          # (probado para este mismo Ubuntu) no.
+          sudo apt-get install -y -qq ffmpeg
 
       - name: Instalar Cloudflare WARP en modo proxy (SOCKS5 :40000)
         run: |
@@ -86,6 +91,7 @@ jobs:
         env:
           PYTHONIOENCODING: utf-8
           YT_DLP_PROXY: socks5://127.0.0.1:40000
+          FFMPEG_BIN: /usr/bin/ffmpeg
         run: |
           python -X utf8 -u -m congreso_live.cli backfill-vod \
               --video-id "${{ inputs.video_id }}" \

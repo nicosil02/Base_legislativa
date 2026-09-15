@@ -51,7 +51,13 @@ jobs:
           key: vigilar-congreso-deps-${{ hashFiles('.github/workflows/vigilar-congreso.yml') }}
 
       - name: Instalar deps
-        run: pip install -q yt-dlp requests faster-whisper imageio-ffmpeg
+        run: |
+          pip install -q yt-dlp requests faster-whisper imageio-ffmpeg
+          # El binario portable de imageio-ffmpeg crasheaba con SIGSEGV en
+          # este runner incluso para una conversion LOCAL sin red de por
+          # medio (bug real encontrado en vivo 2026-09-15, corrida #795) -
+          # el de apt, compilado y probado para este mismo Ubuntu, no.
+          sudo apt-get install -y -qq ffmpeg
 
       - name: Instalar Cloudflare WARP en modo proxy (SOCKS5 :40000)
         run: |
@@ -104,6 +110,7 @@ jobs:
           PYTHONIOENCODING: utf-8
           YT_DLP_PROXY: socks5://127.0.0.1:40000
           FFMPEG_HTTP_PROXY: http://127.0.0.1:8118
+          FFMPEG_BIN: /usr/bin/ffmpeg
         run: |
           # live-watch (no live-watch-once): queda transcribiendo SIN
           # cortar mientras la sesion siga en vivo, en vez de un tick de
