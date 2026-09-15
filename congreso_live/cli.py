@@ -100,6 +100,24 @@ def cmd_live_watch(args) -> int:
     return 0
 
 
+def cmd_backfill_vod(args) -> int:
+    """Sesion ya terminada que la captura en vivo se perdio: baja el
+    audio COMPLETO del VOD y lo transcribe de una, sin esperar los
+    captions de YouTube (tardan de horas a dias)."""
+    try:
+        from congreso_live.live_transcribe import transcribir_vod
+    except ImportError:
+        print("Falta faster-whisper/imageio-ffmpeg: "
+              "pip install faster-whisper imageio-ffmpeg")
+        return 1
+    r = transcribir_vod(args.video_id, args.tipo, args.titulo)
+    if not r["ok"]:
+        print(f"FALLO: {r['motivo']}")
+        return 1
+    print(f"OK: {r['chars']} chars, ~{(r['duracion_seg'] or 0)//60} min cubiertos.")
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     p = argparse.ArgumentParser(prog="congreso_live")
     p.add_argument("-v", "--verbose", action="store_true")
@@ -123,6 +141,12 @@ def main(argv: list[str] | None = None) -> int:
     lw.add_argument("--idle-exit-minutos", type=float, default=None,
                     help="si se pasa, sale sola si no hay NADA en vivo desde hace este tiempo, en vez de seguir poll-eando sin hacer nada hasta --max-total-minutos")
     lw.set_defaults(func=cmd_live_watch)
+    bv = sub.add_parser("backfill-vod",
+                        help="sesion ya terminada que la captura en vivo se perdio: baja y transcribe el audio COMPLETO del VOD")
+    bv.add_argument("--video-id", required=True)
+    bv.add_argument("--tipo", required=True)
+    bv.add_argument("--titulo", required=True)
+    bv.set_defaults(func=cmd_backfill_vod)
     args = p.parse_args(argv)
     logging.basicConfig(level=logging.DEBUG if args.verbose else logging.INFO,
                         format="%(asctime)s %(levelname)s %(message)s")
