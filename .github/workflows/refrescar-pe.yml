@@ -339,20 +339,35 @@ jobs:
             exit 0
           fi
           git commit -m "PE: auto-refresh PLs $(date -u +%Y-%m-%d-%H%M) [skip ci]"
-          # Retry-on-conflict: el workflow de Ecuador puede pushear en
-          # paralelo y dejar nuestro push outdated. Rebaseamos y reintentamos.
+          # Retry-on-conflict: otros workflows (vigilar-congreso.yml,
+          # backfill-vod.yml, y el de Ecuador) pueden pushear en paralelo y
+          # dejar nuestro push outdated. Bug real 2026-09-15: "rebase -X
+          # theirs" descarta el archivo binario COMPLETO de un lado -
+          # asi se borraron transcripciones en vivo reales (Presupuesto/
+          # Transportes) que vigilar-congreso.yml habia guardado segundos
+          # antes. Fix: si el conflicto es en data/proyectos.db.gz,
+          # mergear sesiones_transcripciones a nivel de filas SQL
+          # (merge_db.py) antes de reintentar - proyectos.db (local) SI
+          # tiene siempre la ultima version real de las tablas que este
+          # workflow es dueño (PLs/agenda/etc), asi que se usa como base.
           for i in 1 2 3; do
             if git push; then
               echo "Push OK (intento $i)"
               exit 0
             fi
-            echo "Push fallo (intento $i), rebaseando con origin/main..."
+            echo "Push fallo (intento $i), mergeando con origin/main..."
             git fetch origin main
-            git rebase -X theirs origin/main || {
-              echo "Rebase fallo, abortando intento $i"
-              git rebase --abort
-              sleep 5
-            }
+            if [ -f proyectos.db ] && git show origin/main:data/proyectos.db.gz > /tmp/origin_proyectos.db.gz 2>/dev/null \
+                && [ -s /tmp/origin_proyectos.db.gz ]; then
+              gunzip -c /tmp/origin_proyectos.db.gz > /tmp/origin_proyectos.db
+              python -X utf8 -m congreso_live.merge_db proyectos.db /tmp/origin_proyectos.db
+              gzip -9nkf proyectos.db
+              mv -f proyectos.db.gz data/proyectos.db.gz
+              git add data/proyectos.db.gz
+            fi
+            git reset --soft origin/main
+            git commit -m "PE: auto-refresh PLs $(date -u +%Y-%m-%d-%H%M) [skip ci]"
+            sleep 5
           done
           echo "Push fallo despues de 3 intentos."
           exit 1
