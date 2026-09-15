@@ -1,9 +1,20 @@
 name: Vigilar Congreso en vivo (Fase 0)
 
-# Detecta cuando el Pleno o una comision ordinaria entra EN VIVO en YouTube
-# y avisa por WhatsApp. Repo publico => minutos de Actions gratis.
+# Detecta cuando el Pleno o una comision ordinaria entra EN VIVO en YouTube,
+# avisa por WhatsApp, Y transcribe el audio real en vivo (yt-dlp +
+# faster-whisper) acumulando en sesiones_transcripciones. Repo publico =>
+# minutos de Actions gratis.
 # NOTA: el cron de GitHub se atrasa 0-15 min en horas pico; como las sesiones
 # duran horas, igual se capturan. Para pruebas usar "Run workflow" (dispatch).
+#
+# YouTube bloquea las IPs de datacenter de GitHub Actions ("Sign in to
+# confirm you're not a bot") - verificado que NI el cliente android
+# (--extractor-args) ni PO tokens lo esquivan, el bloqueo es por
+# reputacion de IP. Lo que SI funciona: tunelizar yt-dlp por Cloudflare
+# WARP (VPN gratis de Cloudflare) - verificado en vivo 2026-09-15
+# (_test_warp.yml: mismo request, sin proxy = bot-check, con proxy WARP =
+# titulo real, sin login ni cuenta). Por eso instalamos WARP en modo
+# proxy antes de tocar YouTube.
 
 on:
   schedule:
@@ -23,6 +34,7 @@ concurrency:
 jobs:
   vigilar:
     runs-on: ubuntu-latest
+    timeout-minutes: 9
     steps:
       - uses: actions/checkout@v4
 
@@ -30,24 +42,79 @@ jobs:
         with:
           python-version: '3.13'
 
+      - name: Cache pip + modelo Whisper (persiste entre runs)
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/pip
+            ~/.cache/huggingface
+          key: vigilar-congreso-deps-${{ hashFiles('.github/workflows/vigilar-congreso.yml') }}
+
       - name: Instalar deps
-        run: pip install -q yt-dlp requests
+        run: pip install -q yt-dlp requests faster-whisper imageio-ffmpeg
+
+      - name: Instalar Cloudflare WARP en modo proxy (SOCKS5 :40000)
+        run: |
+          curl -fsSL https://pkg.cloudflareclient.com/pubkey.gpg | sudo gpg --yes --dearmor --output /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg
+          echo "deb [signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] https://pkg.cloudflareclient.com/ $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/cloudflare-client.list
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq cloudflare-warp
+          sudo systemctl enable --now warp-svc
+          sleep 3
+          warp-cli --accept-tos registration new
+          warp-cli --accept-tos mode proxy
+          warp-cli --accept-tos proxy port 40000
+          warp-cli --accept-tos connect
+          sleep 5
+          warp-cli --accept-tos status
 
       - name: Detectar y notificar
         env:
           CALLMEBOT_PHONE: ${{ secrets.CALLMEBOT_PHONE }}
           CALLMEBOT_APIKEY: ${{ secrets.CALLMEBOT_APIKEY }}
           PYTHONIOENCODING: utf-8
+          YT_DLP_PROXY: socks5://127.0.0.1:40000
         run: python -X utf8 -m congreso_live.cli check || echo "[warn] check fallo, sigo"
 
-      - name: Commitear estado (dedupe + log de sesiones)
+      - name: Bootstrap DB Peru desde snapshot gz
+        run: |
+          if [ -f data/proyectos.db.gz ]; then
+            gunzip -kc data/proyectos.db.gz > proyectos.db
+          fi
+
+      - name: Transcribir sesiones en vivo (hasta 5 min)
+        env:
+          PYTHONIOENCODING: utf-8
+          YT_DLP_PROXY: socks5://127.0.0.1:40000
+        run: |
+          timeout 360 python -X utf8 -m congreso_live.cli live-watch-once --max-minutos 5 \
+              || echo "[warn] live-watch-once fallo, sigo"
+
+      - name: Guardar snapshot DB si cambio
+        run: |
+          if [ -f proyectos.db ]; then
+            gzip -9kf proyectos.db
+            mv proyectos.db.gz data/proyectos.db.gz
+          fi
+
+      - name: Commitear estado + snapshot DB
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          if [ -n "$(git status --porcelain data/congreso_live_state.json)" ]; then
-            git add data/congreso_live_state.json
-            git commit -m "Congreso live: estado $(date -u +%Y-%m-%d-%H%M) [skip ci]"
-            git push || echo "[warn] push fallo, sigo"
-          else
-            echo "sin cambios de estado"
+          git add data/congreso_live_state.json data/proyectos.db.gz
+          if git diff --staged --quiet; then
+            echo "sin cambios"
+            exit 0
           fi
+          git commit -m "Congreso live: estado + transcripciones $(date -u +%Y-%m-%d-%H%M) [skip ci]"
+          for i in 1 2 3; do
+            if git push; then
+              echo "Push OK (intento $i)"
+              exit 0
+            fi
+            echo "Push fallo (intento $i), rebaseando con origin/main..."
+            git fetch origin main
+            git rebase -X theirs origin/main || { git rebase --abort; sleep 5; }
+          done
+          echo "Push fallo despues de 3 intentos."
+          exit 1

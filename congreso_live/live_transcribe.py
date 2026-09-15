@@ -1,19 +1,16 @@
-"""Transcripcion en vivo (bajo demanda) de sesiones que estan transmitiendo
-ahora mismo - yt-dlp + faster-whisper, 100% gratis, corre local.
-
-No es un pipeline continuo 24/7 (eso requeriria un proceso corriendo todo
-el tiempo en algun lado) - esto captura los ultimos N segundos de audio
-real de un stream en vivo y los transcribe, para uso interactivo desde la
-app (un boton "transcribir ahora").
+"""Transcripcion en vivo de sesiones que estan transmitiendo ahora mismo -
+yt-dlp + faster-whisper, 100% gratis.
 
 Verificado en vivo 2026-09-14/15: funciona perfecto desde una IP local -
 transcribio 52s de audio real de la Comision de Constitucion en 5s de
 procesamiento (mas rapido que tiempo real, modelo "small" en CPU).
 
-OJO - mismo bloqueo que ya documentamos para sync-transcripciones: las
-IPs de datacenter (GitHub Actions, y muy probablemente Streamlit Cloud
-tambien) estan marcadas por el anti-bot de YouTube. Este modulo solo esta
-verificado funcionando desde una IP residencial/local.
+Las IPs de datacenter (GitHub Actions, Streamlit Cloud) estan marcadas por
+el anti-bot de YouTube - pero tunelizar por Cloudflare WARP (VPN gratis)
+lo esquiva, verificado en vivo 2026-09-15. `capturar_audio_en_vivo` usa
+YT_DLP_PROXY si esta seteada (ver detector._ydl() para el detalle) - el
+workflow de CI instala WARP en modo proxy y exporta esa variable, asi que
+esto SI corre en GitHub Actions ademas de local.
 """
 from __future__ import annotations
 
@@ -59,6 +56,11 @@ def capturar_audio_en_vivo(video_id: str, segundos: int = 30) -> Path | None:
         "-o", str(clip_path),
         f"https://www.youtube.com/watch?v={video_id}",
     ]
+    # Ver detector._ydl() para el porque: bloqueo de YouTube es por IP de
+    # datacenter, WARP (gratis) lo esquiva - el workflow en CI exporta esto.
+    proxy = os.environ.get("YT_DLP_PROXY")
+    if proxy:
+        cmd += ["--proxy", proxy]
     # subprocess.Popen + kill manual (no subprocess.run(timeout=...)):
     # yt-dlp lanza ffmpeg como su PROPIO subproceso para bajar streams
     # HLS. Con run(timeout=) Python mata solo el proceso hijo directo -
@@ -231,9 +233,8 @@ def watch_and_transcribe(intervalo_seg: int = 40, poll_seg: int = 60) -> None:
     concurrente sobre la misma instancia.
 
     Pensado para dejar corriendo en una terminal aparte (o una tarea
-    programada) en una maquina con IP no bloqueada por YouTube - NO
-    funciona desde GitHub Actions ni Streamlit Cloud (bloqueo de IP ya
-    documentado en otros modulos de congreso_live)."""
+    programada) en una maquina con IP no bloqueada por YouTube, o con
+    YT_DLP_PROXY seteada (ver docstring del modulo)."""
     import threading
     import time
 
@@ -269,6 +270,42 @@ def watch_and_transcribe(intervalo_seg: int = 40, poll_seg: int = 60) -> None:
             hilos[v["id"]] = t
 
         time.sleep(poll_seg)
+
+
+def watch_once(intervalo_seg: int = 40, max_minutos: float = 8) -> dict:
+    """Version acotada de watch_and_transcribe(), para correr como UN paso
+    de un workflow programado (GitHub Actions) en vez de un proceso
+    eterno: detecta las sesiones en vivo AHORA, transcribe cada una en
+    paralelo hasta `max_minutos` (o hasta que la sesion termine, lo que
+    pase primero) y devuelve. Pensado para un cron cada ~10 min - cada
+    corrida retoma donde quedo la anterior porque capturar_y_acumular_en_vivo
+    lee el texto ya guardado en sesiones_transcripciones antes de seguir
+    acumulando."""
+    import threading
+
+    from congreso_live.detector import vivos_de_interes
+
+    vivos = vivos_de_interes()
+    if not vivos:
+        print("[live-watch-once] nada en vivo ahora mismo.")
+        return {"sesiones": 0}
+
+    hilos = []
+    for v in vivos:
+        print(f"[live-watch-once] transcribiendo: {v['tipo']} - {v['titulo']} ({v['id']})")
+        t = threading.Thread(
+            target=capturar_y_acumular_en_vivo,
+            kwargs=dict(video_id=v["id"], tipo=v["tipo"], titulo=v["titulo"],
+                        intervalo_seg=intervalo_seg, max_minutos=max_minutos),
+            name=f"live-{v['id']}",
+        )
+        t.start()
+        hilos.append(t)
+
+    for t in hilos:
+        t.join(timeout=max_minutos * 60 + 60)
+
+    return {"sesiones": len(vivos)}
 
 
 # ============================================================
@@ -330,6 +367,33 @@ def _test_acumulacion():
     print("OK live_transcribe: acumulacion crece chunk a chunk y corta al terminar la sesion")
 
 
+def _test_watch_once():
+    """watch_once() debe arrancar un hilo por sesion en vivo y esperarlos
+    a todos antes de devolver - sin tocar la red (mockea vivos_de_interes
+    y capturar_y_acumular_en_vivo)."""
+    from unittest.mock import patch
+
+    import congreso_live.live_transcribe as lt
+
+    vistos = []
+
+    def _fake_acumular(video_id, tipo, titulo, intervalo_seg, max_minutos):
+        vistos.append(video_id)
+
+    vivos_falsos = [
+        {"id": "A", "tipo": "Comision: Test", "titulo": "Sesion A"},
+        {"id": "B", "tipo": "Comision: Test", "titulo": "Sesion B"},
+    ]
+    with patch.object(lt, "capturar_y_acumular_en_vivo", _fake_acumular), \
+         patch("congreso_live.detector.vivos_de_interes", lambda: vivos_falsos):
+        resultado = lt.watch_once(intervalo_seg=1, max_minutos=0.01)
+
+    assert resultado == {"sesiones": 2}, resultado
+    assert sorted(vistos) == ["A", "B"], vistos
+    print("OK live_transcribe: watch_once() transcribe todas las sesiones en vivo en paralelo")
+
+
 if __name__ == "__main__":
     _demo()
     _test_acumulacion()
+    _test_watch_once()
