@@ -130,7 +130,14 @@ TEMAS: dict[str, list[str]] = {
         "agropecuaria", "ganaderia", "ganadería", "semilla",
         "semillas", "riego", "siembra", "cosecha", "agroexport",
         "agroexportación", "agroexportacion", "MIDAGRI", "SENASA",
-        "AGROCALIDAD", "ANA", "agrario", "conveagro", "CONVEAGRO",
+        # ponytail (2026-09-15): "ANA" (Autoridad Nacional del Agua) sola
+        # se saco - matcheaba el nombre propio "Ana" (comun en español)
+        # en cualquier texto que mencionara a alguien con ese nombre,
+        # verificado en vivo con el resumen real de una sesion de la
+        # Comision de Salud que citaba a la diputada "Ana Luisa Yufra
+        # Lugo" y quedaba mal clasificada como "Crop". Mismo criterio que
+        # "premier"/"Keiko" mas abajo.
+        "AGROCALIDAD", "agrario", "conveagro", "CONVEAGRO",
         "AGAP", "CEPES", "agraria.pe", "transgénicos", "transgenicos",
         "OGM", "fertilizantes", "campesino", "campesina", "agro",
         "INIAP", "MAG", "MAGAP", "produccion agropecuaria",
@@ -146,7 +153,14 @@ TEMAS: dict[str, list[str]] = {
         "SBS", "UAF", "due diligence", "GAFI", "GAFILAT",
         "FinCEN", "compliance financiero", "compliance",
         "AFP", "ONP", "SUNAT", "SRI",
-        "tributo", "tributos", "impuesto", "fiscal",
+        "tributo", "tributos", "impuesto",
+        # ponytail (2026-09-15): "fiscal" sola se saco - es ambigua en
+        # español ("fiscal" = tributario, pero tambien = del Ministerio
+        # Publico/Fiscalia, sentido totalmente distinto), verificado en
+        # vivo con una "carpeta fiscal" (denuncias, sentido judicial) que
+        # quedaba mal clasificada como KYC/AML/Financiero. Las frases
+        # compuestas de abajo ya cubren el sentido tributario sin
+        # ambiguedad.
         "evasión fiscal", "evasion fiscal", "régimen tributario",
         "regimen tributario",
         "superintendencia de banca", "banca y seguros",
