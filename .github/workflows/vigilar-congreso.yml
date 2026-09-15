@@ -142,20 +142,49 @@ jobs:
           # toda la sesion. sqlite hace commit por chunk (~40s) con journal
           # por defecto, asi que el archivo en disco esta consistente fuera
           # de una transaccion - agarrarlo aca cada 5 min es seguro.
+          # set +e alrededor del cuerpo del loop: bug real encontrado en vivo
+          # 2026-09-15 (corrida #798) - con -e heredado del shell de Actions,
+          # CUALQUIER comando del cuerpo que devolviera !=0 (gzip, mv, git
+          # add) mataba este script entero en silencio, SIN imprimir nada
+          # (el "&&"/"||" de las lineas de push si estan exceptuados de -e,
+          # pero el resto del cuerpo no) - el proceso de python en segundo
+          # plano seguia mandando output al mismo log, por eso parecia que
+          # "todo seguia corriendo" mientras el commit periodico nunca se
+          # disparaba ni una sola vez en 3+ ventanas de 5 min, con transcripcion
+          # real acumulando (verificado: 11214+ caracteres de una sesion,
+          # 8700+ de otra) que se hubiera perdido si el job se cortaba antes
+          # del commit final. Con set +e + echo de cada paso, un fallo real
+          # queda visible en vez de abortar mudo.
+          set +e
+          tick=0
           while kill -0 "$watch_pid" 2>/dev/null; do
             sleep 300
+            tick=$((tick + 1))
+            echo "[commit-loop] tick $tick: watch_pid=$watch_pid vivo, chequeando proyectos.db"
             if [ -f proyectos.db ]; then
               gzip -9nkf proyectos.db
-              mv proyectos.db.gz data/proyectos.db.gz
+              echo "[commit-loop] gzip exit=$? tamano=$(stat -c%s proyectos.db.gz 2>/dev/null || echo '?')"
+              mv -f proyectos.db.gz data/proyectos.db.gz
               git add data/proyectos.db.gz
-              if ! git diff --staged --quiet; then
+              if git diff --staged --quiet; then
+                echo "[commit-loop] tick $tick: sin cambios en data/proyectos.db.gz"
+              else
                 git commit -m "Congreso live: transcripcion parcial $(date -u +%Y-%m-%d-%H%M) [skip ci]"
-                git push || { git fetch origin main && git rebase -X theirs origin/main && git push; } \
-                    || echo "[warn] commit parcial no se pudo pushear, sigo"
+                if git push; then
+                  echo "[commit-loop] tick $tick: push OK"
+                elif git fetch origin main && git rebase -X theirs origin/main && git push; then
+                  echo "[commit-loop] tick $tick: push OK tras rebase"
+                else
+                  echo "[commit-loop] tick $tick: [warn] commit parcial no se pudo pushear, sigo"
+                fi
               fi
+            else
+              echo "[commit-loop] tick $tick: [warn] proyectos.db no existe todavia"
             fi
           done
+          echo "[commit-loop] watch_pid=$watch_pid termino, salgo del loop de commits ($tick ticks)"
           wait "$watch_pid" || echo "[warn] live-watch fallo, sigo"
+          set -e
 
       - name: Guardar snapshot DB si cambio
         run: |
