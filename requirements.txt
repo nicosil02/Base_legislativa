@@ -30,3 +30,8 @@ pillow>=10.0
 # solo lo usaba el workflow vigilar-congreso.yml via pip install ad-hoc;
 # ahora tambien lo usa la app para el banner "en vivo ahora").
 yt-dlp>=2026.8
+# congreso_live.qa_chat: chat de preguntas sobre transcripciones. Gemini
+# (tier gratuito) en vez de la API de Claude para que no genere costo por
+# uso - decision de Nicolas 2026-09-15. GEMINI_API_KEY vive en st.secrets
+# (Streamlit Cloud) o .env (local), nunca en el codigo.
+google-genai>=1.0
