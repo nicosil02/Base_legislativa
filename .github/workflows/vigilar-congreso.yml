@@ -155,6 +155,24 @@ jobs:
           # 8700+ de otra) que se hubiera perdido si el job se cortaba antes
           # del commit final. Con set +e + echo de cada paso, un fallo real
           # queda visible en vez de abortar mudo.
+          # git config rebase.autoStash: causa raiz real encontrada en vivo
+          # 2026-09-15 (corrida #798, commit b399e5a) - el commit periodico
+          # SI se disparo (una vez), pero el push choco contra otro workflow
+          # que habia pusheado antes (auto-refresh de PLs, mismo blob
+          # data/proyectos.db.gz), y el fallback (git rebase -X theirs)
+          # fallo con "cannot rebase: You have unstaged changes. Please
+          # commit or stash them." - la causa: data/congreso_live_state.json
+          # SI esta trackeado por git y live-watch lo reescribe todo el
+          # tiempo (dedupe + log de sesiones), pero este loop solo agregaba
+          # data/proyectos.db.gz al commit, dejando ese otro archivo
+          # modificado y sin stagear - exactamente lo que bloquea un
+          # rebase. Fix real: agregar tambien ese archivo al commit (como
+          # ya hace el paso final "Commitear estado + snapshot DB").
+          # rebase.autoStash de mas, por si en el futuro aparece otro
+          # archivo trackeado modificado que no contemplamos - autostash
+          # guarda cualquier cambio sin stagear antes del rebase y lo
+          # restaura despues, en vez de que el rebase aborte.
+          git config rebase.autoStash true
           set +e
           tick=0
           while kill -0 "$watch_pid" 2>/dev/null; do
@@ -165,9 +183,9 @@ jobs:
               gzip -9nkf proyectos.db
               echo "[commit-loop] gzip exit=$? tamano=$(stat -c%s proyectos.db.gz 2>/dev/null || echo '?')"
               mv -f proyectos.db.gz data/proyectos.db.gz
-              git add data/proyectos.db.gz
+              git add data/proyectos.db.gz data/congreso_live_state.json
               if git diff --staged --quiet; then
-                echo "[commit-loop] tick $tick: sin cambios en data/proyectos.db.gz"
+                echo "[commit-loop] tick $tick: sin cambios en data/proyectos.db.gz ni data/congreso_live_state.json"
               else
                 git commit -m "Congreso live: transcripcion parcial $(date -u +%Y-%m-%d-%H%M) [skip ci]"
                 if git push; then
@@ -176,6 +194,7 @@ jobs:
                   echo "[commit-loop] tick $tick: push OK tras rebase"
                 else
                   echo "[commit-loop] tick $tick: [warn] commit parcial no se pudo pushear, sigo"
+                  git rebase --abort 2>/dev/null
                 fi
               fi
             else
