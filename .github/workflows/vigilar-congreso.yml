@@ -68,6 +68,23 @@ jobs:
           sleep 5
           warp-cli --accept-tos status
 
+      - name: Puente SOCKS5->HTTP para ffmpeg (privoxy :8118)
+        run: |
+          # Causa raiz real encontrada en vivo 2026-09-15 (corrida #788,
+          # con el stderr de yt-dlp ya visible): "ffmpeg does not support
+          # SOCKS proxies. Downloading is likely to fail" + "ffmpeg
+          # exited with code -11" (segfault) - para un stream EN VIVO,
+          # yt-dlp SIEMPRE delega la descarga a ffmpeg (--hls-prefer-native
+          # no lo evita), y ffmpeg no entiende socks5://. privoxy hace de
+          # puente: recibe HTTP en :8118 y lo reenvia por el SOCKS5 de
+          # WARP - eso SI lo puede usar ffmpeg via las variables de
+          # entorno http_proxy/https_proxy estandar.
+          sudo apt-get install -y -qq privoxy
+          echo "forward-socks5 / 127.0.0.1:40000 ." | sudo tee -a /etc/privoxy/config
+          sudo systemctl restart privoxy
+          sleep 2
+          curl -s -x http://127.0.0.1:8118 -o /dev/null -w "privoxy->WARP HTTP %{http_code}\n" https://www.youtube.com/
+
       - name: Detectar y notificar
         env:
           CALLMEBOT_PHONE: ${{ secrets.CALLMEBOT_PHONE }}
@@ -86,6 +103,7 @@ jobs:
         env:
           PYTHONIOENCODING: utf-8
           YT_DLP_PROXY: socks5://127.0.0.1:40000
+          FFMPEG_HTTP_PROXY: http://127.0.0.1:8118
         run: |
           # live-watch (no live-watch-once): queda transcribiendo SIN
           # cortar mientras la sesion siga en vivo, en vez de un tick de
