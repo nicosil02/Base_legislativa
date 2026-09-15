@@ -1,6 +1,10 @@
 {
  "alertados": [
-  "uawItrs3E9U"
+  "uawItrs3E9U",
+  "hxPvILSygpc",
+  "cc_4eBy0KjU",
+  "Nkx03JALOXE",
+  "Q3wJxoDbbiA"
  ],
  "sesiones": [
   {
@@ -9,6 +13,34 @@
    "tipo": "Comision: Salud",
    "url": "https://www.youtube.com/watch?v=uawItrs3E9U",
    "visto_at": "2026-09-15T13:01:15Z"
+  },
+  {
+   "id": "hxPvILSygpc",
+   "titulo": "🔴EN VIVO: Comisión de Defensa Nacional y Orden Interno de la Cámara de Diputados | 15/09/2026",
+   "tipo": "Comision: Defensa Nacional",
+   "url": "https://www.youtube.com/watch?v=hxPvILSygpc",
+   "visto_at": "2026-09-15T15:05:15Z"
+  },
+  {
+   "id": "cc_4eBy0KjU",
+   "titulo": "🔴 EN VIVO: Comisión de Constitución, Reglamento y Relaciones Exteriores del Senado |15/09/2025",
+   "tipo": "Comision: Constitucion",
+   "url": "https://www.youtube.com/watch?v=cc_4eBy0KjU",
+   "visto_at": "2026-09-15T15:05:15Z"
+  },
+  {
+   "id": "Nkx03JALOXE",
+   "titulo": "🔴EN VIVO: Sesión de la Comisión de Energía y Minas de la Cámara de Diputados | 15/09/2026",
+   "tipo": "Comision: Energia Y Minas",
+   "url": "https://www.youtube.com/watch?v=Nkx03JALOXE",
+   "visto_at": "2026-09-15T15:05:15Z"
+  },
+  {
+   "id": "Q3wJxoDbbiA",
+   "titulo": "🔴EN VIVO: Comisión Bicameral de Presupuesto y Cuenta General de la República | 15/09/2026",
+   "tipo": "Comision: Presupuesto",
+   "url": "https://www.youtube.com/watch?v=Q3wJxoDbbiA",
+   "visto_at": "2026-09-15T15:05:15Z"
   }
  ]
 }
