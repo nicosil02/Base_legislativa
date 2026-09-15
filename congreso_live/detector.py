@@ -92,13 +92,31 @@ def _ydl(opts: dict):
     return yt_dlp.YoutubeDL(base)
 
 
+# Cache de _streams_recientes(): tanto el loop principal de watch_and_transcribe
+# como CADA hilo de capturar_y_acumular_en_vivo (al re-chequear si su sesion
+# sigue viva) llaman vivos_de_interes() por su cuenta - sin cachear esto,
+# con 2-3 sesiones en simultaneo se dispara el listado del canal completo
+# varias veces por minuto contra el mismo tunel WARP. Bug real encontrado
+# en vivo 2026-09-15 (corrida #760): con el tunel ya cargado, eso satura
+# WARP y YouTube empieza a bloquear TODOS los chequeos con "Sign in to
+# confirm you're not a bot" - la sesion de Salud estuvo 96 min sin
+# transcribirse ni un segundo por esto.
+_cache_streams: tuple[float, list[dict]] | None = None
+STREAMS_CACHE_TTL_SEG = 50
+
+
 def _streams_recientes(n: int = 12) -> list[dict]:
+    global _cache_streams
+    if _cache_streams is not None and (time.time() - _cache_streams[0]) < STREAMS_CACHE_TTL_SEG:
+        return _cache_streams[1]
     with _ydl({"extract_flat": True, "playlistend": n}) as ydl:
         info = ydl.extract_info(CANAL, download=False)
-    return [e for e in (info.get("entries") or []) if e.get("id")]
+    resultado = [e for e in (info.get("entries") or []) if e.get("id")]
+    _cache_streams = (time.time(), resultado)
+    return resultado
 
 
-# Cache de resultados de _esta_en_vivo: {video_id: (timestamp, resultado)}.
+# Cache de resultados de _esta_en_vivo: {video_id: (timestamp, resultado, ok)}.
 # watch_and_transcribe() sondea cada poll_seg (60s por default) para
 # siempre - sin esto, cada vuelta vuelve a chequear TODOS los candidatos
 # de _streams_recientes(), incluyendo los mismos streams ya terminados
@@ -109,25 +127,39 @@ def _streams_recientes(n: int = 12) -> list[dict]:
 # pocos minutos - aunque WARP seguia conectado (status "Connected").
 # Cachear por CACHE_TTL_SEG corta ese volumen sin afectar la deteccion
 # real (una sesion nueva entra en vivo, no aparecia en el cache).
-_cache_en_vivo: dict[str, tuple[float, bool]] = {}
+#
+# `ok` (tercer campo) distingue un resultado CONFIRMADO (is_live=False
+# de verdad) de un chequeo que fallo por excepcion (bot-check, timeout,
+# WARP caido) - un fallo transitorio se cachea por FAIL_CACHE_TTL_SEG,
+# mucho mas corto, para no amplificar un bloqueo pasajero de WARP en un
+# apagon de minutos. Bug real encontrado en vivo 2026-09-15: la corrida
+# #760 cacheaba un fallo de red igual que un "no esta en vivo" confirmado
+# por 4 min completos, justo cuando WARP mas necesitaba reintentar rapido.
+_cache_en_vivo: dict[str, tuple[float, bool, bool]] = {}
 CACHE_TTL_SEG = 240
+FAIL_CACHE_TTL_SEG = 20
 
 
 def _esta_en_vivo(video_id: str) -> bool:
     """Confirma is_live con extract completo (flat no lo trae confiable).
-    Resultado cacheado por CACHE_TTL_SEG (ver comentario arriba)."""
+    Resultado cacheado por CACHE_TTL_SEG si fue confirmado, o
+    FAIL_CACHE_TTL_SEG si el chequeo fallo (ver comentario arriba)."""
     cacheado = _cache_en_vivo.get(video_id)
-    if cacheado is not None and (time.time() - cacheado[0]) < CACHE_TTL_SEG:
-        return cacheado[1]
+    if cacheado is not None:
+        ttl = CACHE_TTL_SEG if cacheado[2] else FAIL_CACHE_TTL_SEG
+        if (time.time() - cacheado[0]) < ttl:
+            return cacheado[1]
     try:
         with _ydl({}) as ydl:
             vi = ydl.extract_info(f"https://www.youtube.com/watch?v={video_id}",
                                   download=False)
         resultado = bool(vi.get("is_live"))
+        ok = True
     except Exception as e:
         log.warning("no pude verificar is_live %s: %s", video_id, e)
         resultado = False
-    _cache_en_vivo[video_id] = (time.time(), resultado)
+        ok = False
+    _cache_en_vivo[video_id] = (time.time(), resultado, ok)
     return resultado
 
 
@@ -150,3 +182,54 @@ def vivos_de_interes() -> list[dict]:
             "url": f"https://www.youtube.com/watch?v={e['id']}",
         })
     return out
+
+
+# ============================================================
+# self-check (Ponytail: 1 chequeo ejecutable de la logica no trivial)
+# ============================================================
+
+def _demo():
+    """Sin red: prueba que un chequeo OK se cachea por CACHE_TTL_SEG pero
+    un chequeo fallido (excepcion) se cachea por FAIL_CACHE_TTL_SEG, mucho
+    mas corto - la logica que arreglo el apagon de 96 min del 2026-09-15
+    (ver comentario arriba de _esta_en_vivo)."""
+    import congreso_live.detector as det
+
+    llamadas = {"n": 0}
+
+    def _ydl_falla_primero(opts):
+        class _Fake:
+            def __enter__(self):
+                return self
+            def __exit__(self, *a):
+                return False
+            def extract_info(self, url, download=False):
+                llamadas["n"] += 1
+                if llamadas["n"] == 1:
+                    raise RuntimeError("Sign in to confirm you're not a bot")
+                return {"is_live": True}
+        return _Fake()
+
+    det._cache_en_vivo.clear()
+    with __import__("unittest.mock", fromlist=["patch"]).patch.object(
+            det, "_ydl", _ydl_falla_primero):
+        r1 = det._esta_en_vivo("X1")
+        assert r1 is False and llamadas["n"] == 1, "1er chequeo deberia fallar"
+        # Recien fallo - con TTL de fallo corto, un 2do intento CASI
+        # inmediato deberia reintentar en vez de devolver el cache viejo
+        # (a diferencia de un CACHE_TTL_SEG de 240s, que lo hubiera tapado).
+        det._cache_en_vivo["X1"] = (
+            det._cache_en_vivo["X1"][0] - det.FAIL_CACHE_TTL_SEG - 1,
+            det._cache_en_vivo["X1"][1], det._cache_en_vivo["X1"][2],
+        )
+        r2 = det._esta_en_vivo("X1")
+        assert r2 is True and llamadas["n"] == 2, "tras vencer el TTL de fallo, debe reintentar"
+        # Ahora que esta OK, un 3er intento INMEDIATO (sin vencer el TTL)
+        # debe usar el cache, no volver a pegarle a la red.
+        r3 = det._esta_en_vivo("X1")
+        assert r3 is True and llamadas["n"] == 2, "un resultado OK reciente debe venir del cache"
+    print("OK detector: fallo se cachea corto, exito se cachea largo")
+
+
+if __name__ == "__main__":
+    _demo()
