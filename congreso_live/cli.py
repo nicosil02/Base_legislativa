@@ -14,12 +14,30 @@ import logging
 from datetime import datetime, timezone
 from pathlib import Path
 
-from congreso_live.detector import vivos_de_interes
+from congreso_live.detector import _norm, vivos_de_interes
 from congreso_live.notify import enviar_whatsapp
 from congreso_live.transcripciones import run_sync as sync_transcripciones
 
 STATE_PATH = Path("data/congreso_live_state.json")
 MAX_LOG = 300
+
+
+def _comision_seguida(tipo: str, seguidas_norm: set[str]) -> bool:
+    """True si `v['tipo']` (ej. 'Comision: Energia Y Minas', armado por
+    clasificar_titulo() con una palabra clave corta) matchea alguna
+    comision que Nicolas marco como de interes en la pestana Seguimiento
+    (nombres completos, ej. "Asuntos de Desarrollo Productivo, Energia y
+    Minas..." para Senado) - mismo criterio de substring que ya usa
+    clasificar_titulo() para reconocer la comision en el titulo real.
+
+    Los Plenos (tipo empieza con "Pleno:") siempre pasan - son pocos y
+    relevantes en general, no per-comision. Sin nada marcado todavia,
+    tambien pasa todo (comportamiento actual: avisa de cualquier sesion)
+    para no dejar a Nicolas sin alertas antes de configurar nada."""
+    if tipo.startswith("Pleno:") or not seguidas_norm:
+        return True
+    kw = _norm(tipo.split(":", 1)[-1].strip())
+    return any(kw in nombre or nombre in kw for nombre in seguidas_norm)
 
 log = logging.getLogger(__name__)
 
@@ -56,15 +74,25 @@ def cmd_check(args) -> int:
         print(f"(dry-run) {len(nuevos)} nuevo(s), nada enviado.")
         return 0
 
+    try:
+        from alerts.seguimiento_store import list_seguidas
+        seguidas_norm = {_norm(n) for n in list_seguidas()}
+    except Exception as e:
+        log.warning("no se pudo leer comisiones seguidas, aviso de todo: %s", e)
+        seguidas_norm = set()
+
     now = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    enviados = 0
     for v in nuevos:
-        msg = (f"🔴 Congreso EN VIVO — {v['tipo']}\n{v['titulo']}\n{v['url']}")
-        enviar_whatsapp(msg)
+        if _comision_seguida(v["tipo"], seguidas_norm):
+            msg = (f"🔴 Congreso EN VIVO — {v['tipo']}\n{v['titulo']}\n{v['url']}")
+            enviar_whatsapp(msg)
+            enviados += 1
         state.setdefault("alertados", []).append(v["id"])
         state.setdefault("sesiones", []).append({**v, "visto_at": now})
 
     _save_state(state)
-    print(f"{len(nuevos)} aviso(s) nuevo(s) enviados.")
+    print(f"{len(nuevos)} sesion(es) nueva(s) vista(s), {enviados} aviso(s) enviado(s).")
     return 0
 
 
