@@ -27,16 +27,19 @@ on:
 permissions:
   contents: write
 
-# Mismo grupo que vigilar-congreso.yml (NO uno propio) - ambos escriben al
-# mismo data/proyectos.db.gz. Bug real encontrado en vivo 2026-09-15: con
-# grupos separados corrian en paralelo, y cuando el push de este workflow
-# chocaba con uno de vigilar-congreso, `git rebase -X theirs` (necesario
-# para el archivo binario) descartaba ESTE commit entero en silencio - el
-# job reportaba "success" pero la transcripcion de Salud jamas quedo en
-# la base. La unica forma segura de que dos workflows escriban el mismo
-# blob binario sin pisarse es que nunca corran al mismo tiempo.
+# Grupo propio (ya NO el de vigilar-congreso.yml). Antes compartia ese
+# grupo porque un push concurrente a data/proyectos.db.gz hacia que
+# "git rebase -X theirs" descartara el commit ENTERO de un lado (bug
+# real 2026-09-15, la transcripcion de Salud se perdio asi la primera
+# vez) - pero eso ya esta arreglado de raiz (congreso_live/merge_db.py
+# mergea sesiones_transcripciones por fila antes de recommitear, ver
+# vigilar-congreso.yml), asi que ya no hace falta serializar. Compartir
+# el grupo con vigilar-congreso tenia un costo real: el cron de ese
+# workflow dispara cada 10 min y le ganaba la cola a cualquier dispatch
+# manual de este (verificado en vivo 2026-09-15: 2 intentos de backfill
+# de Salud cancelados antes de arrancar, nunca llegaron a correr).
 concurrency:
-  group: vigilar-congreso
+  group: backfill-vod
   cancel-in-progress: false
 
 jobs:
