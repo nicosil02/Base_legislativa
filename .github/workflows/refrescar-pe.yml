@@ -288,7 +288,7 @@ jobs:
           # Comprimir con gzip -9 para minimizar tamano del .gz en el repo.
           # -k mantiene el .db original para que el cache de la proxima corrida
           # lo encuentre.
-          gzip -9kf proyectos.db
+          gzip -9nkf proyectos.db
           mv proyectos.db.gz data/proyectos.db.gz
           ls -lh data/proyectos.db.gz
 
