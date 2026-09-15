@@ -9,6 +9,7 @@ from __future__ import annotations
 import logging
 import os
 import re
+import time
 import unicodedata
 
 import yt_dlp
@@ -97,16 +98,37 @@ def _streams_recientes(n: int = 12) -> list[dict]:
     return [e for e in (info.get("entries") or []) if e.get("id")]
 
 
+# Cache de resultados de _esta_en_vivo: {video_id: (timestamp, resultado)}.
+# watch_and_transcribe() sondea cada poll_seg (60s por default) para
+# siempre - sin esto, cada vuelta vuelve a chequear TODOS los candidatos
+# de _streams_recientes(), incluyendo los mismos streams ya terminados
+# que siguen apareciendo como "recientes" durante horas. Bug real
+# encontrado en vivo 2026-09-15: ese volumen de pedidos repetidos al
+# mismo puñado de video_ids, via el mismo tunel WARP, hacia que YouTube
+# empezara a bloquear con "Sign in to confirm you're not a bot" a los
+# pocos minutos - aunque WARP seguia conectado (status "Connected").
+# Cachear por CACHE_TTL_SEG corta ese volumen sin afectar la deteccion
+# real (una sesion nueva entra en vivo, no aparecia en el cache).
+_cache_en_vivo: dict[str, tuple[float, bool]] = {}
+CACHE_TTL_SEG = 240
+
+
 def _esta_en_vivo(video_id: str) -> bool:
-    """Confirma is_live con extract completo (flat no lo trae confiable)."""
+    """Confirma is_live con extract completo (flat no lo trae confiable).
+    Resultado cacheado por CACHE_TTL_SEG (ver comentario arriba)."""
+    cacheado = _cache_en_vivo.get(video_id)
+    if cacheado is not None and (time.time() - cacheado[0]) < CACHE_TTL_SEG:
+        return cacheado[1]
     try:
         with _ydl({}) as ydl:
             vi = ydl.extract_info(f"https://www.youtube.com/watch?v={video_id}",
                                   download=False)
-        return bool(vi.get("is_live"))
+        resultado = bool(vi.get("is_live"))
     except Exception as e:
         log.warning("no pude verificar is_live %s: %s", video_id, e)
-        return False
+        resultado = False
+    _cache_en_vivo[video_id] = (time.time(), resultado)
+    return resultado
 
 
 def vivos_de_interes() -> list[dict]:
