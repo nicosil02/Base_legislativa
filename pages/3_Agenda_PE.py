@@ -993,8 +993,8 @@ def _opciones(col: str, base: pd.DataFrame | None = None) -> list[str]:
 # tabla + detalle + vista por comision + mesas tecnicas + transcripciones).
 # Cada una es una tarea distinta; mostrarlas todas a la vez es lo que
 # hacia la pagina sentirse sobrecargada. Ahora se ve una a la vez.
-tab_agenda, tab_comision, tab_mesas, tab_transcripciones = st.tabs(
-    ["Agenda", "Por comisión", "Mesas técnicas", "Transcripciones"]
+tab_agenda, tab_comision, tab_mesas, tab_transcripciones, tab_seguimiento = st.tabs(
+    ["Agenda", "Por comisión", "Mesas técnicas", "Transcripciones", "Seguimiento"]
 )
 
 with tab_agenda:
@@ -1652,6 +1652,49 @@ with tab_transcripciones:
                                 st.session_state[_qa_key].append(
                                     (_pregunta_nueva, _respuesta_nueva))
                                 st.rerun()
+
+with tab_seguimiento:
+    st.markdown(
+        '<p style="font-size:13px;color:var(--ink-soft);max-width:760px;">'
+        'Marcá las comisiones que te interesa seguir como prioritarias. '
+        'Se guarda para vos (no por cliente) y se usa para resaltar sus '
+        'sesiones en la Agenda y para las alertas de WhatsApp cuando haya '
+        'novedades.</p>',
+        unsafe_allow_html=True,
+    )
+    from alerts.seguimiento_store import list_seguidas, set_seguidas
+
+    try:
+        _seguidas_actuales = list_seguidas()
+        _seguimiento_error = None
+    except Exception as e:
+        _seguidas_actuales = set()
+        _seguimiento_error = str(e)
+
+    if _seguimiento_error:
+        st.error(f"No se pudo cargar el estado guardado: {_seguimiento_error}")
+
+    _comisiones_por_camara: dict[str, list[str]] = {}
+    for _c in cats["comisiones"]:
+        _comisiones_por_camara.setdefault(_c["camara"] or "—", []).append(_c["nombre"])
+
+    with st.form("form_seguimiento"):
+        _marcadas: set[str] = set()
+        for _camara, _nombres in sorted(_comisiones_por_camara.items()):
+            st.markdown(f"**{_camara}**")
+            for _nombre in sorted(set(_nombres)):
+                if st.checkbox(_nombre, value=_nombre in _seguidas_actuales,
+                                key=f"seg_{_camara}_{_nombre}"):
+                    _marcadas.add(_nombre)
+        _guardar = st.form_submit_button("Guardar")
+
+    if _guardar:
+        try:
+            set_seguidas(_marcadas)
+            st.success(f"Guardado: {len(_marcadas)} comisión(es) marcadas como prioritarias.")
+            st.rerun()
+        except Exception as e:
+            st.error(f"No se pudo guardar: {e}")
 
 # ---------- Footer ----------
 st.markdown('<div class="footer-rule"></div>', unsafe_allow_html=True)
