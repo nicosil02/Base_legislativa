@@ -138,7 +138,17 @@ def capturar_audio_en_vivo(video_id: str, segundos: int = 30) -> Path | None:
         # seguia fallando sin pista de si yt-dlp no escribio nada, escribio
         # poco, o el problema era otro).
         tam = src.stat().st_size if src.exists() else None
-        err = stderr_path.read_text(encoding="utf-8", errors="replace")[-500:] if stderr_path.exists() else ""
+        # Las ultimas 500 chars del stderr se llenaban con avisos tardios
+        # sin relacion (ej. "No title found in player responses") y
+        # tapaban el error real (el de SOCKS/ffmpeg suele salir bastante
+        # antes) - bug real encontrado en vivo 2026-09-15, corrida #791.
+        # En vez de adivinar donde cae el error, buscamos las lineas que
+        # SI importan en TODO el stderr, y si no hay ninguna, recien ahi
+        # mostramos la cola como fallback.
+        texto = stderr_path.read_text(encoding="utf-8", errors="replace") if stderr_path.exists() else ""
+        claves = ("ERROR", "SOCKS", "exited with code", "Sign in to confirm", "Traceback")
+        relevantes = [l for l in texto.splitlines() if any(k in l for k in claves)]
+        err = "\n".join(relevantes) if relevantes else texto[-500:]
         print(f"[live-transcribe] {video_id}: yt-dlp no genero un archivo util "
               f"(existe={src.exists()}, tamano={tam}, path={src}) stderr: {err}")
         return None
