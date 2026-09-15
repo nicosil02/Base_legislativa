@@ -203,21 +203,58 @@ jobs:
           timeout 120 python -X utf8 -m noticias.cli purge --dias 7 \
               || echo "[warn] noticias purge fallo, sigo"
 
+      - name: Instalar Cloudflare WARP en modo proxy (SOCKS5 :40000)
+        if: github.event.schedule == '0 13 * * *' || github.event_name == 'workflow_dispatch'
+        run: |
+          # Mismo fix que vigilar-congreso.yml, verificado en vivo
+          # 2026-09-15: YouTube bloquea las IPs de datacenter de GitHub
+          # Actions ("Sign in to confirm you're not a bot") por reputacion
+          # de IP, no por falta de token - bgutil-ytdlp-pot-provider (PO
+          # Token) NO lo esquiva (verificado 2026-09-14, run #1775, mismo
+          # error con el token activo). Tunelizar por Cloudflare WARP SI
+          # funciona. Antes este paso no tenia WARP, asi que
+          # sync-transcripciones fallaba SIEMPRE en silencio (el
+          # "|| echo [warn]... sigo" se comia el error) - por eso ninguna
+          # sesion ya terminada tenia transcripcion via captions, pese a
+          # correr "exitosamente" 1x/dia.
+          curl -fsSL https://pkg.cloudflareclient.com/pubkey.gpg | sudo gpg --yes --dearmor --output /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg
+          echo "deb [signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] https://pkg.cloudflareclient.com/ $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/cloudflare-client.list
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq cloudflare-warp
+          sudo systemctl enable --now warp-svc
+          sleep 3
+          warp-cli --accept-tos registration new
+          warp-cli --accept-tos mode proxy
+          warp-cli --accept-tos proxy port 40000
+          warp-cli --accept-tos connect
+          sleep 5
+          warp-cli --accept-tos status
+
+      - name: Puente SOCKS5->HTTP para descargas de captions (privoxy :8118)
+        if: github.event.schedule == '0 13 * * *' || github.event_name == 'workflow_dispatch'
+        run: |
+          # obtener_transcripcion() baja el VTT de los captions con
+          # urllib.request directo (no yt-dlp) - urllib SI respeta
+          # http_proxy/https_proxy del entorno automaticamente (sin
+          # tocar codigo), pero necesita HTTP, no SOCKS5. privoxy hace
+          # de puente igual que en vigilar-congreso.yml.
+          sudo apt-get install -y -qq privoxy
+          echo "forward-socks5 / 127.0.0.1:40000 ." | sudo tee -a /etc/privoxy/config
+          sudo systemctl restart privoxy
+          sleep 2
+          curl -s -x http://127.0.0.1:8118 -o /dev/null -w "privoxy->WARP HTTP %{http_code}\n" https://www.youtube.com/
+
       - name: Transcripciones de sesiones (captions YouTube, Pleno/comisiones)
         if: github.event.schedule == '0 13 * * *' || github.event_name == 'workflow_dispatch'
+        env:
+          YT_DLP_PROXY: socks5://127.0.0.1:40000
+          http_proxy: http://127.0.0.1:8118
+          https_proxy: http://127.0.0.1:8118
         run: |
           # Igual que Registro Oficial EC arriba: los captions de YouTube
           # tardan dias en procesarse (verificado en vivo 2026-09-14), asi
           # que no tiene sentido chequear 15x/dia - alcanza con la corrida
           # de las 8 AM Lima o dispatch manual.
-          #
-          # BLOQUEADO desde GH Actions: las IPs de los runners estan
-          # marcadas por el anti-bot de YouTube ("Sign in to confirm
-          # you're not a bot"). Se probo bgutil-ytdlp-pot-provider (PO
-          # Token via Docker) y NO lo esquiva (verificado en vivo
-          # 2026-09-14 run #1775: mismo error con el token activo) - el
-          # bloqueo es por reputacion de IP, no por falta de token. Sync
-          # real solo funciona desde una IP residencial/local por ahora.
           pip install -q yt-dlp
           timeout 300 python -X utf8 -m congreso_live.cli sync-transcripciones --max 20 \
               || echo "[warn] sync-transcripciones fallo, sigo"
