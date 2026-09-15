@@ -27,8 +27,16 @@ on:
 permissions:
   contents: write
 
+# Mismo grupo que vigilar-congreso.yml (NO uno propio) - ambos escriben al
+# mismo data/proyectos.db.gz. Bug real encontrado en vivo 2026-09-15: con
+# grupos separados corrian en paralelo, y cuando el push de este workflow
+# chocaba con uno de vigilar-congreso, `git rebase -X theirs` (necesario
+# para el archivo binario) descartaba ESTE commit entero en silencio - el
+# job reportaba "success" pero la transcripcion de Salud jamas quedo en
+# la base. La unica forma segura de que dos workflows escriban el mismo
+# blob binario sin pisarse es que nunca corran al mismo tiempo.
 concurrency:
-  group: backfill-vod
+  group: vigilar-congreso
   cancel-in-progress: false
 
 jobs:
