@@ -20,6 +20,14 @@ CANAL = "https://www.youtube.com/@congresodelarepublicaperu/streams"
 
 # Tokens cortos que aparecen en los titulos de YouTube (no los nombres formales
 # largos del catalogo). Si el titulo trae "Comision" + uno de estos -> ordinaria.
+#
+# Bug real encontrado en vivo 2026-09-16 (Nicolas: "por que no llego a
+# capturar la de Desarrollo Agrario?"): 8 de las 25 comisiones ordinarias
+# REALES (verificado contra la tabla `sesiones`, fuente de verdad) no
+# clasificaban con NINGUN keyword - clasificar_titulo() devolvia None, asi
+# que ni siquiera se detectaban como EN VIVO, mucho antes de llegar a
+# transcribir nada. Las agregadas abajo (comentario "2026-09-16") cubren
+# esas 8; las de arriba quedan igual.
 ORDINARIA_KEYWORDS: tuple[str, ...] = (
     "agraria", "ciencia", "comercio exterior", "constitucion", "cultura",
     "defensa del consumidor", "defensa nacional", "descentralizacion",
@@ -27,11 +35,23 @@ ORDINARIA_KEYWORDS: tuple[str, ...] = (
     "inclusion social", "inteligencia", "justicia", "mujer", "presupuesto",
     "produccion", "pueblos andinos", "relaciones exteriores", "salud",
     "trabajo", "transportes", "vivienda",
+    # 2026-09-16: las 8 comisiones reales que no matcheaba ningun keyword
+    # de arriba (verificado contra la tabla `sesiones` real, no contra
+    # una lista supuesta de 24). "agraria" (femenino) no cubre "Desarrollo
+    # Agrario" (masculino) - error de concordancia de genero, no de
+    # contenido.
+    "agrario", "gestion del estado", "regimenes de excepcion",
+    "medio ambiente", "seguimiento legislativo", "procedimientos especiales",
+    "etica parlamentaria",
 )
 
 # Marcadores que excluyen un stream aunque diga "comision".
 EXCLUIR = (
-    "especial", "investigadora", "multipartidaria", "subcomision",
+    # "comision especial" (frase, no solo "especial" suelto) - bug real
+    # 2026-09-16: "especial" solo tambien excluia a la comisión ORDINARIA
+    # real "Procedimientos Especiales" (el adjetivo modifica
+    # "procedimientos", no "comision" - no es una comision especial/ad-hoc).
+    "comision especial", "investigadora", "multipartidaria", "subcomision",
     "noticias", "edicion", "distincion", "homenaje", "ceremonia",
     "conferencia de prensa", "tv digital",
 )
