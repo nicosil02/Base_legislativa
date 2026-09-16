@@ -11,6 +11,8 @@ from pathlib import Path
 
 import streamlit as st
 
+from alerts.borradores_store import list_borradores
+
 
 # ====================== CSS (estilo Vali) ======================
 st.markdown(
@@ -757,6 +759,22 @@ with nt_cols[2]:
 # ====================== Herramienta 4: Alertas ======================
 # Auditoria de UX 2026-09-13: el home no tenia ninguna tarjeta de Alertas -
 # quedaba invisible pese a ser el paso final del flujo de trabajo diario.
+# 2026-09-16: los conteos son POR PERSONA (creado_por) ahora que hay login -
+# antes eran un total global de TODOS los clientes/personas mezclados, lo
+# que no tenia sentido una vez que los borradores son personales.
+@st.cache_data(ttl=60)
+def stats_alertas_mios(email: str | None) -> dict:
+    try:
+        todos = list_borradores()
+    except Exception:
+        return {"pendientes": None, "listos": None}
+    if email:
+        todos = [b for b in todos if b.get("creado_por") == email]
+    pendientes = sum(1 for b in todos if b.get("estado") == "pendiente")
+    listos = sum(1 for b in todos if b.get("estado") == "borrador")
+    return {"pendientes": pendientes, "listos": listos}
+
+
 st.markdown('<div class="tool-block"></div>', unsafe_allow_html=True)
 st.markdown('<div class="section-label">Herramienta</div>', unsafe_allow_html=True)
 st.markdown('<h2 class="tool-title">Alertas</h2>', unsafe_allow_html=True)
@@ -768,8 +786,12 @@ st.markdown(
 )
 al_cols = st.columns([1, 1, 1])
 with al_cols[0]:
+    _yo = st.user.get("email")
+    _s_al = stats_alertas_mios(_yo)
+    _pend, _listos = _s_al["pendientes"], _s_al["listos"]
     pend_txt = f"{_pend:,}" if _pend is not None else "—"
     listos_txt = f"{_listos:,}" if _listos is not None else "—"
+    _institucion = "Tuyos" if _yo else "Todos los clientes"
     st.markdown(
         f"""
         <a href="/alertas" target="_self" class="country-card">
@@ -777,7 +799,7 @@ with al_cols[0]:
                 <div class="flag">📝</div>
                 <div class="name">Borradores</div>
             </div>
-            <div class="institution">Todos los clientes</div>
+            <div class="institution">{_institucion}</div>
             <div class="stats">
                 <div>
                     <div class="stat-num">{pend_txt}</div>
