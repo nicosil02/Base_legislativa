@@ -10,7 +10,8 @@
     "texto": "🎯 *Perú: Nombran a nueva presidenta ejecutiva de EsSalud*\n\n*¿Qué pasó?* El Ejecutivo, a través del Ministerio de Trabajo, oficializó el nombramiento de Zulema Tomás Gonzales como presidenta ejecutiva del Seguro Social de Salud (EsSalud), en reemplazo de Hilda Sandoval, que estaba a cargo de forma interina.\n\n*Puntos a tener en cuenta*\n* Tomás es médica anestesióloga y fue ministra de Salud en 2019 con Martín Vizcarra, además dirigió el Instituto Nacional de Salud del Niño de San Borja desde 2015.\n* Es la quinta conducción de EsSalud en lo que va de 2026, mientras el desabastecimiento de medicamentos supera el 55% en algunas regiones y las citas demoran hasta 80 días en Lima.\n* Su gestión como ministra terminó entre cuestionamientos por presunto nepotismo y por la salida de un cirujano del INSN San Borja, algo que ha reabierto críticas por parte de gremios de trabajadores de salud y médicos.\n\nhttps://andina.pe/agencia/noticia-zulema-tomas-es-nombrada-presidenta-essalud-1091552.aspx",
     "estado": "borrador",
     "created_at": "2026-09-13T14:53:24Z",
-    "updated_at": "2026-09-14T02:59:01Z"
+    "updated_at": "2026-09-14T02:59:01Z",
+    "creado_por": "nicolas.silva@valiconsultores.com"
   },
   {
     "cliente": "bayer",
@@ -24,7 +25,8 @@
     "estado": "borrador",
     "fuentes_adicionales": [],
     "created_at": "2026-09-14T02:59:52Z",
-    "updated_at": "2026-09-14T13:12:29Z"
+    "updated_at": "2026-09-14T13:12:29Z",
+    "creado_por": "nicolas.silva@valiconsultores.com"
   },
   {
     "cliente": "google",
@@ -38,7 +40,8 @@
     "estado": "borrador",
     "fuentes_adicionales": [],
     "created_at": "2026-09-14T02:59:53Z",
-    "updated_at": "2026-09-14T13:12:29Z"
+    "updated_at": "2026-09-14T13:12:29Z",
+    "creado_por": "nicolas.silva@valiconsultores.com"
   },
   {
     "cliente": "incode",
@@ -52,7 +55,8 @@
     "estado": "borrador",
     "fuentes_adicionales": [],
     "created_at": "2026-09-14T02:59:54Z",
-    "updated_at": "2026-09-14T13:12:29Z"
+    "updated_at": "2026-09-14T13:12:29Z",
+    "creado_por": "nicolas.silva@valiconsultores.com"
   },
   {
     "cliente": "syngenta",
@@ -66,7 +70,8 @@
     "estado": "borrador",
     "fuentes_adicionales": [],
     "created_at": "2026-09-14T02:59:55Z",
-    "updated_at": "2026-09-14T13:12:29Z"
+    "updated_at": "2026-09-14T13:12:29Z",
+    "creado_por": "nicolas.silva@valiconsultores.com"
   },
   {
     "cliente": "bayer",
@@ -80,7 +85,8 @@
     "estado": "borrador",
     "fuentes_adicionales": [],
     "created_at": "2026-09-15T13:22:52Z",
-    "updated_at": "2026-09-15T14:22:14Z"
+    "updated_at": "2026-09-15T14:22:14Z",
+    "creado_por": "nicolas.silva@valiconsultores.com"
   },
   {
     "cliente": "bayer",
@@ -94,7 +100,8 @@
     "estado": "borrador",
     "fuentes_adicionales": [],
     "created_at": "2026-09-16T04:18:45Z",
-    "updated_at": "2026-09-16T05:22:29Z"
+    "updated_at": "2026-09-16T05:22:29Z",
+    "creado_por": "nicolas.silva@valiconsultores.com"
   },
   {
     "cliente": "bayer",
@@ -108,7 +115,8 @@
     "estado": "borrador",
     "fuentes_adicionales": [],
     "created_at": "2026-09-16T04:18:58Z",
-    "updated_at": "2026-09-16T05:22:29Z"
+    "updated_at": "2026-09-16T05:22:29Z",
+    "creado_por": "nicolas.silva@valiconsultores.com"
   },
   {
     "cliente": "google",
@@ -122,7 +130,8 @@
     "estado": "borrador",
     "fuentes_adicionales": [],
     "created_at": "2026-09-16T04:19:00Z",
-    "updated_at": "2026-09-16T05:22:29Z"
+    "updated_at": "2026-09-16T05:22:29Z",
+    "creado_por": "nicolas.silva@valiconsultores.com"
   },
   {
     "cliente": "incode",
@@ -136,7 +145,8 @@
     "estado": "borrador",
     "fuentes_adicionales": [],
     "created_at": "2026-09-16T04:19:01Z",
-    "updated_at": "2026-09-16T05:22:29Z"
+    "updated_at": "2026-09-16T05:22:29Z",
+    "creado_por": "nicolas.silva@valiconsultores.com"
   },
   {
     "cliente": "syngenta",
@@ -150,6 +160,7 @@
     "estado": "borrador",
     "fuentes_adicionales": [],
     "created_at": "2026-09-16T04:19:02Z",
-    "updated_at": "2026-09-16T05:22:29Z"
+    "updated_at": "2026-09-16T05:22:29Z",
+    "creado_por": "nicolas.silva@valiconsultores.com"
   }
 ]

@@ -9,6 +9,7 @@ proyectos_ec.json
 .venv/
 venv/
 .env
+.streamlit/secrets.toml
 .claude/
 update.log
 live_watch.log

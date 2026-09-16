@@ -133,9 +133,17 @@ if not clientes:
     st.error("No encuentro carpetas de clientes en `clientes/`.")
     st.stop()
 
-sel_cliente = st.selectbox("Cliente", clientes)
+_yo = st.user.get("email")
+_cols_top = st.columns([2, 2])
+sel_cliente = _cols_top[0].selectbox("Cliente", clientes)
+# Sin login activo (auth no configurado todavia) _yo es None - en ese caso
+# "Solo lo mío" no tiene con qué filtrar, así que se oculta y se ve todo,
+# igual que antes de que existiera el login.
+solo_mio = _cols_top[1].toggle("Solo lo mío", value=bool(_yo), disabled=not _yo) if _yo else False
 
 todos_los_guardados = list_borradores(sel_cliente)
+if solo_mio:
+    todos_los_guardados = [b for b in todos_los_guardados if b.get("creado_por") == _yo]
 pendientes = [b for b in todos_los_guardados if b.get("estado") == "pendiente"]
 ya_redactados = [b for b in todos_los_guardados if b.get("estado") != "pendiente"]
 
