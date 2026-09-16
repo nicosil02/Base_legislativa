@@ -937,7 +937,7 @@ if live_clicked:
         st.success(
             f"**{len(live['nuevos'])} PLs nuevos** detectados en la API que "
             f"aún no están en nuestra DB. El próximo cron los va a sincronizar, "
-            f"pero ya los podés ver acá:"
+            f"pero ya los puedes ver aquí:"
         )
         df_nuevos = pd.DataFrame(live["nuevos"])
         st.dataframe(df_nuevos, hide_index=True, use_container_width=True)
@@ -1208,7 +1208,7 @@ if clientes and not df.empty:
     mc = st.columns([3, 2, 1])
     sel_pl_label = mc[0].selectbox("¿Qué PL?", _opciones_labels, key="marcar_pl_sel")
     sel_pl_clientes = mc[1].multiselect("¿Para qué cliente(s)?", clientes,
-                                         placeholder="Elegí uno o más clientes", key="marcar_pl_cli")
+                                         placeholder="Elige uno o más clientes", key="marcar_pl_cli")
     if mc[2].button("Marcar", key="marcar_pl_btn", disabled=not sel_pl_clientes):
         row = df.loc[opciones_pl[sel_pl_label]]
         # item_id = "pl_PE_<proyecto_ley>" (ej. "pl_PE_00011-2026-2031-CD") -
