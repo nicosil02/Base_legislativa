@@ -263,7 +263,14 @@ jobs:
           # que no tiene sentido chequear 15x/dia - alcanza con la corrida
           # de las 8 AM Lima o dispatch manual.
           pip install -q yt-dlp
-          timeout 300 python -X utf8 -m congreso_live.cli sync-transcripciones --max 20 \
+          # --max 60 (antes 20): con el fix de clasificacion de hoy
+          # (congreso_live/detector.py, 25 comisiones reales en vez de
+          # 17) aparecieron muchas sesiones que antes ni se reconocian -
+          # verificado en vivo 2026-09-16, 20 se clasifican dentro de los
+          # ultimos 40 streams del canal, 20 no alcanzaba (--max 20 =
+          # n=20 crudos = solo 11 clasificados). 60 da margen para el
+          # catch-up de hoy y para el uso normal de ahi en mas.
+          timeout 300 python -X utf8 -m congreso_live.cli sync-transcripciones --max 60 \
               || echo "[warn] sync-transcripciones fallo, sigo"
 
       - name: Reclasificar PLs en "Otros" con alta confianza
