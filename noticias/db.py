@@ -244,14 +244,21 @@ class Database:
         return self.conn.execute("SELECT COUNT(*) FROM noticias").fetchone()[0]
 
     def purge_noticias_antiguas(self, dias: int) -> int:
-        """Borra noticias con fecha_pub/first_seen_at anteriores a 'dias' atras.
-        Devuelve cantidad eliminada. Mantiene la DB liviana ya que la UI solo
-        muestra ventanas cortas (default: solo hoy)."""
+        """Borra noticias descubiertas hace mas de 'dias' dias (por
+        first_seen_at). Devuelve cantidad eliminada.
+
+        Bug real 2026-09-16: purgaba por fecha_pub (fecha del articulo, no
+        cuando lo vimos) - fuentes de publicacion lenta (CONVEAGRO, CEPES,
+        Lazo Rosado, La Revista Agraria y otras: verificado en vivo en el
+        log de produccion, "[CONVEAGRO] 10 items" en el mismo sync que
+        termino con 0 filas en la DB) traen articulos ya publicados hace
+        semanas - se insertaban y se purgaban en la MISMA corrida, nunca
+        llegaban a mostrarse. first_seen_at es lo unico que garantiza que
+        una noticia recien descubierta sobreviva al menos 'dias' dias antes
+        de purgarse, sin importar que tan vieja diga ser."""
         with self.tx() as c:
             cur = c.execute(
-                """DELETE FROM noticias
-                   WHERE date(COALESCE(fecha_pub, first_seen_at))
-                         < date('now', ?)""",
+                "DELETE FROM noticias WHERE date(first_seen_at) < date('now', ?)",
                 (f"-{int(dias)} days",),
             )
             return cur.rowcount or 0
