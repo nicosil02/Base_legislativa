@@ -567,7 +567,12 @@ FUENTES_EC: list[dict] = [
      "rss_url": "https://www.eluniverso.com/rss/politica/", "tipo": "rss"},
     {"categoria": "Coyuntura Politica", "pais": "EC", "nombre": "PRIMICIAS",
      "url": "https://www.primicias.ec/politica/",
-     "rss_url": "https://www.primicias.ec/rss/", "tipo": "rss"},
+     "rss_url": "https://www.primicias.ec/rss/", "tipo": "rss", "activa": 0,
+     "notas": "Desactivada 2026-09-16: rss_url da 404 (PRIMICIAS descontinuo "
+              "su RSS), y la pagina de politica es JS-rendered (los <h1-4> "
+              "del HTML estatico son nombres de auspiciantes, no titulares "
+              "reales - verificado en vivo) asi que tampoco sirve como html. "
+              "Cubierto parcialmente por las queries de Google News EC."},
     {"categoria": "Coyuntura Politica", "pais": "EC", "nombre": "Gestion",
      "url": "https://www.revistagestion.ec/", "tipo": "html"},
     {"categoria": "Coyuntura Politica", "pais": "EC",
@@ -591,7 +596,13 @@ FUENTES_EC: list[dict] = [
      "tipo": "html",
      "notas": "Cubierto por modulo scraper_ec/"},
     {"categoria": "Institucion", "pais": "EC", "nombre": "Registro Oficial",
-     "url": "https://www.registroficial.gob.ec/", "tipo": "html"},
+     "url": "https://www.registroficial.gob.ec/", "tipo": "html", "activa": 0,
+     "notas": "Desactivada 2026-09-16: duplicada/redundante con "
+              "'Registro Oficial EC (indice)' (ver noticias/registro_oficial_ec.py, "
+              "que SI cubre ediciones principales y suplementos via PDF+OCR) - "
+              "esta entrada usaba el scraper HTML generico contra una pagina "
+              "de WordPress con indice-en-texto-plano que ese scraper no puede "
+              "parsear, 0 noticias jamas (verificado contra la DB real)."},
     {"categoria": "Institucion", "pais": "EC", "nombre": "Decretos Presidenciales",
      "url": "https://www.presidencia.gob.ec/decretos/", "tipo": "html"},
     {"categoria": "Institucion", "pais": "EC", "nombre": "Registro Civil (DIGERCIC)",
@@ -1229,4 +1240,18 @@ def all_fuentes() -> list[dict]:
     fuentes = FUENTES_PE + FUENTES_EC + FUENTES_GOOGLE_NEWS
     for f in fuentes:
         f.setdefault("clientes", _clientes_de(f))
+        # Bug real 2026-09-16: las ~125 fuentes "X - ..." (cuentas de
+        # X/Twitter) dependen todas de nitter.net (frontend publico de X sin
+        # API oficial) para tener RSS - verificado en vivo que nitter.net ya
+        # no responde (curl: connection failed, HTTP 000). Nunca trajeron
+        # una sola noticia real (confirmado contra la DB de produccion: 63
+        # fuentes activas, 0 noticias en cualquiera). Se desactivan aca, en
+        # un solo lugar, en vez de tocar cada uno de los ~125 dict literals -
+        # upsert_fuente() vuelve a escribir "activa" en cada corrida de
+        # seed, asi que esto se aplica solo, sin tocar la DB a mano.
+        if "nitter.net" in (f.get("rss_url") or ""):
+            f["activa"] = 0
+            f["notas"] = ((f.get("notas") or "") + " | DESACTIVADA 2026-09-16: "
+                          "nitter.net no responde (HTTP 000), nunca trajo "
+                          "nada real.").strip(" |")
     return fuentes
