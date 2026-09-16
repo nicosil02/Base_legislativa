@@ -528,6 +528,7 @@ def _render_card(n, key_suffix: str = "") -> None:
                     clientes=sel, item_id=full_id, item_tipo="noticia",
                     pais=PAIS, item_titulo=titulo, item_url=n["Enlace"],
                     item_resumen=resumen_completo or None,
+                    creado_por=st.user.get("email"),
                 )
                 st.success(f"Marcado para: {', '.join(sel)}. El agente lo redacta en la próxima hora.")
         # Combinar varias noticias relacionadas en UNA sola alerta (con mas
@@ -628,6 +629,7 @@ if _combinar_items:
             clientes=_sel_cli, item_id=_principal_id, item_tipo="noticia",
             pais=PAIS, item_titulo=_principal["item_titulo"], item_url=_principal["item_url"],
             item_resumen=_principal["item_resumen"], fuentes_adicionales=_adicionales or None,
+            creado_por=st.user.get("email"),
         )
         st.session_state["combinar_items"] = {}
         for _k in list(st.session_state.keys()):

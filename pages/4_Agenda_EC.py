@@ -709,6 +709,7 @@ else:
                 pais="EC", item_titulo=f"{row['PL']}: {row['Título']}",
                 item_url=str(row["Nº trámite"]).split("#")[0],
                 item_resumen=f"En agenda de {row['Comisión']} - {row['Estado del PL']}",
+                creado_por=st.user.get("email"),
             )
             st.success(f"Marcado para: {', '.join(sel_pl_clientes)}. El agente lo redacta en la próxima hora.")
 
