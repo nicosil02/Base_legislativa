@@ -85,9 +85,35 @@ def init_schema(conn: sqlite3.Connection) -> None:
             pdf_url TEXT NOT NULL,
             texto TEXT NOT NULL,
             fetched_at TEXT NOT NULL,
-            PRIMARY KEY (camara, fecha)
+            PRIMARY KEY (camara, fecha, pdf_url)
         )
     """)
+    # Migracion in-place si la tabla ya existe con un PK viejo mas chico -
+    # bugs reales 2026-09-15, verificados en vivo contra produccion, dos
+    # casos distintos que cada uno por separado no alcanza a cubrir:
+    #   1. Una misma fecha puede tener MAS DE UN PDF (Diputados 10/09 y
+    #      26/07 tienen 2 cada una) - (camara, fecha) solo no alcanza.
+    #   2. Un mismo PDF puede cubrir VARIOS dias (sesion Senado 24-26 jul,
+    #      un solo archivo linkeado desde las 2 filas de fecha) -
+    #      (camara, pdf_url) solo tampoco alcanza (fallo con
+    #      UNIQUE constraint al migrar produccion real).
+    # La combinacion completa (camara, fecha, pdf_url) es la unica que
+    # cubre ambos casos sin perder ninguna agenda real.
+    pk_cols = sorted(r[1] for r in conn.execute("PRAGMA table_info(pleno_agenda_pdf)") if r[5] > 0)
+    if pk_cols in (["camara", "fecha"], ["camara", "pdf_url"]):
+        conn.executescript("""
+            ALTER TABLE pleno_agenda_pdf RENAME TO pleno_agenda_pdf_old;
+            CREATE TABLE pleno_agenda_pdf (
+                camara TEXT NOT NULL,
+                fecha TEXT NOT NULL,
+                pdf_url TEXT NOT NULL,
+                texto TEXT NOT NULL,
+                fetched_at TEXT NOT NULL,
+                PRIMARY KEY (camara, fecha, pdf_url)
+            );
+            INSERT OR IGNORE INTO pleno_agenda_pdf SELECT * FROM pleno_agenda_pdf_old;
+            DROP TABLE pleno_agenda_pdf_old;
+        """)
     conn.commit()
 
 
@@ -117,8 +143,8 @@ def run_sync(db_path: str | Path, max_nuevos: int = 50) -> dict:
             if bajadas >= max_nuevos:
                 break
             existe = conn.execute(
-                "SELECT 1 FROM pleno_agenda_pdf WHERE camara=? AND fecha=?",
-                (fila["camara"], fila["fecha"]),
+                "SELECT 1 FROM pleno_agenda_pdf WHERE camara=? AND fecha=? AND pdf_url=?",
+                (fila["camara"], fila["fecha"], fila["pdf_url"]),
             ).fetchone()
             if existe:
                 continue
@@ -192,18 +218,71 @@ def _test_parse_fila_sin_red():
     print("OK agenda_pdf: regex de fila distingue filas con/sin PDF de agenda")
 
 
+def _test_duplicados_y_migracion():
+    """Dos bugs reales 2026-09-15, verificados en vivo contra produccion:
+      1. Una misma fecha puede tener MAS DE UN PDF (Diputados 10/09 y
+         26/07 tenian 2 cada una) - el PK viejo (camara, fecha) pisaba
+         uno con el otro en silencio.
+      2. Un mismo PDF puede cubrir VARIOS dias (Senado 24-26 jul, un
+         solo archivo linkeado desde las 2 filas de fecha) - un PK
+         (camara, pdf_url) tampoco alcanza (fallo real al migrar
+         produccion: UNIQUE constraint failed).
+    Prueba la migracion desde CUALQUIERA de los 2 PK viejos, y que el PK
+    nuevo (camara, fecha, pdf_url) cubra ambos casos sin perder nada."""
+    import tempfile
+
+    for pk_viejo in ("camara, fecha", "camara, pdf_url"):
+        with tempfile.TemporaryDirectory() as td:
+            db_path = str(Path(td) / "test.db")
+            conn = sqlite3.connect(db_path)
+            conn.execute(f"""CREATE TABLE pleno_agenda_pdf (
+                camara TEXT NOT NULL, fecha TEXT NOT NULL, pdf_url TEXT NOT NULL,
+                texto TEXT NOT NULL, fetched_at TEXT NOT NULL,
+                PRIMARY KEY ({pk_viejo}))""")
+            conn.execute(
+                "INSERT INTO pleno_agenda_pdf VALUES (?,?,?,?,?)",
+                ("diputados", "2026-07-26", "https://x/viejo.pdf", "texto viejo", "2026-01-01T00:00:00Z"),
+            )
+            conn.commit()
+            conn.close()
+
+            conn = sqlite3.connect(db_path)
+            init_schema(conn)
+            filas = conn.execute("SELECT camara, fecha, pdf_url FROM pleno_agenda_pdf").fetchall()
+            assert filas == [("diputados", "2026-07-26", "https://x/viejo.pdf")], (pk_viejo, filas)
+
+            # Misma fecha, PDF distinto (caso 1).
+            conn.execute(
+                "INSERT INTO pleno_agenda_pdf VALUES (?,?,?,?,?)",
+                ("diputados", "2026-07-26", "https://x/nuevo.pdf", "texto nuevo", "2026-01-02T00:00:00Z"),
+            )
+            # Mismo PDF, fecha distinta (caso 2, sesion multi-dia).
+            conn.execute(
+                "INSERT INTO pleno_agenda_pdf VALUES (?,?,?,?,?)",
+                ("diputados", "2026-07-27", "https://x/viejo.pdf", "texto viejo", "2026-01-01T00:00:00Z"),
+            )
+            conn.commit()
+            n = conn.execute("SELECT COUNT(*) FROM pleno_agenda_pdf").fetchone()[0]
+            conn.close()
+            assert n == 3, f"({pk_viejo}) esperaba 3 filas (1 original + 2 variantes), hay {n}"
+    print("OK agenda_pdf: migra desde cualquiera de los 2 PK viejos sin "
+          "perder datos, y el PK nuevo cubre PDF-duplicado-por-fecha y "
+          "fecha-duplicada-por-PDF")
+
+
 if __name__ == "__main__":
     import argparse
     p = argparse.ArgumentParser()
     p.add_argument("cmd", choices=["sync", "demo", "test"])
     p.add_argument("--db", default="proyectos.db")
-    p.add_argument("--max-nuevos", type=int, default=10)
+    p.add_argument("--max-nuevos", type=int, default=50)
     args = p.parse_args()
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
     if args.cmd == "demo":
         _demo()
     elif args.cmd == "test":
         _test_parse_fila_sin_red()
+        _test_duplicados_y_migracion()
     else:
         stats = run_sync(args.db, max_nuevos=args.max_nuevos)
         print(f"Agendas del Pleno (PDF): {stats}")
