@@ -188,16 +188,23 @@ def descargar_audio_completo(video_id: str) -> Path | None:
     proxy = os.environ.get("YT_DLP_PROXY")
     if proxy:
         cmd += ["--proxy", proxy]
-    r = subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    r = subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE, text=True)
     if r.returncode != 0 or not audio_path.exists():
+        # No tragarse el error: bug real 2026-09-16 (backfill-vod #8) - con
+        # stderr=DEVNULL un fallo de yt-dlp quedaba completamente opaco
+        # ("no se pudo bajar/convertir el audio" sin mas detalle).
+        print(f"[descargar_audio_completo] yt-dlp fallo (rc={r.returncode}): "
+              f"{r.stderr[-2000:]}", file=sys.stderr)
         return None
 
     wav_path = tmp_dir / "audio.wav"
     r = subprocess.run(
         [str(ffmpeg_local), "-y", "-i", str(audio_path), "-ar", "16000", "-ac", "1", str(wav_path)],
-        capture_output=True,
+        capture_output=True, text=True,
     )
     if r.returncode != 0 or not wav_path.exists():
+        print(f"[descargar_audio_completo] ffmpeg fallo (rc={r.returncode}): "
+              f"{r.stderr[-2000:]}", file=sys.stderr)
         return None
     return wav_path
 
