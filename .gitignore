@@ -43,8 +43,13 @@ mapa_electoral/
 # versionan aparte (bug encontrado 2026-09-13: el agente programado de
 # alertas corre en un clone fresco del repo y los necesita para redactar -
 # no son confidenciales de ningun cliente puntual, son la guia de estilo
-# propia de Vali). El resto de _plantillas/ (bluebooks de referencia,
-# matriz_monitoreo, docs sin uso en runtime) sigue local-only.
+# propia de Vali). El resto de _plantillas/ (bluebooks de referencia, docs
+# sin uso en runtime) sigue local-only.
+#
+# clientes/_plantillas/matriz_monitoreo/ SI se versiona (decision explicita
+# de Nicolas, 2026-09-16: "no hay problema que se publique") - es
+# investigacion de URLs de gobierno reales (PE/EC), no info de negocio
+# confidencial de ningun cliente puntual.
 clientes/*
 !clientes/*/
 clientes/*/*
@@ -53,6 +58,8 @@ clientes/*/*
 !clientes/*/formato_alertas.md
 !clientes/_plantillas/whatsapp_alerta.md
 !clientes/_plantillas/ejemplos_alertas.md
+!clientes/_plantillas/matriz_monitoreo/
+!clientes/_plantillas/matriz_monitoreo/*
 
 # Matrices puntuales de PLs (Bayer Crop/Syngenta, Incode) - decision
 # explicita de Nicolas 2026-09-13: se versionan para que la app en
