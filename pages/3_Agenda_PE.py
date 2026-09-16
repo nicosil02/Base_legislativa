@@ -1614,10 +1614,13 @@ with tab_transcripciones:
                         _render_resumen_card(_res)
                     else:
                         st.caption("Resumen pendiente de generar.")
-                    st.text_area(
-                        "Transcripción completa", value=row["texto"], height=240,
-                        key=f"transcripcion_{row['video_id']}",
-                    )
+                    # Colapsada por defecto (no ocupar la pantalla con el
+                    # texto crudo) - st.code() en vez de st.text_area()
+                    # porque trae boton de copiar nativo (util para pegar
+                    # en otra IA), pedido real de Nicolas 2026-09-16.
+                    if st.toggle("Ver transcripción completa",
+                                 key=f"ver_transcripcion_{row['video_id']}"):
+                        st.code(row["texto"], language=None, wrap_lines=True, height=300)
 
                     # Chat simple de preguntas sobre esta transcripcion, via
                     # Gemini (tier gratuito - decision de Nicolas 2026-09-15
