@@ -11,8 +11,6 @@ from pathlib import Path
 
 import streamlit as st
 
-from alerts.borradores_store import list_borradores
-
 
 # ====================== CSS (estilo Vali) ======================
 st.markdown(
@@ -228,35 +226,6 @@ a.country-card:hover {
 .freshness-card .dot.cold    { background: #EF4444; }
 .freshness-card .dot.unknown { background: #CFD9E0; }
 
-/* ─── Banner "que hacer hoy" ────────────────────────────────────────────
-   Auditoria de UX 2026-09-13: el home no orientaba nada - no mostraba
-   pendientes ni mencionaba Alertas. Este banner va arriba de todo,
-   antes del grid de herramientas, con el estado accionable del dia. */
-.today-banner {
-  display: flex; align-items: center; gap: 18px;
-  border: 1px solid var(--line); border-radius: 14px;
-  padding: 20px 26px; margin-bottom: 44px;
-  background: var(--bg);
-}
-.today-banner.attention {
-  border-color: var(--accent); background: #EBF2FA;
-}
-.today-banner .icon { font-size: 30px; line-height: 1; }
-.today-banner .text { flex: 1; }
-.today-banner .title {
-  font-size: 1.05rem; font-weight: 800; color: var(--ink); line-height: 1.3;
-}
-.today-banner .sub {
-  font-size: 13px; color: var(--ink-soft); margin-top: 2px;
-}
-.today-banner .cta {
-  font-size: 11px; font-weight: 800; letter-spacing: 0.16em;
-  text-transform: uppercase; color: var(--accent); text-decoration: none !important;
-  white-space: nowrap; border: 1px solid var(--accent); border-radius: 8px;
-  padding: 10px 18px; transition: background-color .2s;
-}
-.today-banner .cta:hover { background: rgba(10,41,77,0.06); }
-
 .footer-rule {
   width: 32px; height: 2px; background: var(--ink);
   margin: 80px 0 14px 0;
@@ -423,20 +392,6 @@ def get_freshness() -> dict:
 
 
 @st.cache_data(ttl=60)
-def stats_alertas() -> dict:
-    """Cuenta borradores pendientes de redactar y ya redactados (listos para
-    revisar/enviar) en TODOS los clientes. list_borradores() sin filtro de
-    cliente ya devuelve todo; solo agrupamos por estado."""
-    try:
-        todos = list_borradores()
-    except Exception:
-        return {"pendientes": None, "listos": None}
-    pendientes = sum(1 for b in todos if b.get("estado") == "pendiente")
-    listos = sum(1 for b in todos if b.get("estado") == "borrador")
-    return {"pendientes": pendientes, "listos": listos}
-
-
-@st.cache_data(ttl=60)
 def stats_peru() -> dict:
     db = _find_db_path()
     if db is None:
@@ -551,42 +506,6 @@ st.markdown(
     'seguimiento de cambios de estado y alertas diarias automáticas.</p>',
     unsafe_allow_html=True,
 )
-
-# ====================== Banner "que hacer hoy" ======================
-_s_al = stats_alertas()
-_pend = _s_al["pendientes"]
-_listos = _s_al["listos"]
-if _pend is None:
-    pass  # borradores_store no disponible (sin GH_TOKEN local) - no molestar con esto
-elif _pend == 0 and _listos == 0:
-    st.markdown(
-        """<div class="today-banner">
-        <div class="icon">✨</div>
-        <div class="text">
-            <div class="title">Estás al día</div>
-            <div class="sub">No hay alertas pendientes de redactar ni borradores por revisar.</div>
-        </div>
-        </div>""",
-        unsafe_allow_html=True,
-    )
-else:
-    partes = []
-    if _pend:
-        partes.append(f"<strong>{_pend}</strong> pendiente{'s' if _pend != 1 else ''} de redactar")
-    if _listos:
-        partes.append(f"<strong>{_listos}</strong> lista{'s' if _listos != 1 else ''} para revisar y enviar")
-    titulo = " · ".join(partes)
-    st.markdown(
-        f"""<div class="today-banner attention">
-        <div class="icon">📝</div>
-        <div class="text">
-            <div class="title">{titulo}</div>
-            <div class="sub">Marcadas desde Noticias/Radar Legislativo — el agente las redacta cada hora.</div>
-        </div>
-        <a href="/alertas" target="_self" class="cta">Ir a Alertas →</a>
-        </div>""",
-        unsafe_allow_html=True,
-    )
 
 # Stats por herramienta
 s = stats_peru()

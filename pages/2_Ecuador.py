@@ -754,6 +754,7 @@ if clientes and not df.empty:
             clientes=sel_pl_clientes, item_id=item_id, item_tipo="pl",
             pais="EC", item_titulo=f"{row['_n_tramite_label']}: {row['Título']}",
             item_url=str(row["N. Trámite"]).split("#")[0], item_resumen=row.get("Estado"),
+            creado_por=st.user.get("email"),
         )
         st.success(f"Marcado para: {', '.join(sel_pl_clientes)}. El agente lo redacta en la próxima hora.")
 

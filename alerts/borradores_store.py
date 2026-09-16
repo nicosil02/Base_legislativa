@@ -105,11 +105,17 @@ def list_borradores(cliente: str | None = None) -> list[dict]:
 
 def _upsert(*, cliente: str, item_id: str, item_tipo: str, pais: str,
             item_titulo: str, item_url: str | None, item_resumen: str | None,
-            texto: str, estado: str, fuentes_adicionales: list[dict] | None = None) -> bool:
+            texto: str, estado: str, fuentes_adicionales: list[dict] | None = None,
+            creado_por: str | None = None) -> bool:
     """Crea o actualiza una entrada. No pisa un `estado='borrador'` existente
     con datos de un marcado nuevo (ver `marcar_pendiente`) - solo
     `guardar_borrador` (texto real, escrito a mano o por el agente) puede
-    pasar un item a `estado='borrador'`."""
+    pasar un item a `estado='borrador'`.
+
+    `creado_por` (email de quien marco el item, ver auth/store.py) solo se
+    setea al CREAR la entrada - un update (ej. el agente redactando, o
+    guardar_borrador sin pasar creado_por) nunca lo pisa, para que la
+    pagina de Borradores pueda filtrar "lo mio" por persona."""
     cfg = _gh_config()
     usar_gh = bool(cfg["token"] and cfg["repo"])
     remote = _fetch_remote() if usar_gh else None
@@ -137,6 +143,7 @@ def _upsert(*, cliente: str, item_id: str, item_tipo: str, pais: str,
             "cliente": cliente, "item_id": item_id, "item_tipo": item_tipo,
             "pais": pais, "item_titulo": item_titulo, "item_url": item_url,
             "item_resumen": item_resumen, "texto": texto, "estado": estado,
+            "creado_por": creado_por,
             "fuentes_adicionales": fuentes_adicionales or [],
             "created_at": now, "updated_at": now,
         })
@@ -193,13 +200,19 @@ def guardar_borrador(*, cliente: str, item_id: str, item_tipo: str, pais: str,
 def marcar_pendiente(*, clientes: list[str], item_id: str, item_tipo: str, pais: str,
                      item_titulo: str, item_url: str | None,
                      item_resumen: str | None = None,
-                     fuentes_adicionales: list[dict] | None = None) -> bool:
-    """Nicolas marca un item (tipicamente desde Noticias PE/EC) como 'vale la
-    pena redactar una alerta de esto' para uno o mas clientes - crea una
-    entrada con estado='pendiente' y texto vacio por cada cliente. El agente
-    programado busca estas entradas, las redacta, y las pasa a
+                     fuentes_adicionales: list[dict] | None = None,
+                     creado_por: str | None = None) -> bool:
+    """Un miembro del equipo marca un item (tipicamente desde Noticias PE/EC)
+    como 'vale la pena redactar una alerta de esto' para uno o mas clientes -
+    crea una entrada con estado='pendiente' y texto vacio por cada cliente.
+    El agente programado busca estas entradas, las redacta, y las pasa a
     estado='borrador' via `guardar_borrador`. Si un item ya tiene un borrador
     real para ese cliente, no lo toca (ver `_upsert`).
+
+    `creado_por` (opcional): email de quien marco el item (ver auth/store.py)
+    - permite que la pagina de Borradores filtre "lo mio" por persona una
+    vez que el login este activo. Sin login (auth no configurado todavia),
+    queda en None y la pagina muestra todo, como antes.
 
     `fuentes_adicionales` (opcional): a veces varias noticias relacionadas se
     combinan en UNA sola alerta con mas perspectiva, pero solo se cita la
@@ -211,7 +224,8 @@ def marcar_pendiente(*, clientes: list[str], item_id: str, item_tipo: str, pais:
         ok = _upsert(cliente=cliente, item_id=item_id, item_tipo=item_tipo,
                      pais=pais, item_titulo=item_titulo, item_url=item_url,
                      item_resumen=item_resumen, texto="", estado="pendiente",
-                     fuentes_adicionales=fuentes_adicionales) and ok
+                     fuentes_adicionales=fuentes_adicionales,
+                     creado_por=creado_por) and ok
     return ok
 
 
@@ -276,6 +290,20 @@ def _demo():
         n3 = next(b for b in list_borradores("bayer") if b["item_id"] == "n_3")
         assert n3["fuentes_adicionales"] == [{"item_titulo": "Otro angulo", "item_url": "http://w"}]
         print("OK marcar_pendiente: guarda fuentes_adicionales (varias noticias, una alerta)")
+
+        marcar_pendiente(clientes=["syngenta"], item_id="n_4", item_tipo="noticia",
+                         pais="PE", item_titulo="Noticia de otra persona", item_url="http://q",
+                         creado_por="compañera@valiconsultores.com")
+        n4 = next(b for b in list_borradores("syngenta") if b["item_id"] == "n_4")
+        assert n4["creado_por"] == "compañera@valiconsultores.com"
+        guardar_borrador(cliente="syngenta", item_id="n_4", item_tipo="noticia",
+                         pais="PE", item_titulo="Noticia de otra persona", item_url="http://q",
+                         texto="Texto redactado por el agente")
+        n4 = next(b for b in list_borradores("syngenta") if b["item_id"] == "n_4")
+        assert n4["creado_por"] == "compañera@valiconsultores.com", (
+            "guardar_borrador (el agente redactando, sin creado_por) NO debe "
+            "pisar el dueño original del item")
+        print("OK creado_por: se setea al crear y no se pisa en updates posteriores")
     finally:
         _local_path = old_local_path
         if old_token is not None:

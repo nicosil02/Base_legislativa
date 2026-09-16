@@ -1,9 +1,10 @@
 """Vali Intelligence — Punto de entrada (router de navegación + auth gate).
 
 Antes de cualquier dashboard:
-  - Si la URL trae ?token=... → verifica magic link y setea sesion.
-  - Si no hay sesion activa → renderea login page y STOP.
-  - Si hay sesion → registra paginas en st.navigation y corre el router.
+  - Si [auth] esta en Secrets → exige login con Google (st.user.is_logged_in),
+    restringido a @valiconsultores.com. Sin [auth] configurado, la app queda
+    publica (sin gate) - ver el bloque AUTH GATE mas abajo.
+  - Registra paginas en st.navigation y corre el router.
 
 Corre con:
     python -m streamlit run app.py
@@ -215,12 +216,68 @@ def _bootstrap_dbs_impl():
 _bootstrap_dbs()
 
 
-# ─── AUTH GATE (DESHABILITADO temporalmente por bugs de cookies en Streamlit Cloud) ──
-# El modulo auth/ queda en el repo y se puede reactivar agregando:
-#   from auth.login import gate_or_render
-#   if not gate_or_render(): st.stop()
-# Por ahora la app es publica — los dashboards muestran data publica del
-# Congreso/Asamblea, sin info sensitiva.
+# ─── AUTH GATE (Google, via st.login nativo de Streamlit) ──────────────────
+# Reemplaza el viejo sistema de magic-link (auth/login.py, borrado
+# 2026-09-16) que tenia un bug real de cookies en Streamlit Cloud: la
+# cookie vi_session SI se seteaba (confirmado con DevTools) pero el
+# servidor no la leia al navegar a /peru o /ecuador (paginas = URLs
+# distintas = requests nuevos) - problema de timing/scope del hack de
+# "cookie via JS en un iframe". st.login() usa la cookie de sesion propia
+# de Streamlit (firmada server-side via Authlib), asi que no depende de
+# ese hack y no deberia repetir esa clase de bug.
+#
+# Se activa SOLO si [auth] esta configurado en Secrets (Streamlit Cloud:
+# Manage app > Settings > Secrets) - mientras no este configurado, la app
+# sigue publica como hasta ahora. Deploy seguro: este commit no le rompe
+# el acceso a nadie hasta que se agreguen las credenciales de Google.
+ALLOWED_DOMAIN = "@valiconsultores.com"
+
+
+def _google_auth_configured() -> bool:
+    try:
+        return bool(st.secrets.get("auth", {}).get("google", {}).get("client_id"))
+    except Exception:
+        return False
+
+
+if _google_auth_configured():
+    if not st.user.is_logged_in:
+        st.markdown(
+            "<div style='max-width:440px;margin:14vh auto 0 auto;text-align:center;"
+            "font-family:Inter,-apple-system,sans-serif;'>"
+            "<div style='font-size:11px;font-weight:800;letter-spacing:0.28em;"
+            "text-transform:uppercase;color:#0A294D;margin-bottom:10px;'>"
+            "Asuntos Públicos · Vali Consultores</div>"
+            "<h1 style='font-size:2.4rem;font-weight:900;letter-spacing:-0.03em;"
+            "color:#0A294D;margin:0 0 12px 0;'>Vali Intelligence</h1>"
+            "<p style='font-size:14px;color:#435D74;margin-bottom:28px;'>"
+            "Inicia sesión con tu cuenta de Google "
+            "<strong>@valiconsultores.com</strong> para continuar.</p></div>",
+            unsafe_allow_html=True,
+        )
+        _cols = st.columns([1, 1.2, 1])
+        with _cols[1]:
+            if st.button("Iniciar sesión con Google", use_container_width=True,
+                         type="primary"):
+                st.login("google")
+        st.stop()
+
+    if not st.user.email.endswith(ALLOWED_DOMAIN):
+        st.error(
+            f"Solo cuentas {ALLOWED_DOMAIN} pueden acceder a Vali Intelligence. "
+            f"Conectado como {st.user.email}."
+        )
+        if st.button("Cerrar sesión"):
+            st.logout()
+        st.stop()
+
+    # Registra al usuario en data/users.json si es su primer login (idempotente)
+    # - alerts/cli.py lo usa como lista de destinatarios de las alertas diarias.
+    try:
+        from auth.store import register
+        register(st.user.email)
+    except Exception as e:
+        print(f"[auth] no se pudo registrar {st.user.email}: {e}")
 
 
 # Logo Vali grande en el tope del sidebar.
@@ -485,7 +542,11 @@ alertas = st.Page(
 )
 
 
-# Sidebar logout deshabilitado mientras el auth gate este off.
+if _google_auth_configured() and st.user.is_logged_in:
+    with st.sidebar:
+        st.caption(f"👤 {st.user.email}")
+        if st.button("Cerrar sesión", use_container_width=True):
+            st.logout()
 
 
 nav = st.navigation(
