@@ -142,6 +142,16 @@ TEMAS: dict[str, list[str]] = {
         "OGM", "fertilizantes", "campesino", "campesina", "agro",
         "INIAP", "MAG", "MAGAP", "produccion agropecuaria",
         "producción agropecuaria",
+        # Agroquimicos - bug real 2026-09-16 (Nicolas: "tema prioritario
+        # hoy es lo del TC respecto a plaguicidas"): la categoria Crop no
+        # tenia NINGUNA palabra de plaguicidas/pesticidas, el corazon del
+        # negocio de proteccion de cultivos de Bayer/Syngenta - se
+        # confirmo que un titulo real sobre "control de pesticidas" no
+        # clasificaba en nada.
+        "plaguicida", "plaguicidas", "pesticida", "pesticidas",
+        "agroquímico", "agroquimico", "agroquímicos", "agroquimicos",
+        "glifosato", "herbicida", "herbicidas", "insecticida", "insecticidas",
+        "fungicida", "fungicidas",
         # Ministros actuales de sector (gabinete Galarreta)
         "Vinelli",     # MIDAGRI (agro)
         "Huaroc",      # MINAM (ambiente)
