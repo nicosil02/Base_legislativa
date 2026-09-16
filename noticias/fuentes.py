@@ -551,7 +551,10 @@ FUENTES_PE: list[dict] = [
      "rss_url": "https://niubox.legal/feed/", "tipo": "rss", "activa": 0, "notas": "Feed roto - cubierto por Google News"},
     {"categoria": "Temas Tech", "pais": "PE", "nombre": "Comex Peru",
      "url": "https://www.comexperu.org.pe/",
-     "rss_url": "https://www.comexperu.org.pe/feed/", "tipo": "rss"},
+     "rss_url": "https://www.comexperu.org.pe/feed/", "tipo": "rss", "activa": 0,
+     "notas": "Desactivada 2026-09-16: rss_url da 404, autodiscovery contra la home "
+              "tampoco encontro un feed valido, verificado en vivo. La home no tiene "
+              "un listado de noticias parseable (solo paginas institucionales)."},
     {"categoria": "Temas Tech", "pais": "PE", "nombre": "DPL News Peru",
      "url": "https://dplnews.com/",
      "rss_url": "https://dplnews.com/feed/", "tipo": "rss",
@@ -623,7 +626,11 @@ FUENTES_EC: list[dict] = [
               "de WordPress con indice-en-texto-plano que ese scraper no puede "
               "parsear, 0 noticias jamas (verificado contra la DB real)."},
     {"categoria": "Institucion", "pais": "EC", "nombre": "Decretos Presidenciales",
-     "url": "https://www.presidencia.gob.ec/decretos/", "tipo": "html"},
+     "url": "https://www.presidencia.gob.ec/decretos/", "tipo": "html", "activa": 0,
+     "notas": "Desactivada 2026-09-16: pagina abandonada, un solo decreto listado "
+              "(2021) - verificado en vivo. Los decretos reales se publican en el "
+              "portal Minka (minka.presidencia.gob.ec), una app JSF sin listado "
+              "HTML parseable."},
     {"categoria": "Institucion", "pais": "EC", "nombre": "Registro Civil (DIGERCIC)",
      "url": "https://www.registrocivil.gob.ec/noticias/",
      "rss_url": "https://www.registrocivil.gob.ec/feed/", "tipo": "rss",
@@ -681,12 +688,19 @@ FUENTES_EC: list[dict] = [
      "rss_url": "https://www.controlsanitario.gob.ec/feed/", "tipo": "rss"},
     {"categoria": "Institucion", "pais": "EC",
      "nombre": "ARCSA - Normativa",
-     "url": "https://www.controlsanitario.gob.ec/documentos-vigentes/", "tipo": "html"},
+     "url": "https://www.controlsanitario.gob.ec/documentos-vigentes/", "tipo": "html",
+     "activa": 0,
+     "notas": "Desactivada 2026-09-16: solo 4 PDFs listados en total, ninguno de "
+              "los ultimos 3 anios - pagina practicamente abandonada, verificado "
+              "en vivo."},
 
     # --- TEMAS AGRARIOS ---
     {"categoria": "Temas Agrarios", "pais": "EC",
      "nombre": "Resoluciones Ministerio de Agricultura",
-     "url": "https://www.agricultura.gob.ec/normativa/", "tipo": "html"},
+     "url": "https://www.agricultura.gob.ec/normativa/", "tipo": "html", "activa": 0,
+     "notas": "Desactivada 2026-09-16: la URL en realidad muestra 'Normativa "
+              "Consejo Nacional de la Leche y sus Derivados' (nicho lacteo, no "
+              "normativa agraria general), solo 2 PDFs - verificado en vivo."},
     {"categoria": "Temas Agrarios", "pais": "EC",
      "nombre": "Ministerio de Agricultura y Ganaderia",
      "url": "https://www.agricultura.gob.ec/noticias/",
@@ -715,7 +729,12 @@ FUENTES_EC: list[dict] = [
      "url": "https://www.agrocalidad.gob.ec/normativa-nacional-e-internacional/", "tipo": "html"},
     {"categoria": "Temas Agrarios", "pais": "EC",
      "nombre": "CONAIE (Confederacion Indigenas)",
-     "url": "https://conaie.org/", "tipo": "html"},
+     "url": "https://conaie.org/", "tipo": "html",
+     "notas": "OJO (2026-09-16): HTTP 429 consistente contra IPs de datacenter "
+              "(GH Actions Y probado en vivo aislado desde otra IP no residencial) "
+              "- mismo patron que Ministerio del Ambiente EC. Se deja activa (no "
+              "es un feed muerto, es un WAF agresivo) por si alguna corrida logra "
+              "pasar; no se desactiva a mano."},
     {"categoria": "Temas Agrarios", "pais": "EC", "nombre": "El Productor",
      "url": "https://elproductor.com/",
      "rss_url": "https://elproductor.com/feed/", "tipo": "rss",
@@ -742,7 +761,10 @@ FUENTES_EC: list[dict] = [
      "rss_url": "https://www.telecomunicaciones.gob.ec/feed/", "tipo": "rss"},
     {"categoria": "Temas KYC/AML", "pais": "EC",
      "nombre": "Ministerio de Telecomunicaciones - Normativa",
-     "url": "https://www.telecomunicaciones.gob.ec/normativa/", "tipo": "html"},
+     "url": "https://www.telecomunicaciones.gob.ec/normativa/", "tipo": "html",
+     "activa": 0,
+     "notas": "Desactivada 2026-09-16: los PDFs listados son todos de 2017 - "
+              "pagina abandonada, verificado en vivo."},
     {"categoria": "Temas KYC/AML", "pais": "EC",
      "nombre": "Superintendencia de Proteccion de Datos Personales",
      "url": "https://www.proteccionderechos.gob.ec/", "tipo": "html", "activa": 0,
@@ -763,20 +785,35 @@ FUENTES_EC: list[dict] = [
      "rss_url": "https://www.salud.gob.ec/feed/", "tipo": "rss"},
     {"categoria": "Temas Salud", "pais": "EC",
      "nombre": "Ministerio de Salud Publica - Normativa",
-     "url": "https://www.salud.gob.ec/marco-normativo/", "tipo": "html"},
+     "url": "https://www.salud.gob.ec/marco-normativo/", "tipo": "html", "activa": 0,
+     "notas": "Desactivada 2026-09-16: la pagina no tiene ni un solo link a "
+              "documento real (pdf/doc), verificado en vivo."},
     {"categoria": "Temas Salud", "pais": "EC", "nombre": "IESS (Seg. Social)",
      "url": "https://www.iess.gob.ec/es/web/guest/sala-de-prensa", "tipo": "html",
      "notas": "Timeout consistente en pruebas en vivo (2026-09-12), no se pudo confirmar RSS"},
     {"categoria": "Temas Salud", "pais": "EC", "nombre": "ALAFAR Ecuador",
-     "url": "https://www.alafar.org/", "tipo": "html"},
+     "url": "https://www.alafar.org/", "tipo": "html", "activa": 0,
+     "notas": "Desactivada 2026-09-16: alafar.org es la Asociacion Latinoamericana "
+              "de Fabricantes de Refractarios (materiales industriales), NO la "
+              "asociacion farmaceutica - colision de sigla, verificado en vivo "
+              "(pagina real sobre refractarios, nada de salud/farma). Si existe "
+              "una ALAFAR farmaceutica real, falta confirmar la URL correcta."},
     {"categoria": "Temas Salud", "pais": "EC", "nombre": "SOLCA Ecuador",
-     "url": "https://www.solca.med.ec/", "tipo": "html"},
+     "url": "https://www.solca.med.ec/", "tipo": "html",
+     "notas": "OJO (2026-09-16): HTTP 403 consistente desde IPs de GH Actions "
+              "(pero funciona bien, 17 items reales, probado desde otra IP) - "
+              "mismo patron de bloqueo por IP de datacenter que CONAIE/Ambiente "
+              "EC. Se deja activa por si alguna corrida logra pasar."},
     {"categoria": "Temas Salud", "pais": "EC",
      "nombre": "Jovenes Contra el Cancer Ecuador",
      "url": "https://jovenescontraelcancerec.org/", "tipo": "html", "activa": 0,
      "notas": "Desactivada 2026-09-16: dominio no resuelve (DNS NXDOMAIN), verificado en vivo."},
     {"categoria": "Temas Salud", "pais": "EC", "nombre": "Pacientes Ecuador",
-     "url": "https://pacientesecuador.org/", "tipo": "html"},
+     "url": "https://pacientesecuador.org/", "tipo": "html", "activa": 0,
+     "notas": "Desactivada 2026-09-16: HTTP 403 consistente incluso con el bypass "
+              "de cloudscraper, verificado tanto desde GH Actions como desde otra "
+              "IP - bot-block real del sitio, no problema de IP de datacenter "
+              "como CONAIE/SOLCA."},
     {"categoria": "Temas Salud", "pais": "EC", "nombre": "Edicion Medica",
      "url": "https://www.edicionmedica.ec/",
      "rss_url": "https://www.edicionmedica.ec/rss", "tipo": "rss", "activa": 0,
