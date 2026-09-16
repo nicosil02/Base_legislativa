@@ -157,7 +157,7 @@ CATEGORIA_CLIENTES: dict[str, list[str]] = {
 # (noticias/temas.py::clasificar) - no es un ranking difuso tipo TF-IDF, es
 # un mismo chequeo de keywords determinista/auditable que ya se usa para los
 # badges "Temas" de la UI, aplicado tambien al filtro. Ver TEMAS_CLIENTE.
-INSTITUCIONES_AMPLIAS: set[str] = {"MEF"}
+INSTITUCIONES_AMPLIAS: set[str] = {"MEF", "Salud con Lupa"}
 
 # Fuentes "Coyuntura Politica" que en realidad traen el feed COMPLETO del
 # sitio (deportes, espectaculos, policiales) por un feed especifico roto que
@@ -435,6 +435,14 @@ FUENTES_PE: list[dict] = [
     {"categoria": "Temas Agrarios", "pais": "PE", "nombre": "CEPES",
      "url": "https://www.cepes.org.pe/",
      "rss_url": "https://www.cepes.org.pe/feed/", "tipo": "rss"},
+    {"categoria": "Temas Agrarios", "pais": "PE", "nombre": "Salud con Lupa",
+     "url": "https://saludconlupa.com/noticias/", "tipo": "html",
+     "notas": "Periodismo de investigacion (salud + regulacion agraria, ej. "
+              "control de plaguicidas) - pedido explicito de Nicolas "
+              "2026-09-16. En INSTITUCIONES_AMPLIAS: publican de todo "
+              "(salud, social, etc.), el filtro de cliente exige que el "
+              "titulo/resumen matcheen agro/salud de verdad, no toda la "
+              "seccion 'noticias' del sitio."},
     {"categoria": "Temas Agrarios", "pais": "PE",
      "nombre": "Sociedad Peruana de Derecho Ambiental",
      "url": "https://spda.org.pe/",

@@ -27,6 +27,18 @@ def test_fiscal_solo_no_colisiona_con_carpeta_fiscal():
     assert "KYC / AML / Financiero" in C("Nota", "el gobierno anunció una reforma del régimen tributario")
 
 
+def test_plaguicidas_clasifica_como_crop():
+    # Bug real 2026-09-16 (Nicolas: "tema prioritario hoy es lo del TC
+    # respecto a plaguicidas"): la categoria Crop (Bayer/Syngenta) no
+    # tenia NINGUNA palabra de plaguicidas/pesticidas - el corazon del
+    # negocio de proteccion de cultivos - asi que noticias reales sobre
+    # el tema no clasificaban en nada.
+    assert "Crop" in C(
+        "El Estado sabía dónde fallaba el control de pesticidas. "
+        "Ahora tiene plazos para corregirlo", None)
+    assert "Crop" in C("TC declara fundada demanda sobre plaguicidas en zonas agrícolas", None)
+
+
 if __name__ == "__main__":
     for name, fn in sorted(globals().items()):
         if name.startswith("test_") and callable(fn):
