@@ -26,11 +26,16 @@ def cmd_seed(args) -> int:
     """Importa el catalogo de fuentes desde noticias.fuentes."""
     with Database(args.db) as db:
         db.init_schema()
+        fuentes = all_fuentes()
         n = 0
-        for row in all_fuentes():
+        for row in fuentes:
             db.upsert_fuente(row)
             n += 1
+        mantener = {(f["pais"], f["nombre"]) for f in fuentes}
+        huerfanas = db.deactivate_fuentes_huerfanas(mantener)
         print(f"Catalogo importado: {n} fuentes upserteadas.")
+        if huerfanas:
+            print(f"  {huerfanas} fuente(s) huerfana(s) desactivadas (ya no estan en fuentes.py).")
         print(f"  Activas en DB: {db.count_fuentes()}")
     return 0
 
