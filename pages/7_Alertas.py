@@ -124,7 +124,7 @@ st.markdown(
 )
 st.markdown(
     '<p class="country-subtitle">Lo que marcaste desde Noticias PE/EC — el agente programado lo '
-    'redacta cada hora. Editá y guardá el texto final acá — esto NO envía nada a ningún cliente.</p>',
+    'redacta cada hora. Edita y guarda el texto final aquí — esto NO envía nada a ningún cliente.</p>',
     unsafe_allow_html=True,
 )
 
@@ -142,7 +142,7 @@ ya_redactados = [b for b in todos_los_guardados if b.get("estado") != "pendiente
 st.markdown("##### ⏳ Pendientes de redactar (marcados desde Noticias)")
 if not pendientes:
     st.caption(
-        "Ninguno. Marcá noticias con \"📌 Marcar\" en las páginas de Noticias PE/EC — "
+        "Ninguno. Marca noticias con \"📌 Marcar\" en las páginas de Noticias PE/EC — "
         "el agente programado las redacta en la próxima hora."
     )
 else:
