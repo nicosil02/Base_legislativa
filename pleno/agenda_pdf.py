@@ -91,10 +91,13 @@ def init_schema(conn: sqlite3.Connection) -> None:
     conn.commit()
 
 
-def run_sync(db_path: str | Path, max_nuevos: int = 10) -> dict:
+def run_sync(db_path: str | Path, max_nuevos: int = 50) -> dict:
     """Baja las agendas del Pleno (Senado + Diputados) que todavia no
     tenemos guardadas. `max_nuevos` acota cuantos PDFs nuevos bajar por
-    corrida (por si hay backlog grande la primera vez)."""
+    corrida - de mas, solo como freno de seguridad (el volumen real es
+    ~10-20 por camara por año legislativo, verificado en vivo 2026-09-15:
+    7 Senado + 10 Diputados en total); pedido de Nicolas de tener
+    SIEMPRE todas las agendas disponibles, no una ventana parcial."""
     stats = {"filas_vistas": 0, "nuevas": 0, "errores": 0}
     conn = sqlite3.connect(str(db_path))
     init_schema(conn)
