@@ -266,6 +266,13 @@ jobs:
               git add data/congreso_live_state.json data/proyectos.db.gz
             fi
             git reset --soft origin/main
+            if git diff --staged --quiet; then
+              # Origin ya tiene exactamente este contenido (p.ej. el loop
+              # de commits periodicos de "Transcribir sesiones en vivo" ya
+              # lo empujo) - convergimos, no es un fallo real.
+              echo "Ya esta en origin/main tras el merge, nada que commitear."
+              exit 0
+            fi
             git commit -m "Congreso live: estado + transcripciones $(date -u +%Y-%m-%d-%H%M) [skip ci]"
             sleep 5
           done
