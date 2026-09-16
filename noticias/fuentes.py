@@ -551,8 +551,13 @@ FUENTES_PE: list[dict] = [
 
     # --- TEMAS TECH ---
     {"categoria": "Temas Tech", "pais": "PE", "nombre": "Niubox Legal",
-     "url": "https://niubox.legal/",
-     "rss_url": "https://niubox.legal/feed/", "tipo": "rss", "activa": 0, "notas": "Feed roto - cubierto por Google News"},
+     "url": "https://niubox.legal/category/nius/",
+     "rss_url": "https://niubox.legal/category/nius/feed/", "tipo": "rss",
+     "notas": "Reactivada 2026-09-16: el feed viejo (niubox.legal/feed/) esta "
+              "vacio, pero la matriz de monitoreo (investigado 2026-09-12) ya "
+              "habia encontrado la URL real - es la categoria 'nius' "
+              "(consultora legal, seccion de noticias/blog), no el home. RSS "
+              "real verificado en vivo 2026-09-16 (10 items)."},
     {"categoria": "Temas Tech", "pais": "PE", "nombre": "Comex Peru",
      "url": "https://www.comexperu.org.pe/",
      "rss_url": "https://www.comexperu.org.pe/feed/", "tipo": "rss", "activa": 0,
@@ -678,10 +683,13 @@ FUENTES_EC: list[dict] = [
     {"categoria": "Institucion", "pais": "EC",
      "nombre": "Ministerio de Economia y Finanzas",
      "url": "https://www.finanzas.gob.ec/category/comunicamos/noticias/",
-     "rss_url": "https://www.finanzas.gob.ec/feed/", "tipo": "rss",
-     "notas": "OJO: el sitio ahora se presenta como 'Ministerio de Desarrollo Economico y "
-              "Productivo' - posible fusion/renombre, confirmar con Nicolas si sigue siendo "
-              "la entidad de interes (matriz de monitoreo, 2026-09-12). RSS verificado en vivo."},
+     "rss_url": "https://www.finanzas.gob.ec/feed/", "tipo": "rss", "activa": 0,
+     "notas": "Desactivada 2026-09-16: confirmado con la matriz de monitoreo "
+              "(clientes/_plantillas/matriz_monitoreo/, investigado 2026-09-12) - "
+              "Decreto Ejecutivo 425 (~19/06/2026) fusiono Agricultura+Finanzas+"
+              "Produccion en el 'Ministerio de Desarrollo Economico y Productivo' "
+              "(economicoproductivo.gob.ec). Reemplazada por esa fuente unica, "
+              "ver mas abajo en Temas Agrarios."},
     {"categoria": "Institucion", "pais": "EC",
      "nombre": "Ministerio de Relaciones Exteriores y Movilidad Humana",
      "url": "https://www.cancilleria.gob.ec/noticias-cancilleria/",
@@ -704,30 +712,65 @@ FUENTES_EC: list[dict] = [
      "url": "https://www.agricultura.gob.ec/normativa/", "tipo": "html", "activa": 0,
      "notas": "Desactivada 2026-09-16: la URL en realidad muestra 'Normativa "
               "Consejo Nacional de la Leche y sus Derivados' (nicho lacteo, no "
-              "normativa agraria general), solo 2 PDFs - verificado en vivo."},
+              "normativa agraria general), solo 2 PDFs - verificado en vivo. "
+              "Ademas el dominio agricultura.gob.ec quedo obsoleto por la fusion "
+              "ministerial (ver 'Ministerio de Desarrollo Economico y Productivo' "
+              "mas abajo)."},
     {"categoria": "Temas Agrarios", "pais": "EC",
      "nombre": "Ministerio de Agricultura y Ganaderia",
      "url": "https://www.agricultura.gob.ec/noticias/",
-     "rss_url": "https://www.agricultura.gob.ec/feed/", "tipo": "rss"},
+     "rss_url": "https://www.agricultura.gob.ec/feed/", "tipo": "rss", "activa": 0,
+     "notas": "Desactivada 2026-09-16: confirmado con la matriz de monitoreo "
+              "(investigado 2026-09-12) - Decreto Ejecutivo 425 (~19/06/2026) "
+              "fusiono Agricultura+Finanzas+Produccion en el 'Ministerio de "
+              "Desarrollo Economico y Productivo'. Reemplazada por esa fuente "
+              "unica, ver mas abajo."},
+    {"categoria": "Temas Agrarios", "pais": "EC",
+     "nombre": "Ministerio de Ambiente y Energia (MAE)",
+     "url": "https://www.ambienteyenergia.gob.ec/noticias/",
+     "rss_url": "https://www.ambienteyenergia.gob.ec/feed/", "tipo": "rss",
+     "notas": "Fusion real 2025 (Decreto Ejecutivo 94, 14/08/2025): el viejo "
+              "Ministerio del Ambiente, Agua y Transicion Ecologica fue absorbido "
+              "por el de Energia y Minas - nuevo nombre y dominio "
+              "ambienteyenergia.gob.ec (el viejo ambiente.gob.ec daba SSLError "
+              "consistente). Confirmado con la matriz de monitoreo (investigado "
+              "2026-09-12), RSS real verificado en vivo 2026-09-16 (10 items). "
+              "Reemplaza 'Ministerio del Ambiente' y 'Ministerio del Ambiente - "
+              "Normativa'."},
+    {"categoria": "Temas Agrarios", "pais": "EC",
+     "nombre": "Ministerio de Desarrollo Economico y Productivo (MDEP)",
+     "url": "https://www.economicoproductivo.gob.ec/noticias/",
+     "rss_url": "https://www.economicoproductivo.gob.ec/feed/", "tipo": "rss",
+     "notas": "Fusion real 2026 (Decreto Ejecutivo 425, oficializado "
+              "~19/06/2026): unifica en una sola cartera lo que antes eran 3 "
+              "ministerios separados (Agricultura y Ganaderia, Economia y "
+              "Finanzas, Produccion/Comercio Exterior/Inversiones y Pesca) - los "
+              "3 dominios viejos (agricultura.gob.ec, finanzas.gob.ec, "
+              "produccion.gob.ec) quedan obsoletos. Confirmado con la matriz de "
+              "monitoreo (investigado 2026-09-12), RSS real verificado en vivo "
+              "2026-09-16 (10 items)."},
     {"categoria": "Temas Agrarios", "pais": "EC",
      "nombre": "Ministerio del Ambiente",
-     "url": "https://www.ambiente.gob.ec/noticias/", "tipo": "html",
-     "notas": "OJO: existe tambien un dominio nuevo separado 'ambienteyenergia.gob.ec' "
-              "(posible split/reorganizacion ministerial) - no confirmado cual es la entidad "
-              "vigente, preguntar a Nicolas (matriz de monitoreo, 2026-09-12). Dominio viejo "
-              "da SSLError consistente en pruebas en vivo (2026-09-12) - puede estar "
-              "descontinuandose a favor del dominio nuevo, no solo un problema de RSS."},
+     "url": "https://www.ambiente.gob.ec/noticias/", "tipo": "html", "activa": 0,
+     "notas": "Desactivada 2026-09-16: dominio viejo descontinuado, fusionado en "
+              "'Ministerio de Ambiente y Energia (MAE)' - ver esa entrada, mismo "
+              "dominio nuevo ambienteyenergia.gob.ec. SSLError consistente en "
+              "pruebas en vivo (2026-09-12 y 2026-09-16)."},
     {"categoria": "Temas Agrarios", "pais": "EC",
      "nombre": "Ministerio del Ambiente - Normativa",
-     "url": "https://www.ambiente.gob.ec/normativa-1/", "tipo": "html",
-     "notas": "Mismo dominio y mismo problema que 'Ministerio del Ambiente' de "
-              "arriba (SSLError consistente, verificado de nuevo en vivo "
-              "2026-09-16) - ver esa nota para el detalle del posible cambio de "
-              "dominio."},
+     "url": "https://www.ambiente.gob.ec/normativa-1/", "tipo": "html", "activa": 0,
+     "notas": "Desactivada 2026-09-16: mismo dominio viejo que 'Ministerio del "
+              "Ambiente' - ver esa entrada y 'Ministerio de Ambiente y Energia "
+              "(MAE)'."},
     {"categoria": "Temas Agrarios", "pais": "EC",
      "nombre": "Ministerio de Produccion Comercio Exterior",
      "url": "https://www.produccion.gob.ec/noticias/",
-     "rss_url": "https://www.produccion.gob.ec/feed/", "tipo": "rss"},
+     "rss_url": "https://www.produccion.gob.ec/feed/", "tipo": "rss", "activa": 0,
+     "notas": "Desactivada 2026-09-16: confirmado con la matriz de monitoreo "
+              "(investigado 2026-09-12) - Decreto Ejecutivo 425 (~19/06/2026) "
+              "fusiono Agricultura+Finanzas+Produccion en el 'Ministerio de "
+              "Desarrollo Economico y Productivo'. Reemplazada por esa fuente "
+              "unica, ver mas arriba."},
     {"categoria": "Temas Agrarios", "pais": "EC",
      "nombre": "Agencia de Regulacion y Control Fito y Zoosanitario",
      "url": "https://www.agrocalidad.gob.ec/category/noticias/",
