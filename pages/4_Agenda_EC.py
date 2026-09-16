@@ -600,7 +600,7 @@ if sel_rows:
             st.caption(
                 "💡 Click en el Nº trámite abre el PDF del proyecto directamente. "
                 "Si todavía no tenemos sus documentos enriquecidos, abre el "
-                "portal Ppless v2 (pegá el número en el filtro)."
+                "portal Ppless v2 (pega el número en el filtro)."
             )
         else:
             st.info("No se identificaron PLs específicos en esta sesión "
@@ -697,7 +697,7 @@ else:
         mca = st.columns([3, 2, 1])
         sel_pl_label = mca[0].selectbox("¿Qué PL?", _opciones_labels, key="marcar_agenda_ec_pl_sel")
         sel_pl_clientes = mca[1].multiselect("¿Para qué cliente(s)?", clientes,
-                                              placeholder="Elegí uno o más clientes", key="marcar_agenda_ec_pl_cli")
+                                              placeholder="Elige uno o más clientes", key="marcar_agenda_ec_pl_cli")
         if mca[2].button("Marcar", key="marcar_agenda_ec_pl_btn", disabled=not sel_pl_clientes):
             row = df_agenda_show.loc[opciones_pl[sel_pl_label]]
             # Mismo esquema "pl_EC_<n_tramite>" que pages/2_Ecuador.py, para

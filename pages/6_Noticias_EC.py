@@ -546,7 +546,7 @@ def _render_card(n, key_suffix: str = "") -> None:
         cols = st.columns([5, 2, 2, 2])
         with cols[1].popover("📌 Marcar", help="Marcar para que se redacte una alerta de esto"):
             sel = st.multiselect("¿Para qué cliente(s)?", clientes,
-                             placeholder="Elegí uno o más clientes", key=f"marcar_cli{sfx}")
+                             placeholder="Elige uno o más clientes", key=f"marcar_cli{sfx}")
             if st.button("Marcar", key=f"marcar_btn{sfx}", disabled=not sel):
                 marcar_pendiente(
                     clientes=sel, item_id=full_id, item_tipo="noticia",
@@ -582,7 +582,7 @@ def _render_card(n, key_suffix: str = "") -> None:
 
 
 if df.empty:
-    st.info("Sin noticias con esos filtros. Probá ampliar la **Ventana**, "
+    st.info("Sin noticias con esos filtros. Prueba ampliar la **Ventana**, "
             "cambiar el **Tema** a *Todas*, o limpiar la búsqueda.")
 else:
     if sel_tema != TODAS or sel_cat != TODAS:
@@ -641,7 +641,7 @@ if _combinar_items:
     )
     _principal_id = _opciones[_principal_label]
     _sel_cli = st.multiselect("¿Para qué cliente(s)?", clientes,
-                             placeholder="Elegí uno o más clientes", key="combinar_clientes")
+                             placeholder="Elige uno o más clientes", key="combinar_clientes")
     if st.button("Combinar en una alerta", disabled=not _sel_cli, key="combinar_confirmar"):
         _principal = _combinar_items[_principal_id]
         _adicionales = [
