@@ -189,16 +189,33 @@ jobs:
                   # en vez de pisar el archivo entero, y arrancar el commit
                   # de nuevo sobre la punta real de origin (sin rebase).
                   git fetch origin main
+                  MERGED=""
                   if git show origin/main:data/proyectos.db.gz > /tmp/origin_proyectos.db.gz 2>/dev/null \
                       && [ -s /tmp/origin_proyectos.db.gz ]; then
                     gunzip -c /tmp/origin_proyectos.db.gz > /tmp/origin_proyectos.db
                     python -X utf8 -m congreso_live.merge_db proyectos.db /tmp/origin_proyectos.db
                     gzip -9nkf proyectos.db
-                    mv -f proyectos.db.gz data/proyectos.db.gz
-                    git add data/proyectos.db.gz data/congreso_live_state.json
+                    mv -f proyectos.db.gz /tmp/merged_proyectos.db.gz
+                    MERGED=1
                   fi
-                  git reset --soft origin/main
+                  cp data/congreso_live_state.json /tmp/merged_state.json
+                  # --hard, no --soft: bug real 2026-09-16 - con --soft el
+                  # index se queda con la base vieja del checkout y el
+                  # commit revierte sin querer cualquier OTRO archivo que
+                  # haya cambiado en origin mientras corria el job (paso lo
+                  # mismo en backfill-vod.yml #7 con los .yml de workflow).
+                  # --hard sincroniza todo con origin primero.
+                  git reset --hard origin/main
+                  if [ -n "$MERGED" ]; then
+                    mv -f /tmp/merged_proyectos.db.gz data/proyectos.db.gz
+                  fi
+                  mv -f /tmp/merged_state.json data/congreso_live_state.json
+                  git add data/proyectos.db.gz data/congreso_live_state.json
+                  if git diff --staged --quiet; then
+                    echo "[commit-loop] tick $tick: ya esta en origin/main tras el merge"
+                  else
                   git commit -m "Congreso live: transcripcion parcial $(date -u +%Y-%m-%d-%H%M) [skip ci]"
+                  fi
                   if git push; then
                     echo "[commit-loop] tick $tick: push OK tras merge"
                   else
@@ -257,15 +274,28 @@ jobs:
             # arriba para el bug real que esto arregla.
             echo "Push fallo (intento $i), mergeando con origin/main..."
             git fetch origin main
+            MERGED=""
             if [ -f proyectos.db ] && git show origin/main:data/proyectos.db.gz > /tmp/origin_proyectos.db.gz 2>/dev/null \
                 && [ -s /tmp/origin_proyectos.db.gz ]; then
               gunzip -c /tmp/origin_proyectos.db.gz > /tmp/origin_proyectos.db
               python -X utf8 -m congreso_live.merge_db proyectos.db /tmp/origin_proyectos.db
               gzip -9nkf proyectos.db
-              mv -f proyectos.db.gz data/proyectos.db.gz
-              git add data/congreso_live_state.json data/proyectos.db.gz
+              mv -f proyectos.db.gz /tmp/merged_proyectos.db.gz
+              MERGED=1
             fi
-            git reset --soft origin/main
+            cp data/congreso_live_state.json /tmp/merged_state.json
+            # --hard, no --soft: bug real 2026-09-16 (backfill-vod.yml #7) -
+            # con --soft el index se queda con la base vieja del checkout y
+            # el commit revierte sin querer cualquier OTRO archivo que haya
+            # cambiado en origin mientras corria el job (en #7 reverti 3
+            # workflows .yml; solo lo freno el permiso "workflows" de GH).
+            # --hard sincroniza todo con origin primero.
+            git reset --hard origin/main
+            if [ -n "$MERGED" ]; then
+              mv -f /tmp/merged_proyectos.db.gz data/proyectos.db.gz
+            fi
+            mv -f /tmp/merged_state.json data/congreso_live_state.json
+            git add data/congreso_live_state.json data/proyectos.db.gz
             if git diff --staged --quiet; then
               # Origin ya tiene exactamente este contenido (p.ej. el loop
               # de commits periodicos de "Transcribir sesiones en vivo" ya

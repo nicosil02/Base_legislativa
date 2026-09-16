@@ -140,15 +140,29 @@ jobs:
             # distintas). Ver congreso_live/merge_db.py.
             echo "Push fallo (intento $i), mergeando con origin/main..."
             git fetch origin main
+            MERGED=""
             if [ -f proyectos.db ] && git show origin/main:data/proyectos.db.gz > /tmp/origin_proyectos.db.gz 2>/dev/null \
                 && [ -s /tmp/origin_proyectos.db.gz ]; then
               gunzip -c /tmp/origin_proyectos.db.gz > /tmp/origin_proyectos.db
               python -X utf8 -m congreso_live.merge_db proyectos.db /tmp/origin_proyectos.db
               gzip -9nkf proyectos.db
-              mv -f proyectos.db.gz data/proyectos.db.gz
+              mv -f proyectos.db.gz /tmp/merged_proyectos.db.gz
+              MERGED=1
+            fi
+            # --hard, no --soft: bug real 2026-09-16 (run #7 de este mismo
+            # workflow) - con --soft el index se queda con la base vieja del
+            # checkout, y si origin avanzo en OTROS archivos mientras corria
+            # el job (p.ej. un push a un .yml de workflow), el commit
+            # resultante los revierte a su version vieja sin querer. Aca nos
+            # salvo por suerte el permiso "workflows" de GH (rechazo el push
+            # por tocar un .yml), pero con un archivo cualquiera hubiera
+            # pisado datos en silencio. --hard sincroniza TODO el arbol con
+            # origin primero; despues reaplicamos solo nuestro cambio real.
+            git reset --hard origin/main
+            if [ -n "$MERGED" ]; then
+              mv -f /tmp/merged_proyectos.db.gz data/proyectos.db.gz
               git add data/proyectos.db.gz
             fi
-            git reset --soft origin/main
             if git diff --staged --quiet; then
               echo "Ya esta en origin/main tras el merge, nada que commitear."
               exit 0
