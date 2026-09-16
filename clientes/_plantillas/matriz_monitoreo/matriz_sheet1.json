@@ -1,0 +1,461 @@
+{
+ "_nota": "Instituciones (PE/EC) reestructuradas 2026-09-12, segunda pasada: (1) Chile eliminado del todo el archivo — ningún cliente actual (Google/Incode/Bayer/Syngenta) opera ahí; (2) cada institución trae ahora 'clientes': lista de slugs de clientes a quienes le importa esa fuente (cruce tipo-de-fuente x relevancia-por-cliente, el patrón de Dapper/Parlamento.ai investigado esta sesión), armado desde los 'Entidades a monitorear' reales de cada clientes/<cliente>/notas.md — no inventado; 'todos' se usa solo para el backbone legislativo/político general (Congreso, Presidencia, diarios oficiales), lista vacía [] significa que ninguna nota.md la reclama hoy, no que sea irrelevante; (3) Ecuador tuvo una fusión ministerial real en 2026 (Decreto Ejecutivo 425, oficializado ~19/06/2026): Agricultura y Ganadería + Economía y Finanzas + Producción/Comercio Exterior/Inversiones y Pesca se unieron en un solo 'Ministerio de Desarrollo Económico y Productivo' — las 3 filas viejas se consolidaron en 1. Además el Ministerio del Ambiente se fusionó con Energía y Minas en 2025 (Decreto 94) -> 'Ministerio de Ambiente y Energía', dominio nuevo ambienteyenergia.gob.ec. (4) Niubox y Asociación Latinoamericana de Internet (antes rotos) ya tienen su URL real.",
+ "instituciones_pe": [
+  {
+   "institucion": "Congreso - Proyectos de Ley",
+   "tipo": "portal_legislativo",
+   "url": "https://wb2server.congreso.gob.pe/spley-portal/#/expediente/search",
+   "clientes": [
+    "todos"
+   ],
+   "notas": "ya es el punto final correcto (portal de seguimiento de PLs), no un home genérico"
+  },
+  {
+   "institucion": "El Peruano",
+   "tipo": "normas",
+   "url": "https://diariooficial.elperuano.pe/normas",
+   "clientes": [
+    "todos"
+   ],
+   "notas": "ya es la sección de normas, correcto"
+  },
+  {
+   "institucion": "Canal Congreso",
+   "tipo": "redes",
+   "url": "https://www.facebook.com/canalcongresoperu",
+   "clientes": [
+    "todos"
+   ],
+   "notas": "canal de video del Congreso, se mantiene tal cual"
+  },
+  {
+   "institucion": "Agenda del Congreso",
+   "tipo": "agenda",
+   "url": "https://comunicaciones.congreso.gob.pe/agenda/",
+   "clientes": [
+    "todos"
+   ],
+   "notas": "ya es la agenda, correcto"
+  },
+  {
+   "institucion": "Ministerio de Salud (MINSA)",
+   "noticias_url": "https://www.gob.pe/institucion/minsa/noticias",
+   "normas_url": "https://www.gob.pe/institucion/minsa/normas-legales",
+   "home_url_original": "https://www.gob.pe/minsa",
+   "clientes": [
+    "bayer"
+   ]
+  },
+  {
+   "institucion": "Presidencia del Consejo de Ministros (PCM)",
+   "noticias_url": "https://www.gob.pe/institucion/pcm/noticias",
+   "normas_url": "https://www.gob.pe/institucion/pcm/normas-legales",
+   "home_url_original": "https://www.gob.pe/pcm",
+   "clientes": [
+    "todos"
+   ],
+   "notas": "incluye SGTD (Secretaria de Gobierno y Transformacion Digital); PCM coordina politica de todos los sectores, igual que Congreso/Presidencia"
+  },
+  {
+   "institucion": "Ministerio de Relaciones Exteriores",
+   "noticias_url": "https://www.gob.pe/institucion/rree/noticias",
+   "normas_url": "https://www.gob.pe/institucion/rree/normas-legales",
+   "home_url_original": "https://www.gob.pe/rree",
+   "clientes": [
+    "google"
+   ],
+   "notas": "Alianza del Pacífico, OEA, APEC, relación Perú-EEUU"
+  },
+  {
+   "institucion": "Ministerio de Economía y Finanzas",
+   "noticias_url": "https://www.gob.pe/institucion/mef/noticias",
+   "normas_url": "https://www.gob.pe/institucion/mef/normas-legales",
+   "home_url_original": "https://www.gob.pe/mef",
+   "clientes": [
+    "syngenta"
+   ]
+  },
+  {
+   "institucion": "Ministerio de Educación",
+   "noticias_url": "https://www.gob.pe/institucion/minedu/noticias",
+   "normas_url": "https://www.gob.pe/institucion/minedu/normas-legales",
+   "home_url_original": "https://www.gob.pe/minedu",
+   "clientes": [],
+   "notas": "ningún cliente actual la reclama explícitamente en su notas.md"
+  },
+  {
+   "institucion": "Ministerio del Desarrollo Agrario y Riego (MIDAGRI)",
+   "noticias_url": "https://www.gob.pe/institucion/midagri/noticias",
+   "normas_url": "https://www.gob.pe/institucion/midagri/normas-legales",
+   "home_url_original": "https://www.gob.pe/midagri",
+   "clientes": [
+    "bayer",
+    "syngenta"
+   ]
+  },
+  {
+   "institucion": "Ministerio de la Producción (PRODUCE)",
+   "noticias_url": "https://www.gob.pe/institucion/produce/noticias",
+   "normas_url": "https://www.gob.pe/institucion/produce/normas-legales",
+   "home_url_original": "https://www.gob.pe/produce",
+   "clientes": [],
+   "notas": "ningún cliente actual la reclama explícitamente"
+  },
+  {
+   "institucion": "Ministerio de Comercio Exterior y Turismo (MINCETUR)",
+   "noticias_url": "https://www.gob.pe/institucion/mincetur/noticias",
+   "normas_url": "https://www.gob.pe/institucion/mincetur/normas-legales",
+   "home_url_original": "https://www.gob.pe/mincetur",
+   "clientes": [
+    "google",
+    "bayer",
+    "syngenta"
+   ],
+   "notas": "patrón ya confirmado antes en el proyecto (bluebook de Google)"
+  },
+  {
+   "institucion": "Ministerio de Transportes y Comunicaciones (MTC)",
+   "noticias_url": "https://www.gob.pe/institucion/mtc/noticias",
+   "normas_url": "https://www.gob.pe/institucion/mtc/normas-legales",
+   "home_url_original": "https://www.gob.pe/mtc",
+   "clientes": [
+    "google"
+   ],
+   "notas": "red dorsal / conectividad"
+  },
+  {
+   "institucion": "Ministerio del Ambiente (MINAM)",
+   "noticias_url": "https://www.gob.pe/institucion/minam/noticias",
+   "normas_url": "https://www.gob.pe/institucion/minam/normas-legales",
+   "home_url_original": "https://www.gob.pe/minam",
+   "clientes": [
+    "bayer",
+    "syngenta"
+   ]
+  },
+  {
+   "institucion": "Presidencia",
+   "noticias_url": "https://www.gob.pe/institucion/presidencia/noticias",
+   "normas_url": "https://www.gob.pe/institucion/presidencia/normas-legales",
+   "home_url_original": "https://www.gob.pe/institucion/presidencia/noticias",
+   "clientes": [
+    "todos"
+   ],
+   "notas": "el link original ya era de noticias, se agregó normas"
+  },
+  {
+   "institucion": "DIGEMID",
+   "noticias_url": "https://www.digemid.minsa.gob.pe/category/noticias",
+   "normas_url": "https://www.digemid.minsa.gob.pe/webDigemid/category/normas-legales/",
+   "home_url_original": "https://www.digemid.minsa.gob.pe/institucion",
+   "clientes": [
+    "bayer"
+   ],
+   "notas": "no está en la plataforma gob.pe (dominio propio de MINSA), patrón de URL distinto"
+  },
+  {
+   "institucion": "OSIPTEL",
+   "noticias_url": "https://www.gob.pe/institucion/osiptel/noticias",
+   "normas_url": "https://www.gob.pe/institucion/osiptel/normas-legales",
+   "home_url_original": "https://www.gob.pe/osiptel",
+   "clientes": [
+    "google"
+   ],
+   "notas": "consulta sobre servicios OTT"
+  },
+  {
+   "institucion": "SENASA",
+   "noticias_url": "https://www.gob.pe/institucion/senasa/noticias",
+   "normas_url": "https://www.gob.pe/institucion/senasa/normas-legales",
+   "home_url_original": "https://www.gob.pe/senasa",
+   "clientes": [
+    "bayer",
+    "syngenta"
+   ],
+   "notas": "Syngenta pidió explícitamente reforzar SENASA/sanidad vegetal como prioridad"
+  },
+  {
+   "institucion": "INDECOPI",
+   "noticias_url": "https://www.gob.pe/institucion/indecopi/noticias",
+   "normas_url": "https://www.gob.pe/institucion/indecopi/normas-legales",
+   "home_url_original": "https://www.gob.pe/indecopi",
+   "clientes": [
+    "google",
+    "syngenta"
+   ]
+  },
+  {
+   "institucion": "Apuestas Deportivas - Dirección de Casinos (MINCETUR)",
+   "noticias_url": null,
+   "normas_url": null,
+   "home_url_original": "https://apuestasdeportivas.mincetur.gob.pe/",
+   "clientes": [],
+   "notas": "sub-sitio sin sección propia de noticias/normas; su cobertura real está en las noticias de MINCETUR (arriba). Ningún cliente actual la reclama."
+  }
+ ],
+ "instituciones_ec": [
+  {
+   "institucion": "Asamblea Nacional - Proyectos de Ley",
+   "tipo": "portal_legislativo",
+   "url": "https://leyes.asambleanacional.gob.ec/",
+   "clientes": [
+    "todos"
+   ],
+   "notas": "ya es el punto final correcto"
+  },
+  {
+   "institucion": "Registro Oficial",
+   "tipo": "normas",
+   "url": "https://www.registroficial.gob.ec/",
+   "clientes": [
+    "todos"
+   ],
+   "notas": "equivalente al 'El Peruano' de Ecuador"
+  },
+  {
+   "institucion": "Portal de la Asamblea Nacional",
+   "noticias_url": "https://www.asambleanacional.gob.ec/es/noticias/boletines-de-prensa",
+   "normas_url": null,
+   "home_url_original": "https://www.asambleanacional.gob.ec/es",
+   "clientes": [
+    "todos"
+   ],
+   "notas": "es el Legislativo, su normativa ya la cubre 'Registro Oficial'"
+  },
+  {
+   "institucion": "Agenda de la Asamblea Nacional",
+   "tipo": "agenda",
+   "url": "https://www.asambleanacional.gob.ec/es/agenda_de_comunicacion",
+   "clientes": [
+    "todos"
+   ]
+  },
+  {
+   "institucion": "Ministerio de Salud Pública",
+   "noticias_url": "https://www.salud.gob.ec/noticias/",
+   "normas_url": "https://www.salud.gob.ec/marco-normativo/",
+   "home_url_original": "https://www.salud.gob.ec/",
+   "clientes": [
+    "bayer"
+   ]
+  },
+  {
+   "institucion": "Ministerio de Ambiente y Energía (MAE)",
+   "noticias_url": "https://www.ambienteyenergia.gob.ec/noticias/",
+   "normas_url": "https://www.ambienteyenergia.gob.ec/normativa/",
+   "home_url_original": "https://www.ambiente.gob.ec/noticias/",
+   "clientes": [
+    "bayer",
+    "syngenta"
+   ],
+   "notas": "FUSIONADO 2025 (Decreto Ejecutivo 94, 14/08/2025): el viejo Ministerio del Ambiente, Agua y Transición Ecológica fue absorbido por el de Energía y Minas -> nuevo nombre y dominio 'ambienteyenergia.gob.ec'. Reemplaza la fila vieja 'Ministerio del Ambiente' (ambiente.gob.ec, todavía existe como alias pero ya no es el dominio principal)."
+  },
+  {
+   "institucion": "Ministerio de Desarrollo Económico y Productivo (MDEP)",
+   "noticias_url": "https://www.economicoproductivo.gob.ec/noticias/",
+   "normas_url": "https://www.economicoproductivo.gob.ec/transparencia-frase/",
+   "home_url_original": "https://www.economicoproductivo.gob.ec/",
+   "clientes": [
+    "bayer",
+    "syngenta"
+   ],
+   "notas": "FUSIONADO 2026 (Decreto Ejecutivo 425, oficializado ~19/06/2026): unifica en una sola cartera lo que antes eran 3 ministerios separados -- Agricultura y Ganadería, Economía y Finanzas, y Producción/Comercio Exterior/Inversiones y Pesca (las 3 filas viejas del Excel apuntaban a agricultura.gob.ec / finanzas.gob.ec / produccion.gob.ec, los 3 dominios quedan obsoletos). No se encontró sección de 'normativa' dedicada y limpia -- normas_url es la página de transparencia (mejor proxy disponible, mismo criterio ya usado con Cancillería)."
+  },
+  {
+   "institucion": "Ministerio de Relaciones Exteriores y Movilidad Humana",
+   "noticias_url": "https://www.cancilleria.gob.ec/noticias-cancilleria/",
+   "normas_url": "https://www.cancilleria.gob.ec/transparencia/",
+   "home_url_original": "https://www.cancilleria.gob.ec/",
+   "clientes": [],
+   "notas": "normas_url es transparencia (incluye base legal), no hay sección 'normativa' dedicada. Ningún cliente actual la reclama explícitamente."
+  },
+  {
+   "institucion": "IESS",
+   "noticias_url": "https://www.iess.gob.ec/es/web/guest/sala-de-prensa",
+   "normas_url": null,
+   "home_url_original": "https://www.iess.gob.ec/",
+   "clientes": [
+    "bayer"
+   ],
+   "notas": "nombre en el Excel original decía 'IEES' (typo), es IESS. No se encontró sección normativa dedicada."
+  },
+  {
+   "institucion": "Agencia Nacional de Regulación, Control y Vigilancia Sanitaria (ARCSA)",
+   "noticias_url": "https://www.controlsanitario.gob.ec/noticias/",
+   "normas_url": "https://www.controlsanitario.gob.ec/documentos-vigentes/",
+   "home_url_original": "https://www.controlsanitario.gob.ec/noticias/",
+   "clientes": [
+    "bayer"
+   ]
+  },
+  {
+   "institucion": "Agrocalidad",
+   "noticias_url": "https://www.agrocalidad.gob.ec/category/noticias/",
+   "normas_url": "https://www.agrocalidad.gob.ec/normativa-nacional-e-internacional/",
+   "home_url_original": "https://www.agrocalidad.gob.ec/category/noticias/",
+   "clientes": [
+    "bayer",
+    "syngenta"
+   ],
+   "notas": "el Excel traía además una fila con link de Twitter (@AgrocalidadEC), se mantiene aparte en temas_agrarios/redes, no se tocó"
+  },
+  {
+   "institucion": "Ministerio de Telecomunicaciones y de la Sociedad de la Información",
+   "noticias_url": "https://www.telecomunicaciones.gob.ec/category/catactualidad/",
+   "normas_url": "https://www.telecomunicaciones.gob.ec/normativa/",
+   "home_url_original": "https://www.telecomunicaciones.gob.ec/category/catactualidad/",
+   "clientes": [],
+   "notas": "CONFIRMADO 2026-09-16 contra clientes/google/notas.md real: la sección 'Comisiones y entidades a monitorear' de Google es 100% Perú (MINCETUR, SGTD/PCM, MTC, Cancillería, INDECOPI, ANPD, Parlamento Andino) - Ecuador no aparece ahí en absoluto. El tag 'google' era una inferencia por afinidad temática (digital/telecom), no un pedido real - se saca. Si Nicolas confirma que Google sí quiere cobertura de telecom EC, volver a agregar el tag."
+  }
+ ],
+ "_nota_otras_categorias": "Filas originales del Excel sin tocar en contenido (Nicolas confirmó que le sirven tal cual, incluyendo Twitter/X y Facebook) -- solo se le quitó la columna Chile (eliminada del proyecto, ver nota superior) y se arreglaron 2 URLs muertas (Niubox, Asociación Latinoamericana de Internet). Cada fila ahora es [nombre_PE, link_PE, nombre_EC, link_EC].",
+ "coyuntura_politica": [
+  [
+   "El Comercio",
+   "https://elcomercio.pe/",
+   "El Comercio",
+   "https://www.elcomercio.com/"
+  ],
+  [
+   "Gestion",
+   "https://gestion.pe/",
+   "El Universo",
+   "https://www.eluniverso.com/"
+  ],
+  [
+   "La Republica",
+   "https://larepublica.pe/",
+   "PRIMICIAS",
+   "https://www.primicias.ec/"
+  ],
+  [
+   "Peru 21",
+   "https://peru21.pe/",
+   "Gestión",
+   "https://www.revistagestion.ec/seccion-al-dia"
+  ],
+  [
+   "RPP",
+   "https://rpp.pe/",
+   "Bloomberg Ecuador",
+   "https://www.bloomberglinea.com/latinoamerica/ecuador/"
+  ]
+ ],
+ "temas_agrarios": [
+  [
+   "CAP",
+   "https://twitter.com/CAP_Peru",
+   "CONAIE",
+   "https://mobile.twitter.com/CONAIE_Ecuador"
+  ],
+  [
+   "CONVEAGRO",
+   "https://www.facebook.com/conveagroperu",
+   "El Productor",
+   "https://elproductor.com/"
+  ],
+  [
+   "Agraria",
+   "https://agraria.pe/",
+   "Obervatorio de Cambio Rural",
+   "https://ocaru.org.ec/"
+  ],
+  [
+   "AGAP",
+   "https://www.facebook.com/AGAPPeru",
+   "INIAP",
+   "https://www.iniap.gob.ec/noticias/"
+  ],
+  [
+   "Cepes",
+   "https://twitter.com/CEPES_RURAL",
+   null,
+   null
+  ],
+  [
+   "Sociedad Peruana de Derecho Ambiental",
+   "https://twitter.com/spdaorg",
+   null,
+   null
+  ]
+ ],
+ "temas_salud": [
+  [
+   "Colegio de Quimicos Farmaceuticos del Peru",
+   "https://www.facebook.com/CQFPE",
+   "ALAFAR Ecuador",
+   "https://twitter.com/alafar_ecuador?s=20&t=kg3jexE1BK7P2ebZDqA8TQ"
+  ],
+  [
+   "Esperantra",
+   "https://www.facebook.com/EsperantraPacientes",
+   "Solca Ecuador",
+   "https://twitter.com/SolcaGuayaquil"
+  ],
+  [
+   "Lazo Rosado",
+   "https://twitter.com/LazoRosadoPeru",
+   "Jóvenes Contra el Cáncer de Ecuador",
+   "https://twitter.com/jcontraelcancer"
+  ],
+  [
+   "Federación Peruana de Enfermedades Raras",
+   "https://www.facebook.com/enfermedadesrarasperu/",
+   "Pacientes Ecuador (ERH)",
+   "https://pacientesecuador.org/noticias/"
+  ]
+ ],
+ "temas_tech_pagos": [
+  [
+   "Niubox",
+   "https://niubox.legal/category/nius/",
+   "Criptonoticias",
+   "https://www.criptonoticias.com/etiquetas/bitcoin-ecuador/"
+  ],
+  [
+   "Comex",
+   "https://www.comexperu.org.pe/",
+   "Cámara Ecuatoriana de Comercio Exterior",
+   "https://cece.ec/blog/"
+  ],
+  [
+   "DPL Tech",
+   "https://dplnews.com/category/tecnologia/",
+   "Forbes Digital Ecuador",
+   "https://www.forbes.com.ec/autor/forbes-digital-a71"
+  ],
+  [
+   "Hiperderecho",
+   "https://twitter.com/hiperderecho",
+   "DPL Tech Ecuador",
+   "https://dplnews.com/?s=Ecuador"
+  ],
+  [
+   "Bloomberg en Linea",
+   "https://www.bloomberglinea.com/latinoamerica/peru/",
+   "Camara de Innovación y Tecnología Ecuatoriana",
+   "https://www.facebook.com/CamaraCITEC/"
+  ],
+  [
+   "Asociación Latinoamericana de Internet",
+   "https://alai.lat/",
+   null,
+   null
+  ],
+  [
+   "Ebiz",
+   "https://ebiz.pe/",
+   null,
+   null
+  ]
+ ],
+ "_nota_temas_tech_pagos": "columna PE = 'Temas tech', columna EC = 'Temas pagos' en el Excel original (encabezados distintos por país, así venía).",
+ "problemas_detectados": [
+  {
+   "pais": "PE",
+   "item": "Apuestas Deportivas - Dirección de Casinos",
+   "problema": "sub-sitio sin sección propia de noticias/normas; su actividad relevante ya aparece en las noticias de MINCETUR (verificado con búsquedas reales sobre bloqueos de plataformas de apuestas)."
+  }
+ ],
+ "_resuelto_2026-09-16": "Ministerio de Telecomunicaciones EC: confirmado contra clientes/google/notas.md real que Google no lo reclama explícitamente (su lista de entidades es 100% Perú) - se sacó el tag 'google' inferido. Además se aplicaron las 2 fusiones ministeriales de Ecuador a noticias/fuentes.py (Ministerio de Ambiente y Energía, Ministerio de Desarrollo Económico y Productivo) y se reactivó Niubox con la URL real."
+}
