@@ -823,8 +823,7 @@ st.markdown(
 st.markdown(
     '<p class="country-subtitle">Plataforma para seguir, filtrar y analizar los '
     'proyectos de ley presentados ante el Congreso de la República del Perú — '
-    'período vigente 2026–2031 (Congreso bicameral: Senado + Cámara de Diputados). '
-    'La base histórica 2021–2026 (Congreso unicameral) no se muestra acá.</p>',
+    'período vigente 2026–2031 (Congreso bicameral: Senado + Cámara de Diputados).</p>',
     unsafe_allow_html=True,
 )
 
