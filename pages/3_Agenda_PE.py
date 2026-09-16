@@ -823,7 +823,7 @@ st.markdown(
     '<strong>Senado</strong> y la <strong>Cámara de Diputados</strong> (período vigente '
     '2026–2031) y del <strong>Pleno</strong> del Congreso del Perú. Cada sesión y agenda del '
     'Pleno cruza con la base de proyectos de ley para identificar automáticamente qué PLs '
-    'están en discusión y enriquecerlos con tema, estado y bancada. Usá el filtro "Cámara" '
+    'están en discusión y enriquecerlos con tema, estado y bancada. Usa el filtro "Cámara" '
     'para distinguir entre Senado, Diputados y Congreso/Pleno.</p>',
     unsafe_allow_html=True,
 )
@@ -1246,7 +1246,7 @@ with tab_comision:
             mca = st.columns([3, 2, 1])
             sel_pl_label = mca[0].selectbox("¿Qué PL?", _opciones_labels, key="marcar_agenda_pl_sel")
             sel_pl_clientes = mca[1].multiselect("¿Para qué cliente(s)?", clientes,
-                                                  placeholder="Elegí uno o más clientes", key="marcar_agenda_pl_cli")
+                                                  placeholder="Elige uno o más clientes", key="marcar_agenda_pl_cli")
             if mca[2].button("Marcar", key="marcar_agenda_pl_btn", disabled=not sel_pl_clientes):
                 row = df_show.loc[opciones_pl[sel_pl_label]]
                 item_id = f"pl_PE_{row['PL']}"
@@ -1527,8 +1527,8 @@ with tab_transcripciones:
                 else:
                     cols_v[0].caption(
                         "Todavía no se está transcribiendo automáticamente. "
-                        "Corré `python -m congreso_live.cli live-watch` para "
-                        "que arranque sola, o probá un vistazo rápido acá:"
+                        "Ejecuta `python -m congreso_live.cli live-watch` para "
+                        "que arranque sola, o prueba un vistazo rápido aquí:"
                     )
 
                 # Motivo mas probable de que este boton falle en cualquier
@@ -1659,8 +1659,8 @@ with tab_transcripciones:
 with tab_seguimiento:
     st.markdown(
         '<p style="font-size:13px;color:var(--ink-soft);max-width:760px;">'
-        'Marcá las comisiones que te interesa seguir como prioritarias. '
-        'Se guarda para vos (no por cliente) y se usa para resaltar sus '
+        'Marca las comisiones que te interesa seguir como prioritarias. '
+        'Se guarda para ti (no por cliente) y se usa para resaltar sus '
         'sesiones en la Agenda y para las alertas de WhatsApp cuando haya '
         'novedades.</p>',
         unsafe_allow_html=True,

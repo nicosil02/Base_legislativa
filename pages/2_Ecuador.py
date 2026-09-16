@@ -746,7 +746,7 @@ if clientes and not df.empty:
     mc = st.columns([3, 2, 1])
     sel_pl_label = mc[0].selectbox("¿Qué PL?", _opciones_labels, key="marcar_pl_sel")
     sel_pl_clientes = mc[1].multiselect("¿Para qué cliente(s)?", clientes,
-                                         placeholder="Elegí uno o más clientes", key="marcar_pl_cli")
+                                         placeholder="Elige uno o más clientes", key="marcar_pl_cli")
     if mc[2].button("Marcar", key="marcar_pl_btn", disabled=not sel_pl_clientes):
         row = df.loc[opciones_pl[sel_pl_label]]
         item_id = f"pl_EC_{row['_n_tramite_label']}"
@@ -883,9 +883,9 @@ if selected_rows:
         if not docs:
             st.info(
                 "Este proyecto todavía no tiene documentos enriquecidos en la "
-                "base. Corré: `python -m scraper_ec.cli enriquecer-documentos "
+                "base. Ejecuta: `python -m scraper_ec.cli enriquecer-documentos "
                 f"--limit 5 --force` para procesarlo (incluyendo {sel_tramite}). "
-                "Mientras tanto podés abrir el portal oficial:\n\n"
+                "Mientras tanto puedes abrir el portal oficial:\n\n"
                 f"[Abrir portal Ppless v2 →]({PPLESS_URL})"
             )
         else:
