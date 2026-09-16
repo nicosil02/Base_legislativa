@@ -1,7 +1,7 @@
 requests>=2.31
 pycryptodome>=3.20
 openpyxl>=3.1
-streamlit>=1.34
+streamlit[auth]>=1.42
 pandas>=2.0
 streamlit-aggrid>=0.3.4
 # Clasificador ML para temas de PLs (modulo clasificador/):
