@@ -113,10 +113,18 @@ jobs:
             if git show origin/main:data/proyectos.db.gz > /tmp/origin_proyectos.db.gz 2>/dev/null \
                 && [ -s /tmp/origin_proyectos.db.gz ]; then
               gunzip -c /tmp/origin_proyectos.db.gz > /tmp/origin_proyectos.db
-              python -X utf8 -m congreso_live.merge_db proyectos.db /tmp/origin_proyectos.db
+              # ORIGEN como base, no proyectos.db local - bug real 2026-09-16
+              # (verificado en vivo): este job solo escribe
+              # sesiones_transcripciones pero origin puede tener noticias/PLs
+              # mas frescos que nuestro checkout; usar proyectos.db local como
+              # base pisaba esas tablas en silencio al ganar la carrera de push.
+              python -X utf8 -m congreso_live.merge_db /tmp/origin_proyectos.db proyectos.db
+              gzip -9nkf /tmp/origin_proyectos.db
+              mv -f /tmp/origin_proyectos.db.gz data/proyectos.db.gz
+            else
+              gzip -9nkf proyectos.db
+              mv proyectos.db.gz data/proyectos.db.gz
             fi
-            gzip -9nkf proyectos.db
-            mv proyectos.db.gz data/proyectos.db.gz
           fi
 
       - name: Commitear snapshot DB
@@ -144,9 +152,11 @@ jobs:
             if [ -f proyectos.db ] && git show origin/main:data/proyectos.db.gz > /tmp/origin_proyectos.db.gz 2>/dev/null \
                 && [ -s /tmp/origin_proyectos.db.gz ]; then
               gunzip -c /tmp/origin_proyectos.db.gz > /tmp/origin_proyectos.db
-              python -X utf8 -m congreso_live.merge_db proyectos.db /tmp/origin_proyectos.db
-              gzip -9nkf proyectos.db
-              mv -f proyectos.db.gz /tmp/merged_proyectos.db.gz
+              # ORIGEN como base - ver comentario del bug real 2026-09-16 mas
+              # arriba en este mismo archivo.
+              python -X utf8 -m congreso_live.merge_db /tmp/origin_proyectos.db proyectos.db
+              gzip -9nkf /tmp/origin_proyectos.db
+              mv -f /tmp/origin_proyectos.db.gz /tmp/merged_proyectos.db.gz
               MERGED=1
             fi
             # --hard, no --soft: bug real 2026-09-16 (run #7 de este mismo
