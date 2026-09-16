@@ -28,6 +28,32 @@ def test_excluye_especiales_y_noticias():
     assert C("Distinción Nacional al Emprendimiento") is None
 
 
+def test_las_25_comisiones_ordinarias_reales():
+    # Bug real 2026-09-16 (Nicolas: "por que no llego a capturar la de
+    # Desarrollo Agrario?"): 8 de las 25 comisiones ordinarias reales
+    # (verificadas contra la tabla `sesiones`, no una lista supuesta) no
+    # clasificaban con NINGUN keyword - ni se detectaban como EN VIVO.
+    assert C("EN VIVO: Comisión de Desarrollo Agrario") == "Comision: Agrario"
+    assert C("EN VIVO: Comisión de Asuntos de Gestión del Estado y "
+              "Contraloría") == "Comision: Gestion Del Estado"
+    assert C("EN VIVO: Comisión de Control Político sobre los Actos "
+              "Normativos del Poder Ejecutivo y Regímenes de Excepción"
+              ) == "Comision: Regimenes De Excepcion"
+    assert C("EN VIVO: Comisión de Medio Ambiente y Sostenibilidad"
+              ) == "Comision: Medio Ambiente"
+    assert C("EN VIVO: Comisión de Ordenamiento y Seguimiento Legislativo"
+              ) == "Comision: Seguimiento Legislativo"
+    assert C("EN VIVO: Comisión de Ética Parlamentaria") == "Comision: Etica Parlamentaria"
+    # "Procedimientos Especiales" es una comision ORDINARIA real, no una
+    # comision especial/ad-hoc - "especiales" modifica "procedimientos",
+    # no "comision". No debe caer en la exclusion de "comision especial".
+    assert C("EN VIVO: Comisión de Procedimientos Especiales"
+              ) == "Comision: Procedimientos Especiales"
+    # Las comisiones Especiales/ad-hoc de verdad siguen excluidas (la
+    # frase es "comision especial", no la palabra suelta).
+    assert C("🔴 EN VIVO: Comisión Especial encargada de investigar...") is None
+
+
 def test_vacio_y_no_relacionado():
     assert C("") is None
     assert C(None) is None
