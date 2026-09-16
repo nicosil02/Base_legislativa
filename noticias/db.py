@@ -263,6 +263,34 @@ class Database:
             )
             return cur.rowcount or 0
 
+    def deactivate_fuentes_huerfanas(self, mantener: set[tuple[str, str]]) -> int:
+        """Desactiva fuentes activas cuyo (pais, nombre) ya NO esta en
+        `mantener` (el catalogo actual de noticias/fuentes.py).
+
+        Bug real 2026-09-16: seed() solo hace upsert de lo que SI esta en
+        fuentes.py - nunca desactiva lo que se RENOMBRO o se saco del
+        archivo (ej. "Ministerio de Salud" -> "MINSA"). Esas filas viejas
+        se quedaban activa=1 para siempre, sync tras sync, sin que ningun
+        cambio en fuentes.py pudiera alcanzarlas (36 filas huerfanas asi,
+        verificado contra la DB real - casi la mitad de las fuentes que
+        parecian "no traer nada" en realidad eran duplicados viejos
+        invisibles desde el archivo)."""
+        rows = self.conn.execute(
+            "SELECT id, pais, nombre FROM noticias_fuentes WHERE activa=1"
+        ).fetchall()
+        huerfanas = [r["id"] for r in rows if (r["pais"], r["nombre"]) not in mantener]
+        if not huerfanas:
+            return 0
+        with self.tx() as c:
+            c.executemany(
+                "UPDATE noticias_fuentes SET activa=0, "
+                "notas=COALESCE(notas || ' | ', '') || 'Desactivada automaticamente: '"
+                "'ya no esta en noticias/fuentes.py (renombrada o removida).' "
+                "WHERE id=?",
+                [(fid,) for fid in huerfanas],
+            )
+        return len(huerfanas)
+
     def count_fuentes(self) -> int:
         return self.conn.execute(
             "SELECT COUNT(*) FROM noticias_fuentes WHERE activa=1"
