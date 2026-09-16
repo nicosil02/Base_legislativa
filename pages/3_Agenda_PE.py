@@ -121,8 +121,9 @@ section[data-testid="stSidebar"] [data-testid="stDateInput"] svg {
   text-transform:uppercase; color:var(--accent); margin-bottom:12px;
 }
 .country-title {
-  font-size:clamp(2.5rem,5vw,3.75rem); font-weight:900;
-  letter-spacing:-0.03em; line-height:0.95; color:var(--ink); margin:0 0 10px 0;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size:clamp(2.5rem,5vw,3.75rem); font-weight:400;
+  letter-spacing:-0.01em; line-height:0.98; color:var(--ink); margin:0 0 10px 0;
 }
 .country-title .accent { color:var(--accent); }
 .country-title .period {
