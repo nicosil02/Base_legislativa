@@ -248,8 +248,9 @@ if _google_auth_configured():
             "<div style='font-size:11px;font-weight:800;letter-spacing:0.28em;"
             "text-transform:uppercase;color:#0A294D;margin-bottom:10px;'>"
             "Asuntos Públicos · Vali Consultores</div>"
-            "<h1 style='font-size:2.4rem;font-weight:900;letter-spacing:-0.03em;"
-            "color:#0A294D;margin:0 0 12px 0;'>Vali Intelligence</h1>"
+            "<h1 style=\"font-family:Georgia,'Times New Roman',serif;"
+            "font-size:2.6rem;font-weight:400;letter-spacing:-0.01em;"
+            "color:#0A294D;margin:0 0 12px 0;\">Vali Intelligence</h1>"
             "<p style='font-size:14px;color:#435D74;margin-bottom:28px;'>"
             "Inicia sesión con tu cuenta de Google "
             "<strong>@valiconsultores.com</strong> para continuar.</p></div>",
@@ -545,6 +546,29 @@ alertas = st.Page(
 if _google_auth_configured() and st.user.is_logged_in:
     with st.sidebar:
         st.caption(f"👤 {st.user.email}")
+        # Bug real 2026-09-16: las paginas fuerzan "color:#FFFFFF !important"
+        # en TODO el sidebar (section[data-testid="stSidebar"] *), asi que el
+        # boton secundario por defecto (fondo blanco) terminaba con texto
+        # blanco sobre fondo blanco - invisible. Selector mas especifico
+        # (div[data-testid="stButton"] ademas de section[...]) le gana a esa
+        # regla sin importar el orden en que se inyecten.
+        st.markdown(
+            """<style>
+            section[data-testid="stSidebar"] div[data-testid="stButton"] button {
+                background-color: #FFFFFF !important;
+                border: 1px solid #FFFFFF !important;
+            }
+            section[data-testid="stSidebar"] div[data-testid="stButton"] button p,
+            section[data-testid="stSidebar"] div[data-testid="stButton"] button span {
+                color: #0A294D !important;
+            }
+            section[data-testid="stSidebar"] div[data-testid="stButton"] button:hover {
+                background-color: #F4F6F8 !important;
+                border-color: #F4F6F8 !important;
+            }
+            </style>""",
+            unsafe_allow_html=True,
+        )
         if st.button("Cerrar sesión", use_container_width=True):
             st.logout()
 
