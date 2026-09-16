@@ -81,5 +81,19 @@
     "fuentes_adicionales": [],
     "created_at": "2026-09-15T13:22:52Z",
     "updated_at": "2026-09-15T14:22:14Z"
+  },
+  {
+    "cliente": "bayer",
+    "item_id": "noticia_PE_2195111",
+    "item_tipo": "noticia",
+    "pais": "PE",
+    "item_titulo": "Minsa implementa nueva versión del SISMED para... - Panamericana TV",
+    "item_url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxQSmt3MHhmZ29ieE4yeEY4RVdyb3BJbDE4Nk5EeS1TNHpMYWFVR25FOGFCdU1QaVJLcWtpbFdVQ2syOHpzazhHUGZBWG5kM0hnX0lXTEF6SVJvNFhrWi00SzBrRHdSNkU1SWZSZi1oRTNlb3Z1M2g4TGY3Q29GdnduZzdpUjJtbDFBc1FwXzNRT2xFYzR1bXhCclNwTlp1U3JCT2ZkS1dqb1Q0RlRDV0wtZXFQOVjSAbQBQVVfeXFMT1FZbmJlM2RkV2huNUtIa2NNQXZaUy12MjZPczFoeUhEc1VfdjR4Z2JObkJrU1ZqTGRRZUlWRDFRWE5jVDJOaGpRZllza0VzZ3dxZlJMX24xa2Jrd0tXRGtKNVJkTkVLcjFLSHlXZEo5RWFKSjFwZDEtekJiZkJDaGh6ZGpzVEpCdEN3ZG5vQVlpZFNIU2VLN0FUMFowMzlyYnQwX0tCZ0VaSnlRMUZkZHdSY2c5?oc=5",
+    "item_resumen": "<a href=\"https://news.google.com/rss/articles/CBMitAFBVV95cUxQSmt3MHhmZ29ieE4yeEY4RVdyb3BJbDE4Nk5EeS1TNHpMYWFVR25FOGFCdU1QaVJLcWtpbFdVQ2syOHpzazhHUGZBWG5kM0hnX0lXTEF6SVJvNFhrWi00SzBrRHdSNkU1SWZSZi1oRTNlb3Z1M2g4TGY3Q29GdnduZzdpUjJtbDFBc1FwXzNRT2xFYzR1bXhCclNwTlp1U3JCT2ZkS1dqb1Q0RlRDV0wtZXFQOVjSAbQBQVVfeXFMT1FZbmJlM2RkV2huNUtIa2NNQXZaUy12MjZPczFoeUhEc1VfdjR4Z2JObkJrU1ZqTGRRZUlWRDFRWE5jVDJOaGpRZllza0VzZ3dxZlJMX24xa2Jrd0tXRGtKNVJkTkVLcjFLSHlXZEo5RWFKSjFwZDEtekJiZkJDaGh6ZGpzVEpCdEN3ZG5vQVlpZFNIU2VLN0",
+    "texto": "",
+    "estado": "pendiente",
+    "fuentes_adicionales": [],
+    "created_at": "2026-09-16T04:18:45Z",
+    "updated_at": "2026-09-16T04:18:45Z"
   }
 ]
