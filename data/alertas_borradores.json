@@ -95,5 +95,19 @@
     "fuentes_adicionales": [],
     "created_at": "2026-09-16T04:18:45Z",
     "updated_at": "2026-09-16T04:18:45Z"
+  },
+  {
+    "cliente": "bayer",
+    "item_id": "noticia_EC_2192840",
+    "item_tipo": "noticia",
+    "pais": "EC",
+    "item_titulo": "Daniel Noboa viajará a Estados Unidos del 18 al 23 de septiembre",
+    "item_url": "https://eluniverso.com/noticias/politica/daniel-noboa-viajara-a-estados-unidos-del-18-al-23-de-septiembre-nota/",
+    "item_resumen": "El presidente acudirá a Nueva York para participar en la Asamblea General de Naciones Unidas.",
+    "texto": "",
+    "estado": "pendiente",
+    "fuentes_adicionales": [],
+    "created_at": "2026-09-16T04:18:58Z",
+    "updated_at": "2026-09-16T04:18:58Z"
   }
 ]
