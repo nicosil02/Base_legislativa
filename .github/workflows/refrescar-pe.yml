@@ -417,6 +417,10 @@ jobs:
               git add data/proyectos.db.gz
             fi
             git reset --soft origin/main
+            if git diff --staged --quiet; then
+              echo "Ya esta en origin/main tras el merge, nada que commitear."
+              exit 0
+            fi
             git commit -m "PE: auto-refresh PLs $(date -u +%Y-%m-%d-%H%M) [skip ci]"
             sleep 5
           done
