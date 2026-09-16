@@ -313,11 +313,13 @@ def load_sesiones(fec_inicio: dt.date | None, fec_fin: dt.date | None) -> pd.Dat
              COALESCE(s.status, '—') AS "Estado",
              (SELECT COUNT(*) FROM sesion_ec_pl_referenciado
                 WHERE uid=s.uid AND n_tramite IS NOT NULL) AS "_n_pls",
-             (SELECT GROUP_CONCAT(COALESCE(p.n_tramite, m.n_tramite), ', ')
-                FROM sesion_ec_pl_referenciado m
-                LEFT JOIN proyectos p ON p.n_tramite = m.n_tramite
-                WHERE m.uid = s.uid AND m.n_tramite IS NOT NULL
-                ORDER BY m.score DESC) AS "PLs en agenda",
+             COALESCE(
+               (SELECT GROUP_CONCAT(COALESCE(p.n_tramite, m.n_tramite), ', ')
+                  FROM sesion_ec_pl_referenciado m
+                  LEFT JOIN proyectos p ON p.n_tramite = m.n_tramite
+                  WHERE m.uid = s.uid AND m.n_tramite IS NOT NULL
+                  ORDER BY m.score DESC), '—'
+             ) AS "PLs en agenda",
              -- Limpieza del SUMMARY: cortar en ", modalidad" / " modalidad"
              TRIM(
                CASE
