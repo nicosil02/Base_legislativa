@@ -11,6 +11,8 @@ from pathlib import Path
 
 import streamlit as st
 
+from scraper.sync import PER_PAR_ID_ACTUAL
+
 from alerts.borradores_store import list_borradores
 
 
@@ -396,16 +398,24 @@ def get_freshness() -> dict:
 
 @st.cache_data(ttl=60)
 def stats_peru() -> dict:
+    """Solo el quinquenio VIGENTE (per_par_id actual) - bug real 2026-09-16:
+    esto contaba TODOS los proyectos, incluyendo el periodo historico
+    2021-2026 (Congreso unicameral, ya desconectado del resto de la
+    pagina por pedido explicito de Nicolas), asi que el numero no
+    coincidia con lo que se ve en Perú."""
     db = _find_db_path()
     if db is None:
         return {"total": None, "leyes": None}
     try:
         conn = sqlite3.connect(f"file:{db}?mode=ro&immutable=1", uri=True)
         try:
-            total = conn.execute("SELECT COUNT(*) FROM proyectos").fetchone()[0]
+            total = conn.execute(
+                "SELECT COUNT(*) FROM proyectos WHERE per_par_id=?", (PER_PAR_ID_ACTUAL,)
+            ).fetchone()[0]
             leyes = conn.execute(
-                "SELECT COUNT(*) FROM proyectos WHERE UPPER(estado) LIKE '%PUBLIC%PERUANO%' "
-                "OR UPPER(estado) LIKE '%LEY PUBLICADA%'"
+                "SELECT COUNT(*) FROM proyectos WHERE per_par_id=? AND "
+                "(UPPER(estado) LIKE '%PUBLIC%PERUANO%' OR UPPER(estado) LIKE '%LEY PUBLICADA%')",
+                (PER_PAR_ID_ACTUAL,),
             ).fetchone()[0]
             return {"total": total, "leyes": leyes}
         finally:

@@ -486,6 +486,20 @@ button[kind="header"]::before {
     content: none !important;
     display: none !important;
 }
+
+/* Bug real 2026-09-16: cada pagina fuerza "color:#FFFFFF !important" en
+   TODO el sidebar (section[data-testid="stSidebar"] *) para que el texto
+   se lea sobre el fondo navy - pero cualquier widget con fondo CLARO
+   dentro del sidebar (date_input, text_input, selectbox) hereda ese
+   blanco tambien y el texto queda invisible sobre su propio fondo claro.
+   Selector mas especifico (con [data-testid] del widget) le gana a esa
+   regla sin importar el orden de inyeccion. Global aca en vez de repetir
+   en cada pagina, porque corre en TODAS (app.py se ejecuta siempre). */
+section[data-testid="stSidebar"] div[data-testid="stDateInput"] input,
+section[data-testid="stSidebar"] div[data-testid="stTextInput"] input,
+section[data-testid="stSidebar"] div[data-testid="stSelectbox"] div[data-baseweb="select"] * {
+    color: #0A294D !important;
+}
 </style>""",
     unsafe_allow_html=True,
 )
