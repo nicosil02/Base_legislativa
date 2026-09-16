@@ -329,7 +329,11 @@ FUENTES_PE: list[dict] = [
      "rss_url": "https://gestion.pe/arcio/rss/category/politica/", "tipo": "rss", "activa": 0, "notas": "Feed roto - cubierto por Google News"},
     {"categoria": "Coyuntura Politica", "pais": "PE", "nombre": "La Republica",
      "url": "https://larepublica.pe/politica",
-     "rss_url": "https://larepublica.pe/feed/", "tipo": "rss"},
+     "rss_url": "https://larepublica.pe/feed/", "tipo": "rss", "activa": 0,
+     "notas": "Desactivada 2026-09-16: rss_url da 404, autodiscovery contra la "
+              "home tampoco encontro un feed valido, verificado en vivo - "
+              "cubierta igual por los periodistas de La Republica agregados via "
+              "Google News (Martin Hidalgo, Adrian Sarria, etc.)."},
     {"categoria": "Coyuntura Politica", "pais": "PE", "nombre": "Peru 21",
      "url": "https://peru21.pe/politica/",
      "rss_url": "https://peru21.pe/arcio/rss/category/politica/", "tipo": "rss"},
@@ -715,7 +719,11 @@ FUENTES_EC: list[dict] = [
               "descontinuandose a favor del dominio nuevo, no solo un problema de RSS."},
     {"categoria": "Temas Agrarios", "pais": "EC",
      "nombre": "Ministerio del Ambiente - Normativa",
-     "url": "https://www.ambiente.gob.ec/normativa-1/", "tipo": "html"},
+     "url": "https://www.ambiente.gob.ec/normativa-1/", "tipo": "html",
+     "notas": "Mismo dominio y mismo problema que 'Ministerio del Ambiente' de "
+              "arriba (SSLError consistente, verificado de nuevo en vivo "
+              "2026-09-16) - ver esa nota para el detalle del posible cambio de "
+              "dominio."},
     {"categoria": "Temas Agrarios", "pais": "EC",
      "nombre": "Ministerio de Produccion Comercio Exterior",
      "url": "https://www.produccion.gob.ec/noticias/",
@@ -830,7 +838,10 @@ FUENTES_EC: list[dict] = [
      "notas": "Desactivada 2026-09-16: dominio no resuelve (DNS NXDOMAIN), verificado en vivo."},
     {"categoria": "Temas Tech", "pais": "EC", "nombre": "Forbes Digital Ecuador",
      "url": "https://www.forbes.com.ec/",
-     "rss_url": "https://www.forbes.com.ec/feed/", "tipo": "rss"},
+     "rss_url": "https://www.forbes.com.ec/feed/", "tipo": "rss", "activa": 0,
+     "notas": "Desactivada 2026-09-16: el feed responde HTTP 200 con XML valido "
+              "pero <channel> sin ningun <item> adentro - feed vacio del lado del "
+              "sitio, verificado en vivo (no es bug de nuestro parser)."},
     {"categoria": "Temas Tech", "pais": "EC", "nombre": "DPL Tech Ecuador",
      "url": "https://dplnews.com/", "tipo": "rss",
      "rss_url": "https://dplnews.com/feed/"},
