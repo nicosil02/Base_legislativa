@@ -1472,9 +1472,15 @@ def _render_resumen_card(res: dict, titulo_caja: str = "Resumen",
         )
         ver_todas = True
         if len(ideas) > max_ideas:
+            # key incluye titulo_caja ademas de video_id - bug real
+            # 2026-09-16 (StreamlitDuplicateElementKey en vivo, reportado por
+            # Nicolas): una sesion que ya tiene captions sincronizados
+            # ("Sesiones previas") pero YouTube todavia la marca como en
+            # curso ("En vivo") se renderiza en las DOS secciones con el
+            # mismo video_id en la misma corrida de la pagina.
             ver_todas = st.toggle(
                 f"Ideas clave ({len(ideas)})", value=False,
-                key=f"ideas_toggle_{res.get('video_id', titulo_caja)}",
+                key=f"ideas_toggle_{titulo_caja}_{res.get('video_id', titulo_caja)}",
             )
         ideas_mostradas = ideas if ver_todas else ideas[:max_ideas]
         ideas_html = "".join(f"<li>{i}</li>" for i in ideas_mostradas)
