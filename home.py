@@ -120,8 +120,9 @@ button[kind="header"]::before {
   text-transform: uppercase; color: var(--accent); margin-bottom: 14px;
 }
 .home-title {
+  font-family: Georgia, 'Times New Roman', serif;
   font-size: clamp(3rem, 8vw, 5.5rem);
-  font-weight: 900; letter-spacing: -0.035em; line-height: 0.95;
+  font-weight: 400; letter-spacing: -0.01em; line-height: 0.98;
   color: var(--ink); margin: 0 0 24px 0;
 }
 .home-title .accent { color: var(--accent); }
