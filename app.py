@@ -494,8 +494,17 @@ button[kind="header"]::before {
    blanco tambien y el texto queda invisible sobre su propio fondo claro.
    Selector mas especifico (con [data-testid] del widget) le gana a esa
    regla sin importar el orden de inyeccion. Global aca en vez de repetir
-   en cada pagina, porque corre en TODAS (app.py se ejecuta siempre). */
+   en cada pagina, porque corre en TODAS (app.py se ejecuta siempre).
+
+   Correccion 2026-09-16 (segunda vuelta - Nicolas: "el rango de fechas
+   sigue en blanco"): el <input> real de un date_input esta
+   visibility:hidden (solo existe para accesibilidad/teclado) - el texto
+   que se VE lo pinta React Aria en .react-aria-DateField (fondo
+   transparente, hereda el blanco del sidebar). Apuntarle solo al <input>
+   no arreglaba nada visible; hay que pintar el DateField tambien. */
 section[data-testid="stSidebar"] div[data-testid="stDateInput"] input,
+section[data-testid="stSidebar"] div[data-testid="stDateInput"] .react-aria-DateField,
+section[data-testid="stSidebar"] div[data-testid="stDateInput"] .react-aria-DateField *,
 section[data-testid="stSidebar"] div[data-testid="stTextInput"] input,
 section[data-testid="stSidebar"] div[data-testid="stSelectbox"] div[data-baseweb="select"] * {
     color: #0A294D !important;
