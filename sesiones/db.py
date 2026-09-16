@@ -142,9 +142,17 @@ class Database:
                 c.execute("ALTER TABLE sesiones ADD COLUMN camara TEXT")
 
     # ---------- upsert: lista de sesiones ----------
-    def upsert_from_lista(self, row: dict, comision_id_map: dict[str, tuple[int, str | None]],
+    def upsert_from_lista(self, row: dict, comision_id: int | None, camara: str | None,
                           now: str) -> tuple[bool, bool]:
         """Inserta o actualiza desde la fila del listado /sesiones/busqueda.
+
+        `comision_id`/`camara` vienen de la comision especifica con la que se
+        pidio esta sesion (ver sesiones/sync.py: el listado se pide UNA VEZ
+        POR comisionId, no en un solo pedido con todas mezcladas) - por eso
+        son inequivocos, a diferencia de intentar reconstruirlos despues a
+        partir de nombreComision (texto identico en Senado y Diputados para
+        la enorme mayoria de comisiones ordinarias - bug real 2026-09-16,
+        2209 de 2274 sesiones con camara=NULL).
 
         Returns (is_new, estado_changed). estado_changed indica si vale la pena
         llamar al detalle (porque cambio el estado o es nueva).
@@ -155,7 +163,6 @@ class Database:
             raise ValueError(f"sesion {id_sesion}: fecha invalida {row.get('fecha')!r}")
 
         nombre_comision = row.get("nombreComision") or ""
-        comision_id, camara = comision_id_map.get(nombre_comision, (None, None))
 
         existing = self.conn.execute(
             "SELECT estado, fecha FROM sesiones WHERE id_sesion=?", (id_sesion,)
