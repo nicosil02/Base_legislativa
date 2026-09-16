@@ -8,7 +8,10 @@
   "FrFSBATdaV4",
   "8qHNLFw3JUw",
   "HCzqFEPumnI",
-  "xag-BVcHbB4"
+  "xag-BVcHbB4",
+  "GjvpEAcW8KU",
+  "6FM4tpVETaw",
+  "5HiVff-ilkA"
  ],
  "sesiones": [
   {
@@ -73,6 +76,27 @@
    "tipo": "Comision: Gestion Del Estado",
    "url": "https://www.youtube.com/watch?v=xag-BVcHbB4",
    "visto_at": "2026-09-16T19:08:15Z"
+  },
+  {
+   "id": "GjvpEAcW8KU",
+   "titulo": "🔴EN VIVO: Comisión de Educación, Cultura y Deporte de la Cámara de Diputados | 16/09/2026",
+   "tipo": "Comision: Cultura",
+   "url": "https://www.youtube.com/watch?v=GjvpEAcW8KU",
+   "visto_at": "2026-09-16T22:05:50Z"
+  },
+  {
+   "id": "6FM4tpVETaw",
+   "titulo": "🔴EN VIVO: Comisión de Trabajo y Seguridad Social de la Cámara de Diputados | 16/09/2026",
+   "tipo": "Comision: Trabajo",
+   "url": "https://www.youtube.com/watch?v=6FM4tpVETaw",
+   "visto_at": "2026-09-16T22:05:50Z"
+  },
+  {
+   "id": "5HiVff-ilkA",
+   "titulo": "🔴EN VIVO: Sesión del Pleno del Senado de la República | 16 DE SEPTIEMBRE DEL 2026",
+   "tipo": "Pleno: Senado",
+   "url": "https://www.youtube.com/watch?v=5HiVff-ilkA",
+   "visto_at": "2026-09-16T22:05:50Z"
   }
  ]
 }
