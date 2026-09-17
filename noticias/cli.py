@@ -192,6 +192,27 @@ def cmd_backfill_fechas(args) -> int:
     return 0
 
 
+def cmd_avisar(args) -> int:
+    """Digest por WhatsApp de noticias nuevas y relevantes (PE+EC),
+    agrupando cobertura duplicada del mismo evento - ver noticias/digest.py.
+    Solo manda algo si hay noticias relevantes nuevas desde la ultima
+    corrida; si no, no hace nada (silencioso)."""
+    from noticias.digest import run as run_digest
+
+    with Database(args.db) as db:
+        stats = run_digest(db.conn, dry_run=args.dry_run)
+        print(f"PE: {stats['grupos_pe']} grupo(s) | EC: {stats['grupos_ec']} grupo(s)")
+        if args.dry_run:
+            print(stats["mensaje"] or "(nada relevante nuevo)")
+        elif not stats["mensaje"]:
+            print("nada relevante nuevo, no se manda nada")
+        elif stats["enviado"]:
+            print("enviado por WhatsApp")
+        else:
+            print("[warn] habia algo relevante pero el envio por WhatsApp fallo (ver log)")
+    return 0
+
+
 def cmd_set_url(args) -> int:
     """Actualiza url y/o rss_url de una fuente por nombre+pais."""
     with Database(args.db) as db:
@@ -252,6 +273,12 @@ def build_parser() -> argparse.ArgumentParser:
     bf.add_argument("--limit", type=int, default=None,
                     help="maximo de filas a intentar (default: todas)")
     bf.set_defaults(func=cmd_backfill_fechas)
+
+    av = sub.add_parser("avisar",
+        help="digest por WhatsApp de noticias nuevas y relevantes (PE+EC)")
+    av.add_argument("--dry-run", action="store_true",
+                    help="solo muestra el mensaje, no manda ni guarda estado")
+    av.set_defaults(func=cmd_avisar)
 
     su = sub.add_parser("set-url", help="actualiza url/rss de una fuente")
     su.add_argument("--pais", required=True, choices=["PE", "EC"])
