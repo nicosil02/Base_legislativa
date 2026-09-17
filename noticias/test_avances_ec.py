@@ -48,14 +48,48 @@ def test_excluye_noticia_ceremonial_de_la_misma_fuente():
 
 def test_excluye_fuentes_de_coyuntura_general():
     # Real: "Coyuntura Politica" es mayormente deportes/policiales - aunque
-    # el texto tenga alguna palabra de la lista, no es una fuente puntual
-    # de la Asamblea y no deberia colarse.
+    # el texto tenga alguna palabra de la lista, si no es una de las fuentes
+    # puntuales listadas no deberia colarse.
     db = _db([(
-        "Diario El Universo", "EC",
+        "Diario Random EC", "EC",
         "Comisión de fiscales avanza en investigación por caso de corrupción",
         None, "2026-09-16T12:00:00Z",
     )])
     assert noticias_tramite_recientes(db, dias=30) == []
+
+
+def test_medio_independiente_sin_ancla_asamblea_no_cuela():
+    # Caso real 2026-09-17: "Regulación de scooters... segundo debate en el
+    # Concejo" matchea el keyword de tramite pero es el Concejo MUNICIPAL de
+    # Quito, no la Asamblea Nacional - sin la palabra ancla no debe colar.
+    db = _db([(
+        "El Universo", "EC",
+        "Regulación de scooters en Quito avanza: falta el veto a la Ley de "
+        "Tránsito y el segundo debate en el Concejo",
+        None, "2026-09-14T21:07:06Z",
+    )])
+    assert noticias_tramite_recientes(db, dias=30) == []
+    # También real: "informe PISA" matchea "informe" pero no tiene nada que
+    # ver con tramite legislativo de la Asamblea.
+    db2 = _db([(
+        "El Comercio", "EC",
+        "La brecha real de la educación ecuatoriana tras el informe PISA",
+        None, "2026-09-14T16:11:30Z",
+    )])
+    assert noticias_tramite_recientes(db2, dias=30) == []
+
+
+def test_incluye_medios_independientes_no_solo_la_asamblea():
+    # Nicolas 2026-09-17: "las noticias de la asamblea vienen de un solo
+    # lugar" - El Comercio y El Universo son medios independientes reales,
+    # no el RSS propio de la Asamblea, y deben contar como fuente valida.
+    db = _db([(
+        "El Universo", "EC",
+        "Regulación de scooters en Quito avanza: falta el segundo debate en el pleno",
+        None, "2026-09-14T21:07:06Z",
+    )])
+    out = noticias_tramite_recientes(db, dias=30)
+    assert len(out) == 1
 
 
 def test_respeta_ventana_de_dias():
