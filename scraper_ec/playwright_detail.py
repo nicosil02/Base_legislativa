@@ -96,8 +96,22 @@ def download_csv(output_path, *, headless: bool = True, timeout_ms: int = 60000)
 
             page.wait_for_selector(SEL_TAB_20, timeout=20000)
             page.click(SEL_TAB_20)
-            # Esperar que la tabla del tab 2.0 cargue (el boton CSV aparece al cargar la tabla)
-            page.wait_for_timeout(3500)
+            page.wait_for_timeout(1500)
+            # El boton CSV exporta el array de resultados que arma el ultimo
+            # "Buscar" — sin este click, en CI (mas lento que en local) ese
+            # array puede seguir vacio cuando se llega al boton CSV, y la
+            # exportacion no genera ningun archivo (0 filas => sin evento de
+            # download => timeout de 30s esperandolo). Confirmado en vivo
+            # 2026-09-17: con Buscar explicito el boton exporta un blob CSV
+            # real (~266KB); sin el, a veces exporta un array vacio. Mismo
+            # patron ya usado en playwright_unificado.py.
+            page.wait_for_selector(SEL_BTN_BUSCAR, timeout=10000)
+            page.click(SEL_BTN_BUSCAR)
+            try:
+                page.wait_for_load_state("networkidle", timeout=15000)
+            except PWTimeout:
+                page.wait_for_timeout(3000)
+            page.wait_for_timeout(1000)
             # Click CSV y capturar el download
             with page.expect_download(timeout=30000) as dl_info:
                 page.click(SEL_BTN_CSV, force=True)
