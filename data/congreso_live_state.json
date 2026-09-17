@@ -14,7 +14,8 @@
   "5HiVff-ilkA",
   "HtWXfK0Zd8Y",
   "Qyaeb9PW3rI",
-  "L9k88r8uDKg"
+  "L9k88r8uDKg",
+  "TzXXoK43264"
  ],
  "sesiones": [
   {
@@ -121,6 +122,13 @@
    "tipo": "Pleno: Congreso",
    "url": "https://www.youtube.com/watch?v=L9k88r8uDKg",
    "visto_at": "2026-09-17T21:19:52Z"
+  },
+  {
+   "id": "TzXXoK43264",
+   "titulo": "EN VIVO: Sesión del Pleno de la Cámara de Diputados | 17/09/2026",
+   "tipo": "Pleno: Diputados",
+   "url": "https://www.youtube.com/watch?v=TzXXoK43264",
+   "visto_at": "2026-09-17T21:57:08Z"
   }
  ]
 }
