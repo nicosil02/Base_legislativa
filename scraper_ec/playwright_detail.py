@@ -64,8 +64,10 @@ def _build_download_url(filename: str, subdir: str) -> str:
 def download_csv(output_path, *, headless: bool = True, timeout_ms: int = 60000) -> bool:
     """Descarga el CSV fresco del portal Ppless v2.
 
-    Navega a /report, switchea al tab 2.0 y clickea el boton CSV. Captura
-    la descarga via Playwright's expect_download y la guarda en output_path.
+    Navega a /report, switchea al tab 2.0, busca y clickea el boton CSV.
+    El archivo se arma como un Blob en el navegador (no hay descarga real
+    de red) - se intercepta su contenido directo por JS en vez de esperar
+    el evento nativo de download, que en Chromium headless no es confiable.
 
     Devuelve True si se descargo OK, False si fallo.
     """
@@ -80,6 +82,26 @@ def download_csv(output_path, *, headless: bool = True, timeout_ms: int = 60000)
         ctx = browser.new_context(accept_downloads=True)
         page = ctx.new_page()
         page.set_default_timeout(timeout_ms)
+        # El boton CSV arma el archivo 100% en el navegador (URL.createObjectURL
+        # + <a download> + click), sin ningun request de red - confirmado en
+        # vivo 2026-09-17 inspeccionando el portal a mano. En Chromium headless
+        # (el que usa este runner) ese evento nativo de "download" a veces
+        # nunca dispara aunque el blob se haya generado bien (funciona en un
+        # browser con cabeza, no siempre en headless) - de ahi el timeout de
+        # 30s viendo NADA, ni siquiera con Buscar clickeado antes (intentado y
+        # confirmado que no alcanza). Fix real: interceptar el Blob apenas se
+        # crea via este init script y leer su contenido directo por JS, sin
+        # depender para nada del evento de descarga del SO/navegador.
+        page.add_init_script(
+            """
+            window.__csvBlobText = null;
+            const _orig = URL.createObjectURL.bind(URL);
+            URL.createObjectURL = function(blob) {
+                window.__csvBlobText = blob.text();
+                return _orig(blob);
+            };
+            """
+        )
         try:
             # Retry de page.goto: la red del CI runner puede dar timeouts transient.
             loaded = False
@@ -112,11 +134,12 @@ def download_csv(output_path, *, headless: bool = True, timeout_ms: int = 60000)
             except PWTimeout:
                 page.wait_for_timeout(3000)
             page.wait_for_timeout(1000)
-            # Click CSV y capturar el download
-            with page.expect_download(timeout=30000) as dl_info:
-                page.click(SEL_BTN_CSV, force=True)
-            dl = dl_info.value
-            dl.save_as(str(output_path))
+            # Click CSV y leer el blob interceptado (ver init script arriba)
+            # en vez de esperar el evento nativo de download.
+            page.click(SEL_BTN_CSV, force=True)
+            page.wait_for_function("window.__csvBlobText !== null", timeout=15000)
+            texto = page.evaluate("async () => await window.__csvBlobText")
+            output_path.write_text(texto, encoding="utf-8")
             size = output_path.stat().st_size
             print(f"[csv] descargado {output_path.name} ({size:,} bytes)")
             return size > 0
