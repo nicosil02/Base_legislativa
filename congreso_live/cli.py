@@ -9,54 +9,20 @@ por el workflow igual que data/alert_sent_log.json.
 from __future__ import annotations
 
 import argparse
-import json
 import logging
 from datetime import datetime, timezone
-from pathlib import Path
 
-from congreso_live.detector import _norm, vivos_de_interes
+from congreso_live.detector import vivos_de_interes
 from congreso_live.notify import enviar_whatsapp
+from congreso_live.state import (
+    comision_seguida as _comision_seguida,
+    load_state as _load_state,
+    save_state as _save_state,
+    seguidas_activas,
+)
 from congreso_live.transcripciones import run_sync as sync_transcripciones
 
-STATE_PATH = Path("data/congreso_live_state.json")
-MAX_LOG = 300
-
-
-def _comision_seguida(tipo: str, seguidas_norm: set[str]) -> bool:
-    """True si `v['tipo']` (ej. 'Comision: Energia Y Minas', armado por
-    clasificar_titulo() con una palabra clave corta) matchea alguna
-    comision que Nicolas marco como de interes en la pestana Seguimiento
-    (nombres completos, ej. "Asuntos de Desarrollo Productivo, Energia y
-    Minas..." para Senado) - mismo criterio de substring que ya usa
-    clasificar_titulo() para reconocer la comision en el titulo real.
-
-    Los Plenos (tipo empieza con "Pleno:") siempre pasan - son pocos y
-    relevantes en general, no per-comision. Sin nada marcado todavia,
-    tambien pasa todo (comportamiento actual: avisa de cualquier sesion)
-    para no dejar a Nicolas sin alertas antes de configurar nada."""
-    if tipo.startswith("Pleno:") or not seguidas_norm:
-        return True
-    kw = _norm(tipo.split(":", 1)[-1].strip())
-    return any(kw in nombre or nombre in kw for nombre in seguidas_norm)
-
 log = logging.getLogger(__name__)
-
-
-def _load_state() -> dict:
-    if STATE_PATH.exists():
-        try:
-            return json.loads(STATE_PATH.read_text(encoding="utf-8"))
-        except Exception:
-            pass
-    return {"alertados": [], "sesiones": []}
-
-
-def _save_state(state: dict) -> None:
-    state["sesiones"] = state.get("sesiones", [])[-MAX_LOG:]
-    state["alertados"] = state.get("alertados", [])[-MAX_LOG:]
-    STATE_PATH.parent.mkdir(parents=True, exist_ok=True)
-    STATE_PATH.write_text(json.dumps(state, ensure_ascii=False, indent=1),
-                          encoding="utf-8")
 
 
 def cmd_check(args) -> int:
@@ -74,12 +40,7 @@ def cmd_check(args) -> int:
         print(f"(dry-run) {len(nuevos)} nuevo(s), nada enviado.")
         return 0
 
-    try:
-        from alerts.seguimiento_store import list_seguidas
-        seguidas_norm = {_norm(n) for n in list_seguidas()}
-    except Exception as e:
-        log.warning("no se pudo leer comisiones seguidas, aviso de todo: %s", e)
-        seguidas_norm = set()
+    seguidas_norm = seguidas_activas()
 
     now = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     enviados = 0
