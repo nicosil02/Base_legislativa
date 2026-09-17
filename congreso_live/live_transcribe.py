@@ -407,6 +407,7 @@ def _avisar_si_no_avisado(v: dict) -> None:
     horas. Ver congreso_live/state.py."""
     from datetime import datetime, timezone
 
+    from congreso_live.agenda_preview import agenda_extra_para
     from congreso_live.notify import enviar_whatsapp
     from congreso_live.state import (
         comision_seguida, load_state, save_state, seguidas_activas,
@@ -416,7 +417,8 @@ def _avisar_si_no_avisado(v: dict) -> None:
     if v["id"] in set(state.get("alertados", [])):
         return
     if comision_seguida(v["tipo"], seguidas_activas()):
-        enviar_whatsapp(f"🔴 Congreso EN VIVO — {v['tipo']}\n{v['titulo']}\n{v['url']}")
+        enviar_whatsapp(f"🔴 Congreso EN VIVO — {v['tipo']}\n{v['titulo']}\n{v['url']}"
+                         f"{agenda_extra_para(v)}")
     state.setdefault("alertados", []).append(v["id"])
     state.setdefault("sesiones", []).append(
         {**v, "visto_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")})
