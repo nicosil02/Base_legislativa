@@ -175,6 +175,8 @@ jobs:
         env:
           SCHEDULE: ${{ github.event.schedule }}
           IS_DISPATCH: ${{ github.event_name == 'workflow_dispatch' }}
+          CALLMEBOT_PHONE: ${{ secrets.CALLMEBOT_PHONE }}
+          CALLMEBOT_APIKEY: ${{ secrets.CALLMEBOT_APIKEY }}
         run: |
           # Seed idempotente del catalogo de fuentes + sync RSS de los
           # ~84 medios/instituciones/gremios mapeados. Captura noticias
@@ -195,6 +197,14 @@ jobs:
               || echo "[warn] noticias seed fallo, sigo"
           timeout 600 python -X utf8 -m noticias.cli sync $RO_FLAG \
               || echo "[warn] noticias sync fallo, sigo"
+          # Digest por WhatsApp de lo nuevo y relevante (PE+EC), agrupando
+          # cobertura duplicada del mismo evento - ver noticias/digest.py.
+          # Nicolas 2026-09-17: no quiere entrar a la app para enterarse de
+          # que hay noticias nuevas. Solo manda algo si encuentra algo
+          # relevante desde la ultima corrida (15x/dia, como el resto de
+          # este paso) - la mayoria de las corridas no mandan nada.
+          timeout 120 python -X utf8 -m noticias.cli avisar \
+              || echo "[warn] noticias avisar fallo, sigo"
           # Backfill de fechas: sync solo re-toca los items MAS RECIENTES
           # por fuente, asi que una fila que quedo con fecha_pub NULL (fix
           # de codigo posterior a su insercion, o fuente sin <time> en su
