@@ -91,19 +91,25 @@ jobs:
           sleep 2
           curl -s -x http://127.0.0.1:8118 -o /dev/null -w "privoxy->WARP HTTP %{http_code}\n" https://www.youtube.com/
 
+      - name: Bootstrap DB Peru desde snapshot gz
+        run: |
+          if [ -f data/proyectos.db.gz ]; then
+            gunzip -kc data/proyectos.db.gz > proyectos.db
+          fi
+
       - name: Detectar y notificar
         env:
           CALLMEBOT_PHONE: ${{ secrets.CALLMEBOT_PHONE }}
           CALLMEBOT_APIKEY: ${{ secrets.CALLMEBOT_APIKEY }}
           PYTHONIOENCODING: utf-8
           YT_DLP_PROXY: socks5://127.0.0.1:40000
-        run: python -X utf8 -u -m congreso_live.cli check || echo "[warn] check fallo, sigo"
-
-      - name: Bootstrap DB Peru desde snapshot gz
         run: |
-          if [ -f data/proyectos.db.gz ]; then
-            gunzip -kc data/proyectos.db.gz > proyectos.db
-          fi
+          # El bootstrap de arriba (antes iba despues de este paso) tiene
+          # que ir primero para que el aviso pueda buscar los puntos de
+          # agenda de HOY en proyectos.db (ver congreso_live/agenda_preview.py)
+          # - es best-effort: si la DB no esta, el aviso sale igual, solo
+          # sin el bloque de agenda.
+          python -X utf8 -u -m congreso_live.cli check || echo "[warn] check fallo, sigo"
 
       - name: Transcribir sesiones en vivo (continuo, hasta 170 min, con commits periodicos)
         env:

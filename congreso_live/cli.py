@@ -12,6 +12,7 @@ import argparse
 import logging
 from datetime import datetime, timezone
 
+from congreso_live.agenda_preview import agenda_extra_para
 from congreso_live.detector import vivos_de_interes
 from congreso_live.notify import enviar_whatsapp
 from congreso_live.state import (
@@ -46,7 +47,8 @@ def cmd_check(args) -> int:
     enviados = 0
     for v in nuevos:
         if _comision_seguida(v["tipo"], seguidas_norm):
-            msg = (f"🔴 Congreso EN VIVO — {v['tipo']}\n{v['titulo']}\n{v['url']}")
+            msg = (f"🔴 Congreso EN VIVO — {v['tipo']}\n{v['titulo']}\n{v['url']}"
+                   f"{agenda_extra_para(v)}")
             enviar_whatsapp(msg)
             enviados += 1
         state.setdefault("alertados", []).append(v["id"])
