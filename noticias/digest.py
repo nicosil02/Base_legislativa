@@ -101,7 +101,19 @@ def _es_relevante(n: dict) -> bool:
     # clasificar() porque tambien lo usan las paginas Noticias PE/EC.
     if n.get("tags") == "normas":
         return False
-    return "Coyuntura política" in clasificar(n["titulo"], n["resumen"])
+    # clasificar() puede devolver VARIOS temas a la vez, y "ministro"/
+    # "presidente" (palabras de Coyuntura política) aparecen tal cual en
+    # notas que son 100% Salud o Crop y solo mencionan a un ministro de
+    # paso (verificado en vivo 2026-09-17, caso real: Nicolas - "todo lo
+    # que es salud lo cataloga como si si, pero no nos interesa todo salud
+    # en general, ahi el bluebook es claro. en agro igual"). Se exige
+    # Coyuntura política PURA (sin ningun otro tema) para que esta pasada
+    # general no cuele noticias de Salud/Crop/Tech/KYC que solo comparten
+    # esa palabra - el interes real y especifico en esos verticales vive
+    # en el bluebook de cada cliente (clientes/<cliente>/notas.md), no en
+    # "toda noticia de Salud/Agro" en general.
+    temas = clasificar(n["titulo"], n["resumen"])
+    return temas == ["Coyuntura política"]
 
 
 def _agrupar_por_similitud(items: list[dict], umbral: float = UMBRAL_SIMILITUD) -> list[list[dict]]:
@@ -232,14 +244,23 @@ def _demo():
         (8, 4, "CONCEDER licencia sin goce de haber a la servidora bajo el "
                "Decreto Legislativo N° 1057, como Asistente Administrativa",
          "http://a/8", "normas"),
+        # Caso real 2026-09-17 (Nicolas: "todo lo que es salud lo cataloga
+        # como si si, pero no nos interesa todo salud en general... en agro
+        # igual"): clasificar() etiqueta esto ["Coyuntura política","Salud"]
+        # a la vez porque menciona "ministro" - es una noticia de Salud
+        # generica, no coyuntura real, y no debe colar en el digest general.
+        (9, 4, "Ministro de Salud anuncia nueva campaña de vacunación contra el sarampión",
+         "http://a/9", None),
     ]
     conn.executemany("INSERT INTO noticias (id, fuente_id, titulo, resumen, url, tags) "
                      "VALUES (?, ?, ?, NULL, ?, ?)", filas)
 
     grupos, ultimo = armar_grupos(conn, "PE")
-    assert ultimo == 8, ultimo
+    assert ultimo == 9, ultimo
     assert not any(n["id"] == 8 for g in grupos for n in g), \
         "el item tags='normas' no deberia colarse pese a clasificar como Coyuntura política"
+    assert not any(n["id"] == 9 for g in grupos for n in g), \
+        "una noticia de Salud/Crop generica no debe colar solo por co-tagear Coyuntura política"
     # Las 2 notas sobre Velarde se agrupan en 1; el resto (relleno + receta,
     # que no es relevante) quedan como grupos propios de 1 sola nota.
     grupo_velarde = next(g for g in grupos if len(g) > 1)
