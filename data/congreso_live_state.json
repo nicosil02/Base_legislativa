@@ -15,7 +15,8 @@
   "HtWXfK0Zd8Y",
   "Qyaeb9PW3rI",
   "L9k88r8uDKg",
-  "TzXXoK43264"
+  "TzXXoK43264",
+  "ZSZAGzP3fxI"
  ],
  "sesiones": [
   {
@@ -129,6 +130,13 @@
    "tipo": "Pleno: Diputados",
    "url": "https://www.youtube.com/watch?v=TzXXoK43264",
    "visto_at": "2026-09-17T21:57:08Z"
+  },
+  {
+   "id": "ZSZAGzP3fxI",
+   "titulo": "🔴EN VIVO: Sesión de la Comisión Procedimientos Especiales del Senado de la República",
+   "tipo": "Comision: Procedimientos Especiales",
+   "url": "https://www.youtube.com/watch?v=ZSZAGzP3fxI",
+   "visto_at": "2026-09-17T22:46:25Z"
   }
  ]
 }
