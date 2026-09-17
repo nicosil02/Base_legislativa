@@ -393,6 +393,36 @@ def capturar_y_acumular_en_vivo(
             "chars": len(texto_acumulado)}
 
 
+def _avisar_si_no_avisado(v: dict) -> None:
+    """Avisa por WhatsApp de una sesion nueva descubierta ACA (a mitad de
+    un job que ya viene transcribiendo otra) - reusa el mismo dedupe que
+    cli.py::cmd_check (data/congreso_live_state.json) asi no se manda dos
+    veces si cmd_check ya la habia alertado al arranque del job.
+
+    Bug real 2026-09-17: cmd_check corre UNA sola vez, al arranque del
+    job de vigilar-congreso.yml - una sesion que arranca mientras el job
+    ya viene transcribiendo otra (hasta 170 min) no se avisaba hasta el
+    proximo arranque de job, que con el disparador externo encolado y
+    cancelado mientras tanto (mismo concurrency group) podia tardar
+    horas. Ver congreso_live/state.py."""
+    from datetime import datetime, timezone
+
+    from congreso_live.notify import enviar_whatsapp
+    from congreso_live.state import (
+        comision_seguida, load_state, save_state, seguidas_activas,
+    )
+
+    state = load_state()
+    if v["id"] in set(state.get("alertados", [])):
+        return
+    if comision_seguida(v["tipo"], seguidas_activas()):
+        enviar_whatsapp(f"🔴 Congreso EN VIVO — {v['tipo']}\n{v['titulo']}\n{v['url']}")
+    state.setdefault("alertados", []).append(v["id"])
+    state.setdefault("sesiones", []).append(
+        {**v, "visto_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")})
+    save_state(state)
+
+
 def watch_and_transcribe(intervalo_seg: int = 40, poll_seg: int = 60,
                          max_total_minutos: float | None = None,
                          idle_exit_minutos: float | None = None) -> None:
@@ -471,6 +501,7 @@ def watch_and_transcribe(intervalo_seg: int = 40, poll_seg: int = 60,
             if v["id"] in hilos:
                 continue
             print(f"[live-watch] nueva sesion en vivo: {v['tipo']} - {v['titulo']} ({v['id']})")
+            _avisar_si_no_avisado(v)
             t = threading.Thread(
                 target=capturar_y_acumular_en_vivo,
                 kwargs=dict(video_id=v["id"], tipo=v["tipo"], titulo=v["titulo"],
@@ -665,20 +696,31 @@ def _test_watch_and_transcribe_max_total():
     capturar_y_acumular_en_vivo; poll_seg=1 real segundo x ~2 vueltas,
     rapido y determinista sin mockear time.sleep - mockearlo hace que el
     loop gire sin freno mientras dura el test, generando miles de
-    iteraciones inutiles antes de que se note el limite)."""
+    iteraciones inutiles antes de que se note el limite).
+
+    Tambien cubre el aviso por WhatsApp de una sesion nueva (ver
+    _avisar_si_no_avisado) - state.STATE_PATH apunta a un tmp file para
+    no tocar el data/congreso_live_state.json real del repo."""
+    import tempfile
+    from pathlib import Path
     from unittest.mock import patch
 
     import congreso_live.live_transcribe as lt
+    import congreso_live.state as st
 
     vistos = []
 
     def _fake_acumular(video_id, tipo, titulo, intervalo_seg):
         vistos.append(video_id)
 
-    vivos_falsos = [{"id": "A", "tipo": "Comision: Test", "titulo": "Sesion A"}]
+    vivos_falsos = [{"id": "A", "tipo": "Comision: Test", "titulo": "Sesion A",
+                     "url": "https://www.youtube.com/watch?v=A"}]
+    tmp_state = Path(tempfile.mkdtemp()) / "congreso_live_state.json"
     with patch.object(lt, "capturar_y_acumular_en_vivo", _fake_acumular), \
-         patch("congreso_live.detector.vivos_de_interes", lambda: vivos_falsos):
+         patch("congreso_live.detector.vivos_de_interes", lambda: vivos_falsos), \
+         patch.object(st, "STATE_PATH", tmp_state):
         lt.watch_and_transcribe(intervalo_seg=1, poll_seg=1, max_total_minutos=1.5 / 60)
+        assert "A" in st.load_state().get("alertados", []), "no quedo registrada como alertada"
 
     assert vistos and set(vistos) == {"A"}, vistos
     print("OK live_transcribe: watch_and_transcribe(max_total_minutos=...) transcribe y sale solo")
@@ -708,10 +750,36 @@ def _test_watch_and_transcribe_idle_exit():
     print("OK live_transcribe: watch_and_transcribe(idle_exit_minutos=...) sale sola sin nada en vivo")
 
 
+def _test_avisar_si_no_avisado_no_duplica():
+    """Bug real 2026-09-17: una sesion nueva descubierta a mitad de un job
+    largo debe avisarse por WhatsApp (ver _avisar_si_no_avisado) - pero
+    NO si cmd_check ya la habia alertado al arranque del mismo job
+    (mismo dedupe, data/congreso_live_state.json)."""
+    import tempfile
+    from pathlib import Path
+    from unittest.mock import patch
+
+    import congreso_live.live_transcribe as lt
+    import congreso_live.state as st
+
+    v = {"id": "B", "tipo": "Pleno: Senado", "titulo": "Sesion B",
+         "url": "https://www.youtube.com/watch?v=B"}
+    tmp_state = Path(tempfile.mkdtemp()) / "congreso_live_state.json"
+    enviados = []
+    with patch.object(st, "STATE_PATH", tmp_state), \
+         patch("congreso_live.notify.enviar_whatsapp", lambda msg: enviados.append(msg) or True):
+        lt._avisar_si_no_avisado(v)
+        assert len(enviados) == 1, "deberia avisar la primera vez"
+        lt._avisar_si_no_avisado(v)
+        assert len(enviados) == 1, "no deberia re-avisar la misma sesion (ya alertada)"
+    print("OK live_transcribe: _avisar_si_no_avisado no duplica un aviso ya enviado")
+
+
 if __name__ == "__main__":
     _demo()
     _test_killpg_mata_el_arbol_completo()
     _test_acumulacion()
+    _test_avisar_si_no_avisado_no_duplica()
     _test_tolera_fallo_transitorio()
     _test_transcribir_vod()
     _test_watch_and_transcribe_max_total()
