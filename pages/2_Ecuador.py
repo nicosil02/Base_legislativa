@@ -19,6 +19,7 @@ import streamlit as st
 from scraper.categorias import CATEGORIA_CLIENTES_PL
 from alerts.borradores_store import marcar_pendiente
 from clientes.matrices import matriz_bayer_crop, matriz_incode_ec
+from noticias.avances_ec import noticias_tramite_recientes
 
 CLIENTES_DIR = Path(__file__).resolve().parent.parent / "clientes"
 
@@ -60,6 +61,33 @@ def _find_db_path() -> Path | None:
         if p.exists() and p.is_file() and p.stat().st_size > 0:
             return p.resolve()
     return None
+
+
+def _find_db_noticias_path() -> Path | None:
+    """proyectos.db (noticias vive ahi, no en proyectos_ec.db) - mismo patron
+    de busqueda que pages/6_Noticias_EC.py."""
+    here = Path(__file__).resolve().parent
+    candidates = [here.parent / "proyectos.db", Path.cwd() / "proyectos.db"]
+    cur = here
+    for _ in range(5):
+        candidates.append(cur / "proyectos.db")
+        cur = cur.parent
+    for p in candidates:
+        if p.exists() and p.is_file() and p.stat().st_size > 0:
+            return p.resolve()
+    return None
+
+
+@st.cache_data(ttl=300)
+def _noticias_tramite_recientes() -> list[dict]:
+    db_path = _find_db_noticias_path()
+    if not db_path:
+        return []
+    conn = sqlite3.connect(f"file:{db_path}?mode=ro", uri=True)
+    try:
+        return noticias_tramite_recientes(conn, dias=10)
+    finally:
+        conn.close()
 
 
 # st.set_page_config NO se llama acá: ya lo hace app.py (entry de st.navigation).
@@ -468,6 +496,26 @@ for col, (label, val) in zip(cols, totals.items()):
     col.metric(label, f"{val:,}")
 
 st.markdown("")
+
+# ---------- Señal temprana: noticias de trámite de la Asamblea ----------
+# En Ecuador los cambios de estado suelen salir primero en noticias de la
+# Asamblea que en el portal oficial (Nicolas, 2026-09-17). No es un vinculo
+# automatico a un PL especifico (ver noticias/avances_ec.py: se probo y no
+# fue confiable) - es una lista corta para cruzar a mano con los PLs de
+# interes de cada cliente.
+_candidatas = _noticias_tramite_recientes()
+if _candidatas:
+    with st.expander(
+        f"📰 {len(_candidatas)} noticia(s) reciente(s) de la Asamblea que podrían "
+        "ser un avance de trámite (revisar a mano)"
+    ):
+        st.caption(
+            "Suelen salir antes de que el portal oficial actualice el estado del PL. "
+            "No están enlazadas a un PL específico — cruzalas con tus proyectos de interés."
+        )
+        for c in _candidatas:
+            fecha = (c["fecha_pub"] or "")[:10]
+            st.markdown(f"- **{fecha}** — [{c['titulo']}]({c['url']})")
 
 cats = load_catalogs()
 
