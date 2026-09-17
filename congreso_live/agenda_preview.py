@@ -1,16 +1,23 @@
-"""Puntos de agenda de HOY para una comision detectada EN VIVO - se usan
-en el aviso inicial de WhatsApp para que Nicolas sepa de que va la sesion
-antes de entrar, sin esperar a la transcripcion (esa llega despues, ver
-resumenes_store.py - Nicolas 2026-09-17 pidio explicitamente que la
-agenda salga del archivo de agenda que YA tenemos, no de la transcripcion).
+"""Puntos de agenda de HOY para una sesion (comision o Pleno) detectada EN
+VIVO - se usan en el aviso inicial de WhatsApp para que Nicolas sepa de
+que va la sesion antes de entrar, sin esperar a la transcripcion (esa
+llega despues, ver resumenes_store.py - Nicolas 2026-09-17 pidio
+explicitamente que la agenda salga del archivo de agenda que YA tenemos,
+no de la transcripcion).
 
-LIMITACION real encontrada en vivo 2026-09-17: `pleno_sesiones` no tiene
-NINGUNA fila desde 2026-06-23 (sigue en el periodo unicameral viejo) - el
-sync de agenda del Pleno bicameral esta roto o sin publicar, no se
-investigo a fondo esta sesion. Por eso este modulo solo da preview para
-comisiones (tabla `sesiones` + `sesion_agenda_punto`, con datos reales de
-hoy verificados en vivo) - para 'Pleno: X' siempre devuelve [] hasta que
-ese sync se arregle en otra sesion.
+Dos fuentes distintas segun el tipo de sesion:
+  - Comisiones: tabla `sesiones` + `sesion_agenda_punto` (API vieja, sigue
+    viva y al dia para el periodo bicameral).
+  - Pleno: tabla `pleno_agenda_pdf` (texto completo del PDF de agenda que
+    publica cada camara - `pleno.agenda_pdf` en pleno/, NO `pleno_sesiones`/
+    `pleno_tema`, que son de la API vieja y dejaron de recibir filas
+    nuevas desde 2026-06-23 porque son del periodo unicameral que ya
+    termino - confundir esa tabla con la real hizo pensar en un primer
+    pase que el sync de Pleno bicameral estaba roto; no lo esta, solo
+    vive en otra tabla). El texto del PDF no trae una lista estructurada
+    de puntos como sesion_agenda_punto - se parsea la seccion "ÍNDICE"
+    del propio documento (ver _extraer_indice), que es la tabla de
+    contenidos corta que cada agenda ya trae.
 """
 from __future__ import annotations
 
@@ -77,6 +84,81 @@ def puntos_agenda_comision(db: sqlite3.Connection, tipo: str, titulo: str,
     return [_una_linea_corta(p[0]) for p in puntos if p[0] and p[0].strip()]
 
 
+_RE_ROMANO = re.compile(r"[IVXLC]+\.?$")
+_RE_HEADER_PAGINA = re.compile(
+    r"(agenda del pleno|agenda de la sesi[oó]n del pleno|"
+    r"c[aá]mara de diputados|senado de la rep[uú]blica)",
+    re.IGNORECASE,
+)
+
+
+def _extraer_indice(texto: str, max_items: int = MAX_PUNTOS) -> list[str]:
+    """Los PDFs de agenda (senado.congreso.gob.pe / diputados.congreso.gob.pe)
+    traen una seccion "ÍNDICE" (tabla de contenidos corta) antes del
+    cuerpo completo (paginas de mociones/oficios enteros, inutilizables
+    para un WhatsApp). Se extrae el texto entre "ÍNDICE" y la proxima
+    aparicion del encabezado de pagina repetido (que marca donde termina
+    el indice y empieza el cuerpo real), se descartan numeros de pagina
+    sueltos, y se pega cada numeral romano suelto (bug real de extraccion
+    de PDF: a veces "I." queda en su propia linea, separado del titulo)
+    con el titulo que le sigue."""
+    m = re.search(r"índice", texto, re.IGNORECASE)
+    if not m:
+        return []
+    resto = texto[m.end():]
+    m2 = _RE_HEADER_PAGINA.search(resto)
+    bloque = resto[:m2.start()] if m2 else resto[:800]
+
+    crudas = [l.strip() for l in bloque.splitlines() if l.strip()]
+    crudas = [
+        l for l in crudas
+        if not re.fullmatch(r"\d+", l)
+        and not re.fullmatch(r"p[aá]g\.?", l, re.IGNORECASE)
+        and not re.fullmatch(r"índice", l, re.IGNORECASE)
+    ]
+
+    out: list[str] = []
+    pendiente = ""
+    for l in crudas:
+        if _RE_ROMANO.fullmatch(l):
+            pendiente = l.rstrip(".")
+            continue
+        out.append(f"{pendiente}. {l}" if pendiente else l)
+        pendiente = ""
+        if len(out) >= max_items:
+            break
+    return out
+
+
+def puntos_agenda_pleno(db: sqlite3.Connection, tipo: str,
+                        max_puntos: int = MAX_PUNTOS) -> list[str]:
+    """tipo: 'Pleno: Senado'/'Pleno: Diputados' (ver detector.clasificar_titulo).
+    'Pleno: Congreso' (sesion conjunta, caso raro/fallback) no tiene una
+    camara clara para elegir el PDF correcto - devuelve [] antes que
+    adivinar. [] tambien si el PDF de HOY todavia no fue publicado o
+    scrapeado (el Congreso a veces lo sube el mismo dia de la sesion, no
+    antes - limitacion real de la fuente, no del parser)."""
+    camara = {"Pleno: Senado": "senado", "Pleno: Diputados": "diputados"}.get(tipo)
+    if not camara:
+        return []
+    hoy_lima = datetime.now(LIMA).date().isoformat()
+    row = db.execute(
+        "SELECT texto FROM pleno_agenda_pdf WHERE camara=? AND fecha=? "
+        "ORDER BY length(texto) DESC LIMIT 1",
+        (camara, hoy_lima),
+    ).fetchone()
+    if not row:
+        return []
+    return _extraer_indice(row[0], max_puntos)
+
+
+def puntos_agenda(db: sqlite3.Connection, tipo: str, titulo: str) -> list[str]:
+    """Despacha a comision o Pleno segun el prefijo de `tipo`."""
+    if tipo.startswith("Pleno:"):
+        return puntos_agenda_pleno(db, tipo)
+    return puntos_agenda_comision(db, tipo, titulo)
+
+
 def _una_linea_corta(texto: str, max_chars: int = MAX_CHARS_PUNTO) -> str:
     """Los puntos de agenda reales son parrafos completos (invitaciones
     con oficio, temas en vinetas, etc.) - inutilizable en un WhatsApp de
@@ -102,7 +184,7 @@ def agenda_extra_para(v: dict) -> str:
             return ""
         conn = sqlite3.connect(f"file:{db_path}?mode=ro", uri=True)
         try:
-            puntos = puntos_agenda_comision(conn, v["tipo"], v["titulo"])
+            puntos = puntos_agenda(conn, v["tipo"], v["titulo"])
         finally:
             conn.close()
         return formatear_para_whatsapp(puntos)
@@ -160,7 +242,37 @@ def _demo():
     assert _una_linea_corta("Primera línea del punto\n\nDetalle largo despues") == "Primera línea del punto"
     assert _una_linea_corta("x" * 200) == "x" * 139 + "…"
 
-    print("OK agenda_preview: matchea por camara+keyword del dia y no adivina si es ambiguo")
+    # --- Pleno: pleno_agenda_pdf, formato real del PDF (verificado en
+    # vivo 2026-09-17 contra las agendas reales de Senado/Diputados) -
+    # numerales romanos en su propia linea, encabezado de pagina repetido
+    # que marca donde termina el indice, numeros de pagina sueltos.
+    conn.execute("""CREATE TABLE pleno_agenda_pdf (camara TEXT, fecha TEXT, texto TEXT)""")
+    texto_pdf = (
+        "Agenda del Pleno del Senado\n"
+        "Sesión del jueves\n\n"
+        "SENADO DE LA REPÚBLICA | Área de Relatoría y Agenda\n2\n"
+        "ÍNDICE\nPág.\n\nÍndice\n2\n"
+        "I.\nConcurrencia de ministro de Estado\n3\n"
+        "II.\nOficios del Poder Ejecutivo\n4\n\n"
+        "Agenda del Pleno del Senado\n"
+        "SENADO DE LA REPÚBLICA | Área de Relatoría y Agenda\n3\n"
+        "I. CONCURRENCIA DE MINISTRO DE ESTADO\n(cuerpo completo, paginas y paginas)..."
+    )
+    conn.execute("INSERT INTO pleno_agenda_pdf VALUES ('senado', ?, ?)", (hoy, texto_pdf))
+    assert puntos_agenda_pleno(conn, "Pleno: Senado") == [
+        "I. Concurrencia de ministro de Estado", "II. Oficios del Poder Ejecutivo",
+    ]
+    assert puntos_agenda_pleno(conn, "Pleno: Diputados") == [], "diputados no tiene PDF hoy en este fixture"
+    assert puntos_agenda_pleno(conn, "Pleno: Congreso") == [], "sesion conjunta - no hay camara clara, no adivina"
+
+    # El dispatcher puntos_agenda() elige la fuente correcta por prefijo.
+    assert puntos_agenda(conn, "Pleno: Senado", "cualquier titulo") == [
+        "I. Concurrencia de ministro de Estado", "II. Oficios del Poder Ejecutivo",
+    ]
+    assert puntos_agenda(conn, "Comision: Justicia", "Comisión de Justicia y DDHH del Senado") == \
+        ["Dictamen sobre reforma penal", "Informe de la subcomision"]
+
+    print("OK agenda_preview: matchea por camara+keyword/PDF del dia y no adivina si es ambiguo")
 
 
 if __name__ == "__main__":
