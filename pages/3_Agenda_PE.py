@@ -1720,38 +1720,62 @@ with tab_transcripciones:
         from congreso_live.resumenes_store import list_resumenes
         _resumenes = list_resumenes()
 
-        # ---------- Esta semana: Senado / Diputados / Congreso / Conjunta ----------
-        st.markdown("##### 📅 Esta semana")
+        # ---------- Por semana: navegacion + filtro Senado/Diputados/Plenos+Conjuntas ----------
+        # Pedido real de Nicolas 2026-09-18: botones de camara + poder ver
+        # semanas pasadas, no solo la actual. 3 botones (no 4): "Senado" y
+        # "Diputados" incluyen TODO de esa camara (comisiones + su Pleno);
+        # el tercero junta Plenos conjuntos (sesion solemne, tipo "Congreso")
+        # y comisiones bicamerales (tipo "Conjunta", ej. Presupuesto) -
+        # confirmado con Nicolas, es la lectura mas natural.
+        st.markdown("##### 📅 Por semana")
+        if "semana_offset" not in st.session_state:
+            st.session_state["semana_offset"] = 0
+        _col_prev, _col_label, _col_next = st.columns([1, 2, 1])
+        if _col_prev.button("◀ Anterior", key="semana_prev", use_container_width=True):
+            st.session_state["semana_offset"] -= 1
+        if _col_next.button("Siguiente ▶", key="semana_next", use_container_width=True):
+            st.session_state["semana_offset"] += 1
         _hoy = dt.datetime.now(dt.timezone.utc).date()
-        _lunes = _hoy - dt.timedelta(days=_hoy.weekday())
+        _lunes_hoy = _hoy - dt.timedelta(days=_hoy.weekday())
+        _lunes = _lunes_hoy + dt.timedelta(weeks=st.session_state["semana_offset"])
         _domingo = _lunes + dt.timedelta(days=6)
-        st.caption(f"Semana del {_lunes:%d/%m} al {_domingo:%d/%m}.")
+        _col_label.markdown(f"**{_lunes:%d/%m} al {_domingo:%d/%m}**")
+        if st.session_state["semana_offset"] != 0 and _col_label.button("Volver a esta semana", key="semana_hoy"):
+            st.session_state["semana_offset"] = 0
+            st.rerun()
+
+        _filtro_camara = st.radio(
+            "Camara", ["Senado", "Diputados", "Plenos y conjuntas"],
+            horizontal=True, key="filtro_camara", label_visibility="collapsed",
+        )
+        _camaras_del_filtro = (
+            {"Senado"} if _filtro_camara == "Senado" else
+            {"Diputados"} if _filtro_camara == "Diputados" else
+            {"Congreso", "Conjunta"}
+        )
+
         _df_semana = df_transcripciones[
             (df_transcripciones["fecha"] >= _lunes.isoformat())
             & (df_transcripciones["fecha"] <= _domingo.isoformat())
         ]
-        if _df_semana.empty:
-            st.caption("Todavía no hay sesiones transcritas esta semana.")
+        _filas_tabla = []
+        for _, _r in _df_semana.iterrows():
+            _cam = _clasificar_camara(_r["tipo"], _r["titulo"], _r["fecha"], _r["video_id"])
+            if _cam not in _camaras_del_filtro:
+                continue
+            _res = _resumenes.get(_r["video_id"])
+            _que_paso = _res["resumen"] if _res else (
+                (_r["texto"][:180] + "…") if _r["texto"] else "Resumen pendiente de generar."
+            )
+            _clase = "Pleno" if _r["tipo"].startswith("Pleno:") else _r["tipo"].split(":", 1)[-1].strip()
+            _filas_tabla.append({"Día": _r["fecha"] or "—", "Comisión": _clase, "Qué pasó": _que_paso})
+        if not _filas_tabla:
+            st.caption(f"Nada de {_filtro_camara} esa semana.")
         else:
-            _grupos: dict[str, list] = {}
-            for _, _r in _df_semana.iterrows():
-                _grupos.setdefault(
-                    _clasificar_camara(_r["tipo"], _r["titulo"], _r["fecha"], _r["video_id"]),
-                    [],
-                ).append(_r)
-            for _cam in ("Senado", "Diputados", "Congreso", "Conjunta", "Sin confirmar"):
-                _filas = _grupos.get(_cam)
-                if not _filas:
-                    continue
-                st.markdown(f"**{_cam}**")
-                for _r in _filas:
-                    _res = _resumenes.get(_r["video_id"])
-                    _que_paso = _res["resumen"] if _res else (
-                        (_r["texto"][:180] + "…") if _r["texto"] else "Resumen pendiente de generar."
-                    )
-                    _clase = "Pleno" if _r["tipo"].startswith("Pleno:") else _r["tipo"].split(":", 1)[-1].strip()
-                    st.markdown(f"- **{_r['fecha']}** · {_clase} — {_que_paso}")
-            st.markdown("")
+            st.dataframe(
+                pd.DataFrame(_filas_tabla).sort_values("Día"),
+                hide_index=True, use_container_width=True,
+            )
 
         # st.expander no admite expanders anidados (cada sesion ya usa uno
         # para su propio detalle) - un toggle es el equivalente "boton que
