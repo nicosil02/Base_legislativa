@@ -49,6 +49,42 @@ def _camara_de_titulo(titulo: str | None) -> str | None:
     return None
 
 
+def camara_de_agenda(db: sqlite3.Connection, tipo: str, fecha: str | None) -> str | None:
+    """Cruza contra la agenda real (tabla `sesiones`, misma fuente que
+    puntos_agenda_comision) para resolver la camara de una Comision cuyo
+    titulo de YouTube NO la dice - pedido real de Nicolas 2026-09-18: los
+    5 comites que se llaman igual en ambas camaras (Constitucion, Defensa
+    Nacional, Justicia, Etica, Procedimientos Especiales) solo se pueden
+    distinguir por texto cuando el titulo trae el marcador explicito;
+    cuando no lo trae, la agenda real (quien tenia sesion agendada ESE
+    dia con ese nombre de comision) sí lo sabe.
+
+    `fecha` es la fecha UTC de captura (sesiones_transcripciones.fecha) -
+    se prueba esa Y el dia anterior, porque una sesion que arranca de
+    madrugada UTC (antes de las 05:00 = medianoche Lima) cae un dia
+    despues en UTC que en la agenda real (Lima). None si no hay ninguna
+    sesion agendada esos dias con ese keyword, o si hay mas de una camara
+    candidata - mismo criterio que puntos_agenda_comision: no adivina."""
+    if not tipo.startswith("Comision:") or not fecha:
+        return None
+    kw = _norm(tipo.split(":", 1)[-1].strip())
+    try:
+        d = datetime.fromisoformat(fecha).date()
+    except ValueError:
+        return None
+    fechas = (d.isoformat(), (d - timedelta(days=1)).isoformat())
+    rows = db.execute(
+        f"SELECT nombre_comision, camara FROM sesiones WHERE fecha IN "
+        f"({','.join('?' * len(fechas))})", fechas,
+    ).fetchall()
+    camaras = {_norm(camara) for nombre, camara in rows if camara and kw in _norm(nombre)}
+    if camaras == {"senado"}:
+        return "Senado"
+    if camaras == {"diputados"}:
+        return "Diputados"
+    return None
+
+
 def puntos_agenda_comision(db: sqlite3.Connection, tipo: str, titulo: str,
                            max_puntos: int = MAX_PUNTOS) -> list[str]:
     """tipo: 'Comision: <kw>' (ver detector.clasificar_titulo). Busca,
@@ -233,6 +269,20 @@ def _demo():
 
     # Pleno nunca busca en sesiones de comision.
     assert puntos_agenda_comision(conn, "Pleno: Senado", "Sesión del Pleno del Senado") == []
+
+    # camara_de_agenda: mismo fixture (Justicia = Senado, Energia y Minas =
+    # Diputados ese dia) - resuelve por agenda real, sin depender del titulo.
+    assert camara_de_agenda(conn, "Comision: Justicia", hoy) == "Senado"
+    assert camara_de_agenda(conn, "Comision: Energia Y Minas", hoy) == "Diputados"
+    # Sin sesion agendada ese dia con ese keyword -> no adivina.
+    assert camara_de_agenda(conn, "Comision: Salud", hoy) is None
+    # Un dia antes de `hoy` (UTC de madrugada = Lima del dia anterior) tambien
+    # se prueba - la sesion del fixture sigue estando en `hoy`, cae dentro
+    # de la ventana de 2 fechas al pedir "manana" (fecha UTC = hoy+1).
+    _manana = (datetime.now(LIMA).date() + timedelta(days=1)).isoformat()
+    assert camara_de_agenda(conn, "Comision: Justicia", _manana) == "Senado"
+    # Pleno no tiene camara ambigua que resolver via `sesiones` (comisiones).
+    assert camara_de_agenda(conn, "Pleno: Senado", hoy) is None
 
     assert formatear_para_whatsapp([]) == ""
     assert formatear_para_whatsapp(["A", "B"]) == "\n\nPuntos de agenda:\n- A\n- B"
