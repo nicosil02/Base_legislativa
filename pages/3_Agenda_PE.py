@@ -1855,28 +1855,37 @@ with tab_transcripciones:
                 _filas.append({"Comisión": _nombre_extra, "Qué pasó": _que_paso(_r)})
             return pd.DataFrame(_filas)
 
-        st.markdown("**Senado**")
-        st.dataframe(_tabla_camara("Senado", _SENADO_COMISIONES_ORDEN),
-                     hide_index=True, use_container_width=True)
-        st.markdown("**Diputados**")
-        st.dataframe(_tabla_camara("Diputados", _DIPUTADOS_COMISIONES_ORDEN),
-                     hide_index=True, use_container_width=True)
-
-        _df_conjuntas = _df_semana[_df_semana["_camara"].isin(["Congreso", "Conjunta"])]
-        if not _df_conjuntas.empty:
-            st.markdown("**Plenos y sesiones conjuntas**")
-            # El nombre corto ya viene de `tipo` (ej. "Comision: Presupuesto"
-            # -> "Presupuesto") - antes caia al titulo crudo del video para
-            # las bicamerales, que trae emoji/fecha/"EN VIVO" pegado y queda
-            # feo (bug real reportado por Nicolas 2026-09-18).
-            _filas_conj = [
-                {"Comisión": (f"Pleno {_r['tipo'].split(':', 1)[-1].strip()}"
-                              if _r["tipo"].startswith("Pleno:")
-                              else _r["tipo"].split(":", 1)[-1].strip()),
-                 "Qué pasó": _que_paso(_r)}
-                for _, _r in _df_conjuntas.iterrows()
-            ]
-            st.dataframe(pd.DataFrame(_filas_conj), hide_index=True, use_container_width=True)
+        # Botones para ver una tabla a la vez (pedido de Nicolas: le
+        # gustaba poder pasar de Senado a Diputados y al otro con un
+        # boton, en vez de las 3 tablas juntas) - el checklist fijo con
+        # "No sesionó" se mantiene, solo cambia como se navega entre camaras.
+        _vista = st.radio(
+            "Vista", ["Senado", "Diputados", "Plenos y conjuntas"],
+            horizontal=True, key="vista_camara", label_visibility="collapsed",
+        )
+        if _vista == "Senado":
+            st.dataframe(_tabla_camara("Senado", _SENADO_COMISIONES_ORDEN),
+                         hide_index=True, use_container_width=True)
+        elif _vista == "Diputados":
+            st.dataframe(_tabla_camara("Diputados", _DIPUTADOS_COMISIONES_ORDEN),
+                         hide_index=True, use_container_width=True)
+        else:
+            _df_conjuntas = _df_semana[_df_semana["_camara"].isin(["Congreso", "Conjunta"])]
+            if _df_conjuntas.empty:
+                st.caption("Nada de Plenos conjuntos o comisiones bicamerales esta semana.")
+            else:
+                # El nombre corto ya viene de `tipo` (ej. "Comision: Presupuesto"
+                # -> "Presupuesto") - antes caia al titulo crudo del video para
+                # las bicamerales, que trae emoji/fecha/"EN VIVO" pegado y
+                # queda feo (bug real reportado por Nicolas 2026-09-18).
+                _filas_conj = [
+                    {"Comisión": (f"Pleno {_r['tipo'].split(':', 1)[-1].strip()}"
+                                  if _r["tipo"].startswith("Pleno:")
+                                  else _r["tipo"].split(":", 1)[-1].strip()),
+                     "Qué pasó": _que_paso(_r)}
+                    for _, _r in _df_conjuntas.iterrows()
+                ]
+                st.dataframe(pd.DataFrame(_filas_conj), hide_index=True, use_container_width=True)
 
         # st.expander no admite expanders anidados (cada sesion ya usa uno
         # para su propio detalle) - un toggle es el equivalente "boton que
