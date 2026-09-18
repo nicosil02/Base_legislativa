@@ -1566,8 +1566,30 @@ def _camara_de_descripcion(video_id: str) -> str | None:
     return None
 
 
+def _camara_del_texto(texto: str | None) -> str | None:
+    """Cuenta menciones de 'senador(a)'/'diputado(a)' en la transcripcion
+    real - la sala esta llena de gente que se llama a si misma por su
+    cargo real durante el pase de lista, senal mas confiable que la
+    agenda cuando 2 sesiones reales distintas caen en la ventana de
+    fecha de la MISMA fila de agenda. Bug real 2026-09-18: EM7fr1Txae4
+    (Diputados, "diputado" x70, "senador" x0 en el texto) resolvia mal a
+    "Senado" via camara_de_agenda porque esa semana la agenda solo tenia
+    registrada la sesion del Senado, y las dos sesiones (Senado +
+    Diputados) caian en su ventana de +-1 dia."""
+    if not texto:
+        return None
+    t = texto.lower()
+    n_senado = t.count("senador")
+    n_diputados = t.count("diputado")
+    if n_senado >= 5 and n_senado > 3 * n_diputados:
+        return "Senado"
+    if n_diputados >= 5 and n_diputados > 3 * n_senado:
+        return "Diputados"
+    return None
+
+
 def _clasificar_camara(tipo: str, titulo: str, fecha: str | None = None,
-                       video_id: str | None = None) -> str:
+                       video_id: str | None = None, texto: str | None = None) -> str:
     """'Senado' / 'Diputados' / 'Congreso' (Pleno solemne/conjunto) /
     'Conjunta' (comision BICAMERAL real, ej. Presupuesto) / 'Sin
     confirmar'. Un Pleno ya lo dice en `tipo` (detector.clasificar_titulo).
@@ -1602,6 +1624,9 @@ def _clasificar_camara(tipo: str, titulo: str, fecha: str | None = None,
         return "Diputados"
     if "asuntos de" in t:  # convencion real del Senado no cubierta arriba
         return "Senado"
+    camara = _camara_del_texto(texto)
+    if camara:
+        return camara
     from congreso_live.agenda_preview import camara_de_agenda
     try:
         camara = camara_de_agenda(get_conn(), tipo, titulo, fecha)
@@ -1760,7 +1785,7 @@ with tab_transcripciones:
         ]
         _filas_tabla = []
         for _, _r in _df_semana.iterrows():
-            _cam = _clasificar_camara(_r["tipo"], _r["titulo"], _r["fecha"], _r["video_id"])
+            _cam = _clasificar_camara(_r["tipo"], _r["titulo"], _r["fecha"], _r["video_id"], _r["texto"])
             if _cam not in _camaras_del_filtro:
                 continue
             _res = _resumenes.get(_r["video_id"])
@@ -1793,7 +1818,7 @@ with tab_transcripciones:
                     )
                     _res = _resumenes.get(row["video_id"])
                     _camara = _clasificar_camara(
-                        row["tipo"], row["titulo"], row["fecha"], row["video_id"])
+                        row["tipo"], row["titulo"], row["fecha"], row["video_id"], row["texto"])
                     with st.expander(f"[{_camara}] {row['tipo']} · {row['titulo'][:90]}"):
                         st.markdown(
                             f'<div style="margin-bottom:10px;">{_temas_html}</div>'
