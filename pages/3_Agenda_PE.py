@@ -1494,25 +1494,62 @@ def _render_resumen_card(res: dict, titulo_caja: str = "Resumen",
         )
 
 
+# Catalogo oficial de comisiones ordinarias 2026-2027 (fuente:
+# comunicaciones.congreso.gob.pe, Res. Leg. 005-2025-2026-CR/El Peruano) -
+# cada camara le puso un nombre COMPLETO distinto a su comite del mismo
+# tema, asi que un fragmento del titulo alcanza para distinguirlas SIN
+# que el titulo de YouTube diga "Senado"/"Diputados" (pasa seguido, ver
+# Cz5LEnuU_VQ 2026-09-18: "Comision en asuntos de Salud, Educacion,
+# Cultura, Mujer y Desarrollo Social" sin mencionar la camara). El Senado
+# junta varios temas en comites "en/de asuntos de X" (unico de esos 3
+# combos: nadie mas los junta asi); Diputados los mantiene separados con
+# nombres propios que el Senado no usa.
+_SENADO_COMBOS: tuple[tuple[str, ...], ...] = (
+    ("desarrollo productivo",),  # exclusivo del Senado (Energia y Minas + Infraestructura + Trabajo)
+    ("salud", "educacion"), ("salud", "cultura"),
+    ("salud", "mujer"), ("salud", "desarrollo social"),  # mega-comite unico del Senado
+    ("economia", "consumidor"),  # "...Medio Ambiente y Defensa al Consumidor" (Senado)
+)
+_DIPUTADOS_KEYWORDS: tuple[str, ...] = (
+    "agrario", "pueblos andinos", "amazonicos", "afroperuanos",
+    "comercio exterior", "ciencia", "innovacion tecnologica", "deporte",
+    "banca", "inteligencia financiera",  # "...Banca, Finanzas e Inteligencia Financiera" (Diputados)
+    "regulacion de los servicios publicos", "vivienda y transportes",
+    "seguridad social", "modernizacion",
+)
+
+
 def _clasificar_camara(tipo: str, titulo: str) -> str:
-    """'Senado' / 'Diputados' / 'Congreso' (sesion solemne/conjunta de
-    ambas) / 'Conjunta' (comision bicameral) - para agrupar la tabla
-    semanal. Un Pleno ya lo dice en `tipo` (detector.clasificar_titulo).
+    """'Senado' / 'Diputados' / 'Congreso' (Pleno solemne/conjunto) /
+    'Conjunta' (comision BICAMERAL real, ej. Presupuesto) / 'Sin
+    confirmar'. Un Pleno ya lo dice en `tipo` (detector.clasificar_titulo).
     Una Comision NO trae la camara en `tipo` (es solo la palabra clave,
-    ej. "Comision: Salud") - ahi se busca en el titulo real.
-    ponytail: heuristica de texto sobre el titulo, no un campo propio -
-    si el titulo no menciona ninguna camara (comision bicameral tipica),
-    cae a "Conjunta"."""
+    ej. "Comision: Justicia") - se busca primero un marcador explicito en
+    el titulo, despues el catalogo oficial de arriba.
+
+    Solo 5 comites se llaman EXACTAMENTE igual en las dos camaras
+    (Constitucion, Defensa Nacional, Justicia, Etica Parlamentaria,
+    Procedimientos Especiales) - sin "Senado"/"Diputados" explicito en
+    el titulo esos quedan genuinamente ambiguos por texto solo. ponytail:
+    mejor decir "Sin confirmar" que adivinar mal esos 5 casos."""
     if tipo.startswith("Pleno:"):
         return tipo.split(":", 1)[1].strip()
     from congreso_live.detector import _norm
     t = _norm(titulo)
+    if "bicameral" in t or "comision permanente" in t or "senadores y camara de diputados" in t:
+        return "Conjunta"
     en_senado, en_diputados = "senado" in t, "diputados" in t
     if en_senado and not en_diputados:
         return "Senado"
     if en_diputados and not en_senado:
         return "Diputados"
-    return "Conjunta"
+    if any(all(kw in t for kw in combo) for combo in _SENADO_COMBOS):
+        return "Senado"
+    if any(kw in t for kw in _DIPUTADOS_KEYWORDS):
+        return "Diputados"
+    if "asuntos de" in t:  # convencion real del Senado no cubierta arriba
+        return "Senado"
+    return "Sin confirmar"
 
 
 with tab_transcripciones:
@@ -1637,7 +1674,7 @@ with tab_transcripciones:
             _grupos: dict[str, list] = {}
             for _, _r in _df_semana.iterrows():
                 _grupos.setdefault(_clasificar_camara(_r["tipo"], _r["titulo"]), []).append(_r)
-            for _cam in ("Senado", "Diputados", "Congreso", "Conjunta"):
+            for _cam in ("Senado", "Diputados", "Congreso", "Conjunta", "Sin confirmar"):
                 _filas = _grupos.get(_cam)
                 if not _filas:
                     continue
@@ -1666,7 +1703,8 @@ with tab_transcripciones:
                         for t in (row["temas"] or "").split(",") if t
                     )
                     _res = _resumenes.get(row["video_id"])
-                    with st.expander(f"{row['tipo']} · {row['titulo'][:90]}"):
+                    _camara = _clasificar_camara(row["tipo"], row["titulo"])
+                    with st.expander(f"[{_camara}] {row['tipo']} · {row['titulo'][:90]}"):
                         st.markdown(
                             f'<div style="margin-bottom:10px;">{_temas_html}</div>'
                             f'<div style="font-size:12px;color:var(--ink-mute);margin-bottom:10px;">'
