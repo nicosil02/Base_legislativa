@@ -1,0 +1,160 @@
+name: Backfill automatico (sesiones perdidas)
+
+# Cierra el hueco de backfill-vod.yml (100% manual, alguien tiene que
+# notar la sesion faltante y tipear el video_id a mano) - escanea SOLO
+# el canal de YouTube del Congreso, encuentra sesiones reales (Pleno/
+# comision) que sesiones_transcripciones todavia no tiene, y las
+# recupera de a pocas por corrida: captions si ya estan listos (rapido),
+# VOD completo + Whisper si no (lento, mismo camino que backfill-vod.yml
+# manual). Ver congreso_live/backfill_auto.py para el por que completo -
+# bug real 2026-09-18: 16 sesiones reales se encontraron y recuperaron
+# a mano en una sola sesion de trabajo, varias de la semana en curso.
+#
+# Mismo esquema WARP que vigilar-congreso.yml/backfill-vod.yml (YouTube
+# bloquea IPs de datacenter, WARP lo esquiva).
+
+on:
+  schedule:
+    - cron: '20 */6 * * *'  # cada 6 horas, en un minuto que no compite con otros cron
+  workflow_dispatch:
+    inputs:
+      max:
+        description: "Cuantas sesiones recuperar en esta corrida"
+        required: false
+        default: "4"
+
+permissions:
+  contents: write
+
+# Grupo propio - no comparte cola con vigilar-congreso (dispara cada 10
+# min, le ganaria la cola siempre) ni con backfill-vod (dispatch manual
+# puntual, distinto uso).
+concurrency:
+  group: backfill-auto
+  cancel-in-progress: false
+
+jobs:
+  backfill:
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Cache pip + modelo Whisper (persiste entre runs)
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/pip
+            ~/.cache/huggingface
+          key: vigilar-congreso-deps-${{ hashFiles('.github/workflows/vigilar-congreso.yml') }}
+
+      - name: Instalar deps
+        run: |
+          pip install -q yt-dlp requests faster-whisper imageio-ffmpeg
+          # Ver vigilar-congreso.yml: el binario portable de imageio-ffmpeg
+          # crasheaba (SIGSEGV) en runners de GitHub Actions - el de apt
+          # (probado para este mismo Ubuntu) no.
+          sudo apt-get install -y -qq ffmpeg
+
+      - name: Instalar Cloudflare WARP en modo proxy (SOCKS5 :40000)
+        run: |
+          curl -fsSL --retry 3 --retry-delay 2 --retry-all-errors https://pkg.cloudflareclient.com/pubkey.gpg | sudo gpg --yes --dearmor --output /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg
+          echo "deb [signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] https://pkg.cloudflareclient.com/ $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/cloudflare-client.list
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq cloudflare-warp
+          sudo systemctl enable --now warp-svc
+          sleep 3
+          warp-cli --accept-tos registration new
+          warp-cli --accept-tos mode proxy
+          warp-cli --accept-tos proxy port 40000
+          warp-cli --accept-tos connect
+          sleep 5
+          warp-cli --accept-tos status
+
+      - name: Bootstrap DB Peru desde snapshot gz
+        run: |
+          if [ -f data/proyectos.db.gz ]; then
+            gunzip -kc data/proyectos.db.gz > proyectos.db
+          fi
+
+      - name: Escanear canal y recuperar sesiones faltantes
+        env:
+          PYTHONIOENCODING: utf-8
+          YT_DLP_PROXY: socks5://127.0.0.1:40000
+          FFMPEG_BIN: /usr/bin/ffmpeg
+        run: |
+          # github.event.inputs.MAX (no el contexto `inputs` mas nuevo) -
+          # evalua vacio de forma segura en triggers que no son
+          # workflow_dispatch (ej. schedule), en vez de fallar la expresion.
+          MAX="${{ github.event.inputs.max }}"
+          if [ -z "$MAX" ]; then MAX=4; fi
+          python -X utf8 -u -m congreso_live.cli backfill-auto \
+              --max "$MAX" || echo "[warn] backfill-auto termino con error, sigo al commit igual"
+
+      - name: Guardar snapshot DB si cambio
+        run: |
+          # Mergear SIEMPRE lo ultimo de origin antes de generar el
+          # snapshot - mismo criterio que backfill-vod.yml/vigilar-congreso.yml
+          # (bug real 2026-09-15/16: usar proyectos.db local como base pisa
+          # en silencio noticias/PLs mas frescos que llegaron mientras corria).
+          if [ -f proyectos.db ]; then
+            git fetch origin main 2>/dev/null || true
+            if git show origin/main:data/proyectos.db.gz > /tmp/origin_proyectos.db.gz 2>/dev/null \
+                && [ -s /tmp/origin_proyectos.db.gz ]; then
+              gunzip -c /tmp/origin_proyectos.db.gz > /tmp/origin_proyectos.db
+              python -X utf8 -m congreso_live.merge_db /tmp/origin_proyectos.db proyectos.db
+              gzip -9nkf /tmp/origin_proyectos.db
+              mv -f /tmp/origin_proyectos.db.gz data/proyectos.db.gz
+            else
+              gzip -9nkf proyectos.db
+              mv proyectos.db.gz data/proyectos.db.gz
+            fi
+          fi
+
+      - name: Commitear snapshot DB
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/proyectos.db.gz
+          if git diff --staged --quiet; then
+            echo "sin cambios (nada pendiente esta corrida)"
+            exit 0
+          fi
+          git commit -m "Backfill automatico: sesiones recuperadas $(date -u +%Y-%m-%d-%H%M) [skip ci]"
+          for i in 1 2 3; do
+            if git push; then
+              echo "Push OK (intento $i)"
+              exit 0
+            fi
+            echo "Push fallo (intento $i), mergeando con origin/main..."
+            git fetch origin main
+            MERGED=""
+            if [ -f proyectos.db ] && git show origin/main:data/proyectos.db.gz > /tmp/origin_proyectos.db.gz 2>/dev/null \
+                && [ -s /tmp/origin_proyectos.db.gz ]; then
+              gunzip -c /tmp/origin_proyectos.db.gz > /tmp/origin_proyectos.db
+              python -X utf8 -m congreso_live.merge_db /tmp/origin_proyectos.db proyectos.db
+              gzip -9nkf /tmp/origin_proyectos.db
+              mv -f /tmp/origin_proyectos.db.gz /tmp/merged_proyectos.db.gz
+              MERGED=1
+            fi
+            # --hard, no --soft: mismo bug real 2026-09-16 documentado en
+            # backfill-vod.yml - con --soft el commit puede revertir OTROS
+            # archivos que avanzaron en origin mientras corria el job.
+            git reset --hard origin/main
+            if [ -n "$MERGED" ]; then
+              mv -f /tmp/merged_proyectos.db.gz data/proyectos.db.gz
+              git add data/proyectos.db.gz
+            fi
+            if git diff --staged --quiet; then
+              echo "Ya esta en origin/main tras el merge, nada que commitear."
+              exit 0
+            fi
+            git commit -m "Backfill automatico: sesiones recuperadas $(date -u +%Y-%m-%d-%H%M) [skip ci]"
+            sleep 5
+          done
+          echo "Push fallo despues de 3 intentos."
+          exit 1

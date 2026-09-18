@@ -109,6 +109,28 @@ def cmd_backfill_vod(args) -> int:
     return 0
 
 
+def cmd_backfill_auto(args) -> int:
+    """Escanea el canal solo, encuentra sesiones reales sin transcribir
+    y recupera hasta --max de a poco (captions si estan listos, VOD
+    completo + Whisper si no) - ver congreso_live/backfill_auto.py."""
+    try:
+        from congreso_live.backfill_auto import procesar_pendientes
+    except ImportError:
+        print("Falta faster-whisper/imageio-ffmpeg: "
+              "pip install faster-whisper imageio-ffmpeg")
+        return 1
+    from congreso_live.transcripciones import _find_db_path
+
+    r = procesar_pendientes(_find_db_path(), max_n=args.max)
+    print(f"Pendientes encontrados: {r['pendientes_totales']}. "
+          f"Procesados: {len(r['procesados'])}, fallidos: {len(r['fallidos'])}.")
+    for p in r["procesados"]:
+        print(f"  OK {p['video_id']} via {p['via']}: {p['chars']} chars")
+    for f in r["fallidos"]:
+        print(f"  FALLO {f['video_id']}: {f['motivo']}")
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     p = argparse.ArgumentParser(prog="congreso_live")
     p.add_argument("-v", "--verbose", action="store_true")
@@ -138,6 +160,11 @@ def main(argv: list[str] | None = None) -> int:
     bv.add_argument("--tipo", required=True)
     bv.add_argument("--titulo", required=True)
     bv.set_defaults(func=cmd_backfill_vod)
+    ba = sub.add_parser("backfill-auto",
+                        help="escanea el canal solo y recupera sesiones reales que faltan, sin intervencion manual")
+    ba.add_argument("--max", type=int, default=4,
+                    help="cuantas sesiones recuperar por corrida (default 4 - cada una cuesta red/CPU real)")
+    ba.set_defaults(func=cmd_backfill_auto)
     args = p.parse_args(argv)
     logging.basicConfig(level=logging.DEBUG if args.verbose else logging.INFO,
                         format="%(asctime)s %(levelname)s %(message)s")
