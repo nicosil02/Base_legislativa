@@ -49,7 +49,28 @@ def _camara_de_titulo(titulo: str | None) -> str | None:
     return None
 
 
-def camara_de_agenda(db: sqlite3.Connection, tipo: str, fecha: str | None) -> str | None:
+_RE_FECHA_TITULO = re.compile(r"\b(\d{1,2})/(\d{1,2})/(\d{2,4})\b")
+
+
+def _fecha_del_titulo(titulo: str | None) -> str | None:
+    """El titulo real de YouTube casi siempre trae la fecha de la sesion
+    (ej. "...| 09/09/2026") - a veces mas confiable que `fecha`
+    (sesiones_transcripciones.fecha, la fecha UTC de CAPTURA, que puede
+    correr 1+ dia por detras si la sesion arranco tarde o se resumio
+    despues). None si no hay match o la fecha no es valida."""
+    m = _RE_FECHA_TITULO.search(titulo or "")
+    if not m:
+        return None
+    dia, mes, anio = m.groups()
+    anio = anio if len(anio) == 4 else f"20{anio}"
+    try:
+        return datetime(int(anio), int(mes), int(dia)).date().isoformat()
+    except ValueError:
+        return None
+
+
+def camara_de_agenda(db: sqlite3.Connection, tipo: str, titulo: str | None,
+                     fecha: str | None) -> str | None:
     """Cruza contra la agenda real (tabla `sesiones`, misma fuente que
     puntos_agenda_comision) para resolver la camara de una Comision cuyo
     titulo de YouTube NO la dice - pedido real de Nicolas 2026-09-18: los
@@ -59,20 +80,29 @@ def camara_de_agenda(db: sqlite3.Connection, tipo: str, fecha: str | None) -> st
     cuando no lo trae, la agenda real (quien tenia sesion agendada ESE
     dia con ese nombre de comision) sí lo sabe.
 
-    `fecha` es la fecha UTC de captura (sesiones_transcripciones.fecha) -
-    se prueba esa Y el dia anterior, porque una sesion que arranca de
-    madrugada UTC (antes de las 05:00 = medianoche Lima) cae un dia
-    despues en UTC que en la agenda real (Lima). None si no hay ninguna
-    sesion agendada esos dias con ese keyword, o si hay mas de una camara
+    Prueba la fecha que trae el propio TITULO (si la trae - ver
+    _fecha_del_titulo) y la de `fecha` (fecha UTC de captura,
+    sesiones_transcripciones.fecha) +- 1 dia, por el desfase UTC/Lima de
+    una sesion que arranca de madrugada. None si ningun dia candidato
+    tiene una sesion agendada con ese keyword, o si hay mas de una camara
     candidata - mismo criterio que puntos_agenda_comision: no adivina."""
-    if not tipo.startswith("Comision:") or not fecha:
+    if not tipo.startswith("Comision:"):
         return None
     kw = _norm(tipo.split(":", 1)[-1].strip())
-    try:
-        d = datetime.fromisoformat(fecha).date()
-    except ValueError:
+    candidatas: set[str] = set()
+    del_titulo = _fecha_del_titulo(titulo)
+    if del_titulo:
+        candidatas.add(del_titulo)
+    if fecha:
+        try:
+            d = datetime.fromisoformat(fecha).date()
+            candidatas.add(d.isoformat())
+            candidatas.add((d - timedelta(days=1)).isoformat())
+        except ValueError:
+            pass
+    if not candidatas:
         return None
-    fechas = (d.isoformat(), (d - timedelta(days=1)).isoformat())
+    fechas = tuple(candidatas)
     rows = db.execute(
         f"SELECT nombre_comision, camara FROM sesiones WHERE fecha IN "
         f"({','.join('?' * len(fechas))})", fechas,
@@ -272,17 +302,24 @@ def _demo():
 
     # camara_de_agenda: mismo fixture (Justicia = Senado, Energia y Minas =
     # Diputados ese dia) - resuelve por agenda real, sin depender del titulo.
-    assert camara_de_agenda(conn, "Comision: Justicia", hoy) == "Senado"
-    assert camara_de_agenda(conn, "Comision: Energia Y Minas", hoy) == "Diputados"
+    assert camara_de_agenda(conn, "Comision: Justicia", "sin fecha en el titulo", hoy) == "Senado"
+    assert camara_de_agenda(conn, "Comision: Energia Y Minas", "sin fecha", hoy) == "Diputados"
     # Sin sesion agendada ese dia con ese keyword -> no adivina.
-    assert camara_de_agenda(conn, "Comision: Salud", hoy) is None
+    assert camara_de_agenda(conn, "Comision: Salud", "sin fecha", hoy) is None
     # Un dia antes de `hoy` (UTC de madrugada = Lima del dia anterior) tambien
     # se prueba - la sesion del fixture sigue estando en `hoy`, cae dentro
     # de la ventana de 2 fechas al pedir "manana" (fecha UTC = hoy+1).
     _manana = (datetime.now(LIMA).date() + timedelta(days=1)).isoformat()
-    assert camara_de_agenda(conn, "Comision: Justicia", _manana) == "Senado"
+    assert camara_de_agenda(conn, "Comision: Justicia", "sin fecha", _manana) == "Senado"
     # Pleno no tiene camara ambigua que resolver via `sesiones` (comisiones).
-    assert camara_de_agenda(conn, "Pleno: Senado", hoy) is None
+    assert camara_de_agenda(conn, "Pleno: Senado", "sin fecha", hoy) is None
+    # La fecha del TITULO (mas confiable que `fecha` de captura, ver
+    # _fecha_del_titulo) alcanza sola, incluso si `fecha` no tiene nada que
+    # ver - bug real 2026-09-18: un titulo con "09/09/2026" pero fetched_at
+    # del 10/09 quedaba "Sin confirmar" porque solo se probaba `fecha` +-1.
+    assert camara_de_agenda(
+        conn, "Comision: Justicia", f"Sesión de la Comisión | {hoy[8:10]}/{hoy[5:7]}/{hoy[:4]}",
+        "2099-01-01") == "Senado"
 
     assert formatear_para_whatsapp([]) == ""
     assert formatear_para_whatsapp(["A", "B"]) == "\n\nPuntos de agenda:\n- A\n- B"

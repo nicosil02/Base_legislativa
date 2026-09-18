@@ -1552,15 +1552,12 @@ def _clasificar_camara(tipo: str, titulo: str, fecha: str | None = None) -> str:
         return "Diputados"
     if "asuntos de" in t:  # convencion real del Senado no cubierta arriba
         return "Senado"
-    if fecha:
-        from congreso_live.agenda_preview import camara_de_agenda
-        try:
-            camara = camara_de_agenda(get_conn(), tipo, fecha)
-        except sqlite3.OperationalError:
-            camara = None
-        if camara:
-            return camara
-    return "Sin confirmar"
+    from congreso_live.agenda_preview import camara_de_agenda
+    try:
+        camara = camara_de_agenda(get_conn(), tipo, titulo, fecha)
+    except sqlite3.OperationalError:
+        camara = None
+    return camara or "Sin confirmar"
 
 
 with tab_transcripciones:
