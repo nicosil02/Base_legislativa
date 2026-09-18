@@ -1865,9 +1865,15 @@ with tab_transcripciones:
         _df_conjuntas = _df_semana[_df_semana["_camara"].isin(["Congreso", "Conjunta"])]
         if not _df_conjuntas.empty:
             st.markdown("**Plenos y sesiones conjuntas**")
+            # El nombre corto ya viene de `tipo` (ej. "Comision: Presupuesto"
+            # -> "Presupuesto") - antes caia al titulo crudo del video para
+            # las bicamerales, que trae emoji/fecha/"EN VIVO" pegado y queda
+            # feo (bug real reportado por Nicolas 2026-09-18).
             _filas_conj = [
-                {"Comisión": _r["tipo"].split(":", 1)[-1].strip() if _r["tipo"].startswith("Pleno:")
-                 else _r["titulo"][:70], "Qué pasó": _que_paso(_r)}
+                {"Comisión": (f"Pleno {_r['tipo'].split(':', 1)[-1].strip()}"
+                              if _r["tipo"].startswith("Pleno:")
+                              else _r["tipo"].split(":", 1)[-1].strip()),
+                 "Qué pasó": _que_paso(_r)}
                 for _, _r in _df_conjuntas.iterrows()
             ]
             st.dataframe(pd.DataFrame(_filas_conj), hide_index=True, use_container_width=True)
