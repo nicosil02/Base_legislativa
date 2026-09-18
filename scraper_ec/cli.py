@@ -165,7 +165,15 @@ def cmd_actualizar_csv(args) -> int:
     from scraper_ec.csv_importer import import_csv
 
     repo_root = Path(__file__).resolve().parent.parent
-    csv_path = repo_root / "data" / "ppless_listado_2025-2029_snapshot.csv"
+    # NO reusar ppless_listado_2025-2029_snapshot.csv (ese es el seed fijo
+    # versionado en git para el bootstrap inicial cuando no existe
+    # proyectos_ec.db.gz) - bug real encontrado en vivo 2026-09-17: una vez
+    # arreglada la descarga (commit 9b9070a), cada corrida sobreescribia ese
+    # archivo TRACKEADO sin comitearlo, dejando el working tree sucio y
+    # rompiendo el "git rebase" del paso de auto-commit ("cannot rebase: you
+    # have unstaged changes"). Este archivo es efimero (gitignored), separado
+    # del seed.
+    csv_path = repo_root / "data" / "ppless_actual.csv"
 
     print(f"[actualizar-csv] descargando CSV fresco a {csv_path.name}...")
     ok = download_csv(csv_path, headless=not args.no_headless)
