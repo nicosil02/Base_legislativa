@@ -43,6 +43,13 @@ ORDINARIA_KEYWORDS: tuple[str, ...] = (
     "agrario", "gestion del estado", "regimenes de excepcion",
     "medio ambiente", "seguimiento legislativo", "procedimientos especiales",
     "etica parlamentaria",
+    # 2026-09-18: encontrada al backfillear 8 sesiones reales del Senado
+    # que nunca se transcribieron (Nicolas: "creo que hay varias que no
+    # tienes") - la Comision de Control Politico sobre los Actos
+    # Normativos del Poder Ejecutivo (no-legislativa, catalogo oficial
+    # 2026-2027 del Senado) tampoco matcheaba ningun keyword, asi que
+    # NUNCA se hubiera detectado en vivo tampoco.
+    "control politico",
 )
 
 # Marcadores que excluyen un stream aunque diga "comision".
