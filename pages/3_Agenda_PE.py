@@ -1517,9 +1517,18 @@ _DIPUTADOS_KEYWORDS: tuple[str, ...] = (
     "regulacion de los servicios publicos", "vivienda y transportes",
     "seguridad social", "modernizacion",
 )
+# Casos puntuales donde ni el titulo ni la agenda real (`sesiones`) alcanzan
+# (agenda sin ese dia registrado) - confirmados a mano por Nicolas leyendo
+# la DESCRIPCION del video en YouTube (el titulo no siempre la trae, la
+# descripcion a veces si). No vale la pena un pipeline de yt-dlp para leer
+# descripciones por estos pocos casos - se agregan aca a mano si aparecen.
+_OVERRIDES_CAMARA: dict[str, str] = {
+    "GEpUFqa-9hY": "Diputados",  # "Constitucion...| 09/09/2026" - confirmado 2026-09-18
+}
 
 
-def _clasificar_camara(tipo: str, titulo: str, fecha: str | None = None) -> str:
+def _clasificar_camara(tipo: str, titulo: str, fecha: str | None = None,
+                       video_id: str | None = None) -> str:
     """'Senado' / 'Diputados' / 'Congreso' (Pleno solemne/conjunto) /
     'Conjunta' (comision BICAMERAL real, ej. Presupuesto) / 'Sin
     confirmar'. Un Pleno ya lo dice en `tipo` (detector.clasificar_titulo).
@@ -1535,6 +1544,8 @@ def _clasificar_camara(tipo: str, titulo: str, fecha: str | None = None) -> str:
     congreso_live.agenda_preview.camara_de_agenda) - pedido real de
     Nicolas 2026-09-18: "cruzando con la agenda de cada cámara". Sin
     `fecha` o sin match en la agenda, "Sin confirmar" en vez de adivinar."""
+    if video_id and video_id in _OVERRIDES_CAMARA:
+        return _OVERRIDES_CAMARA[video_id]
     if tipo.startswith("Pleno:"):
         return tipo.split(":", 1)[1].strip()
     from congreso_live.detector import _norm
@@ -1681,7 +1692,10 @@ with tab_transcripciones:
         else:
             _grupos: dict[str, list] = {}
             for _, _r in _df_semana.iterrows():
-                _grupos.setdefault(_clasificar_camara(_r["tipo"], _r["titulo"], _r["fecha"]), []).append(_r)
+                _grupos.setdefault(
+                    _clasificar_camara(_r["tipo"], _r["titulo"], _r["fecha"], _r["video_id"]),
+                    [],
+                ).append(_r)
             for _cam in ("Senado", "Diputados", "Congreso", "Conjunta", "Sin confirmar"):
                 _filas = _grupos.get(_cam)
                 if not _filas:
@@ -1711,7 +1725,8 @@ with tab_transcripciones:
                         for t in (row["temas"] or "").split(",") if t
                     )
                     _res = _resumenes.get(row["video_id"])
-                    _camara = _clasificar_camara(row["tipo"], row["titulo"], row["fecha"])
+                    _camara = _clasificar_camara(
+                        row["tipo"], row["titulo"], row["fecha"], row["video_id"])
                     with st.expander(f"[{_camara}] {row['tipo']} · {row['titulo'][:90]}"):
                         st.markdown(
                             f'<div style="margin-bottom:10px;">{_temas_html}</div>'
