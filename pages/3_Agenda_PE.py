@@ -1398,7 +1398,10 @@ with tab_mesas:
 
 # ---------- Transcripciones (captions de YouTube, Pleno/comisiones) ----------
 @st.cache_data(ttl=300)
-def load_transcripciones(limit: int = 15) -> pd.DataFrame:
+def load_transcripciones(limit: int = 60) -> pd.DataFrame:
+    # ponytail: limit fijo, no paginacion real - con varias comisiones en
+    # simultaneo por dia esto se vuelve a llenar en 1-2 semanas. Si vuelve
+    # a pasar, agregar filtro de fecha/busqueda en vez de subir el numero.
     conn = get_conn()
     try:
         existe = conn.execute(
