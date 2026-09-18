@@ -20,6 +20,12 @@ live_watch.log
 !data/ProyectosDeLey.xlsx
 !data/proyectos.db.gz
 
+# CSV descargado fresco cada corrida por scraper_ec.cli actualizar-csv -
+# efimero, NUNCA commitear (bug real 2026-09-17: reusar el seed trackeado
+# ppless_listado_2025-2029_snapshot.csv como destino de la descarga dejaba
+# el working tree sucio y rompia el git rebase del auto-commit).
+data/ppless_actual.csv
+
 # Estado del scheduler de alertas (commiteado por GH Actions)
 !data/alert_sent_log.json
 
