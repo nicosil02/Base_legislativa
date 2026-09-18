@@ -1517,6 +1517,52 @@ _DIPUTADOS_KEYWORDS: tuple[str, ...] = (
     "regulacion de los servicios publicos", "vivienda y transportes",
     "seguridad social", "modernizacion",
 )
+
+# Catalogo oficial de comisiones ORDINARIAS 2026-2027, en el mismo orden
+# que el informe semanal real que arma Nicolas (pedido 2026-09-18: "las
+# sesiones... podrian aparecer siempre en el orden que tengo en mi doc...
+# y si no sesionaron colocar que no sesionaron"). No incluye las
+# no-legislativas (Etica, Procedimientos Especiales, Control Politico,
+# Inteligencia, Acusaciones Constitucionales, Seguimiento Legislativo) -
+# esas aparecen solo si tuvieron sesion real esa semana, al final de la
+# tabla de su camara.
+_SENADO_COMISIONES_ORDEN: tuple[str, ...] = (
+    "Constitución, Reglamento y Relaciones Exteriores",
+    "Defensa Nacional y Orden Interno",
+    "Desarrollo Productivo, Energía y Minas, Infraestructura y Trabajo",
+    "Economía, Medio Ambiente y Defensa al Consumidor",  # el titulo real dice "al", no "del" - ver Defensa del Consumidor de Diputados, comite distinto
+    "Salud, Educación, Cultura, Mujer y Desarrollo Social y Digital",
+    "Gestión del Estado y Contraloría",
+    "Justicia y Derechos Humanos",
+)
+_DIPUTADOS_COMISIONES_ORDEN: tuple[str, ...] = (
+    "Constitución, Reglamento y Relaciones Exteriores",
+    "Defensa Nacional y Orden Interno",
+    "Desarrollo Agrario",
+    "Defensa del Consumidor y Regulación de los Servicios Públicos",
+    "Modernización de la Gestión del Estado y Contraloría",
+    "Economía, Banca, Finanzas e Inteligencia Financiera",
+    "Educación, Cultura y Deporte",
+    "Energía y Minas",
+    "Justicia y Derechos Humanos",
+    "Inclusión Social, Familia, Mujer y Pueblos Andinos, Amazónicos y Afroperuanos",
+    "Producción, Comercio Exterior y Turismo",
+    "Medio Ambiente y Sostenibilidad",
+    "Salud",
+    "Trabajo y Seguridad Social",
+    "Infraestructura, Vivienda y Transportes",
+    "Ciencia, Innovación Tecnológica y Sociedad Digital",
+)
+
+
+def _tipo_de_comision_oficial(nombre: str) -> str | None:
+    """El mismo clasificador que ya usa detector.py sobre titulos reales
+    de YouTube, aplicado al nombre OFICIAL del catalogo - encuentra que
+    palabra clave corta (tipo) le corresponderia a esta comision."""
+    from congreso_live.detector import clasificar_titulo
+    return clasificar_titulo(f"Comisión de {nombre}")
+
+
 # Casos puntuales donde ni el titulo ni la agenda real (`sesiones`) alcanzan
 # (agenda sin ese dia registrado) - confirmados a mano por Nicolas leyendo
 # la DESCRIPCION del video en YouTube (el titulo no siempre la trae, la
@@ -1745,13 +1791,16 @@ with tab_transcripciones:
         from congreso_live.resumenes_store import list_resumenes
         _resumenes = list_resumenes()
 
-        # ---------- Por semana: navegacion + filtro Senado/Diputados/Plenos+Conjuntas ----------
-        # Pedido real de Nicolas 2026-09-18: botones de camara + poder ver
-        # semanas pasadas, no solo la actual. 3 botones (no 4): "Senado" y
-        # "Diputados" incluyen TODO de esa camara (comisiones + su Pleno);
-        # el tercero junta Plenos conjuntos (sesion solemne, tipo "Congreso")
-        # y comisiones bicamerales (tipo "Conjunta", ej. Presupuesto) -
-        # confirmado con Nicolas, es la lectura mas natural.
+        # ---------- Por semana: checklist fijo por comision, como el informe ----------
+        # Pedido real de Nicolas 2026-09-18: "las sesiones... podrian aparecer
+        # siempre en el orden que tengo en mi doc... y si no sesionaron
+        # colocar que no sesionaron" - reemplaza el filtro de 3 botones (que
+        # solo mostraba lo que SI paso) por un checklist fijo de las
+        # comisiones ordinarias de cada camara, en el orden del catalogo
+        # oficial (el mismo que usa su informe semanal real), con "No
+        # sesionó" explicito para las que no tuvieron actividad. Las
+        # no-legislativas/bicamerales que SI sesionaron van al final, fuera
+        # del catalogo fijo.
         st.markdown("##### 📅 Por semana")
         if "semana_offset" not in st.session_state:
             st.session_state["semana_offset"] = 0
@@ -1769,38 +1818,59 @@ with tab_transcripciones:
             st.session_state["semana_offset"] = 0
             st.rerun()
 
-        _filtro_camara = st.radio(
-            "Camara", ["Senado", "Diputados", "Plenos y conjuntas"],
-            horizontal=True, key="filtro_camara", label_visibility="collapsed",
-        )
-        _camaras_del_filtro = (
-            {"Senado"} if _filtro_camara == "Senado" else
-            {"Diputados"} if _filtro_camara == "Diputados" else
-            {"Congreso", "Conjunta"}
-        )
-
         _df_semana = df_transcripciones[
             (df_transcripciones["fecha"] >= _lunes.isoformat())
             & (df_transcripciones["fecha"] <= _domingo.isoformat())
+        ].copy()
+        _df_semana["_camara"] = [
+            _clasificar_camara(r["tipo"], r["titulo"], r["fecha"], r["video_id"], r["texto"])
+            for _, r in _df_semana.iterrows()
         ]
-        _filas_tabla = []
-        for _, _r in _df_semana.iterrows():
-            _cam = _clasificar_camara(_r["tipo"], _r["titulo"], _r["fecha"], _r["video_id"], _r["texto"])
-            if _cam not in _camaras_del_filtro:
-                continue
-            _res = _resumenes.get(_r["video_id"])
-            _que_paso = _res["resumen"] if _res else (
-                (_r["texto"][:180] + "…") if _r["texto"] else "Resumen pendiente de generar."
-            )
-            _clase = "Pleno" if _r["tipo"].startswith("Pleno:") else _r["tipo"].split(":", 1)[-1].strip()
-            _filas_tabla.append({"Día": _r["fecha"] or "—", "Comisión": _clase, "Qué pasó": _que_paso})
-        if not _filas_tabla:
-            st.caption(f"Nada de {_filtro_camara} esa semana.")
-        else:
-            st.dataframe(
-                pd.DataFrame(_filas_tabla).sort_values("Día"),
-                hide_index=True, use_container_width=True,
-            )
+
+        def _que_paso(row) -> str:
+            _res = _resumenes.get(row["video_id"])
+            if _res:
+                return _res["resumen"]
+            return (row["texto"][:180] + "…") if row["texto"] else "Resumen pendiente de generar."
+
+        def _tabla_camara(camara: str, catalogo: tuple[str, ...]) -> pd.DataFrame:
+            _df_cam = _df_semana[_df_semana["_camara"] == camara]
+            _tipos_catalogo: set[str] = set()
+            _filas = []
+            for _nombre in catalogo:
+                _tipo = _tipo_de_comision_oficial(_nombre)
+                _tipos_catalogo.add(_tipo)
+                _match = _df_cam[_df_cam["tipo"] == _tipo] if _tipo else _df_cam.iloc[0:0]
+                if _match.empty:
+                    _filas.append({"Comisión": _nombre, "Qué pasó": "No sesionó esta semana."})
+                else:
+                    for _, _r in _match.iterrows():
+                        _filas.append({"Comisión": _nombre, "Qué pasó": _que_paso(_r)})
+            # Lo que sesiono esa semana pero no esta en el catalogo fijo
+            # (no-legislativas: Etica, Procedimientos Especiales, Control
+            # Politico, etc.) - al final, con su propio nombre real.
+            _extra = _df_cam[~_df_cam["tipo"].isin(_tipos_catalogo)]
+            for _, _r in _extra.iterrows():
+                _nombre_extra = _r["tipo"].split(":", 1)[-1].strip()
+                _filas.append({"Comisión": _nombre_extra, "Qué pasó": _que_paso(_r)})
+            return pd.DataFrame(_filas)
+
+        st.markdown("**Senado**")
+        st.dataframe(_tabla_camara("Senado", _SENADO_COMISIONES_ORDEN),
+                     hide_index=True, use_container_width=True)
+        st.markdown("**Diputados**")
+        st.dataframe(_tabla_camara("Diputados", _DIPUTADOS_COMISIONES_ORDEN),
+                     hide_index=True, use_container_width=True)
+
+        _df_conjuntas = _df_semana[_df_semana["_camara"].isin(["Congreso", "Conjunta"])]
+        if not _df_conjuntas.empty:
+            st.markdown("**Plenos y sesiones conjuntas**")
+            _filas_conj = [
+                {"Comisión": _r["tipo"].split(":", 1)[-1].strip() if _r["tipo"].startswith("Pleno:")
+                 else _r["titulo"][:70], "Qué pasó": _que_paso(_r)}
+                for _, _r in _df_conjuntas.iterrows()
+            ]
+            st.dataframe(pd.DataFrame(_filas_conj), hide_index=True, use_container_width=True)
 
         # st.expander no admite expanders anidados (cada sesion ya usa uno
         # para su propio detalle) - un toggle es el equivalente "boton que
