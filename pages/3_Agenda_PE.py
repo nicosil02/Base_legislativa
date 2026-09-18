@@ -1519,7 +1519,7 @@ _DIPUTADOS_KEYWORDS: tuple[str, ...] = (
 )
 
 
-def _clasificar_camara(tipo: str, titulo: str) -> str:
+def _clasificar_camara(tipo: str, titulo: str, fecha: str | None = None) -> str:
     """'Senado' / 'Diputados' / 'Congreso' (Pleno solemne/conjunto) /
     'Conjunta' (comision BICAMERAL real, ej. Presupuesto) / 'Sin
     confirmar'. Un Pleno ya lo dice en `tipo` (detector.clasificar_titulo).
@@ -1530,8 +1530,11 @@ def _clasificar_camara(tipo: str, titulo: str) -> str:
     Solo 5 comites se llaman EXACTAMENTE igual en las dos camaras
     (Constitucion, Defensa Nacional, Justicia, Etica Parlamentaria,
     Procedimientos Especiales) - sin "Senado"/"Diputados" explicito en
-    el titulo esos quedan genuinamente ambiguos por texto solo. ponytail:
-    mejor decir "Sin confirmar" que adivinar mal esos 5 casos."""
+    el titulo esos quedan ambiguos por texto solo. Para esos, si se pasa
+    `fecha`, se cruza contra la agenda real (tabla `sesiones`, ver
+    congreso_live.agenda_preview.camara_de_agenda) - pedido real de
+    Nicolas 2026-09-18: "cruzando con la agenda de cada cámara". Sin
+    `fecha` o sin match en la agenda, "Sin confirmar" en vez de adivinar."""
     if tipo.startswith("Pleno:"):
         return tipo.split(":", 1)[1].strip()
     from congreso_live.detector import _norm
@@ -1549,6 +1552,14 @@ def _clasificar_camara(tipo: str, titulo: str) -> str:
         return "Diputados"
     if "asuntos de" in t:  # convencion real del Senado no cubierta arriba
         return "Senado"
+    if fecha:
+        from congreso_live.agenda_preview import camara_de_agenda
+        try:
+            camara = camara_de_agenda(get_conn(), tipo, fecha)
+        except sqlite3.OperationalError:
+            camara = None
+        if camara:
+            return camara
     return "Sin confirmar"
 
 
@@ -1673,7 +1684,7 @@ with tab_transcripciones:
         else:
             _grupos: dict[str, list] = {}
             for _, _r in _df_semana.iterrows():
-                _grupos.setdefault(_clasificar_camara(_r["tipo"], _r["titulo"]), []).append(_r)
+                _grupos.setdefault(_clasificar_camara(_r["tipo"], _r["titulo"], _r["fecha"]), []).append(_r)
             for _cam in ("Senado", "Diputados", "Congreso", "Conjunta", "Sin confirmar"):
                 _filas = _grupos.get(_cam)
                 if not _filas:
@@ -1703,7 +1714,7 @@ with tab_transcripciones:
                         for t in (row["temas"] or "").split(",") if t
                     )
                     _res = _resumenes.get(row["video_id"])
-                    _camara = _clasificar_camara(row["tipo"], row["titulo"])
+                    _camara = _clasificar_camara(row["tipo"], row["titulo"], row["fecha"])
                     with st.expander(f"[{_camara}] {row['tipo']} · {row['titulo'][:90]}"):
                         st.markdown(
                             f'<div style="margin-bottom:10px;">{_temas_html}</div>'
