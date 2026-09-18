@@ -113,6 +113,8 @@ jobs:
 
       - name: Transcribir sesiones en vivo (continuo, hasta 170 min, con commits periodicos)
         env:
+          CALLMEBOT_PHONE: ${{ secrets.CALLMEBOT_PHONE }}
+          CALLMEBOT_APIKEY: ${{ secrets.CALLMEBOT_APIKEY }}
           PYTHONIOENCODING: utf-8
           YT_DLP_PROXY: socks5://127.0.0.1:40000
           FFMPEG_HTTP_PROXY: http://127.0.0.1:8118
