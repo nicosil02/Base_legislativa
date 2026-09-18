@@ -1527,6 +1527,45 @@ _OVERRIDES_CAMARA: dict[str, str] = {
 }
 
 
+@st.cache_data(ttl=None, show_spinner=False)
+def _camara_de_descripcion(video_id: str) -> str | None:
+    """Ultimo fallback: baja la DESCRIPCION real del video (no el
+    titulo) via yt-dlp - a veces el titulo omite la camara pero la
+    descripcion si la trae (caso real GEpUFqa-9hY, confirmado a mano por
+    Nicolas 2026-09-18 leyendo la descripcion en YouTube: "no, tu
+    tendrias que revisar la descripcion... y alli lo ves"). Solo se llama
+    para las pocas sesiones que ni el titulo, ni el catalogo oficial, ni
+    la agenda real resolvieron - un extract_info completo por video no es
+    gratis, no vale la pena para las que ya resuelven antes. Cacheado
+    para siempre (la descripcion de un video publicado no cambia). None
+    si falla (sin red, o el mismo bloqueo de IP de datacenter que YouTube
+    le pone a GitHub Actions/Streamlit Cloud - ver congreso_live/detector.py
+    - o la descripcion tampoco la menciona)."""
+    import os
+
+    import yt_dlp
+
+    opts = {"quiet": True, "no_warnings": True, "skip_download": True,
+            "socket_timeout": 15}
+    proxy = os.environ.get("YT_DLP_PROXY")
+    if proxy:
+        opts["proxy"] = proxy
+    try:
+        with yt_dlp.YoutubeDL(opts) as ydl:
+            info = ydl.extract_info(
+                f"https://www.youtube.com/watch?v={video_id}", download=False)
+    except Exception:
+        return None
+    from congreso_live.detector import _norm
+    t = _norm(info.get("description"))
+    en_senado, en_diputados = "senado" in t, "diputados" in t
+    if en_senado and not en_diputados:
+        return "Senado"
+    if en_diputados and not en_senado:
+        return "Diputados"
+    return None
+
+
 def _clasificar_camara(tipo: str, titulo: str, fecha: str | None = None,
                        video_id: str | None = None) -> str:
     """'Senado' / 'Diputados' / 'Congreso' (Pleno solemne/conjunto) /
@@ -1568,6 +1607,10 @@ def _clasificar_camara(tipo: str, titulo: str, fecha: str | None = None,
         camara = camara_de_agenda(get_conn(), tipo, titulo, fecha)
     except sqlite3.OperationalError:
         camara = None
+    if camara:
+        return camara
+    if video_id:
+        camara = _camara_de_descripcion(video_id)
     return camara or "Sin confirmar"
 
 
