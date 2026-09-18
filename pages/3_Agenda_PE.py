@@ -1494,6 +1494,27 @@ def _render_resumen_card(res: dict, titulo_caja: str = "Resumen",
         )
 
 
+def _clasificar_camara(tipo: str, titulo: str) -> str:
+    """'Senado' / 'Diputados' / 'Congreso' (sesion solemne/conjunta de
+    ambas) / 'Conjunta' (comision bicameral) - para agrupar la tabla
+    semanal. Un Pleno ya lo dice en `tipo` (detector.clasificar_titulo).
+    Una Comision NO trae la camara en `tipo` (es solo la palabra clave,
+    ej. "Comision: Salud") - ahi se busca en el titulo real.
+    ponytail: heuristica de texto sobre el titulo, no un campo propio -
+    si el titulo no menciona ninguna camara (comision bicameral tipica),
+    cae a "Conjunta"."""
+    if tipo.startswith("Pleno:"):
+        return tipo.split(":", 1)[1].strip()
+    from congreso_live.detector import _norm
+    t = _norm(titulo)
+    en_senado, en_diputados = "senado" in t, "diputados" in t
+    if en_senado and not en_diputados:
+        return "Senado"
+    if en_diputados and not en_senado:
+        return "Diputados"
+    return "Conjunta"
+
+
 with tab_transcripciones:
     # ---------- En vivo: transcribir los ultimos N segundos, bajo demanda ----------
     # Bajo demanda (no automatico) porque capturar audio real de un stream
@@ -1599,73 +1620,106 @@ with tab_transcripciones:
     else:
         from congreso_live.resumenes_store import list_resumenes
         _resumenes = list_resumenes()
+
+        # ---------- Esta semana: Senado / Diputados / Congreso / Conjunta ----------
+        st.markdown("##### 📅 Esta semana")
+        _hoy = dt.datetime.now(dt.timezone.utc).date()
+        _lunes = _hoy - dt.timedelta(days=_hoy.weekday())
+        _domingo = _lunes + dt.timedelta(days=6)
+        st.caption(f"Semana del {_lunes:%d/%m} al {_domingo:%d/%m}.")
+        _df_semana = df_transcripciones[
+            (df_transcripciones["fecha"] >= _lunes.isoformat())
+            & (df_transcripciones["fecha"] <= _domingo.isoformat())
+        ]
+        if _df_semana.empty:
+            st.caption("Todavía no hay sesiones transcritas esta semana.")
+        else:
+            _grupos: dict[str, list] = {}
+            for _, _r in _df_semana.iterrows():
+                _grupos.setdefault(_clasificar_camara(_r["tipo"], _r["titulo"]), []).append(_r)
+            for _cam in ("Senado", "Diputados", "Congreso", "Conjunta"):
+                _filas = _grupos.get(_cam)
+                if not _filas:
+                    continue
+                st.markdown(f"**{_cam}**")
+                for _r in _filas:
+                    _res = _resumenes.get(_r["video_id"])
+                    _que_paso = _res["resumen"] if _res else (
+                        (_r["texto"][:180] + "…") if _r["texto"] else "Resumen pendiente de generar."
+                    )
+                    _clase = "Pleno" if _r["tipo"].startswith("Pleno:") else _r["tipo"].split(":", 1)[-1].strip()
+                    st.markdown(f"- **{_r['fecha']}** · {_clase} — {_que_paso}")
+            st.markdown("")
+
         # st.expander no admite expanders anidados (cada sesion ya usa uno
         # para su propio detalle) - un toggle es el equivalente "boton que
         # muestra/oculta" sin ese problema.
-        ver_previas = st.toggle(f"Sesiones previas ({len(df_transcripciones)})")
+        ver_previas = st.toggle(f"Sesiones previas, por fecha ({len(df_transcripciones)})")
         if ver_previas:
-            for _, row in df_transcripciones.iterrows():
-                _dur = row["duracion_seg"]
-                _dur_txt = f"{int(_dur) // 3600}h {(int(_dur) % 3600) // 60}min" if _dur else "—"
-                _temas_html = "".join(
-                    f'<span class="pl-chip">{t}</span>'
-                    for t in (row["temas"] or "").split(",") if t
-                )
-                _res = _resumenes.get(row["video_id"])
-                with st.expander(f"{row['tipo']} · {row['fecha'] or '—'} · {row['titulo'][:90]}"):
-                    st.markdown(
-                        f'<div style="margin-bottom:10px;">{_temas_html}</div>'
-                        f'<div style="font-size:12px;color:var(--ink-mute);margin-bottom:10px;">'
-                        f'Duración: {_dur_txt} · '
-                        f'<a href="https://www.youtube.com/watch?v={row["video_id"]}" '
-                        f'target="_blank">Ver en YouTube ↗</a></div>',
-                        unsafe_allow_html=True,
+            for _fecha, _grupo in df_transcripciones.groupby("fecha", sort=False):
+                st.markdown(f"###### {_fecha or 'Sin fecha'} ({len(_grupo)})")
+                for _, row in _grupo.iterrows():
+                    _dur = row["duracion_seg"]
+                    _dur_txt = f"{int(_dur) // 3600}h {(int(_dur) % 3600) // 60}min" if _dur else "—"
+                    _temas_html = "".join(
+                        f'<span class="pl-chip">{t}</span>'
+                        for t in (row["temas"] or "").split(",") if t
                     )
-                    if _res:
-                        _render_resumen_card(_res)
-                    else:
-                        st.caption("Resumen pendiente de generar.")
-                    # Colapsada por defecto (no ocupar la pantalla con el
-                    # texto crudo) - st.code() en vez de st.text_area()
-                    # porque trae boton de copiar nativo (util para pegar
-                    # en otra IA), pedido real de Nicolas 2026-09-16.
-                    if st.toggle("Ver transcripción completa",
-                                 key=f"ver_transcripcion_{row['video_id']}"):
-                        st.code(row["texto"], language=None, wrap_lines=True, height=300)
-
-                    # Chat simple de preguntas sobre esta transcripcion, via
-                    # Gemini (tier gratuito - decision de Nicolas 2026-09-15
-                    # para que esto no genere costo por uso). Sin memoria
-                    # entre sesiones de usuario ni busqueda cruzada entre
-                    # transcripciones - una pregunta, un contexto: el texto
-                    # de ESTA sesion.
-                    st.markdown("**Preguntale a la transcripción**")
-                    _qa_key = f"qa_history_{row['video_id']}"
-                    if _qa_key not in st.session_state:
-                        st.session_state[_qa_key] = []
-                    for _pregunta_prev, _respuesta_prev in st.session_state[_qa_key]:
-                        st.chat_message("user").write(_pregunta_prev)
-                        st.chat_message("assistant").write(_respuesta_prev)
-                    with st.form(key=f"qa_form_{row['video_id']}", clear_on_submit=True):
-                        _pregunta_nueva = st.text_input(
-                            "Pregunta", placeholder="¿Qué se discutió sobre...?",
-                            label_visibility="collapsed",
-                            key=f"qa_input_{row['video_id']}",
+                    _res = _resumenes.get(row["video_id"])
+                    with st.expander(f"{row['tipo']} · {row['titulo'][:90]}"):
+                        st.markdown(
+                            f'<div style="margin-bottom:10px;">{_temas_html}</div>'
+                            f'<div style="font-size:12px;color:var(--ink-mute);margin-bottom:10px;">'
+                            f'Duración: {_dur_txt} · '
+                            f'<a href="https://www.youtube.com/watch?v={row["video_id"]}" '
+                            f'target="_blank">Ver en YouTube ↗</a></div>',
+                            unsafe_allow_html=True,
                         )
-                        _enviar = st.form_submit_button("Preguntar")
-                    if _enviar and _pregunta_nueva.strip():
-                        with st.spinner("Pensando..."):
-                            try:
-                                from congreso_live.qa_chat import preguntar
-                                _respuesta_nueva = preguntar(
-                                    _pregunta_nueva, row["texto"], titulo=row["titulo"],
-                                )
-                            except Exception as e:
-                                st.error(f"No se pudo responder: {e}")
-                            else:
-                                st.session_state[_qa_key].append(
-                                    (_pregunta_nueva, _respuesta_nueva))
-                                st.rerun()
+                        if _res:
+                            _render_resumen_card(_res)
+                        else:
+                            st.caption("Resumen pendiente de generar.")
+                        # Colapsada por defecto (no ocupar la pantalla con el
+                        # texto crudo) - st.code() en vez de st.text_area()
+                        # porque trae boton de copiar nativo (util para pegar
+                        # en otra IA), pedido real de Nicolas 2026-09-16.
+                        if st.toggle("Ver transcripción completa",
+                                     key=f"ver_transcripcion_{row['video_id']}"):
+                            st.code(row["texto"], language=None, wrap_lines=True, height=300)
+
+                        # Chat simple de preguntas sobre esta transcripcion, via
+                        # Gemini (tier gratuito - decision de Nicolas 2026-09-15
+                        # para que esto no genere costo por uso). Sin memoria
+                        # entre sesiones de usuario ni busqueda cruzada entre
+                        # transcripciones - una pregunta, un contexto: el texto
+                        # de ESTA sesion.
+                        st.markdown("**Preguntale a la transcripción**")
+                        _qa_key = f"qa_history_{row['video_id']}"
+                        if _qa_key not in st.session_state:
+                            st.session_state[_qa_key] = []
+                        for _pregunta_prev, _respuesta_prev in st.session_state[_qa_key]:
+                            st.chat_message("user").write(_pregunta_prev)
+                            st.chat_message("assistant").write(_respuesta_prev)
+                        with st.form(key=f"qa_form_{row['video_id']}", clear_on_submit=True):
+                            _pregunta_nueva = st.text_input(
+                                "Pregunta", placeholder="¿Qué se discutió sobre...?",
+                                label_visibility="collapsed",
+                                key=f"qa_input_{row['video_id']}",
+                            )
+                            _enviar = st.form_submit_button("Preguntar")
+                        if _enviar and _pregunta_nueva.strip():
+                            with st.spinner("Pensando..."):
+                                try:
+                                    from congreso_live.qa_chat import preguntar
+                                    _respuesta_nueva = preguntar(
+                                        _pregunta_nueva, row["texto"], titulo=row["titulo"],
+                                    )
+                                except Exception as e:
+                                    st.error(f"No se pudo responder: {e}")
+                                else:
+                                    st.session_state[_qa_key].append(
+                                        (_pregunta_nueva, _respuesta_nueva))
+                                    st.rerun()
 
 with tab_seguimiento:
     st.markdown(
