@@ -441,8 +441,12 @@ sel_cliente = fc2[1].selectbox("Cliente", [TODOS] + clientes,
     help="Fuentes relevantes para ese cliente (más las de interés general)")
 busqueda = fc2[2].text_input("Buscar en título o resumen",
     placeholder="ej. AFP, IA, agricultura")
-solo_norma = fc2[3].checkbox("📋 Solo normativa",
-    help="Decretos, resoluciones, leyes, reglamentos publicados")
+filtro_norma = fc2[3].selectbox(
+    "📋 Normativa", ["Sin normativa", "Todas", "Solo normativa"], index=0,
+    help="Decretos, resoluciones, leyes, reglamentos publicados. \"Sin "
+         "normativa\" (default) los oculta - antes solo existía \"Solo "
+         "normativa\" (mostrar únicamente) y no había forma de ocultarlos "
+         "del feed general.")
 
 df = load_noticias(
     pais=PAIS,
@@ -457,7 +461,9 @@ df = load_noticias(
 # Filtros post-clasificación (en pandas)
 if sel_tema != TODAS and not df.empty:
     df = df[df["Temas"].apply(lambda lst: sel_tema in (lst or []))]
-if solo_norma and not df.empty:
+if not df.empty and filtro_norma == "Sin normativa":
+    df = df[df["EsNormativa"] == False]  # noqa: E712
+elif not df.empty and filtro_norma == "Solo normativa":
     df = df[df["EsNormativa"] == True]  # noqa: E712
 
 _extras = []
@@ -465,8 +471,8 @@ if sel_tema != TODAS:
     _extras.append(f"tema: **{sel_tema}**")
 if sel_cliente != TODOS:
     _extras.append(f"cliente: **{sel_cliente}**")
-if solo_norma:
-    _extras.append("**📋 normativa**")
+if filtro_norma != "Todas":
+    _extras.append(f"**📋 {filtro_norma.lower()}**")
 st.markdown(f"##### {len(df):,} noticia(s) · {sel_ventana.lower()}"
     + (" · " + " · ".join(_extras) if _extras else ""))
 
