@@ -76,7 +76,16 @@ jobs:
           # "ModuleNotFoundError: No module named 'sklearn'" - el digest de
           # WhatsApp de noticias PE/EC (y el match de PL de interes de
           # Ecuador) nunca llego a mandar nada.
-          pip install requests pycryptodome openpyxl pandas scikit-learn
+          # yt-dlp: mismo patron que scikit-learn arriba - bug real
+          # 2026-09-19. clientes/alertas_pl.py solo necesita
+          # _find_db_path() (un simple resolvedor de ruta), pero esa
+          # funcion vive en congreso_live/transcripciones.py, que tiene
+          # `import yt_dlp` a nivel de modulo (lo usa OTRA funcion del
+          # mismo archivo, no _find_db_path) - yt-dlp recien se instalaba
+          # mas abajo, para el paso de transcripciones con WARP, demasiado
+          # tarde para el paso de alertas_pl que corre antes. La alerta de
+          # PL de Bayer nunca llego a chequear nada desde que se armo.
+          pip install requests pycryptodome openpyxl pandas scikit-learn yt-dlp
 
       - name: Instalar dependencias de noticias (PDF/OCR Registro Oficial EC)
         if: github.event.schedule == '0 13 * * *' || github.event_name == 'workflow_dispatch'
