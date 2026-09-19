@@ -73,3 +73,4 @@ clientes/*/*
 !clientes/MatrizPLAndinos_Bayer CROP.xlsx
 !clientes/140125 - Matriz - Matriz Legislativa y Regulatoria INCODE.xlsx
 !clientes/matrices.py
+!clientes/alertas_pl.py
