@@ -41,6 +41,39 @@ def _pl_relacionado(titulo: str | None, resumen: str | None) -> str | None:
             return pl["titulo_matriz"]
     return None
 
+
+@st.cache_data(ttl=300)
+def _seguimiento_pl_ec(dias: int = 90) -> pd.DataFrame:
+    """Una fila por PL trackeado (matriz Bayer/Syngenta/Incode) con la
+    noticia mas reciente que le matcheo en los ultimos `dias` - vista
+    persistente del mismo matching que ya dispara el WhatsApp
+    (noticias/digest.py::_matches_pl_ec), para no depender de pescar el
+    mensaje. Pedido de Nicolas 2026-09-19: "vincularla tambien a noticias
+    para poder tenerla actualizada en tiempo real" - sin tocar el Google
+    Sheet, solo lectura."""
+    trackeados = _pls_trackeados_cache()
+    if not trackeados:
+        return pd.DataFrame()
+    df_noticias = load_noticias(PAIS, ventana_sql=f"date('now', '-{dias} days')", limit=1000)
+    filas = []
+    for pl in trackeados:
+        matches = [
+            row for _, row in df_noticias.iterrows()
+            if coincide_con_noticia(pl.get("titulo_matriz"), f"{row['Título']} {row['Resumen'] or ''}",
+                                    noticia_titulo=row["Título"])
+        ]
+        # load_noticias ya viene ORDER BY fecha DESC - la primera es la mas reciente.
+        ultima = matches[0] if matches else None
+        filas.append({
+            "Cliente": "/".join(pl.get("clientes") or []) or "—",
+            "PL de interés": pl["titulo_matriz"],
+            "Última noticia": ultima["Título"] if ultima is not None else "Sin noticias recientes",
+            "Fecha": ultima["Fecha"] if ultima is not None else "",
+            "Enlace": ultima["Enlace"] if ultima is not None else "",
+            "N° noticias": len(matches),
+        })
+    return pd.DataFrame(filas)
+
 CLIENTES_DIR = Path(__file__).resolve().parent.parent / "clientes"
 
 # Una noticia con varios temas se renderiza una vez por cada grupo de tema
@@ -663,6 +696,17 @@ if _combinar_items:
         st.success(f"Combinadas {len(_ids)} noticias en una alerta para: {', '.join(_sel_cli)}.")
         st.rerun()
 
+
+# ---------- PL de interés (matriz de cliente) - colapsado, no es para todos ----------
+with st.expander("🔎 Seguimiento de PL de interés"):
+    _df_seguimiento = _seguimiento_pl_ec()
+    if _df_seguimiento.empty:
+        st.caption("No hay ningún PL trackeado todavía (ver clientes/matrices.py).")
+    else:
+        st.dataframe(
+            _df_seguimiento, hide_index=True, use_container_width=True,
+            column_config={"Enlace": st.column_config.LinkColumn("Enlace", display_text="Ver ↗")},
+        )
 
 # ---------- Footer ----------
 st.markdown('<div class="footer-rule"></div>', unsafe_allow_html=True)
