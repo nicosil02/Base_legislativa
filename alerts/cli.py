@@ -174,8 +174,11 @@ def main(argv=None):
     p = argparse.ArgumentParser(prog="alerts", description="Sistema de alertas Radar Legislativo")
     sub = p.add_subparsers(dest="cmd", required=True)
     s = sub.add_parser("send", help="Construye y manda el email")
-    s.add_argument("--slot", choices=["09", "10", "manual"], default="manual",
-                   help="Slot horario (afecta logica 9/10 AM). Default manual.")
+    s.add_argument("--slot", choices=["09", "10", "manual", "cron"], default="manual",
+                   help="Slot horario (afecta logica 9/10 AM). Default manual. "
+                        "'cron' es el backup 4x/dia de refrescar-pe.yml - bug real "
+                        "2026-09-19: no estaba en choices, asi que ESA llamada real "
+                        "fallaba con argparse en cada corrida (\"invalid choice: 'cron'\").")
     s.add_argument("--dry-run", action="store_true", help="No envia, imprime HTML")
     s.add_argument("--force", action="store_true",
                    help="Envia aunque ya se haya marcado como enviado hoy")

@@ -68,7 +68,15 @@ jobs:
       - name: Instalar dependencias
         run: |
           python -m pip install --upgrade pip
-          pip install requests pycryptodome openpyxl pandas
+          # scikit-learn: bug real 2026-09-19 - noticias/digest.py lo
+          # importa a nivel de modulo (TfidfVectorizer/cosine_similarity),
+          # pero solo se instalaba mas abajo en el paso "Reclasificar PLs"
+          # (que corre DESPUES de noticias.cli avisar). Cada corrida desde
+          # que se armo el digest (2026-09-17) crasheaba en silencio con
+          # "ModuleNotFoundError: No module named 'sklearn'" - el digest de
+          # WhatsApp de noticias PE/EC (y el match de PL de interes de
+          # Ecuador) nunca llego a mandar nada.
+          pip install requests pycryptodome openpyxl pandas scikit-learn
 
       - name: Instalar dependencias de noticias (PDF/OCR Registro Oficial EC)
         if: github.event.schedule == '0 13 * * *' || github.event_name == 'workflow_dispatch'
