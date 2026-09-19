@@ -159,6 +159,51 @@ def armar_grupos(conn: sqlite3.Connection, pais: str) -> tuple[list[list[dict]],
     return grupos[:MAX_GRUPOS_POR_PAIS], max(n["id"] for n in vistas)
 
 
+def _matches_pl_ec(vistas: list[dict]) -> list[dict]:
+    """Noticias EC nuevas (sin filtrar por relevancia/tema - un PL de agro
+    puede clasificar como "Crop", no "Coyuntura política", asi que el
+    filtro _es_relevante de arriba no aplica aca) que parecen hablar de un
+    PL que ya trackeamos (matriz Bayer Crop/Syngenta + Incode, ver
+    clientes/matrices.py) - señal temprana antes de que el portal de la
+    Asamblea (sync cada 4-6h) lo refleje. Pedido real de Nicolas
+    2026-09-18/19: conectar esto a WhatsApp, no solo al tag visual que ya
+    existia en pages/6_Noticias_EC.py."""
+    from clientes.matrices import coincide_con_noticia, pls_trackeados_ec
+
+    trackeados = pls_trackeados_ec()
+    if not trackeados:
+        return []
+    # Agrupado por PL (no un renglon por articulo) - probado en vivo
+    # 2026-09-19 contra el corpus real: sin esto, un solo PL con cobertura
+    # de varios medios (COIP, INIAP) inundaba el mensaje con 34 renglones
+    # para ~5 PL distintos. Mismo problema real que ya motivo el agrupado
+    # por similitud del digest general, aca resuelto mas simple: la CLAVE
+    # de agrupacion ya se sabe (el propio PL matcheado), no hace falta
+    # TF-IDF.
+    por_pl: dict[str, dict] = {}
+    for n in vistas:
+        texto = f"{n['titulo'] or ''} {n['resumen'] or ''}"
+        for pl in trackeados:
+            if coincide_con_noticia(pl.get("titulo_matriz"), texto, noticia_titulo=n["titulo"]):
+                clave = pl["titulo_matriz"]
+                if clave in por_pl:
+                    por_pl[clave]["n_articulos"] += 1
+                else:
+                    por_pl[clave] = {**n, "pl_titulo": clave, "clientes": pl.get("clientes", []),
+                                     "n_articulos": 1}
+                break
+    # Mismo tope que armar_grupos - mas recientes primero (por id de la
+    # noticia representante de cada PL).
+    salida = sorted(por_pl.values(), key=lambda n: n["id"], reverse=True)
+    return salida[:MAX_GRUPOS_POR_PAIS]
+
+
+def _formatear_match_pl(n: dict) -> str:
+    clientes = "/".join(n.get("clientes") or []) or "cliente"
+    extra = f" (+{n['n_articulos'] - 1} más)" if n.get("n_articulos", 1) > 1 else ""
+    return f"- [{clientes}] {n['pl_titulo']}: {n['titulo']}{extra}\n  {n['url']}"
+
+
 def _formatear_grupo(g: list[dict]) -> str:
     principal = g[0]
     linea = f"- {principal['titulo']}"
@@ -169,28 +214,39 @@ def _formatear_grupo(g: list[dict]) -> str:
     return linea
 
 
-def formatear_mensaje(grupos_pe: list[list[dict]], grupos_ec: list[list[dict]]) -> str:
-    """'' si no hay nada relevante en ninguno de los dos paises."""
+def formatear_mensaje(grupos_pe: list[list[dict]], grupos_ec: list[list[dict]],
+                      matches_pl_ec: list[dict] = ()) -> str:
+    """'' si no hay nada relevante en ninguno de los dos paises ni matches
+    de PL trackeados de Ecuador."""
     secciones = []
     if grupos_pe:
         secciones.append("*PERÚ*\n" + "\n".join(_formatear_grupo(g) for g in grupos_pe))
     if grupos_ec:
         secciones.append("*ECUADOR*\n" + "\n".join(_formatear_grupo(g) for g in grupos_ec))
+    if matches_pl_ec:
+        secciones.append("*PL DE INTERÉS (ECUADOR)*\n" +
+                         "\n".join(_formatear_match_pl(n) for n in matches_pl_ec))
     if not secciones:
         return ""
     return "📰 Noticias relevantes\n\n" + "\n\n".join(secciones)
 
 
 def run(conn: sqlite3.Connection, dry_run: bool = False) -> dict:
-    """Corre el digest completo: arma grupos PE+EC, manda por WhatsApp si
-    hay algo, y avanza el estado (siempre, haya o no algo relevante - lo
-    visto sin relevancia no debe re-escanearse en la proxima corrida)."""
+    """Corre el digest completo: arma grupos PE+EC, cruza las noticias EC
+    nuevas contra los PL trackeados de cliente, manda por WhatsApp si hay
+    algo, y avanza el estado (siempre, haya o no algo relevante - lo visto
+    sin relevancia no debe re-escanearse en la proxima corrida)."""
     from congreso_live.notify import enviar_whatsapp
 
     init_schema(conn)
     grupos_pe, ultimo_pe = armar_grupos(conn, "PE")
     grupos_ec, ultimo_ec = armar_grupos(conn, "EC")
-    mensaje = formatear_mensaje(grupos_pe, grupos_ec)
+    # Mismo lote de noticias EC nuevas que armar_grupos ya leyo (antes de
+    # avanzar el estado abajo) - re-consultado aca porque el match de PL
+    # NO pasa por el filtro _es_relevante (ver _matches_pl_ec).
+    vistas_ec = _noticias_desde(conn, "EC", _ultimo_id(conn, "EC"))
+    matches_pl = _matches_pl_ec(vistas_ec)
+    mensaje = formatear_mensaje(grupos_pe, grupos_ec, matches_pl)
 
     enviado = False
     if mensaje and not dry_run:
@@ -202,7 +258,7 @@ def run(conn: sqlite3.Connection, dry_run: bool = False) -> dict:
 
     return {
         "grupos_pe": len(grupos_pe), "grupos_ec": len(grupos_ec),
-        "mensaje": mensaje, "enviado": enviado,
+        "matches_pl_ec": len(matches_pl), "mensaje": mensaje, "enviado": enviado,
     }
 
 
@@ -284,5 +340,47 @@ def _demo():
     print("OK digest: agrupa notas del mismo evento y no repite lo ya visto")
 
 
+def _test_matches_pl_ec():
+    """Caso real verificado en vivo 2026-09-13 (ver clientes/matrices.py):
+    una noticia sobre el INIAP matchea el PL trackeado por sigla, aunque
+    la noticia no sea "Coyuntura política" (no pasa por _es_relevante) -
+    y aparece en su propia seccion del mensaje de WhatsApp."""
+    from unittest.mock import patch
+
+    import noticias.digest as dg
+
+    trackeados = [{"pl_numero": "473129", "titulo_matriz":
+                   "Proyecto de ley reformatoria a la Ley Constitutiva del INIAP",
+                   "clientes": ["bayer", "syngenta"]}]
+    vistas = [
+        {"id": 1, "titulo": "ECUADOR: Comisión aprueba informe para reformar la Ley del INIAP",
+         "resumen": None, "url": "http://x/1", "fuente": "Medio X", "tags": None},
+        # 2do articulo sobre el MISMO PL, otro medio - debe agruparse con el
+        # primero (bug real 2026-09-19: sin agrupar, 34 noticias reales de
+        # apenas ~5 PL distintos inundaban el mensaje de WhatsApp).
+        {"id": 2, "titulo": "Pleno tramitó en primer debate la normativa para modernizar el INIAP",
+         "resumen": None, "url": "http://x/2", "fuente": "Medio Z", "tags": None},
+        {"id": 3, "titulo": "Presidenta Fujimori entrega ayuda humanitaria a población de Purús",
+         "resumen": None, "url": "http://x/3", "fuente": "Medio Y", "tags": None},
+    ]
+    with patch("clientes.matrices.pls_trackeados_ec", lambda: trackeados):
+        matches = dg._matches_pl_ec(vistas)
+    assert len(matches) == 1, matches  # los 2 articulos de INIAP se agrupan en 1
+    assert matches[0]["id"] == 1, matches  # se queda con el primero visto como representante
+    assert matches[0]["n_articulos"] == 2, matches
+    assert matches[0]["pl_titulo"] == trackeados[0]["titulo_matriz"]
+
+    msg = dg.formatear_mensaje([], [], matches)
+    assert "*PL DE INTERÉS (ECUADOR)*" in msg
+    assert "INIAP" in msg
+    assert "+1 más" in msg
+    assert "bayer/syngenta" in msg
+
+    # Sin matches, esta seccion no aparece (y sin nada mas, mensaje vacio).
+    assert dg.formatear_mensaje([], [], []) == ""
+    print("OK digest: matchea PL trackeado (INIAP) fuera del filtro de Coyuntura política")
+
+
 if __name__ == "__main__":
     _demo()
+    _test_matches_pl_ec()
