@@ -12,10 +12,25 @@ name: Backfill automatico (sesiones perdidas)
 #
 # Mismo esquema WARP que vigilar-congreso.yml/backfill-vod.yml (YouTube
 # bloquea IPs de datacenter, WARP lo esquiva).
+#
+# El `schedule:` nativo de GitHub NO disparo confiable (bug real
+# 2026-09-19: 25+ min de atraso sobre el primer horario esperado, mismo
+# problema ya documentado en vigilar-congreso.yml a 10 min de frecuencia -
+# ahi se arreglo con un pinger externo, pero acá Nicolas ya no tiene el
+# token a mano). Se agrega el trigger `push` sobre data/.backfill_trigger
+# como disparador real: una rutina programada en la nube (no este repo,
+# ver Claude routines) solo actualiza ese archivo y hace push cada 6h -
+# mismo mecanismo (git push) que ya usan de forma confiable las rutinas
+# de "Resumir transcripciones"/"Redactar alertas", sin necesitar ningun
+# token de GitHub nuevo. `schedule:` queda igual, por si algun dia se
+# pone confiable solo.
 
 on:
+  push:
+    paths:
+      - 'data/.backfill_trigger'
   schedule:
-    - cron: '20 */6 * * *'  # cada 6 horas, en un minuto que no compite con otros cron
+    - cron: '20 */6 * * *'  # cada 6 horas - no confiable solo, ver comentario arriba
   workflow_dispatch:
     inputs:
       max:
