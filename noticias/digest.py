@@ -214,10 +214,23 @@ def _formatear_grupo(g: list[dict]) -> str:
     return linea
 
 
+# CallMeBot manda el mensaje via GET (la URL entera lleva el texto
+# codificado como query param) - bug real 2026-09-19: la primera corrida
+# real de este digest (backlog acumulado desde el 17/09 por el bug de
+# sklearn de mas abajo) armo un mensaje de 13000+ caracteres y CallMeBot
+# lo rechazo con "414 Request-URI Too Large" - fallo TOTAL, no se mando
+# nada. Peor: run() avanza el estado igual haya fallado el envio o no,
+# asi que ese contenido se perdia para siempre (nunca se reintentaba).
+# Recortar duro a un tamano seguro es preferible a perder el mensaje
+# entero - MAX_GRUPOS_POR_PAIS ya prioriza lo mas reciente primero.
+MENSAJE_MAX_CHARS = 1500
+
+
 def formatear_mensaje(grupos_pe: list[list[dict]], grupos_ec: list[list[dict]],
                       matches_pl_ec: list[dict] = ()) -> str:
     """'' si no hay nada relevante en ninguno de los dos paises ni matches
-    de PL trackeados de Ecuador."""
+    de PL trackeados de Ecuador. Recorta a MENSAJE_MAX_CHARS si hace falta -
+    ver comentario de la constante."""
     secciones = []
     if grupos_pe:
         secciones.append("*PERÚ*\n" + "\n".join(_formatear_grupo(g) for g in grupos_pe))
@@ -228,7 +241,10 @@ def formatear_mensaje(grupos_pe: list[list[dict]], grupos_ec: list[list[dict]],
                          "\n".join(_formatear_match_pl(n) for n in matches_pl_ec))
     if not secciones:
         return ""
-    return "📰 Noticias relevantes\n\n" + "\n\n".join(secciones)
+    mensaje = "📰 Noticias relevantes\n\n" + "\n\n".join(secciones)
+    if len(mensaje) > MENSAJE_MAX_CHARS:
+        mensaje = mensaje[:MENSAJE_MAX_CHARS].rsplit("\n", 1)[0] + "\n…(recortado, quedaba más - ver la app)"
+    return mensaje
 
 
 def run(conn: sqlite3.Connection, dry_run: bool = False) -> dict:
