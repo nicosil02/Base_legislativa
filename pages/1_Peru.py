@@ -522,6 +522,28 @@ def kpi_totals() -> dict[str, int]:
     }
 
 
+@st.cache_data(ttl=300)
+def documentos_hoy() -> int:
+    """PLs + noticias detectados HOY (Peru) - gap real vs Dapper identificado
+    2026-09-20 (ver memoria dapper-gap-analysis): ellos muestran un contador
+    de "documentos publicados hoy" en el dashboard. Dato barato, ya lo
+    tenemos - solo faltaba mostrarlo."""
+    conn = get_conn()
+    pls_hoy = conn.execute(
+        "SELECT COUNT(*) FROM proyectos WHERE per_par_id=? AND date(first_seen_at)=date('now')",
+        (PER_PAR_ID_ACTUAL,),
+    ).fetchone()[0]
+    noticias_hoy = 0
+    try:
+        noticias_hoy = conn.execute(
+            "SELECT COUNT(*) FROM noticias n JOIN noticias_fuentes f ON f.id=n.fuente_id "
+            "WHERE f.pais='PE' AND date(n.first_seen_at)=date('now')"
+        ).fetchone()[0]
+    except sqlite3.OperationalError:
+        pass
+    return pls_hoy + noticias_hoy
+
+
 @st.cache_data(ttl=60)
 def last_sync() -> dict | None:
     conn = get_conn()
@@ -853,9 +875,11 @@ if _live.get("inserted", 0) > 0:
 
 # ---------- KPIs ----------
 totals = kpi_totals()
-cols = st.columns(len(totals))
+cols = st.columns(len(totals) + 1)
 for col, (label, val) in zip(cols, totals.items()):
     col.metric(label, f"{val:,}")
+cols[-1].metric("Nuevos hoy", f"{documentos_hoy():,}",
+                 help="Proyectos de ley + noticias detectados hoy (Perú)")
 
 st.markdown("")
 
