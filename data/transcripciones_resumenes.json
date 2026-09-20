@@ -1157,16 +1157,16 @@
   },
   {
     "video_id": "FoREUbCDDkE",
-    "resumen": "La Comision de Asuntos de Salud, Educacion, Cultura, Mujer, Desarrollo Social y Digital del Senado realizo su segunda sesion ordinaria el 7 de septiembre de 2026, con 11 senadores titulares presentes (quorum minimo de 7) y varios reemplazos formalizados por oficio. Tras aprobar sin observaciones el acta de la sesion anterior (31 de agosto), en la estacion de informes el senador Victor Noriega Reategui anuncio la participacion del epidemiologo Javier Alburu Guarda para exponer sobre el fenomeno El Nino global y costero, y otro congresista comenzaba a presentar un informe propio cuando la transcripcion capturada corta abruptamente aca, probablemente por una interrupcion tecnica en la captura - no hay evidencia de que la sesion siguiera en curso a esta altura.",
+    "resumen": "La Comision de Asuntos de Salud, Educacion, Cultura, Mujer, Desarrollo Social y Digital del Senado realizo su segunda sesion ordinaria el 7 de septiembre de 2026, con 11 senadores titulares presentes (quorum minimo de 7) y varios reemplazos formalizados por oficio. Tras aprobar sin observaciones el acta de la sesion anterior (31 de agosto), en la estacion de informes el senador Victor Noriega Reategui anuncio la participacion del epidemiologo Javier Alburu Guarda para exponer sobre el fenomeno El Nino global y costero, y otro congresista comenzaba a presentar un informe propio cuando la transcripcion capturada corta abruptamente aca; la duracion capturada no volvio a crecer en las horas siguientes, por lo que la sesion ya termino o la captura se corto por un problema tecnico, sin evidencia de que siguiera en vivo despues de ese punto.",
     "ideas_clave": [
       "11 senadores titulares presentes, por encima del quorum requerido de 7, con reemplazos formalizados por oficio: senador Andres Ramos Hilcas reemplaza a la senadora Silvana Robles (oficio 128), senadora Carla Cheffer Cuculiza reemplaza al senador Aguinaga Recuenco (oficio 08), y senador Absalon Vazquez Villanueva reemplaza a la senadora Jaur de Aguayo (oficio 050).",
       "Se aprobo sin observaciones el acta de la primera sesion ordinaria realizada el 31 de agosto de 2026.",
       "El senador Victor Noriega Reategui (oficio 248) informo sobre la invitacion al epidemiologo Dr. Javier Alburu Guarda, especialista en salud publica, para exponer en la comision sobre el fenomeno El Nino global y costero.",
       "Otro congresista solicito la palabra para presentar un informe propio y comenzaba su exposicion cuando la transcripcion capturada se corta abruptamente.",
       "No se registran votaciones ni dictamenes aprobados en el tramo capturado de la sesion.",
-      "La captura de esta transcripcion quedo detenida en 685 segundos desde el 19/09 a las 18:52 UTC sin volver a crecer, lo que indica que la sesion ya termino o la captura se corto por un problema tecnico, no que siga en vivo."
+      "La captura de esta transcripcion permanece detenida en 685 segundos (sin crecer desde al menos el 19/09), lo que confirma que la sesion ya termino o que la captura se corto por un problema tecnico, no que siga en vivo."
     ],
-    "generated_at": "2026-09-19T22:51:47Z",
+    "generated_at": "2026-09-20T03:50:27Z",
     "duracion_seg": 685,
     "agenda_cumplida": null
   },
