@@ -37,7 +37,7 @@ import sqlite3
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
-from noticias.temas import clasificar
+from noticias.temas import FUENTES_MULTIPAIS, clasificar, pais_por_contenido
 
 UMBRAL_SIMILITUD = 0.35
 MAX_GRUPOS_POR_PAIS = 12
@@ -69,19 +69,33 @@ def _guardar_ultimo_id(conn: sqlite3.Connection, pais: str, ultimo_id: int) -> N
 
 
 def _noticias_desde(conn: sqlite3.Connection, pais: str, desde_id: int) -> list[dict]:
+    """Trae candidatos de `pais`, mas los de fuentes multi-pais (ver
+    FUENTES_MULTIPAIS en noticias/temas.py) reclasificados por contenido -
+    bug real 2026-09-20: "DPL News Ecuador" cubre TODO LATAM, y una
+    noticia 100% peruana (renuncia de Rafael Rey, Ministro de Transportes)
+    quedo archivada como si fuera de Ecuador solo porque asi esta
+    catalogada la fuente, no el articulo."""
+    placeholders = ",".join("?" for _ in FUENTES_MULTIPAIS)
     filas = conn.execute(
-        """
-        SELECT n.id, n.titulo, n.resumen, n.url, f.nombre AS fuente, n.tags
+        f"""
+        SELECT n.id, n.titulo, n.resumen, n.url, f.nombre AS fuente, n.tags, f.pais
         FROM noticias n JOIN noticias_fuentes f ON f.id = n.fuente_id
-        WHERE f.pais = ? AND f.activa = 1 AND n.id > ?
+        WHERE (f.pais = ? OR f.nombre IN ({placeholders}))
+          AND f.activa = 1 AND n.id > ?
         ORDER BY n.id
         """,
-        (pais, desde_id),
+        (pais, *FUENTES_MULTIPAIS, desde_id),
     ).fetchall()
-    return [
-        {"id": r[0], "titulo": r[1], "resumen": r[2], "url": r[3], "fuente": r[4], "tags": r[5]}
-        for r in filas
-    ]
+    salida = []
+    for r in filas:
+        fuente, pais_fuente = r[4], r[6]
+        pais_real = (pais_por_contenido(r[1], r[2], pais_fuente)
+                     if fuente in FUENTES_MULTIPAIS else pais_fuente)
+        if pais_real != pais:
+            continue
+        salida.append({"id": r[0], "titulo": r[1], "resumen": r[2], "url": r[3],
+                        "fuente": fuente, "tags": r[5]})
+    return salida
 
 
 def _es_relevante(n: dict) -> bool:
@@ -425,6 +439,39 @@ def _test_matches_pl_ec():
     print("OK digest: matchea PL trackeado (INIAP) fuera del filtro de Coyuntura política")
 
 
+def _test_pais_multipais():
+    """Caso real 2026-09-20: 'DPL News Ecuador' cubre todo LATAM y estaba
+    catalogada con pais='EC' - una noticia 100% peruana (Rafael Rey deja
+    el MTC) quedaba archivada como si fuera de Ecuador y nunca llegaba al
+    digest de Peru. `_noticias_desde` ahora reclasifica por contenido las
+    fuentes de FUENTES_MULTIPAIS."""
+    conn = sqlite3.connect(":memory:")
+    conn.execute("""CREATE TABLE noticias_fuentes (id INTEGER PRIMARY KEY,
+        pais TEXT, nombre TEXT, categoria TEXT, activa INTEGER DEFAULT 1)""")
+    conn.execute("""CREATE TABLE noticias (id INTEGER PRIMARY KEY,
+        fuente_id INTEGER, titulo TEXT, resumen TEXT, url TEXT, tags TEXT)""")
+    conn.execute("INSERT INTO noticias_fuentes VALUES (1,'EC','DPL News Ecuador','Temas KYC/AML',1)")
+    conn.execute("INSERT INTO noticias_fuentes VALUES (2,'EC','El Universo','Coyuntura Politica',1)")
+    filas = [
+        # Real (titulo real, DPL News Ecuador, catalogada pais='EC') - debe
+        # aparecer en el stream de PE, no en el de EC.
+        (1, 1, "Rafael Rey deja el Ministerio de Transportes y Comunicaciones de Perú", None, "http://a/1", None),
+        # Real de Ecuador, misma fuente multi-pais - debe seguir en EC.
+        (2, 1, "Ecuador: Fiscalía pidió vincular a la esposa de Aquiles Álvarez al caso Goleada", None, "http://a/2", None),
+        # Fuente normal (no multi-pais), sin cambios de comportamiento.
+        (3, 2, "Daniel Noboa llega a Estados Unidos para participar en la Asamblea General de la ONU", None, "http://a/3", None),
+    ]
+    conn.executemany("INSERT INTO noticias (id, fuente_id, titulo, resumen, url, tags) "
+                     "VALUES (?, ?, ?, ?, ?, ?)", filas)
+
+    vistas_pe = _noticias_desde(conn, "PE", 0)
+    vistas_ec = _noticias_desde(conn, "EC", 0)
+    assert {n["id"] for n in vistas_pe} == {1}, vistas_pe
+    assert {n["id"] for n in vistas_ec} == {2, 3}, vistas_ec
+    print("OK digest: reclasifica por contenido las fuentes multi-pais (caso real Rafael Rey/DPL)")
+
+
 if __name__ == "__main__":
     _demo()
     _test_matches_pl_ec()
+    _test_pais_multipais()
