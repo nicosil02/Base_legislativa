@@ -244,3 +244,134 @@ def es_normativa(titulo: str | None, resumen: str | None = None) -> bool:
 
 def todos_los_temas() -> list[str]:
     return list(TEMAS.keys())
+
+
+# ============================================================
+# Deteccion de pais por contenido (funcionarios/instituciones/gentilicio)
+# ============================================================
+#
+# Bug real 2026-09-20: Nicolas reporto que una noticia 100% peruana (la
+# renuncia de Rafael Rey como Ministro de Transportes) nunca le llego -
+# la agarro "DPL News Ecuador" (dplnews.com, cubre TODO LATAM, no solo
+# Ecuador) y quedo archivada bajo pais="EC" porque noticias_fuentes.pais
+# es un dato de LA FUENTE, no del articulo. Peor: DPL esta cargado 3
+# veces en el catalogo (DPL News Peru->PE, DPL News Ecuador->EC, DPL Tech
+# Ecuador->EC), las 3 apuntando al MISMO feed (dplnews.com/feed/) - como
+# noticias.url es UNIQUE, cada articulo se lo queda la primera de las 3
+# filas que lo sincronice primero, asi que el pais que le toca es
+# esencialmente al azar, no por contenido real.
+#
+# Estas listas son señales ESTABLES a proposito (gentilicio + nombre del
+# presidente actual + siglas de instituciones que no cambian de nombre
+# cada reorganizacion de gabinete) en vez de listar ministros - un
+# ministro puede renunciar el mismo dia que sale la noticia (literalmente
+# el caso que motivo esto).
+_SEÑALES_PAIS: dict[str, list[str]] = {
+    "PE": [
+        "peru", "peruano", "peruana", "peruanos", "peruanas",
+        "fujimori", "galarreta",
+        "congreso de la republica", "congreso peruano",
+        "camara de diputados del peru", "senado de la republica del peru",
+        "senado del peru",
+        # ponytail (2026-09-20): "PRODUCE" (Ministerio de la Produccion) se
+        # saco - choca con el verbo comun "produce" (ej. "Solana produce
+        # nuevos bloques", nota de cripto sin nada que ver con Peru,
+        # verificado en vivo). "camara de diputados"/"senado de la
+        # republica" a secas tambien se sacaron - son nombres genericos
+        # que usan MUCHOS paises de LATAM (Paraguay, Argentina, Chile...),
+        # no exclusivos de Peru; solo cuentan calificados con "del peru".
+        "MEF", "MTC", "MINSA", "MIDAGRI", "MINCETUR", "MINEDU",
+        "RENIEC", "ONPE", "JNE", "SUNAT", "BCRP", "PCM", "essalud", "digemid",
+    ],
+    "EC": [
+        "ecuador", "ecuatoriano", "ecuatoriana", "ecuatorianos", "ecuatorianas",
+        "noboa", "maria jose pinto",
+        "asamblea nacional",
+        "IESS", "SRI", "ARCSA", "MSP", "registro oficial", "senae", "senescyt",
+    ],
+}
+_PATTERNS_PAIS = {p: _compile(kws) for p, kws in _SEÑALES_PAIS.items()}
+
+# Veto: nombres de OTROS paises de LATAM que las fuentes multi-pais
+# (Criptonoticias, DPL) tambien cubren. Bug real 2026-09-20: "MINSA"
+# tambien es el nombre del Ministerio de Salud de NICARAGUA, y "Camara de
+# Diputados" es generico - sin este veto, una nota 100% sobre Nicaragua o
+# Paraguay que de pasada nombra su propio ministerio/camara se colaba
+# como si fuera de Peru. Si el texto nombra a otro pais y NO nombra a
+# Peru/Ecuador por su nombre, no hay señal confiable - se descarta el
+# puntaje de PE/EC entero y se usa `pais_fuente` (fallback de siempre).
+_OTROS_PAISES = _compile([
+    "nicaragua", "paraguay", "bolivia", "colombia", "mexico", "chile",
+    "argentina", "venezuela", "brasil", "espana", "panama", "costa rica",
+    "uruguay", "cuba", "honduras", "el salvador", "guatemala",
+    "republica dominicana",
+])
+
+# Fuentes cuyo `noticias_fuentes.pais` catalogado NO es confiable como
+# pais del articulo - medios/feeds regionales LATAM, verificados en vivo
+# 2026-09-20 (dominio no especifico a un pais, o el mismo feed cargado
+# bajo mas de un pais en el catalogo).
+FUENTES_MULTIPAIS: set[str] = {
+    "DPL News Ecuador", "DPL News Peru", "DPL Tech Ecuador",
+    "Bloomberg en Linea", "Criptonoticias",
+    "Asociacion Latinoamericana de Internet", "Ebiz Latam",
+}
+
+
+def pais_por_contenido(titulo: str | None, resumen: str | None,
+                        pais_fuente: str) -> str:
+    """Pais real de la noticia por menciones a funcionarios/instituciones
+    estables de cada pais. Empate (incluido 0-0, el caso comun de una nota
+    que no menciona ningun funcionario) -> se queda con `pais_fuente` sin
+    cambios, es el comportamiento de siempre."""
+    texto = _norm(f"{titulo or ''} {resumen or ''}")
+    if not texto.strip():
+        return pais_fuente
+    puntos = {p: len(pat.findall(texto)) for p, pat in _PATTERNS_PAIS.items()}
+    pe, ec = puntos.get("PE", 0), puntos.get("EC", 0)
+    # Veto: si se nombra a OTRO pais de LATAM y la señal ganadora es una
+    # sola sigla ambigua (ej. "MINSA" tambien es de Nicaragua), no alcanza -
+    # se necesitan 2+ señales, o ninguna mencion de otro pais, para confiar.
+    if _OTROS_PAISES.search(texto) and max(pe, ec) <= 1:
+        return pais_fuente
+    if pe > ec:
+        return "PE"
+    if ec > pe:
+        return "EC"
+    return pais_fuente
+
+
+def _demo():
+    # Caso real 2026-09-20 que motivo esto: DPL News Ecuador (catalogada
+    # pais='EC') traia esta noticia 100% peruana.
+    assert pais_por_contenido(
+        "Rafael Rey deja el Ministerio de Transportes y Comunicaciones de Perú",
+        None, "EC") == "PE"
+    assert pais_por_contenido(
+        "Noboa llega a Estados Unidos para participar en la Asamblea General de la ONU",
+        None, "PE") == "EC"
+    # Sin señales de ningun pais -> se queda con lo que ya tenia la fuente.
+    assert pais_por_contenido("El chavismo y la oposición continúan el diálogo",
+                               None, "EC") == "EC"
+    assert pais_por_contenido(None, None, "PE") == "PE"
+    # Falsos positivos reales 2026-09-20 (verificados contra 30 dias de
+    # produccion, fuentes multi-pais tipo Criptonoticias/DPL que cubren
+    # TODO LATAM, no solo Peru/Ecuador):
+    assert pais_por_contenido(
+        "Solana gana velocidad gracias a su nueva actualización",
+        "La activación de SIMD-0525 redujo a 250 ms el tiempo de slot, el "
+        "intervalo en que Solana produce nuevos bloques.", "EC") == "EC", \
+        '"produce" (verbo) no debe matchear el Ministerio de la Produccion (PE)'
+    assert pais_por_contenido(
+        "Nicaragua fortalece su preparación para la IA en salud",
+        "el Ministerio de Salud de Nicaragua (MINSA) y la OPS...", "EC") == "EC", \
+        "MINSA tambien es de Nicaragua - una sola sigla ambigua no alcanza si se nombra otro pais"
+    assert pais_por_contenido(
+        "Desmantelan 2 granjas clandestinas de minería de Bitcoin en Paraguay",
+        "La Cámara de Diputados solicitó a la ANDE informes...", "EC") == "EC", \
+        '"camara de diputados" a secas es generico en LATAM, no exclusivo de Peru'
+    print("OK temas: pais_por_contenido detecta por funcionarios/instituciones estables")
+
+
+if __name__ == "__main__":
+    _demo()
