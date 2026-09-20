@@ -1,24 +1,19 @@
 name: Alertas diarias Radar Legislativo
 
 on:
-  schedule:
-    # Triple-trigger para maximizar probabilidad de llegada cerca de 9 AM Lima.
-    # GH Actions cron atrasa 0-3h aleatorio. already_sent_today previene
-    # duplicados: el primero que llegue envia, los demas son no-ops.
-    #
-    #   12 UTC (7 AM Lima) + 0-3h atraso = 7-10 AM Lima  ← primer intento
-    #   13 UTC (8 AM Lima) + 0-3h atraso = 8-11 AM Lima  ← retry
-    #   14 UTC (9 AM Lima) + 0-3h atraso = 9-12 PM Lima  ← ultimo retry
-    #
-    # En la practica casi siempre llega entre 8-10 AM Lima. Si los 3 fallan,
-    # refrescar-pe.yml envia como backup en su corrida de 13 UTC.
-    - cron: '0 12 * * *'
-    - cron: '0 13 * * *'
-    - cron: '0 14 * * *'
+  # Cron RETIRADO 2026-09-20: este triple-trigger (12/13/14 UTC) era el
+  # intento original de mandar 1x/dia cerca de 9 AM Lima, pero GH Actions
+  # atrasa crons 0-3h en horas pico - por eso refrescar-pe.yml (cron
+  # horario, ya probado confiable en este mismo repo) paso a ser el envio
+  # real, y este quedaba como "backup del backup" redundante. Ademas, el
+  # rediseno de esa misma fecha (2 horarios fijos am/pm - ver alerts/cli.py)
+  # cambio los --slot validos de "09"/"10" a "am"/"pm"/"manual"; el
+  # `slot=09` hardcodeado de mas abajo hubiera roto con argparse en cada
+  # corrida. Se deja SOLO workflow_dispatch para pruebas manuales.
   workflow_dispatch:
     inputs:
       slot:
-        description: 'Slot (09, 10, manual)'
+        description: 'Slot (am, pm, manual)'
         required: false
         default: 'manual'
       force:
@@ -121,16 +116,12 @@ jobs:
               echo "force_flag=" >> $GITHUB_OUTPUT
             fi
           else
-            # Usar el CRON SCHEDULE que dispara este run, NO la hora UTC actual.
-            # GitHub Actions atrasa crons 0-3h en horas pico → si calculamos
-            # por hora actual, cron de 14:00 que corre a las 16:30 daria
-            # HOUR_UTC=16 (ni 14 ni 15) → slot=manual erroneamente.
-            # github.event.schedule devuelve la expresion cron exacta que
-            # dispara el run.
-            # Solo hay 1 cron (0 11 * * *). slot=09 nominal.
-            echo "slot=09" >> $GITHUB_OUTPUT
+            # Sin cron activo (ver comentario en `on:` arriba) - este
+            # workflow ya no deberia dispararse por schedule, pero si
+            # alguna vez se reactiva un cron aca, "manual" es el unico
+            # slot que siempre es valido sin marcar estado am/pm.
+            echo "slot=manual" >> $GITHUB_OUTPUT
             echo "force_flag=" >> $GITHUB_OUTPUT
-            echo "Cron schedule: $SCHEDULE"
           fi
 
       - name: Construir y enviar alerta

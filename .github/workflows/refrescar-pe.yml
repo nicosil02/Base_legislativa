@@ -229,12 +229,21 @@ jobs:
               || echo "[warn] noticias sync fallo, sigo"
           # Digest por WhatsApp de lo nuevo y relevante (PE+EC), agrupando
           # cobertura duplicada del mismo evento - ver noticias/digest.py.
-          # Nicolas 2026-09-17: no quiere entrar a la app para enterarse de
-          # que hay noticias nuevas. Solo manda algo si encuentra algo
-          # relevante desde la ultima corrida (15x/dia, como el resto de
-          # este paso) - la mayoria de las corridas no mandan nada.
-          timeout 120 python -X utf8 -m noticias.cli avisar \
-              || echo "[warn] noticias avisar fallo, sigo"
+          # Redisenado 2026-09-20 (Nicolas: "las alertas... me llegan muy
+          # seguido... a veces no me dice nada" + "debería llegar 2 veces
+          # al día, 1 a las 8-9am y otra a las 2pm"): antes disparaba en
+          # cada corrida (15x/dia) y solo mandaba algo si habia contenido -
+          # silencio ambiguo el resto de las veces. Ahora SOLO corre en
+          # los 2 horarios fijos (9am/2pm Lima) o en dispatch manual, y
+          # noticias/digest.py::run() siempre manda algo (aunque sea "sin
+          # novedades") en esos 2 horarios - las corridas intermedias
+          # siguen sincronizando datos igual, solo no vuelven a avisar.
+          if [ "$SCHEDULE" = "0 14 * * *" ] || [ "$SCHEDULE" = "0 19 * * *" ] || [ "$IS_DISPATCH" = "true" ]; then
+            timeout 120 python -X utf8 -m noticias.cli avisar \
+                || echo "[warn] noticias avisar fallo, sigo"
+          else
+            echo "[avisar] fuera de los horarios fijos (9am/2pm Lima) - skip"
+          fi
           # Backfill de fechas: sync solo re-toca los items MAS RECIENTES
           # por fuente, asi que una fila que quedo con fecha_pub NULL (fix
           # de codigo posterior a su insercion, o fuente sin <time> en su
@@ -349,16 +358,24 @@ jobs:
           RESEND_FROM: ${{ secrets.RESEND_FROM }}
           ALERT_RECIPIENT: ${{ secrets.ALERT_RECIPIENT }}
           PYTHONIOENCODING: utf-8
+          SCHEDULE: ${{ github.event.schedule }}
+          IS_DISPATCH: ${{ github.event_name == 'workflow_dispatch' }}
         run: |
-          # Backup confiable del workflow daily-alerts.yml — sus crones tienen
-          # latencias muy variables (>3h en GitHub Actions). Este workflow
-          # corre 4x/dia con timing mas consistente. Si la alerta ya se envio
-          # hoy (slot=09, slot=10 o slot=cron), alerts.cli skip via
-          # already_sent_today. Si no, envia.
+          # Redisenado 2026-09-20 (mismo pedido que el digest de WhatsApp
+          # arriba: 2 horarios fijos por dia, 9am y 2pm Lima, en vez de
+          # 1x/dia con retry). Ver alerts/cli.py para la logica completa -
+          # cada slot SIEMPRE envia (con o sin contenido) salvo que ya se
+          # haya mandado ese slot especifico hoy.
           if [ -z "$RESEND_API_KEY" ]; then
             echo "[alert-backup] sin RESEND_API_KEY, skip"
+          elif [ "$SCHEDULE" = "0 14 * * *" ]; then
+            python -X utf8 -m alerts.cli send --slot am || echo "[warn] alert send (am) fallo, sigo"
+          elif [ "$SCHEDULE" = "0 19 * * *" ]; then
+            python -X utf8 -m alerts.cli send --slot pm || echo "[warn] alert send (pm) fallo, sigo"
+          elif [ "$IS_DISPATCH" = "true" ]; then
+            python -X utf8 -m alerts.cli send --slot manual || echo "[warn] alert send (manual) fallo, sigo"
           else
-            python -X utf8 -m alerts.cli send --slot cron || echo "[warn] alert send fallo, sigo"
+            echo "[alert-backup] fuera de los horarios fijos (9am/2pm Lima) - skip"
           fi
 
       - name: Heartbeats (registra corrida exitosa)

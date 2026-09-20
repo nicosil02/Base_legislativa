@@ -295,9 +295,18 @@ def run(conn: sqlite3.Connection, dry_run: bool = False) -> dict:
     vistas_ec = _noticias_desde(conn, "EC", _ultimo_id(conn, "EC"))
     matches_pl = _matches_pl_ec(vistas_ec)
     mensaje = formatear_mensaje(grupos_pe, grupos_ec, matches_pl)
+    # Bug real 2026-09-20 (Nicolas: "a veces no me dice nada, o sea me
+    # llega sin ningun update"): antes esta funcion solo mandaba WhatsApp
+    # cuando habia algo relevante - silencio total el resto de las veces,
+    # indistinguible de un pipeline roto. Ahora que refrescar-pe.yml solo
+    # llama a esto 2 veces al dia (9am/2pm Lima, horarios fijos - ver el
+    # `if` de ese workflow), "sin novedades" es una respuesta explicita y
+    # esperada en vez de silencio ambiguo.
+    if not mensaje:
+        mensaje = "📰 Sin noticias relevantes nuevas desde el último chequeo."
 
     enviado = False
-    if mensaje and not dry_run:
+    if not dry_run:
         enviado = enviar_whatsapp(mensaje)
 
     if not dry_run:
@@ -471,7 +480,30 @@ def _test_pais_multipais():
     print("OK digest: reclasifica por contenido las fuentes multi-pais (caso real Rafael Rey/DPL)")
 
 
+def _test_run_manda_sin_novedades_si_no_hay_nada():
+    """Bug real 2026-09-20 (Nicolas: "a veces no me dice nada, o sea me
+    llega sin ningun update"): con el digest corriendo solo 2x/dia ahora
+    (9am/2pm Lima, gateado en refrescar-pe.yml), silencio total es
+    indistinguible de un pipeline roto - run() debe mandar algo SIEMPRE."""
+    from unittest.mock import patch
+
+    conn = sqlite3.connect(":memory:")
+    conn.execute("""CREATE TABLE noticias_fuentes (id INTEGER PRIMARY KEY,
+        pais TEXT, nombre TEXT, categoria TEXT, activa INTEGER DEFAULT 1)""")
+    conn.execute("""CREATE TABLE noticias (id INTEGER PRIMARY KEY,
+        fuente_id INTEGER, titulo TEXT, resumen TEXT, url TEXT, tags TEXT)""")
+    enviados = []
+    with patch("congreso_live.notify.enviar_whatsapp", lambda msg: enviados.append(msg) or True), \
+         patch("clientes.matrices.pls_trackeados_ec", lambda: []):
+        resultado = run(conn)
+    assert len(enviados) == 1, "debe enviar aunque no haya nada relevante"
+    assert "Sin noticias relevantes" in enviados[0]
+    assert resultado["enviado"] is True
+    print("OK digest: run() manda 'sin novedades' en vez de quedarse en silencio")
+
+
 if __name__ == "__main__":
     _demo()
     _test_matches_pl_ec()
     _test_pais_multipais()
+    _test_run_manda_sin_novedades_si_no_hay_nada()
