@@ -93,13 +93,31 @@ def _es_relevante(n: dict) -> bool:
     canal de WhatsApp es mas caro de interrumpir que un badge, y no es lo
     que Nicolas pidio ("varias del mismo tema" se referia a cobertura de
     prensa duplicada, no a resoluciones administrativas)."""
-    # tags='normas' son resoluciones administrativas de los feeds gobpe
-    # (MINSA/MIDAGRI/SENASA/MEF...) - tramite interno (licencias,
+    # tags='normas' (exacto) son resoluciones administrativas de los feeds
+    # gobpe (MINSA/MIDAGRI/SENASA/MEF...) - tramite interno (licencias,
     # designaciones) que a veces dispara "Coyuntura política" en
     # clasificar() solo por mencionar "Decreto Legislativo" de pasada, no
     # por ser noticia real (verificado en vivo 2026-09-17). No se toca
     # clasificar() porque tambien lo usan las paginas Noticias PE/EC.
-    if n.get("tags") == "normas":
+    #
+    # Bug real encontrado 2026-09-20 (Nicolas: "matchea mal cosas que no
+    # me interesan para nada"): este chequeo NUNCA agarraba las 476
+    # noticias reales de `noticias/el_peruano.py`/`registro_oficial_ec.py`
+    # (Diario Oficial El Peruano, Registro Oficial EC) - esos scrapers
+    # taggean pipe-joined ("Coyuntura política|el-peruano|normativa"), no
+    # el string exacto "normas". Resultado verificado contra la DB real:
+    # decenas de resoluciones puramente administrativas (confirmaciones
+    # del JNE, autorizaciones de viaje de jueces, nombramientos de
+    # fiscales) inundaban el digest porque casi todas mencionan "JNE",
+    # "fiscal" o "PCM" (palabras de Coyuntura política) solo por ser el
+    # nombre de la entidad emisora, no por ser noticia real. Ambos
+    # scrapers agregan el tag "normativa" (no "normas") a TODO lo que
+    # producen - es la señal mas confiable que hay, mas confiable que
+    # regex sobre el texto (`es_normativa()` de noticias/temas.py de hecho
+    # tampoco agarra estos titulos: "resolución" pelado, sin calificar de
+    # "ministerial"/"suprema"/etc., no esta en su lista de keywords).
+    tags = (n.get("tags") or "").split("|")
+    if "normas" in tags or "normativa" in tags:
         return False
     # clasificar() puede devolver VARIOS temas a la vez, y "ministro"/
     # "presidente" (palabras de Coyuntura política) aparecen tal cual en
@@ -323,16 +341,26 @@ def _demo():
         # generica, no coyuntura real, y no debe colar en el digest general.
         (9, 4, "Ministro de Salud anuncia nueva campaña de vacunación contra el sarampión",
          "http://a/9", None),
+        # Bug real 2026-09-20: titulo real de El Peruano, tags pipe-joined
+        # como los produce noticias/el_peruano.py de verdad - "JNE"/"fiscal"
+        # disparan Coyuntura política, y el viejo chequeo tags=="normas"
+        # (exacto) nunca los agarraba porque el formato real es distinto.
+        (10, 1, "JURADO NACIONAL DE ELECCIONES — RESOLUCIÓN N° 3255-2026-JNE: "
+                "Confirman la Resolución Nº 00424-2026-JEE-HYLS/JNE",
+         "http://a/10", "Coyuntura política|el-peruano|normativa"),
     ]
     conn.executemany("INSERT INTO noticias (id, fuente_id, titulo, resumen, url, tags) "
                      "VALUES (?, ?, ?, NULL, ?, ?)", filas)
 
     grupos, ultimo = armar_grupos(conn, "PE")
-    assert ultimo == 9, ultimo
+    assert ultimo == 10, ultimo
     assert not any(n["id"] == 8 for g in grupos for n in g), \
         "el item tags='normas' no deberia colarse pese a clasificar como Coyuntura política"
     assert not any(n["id"] == 9 for g in grupos for n in g), \
         "una noticia de Salud/Crop generica no debe colar solo por co-tagear Coyuntura política"
+    assert not any(n["id"] == 10 for g in grupos for n in g), \
+        "una resolucion administrativa de El Peruano (tags pipe-joined con "\
+        "'normativa') no deberia colarse - bug real 2026-09-20"
     # Las 2 notas sobre Velarde se agrupan en 1; el resto (relleno + receta,
     # que no es relevante) quedan como grupos propios de 1 sola nota.
     grupo_velarde = next(g for g in grupos if len(g) > 1)
