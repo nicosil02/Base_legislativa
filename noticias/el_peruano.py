@@ -144,6 +144,17 @@ def run_sync(db, dias: int = 1) -> dict:
         "url": "https://busquedas.elperuano.pe/",
         "rss_url": None, "tipo": "custom", "activa": 1,
         "notas": "Normas Legales del día vía scraping busquedas.elperuano.pe",
+        # Bug real 2026-09-20 (gap #2 vs Dapper, ver memoria
+        # dapper-gap-analysis): sin "clientes" acá, upsert_fuente() lo
+        # guardaba vacio - las 456 normas reales de este scraper (30 dias)
+        # quedaban INVISIBLES para alerts/relevancia.py, que filtra
+        # candidatos por _clientes_de_fuente() antes de que Gemini llegue
+        # a juzgar relevancia real. "todos" (mismo criterio que la fila
+        # "El Peruano" simple y "Google News PE — El Peruano publica" en
+        # noticias/fuentes.py) las vuelve candidatas para TODOS los
+        # clientes, dejando que el ranking real (TF-IDF/Gemini) decida
+        # relevancia por decreto, no el tag de la fuente.
+        "clientes": ["todos"],
     })
 
     hoy = datetime.now(timezone.utc)
@@ -233,6 +244,18 @@ def _test_run_sync_guarda_todo_sin_filtrar_tema():
         assert stats["items_totales"] == 2, stats
         assert stats["nuevas"] == 2, (
             f"debe guardar las 2, incluso la que no matchea tema: {stats}")
+
+        # Bug real 2026-09-20: sin "clientes":["todos"] en el upsert_fuente()
+        # de arriba, esta fuente quedaba con clientes='' - invisible para
+        # alerts/relevancia.py, que filtra candidatos por fuente ANTES de
+        # que Gemini juzgue relevancia real por decreto (ver memoria
+        # dapper-gap-analysis, gap #2).
+        with Database(db_path) as db2:
+            row = db2.conn.execute(
+                "SELECT clientes FROM noticias_fuentes WHERE nombre=?", (FUENTE_NOMBRE,)
+            ).fetchone()
+        assert row["clientes"] == "todos", \
+            f"la fuente debe quedar tageada 'todos', quedo {row['clientes']!r}"
     print("OK el_peruano: run_sync guarda todas las normas, sin filtrar por tema")
 
 
