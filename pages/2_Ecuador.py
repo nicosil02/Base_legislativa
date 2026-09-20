@@ -90,6 +90,32 @@ def _noticias_tramite_recientes() -> list[dict]:
         conn.close()
 
 
+@st.cache_data(ttl=300)
+def documentos_hoy() -> int:
+    """PLs + noticias detectados HOY (Ecuador) - gap real vs Dapper
+    identificado 2026-09-20 (ver memoria dapper-gap-analysis): ellos
+    muestran un contador de "documentos publicados hoy" en el dashboard.
+    Dato barato, ya lo tenemos - solo faltaba mostrarlo."""
+    conn = get_conn()
+    pls_hoy = conn.execute(
+        "SELECT COUNT(*) FROM proyectos WHERE date(first_seen_at)=date('now')"
+    ).fetchone()[0]
+    noticias_hoy = 0
+    db_noticias = _find_db_noticias_path()
+    if db_noticias:
+        nconn = sqlite3.connect(f"file:{db_noticias}?mode=ro", uri=True)
+        try:
+            noticias_hoy = nconn.execute(
+                "SELECT COUNT(*) FROM noticias n JOIN noticias_fuentes f ON f.id=n.fuente_id "
+                "WHERE f.pais='EC' AND date(n.first_seen_at)=date('now')"
+            ).fetchone()[0]
+        except sqlite3.OperationalError:
+            pass
+        finally:
+            nconn.close()
+    return pls_hoy + noticias_hoy
+
+
 # st.set_page_config NO se llama acá: ya lo hace app.py (entry de st.navigation).
 # Llamarlo dos veces tira StreamlitAPIException y rompe la página.
 
@@ -491,9 +517,11 @@ st.markdown(
 
 # ---------- KPIs ----------
 totals = kpi_totals()
-cols = st.columns(len(totals))
+cols = st.columns(len(totals) + 1)
 for col, (label, val) in zip(cols, totals.items()):
     col.metric(label, f"{val:,}")
+cols[-1].metric("Nuevos hoy", f"{documentos_hoy():,}",
+                 help="Proyectos de ley + noticias detectados hoy (Ecuador)")
 
 st.markdown("")
 
