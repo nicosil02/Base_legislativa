@@ -301,32 +301,65 @@ def _formatear_grupo(g: list[dict]) -> str:
 # real de este digest (backlog acumulado desde el 17/09 por el bug de
 # sklearn de mas abajo) armo un mensaje de 13000+ caracteres y CallMeBot
 # lo rechazo con "414 Request-URI Too Large" - fallo TOTAL, no se mando
-# nada. Peor: run() avanza el estado igual haya fallado el envio o no,
-# asi que ese contenido se perdia para siempre (nunca se reintentaba).
-# Recortar duro a un tamano seguro es preferible a perder el mensaje
-# entero - MAX_GRUPOS_POR_PAIS ya prioriza lo mas reciente primero.
+# nada. MENSAJE_MAX_CHARS es el limite seguro por mensaje individual.
+#
+# Bug real 2026-09-21 (Nicolas: "recorta las alertas... si se va a
+# cortar, envia mas de un mensaje"): el fix anterior recortaba duro al
+# limite y perdia todo lo que sobraba. Ahora formatear_mensajes() reparte
+# el contenido en varios mensajes de WhatsApp en vez de truncar - nunca
+# se pierde una noticia.
 MENSAJE_MAX_CHARS = 1500
 
 
-def formatear_mensaje(grupos_pe: list[list[dict]], grupos_ec: list[list[dict]],
-                      matches_pl_ec: list[dict] = ()) -> str:
-    """'' si no hay nada relevante en ninguno de los dos paises ni matches
-    de PL trackeados de Ecuador. Recorta a MENSAJE_MAX_CHARS si hace falta -
-    ver comentario de la constante."""
-    secciones = []
+def formatear_mensajes(grupos_pe: list[list[dict]], grupos_ec: list[list[dict]],
+                        matches_pl_ec: list[dict] = ()) -> list[str]:
+    """Lista de mensajes de WhatsApp a mandar - [] si no hay nada relevante,
+    normalmente 1 mensaje, y varios (numerados, con "(cont.)" en el titulo
+    de continuacion) si el contenido no entra en MENSAJE_MAX_CHARS. Cada
+    _formatear_grupo/_formatear_match_pl es una unidad atomica - nunca se
+    parte una noticia a la mitad entre dos mensajes."""
+    secciones: list[tuple[str, list[str]]] = []
     if grupos_pe:
-        secciones.append("*PERÚ*\n" + "\n".join(_formatear_grupo(g) for g in grupos_pe))
+        secciones.append(("*PERÚ*", [_formatear_grupo(g) for g in grupos_pe]))
     if grupos_ec:
-        secciones.append("*ECUADOR*\n" + "\n".join(_formatear_grupo(g) for g in grupos_ec))
+        secciones.append(("*ECUADOR*", [_formatear_grupo(g) for g in grupos_ec]))
     if matches_pl_ec:
-        secciones.append("*PL DE INTERÉS (ECUADOR)*\n" +
-                         "\n".join(_formatear_match_pl(n) for n in matches_pl_ec))
+        secciones.append(("*PL DE INTERÉS (ECUADOR)*",
+                          [_formatear_match_pl(n) for n in matches_pl_ec]))
     if not secciones:
-        return ""
-    mensaje = "📰 Noticias relevantes\n\n" + "\n\n".join(secciones)
-    if len(mensaje) > MENSAJE_MAX_CHARS:
-        mensaje = mensaje[:MENSAJE_MAX_CHARS].rsplit("\n", 1)[0] + "\n…(recortado, quedaba más - ver la app)"
-    return mensaje
+        return []
+
+    titulo = "📰 Noticias relevantes"
+    mensajes: list[str] = []
+    partes: list[str] = [titulo]
+    largo = len(titulo)
+
+    def _cerrar_mensaje() -> None:
+        nonlocal partes, largo
+        mensajes.append("\n\n".join(partes))
+        partes = [f"{titulo} (cont.)"]
+        largo = len(partes[0])
+
+    for header, items in secciones:
+        header_en_mensaje = False
+        for item in items:
+            bloque = item if header_en_mensaje else f"{header}\n{item}"
+            # len(partes) > 1: nunca cerramos un mensaje vacio (si el
+            # primer item de un mensaje nuevo ya excede el limite solo,
+            # lo dejamos pasar igual - mejor un mensaje largo que perder
+            # la noticia).
+            if len(partes) > 1 and largo + 2 + len(bloque) > MENSAJE_MAX_CHARS:
+                _cerrar_mensaje()
+                header_en_mensaje = False
+                bloque = f"{header}\n{item}"
+            partes.append(bloque)
+            largo += 2 + len(bloque)
+            header_en_mensaje = True
+    mensajes.append("\n\n".join(partes))
+
+    if len(mensajes) > 1:
+        mensajes = [f"{m}\n\n({i}/{len(mensajes)})" for i, m in enumerate(mensajes, 1)]
+    return mensajes
 
 
 def run(conn: sqlite3.Connection, dry_run: bool = False) -> dict:
@@ -344,7 +377,7 @@ def run(conn: sqlite3.Connection, dry_run: bool = False) -> dict:
     # NO pasa por el filtro _es_relevante (ver _matches_pl_ec).
     vistas_ec = _noticias_desde(conn, "EC", _ultimo_id(conn, "EC"))
     matches_pl = _matches_pl_ec(vistas_ec)
-    mensaje = formatear_mensaje(grupos_pe, grupos_ec, matches_pl)
+    mensajes = formatear_mensajes(grupos_pe, grupos_ec, matches_pl)
     # Bug real 2026-09-20 (Nicolas: "a veces no me dice nada, o sea me
     # llega sin ningun update"): antes esta funcion solo mandaba WhatsApp
     # cuando habia algo relevante - silencio total el resto de las veces,
@@ -352,12 +385,15 @@ def run(conn: sqlite3.Connection, dry_run: bool = False) -> dict:
     # llama a esto 2 veces al dia (9am/2pm Lima, horarios fijos - ver el
     # `if` de ese workflow), "sin novedades" es una respuesta explicita y
     # esperada en vez de silencio ambiguo.
-    if not mensaje:
-        mensaje = "📰 Sin noticias relevantes nuevas desde el último chequeo."
+    if not mensajes:
+        mensajes = ["📰 Sin noticias relevantes nuevas desde el último chequeo."]
 
     enviado = False
     if not dry_run:
-        enviado = enviar_whatsapp(mensaje)
+        # Lista (no generador): `all()` corta en el primer False y se
+        # saltaria el envio de los mensajes siguientes si el primero falla.
+        resultados = [enviar_whatsapp(m) for m in mensajes]
+        enviado = all(resultados)
 
     if not dry_run:
         _guardar_ultimo_id(conn, "PE", ultimo_pe)
@@ -365,7 +401,9 @@ def run(conn: sqlite3.Connection, dry_run: bool = False) -> dict:
 
     return {
         "grupos_pe": len(grupos_pe), "grupos_ec": len(grupos_ec),
-        "matches_pl_ec": len(matches_pl), "mensaje": mensaje, "enviado": enviado,
+        "matches_pl_ec": len(matches_pl),
+        "mensaje": "\n\n---\n\n".join(mensajes), "mensajes": mensajes,
+        "enviado": enviado,
     }
 
 
@@ -448,13 +486,15 @@ def _demo():
     assert {n["id"] for n in grupo_velarde} == {1, 2}
     grupos = [grupo_velarde] + [g for g in grupos if g is not grupo_velarde]
 
-    msg = formatear_mensaje(grupos, [])
+    mensajes = formatear_mensajes(grupos, [])
+    assert len(mensajes) == 1
+    msg = mensajes[0]
     assert "*PERÚ*" in msg and "*ECUADOR*" not in msg
     assert "Pleno del Senado aprueba ratificación de Julio Velarde" in msg
     assert "Medio B" in msg  # la fuente adicional queda anotada
 
-    # Sin nada relevante -> mensaje vacio, no se manda nada.
-    assert formatear_mensaje([], []) == ""
+    # Sin nada relevante -> sin mensajes, no se manda nada.
+    assert formatear_mensajes([], []) == []
 
     # El estado avanza y no re-trae lo ya visto.
     _guardar_ultimo_id(conn, "PE", ultimo)
@@ -494,14 +534,16 @@ def _test_matches_pl_ec():
     assert matches[0]["n_articulos"] == 2, matches
     assert matches[0]["pl_titulo"] == trackeados[0]["titulo_matriz"]
 
-    msg = dg.formatear_mensaje([], [], matches)
+    mensajes = dg.formatear_mensajes([], [], matches)
+    assert len(mensajes) == 1
+    msg = mensajes[0]
     assert "*PL DE INTERÉS (ECUADOR)*" in msg
     assert "INIAP" in msg
     assert "+1 más" in msg
     assert "bayer/syngenta" in msg
 
-    # Sin matches, esta seccion no aparece (y sin nada mas, mensaje vacio).
-    assert dg.formatear_mensaje([], [], []) == ""
+    # Sin matches, esta seccion no aparece (y sin nada mas, sin mensajes).
+    assert dg.formatear_mensajes([], [], []) == []
     print("OK digest: matchea PL trackeado (INIAP) fuera del filtro de Coyuntura política")
 
 
@@ -580,6 +622,30 @@ def _test_formatear_grupo_acorta_urls_largas():
     print("OK digest: _formatear_grupo/_formatear_match_pl acortan URLs largas")
 
 
+def _test_formatear_mensajes_parte_en_varios():
+    """Bug real 2026-09-21 (Nicolas: "recorta las alertas... si se va a
+    cortar, envia mas de un mensaje"): un backlog grande no debe
+    truncarse - se reparte en varios mensajes de WhatsApp numerados, sin
+    perder ninguna noticia."""
+    grupos_ec = [
+        [{"titulo": f"Noticia de prueba numero {i} con un titulo bastante "
+                    "largo para simular contenido real de produccion",
+          "fuente": "Medio X", "url": f"http://x/{i}"}]
+        for i in range(30)
+    ]
+    mensajes = formatear_mensajes([], grupos_ec)
+    assert len(mensajes) > 1, "un backlog grande debe partirse en varios mensajes"
+    for i, m in enumerate(mensajes, 1):
+        assert len(m) <= MENSAJE_MAX_CHARS + 150, \
+            f"mensaje {i} se fue muy por encima del limite: {len(m)} chars"
+        assert f"({i}/{len(mensajes)})" in m
+    # Ninguna noticia se pierde - los 30 titulos aparecen en algun mensaje.
+    todo = "\n".join(mensajes)
+    for i in range(30):
+        assert f"Noticia de prueba numero {i} " in todo, f"se perdio la noticia {i}"
+    print("OK digest: formatear_mensajes reparte backlogs grandes sin perder contenido")
+
+
 def _test_ignora_noticias_viejas():
     """Bug real 2026-09-21 (Nicolas: "las noticias que envias tienen que
     ser de ese dia... no me puedes enviar una noticia de hace meses"):
@@ -626,4 +692,5 @@ if __name__ == "__main__":
     _test_pais_multipais()
     _test_run_manda_sin_novedades_si_no_hay_nada()
     _test_formatear_grupo_acorta_urls_largas()
+    _test_formatear_mensajes_parte_en_varios()
     _test_ignora_noticias_viejas()
