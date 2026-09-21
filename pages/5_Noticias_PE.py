@@ -22,6 +22,7 @@ from noticias.fuentes import (
     FUENTES_GENERALISTAS_FILTRAR_RUIDO,
 )
 from alerts.borradores_store import marcar_pendiente
+from noticias.feedback_store import list_descartadas, registrar_descarte
 
 CLIENTES_DIR = Path(__file__).resolve().parent.parent / "clientes"
 
@@ -155,33 +156,14 @@ def get_conn() -> sqlite3.Connection:
 
 
 def _feedback_descartar(noticia_id: int) -> None:
-    """Marca una noticia como descartada (feedback humano).
-    Escribe en tabla noticias_feedback + invalida cache."""
-    db = _find_db_path()
-    if not db:
-        return
-    conn = sqlite3.connect(str(db), check_same_thread=False)
-    try:
-        # Crear tabla si no existe (idempotente).
-        conn.executescript("""
-            CREATE TABLE IF NOT EXISTS noticias_feedback (
-              id INTEGER PRIMARY KEY AUTOINCREMENT,
-              noticia_id INTEGER NOT NULL,
-              action TEXT NOT NULL,
-              tema_correcto TEXT,
-              created_at TEXT NOT NULL
-            );
-            CREATE INDEX IF NOT EXISTS idx_feedback_noticia
-              ON noticias_feedback(noticia_id);
-        """)
-        conn.execute(
-            "INSERT INTO noticias_feedback (noticia_id, action, created_at) "
-            "VALUES (?, 'descartar', datetime('now'))",
-            (int(noticia_id),),
-        )
-        conn.commit()
-    finally:
-        conn.close()
+    """Marca una noticia como descartada (feedback humano). Bug real
+    2026-09-21 (Nicolas: "vengo descartando varias y nada"): esto escribia
+    a una copia LOCAL/efimera de proyectos.db que Streamlit Cloud
+    reconstruye desde data/proyectos.db.gz en cada redeploy (ver
+    _bootstrap_dbs_impl en app.py) - se perdia en minutos. Ahora usa
+    noticias/feedback_store.py (GitHub Contents API, mismo patron que
+    clasificador/decisiones_store.py) para que el descarte sobreviva."""
+    registrar_descarte(int(noticia_id), descartado_por=st.user.get("email"))
     st.cache_data.clear()
 
 
@@ -293,10 +275,6 @@ def load_noticias(pais: str,
       JOIN noticias_fuentes f ON f.id = n.fuente_id
       WHERE f.pais = ? AND f.activa = 1
         AND date(COALESCE(n.fecha_pub, n.first_seen_at)) >= {ventana_sql}
-        AND NOT EXISTS (
-          SELECT 1 FROM noticias_feedback fb
-          WHERE fb.noticia_id = n.id AND fb.action = 'descartar'
-        )
     """
     params: list = [pais]
     if categoria_fuente:
@@ -315,6 +293,10 @@ def load_noticias(pais: str,
     sql += " ORDER BY COALESCE(n.fecha_pub, n.first_seen_at) DESC LIMIT ?"
     params.append(limit)
     df = pd.read_sql_query(sql, conn, params=params)
+    if not df.empty:
+        descartadas = list_descartadas()
+        if descartadas:
+            df = df[~df["ID"].isin(descartadas)]
     if not df.empty:
         # Dedup: misma noticia de distintos portales → nos quedamos con
         # la más reciente. Clave = título normalizado (lowercase, sin
