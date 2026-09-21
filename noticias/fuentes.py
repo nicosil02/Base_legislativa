@@ -887,7 +887,16 @@ FUENTES_EC: list[dict] = [
               "sitio, verificado en vivo (no es bug de nuestro parser)."},
     {"categoria": "Temas Tech", "pais": "EC", "nombre": "DPL Tech Ecuador",
      "url": "https://dplnews.com/", "tipo": "rss",
-     "rss_url": "https://dplnews.com/feed/"},
+     "rss_url": "https://dplnews.com/feed/", "activa": 0,
+     "notas": "Desactivada 2026-09-20: mismo feed EXACTO que 'DPL News Peru' "
+              "(pais=PE) y 'DPL News Ecuador' (pais=EC, categoria KYC/AML) - "
+              "3 filas de catalogo apuntando a dplnews.com/feed/. Como "
+              "noticias.url es UNIQUE, cada articulo se lo queda la primera "
+              "fila que sincroniza - esta siempre llega ultima (verificado en "
+              "vivo: '[DPL Tech Ecuador] 10 items' cada corrida, 0 nuevas "
+              "reales siempre). Fetch desperdiciado sin beneficio real -"
+              " el pais real de cada articulo ya se corrige por contenido "
+              "en noticias/temas.py:pais_por_contenido() via las otras 2."},
     {"categoria": "Temas Tech", "pais": "EC",
      "nombre": "Camara de Innovacion y Tecnologia Ecuatoriana",
      "url": "https://www.cite.org.ec/", "tipo": "html", "activa": 0,

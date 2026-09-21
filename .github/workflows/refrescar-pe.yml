@@ -85,7 +85,23 @@ jobs:
           # mas abajo, para el paso de transcripciones con WARP, demasiado
           # tarde para el paso de alertas_pl que corre antes. La alerta de
           # PL de Bayer nunca llego a chequear nada desde que se armo.
+          #
+          # certifi: bug real 2026-09-20 encontrado auditando fuentes activas
+          # sin ninguna noticia jamas - Cancilleria EC (cancilleria.gob.ec,
+          # fuente real y activa, verificado con curl y con nuestro propio
+          # fetch_fuente() desde otra red: 200 OK, feed real con items
+          # recientes) fallaba SIEMPRE en este runner con
+          # "SSLCertVerificationError: unable to get local issuer
+          # certificate" - tanto la sesion con cloudscraper como el fallback
+          # plano de _get() (pensado para OTRO problema, el fingerprint TLS
+          # de cloudscraper) fallaban igual, porque el certificado real
+          # (CA real Sectigo, no autofirmado) usa una CA intermedia mas
+          # nueva que el certifi ya cacheado en la imagen del runner no
+          # reconoce. Actualizar certifi es inofensivo (solo agrega
+          # confianza a CAs reales, nunca la reduce) y deberia resolver esto
+          # para cualquier sitio con el mismo patron, no solo Cancilleria.
           pip install requests pycryptodome openpyxl pandas scikit-learn yt-dlp
+          pip install --upgrade certifi
 
       - name: Instalar dependencias de noticias (PDF/OCR Registro Oficial EC)
         if: github.event.schedule == '0 13 * * *' || github.event_name == 'workflow_dispatch'
