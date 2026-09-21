@@ -17,6 +17,12 @@ Comandos:
 
   python -m clasificador.cli stats [--db DB]
     Muestra estadisticas: distribucion de temas, sugerencias pendientes.
+
+  python -m clasificador.cli aplicar-decisiones [--db DB]
+    Aplica las decisiones (aceptar/rechazar) que Nicolas registro desde
+    la seccion "Sugerencias de reclasificacion" de pages/1_Peru.py -
+    ver clasificador/decisiones_store.py para el por que del round-trip
+    (la UI no puede escribir proyectos.db directo).
 """
 from __future__ import annotations
 
@@ -25,7 +31,7 @@ import sqlite3
 import sys
 
 from .predict import predict_tema, topk
-from .reclassify import reclassify_otros
+from .reclassify import aplicar_decisiones, reclassify_otros
 from .train import (
     evaluate,
     load_training_data,
@@ -67,6 +73,25 @@ def cmd_reclassify(args: argparse.Namespace) -> int:
     finally:
         conn.close()
     print(f"\n[reclassify] stats: {stats}")
+    return 0
+
+
+def cmd_aplicar_decisiones(args: argparse.Namespace) -> int:
+    from .decisiones_store import limpiar_decisiones_aplicadas, list_decisiones_pendientes
+
+    decisiones = list_decisiones_pendientes()
+    if not decisiones:
+        print("[aplicar-decisiones] sin decisiones pendientes")
+        return 0
+    conn = sqlite3.connect(args.db)
+    try:
+        stats = aplicar_decisiones(conn, decisiones)
+    finally:
+        conn.close()
+    limpiar_decisiones_aplicadas(stats["procesadas"])
+    print(f"[aplicar-decisiones] aceptadas={stats['aceptadas']} "
+          f"rechazadas={stats['rechazadas']} ya_resueltas={stats['ya_resueltas']} "
+          f"no_encontradas={stats['no_encontradas']}")
     return 0
 
 
@@ -126,6 +151,10 @@ def build_parser() -> argparse.ArgumentParser:
     ps = sub.add_parser("stats", help="estadisticas del clasificador")
     ps.add_argument("--db", default="proyectos.db")
 
+    pa = sub.add_parser("aplicar-decisiones",
+                        help="aplica aceptar/rechazar registrados desde la UI (pages/1_Peru.py)")
+    pa.add_argument("--db", default="proyectos.db")
+
     return p
 
 
@@ -139,6 +168,8 @@ def main(argv: list[str] | None = None) -> int:
         return cmd_reclassify(args)
     if args.cmd == "stats":
         return cmd_stats(args)
+    if args.cmd == "aplicar-decisiones":
+        return cmd_aplicar_decisiones(args)
     return 1
 
 
