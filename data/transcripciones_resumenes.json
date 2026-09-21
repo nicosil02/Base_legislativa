@@ -1359,5 +1359,21 @@
     "generated_at": "2026-09-21T13:49:52Z",
     "duracion_seg": 4030,
     "agenda_cumplida": null
+  },
+  {
+    "video_id": "i4NfsGzzY1c",
+    "resumen": "Sesion de la Comision de Procedimientos Especiales del Senado (21/09/2026) dedicada al debate sobre los requisitos de evaluacion de candidatos a un concurso publico, centrado en el caso del candidato Gonzalo Ricardo Alegria Barona, cuyo titulo universitario extranjero (Universidad de Nueva York) no contaba con inscripcion en SUNEDU ni sus certificados de trabajo con convalidacion de SERVIR, requisitos que segun varios senadores figuraban en una ficha del proceso pero no en el texto original de la convocatoria. Tras un extenso debate sobre si aplicar la convocatoria o la ficha adicional -con advertencias sobre el riesgo de acciones de amparo por vulneracion al debido proceso-, la comision voto y aprobo por 9 votos a favor y 1 en contra las pautas para la entrevista personal de los candidatos. (sesion en curso al momento de este resumen)",
+    "ideas_clave": [
+      "El debate central giro sobre el candidato Gonzalo Ricardo Alegria Barona, cuyo titulo de la Universidad de Nueva York no estaba inscrito en SUNEDU y cuyos certificados de trabajo no contaban con convalidacion de SERVIR, requisitos que segun varios senadores figuraban en una 'ficha' del proceso pero no en el texto de la convocatoria original.",
+      "Se advirtio que aplicar estrictamente el requisito de convalidacion en SERVIR a todos los expedientes eliminaria cerca del 60% de los postulantes presentados al concurso.",
+      "Se cito como antecedente el caso del 'doctor Belarde/Belarque', un candidato de sesiones anteriores sobre el que hubo un debate similar por requisitos no cumplidos.",
+      "Una senadora observo que la escala de puntaje de la entrevista personal (0 a 40 puntos) no figuraba en la convocatoria original y fue incorporada recien un dia antes, y propuso volver a convocar el proceso por transparencia; la propuesta no prospero.",
+      "Se advirtio sobre el riesgo de que el proceso derive en acciones de amparo por presunta vulneracion del debido proceso si no se aplican criterios uniformes a todos los postulantes.",
+      "La comision voto y aprobo por mayoria (9 votos a favor y 1 en contra, del senador Gago Rodriguez) las pautas para la entrevista personal de los candidatos, evaluada de 0 a 40 puntos por candidato.",
+      "La sesion cerro con la dispensa del tramite de aprobacion del acta para dar por adoptados los acuerdos tomados."
+    ],
+    "generated_at": "2026-09-21T18:50:02Z",
+    "duracion_seg": 800,
+    "agenda_cumplida": null
   }
 ]
