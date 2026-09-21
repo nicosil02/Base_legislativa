@@ -231,18 +231,27 @@ def _matches_pl_ec(vistas: list[dict]) -> list[dict]:
 
 
 def _formatear_match_pl(n: dict) -> str:
+    from congreso_live.notify import acortar_url
+
     clientes = "/".join(n.get("clientes") or []) or "cliente"
     extra = f" (+{n['n_articulos'] - 1} más)" if n.get("n_articulos", 1) > 1 else ""
-    return f"- [{clientes}] {n['pl_titulo']}: {n['titulo']}{extra}\n  {n['url']}"
+    return f"- [{clientes}] {n['pl_titulo']}: {n['titulo']}{extra}\n  {acortar_url(n['url'])}"
 
 
 def _formatear_grupo(g: list[dict]) -> str:
+    from congreso_live.notify import acortar_url
+
     principal = g[0]
     linea = f"- {principal['titulo']}"
     otras_fuentes = sorted({n["fuente"] for n in g[1:]} - {principal["fuente"]})
     if otras_fuentes:
         linea += f" ({principal['fuente']} + {', '.join(otras_fuentes)})"
-    linea += f"\n  {principal['url']}"
+    # Bug real 2026-09-21 (Nicolas: "las alertas... a veces se mandan
+    # incompletas por los tamaños largos de los links"): las URLs de
+    # Google News (la fuente mas comun aca) llegan a pesar 500-700+
+    # caracteres - con varias por mensaje se comian buena parte de
+    # MENSAJE_MAX_CHARS y el resto se recortaba. Ver acortar_url().
+    linea += f"\n  {acortar_url(principal['url'])}"
     return linea
 
 
@@ -502,8 +511,30 @@ def _test_run_manda_sin_novedades_si_no_hay_nada():
     print("OK digest: run() manda 'sin novedades' en vez de quedarse en silencio")
 
 
+def _test_formatear_grupo_acorta_urls_largas():
+    """Bug real 2026-09-21 (Nicolas: "las alertas... a veces se mandan
+    incompletas por los tamaños largos de los links"): URLs de Google
+    News reales llegan a pesar 500-700+ caracteres - _formatear_grupo()
+    y _formatear_match_pl() deben acortarlas via congreso_live.notify."""
+    from unittest.mock import patch
+
+    larga = "https://news.google.com/rss/articles/" + "A" * 500
+    with patch("congreso_live.notify.acortar_url", lambda u: "https://tinyurl.com/xyz"):
+        linea = _formatear_grupo([{"titulo": "Un titulo", "fuente": "Medio",
+                                    "url": larga}])
+        assert "https://tinyurl.com/xyz" in linea
+        assert larga not in linea
+
+        linea_pl = _formatear_match_pl({"titulo": "Nota", "pl_titulo": "PL X",
+                                         "url": larga, "clientes": ["bayer"]})
+        assert "https://tinyurl.com/xyz" in linea_pl
+        assert larga not in linea_pl
+    print("OK digest: _formatear_grupo/_formatear_match_pl acortan URLs largas")
+
+
 if __name__ == "__main__":
     _demo()
     _test_matches_pl_ec()
     _test_pais_multipais()
     _test_run_manda_sin_novedades_si_no_hay_nada()
+    _test_formatear_grupo_acorta_urls_largas()

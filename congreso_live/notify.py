@@ -14,10 +14,42 @@ from __future__ import annotations
 import logging
 import os
 from urllib.parse import quote
+from urllib.request import Request, urlopen
 
 import requests
 
 log = logging.getLogger(__name__)
+
+
+def acortar_url(url: str | None) -> str | None:
+    """Acorta con TinyURL (gratis, sin API key). Bug real 2026-09-21
+    (Nicolas: "las alertas de whatsapp a veces se mandan incompletas por
+    los tamaños largos de los links"): las URLs de Google News (la fuente
+    mas comun en noticias/digest.py) llegan a pesar 500-700+ caracteres -
+    verificado en vivo, una sola de 581 caracteres. Con varias por
+    mensaje, se comian buena parte de MENSAJE_MAX_CHARS y el resto del
+    contenido se recortaba o se perdia.
+
+    Probado en vivo 2026-09-21: is.gd/v.gd rechazan esta URL puntual
+    ("database insert failed"), TinyURL la acorta sin problema
+    (581 -> 26 caracteres). Fail-safe total: cualquier error (timeout,
+    API caida, URL invalida) devuelve la URL ORIGINAL sin acortar - esto
+    nunca debe romper el envio del mensaje."""
+    if not url or len(url) < 40:
+        return url  # ya es corta, no vale el round-trip de red
+    try:
+        req = Request(
+            "https://tinyurl.com/api-create.php?url=" + quote(url, safe=""),
+            headers={"User-Agent": "Mozilla/5.0 (radar-legislativo)"},
+        )
+        with urlopen(req, timeout=8) as resp:
+            corta = resp.read().decode().strip()
+        if corta.startswith("https://tinyurl.com/"):
+            return corta
+        log.warning("[notify] acortar_url respuesta inesperada: %s", corta[:100])
+    except Exception as e:
+        log.warning("[notify] acortar_url fallo para %s...: %s", url[:60], e)
+    return url
 
 
 def enviar_whatsapp(mensaje: str) -> bool:
@@ -37,3 +69,41 @@ def enviar_whatsapp(mensaje: str) -> bool:
     except Exception as e:
         log.warning("[notify] fallo envio WhatsApp: %s", e)
         return False
+
+
+# ============================================================
+# self-check (Ponytail: 1 chequeo ejecutable de la logica no trivial)
+# ============================================================
+
+def _demo():
+    from unittest.mock import patch
+
+    # __name__ (no el string literal "congreso_live.notify") para que el
+    # patch funcione tanto corrido como `python -m congreso_live.notify`
+    # (donde este archivo se carga como __main__, un modulo distinto) como
+    # importado normalmente - mismo gotcha en los dos casos.
+    target = __name__ + ".urlopen"
+
+    # URL corta: nunca dispara la red.
+    with patch(target) as mock_urlopen:
+        assert acortar_url("https://x.com/a") == "https://x.com/a"
+        mock_urlopen.assert_not_called()
+
+    # URL larga, TinyURL responde bien.
+    larga = "https://news.google.com/rss/articles/" + "A" * 500
+    respuesta_ok = type("R", (), {
+        "__enter__": lambda s: s, "__exit__": lambda *a: None,
+        "read": lambda s: b"https://tinyurl.com/abc123",
+    })()
+    with patch(target, return_value=respuesta_ok):
+        assert acortar_url(larga) == "https://tinyurl.com/abc123"
+
+    # Falla de red: nunca debe romper, devuelve la URL original.
+    with patch(target, side_effect=TimeoutError("timeout")):
+        assert acortar_url(larga) == larga
+
+    print("OK notify: acortar_url acorta URLs largas, es fail-safe ante errores")
+
+
+if __name__ == "__main__":
+    _demo()
