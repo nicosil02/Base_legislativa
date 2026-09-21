@@ -220,32 +220,40 @@ st.caption(
 if st.session_state.get("chat_cliente") != sel_cliente:
     st.session_state["chat_cliente"] = sel_cliente
     st.session_state["chat_historial_ui"] = []
-    st.session_state["chat_obj"] = None
 
 for _rol, _texto in st.session_state.get("chat_historial_ui", []):
     with st.chat_message(_rol):
         st.markdown(_texto)
 
 if _prompt := st.chat_input(f"Escribí acá para {sel_cliente}..."):
-    st.session_state["chat_historial_ui"].append(("user", _prompt))
     with st.chat_message("user"):
         st.markdown(_prompt)
     with st.chat_message("assistant"):
         with st.spinner("Pensando..."):
             try:
-                if st.session_state["chat_obj"] is None:
-                    st.session_state["chat_obj"] = nueva_conversacion(sel_cliente)
-                _resp = st.session_state["chat_obj"].send_message(_prompt)
+                # Bug real 2026-09-21 (probado en vivo): guardar el objeto
+                # Chat en session_state y reusarlo en el siguiente mensaje
+                # tiraba "Cannot send a request, as the client has been
+                # closed" - Streamlit re-ejecuta el script entero en cada
+                # interaccion y el Client de Gemini no sobrevive de una
+                # corrida a la otra. Se reconstruye la conversacion de
+                # cero en cada mensaje, pasandole lo ya charlado.
+                _historial_gemini = [
+                    {"role": "user" if rol == "user" else "model", "parts": [{"text": texto}]}
+                    for rol, texto in st.session_state["chat_historial_ui"]
+                ]
+                _chat = nueva_conversacion(sel_cliente, historial=_historial_gemini)
+                _resp = _chat.send_message(_prompt)
                 _respuesta = (_resp.text or "").strip()
             except Exception as e:
                 _respuesta = f"⚠️ No se pudo conectar con Gemini: {e}"
         st.markdown(_respuesta)
+    st.session_state["chat_historial_ui"].append(("user", _prompt))
     st.session_state["chat_historial_ui"].append(("assistant", _respuesta))
 
 if st.session_state.get("chat_historial_ui"):
     if st.button("🔄 Nueva conversación"):
         st.session_state["chat_historial_ui"] = []
-        st.session_state["chat_obj"] = None
         st.rerun()
 
 st.markdown('<div class="footer-rule"></div>', unsafe_allow_html=True)
