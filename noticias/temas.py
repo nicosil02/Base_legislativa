@@ -120,10 +120,17 @@ TEMAS: dict[str, list[str]] = {
         "Secretaria de Gobierno Digital",
         "Secretaría de Gobierno y Transformación Digital",
         "Secretaria de Gobierno y Transformacion Digital",
-        # Ministro de Justicia y de Comercio Exterior actuales
-        # (gabinete Galarreta) — políticamente relevantes para digital.
-        "Álvarez Miranda", "Alvarez Miranda",   # Justicia → dueño de ANPD
-        "Rogers Valencia",                       # MINCETUR
+        # "Rogers Valencia" (ministro MINCETUR) se saco 2026-09-21 - mismo
+        # criterio que "ANA"/"premier"/"fiscal" mas abajo: verificado
+        # contra produccion (30 dias), 8 de 8 menciones eran turismo/
+        # comercio exterior sin ninguna señal digital real (ferias de
+        # turismo, vuelos, terminal portuario, Machu Picchu) - el nombre
+        # del ministro no es proxy de que la nota sea sobre digital, es
+        # proxy de "MINCETUR publico algo", que es casi cualquier cosa.
+        # "Álvarez Miranda" (Justicia, dueño de ANPD) se deja por ahora -
+        # mismo riesgo estructural pero sin evidencia real todavia (0
+        # menciones en 30 dias) - revisar si empieza a aparecer.
+        "Álvarez Miranda", "Alvarez Miranda",
     ],
     "Crop": [
         "agricultura", "agrícola", "agricola", "agropecuario",
@@ -425,6 +432,24 @@ def _demo():
     print("OK temas: pais_por_contenido detecta por funcionarios/instituciones estables")
 
 
+def _test_ministro_no_es_proxy_de_tema():
+    """Bug real 2026-09-21 (auditoria en vivo pedida por Nicolas: "quiero
+    que aprendas mejor... las noticias que realmente nos interesan"):
+    "Rogers Valencia" (ministro MINCETUR) estaba en Tech/Digital - 8 de 8
+    menciones reales en 30 dias eran turismo/comercio exterior sin
+    ninguna señal digital. El nombre de un ministro NO es proxy de que la
+    nota sea del tema por el que se agrego - es proxy de "su ministerio
+    publico algo", que cubre todo lo que hace ese ministerio."""
+    assert "Tech / Digital" not in clasificar(
+        "Ministro Rogers Valencia visita terminal multipropósito de "
+        "DP World en el Callao")
+    assert clasificar(
+        "Mincetur destaca nueva conexión aérea directa entre São Paulo y "
+        "Cusco como impulso histórico para el turismo") == []
+    print("OK temas: un ministro de turismo/comercio no marca Tech/Digital "
+          "solo por su nombre")
+
+
 def _test_es_deportivo():
     # Casos reales 2026-09-21 (verificados en produccion, 2 veces: primero
     # en las alertas de WhatsApp, despues via auditoria en vivo se
@@ -451,4 +476,5 @@ def _test_es_deportivo():
 
 if __name__ == "__main__":
     _demo()
+    _test_ministro_no_es_proxy_de_tema()
     _test_es_deportivo()
