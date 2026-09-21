@@ -231,18 +231,21 @@ if _prompt := st.chat_input(f"Escribí acá para {sel_cliente}..."):
     with st.chat_message("assistant"):
         with st.spinner("Pensando..."):
             try:
-                # Bug real 2026-09-21 (probado en vivo): guardar el objeto
-                # Chat en session_state y reusarlo en el siguiente mensaje
-                # tiraba "Cannot send a request, as the client has been
-                # closed" - Streamlit re-ejecuta el script entero en cada
-                # interaccion y el Client de Gemini no sobrevive de una
-                # corrida a la otra. Se reconstruye la conversacion de
-                # cero en cada mensaje, pasandole lo ya charlado.
+                # Bug real 2026-09-21 (probado en vivo y reproducido en
+                # local): "Cannot send a request, as the client has been
+                # closed". Causa raiz: chats.create() no retiene una
+                # referencia fuerte al Client que lo creo - si solo nos
+                # quedamos con `_chat` (sin `_client`), el garbage
+                # collector puede cerrar la sesion HTTP del Client antes
+                # de que send_message() la use, aunque el Chat siga
+                # "vivo". Por eso nueva_conversacion() devuelve
+                # (client, chat) - hay que retener AMBOS hasta despues
+                # del send_message() de abajo (no solo _chat).
                 _historial_gemini = [
                     {"role": "user" if rol == "user" else "model", "parts": [{"text": texto}]}
                     for rol, texto in st.session_state["chat_historial_ui"]
                 ]
-                _chat = nueva_conversacion(sel_cliente, historial=_historial_gemini)
+                _client, _chat = nueva_conversacion(sel_cliente, historial=_historial_gemini)
                 _resp = _chat.send_message(_prompt)
                 _respuesta = (_resp.text or "").strip()
             except Exception as e:

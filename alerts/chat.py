@@ -71,15 +71,21 @@ def nueva_conversacion(slug: str, historial: list[dict] | None = None):
     como system_instruction. Levanta RuntimeError si falta GEMINI_API_KEY
     (mismo patron que congreso_live.qa_chat.py).
 
-    Bug real 2026-09-21 (probado en vivo contra la app deployada):
-    "Cannot send a request, as the client has been closed" - Streamlit
-    re-ejecuta el script ENTERO en cada interaccion, y el objeto
-    genai.Client (y su sesion HTTP interna) de una corrida anterior no
-    sobrevive confiablemente a la siguiente, aunque el objeto Chat este
-    guardado en st.session_state. Fix: nunca reusar un Client/Chat viejo -
-    se crea uno nuevo en cada mensaje, pasandole `historial` (turnos
-    previos, formato [{"role": "user"|"model", "parts": [{"text": ...}]}])
-    para que la conversacion siga de donde quedo."""
+    Devuelve (client, chat) - HAY QUE QUEDARSE CON LA REFERENCIA A `client`
+    hasta despues de llamar chat.send_message(), no solo con `chat`.
+
+    Bug real 2026-09-21 (reproducido en local, no solo en la app
+    deployada): "Cannot send a request, as the client has been closed".
+    Causa raiz real: el objeto genai.Client crea la sesion HTTP interna
+    que chat.send_message() termina usando, pero chats.create() no
+    retiene una referencia fuerte al Client que lo creo - en cuanto la
+    variable local `client` queda sin referencias (ej. al terminar esta
+    funcion, devolviendo solo el Chat), el garbage collector lo recolecta
+    y cierra su sesion HTTP, aunque el objeto Chat siga "vivo". Reproducido
+    con gc.collect() explicito entre crear el chat y mandar el mensaje -
+    mismo error exacto. No tiene nada que ver con reruns de Streamlit
+    (ese fue un diagnostico previo incorrecto) - pasa incluso en un
+    script Python comun."""
     api_key = os.environ.get("GEMINI_API_KEY")
     if not api_key:
         raise RuntimeError("Falta GEMINI_API_KEY en el entorno")
@@ -88,11 +94,12 @@ def nueva_conversacion(slug: str, historial: list[dict] | None = None):
     from google.genai import types
 
     client = genai.Client(api_key=api_key)
-    return client.chats.create(
+    chat = client.chats.create(
         model=MODEL,
         config=types.GenerateContentConfig(system_instruction=construir_system_prompt(slug)),
         history=historial or None,
     )
+    return client, chat
 
 
 # ============================================================
@@ -129,25 +136,56 @@ def _demo():
 
 
 def _test_reconstruye_con_historial():
-    """Bug real 2026-09-21, probado en vivo contra la app deployada:
-    reusar un objeto Chat guardado entre reruns de Streamlit tiraba
-    "Cannot send a request, as the client has been closed". El fix
-    reconstruye la conversacion de cero en cada mensaje pasando el
-    historial ya charlado - esto verifica que esa reconstruccion carga
-    bien los turnos previos (sin red, chats.create() no llama a la API)."""
+    """nueva_conversacion() con `historial` debe reconstruir la
+    conversacion con los turnos previos ya cargados (sin red -
+    chats.create() no llama a la API todavia)."""
     os.environ["GEMINI_API_KEY"] = "fake-key-solo-para-construir-el-objeto"
     try:
         historial = [
             {"role": "user", "parts": [{"text": "hola"}]},
             {"role": "model", "parts": [{"text": "hola, en que te ayudo"}]},
         ]
-        chat = nueva_conversacion("bayer", historial=historial)
+        _client, chat = nueva_conversacion("bayer", historial=historial)
         assert len(chat.get_history()) == 2
     finally:
         os.environ.pop("GEMINI_API_KEY", None)
     print("OK chat: nueva_conversacion() reconstruye la conversacion con el historial previo")
 
 
+def _test_devuelve_client_y_chat_y_no_se_cierra_si_se_retienen_ambos():
+    """Bug real 2026-09-21, reproducido en local Y en la app deployada:
+    "Cannot send a request, as the client has been closed". Causa raiz:
+    chats.create() no retiene una referencia fuerte al Client que lo
+    creo - si el caller solo se queda con el Chat (no con el Client), el
+    GC puede recolectar y cerrar la sesion HTTP del Client aunque el
+    Chat siga "vivo" (reproducido a mano con gc.collect() explicito
+    entre crear el chat y mandar el mensaje). Por eso nueva_conversacion()
+    devuelve (client, chat) - este test verifica que MIENTRAS EL CALLER
+    RETENGA AMBOS, gc.collect() no rompe el envio (la excepcion que
+    ocurre despues es de credenciales invalidas, no la de cliente
+    cerrado - no hay red real en self-test)."""
+    import gc
+
+    os.environ["GEMINI_API_KEY"] = "fake-key-solo-para-construir-el-objeto"
+    try:
+        client, chat = nueva_conversacion("bayer")
+        assert type(client).__name__ == "Client"
+        assert hasattr(chat, "send_message")
+        gc.collect()  # el caller SIGUE reteniendo `client` en esta linea
+        try:
+            chat.send_message("hola")
+        except RuntimeError as e:
+            assert "client has been closed" not in str(e), (
+                "el Client se cerro aunque el caller seguia reteniendo la "
+                "referencia - algo rompio la retencion")
+        except Exception:
+            pass  # otro error (credenciales invalidas) es esperado sin red real
+    finally:
+        os.environ.pop("GEMINI_API_KEY", None)
+    print("OK chat: (client, chat) retenidos juntos sobreviven al garbage collector")
+
+
 if __name__ == "__main__":
     _demo()
     _test_reconstruye_con_historial()
+    _test_devuelve_client_y_chat_y_no_se_cierra_si_se_retienen_ambos()
