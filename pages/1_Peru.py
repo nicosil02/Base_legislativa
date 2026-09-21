@@ -545,6 +545,41 @@ def documentos_hoy() -> int:
 
 
 @st.cache_data(ttl=60)
+def sugerencias_pendientes() -> list[dict]:
+    """PLs en 'Otros' que el clasificador ML (re-entrenado semanal, ver
+    entrenar-ml.yml) sugiere mover a otro tema con confianza 70-85%
+    (arriba de eso ya se aplica solo, ver clasificador/reclassify.py).
+
+    Gap real encontrado 2026-09-21: esta tabla existe y crece desde
+    mayo (246 pendientes en la auditoria que lo encontro) pero no habia
+    NINGUNA forma de verla - ni pagina, ni reporte, solo un conteo por
+    CLI que Nicolas nunca corre. Excluye las que ya tienen una decision
+    encolada (ver clasificador/decisiones_store.py) para no mostrar de
+    nuevo algo que ya se decidio pero todavia no se aplico en la DB
+    real (eso pasa en la proxima corrida de refrescar-pe.yml)."""
+    from clasificador.decisiones_store import list_decisiones_pendientes
+
+    conn = get_conn()
+    try:
+        rows = conn.execute(
+            """SELECT s.id, s.pley_num, s.per_par_id, s.cod_tipo_parl,
+                      s.tema_anterior, s.tema_sugerido, s.confidence, s.created_at,
+                      p.titulo, p.sumilla
+               FROM clasificacion_sugerencias s
+               JOIN proyectos p ON p.pley_num = s.pley_num
+                                AND p.per_par_id = s.per_par_id
+                                AND p.cod_tipo_parl = s.cod_tipo_parl
+               WHERE s.estado = 'pendiente' AND s.per_par_id = ?
+               ORDER BY s.confidence DESC""",
+            (PER_PAR_ID_ACTUAL,),
+        ).fetchall()
+    except sqlite3.OperationalError:
+        return []
+    ya_decididas = {d["sugerencia_id"] for d in list_decisiones_pendientes()}
+    return [dict(r) for r in rows if r["id"] not in ya_decididas]
+
+
+@st.cache_data(ttl=60)
 def last_sync() -> dict | None:
     conn = get_conn()
     r = conn.execute(
@@ -882,6 +917,38 @@ cols[-1].metric("Nuevos hoy", f"{documentos_hoy():,}",
                  help="Proyectos de ley + noticias detectados hoy (Perú)")
 
 st.markdown("")
+
+# ---------- Sugerencias de reclasificacion (clasificador ML) ----------
+_sugerencias = sugerencias_pendientes()
+if _sugerencias:
+    with st.expander(f"🏷️ Sugerencias de reclasificación pendientes ({len(_sugerencias)})"):
+        st.caption(
+            "El clasificador ML (se reentrena cada semana) detecta PLs en "
+            "\"Otros\" que probablemente son de otro tema, con 70-85% de "
+            "confianza (arriba de eso ya se aplica solo). Revisá y decidí — "
+            "se aplica en la próxima sincronización automática, no al instante."
+        )
+        from clasificador.decisiones_store import registrar_decision
+
+        for s in _sugerencias:
+            c1, c2, c3 = st.columns([7, 1, 1])
+            with c1:
+                st.markdown(
+                    f"**PL {s['pley_num']}** · {s['tema_anterior']} → "
+                    f"**{s['tema_sugerido']}** ({s['confidence']:.0%} confianza)  \n"
+                    f"{s['titulo']}"
+                )
+            with c2:
+                if st.button("✅ Aceptar", key=f"acc_sug_{s['id']}", use_container_width=True):
+                    registrar_decision(sugerencia_id=s["id"], decision="aceptar")
+                    st.cache_data.clear()
+                    st.rerun()
+            with c3:
+                if st.button("❌ Rechazar", key=f"rec_sug_{s['id']}", use_container_width=True):
+                    registrar_decision(sugerencia_id=s["id"], decision="rechazar")
+                    st.cache_data.clear()
+                    st.rerun()
+            st.markdown('<hr style="margin:4px 0;opacity:0.15">', unsafe_allow_html=True)
 
 cats = load_catalogs()
 

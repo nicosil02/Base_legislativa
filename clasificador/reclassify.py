@@ -152,3 +152,70 @@ def reclassify_otros(
         "apply_threshold": apply_threshold,
         "suggest_threshold": suggest_threshold,
     }
+
+
+def aplicar_decisiones(conn: sqlite3.Connection, decisiones: list[dict]) -> dict:
+    """Aplica decisiones humanas (aceptar/rechazar) sobre sugerencias
+    pendientes, registradas desde pages/1_Peru.py via
+    clasificador/decisiones_store.py (ver ese modulo para el por que del
+    round-trip: la UI no puede escribir proyectos.db directo).
+
+    "aceptar" pone tema_manual=1 (no 0, a diferencia del auto-apply de
+    reclassify_otros de arriba) - un humano revisando y confirmando ES
+    una clasificacion manual real, y de paso queda disponible como dato
+    de entrenamiento futuro (cmd_train usa tema_manual=1).
+
+    Devuelve las `sugerencia_id` efectivamente procesadas (aplicadas,
+    rechazadas, o simplemente ya no encontradas/ya resueltas) para que
+    el caller (clasificador.cli aplicar-decisiones) las saque del JSON
+    de pendientes - una decision nunca debe quedar reintentandose para
+    siempre."""
+    now = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    aceptadas = rechazadas = ya_resueltas = no_encontradas = 0
+    procesadas: list[int] = []
+
+    for d in decisiones:
+        sid = d["sugerencia_id"]
+        row = conn.execute(
+            "SELECT pley_num, per_par_id, cod_tipo_parl, tema_sugerido, estado "
+            "FROM clasificacion_sugerencias WHERE id=?", (sid,)
+        ).fetchone()
+        if row is None:
+            no_encontradas += 1
+            procesadas.append(sid)
+            continue
+        pley_num, per_par_id, cod_tipo_parl, tema_sugerido, estado = row
+        if estado != "pendiente":
+            # Ya resuelta por otra via (ej. el reclassify semanal la
+            # re-genero con mayor confianza y la auto-aplico) - nada que
+            # hacer, solo dejar de reintentarla.
+            ya_resueltas += 1
+            procesadas.append(sid)
+            continue
+        with conn:
+            if d["decision"] == "aceptar":
+                conn.execute(
+                    "UPDATE proyectos SET tema=?, tema_manual=1 "
+                    "WHERE pley_num=? AND per_par_id=? AND cod_tipo_parl=?",
+                    (tema_sugerido, pley_num, per_par_id, cod_tipo_parl),
+                )
+                conn.execute(
+                    "UPDATE clasificacion_sugerencias SET estado='aplicado', "
+                    "decided_at=?, decided_by=? WHERE id=?",
+                    (now, d.get("decided_by"), sid),
+                )
+                aceptadas += 1
+            else:
+                conn.execute(
+                    "UPDATE clasificacion_sugerencias SET estado='rechazado', "
+                    "decided_at=?, decided_by=? WHERE id=?",
+                    (now, d.get("decided_by"), sid),
+                )
+                rechazadas += 1
+        procesadas.append(sid)
+
+    return {
+        "aceptadas": aceptadas, "rechazadas": rechazadas,
+        "ya_resueltas": ya_resueltas, "no_encontradas": no_encontradas,
+        "procesadas": procesadas,
+    }
