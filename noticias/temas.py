@@ -246,6 +246,34 @@ def todos_los_temas() -> list[str]:
     return list(TEMAS.keys())
 
 
+# Bug real 2026-09-21 (Nicolas: "0 relevantes" en las alertas de
+# WhatsApp): "presidente"/"presidenta" (palabras de Coyuntura política)
+# matchean IGUAL al presidente de un club de futbol que al de la
+# Republica - verificado contra produccion: 8 de 9 items de una alerta
+# real eran resultados/dirigencia de Liga Ecuabet (Barcelona SC, Emelec)
+# clasificados como "Coyuntura política" solo por mencionar a su
+# presidente. No se toca clasificar() (lo usan las paginas Noticias
+# PE/EC tambien) - esto es un veto aparte, mas especifico, para quien
+# necesite descartar contenido deportivo puntualmente.
+KEYWORDS_DEPORTES = [
+    "liga ecuabet", "liga pro", "copa sudamericana", "copa libertadores",
+    "cuadrangular", "hexagonal", "hinchas", "hinchada", "estadio",
+    "futbolista", "futbolistas", "delantero", "defensor", "arquero",
+    "director tecnico", "director técnico", "barcelona sc", "emelec",
+]
+_PATTERN_DEPORTES = _compile(KEYWORDS_DEPORTES)
+
+
+def es_deportivo(titulo: str | None, resumen: str | None = None) -> bool:
+    """True si el contenido es sobre futbol/deportes - independiente de
+    que tema le haya asignado clasificar() (un "presidente de club" cuela
+    como Coyuntura política sin esto)."""
+    texto = _norm(f"{titulo or ''} {resumen or ''}")
+    if not texto.strip():
+        return False
+    return bool(_PATTERN_DEPORTES.search(texto))
+
+
 # ============================================================
 # Deteccion de pais por contenido (funcionarios/instituciones/gentilicio)
 # ============================================================
@@ -319,11 +347,18 @@ FUENTES_MULTIPAIS: set[str] = {
 
 
 def pais_por_contenido(titulo: str | None, resumen: str | None,
-                        pais_fuente: str) -> str:
+                        pais_fuente: str) -> str | None:
     """Pais real de la noticia por menciones a funcionarios/instituciones
-    estables de cada pais. Empate (incluido 0-0, el caso comun de una nota
-    que no menciona ningun funcionario) -> se queda con `pais_fuente` sin
-    cambios, es el comportamiento de siempre."""
+    estables de cada pais. Empate CON señal (ambos paises mencionados por
+    igual) -> se queda con `pais_fuente`. Devuelve None si no hay NINGUNA
+    señal de PE ni de EC - bug real 2026-09-21 (Nicolas: "las noticias...
+    no son de Peru... son 0 relevantes"): una nota de Argentina (Javier
+    Milei, economia, elecciones 2027) via "Bloomberg en Linea" (fuente
+    multi-pais, catalogada PE) no menciona nada de Peru NI de Ecuador -
+    quedarse con pais_fuente en ese caso asume que toda nota sin señal
+    conocida es del pais registrado de la fuente, que para una fuente
+    multi-pais es un dato arbitrario, no una inferencia real. El caller
+    (`_noticias_desde`) ya excluye None de ambos paises."""
     texto = _norm(f"{titulo or ''} {resumen or ''}")
     if not texto.strip():
         return pais_fuente
@@ -334,6 +369,8 @@ def pais_por_contenido(titulo: str | None, resumen: str | None,
     # se necesitan 2+ señales, o ninguna mencion de otro pais, para confiar.
     if _OTROS_PAISES.search(texto) and max(pe, ec) <= 1:
         return pais_fuente
+    if pe == 0 and ec == 0:
+        return None
     if pe > ec:
         return "PE"
     if ec > pe:
@@ -350,18 +387,26 @@ def _demo():
     assert pais_por_contenido(
         "Noboa llega a Estados Unidos para participar en la Asamblea General de la ONU",
         None, "PE") == "EC"
-    # Sin señales de ningun pais -> se queda con lo que ya tenia la fuente.
+    # Sin NINGUNA señal de PE ni EC -> None (no asumir el pais de la
+    # fuente, es arbitrario para una fuente multi-pais) - bug real
+    # 2026-09-21, verificado en produccion: nota 100% de Argentina
+    # (Javier Milei) via "Bloomberg en Linea" (catalogada PE) se mandaba
+    # como si fuera noticia peruana.
+    assert pais_por_contenido(
+        "Cómo llegaría la economía de Milei a las elecciones de 2027, según analistas",
+        None, "PE") is None
     assert pais_por_contenido("El chavismo y la oposición continúan el diálogo",
-                               None, "EC") == "EC"
-    assert pais_por_contenido(None, None, "PE") == "PE"
+                               None, "EC") is None
+    assert pais_por_contenido(None, None, "PE") == "PE", \
+        "texto vacio (titulo/resumen None) es un caso distinto - no hay nada que analizar, se queda con pais_fuente"
     # Falsos positivos reales 2026-09-20 (verificados contra 30 dias de
     # produccion, fuentes multi-pais tipo Criptonoticias/DPL que cubren
     # TODO LATAM, no solo Peru/Ecuador):
     assert pais_por_contenido(
         "Solana gana velocidad gracias a su nueva actualización",
         "La activación de SIMD-0525 redujo a 250 ms el tiempo de slot, el "
-        "intervalo en que Solana produce nuevos bloques.", "EC") == "EC", \
-        '"produce" (verbo) no debe matchear el Ministerio de la Produccion (PE)'
+        "intervalo en que Solana produce nuevos bloques.", "EC") is None, \
+        '"produce" (verbo) no debe matchear el Ministerio de la Produccion (PE), y sin otra señal es None'
     assert pais_por_contenido(
         "Nicaragua fortalece su preparación para la IA en salud",
         "el Ministerio de Salud de Nicaragua (MINSA) y la OPS...", "EC") == "EC", \
@@ -373,5 +418,22 @@ def _demo():
     print("OK temas: pais_por_contenido detecta por funcionarios/instituciones estables")
 
 
+def _test_es_deportivo():
+    # Casos reales 2026-09-21 (verificados en produccion): presidentes de
+    # club coleando como "Coyuntura política" via clasificar().
+    assert clasificar("Miguel Montalvo, presidente de Barcelona SC, y el "
+                       "cambio del club a sociedad anónima", None) == ["Coyuntura política"]
+    assert es_deportivo("Miguel Montalvo, presidente de Barcelona SC, y el "
+                         "cambio del club a sociedad anónima", None)
+    assert es_deportivo(
+        "José David Jiménez, presidente de Emelec, plantea revisar el "
+        "formato de Liga Ecuabet para recuperar a los hinchas en los estadios")
+    # Un presidente real de pais NO debe marcarse como deportivo.
+    assert not es_deportivo("Presidenta Keiko Fujimori lidera sesión de "
+                             "Consejo de Ministros en Palacio de Gobierno")
+    print("OK temas: es_deportivo detecta presidentes de club (Barcelona SC, Emelec)")
+
+
 if __name__ == "__main__":
     _demo()
+    _test_es_deportivo()

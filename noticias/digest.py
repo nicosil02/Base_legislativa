@@ -38,7 +38,7 @@ from datetime import datetime, timedelta, timezone
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
-from noticias.temas import FUENTES_MULTIPAIS, clasificar, pais_por_contenido
+from noticias.temas import FUENTES_MULTIPAIS, clasificar, es_deportivo, pais_por_contenido
 
 UMBRAL_SIMILITUD = 0.35
 MAX_GRUPOS_POR_PAIS = 12
@@ -176,7 +176,15 @@ def _es_relevante(n: dict) -> bool:
     # en el bluebook de cada cliente (clientes/<cliente>/notas.md), no en
     # "toda noticia de Salud/Agro" en general.
     temas = clasificar(n["titulo"], n["resumen"])
-    return temas == ["Coyuntura política"]
+    if temas != ["Coyuntura política"]:
+        return False
+    # Bug real 2026-09-21 (Nicolas: "0 relevantes" en una alerta real) -
+    # "presidente"/"presidenta" (Coyuntura política) matchea igual al
+    # presidente de un club de futbol que al de la Republica. Verificado
+    # contra produccion: 7 de 9 items de una alerta EC real eran
+    # resultados/dirigencia de Liga Ecuabet (Barcelona SC, Emelec) colados
+    # solo por mencionar a su presidente. Ver es_deportivo() en temas.py.
+    return not es_deportivo(n["titulo"], n["resumen"])
 
 
 def _agrupar_por_similitud(items: list[dict], umbral: float = UMBRAL_SIMILITUD) -> list[list[dict]]:
@@ -413,16 +421,23 @@ def _demo():
         (10, 1, "JURADO NACIONAL DE ELECCIONES — RESOLUCIÓN N° 3255-2026-JNE: "
                 "Confirman la Resolución Nº 00424-2026-JEE-HYLS/JNE",
          "http://a/10", "Coyuntura política|el-peruano|normativa"),
+        # Bug real 2026-09-21 (Nicolas: "0 relevantes" en una alerta real):
+        # "presidente de club" clasifica igual que "presidente de la
+        # Republica" - caso real, Liga Ecuabet/Barcelona SC.
+        (11, 1, "Miguel Montalvo, presidente de Barcelona SC, evalúa el "
+                "cambio del club a sociedad anónima", "http://a/11", None),
     ]
     conn.executemany("INSERT INTO noticias (id, fuente_id, titulo, resumen, url, tags) "
                      "VALUES (?, ?, ?, NULL, ?, ?)", filas)
 
     grupos, ultimo = armar_grupos(conn, "PE")
-    assert ultimo == 10, ultimo
+    assert ultimo == 11, ultimo
     assert not any(n["id"] == 8 for g in grupos for n in g), \
         "el item tags='normas' no deberia colarse pese a clasificar como Coyuntura política"
     assert not any(n["id"] == 9 for g in grupos for n in g), \
         "una noticia de Salud/Crop generica no debe colar solo por co-tagear Coyuntura política"
+    assert not any(n["id"] == 11 for g in grupos for n in g), \
+        "un presidente de club de futbol no debe colar como Coyuntura política"
     assert not any(n["id"] == 10 for g in grupos for n in g), \
         "una resolucion administrativa de El Peruano (tags pipe-joined con "\
         "'normativa') no deberia colarse - bug real 2026-09-20"
