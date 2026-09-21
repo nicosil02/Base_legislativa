@@ -347,6 +347,20 @@ jobs:
           pip install -q scikit-learn joblib
           python -X utf8 -m clasificador.cli reclassify --apply || echo "[warn] reclassify fallo, sigo"
 
+      - name: Aplicar decisiones de reclasificacion (aceptar/rechazar desde la app)
+        run: |
+          # Gap real encontrado 2026-09-21: 246 sugerencias de
+          # clasificacion_sugerencias llevaban meses acumulandose sin
+          # forma de revisarlas. pages/1_Peru.py ahora las muestra y dejar
+          # que Nicolas decida, pero esa pagina abre proyectos.db en modo
+          # READ-ONLY (y ese archivo local en Streamlit Cloud es efimero
+          # de todas formas) - no puede escribir la decision ahi. Solo
+          # REGISTRA la decision en data/clasificador_decisiones.json (via
+          # la API de GitHub, mismo patron que alerts/borradores_store.py)
+          # y este paso, que SI tiene el proyectos.db real, es quien
+          # aplica de verdad tema/estado y limpia el JSON de pendientes.
+          python -X utf8 -m clasificador.cli aplicar-decisiones || echo "[warn] aplicar-decisiones fallo, sigo"
+
       - name: Reclasificar temas de transcripciones con el resumen limpio
         run: |
           # Bug real 2026-09-15 (feedback de Nicolas: "estas clasificando
@@ -457,7 +471,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/proyectos.db.gz data/pl_seguimiento_estado.json
+          git add data/proyectos.db.gz data/pl_seguimiento_estado.json data/clasificador_decisiones.json
           if git diff --staged --quiet; then
             echo "Sin cambios en el snapshot PE."
             exit 0
@@ -490,11 +504,14 @@ jobs:
               mv -f proyectos.db.gz /tmp/merged_proyectos.db.gz
               MERGED=1
             fi
-            # data/pl_seguimiento_estado.json (clientes/alertas_pl.py) es
-            # OTRO archivo aparte de proyectos.db.gz - el --hard de abajo lo
-            # pisaria con la version vieja de origin igual que el bug real
-            # 2026-09-16 de mas abajo, asi que se salva aparte antes del reset.
+            # data/pl_seguimiento_estado.json (clientes/alertas_pl.py) y
+            # data/clasificador_decisiones.json (clasificador/decisiones_store.py)
+            # son OTROS archivos aparte de proyectos.db.gz - el --hard de
+            # abajo los pisaria con la version vieja de origin igual que el
+            # bug real 2026-09-16 de mas abajo, asi que se salvan aparte
+            # antes del reset.
             [ -f data/pl_seguimiento_estado.json ] && cp data/pl_seguimiento_estado.json /tmp/estado_pl.json
+            [ -f data/clasificador_decisiones.json ] && cp data/clasificador_decisiones.json /tmp/clasificador_decisiones.json
             # --hard, no --soft: bug real 2026-09-16 (backfill-vod.yml #7) -
             # con --soft el index se queda con la base vieja del checkout y
             # el commit revierte sin querer cualquier OTRO archivo que haya
@@ -506,7 +523,8 @@ jobs:
               mv -f /tmp/merged_proyectos.db.gz data/proyectos.db.gz
             fi
             [ -f /tmp/estado_pl.json ] && mv -f /tmp/estado_pl.json data/pl_seguimiento_estado.json
-            git add data/proyectos.db.gz data/pl_seguimiento_estado.json
+            [ -f /tmp/clasificador_decisiones.json ] && mv -f /tmp/clasificador_decisiones.json data/clasificador_decisiones.json
+            git add data/proyectos.db.gz data/pl_seguimiento_estado.json data/clasificador_decisiones.json
             if git diff --staged --quiet; then
               echo "Ya esta en origin/main tras el merge, nada que commitear."
               exit 0
