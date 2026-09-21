@@ -66,10 +66,20 @@ redaccion real del equipo, estudiala) ===
 """
 
 
-def nueva_conversacion(slug: str):
-    """Crea una conversacion nueva de Gemini con el contexto de `slug` ya
-    cargado como system_instruction. Levanta RuntimeError si falta
-    GEMINI_API_KEY (mismo patron que congreso_live.qa_chat.py)."""
+def nueva_conversacion(slug: str, historial: list[dict] | None = None):
+    """Crea una conversacion de Gemini con el contexto de `slug` ya cargado
+    como system_instruction. Levanta RuntimeError si falta GEMINI_API_KEY
+    (mismo patron que congreso_live.qa_chat.py).
+
+    Bug real 2026-09-21 (probado en vivo contra la app deployada):
+    "Cannot send a request, as the client has been closed" - Streamlit
+    re-ejecuta el script ENTERO en cada interaccion, y el objeto
+    genai.Client (y su sesion HTTP interna) de una corrida anterior no
+    sobrevive confiablemente a la siguiente, aunque el objeto Chat este
+    guardado en st.session_state. Fix: nunca reusar un Client/Chat viejo -
+    se crea uno nuevo en cada mensaje, pasandole `historial` (turnos
+    previos, formato [{"role": "user"|"model", "parts": [{"text": ...}]}])
+    para que la conversacion siga de donde quedo."""
     api_key = os.environ.get("GEMINI_API_KEY")
     if not api_key:
         raise RuntimeError("Falta GEMINI_API_KEY en el entorno")
@@ -81,6 +91,7 @@ def nueva_conversacion(slug: str):
     return client.chats.create(
         model=MODEL,
         config=types.GenerateContentConfig(system_instruction=construir_system_prompt(slug)),
+        history=historial or None,
     )
 
 
@@ -117,5 +128,26 @@ def _demo():
     print("OK chat: construir_system_prompt() arma el contexto real, nueva_conversacion() exige API key")
 
 
+def _test_reconstruye_con_historial():
+    """Bug real 2026-09-21, probado en vivo contra la app deployada:
+    reusar un objeto Chat guardado entre reruns de Streamlit tiraba
+    "Cannot send a request, as the client has been closed". El fix
+    reconstruye la conversacion de cero en cada mensaje pasando el
+    historial ya charlado - esto verifica que esa reconstruccion carga
+    bien los turnos previos (sin red, chats.create() no llama a la API)."""
+    os.environ["GEMINI_API_KEY"] = "fake-key-solo-para-construir-el-objeto"
+    try:
+        historial = [
+            {"role": "user", "parts": [{"text": "hola"}]},
+            {"role": "model", "parts": [{"text": "hola, en que te ayudo"}]},
+        ]
+        chat = nueva_conversacion("bayer", historial=historial)
+        assert len(chat.get_history()) == 2
+    finally:
+        os.environ.pop("GEMINI_API_KEY", None)
+    print("OK chat: nueva_conversacion() reconstruye la conversacion con el historial previo")
+
+
 if __name__ == "__main__":
     _demo()
+    _test_reconstruye_con_historial()
