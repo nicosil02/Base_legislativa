@@ -33,6 +33,7 @@ Comercio a la vez, cada caso en 1 sola linea).
 from __future__ import annotations
 
 import sqlite3
+from datetime import datetime, timedelta, timezone
 
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
@@ -41,6 +42,18 @@ from noticias.temas import FUENTES_MULTIPAIS, clasificar, pais_por_contenido
 
 UMBRAL_SIMILITUD = 0.35
 MAX_GRUPOS_POR_PAIS = 12
+# Bug real 2026-09-21 (Nicolas: "las noticias que envias tienen que ser
+# de ese dia... no me puedes enviar una noticia de hace meses"): las
+# fuentes "Google News PE/EC - <tema>" son busquedas por RELEVANCIA, no
+# orden cronologico - un articulo viejo (verificado en produccion: 2017,
+# 2019, 2022, 2023) puede aparecer HOY en los resultados de una busqueda
+# guardada y entrar a la DB con first_seen_at=hoy aunque su fecha_pub
+# real sea de hace años. El cursor del digest es por ID (nunca revisa lo
+# ya visto), no por fecha - sin este chequeo, cualquier articulo asi
+# pasa como si fuera noticia fresca. 2 dias de margen (no 1) para
+# fin de semana/demoras de pipeline normales, no para colar contenido
+# viejo.
+DIAS_FRESCURA = 2
 
 
 def init_schema(conn: sqlite3.Connection) -> None:
@@ -78,7 +91,7 @@ def _noticias_desde(conn: sqlite3.Connection, pais: str, desde_id: int) -> list[
     placeholders = ",".join("?" for _ in FUENTES_MULTIPAIS)
     filas = conn.execute(
         f"""
-        SELECT n.id, n.titulo, n.resumen, n.url, f.nombre AS fuente, n.tags, f.pais
+        SELECT n.id, n.titulo, n.resumen, n.url, f.nombre AS fuente, n.tags, f.pais, n.fecha_pub
         FROM noticias n JOIN noticias_fuentes f ON f.id = n.fuente_id
         WHERE (f.pais = ? OR f.nombre IN ({placeholders}))
           AND f.activa = 1 AND n.id > ?
@@ -94,8 +107,24 @@ def _noticias_desde(conn: sqlite3.Connection, pais: str, desde_id: int) -> list[
         if pais_real != pais:
             continue
         salida.append({"id": r[0], "titulo": r[1], "resumen": r[2], "url": r[3],
-                        "fuente": fuente, "tags": r[5]})
+                        "fuente": fuente, "tags": r[5], "fecha_pub": r[7]})
     return salida
+
+
+def _es_reciente(n: dict, dias: int = DIAS_FRESCURA) -> bool:
+    """True si `fecha_pub` es de los ultimos `dias` dias, o si no tiene
+    fecha_pub (tratado como reciente - mismo criterio ya usado en el
+    resto del codigo, ej. Noticias PE/EC: COALESCE(fecha_pub,
+    first_seen_at)). Ver DIAS_FRESCURA arriba para el bug real que
+    motiva esto."""
+    fecha_pub = n.get("fecha_pub")
+    if not fecha_pub:
+        return True
+    try:
+        fecha = datetime.fromisoformat(fecha_pub.replace("Z", "+00:00"))
+    except (ValueError, TypeError):
+        return True
+    return (datetime.now(timezone.utc) - fecha) <= timedelta(days=dias)
 
 
 def _es_relevante(n: dict) -> bool:
@@ -132,6 +161,8 @@ def _es_relevante(n: dict) -> bool:
     # "ministerial"/"suprema"/etc., no esta en su lista de keywords).
     tags = (n.get("tags") or "").split("|")
     if "normas" in tags or "normativa" in tags:
+        return False
+    if not _es_reciente(n):
         return False
     # clasificar() puede devolver VARIOS temas a la vez, y "ministro"/
     # "presidente" (palabras de Coyuntura política) aparecen tal cual en
@@ -214,6 +245,8 @@ def _matches_pl_ec(vistas: list[dict]) -> list[dict]:
     # TF-IDF.
     por_pl: dict[str, dict] = {}
     for n in vistas:
+        if not _es_reciente(n):
+            continue
         texto = f"{n['titulo'] or ''} {n['resumen'] or ''}"
         for pl in trackeados:
             if coincide_con_noticia(pl.get("titulo_matriz"), texto, noticia_titulo=n["titulo"]):
@@ -338,7 +371,7 @@ def _demo():
     conn.execute("""CREATE TABLE noticias_fuentes (id INTEGER PRIMARY KEY,
         pais TEXT, nombre TEXT, categoria TEXT, activa INTEGER DEFAULT 1)""")
     conn.execute("""CREATE TABLE noticias (id INTEGER PRIMARY KEY,
-        fuente_id INTEGER, titulo TEXT, resumen TEXT, url TEXT, tags TEXT)""")
+        fuente_id INTEGER, titulo TEXT, resumen TEXT, url TEXT, tags TEXT, fecha_pub TEXT)""")
     conn.execute("INSERT INTO noticias_fuentes VALUES (1,'PE','Medio A','Coyuntura Politica',1)")
     conn.execute("INSERT INTO noticias_fuentes VALUES (2,'PE','Medio B','Coyuntura Politica',1)")
     conn.execute("INSERT INTO noticias_fuentes VALUES (3,'PE','Blog de cocina','Temas Salud',1)")
@@ -467,7 +500,7 @@ def _test_pais_multipais():
     conn.execute("""CREATE TABLE noticias_fuentes (id INTEGER PRIMARY KEY,
         pais TEXT, nombre TEXT, categoria TEXT, activa INTEGER DEFAULT 1)""")
     conn.execute("""CREATE TABLE noticias (id INTEGER PRIMARY KEY,
-        fuente_id INTEGER, titulo TEXT, resumen TEXT, url TEXT, tags TEXT)""")
+        fuente_id INTEGER, titulo TEXT, resumen TEXT, url TEXT, tags TEXT, fecha_pub TEXT)""")
     conn.execute("INSERT INTO noticias_fuentes VALUES (1,'EC','DPL News Ecuador','Temas KYC/AML',1)")
     conn.execute("INSERT INTO noticias_fuentes VALUES (2,'EC','El Universo','Coyuntura Politica',1)")
     filas = [
@@ -500,7 +533,7 @@ def _test_run_manda_sin_novedades_si_no_hay_nada():
     conn.execute("""CREATE TABLE noticias_fuentes (id INTEGER PRIMARY KEY,
         pais TEXT, nombre TEXT, categoria TEXT, activa INTEGER DEFAULT 1)""")
     conn.execute("""CREATE TABLE noticias (id INTEGER PRIMARY KEY,
-        fuente_id INTEGER, titulo TEXT, resumen TEXT, url TEXT, tags TEXT)""")
+        fuente_id INTEGER, titulo TEXT, resumen TEXT, url TEXT, tags TEXT, fecha_pub TEXT)""")
     enviados = []
     with patch("congreso_live.notify.enviar_whatsapp", lambda msg: enviados.append(msg) or True), \
          patch("clientes.matrices.pls_trackeados_ec", lambda: []):
@@ -532,9 +565,50 @@ def _test_formatear_grupo_acorta_urls_largas():
     print("OK digest: _formatear_grupo/_formatear_match_pl acortan URLs largas")
 
 
+def _test_ignora_noticias_viejas():
+    """Bug real 2026-09-21 (Nicolas: "las noticias que envias tienen que
+    ser de ese dia... no me puedes enviar una noticia de hace meses"):
+    verificado contra produccion, 123 articulos con fecha_pub de hace
+    meses/años (2017, 2019, 2022, 2023) entraron a la DB como "nuevos"
+    (first_seen_at reciente) via fuentes "Google News - <tema>" (buscan
+    por relevancia, no cronologia) y pasaban el filtro de tema."""
+    conn = sqlite3.connect(":memory:")
+    init_schema(conn)
+    conn.execute("""CREATE TABLE noticias_fuentes (id INTEGER PRIMARY KEY,
+        pais TEXT, nombre TEXT, categoria TEXT, activa INTEGER DEFAULT 1)""")
+    conn.execute("""CREATE TABLE noticias (id INTEGER PRIMARY KEY,
+        fuente_id INTEGER, titulo TEXT, resumen TEXT, url TEXT, tags TEXT, fecha_pub TEXT)""")
+    conn.execute("INSERT INTO noticias_fuentes VALUES (1,'EC','Google News EC','Coyuntura Politica',1)")
+    filas = [
+        # Caso real (parafraseado): articulo de 2017 sobre Odebrecht,
+        # detectado HOY por una busqueda guardada de Google News - tema
+        # real (menciona "Congreso"), pero la noticia NO es de hoy.
+        (1, 1, "El Congreso de Ecuador debate el caso Odebrecht en sesion plenaria",
+         None, "http://x/1", None, "2017-09-05T07:00:00Z"),
+        # Contraste: mismo tema, pero realmente de hoy - debe pasar.
+        (2, 1, "El Congreso aprueba en el Pleno la nueva ley de emergencia",
+         None, "http://x/2", None, datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")),
+        # Sin fecha_pub (NULL) - se trata como reciente (mismo criterio
+        # que el resto del codigo, COALESCE con first_seen_at).
+        (3, 1, "El presidente encabeza reunion de gabinete en el Congreso",
+         None, "http://x/3", None, None),
+    ]
+    conn.executemany("INSERT INTO noticias (id, fuente_id, titulo, resumen, url, tags, fecha_pub) "
+                     "VALUES (?, ?, ?, ?, ?, ?, ?)", filas)
+
+    grupos, ultimo = armar_grupos(conn, "EC")
+    assert ultimo == 3, ultimo
+    ids_incluidos = {n["id"] for g in grupos for n in g}
+    assert 1 not in ids_incluidos, "un articulo de 2017 no debe colar como noticia de hoy"
+    assert 2 in ids_incluidos, "una noticia real de hoy si debe pasar"
+    assert 3 in ids_incluidos, "sin fecha_pub se trata como reciente, no se excluye"
+    print("OK digest: ignora noticias con fecha_pub vieja (busquedas de Google News no son cronologicas)")
+
+
 if __name__ == "__main__":
     _demo()
     _test_matches_pl_ec()
     _test_pais_multipais()
     _test_run_manda_sin_novedades_si_no_hay_nada()
     _test_formatear_grupo_acorta_urls_largas()
+    _test_ignora_noticias_viejas()
