@@ -264,7 +264,37 @@ def es_deportivo(titulo: str | None, resumen: str | None = None) -> bool:
     return bool(_PATTERN_DEPORTES.search(texto))
 
 
-def clasificar(titulo: str | None, resumen: str | None = None) -> list[str]:
+# Bug real 2026-09-21 (auditoria en vivo pedida por Nicolas: "revisa lo
+# del cancer/farandula tambien"): "cancer"/"cáncer" (Salud) matchea IGUAL
+# una nota de farandula que menciona el diagnostico de alguien de pasada
+# que una noticia real de salud publica - verificado contra produccion:
+# "Kim Kardashian recordo su hospitalizacion... antecedentes de cancer en
+# su familia" (elcomercio.com/afull/... - "afull" es la vertical de
+# entretenimiento de El Comercio) y una nota sobre una pelicula
+# ecuatoriana ganando un festival de cine (eluniverso.com/entretenimiento/
+# cine/...) clasificaban como Salud. A diferencia del veto de deportes
+# (por palabras en el texto), aca la señal confiable es la SECCION del
+# medio en la URL, no el texto - no hay forma robusta de distinguir "nota
+# de salud real" de "nota de farandula que menciona una enfermedad de
+# pasada" solo con keywords del titulo/resumen.
+KEYWORDS_ESPECTACULOS_URL = [
+    "/entretenimiento/", "/farandula/", "/espectaculos/", "/afull/",
+    "/gente/", "/cine/",
+]
+
+
+def es_espectaculos(url: str | None) -> bool:
+    """True si la URL es de una seccion de entretenimiento/farandula del
+    medio - independiente de que palabras de otro tema mencione de
+    pasada (una nota de farandula puede mencionar "cancer" o
+    "hospitalizacion" sin ser noticia de salud real)."""
+    if not url:
+        return False
+    return any(marca in url.lower() for marca in KEYWORDS_ESPECTACULOS_URL)
+
+
+def clasificar(titulo: str | None, resumen: str | None = None,
+               url: str | None = None) -> list[str]:
     """Lista de temas detectados en el contenido. Orden estable."""
     texto = _norm(f"{titulo or ''} {resumen or ''}")
     if not texto.strip():
@@ -272,6 +302,8 @@ def clasificar(titulo: str | None, resumen: str | None = None) -> list[str]:
     temas = [t for t, pat in _PATTERNS.items() if pat.search(texto)]
     if "Coyuntura política" in temas and _PATTERN_DEPORTES.search(texto):
         temas = [t for t in temas if t != "Coyuntura política"]
+    if "Salud" in temas and es_espectaculos(url):
+        temas = [t for t in temas if t != "Salud"]
     return temas
 
 
@@ -432,6 +464,38 @@ def _demo():
     print("OK temas: pais_por_contenido detecta por funcionarios/instituciones estables")
 
 
+def _test_es_espectaculos():
+    """Casos reales 2026-09-21 (auditoria en vivo, Nicolas: "revisa lo del
+    cancer/farandula tambien"): notas de farandula que mencionan una
+    enfermedad de pasada no deben clasificar como Salud."""
+    url_kardashian = "https://www.elcomercio.com/afull/kim-kardashian-esofagitis-salud-estados-unidos/"
+    titulo_kardashian = ("Kim Kardashian recordó su hospitalización y encendió las "
+                          "alarmas por antecedentes de cáncer en su familia")
+    assert es_espectaculos(url_kardashian)
+    assert clasificar(titulo_kardashian, None, url_kardashian) == []
+    # Sin la URL (o con una que no es de farandula), sigue clasificando -
+    # el veto es especificamente por seccion del medio, no por palabra.
+    assert clasificar(titulo_kardashian, None, None) == ["Salud"]
+    assert clasificar(titulo_kardashian, None, "https://www.elcomercio.com/politica/nota") == ["Salud"]
+
+    url_pelicula = ("https://eluniverso.com/entretenimiento/cine/pelicula-ecuatoriana-mama-"
+                     "de-ana-cristina-benitez-gana-el-festival-internacional-de-cine-nota/")
+    assert es_espectaculos(url_pelicula)
+    assert clasificar(
+        "Película ecuatoriana 'Mama' gana el Festival Internacional de Cine",
+        "El documental presenta el diagnóstico de cáncer de mama en etapa avanzada de la directora.",
+        url_pelicula,
+    ) == []
+
+    # Una nota de salud real (MINSA, gob.pe) no se ve afectada.
+    assert not es_espectaculos("https://www.gob.pe/institucion/minsa/noticias/1444776-nota")
+    assert clasificar(
+        "Minsa: La hinchazón o pesadez en el brazo tras el cáncer de mama requiere atención médica",
+        None, "https://www.gob.pe/institucion/minsa/noticias/1444776-nota",
+    ) == ["Salud"]
+    print("OK temas: notas de farandula (URL de entretenimiento) no clasifican como Salud")
+
+
 def _test_ministro_no_es_proxy_de_tema():
     """Bug real 2026-09-21 (auditoria en vivo pedida por Nicolas: "quiero
     que aprendas mejor... las noticias que realmente nos interesan"):
@@ -476,5 +540,6 @@ def _test_es_deportivo():
 
 if __name__ == "__main__":
     _demo()
+    _test_es_espectaculos()
     _test_ministro_no_es_proxy_de_tema()
     _test_es_deportivo()
