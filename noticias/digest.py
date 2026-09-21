@@ -179,7 +179,7 @@ def _es_relevante(n: dict) -> bool:
     # presidente de un club de futbol que al de la Republica - clasificar()
     # ya filtra esto (ver es_deportivo() en temas.py), asi que un item de
     # deportes nunca llega aca con temas == ["Coyuntura política"].
-    temas = clasificar(n["titulo"], n["resumen"])
+    temas = clasificar(n["titulo"], n["resumen"], n.get("url"))
     return temas == ["Coyuntura política"]
 
 
