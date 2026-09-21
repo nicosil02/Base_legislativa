@@ -164,7 +164,13 @@ def _feedback_descartar(noticia_id: int) -> None:
     noticias/feedback_store.py (GitHub Contents API, mismo patron que
     clasificador/decisiones_store.py) para que el descarte sobreviva."""
     registrar_descarte(int(noticia_id), descartado_por=st.user.get("email"))
-    st.cache_data.clear()
+    # Bug real 2026-09-21 (Nicolas: "el boton de descartar demora
+    # muchisimo en aplicar"): st.cache_data.clear() invalida TODO el
+    # cache de la app (ambas paginas PE/EC: fuentes, kpis, clientes...),
+    # no solo lo que este descarte afecta. Solo load_noticias() lee
+    # list_descartadas() - limpiar nada mas esa funcion alcanza y es
+    # mucho mas rapido.
+    load_noticias.clear()
 
 
 # IMPORTANTE: pasamos `pais` como argumento a TODAS las funciones cacheadas
