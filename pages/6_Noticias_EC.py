@@ -367,7 +367,7 @@ def load_noticias(pais: str,
             "Temas KYC/AML": "KYC / AML / Financiero",
         }
         def _temas_de_noticia(row):
-            temas = clasificar(row["Título"], row["Resumen"])
+            temas = clasificar(row["Título"], row["Resumen"], row.get("Enlace"))
             tema_fuente = _CAT_A_TEMA.get(row.get("Categoría fuente"))
             if tema_fuente and tema_fuente not in temas:
                 temas = [tema_fuente] + temas
