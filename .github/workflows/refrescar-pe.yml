@@ -1,6 +1,18 @@
 name: Actualizar Peru (PLs + snapshot)
 
 on:
+  # Bug real 2026-09-21 (Nicolas: "no me ha llegado nada [de whatsapp] y
+  # los 9am"): el cron nativo de GitHub dejo de disparar durante ~6 horas
+  # seguidas (ultimo disparo real antes del hueco: la corrida de las 22:00
+  # Lima del dia anterior, ejecutada mas de 5 horas TARDE) - se perdieron
+  # completas las corridas de 8am Y 9am Lima, exactamente cuando debian
+  # mandarse las alertas. Mismo patron ya documentado y resuelto para
+  # backfill-auto.yml (ver ese workflow) - push es confiable, schedule no.
+  # Fix: una rutina en la nube de Claude toca data/.refrescar_trigger cada
+  # hora y lo pushea - ese push dispara esta corrida aunque el cron nativo
+  # vuelva a fallar. No reemplaza al schedule de abajo, es un respaldo.
+  push:
+    paths: ['data/.refrescar_trigger']
   schedule:
     # Cada hora durante horas habiles 8 AM - 22 PM Lima (13-03 UTC),
     # mas corrida nocturna a las 6 AM Lima (11 UTC) para catch-up.
@@ -44,6 +56,23 @@ jobs:
         uses: actions/checkout@v5
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Determinar hora UTC real
+        id: hora
+        run: |
+          # Bug real 2026-09-21: los pasos de abajo gateaban por
+          # `github.event.schedule` (la expresion cron EXACTA que
+          # supuestamente disparo la corrida) - pero eso queda vacio en
+          # una corrida disparada por push (el respaldo de arriba) y no
+          # sirve si el cron nativo disparo TARDE (ej. el slot de 9am
+          # ejecutandose a las 10:30, todavia con SCHEDULE="0 14 * * *"
+          # pero fuera de esa hora real). Usar la hora UTC real del
+          # momento en que corre esto es mas robusto: funciona igual sin
+          # importar como se disparo la corrida.
+          # 10#... fuerza base-10: date -u +%H da "08"/"09" con cero a la
+          # izquierda, que bash interpreta como octal invalido en
+          # comparaciones -eq/-ge mas abajo si no se fuerza la base.
+          echo "hour=$((10#$(date -u +%H)))" >> "$GITHUB_OUTPUT"
 
       - name: Setup Python
         uses: actions/setup-python@v6
@@ -104,7 +133,11 @@ jobs:
           pip install --upgrade certifi
 
       - name: Instalar dependencias de noticias (PDF/OCR Registro Oficial EC)
-        if: github.event.schedule == '0 13 * * *' || github.event_name == 'workflow_dispatch'
+        # Ventana 8-9am Lima (13-14 UTC), no solo el minuto exacto - bug
+        # real 2026-09-21: el cron nativo puede disparar tarde (o no
+        # disparar), y github.event.schedule exige el string EXACTO -
+        # steps.hora (hora UTC real de esta corrida) tolera el margen.
+        if: steps.hora.outputs.hour == '13' || steps.hora.outputs.hour == '14' || github.event_name == 'workflow_dispatch'
         run: |
           # Solo se instala en la corrida de las 8 AM Lima (ver "Actualizar
           # noticias" mas abajo) - no hace falta pagar este costo 15x/dia
@@ -219,7 +252,7 @@ jobs:
 
       - name: Actualizar noticias y coyuntura (PE + EC)
         env:
-          SCHEDULE: ${{ github.event.schedule }}
+          HOUR: ${{ steps.hora.outputs.hour }}
           IS_DISPATCH: ${{ github.event_name == 'workflow_dispatch' }}
           CALLMEBOT_PHONE: ${{ secrets.CALLMEBOT_PHONE }}
           CALLMEBOT_APIKEY: ${{ secrets.CALLMEBOT_APIKEY }}
@@ -232,11 +265,12 @@ jobs:
           #
           # Registro Oficial EC (indice + PDF/OCR de ediciones y
           # suplementos) es distinto: publica 1x/dia, asi que --con-ro-ec
-          # solo se agrega en la corrida de las 8 AM Lima o en dispatch
-          # manual - no tiene sentido re-bajar/re-OCRear los mismos PDFs
-          # 15 veces al dia.
+          # solo se agrega en la ventana 8-9am Lima o en dispatch manual -
+          # no tiene sentido re-bajar/re-OCRear los mismos PDFs 15 veces
+          # al dia. Ventana (no minuto exacto) por el mismo motivo que
+          # steps.hora de arriba: el cron nativo puede disparar tarde.
           RO_FLAG=""
-          if [ "$SCHEDULE" = "0 13 * * *" ] || [ "$IS_DISPATCH" = "true" ]; then
+          if [ "$HOUR" = "13" ] || [ "$HOUR" = "14" ] || [ "$IS_DISPATCH" = "true" ]; then
             RO_FLAG="--con-ro-ec"
           fi
           timeout 600 python -X utf8 -m noticias.cli seed \
@@ -249,16 +283,27 @@ jobs:
           # seguido... a veces no me dice nada" + "debería llegar 2 veces
           # al día, 1 a las 8-9am y otra a las 2pm"): antes disparaba en
           # cada corrida (15x/dia) y solo mandaba algo si habia contenido -
-          # silencio ambiguo el resto de las veces. Ahora SOLO corre en
-          # los 2 horarios fijos (9am/2pm Lima) o en dispatch manual, y
-          # noticias/digest.py::run() siempre manda algo (aunque sea "sin
-          # novedades") en esos 2 horarios - las corridas intermedias
-          # siguen sincronizando datos igual, solo no vuelven a avisar.
-          if [ "$SCHEDULE" = "0 14 * * *" ] || [ "$SCHEDULE" = "0 19 * * *" ] || [ "$IS_DISPATCH" = "true" ]; then
+          # silencio ambiguo el resto de las veces.
+          #
+          # Bug real 2026-09-21 (Nicolas: "no me ha llegado nada y los
+          # 9am"): con el minuto EXACTO (SCHEDULE == "0 14 * * *"), un
+          # cron nativo que dispara tarde o que directamente no dispara
+          # (paso ese mismo dia - 6 horas sin ninguna corrida) significaba
+          # SIN alerta ese dia, sin reintento. Ventana de 2 horas (9-10am,
+          # 2-3pm Lima) en vez del minuto exacto - tolera atrasos del cron
+          # nativo y corridas de respaldo por push (ver `on:` arriba)
+          # aunque no caigan justo en el minuto :00.
+          if [ "$HOUR" -ge 14 ] && [ "$HOUR" -le 15 ]; then
+            timeout 120 python -X utf8 -m noticias.cli avisar \
+                || echo "[warn] noticias avisar fallo, sigo"
+          elif [ "$HOUR" -ge 19 ] && [ "$HOUR" -le 20 ]; then
+            timeout 120 python -X utf8 -m noticias.cli avisar \
+                || echo "[warn] noticias avisar fallo, sigo"
+          elif [ "$IS_DISPATCH" = "true" ]; then
             timeout 120 python -X utf8 -m noticias.cli avisar \
                 || echo "[warn] noticias avisar fallo, sigo"
           else
-            echo "[avisar] fuera de los horarios fijos (9am/2pm Lima) - skip"
+            echo "[avisar] fuera de los horarios fijos (9-10am/2-3pm Lima) - skip"
           fi
           # Backfill de fechas: sync solo re-toca los items MAS RECIENTES
           # por fuente, asi que una fila que quedo con fecha_pub NULL (fix
@@ -276,7 +321,11 @@ jobs:
               || echo "[warn] noticias purge fallo, sigo"
 
       - name: Instalar Cloudflare WARP en modo proxy (SOCKS5 :40000)
-        if: github.event.schedule == '0 13 * * *' || github.event_name == 'workflow_dispatch'
+        # Ventana 8-9am Lima (13-14 UTC), no solo el minuto exacto - bug
+        # real 2026-09-21: el cron nativo puede disparar tarde (o no
+        # disparar), y github.event.schedule exige el string EXACTO -
+        # steps.hora (hora UTC real de esta corrida) tolera el margen.
+        if: steps.hora.outputs.hour == '13' || steps.hora.outputs.hour == '14' || github.event_name == 'workflow_dispatch'
         run: |
           # Mismo fix que vigilar-congreso.yml, verificado en vivo
           # 2026-09-15: YouTube bloquea las IPs de datacenter de GitHub
@@ -303,7 +352,11 @@ jobs:
           warp-cli --accept-tos status
 
       - name: Puente SOCKS5->HTTP para descargas de captions (privoxy :8118)
-        if: github.event.schedule == '0 13 * * *' || github.event_name == 'workflow_dispatch'
+        # Ventana 8-9am Lima (13-14 UTC), no solo el minuto exacto - bug
+        # real 2026-09-21: el cron nativo puede disparar tarde (o no
+        # disparar), y github.event.schedule exige el string EXACTO -
+        # steps.hora (hora UTC real de esta corrida) tolera el margen.
+        if: steps.hora.outputs.hour == '13' || steps.hora.outputs.hour == '14' || github.event_name == 'workflow_dispatch'
         run: |
           # obtener_transcripcion() baja el VTT de los captions con
           # urllib.request directo (no yt-dlp) - urllib SI respeta
@@ -317,7 +370,11 @@ jobs:
           curl -s -x http://127.0.0.1:8118 -o /dev/null -w "privoxy->WARP HTTP %{http_code}\n" https://www.youtube.com/
 
       - name: Transcripciones de sesiones (captions YouTube, Pleno/comisiones)
-        if: github.event.schedule == '0 13 * * *' || github.event_name == 'workflow_dispatch'
+        # Ventana 8-9am Lima (13-14 UTC), no solo el minuto exacto - bug
+        # real 2026-09-21: el cron nativo puede disparar tarde (o no
+        # disparar), y github.event.schedule exige el string EXACTO -
+        # steps.hora (hora UTC real de esta corrida) tolera el margen.
+        if: steps.hora.outputs.hour == '13' || steps.hora.outputs.hour == '14' || github.event_name == 'workflow_dispatch'
         env:
           YT_DLP_PROXY: socks5://127.0.0.1:40000
           http_proxy: http://127.0.0.1:8118
@@ -388,7 +445,7 @@ jobs:
           RESEND_FROM: ${{ secrets.RESEND_FROM }}
           ALERT_RECIPIENT: ${{ secrets.ALERT_RECIPIENT }}
           PYTHONIOENCODING: utf-8
-          SCHEDULE: ${{ github.event.schedule }}
+          HOUR: ${{ steps.hora.outputs.hour }}
           IS_DISPATCH: ${{ github.event_name == 'workflow_dispatch' }}
         run: |
           # Redisenado 2026-09-20 (mismo pedido que el digest de WhatsApp
@@ -396,16 +453,23 @@ jobs:
           # 1x/dia con retry). Ver alerts/cli.py para la logica completa -
           # cada slot SIEMPRE envia (con o sin contenido) salvo que ya se
           # haya mandado ese slot especifico hoy.
+          #
+          # Bug real 2026-09-21 (Nicolas: "no me ha llegado nada y los
+          # 9am"): igual que en el digest de WhatsApp de arriba, el minuto
+          # EXACTO no tolera un cron nativo que dispara tarde o que no
+          # dispara. Ventana de 2 horas en vez del minuto exacto -
+          # alerts/cli.py ya dedupe por dia+slot, asi que no hay riesgo de
+          # duplicar aunque 2 corridas caigan en la misma ventana.
           if [ -z "$RESEND_API_KEY" ]; then
             echo "[alert-backup] sin RESEND_API_KEY, skip"
-          elif [ "$SCHEDULE" = "0 14 * * *" ]; then
+          elif [ "$HOUR" -ge 14 ] && [ "$HOUR" -le 15 ]; then
             python -X utf8 -m alerts.cli send --slot am || echo "[warn] alert send (am) fallo, sigo"
-          elif [ "$SCHEDULE" = "0 19 * * *" ]; then
+          elif [ "$HOUR" -ge 19 ] && [ "$HOUR" -le 20 ]; then
             python -X utf8 -m alerts.cli send --slot pm || echo "[warn] alert send (pm) fallo, sigo"
           elif [ "$IS_DISPATCH" = "true" ]; then
             python -X utf8 -m alerts.cli send --slot manual || echo "[warn] alert send (manual) fallo, sigo"
           else
-            echo "[alert-backup] fuera de los horarios fijos (9am/2pm Lima) - skip"
+            echo "[alert-backup] fuera de los horarios fijos (9-10am/2-3pm Lima) - skip"
           fi
 
       - name: Heartbeats (registra corrida exitosa)
