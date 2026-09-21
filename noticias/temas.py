@@ -224,37 +224,20 @@ def _compile(kws: list[str]) -> re.Pattern:
 _PATTERNS = {tema: _compile(kws) for tema, kws in TEMAS.items()}
 _PATTERN_NORMATIVA = _compile(KEYWORDS_NORMATIVA)
 
-
-def clasificar(titulo: str | None, resumen: str | None = None) -> list[str]:
-    """Lista de temas detectados en el contenido. Orden estable."""
-    texto = _norm(f"{titulo or ''} {resumen or ''}")
-    if not texto.strip():
-        return []
-    return [t for t, pat in _PATTERNS.items() if pat.search(texto)]
-
-
-def es_normativa(titulo: str | None, resumen: str | None = None) -> bool:
-    """True si el contenido referencia normativa (decreto, ley, resolución,
-    reglamento, registro oficial, etc.). Independiente del tema."""
-    texto = _norm(f"{titulo or ''} {resumen or ''}")
-    if not texto.strip():
-        return False
-    return bool(_PATTERN_NORMATIVA.search(texto))
-
-
-def todos_los_temas() -> list[str]:
-    return list(TEMAS.keys())
-
-
-# Bug real 2026-09-21 (Nicolas: "0 relevantes" en las alertas de
-# WhatsApp): "presidente"/"presidenta" (palabras de Coyuntura política)
-# matchean IGUAL al presidente de un club de futbol que al de la
-# Republica - verificado contra produccion: 8 de 9 items de una alerta
-# real eran resultados/dirigencia de Liga Ecuabet (Barcelona SC, Emelec)
-# clasificados como "Coyuntura política" solo por mencionar a su
-# presidente. No se toca clasificar() (lo usan las paginas Noticias
-# PE/EC tambien) - esto es un veto aparte, mas especifico, para quien
-# necesite descartar contenido deportivo puntualmente.
+# Bug real 2026-09-21 (Nicolas, primero en las alertas de WhatsApp - "0
+# relevantes" - y confirmado despues tambien en las paginas Noticias
+# PE/EC via auditoria en vivo contra produccion, 2026-09-21 mas tarde el
+# mismo dia): "presidente"/"presidenta" (palabras de Coyuntura política)
+# matchea IGUAL al presidente de un club de futbol que al de la
+# Republica. El primer intento de arreglar esto solo aplicaba el veto
+# dentro del digest de WhatsApp (noticias/digest.py) razonando que
+# clasificar() "tambien lo usan las paginas Noticias PE/EC" como motivo
+# para NO tocarlo - exactamente al reves: como TODOS los consumidores
+# (WhatsApp y las paginas) comparten clasificar(), el veto tiene que
+# vivir aca para que todos lo hereden. Verificado en vivo: Miguel
+# Montalvo (presidente de Barcelona SC) y Jose David Jimenez (presidente
+# de Emelec) seguian apareciendo como "Coyuntura política" en la pagina
+# Noticias EC pese al fix del digest.
 KEYWORDS_DEPORTES = [
     "liga ecuabet", "liga pro", "copa sudamericana", "copa libertadores",
     "cuadrangular", "hexagonal", "hinchas", "hinchada", "estadio",
@@ -272,6 +255,30 @@ def es_deportivo(titulo: str | None, resumen: str | None = None) -> bool:
     if not texto.strip():
         return False
     return bool(_PATTERN_DEPORTES.search(texto))
+
+
+def clasificar(titulo: str | None, resumen: str | None = None) -> list[str]:
+    """Lista de temas detectados en el contenido. Orden estable."""
+    texto = _norm(f"{titulo or ''} {resumen or ''}")
+    if not texto.strip():
+        return []
+    temas = [t for t, pat in _PATTERNS.items() if pat.search(texto)]
+    if "Coyuntura política" in temas and _PATTERN_DEPORTES.search(texto):
+        temas = [t for t in temas if t != "Coyuntura política"]
+    return temas
+
+
+def es_normativa(titulo: str | None, resumen: str | None = None) -> bool:
+    """True si el contenido referencia normativa (decreto, ley, resolución,
+    reglamento, registro oficial, etc.). Independiente del tema."""
+    texto = _norm(f"{titulo or ''} {resumen or ''}")
+    if not texto.strip():
+        return False
+    return bool(_PATTERN_NORMATIVA.search(texto))
+
+
+def todos_los_temas() -> list[str]:
+    return list(TEMAS.keys())
 
 
 # ============================================================
@@ -419,19 +426,27 @@ def _demo():
 
 
 def _test_es_deportivo():
-    # Casos reales 2026-09-21 (verificados en produccion): presidentes de
-    # club coleando como "Coyuntura política" via clasificar().
+    # Casos reales 2026-09-21 (verificados en produccion, 2 veces: primero
+    # en las alertas de WhatsApp, despues via auditoria en vivo se
+    # confirmo que TAMBIEN seguian apareciendo en las paginas Noticias
+    # PE/EC, porque el primer intento solo veteaba dentro del digest y no
+    # en clasificar() mismo) - presidentes de club NO deben clasificar
+    # como Coyuntura política en ningun consumidor.
     assert clasificar("Miguel Montalvo, presidente de Barcelona SC, y el "
-                       "cambio del club a sociedad anónima", None) == ["Coyuntura política"]
+                       "cambio del club a sociedad anónima", None) == []
     assert es_deportivo("Miguel Montalvo, presidente de Barcelona SC, y el "
                          "cambio del club a sociedad anónima", None)
     assert es_deportivo(
         "José David Jiménez, presidente de Emelec, plantea revisar el "
         "formato de Liga Ecuabet para recuperar a los hinchas en los estadios")
-    # Un presidente real de pais NO debe marcarse como deportivo.
+    # Un presidente real de pais NO debe marcarse como deportivo, y SI
+    # debe seguir clasificando como Coyuntura política.
     assert not es_deportivo("Presidenta Keiko Fujimori lidera sesión de "
                              "Consejo de Ministros en Palacio de Gobierno")
-    print("OK temas: es_deportivo detecta presidentes de club (Barcelona SC, Emelec)")
+    assert clasificar("Presidenta Keiko Fujimori lidera sesión de "
+                       "Consejo de Ministros en Palacio de Gobierno") == ["Coyuntura política"]
+    print("OK temas: clasificar() ya no marca presidentes de club (Barcelona SC, "
+          "Emelec) como Coyuntura política, pero si a presidentes reales")
 
 
 if __name__ == "__main__":

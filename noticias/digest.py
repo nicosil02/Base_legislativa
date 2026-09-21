@@ -38,7 +38,7 @@ from datetime import datetime, timedelta, timezone
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
-from noticias.temas import FUENTES_MULTIPAIS, clasificar, es_deportivo, pais_por_contenido
+from noticias.temas import FUENTES_MULTIPAIS, clasificar, pais_por_contenido
 
 UMBRAL_SIMILITUD = 0.35
 MAX_GRUPOS_POR_PAIS = 12
@@ -175,16 +175,12 @@ def _es_relevante(n: dict) -> bool:
     # esa palabra - el interes real y especifico en esos verticales vive
     # en el bluebook de cada cliente (clientes/<cliente>/notas.md), no en
     # "toda noticia de Salud/Agro" en general.
-    temas = clasificar(n["titulo"], n["resumen"])
-    if temas != ["Coyuntura política"]:
-        return False
-    # Bug real 2026-09-21 (Nicolas: "0 relevantes" en una alerta real) -
     # "presidente"/"presidenta" (Coyuntura política) matchea igual al
-    # presidente de un club de futbol que al de la Republica. Verificado
-    # contra produccion: 7 de 9 items de una alerta EC real eran
-    # resultados/dirigencia de Liga Ecuabet (Barcelona SC, Emelec) colados
-    # solo por mencionar a su presidente. Ver es_deportivo() en temas.py.
-    return not es_deportivo(n["titulo"], n["resumen"])
+    # presidente de un club de futbol que al de la Republica - clasificar()
+    # ya filtra esto (ver es_deportivo() en temas.py), asi que un item de
+    # deportes nunca llega aca con temas == ["Coyuntura política"].
+    temas = clasificar(n["titulo"], n["resumen"])
+    return temas == ["Coyuntura política"]
 
 
 def _agrupar_por_similitud(items: list[dict], umbral: float = UMBRAL_SIMILITUD) -> list[list[dict]]:
