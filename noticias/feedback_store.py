@@ -146,8 +146,18 @@ def registrar_descarte(noticia_id: int, descartado_por: str | None = None) -> bo
     except urllib.error.HTTPError as e:
         err_body = e.read().decode("utf-8", errors="replace")
         raise RuntimeError("GitHub PUT failed: " + str(e.code) + " " + err_body[:300]) from None
-    _cache["descartes"] = None
-    _cache["fetched_at"] = 0
+    # Bug real 2026-09-21 (Nicolas: "el boton de descartar demora
+    # muchisimo en aplicar"): invalidar el cache aca forzaba un TERCER
+    # round-trip a la API de GitHub (GET) en el siguiente
+    # list_descartadas(), que Streamlit dispara de inmediato via
+    # st.rerun() - 3 llamadas de red seguidas por un solo click. Ya
+    # tenemos el contenido posterior al PUT en memoria (`descartes`), asi
+    # que lo cacheamos directo en vez de invalidar. El "sha" no hace
+    # falta aca - list_descartadas() nunca lo usa, y registrar_descarte()
+    # siempre pide uno fresco antes de escribir (no confia en el cache
+    # para eso).
+    _cache["descartes"] = {"descartes": descartes, "sha": None}
+    _cache["fetched_at"] = time.time()
     return True
 
 
@@ -186,5 +196,58 @@ def _demo():
             os.environ["GH_TOKEN"] = old_token
 
 
+def _test_registrar_descarte_gh_no_refetch_extra():
+    """Bug real 2026-09-21 (Nicolas: "el boton de descartar demora
+    muchisimo en aplicar"): un registrar_descarte() exitoso invalidaba el
+    cache (ponia None) en vez de actualizarlo, forzando un GET extra en
+    el list_descartadas() inmediato - que Streamlit dispara via
+    st.rerun() apenas se descarta algo - 3 llamadas de red (GET+PUT+GET)
+    por un solo click. Ahora el cache queda poblado directo con el
+    resultado ya conocido tras el PUT: 2 llamadas por click, no 3."""
+    from unittest.mock import patch
+
+    old_token = os.environ.get("GH_TOKEN")
+    old_repo = os.environ.get("GH_REPO")
+    os.environ["GH_TOKEN"] = "fake-token"
+    os.environ["GH_REPO"] = "fake/repo"
+    _cache["descartes"] = None
+    _cache["fetched_at"] = 0
+
+    llamadas = []
+    contenido_remoto = base64.b64encode(b"[]").decode("ascii")
+
+    def _fake_urlopen(req, timeout=None):
+        llamadas.append(req.get_method())
+        if req.get_method() == "PUT":
+            return type("R", (), {"__enter__": lambda s: s, "__exit__": lambda *a: None})()
+        body = json.dumps({"content": contenido_remoto, "sha": "abc123"}).encode()
+        return type("R", (), {
+            "__enter__": lambda s: s, "__exit__": lambda *a: None,
+            "read": lambda s: body,
+        })()
+
+    try:
+        with patch("noticias.feedback_store.urllib.request.urlopen", side_effect=_fake_urlopen):
+            assert registrar_descarte(303, descartado_por="nico")
+            assert len(llamadas) == 2, f"esperaba GET+PUT, hubo {llamadas}"
+            assert list_descartadas() == {303}
+            assert len(llamadas) == 2, (
+                "list_descartadas() no deberia pegarle a la red de nuevo - "
+                "el cache ya tiene el resultado del PUT")
+        print("OK registrar_descarte: no fuerza un 3er round-trip a GitHub en el rerun inmediato")
+    finally:
+        if old_token is None:
+            os.environ.pop("GH_TOKEN", None)
+        else:
+            os.environ["GH_TOKEN"] = old_token
+        if old_repo is None:
+            os.environ.pop("GH_REPO", None)
+        else:
+            os.environ["GH_REPO"] = old_repo
+        _cache["descartes"] = None
+        _cache["fetched_at"] = 0
+
+
 if __name__ == "__main__":
     _demo()
+    _test_registrar_descarte_gh_no_refetch_extra()

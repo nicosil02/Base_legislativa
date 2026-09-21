@@ -212,7 +212,10 @@ def _feedback_descartar(noticia_id: int) -> None:
     LOCAL/efimera de proyectos.db que Streamlit Cloud reconstruye desde
     data/proyectos.db.gz en cada redeploy, se perdia en minutos."""
     registrar_descarte(int(noticia_id), descartado_por=st.user.get("email"))
-    st.cache_data.clear()
+    # Ver comentario equivalente en pages/5_Noticias_PE.py - solo
+    # load_noticias() lee list_descartadas(), no hace falta invalidar
+    # todo el cache de la app.
+    load_noticias.clear()
 
 
 # IMPORTANTE: pasamos `pais` como argumento a TODAS las funciones cacheadas
