@@ -38,7 +38,7 @@ from datetime import datetime, timedelta, timezone
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
-from noticias.temas import FUENTES_MULTIPAIS, clasificar, pais_por_contenido
+from noticias.temas import FUENTES_MULTIPAIS, clasificar, es_fuente_multipais, pais_por_contenido
 
 UMBRAL_SIMILITUD = 0.35
 MAX_GRUPOS_POR_PAIS = 12
@@ -103,7 +103,7 @@ def _noticias_desde(conn: sqlite3.Connection, pais: str, desde_id: int) -> list[
     for r in filas:
         fuente, pais_fuente = r[4], r[6]
         pais_real = (pais_por_contenido(r[1], r[2], pais_fuente)
-                     if fuente in FUENTES_MULTIPAIS else pais_fuente)
+                     if es_fuente_multipais(fuente) else pais_fuente)
         if pais_real != pais:
             continue
         salida.append({"id": r[0], "titulo": r[1], "resumen": r[2], "url": r[3],
