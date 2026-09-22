@@ -411,6 +411,14 @@ FUENTES_MULTIPAIS: set[str] = {
     "DPL News Ecuador", "DPL News Peru", "DPL Tech Ecuador",
     "Bloomberg en Linea", "Criptonoticias",
     "Asociacion Latinoamericana de Internet", "Ebiz Latam",
+    # "Portal agrario regional" (ver su propia nota en noticias/fuentes.py,
+    # ya excluida del bluebook de bayer/syngenta por el mismo motivo) -
+    # catalogada EC pero es periodismo agrario global generico. Bug real
+    # 2026-09-21 (auditoria en vivo): 46 de 60 articulos en 30 dias (77%)
+    # no tenian NINGUNA señal de Ecuador (Argentina, España/Galicia,
+    # Etiopia, Africa Occidental, Inglaterra...) y se mostraban igual bajo
+    # la pestaña Ecuador.
+    "Mundo Agropecuario",
 }
 
 # Prefijos de fuentes "Google News PE/EC — <busqueda guardada>" - bug real
@@ -451,7 +459,17 @@ def pais_por_contenido(titulo: str | None, resumen: str | None,
     # Veto: si se nombra a OTRO pais de LATAM y la señal ganadora es una
     # sola sigla ambigua (ej. "MINSA" tambien es de Nicaragua), no alcanza -
     # se necesitan 2+ señales, o ninguna mencion de otro pais, para confiar.
-    if _OTROS_PAISES.search(texto) and max(pe, ec) <= 1:
+    # Bug real 2026-09-21 (auditoria en vivo, fuente "Mundo Agropecuario",
+    # catalogada EC pero es periodismo agrario global): `max(pe, ec) <= 1`
+    # tambien es verdadero cuando AMBOS son 0 (sin señal real de ningun
+    # lado), asi que un articulo 100% de Argentina ("Argentina ajusta
+    # cultivos de verano al agua disponible", pe=0 ec=0) caia en esta
+    # rama por nombrar "argentina" y se quedaba como EC (pais_fuente) en
+    # vez de excluirse - la regla de "sin señal -> None" de mas abajo
+    # nunca se alcanzaba. Exigir `0 <` deja pasar a esa regla cuando
+    # simplemente no hay señal de ningun pais, sin importar si se nombra
+    # a otro (eso ya lo cubre el chequeo pe==0 and ec==0 de abajo).
+    if _OTROS_PAISES.search(texto) and 0 < max(pe, ec) <= 1:
         return pais_fuente
     if pe == 0 and ec == 0:
         return None
@@ -495,11 +513,38 @@ def _demo():
         "Nicaragua fortalece su preparación para la IA en salud",
         "el Ministerio de Salud de Nicaragua (MINSA) y la OPS...", "EC") == "EC", \
         "MINSA tambien es de Nicaragua - una sola sigla ambigua no alcanza si se nombra otro pais"
+    # Bug real 2026-09-21 (auditoria en vivo, fuente "Mundo Agropecuario"):
+    # esto devolvia "EC" (pais_fuente) hasta el fix de mas abajo - "camara
+    # de diputados" a secas no matchea NADA (se saco del listado por
+    # generico), asi que pe=ec=0 - un articulo 100% de Paraguay sin
+    # ninguna señal real de Peru/Ecuador debe excluirse (None), no
+    # quedarse con pais_fuente solo porque se nombra a Paraguay.
     assert pais_por_contenido(
         "Desmantelan 2 granjas clandestinas de minería de Bitcoin en Paraguay",
-        "La Cámara de Diputados solicitó a la ANDE informes...", "EC") == "EC", \
-        '"camara de diputados" a secas es generico en LATAM, no exclusivo de Peru'
+        "La Cámara de Diputados solicitó a la ANDE informes...", "EC") is None, \
+        "sin señal real de PE/EC, nombrar a otro pais no alcanza para quedarse con pais_fuente"
     print("OK temas: pais_por_contenido detecta por funcionarios/instituciones estables")
+
+
+def _test_sin_senal_no_es_pais_fuente_aunque_nombre_otro_pais():
+    """Bug real 2026-09-21 (auditoria en vivo, fuente "Mundo Agropecuario",
+    catalogada EC pero periodismo agrario global): un articulo 100% de
+    Argentina, sin NINGUNA señal de PE/EC, se quedaba como "EC"
+    (pais_fuente) solo por nombrar "argentina" - `max(pe, ec) <= 1` era
+    cierto tambien cuando ambos eran 0, asi que la regla de "sin señal ->
+    None" nunca se alcanzaba."""
+    assert es_fuente_multipais("Mundo Agropecuario")
+    assert pais_por_contenido(
+        "Argentina ajusta cultivos de verano al agua disponible",
+        "Ensayos del INTA San Luis compararon maíz, sorgo, soja y maní "
+        "para identificar estrategias capaces de estabilizar la "
+        "producción en secano.", "EC") is None
+    assert pais_por_contenido(
+        "Del bosque a la colmena: así se obtiene la miel gallega",
+        "Marcos Atrio y César trabajan entre robles y castaños para "
+        "cosechar la miel oscura de Mel da Ziralla en un entorno rural "
+        "de Galicia, España.", "EC") is None
+    print("OK temas: sin señal real de PE/EC, nombrar otro pais tambien excluye (no se queda con pais_fuente)")
 
 
 def _test_venezuela_no_es_ecuador():
@@ -618,6 +663,7 @@ def _test_es_deportivo():
 
 if __name__ == "__main__":
     _demo()
+    _test_sin_senal_no_es_pais_fuente_aunque_nombre_otro_pais()
     _test_venezuela_no_es_ecuador()
     _test_tributo_no_es_homenaje()
     _test_es_espectaculos()
