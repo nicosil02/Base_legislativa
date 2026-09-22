@@ -495,8 +495,12 @@ def _chips(temas_list: list[str], es_norma: bool) -> str:
     chips_html = []
     if es_norma:
         chips_html.append(
+            # Dorado de sello/registro oficial en vez del rosa generico -
+            # pase de diseno 2026-09-22 (frontend-design skill): conecta
+            # con lo que la etiqueta realmente representa (decretos,
+            # resoluciones, registro oficial), no un color sin significado.
             '<span style="display:inline-block;'
-            'background:#FFE6E6;color:var(--accent-red);'
+            'background:#F6EFDD;color:var(--gold);'
             'font-size:10px;font-weight:800;letter-spacing:.04em;'
             'padding:2px 8px;border-radius:999px;'
             'margin-right:6px;margin-top:6px;">📋 Normativa</span>'

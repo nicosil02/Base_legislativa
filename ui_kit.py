@@ -22,7 +22,11 @@ THEME_CSS = """
   --line-soft:  #E3E9ED;
   --accent:     #0A294D;
   --accent-red: #BF1A1A;
-  --bg:         #FFFFFF;
+  --gold:       #9C7A2E;  /* sello/registro oficial - solo para Normativa,
+                             nunca como color de marca general */
+  --bg:         #FBFAF7;  /* antes #FFFFFF puro - blanco calido tipo papel
+                             de gaceta, no blanco "SaaS generico". Pase de
+                             diseno 2026-09-22 (frontend-design skill). */
   --bg-soft:    #F4F6F8;
 }
 html, body, [class*="css"], .stApp {
