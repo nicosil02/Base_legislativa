@@ -525,8 +525,9 @@ def _chips(temas_list: list[str], es_norma: bool) -> str:
     chips_html = []
     if es_norma:
         chips_html.append(
+            # Dorado de sello/registro oficial - ver pages/5_Noticias_PE.py
             '<span style="display:inline-block;'
-            'background:#FFE6E6;color:var(--accent-red);'
+            'background:#F6EFDD;color:var(--gold);'
             'font-size:10px;font-weight:800;letter-spacing:.04em;'
             'padding:2px 8px;border-radius:999px;'
             'margin-right:6px;margin-top:6px;">📋 Normativa</span>'
