@@ -125,6 +125,21 @@ div[data-testid="stMetric"] {
 [data-testid="stChatMessage"]:has([data-testid="stChatMessageAvatarAssistant"]) {
   background-color: transparent !important;
 }
+/* === st.container(border=True) (Peru: sugerencias de reclasificacion;
+   Ecuador: noticias de tramite de la Asamblea) - por defecto sale con
+   borde gris Streamlit generico, sin relacion con las demas listas
+   (noticia-card, item-card, session-card) que ya tienen borde propio +
+   hover. Mismo tratamiento aca para que no se sientan una lista de debug
+   suelta dentro del expander. */
+[data-testid="stVerticalBlockBorderWrapper"] {
+  border-color: var(--line-soft) !important;
+  border-radius: 10px !important;
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+[data-testid="stVerticalBlockBorderWrapper"]:hover {
+  border-color: var(--accent) !important;
+  box-shadow: 0 2px 8px rgba(10,41,77,0.08);
+}
 /* === Sidebar navy + texto blanco === */
 section[data-testid="stSidebar"] {
   background-color: var(--ink) !important;

@@ -512,7 +512,8 @@ if _candidatas:
         )
         for c in _candidatas:
             fecha = (c["fecha_pub"] or "")[:10]
-            st.markdown(f"- **{fecha}** — [{c['titulo']}]({c['url']})")
+            with st.container(border=True):
+                st.markdown(f"**{fecha}** — [{c['titulo']}]({c['url']})")
 
 cats = load_catalogs()
 

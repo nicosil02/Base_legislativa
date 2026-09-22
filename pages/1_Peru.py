@@ -853,24 +853,24 @@ if _sugerencias:
         from clasificador.decisiones_store import registrar_decision
 
         for s in _sugerencias:
-            c1, c2, c3 = st.columns([7, 1, 1])
-            with c1:
-                st.markdown(
-                    f"**PL {s['pley_num']}** · {s['tema_anterior']} → "
-                    f"**{s['tema_sugerido']}** ({s['confidence']:.0%} confianza)  \n"
-                    f"{s['titulo']}"
-                )
-            with c2:
-                if st.button("✅ Aceptar", key=f"acc_sug_{s['id']}", use_container_width=True):
-                    registrar_decision(sugerencia_id=s["id"], decision="aceptar")
-                    st.cache_data.clear()
-                    st.rerun()
-            with c3:
-                if st.button("❌ Rechazar", key=f"rec_sug_{s['id']}", use_container_width=True):
-                    registrar_decision(sugerencia_id=s["id"], decision="rechazar")
-                    st.cache_data.clear()
-                    st.rerun()
-            st.markdown('<hr style="margin:4px 0;opacity:0.15">', unsafe_allow_html=True)
+            with st.container(border=True):
+                c1, c2, c3 = st.columns([7, 1, 1])
+                with c1:
+                    st.markdown(
+                        f"**PL {s['pley_num']}** · {s['tema_anterior']} → "
+                        f"**{s['tema_sugerido']}** ({s['confidence']:.0%} confianza)  \n"
+                        f"{s['titulo']}"
+                    )
+                with c2:
+                    if st.button("✅ Aceptar", key=f"acc_sug_{s['id']}", use_container_width=True):
+                        registrar_decision(sugerencia_id=s["id"], decision="aceptar")
+                        st.cache_data.clear()
+                        st.rerun()
+                with c3:
+                    if st.button("❌ Rechazar", key=f"rec_sug_{s['id']}", use_container_width=True):
+                        registrar_decision(sugerencia_id=s["id"], decision="rechazar")
+                        st.cache_data.clear()
+                        st.rerun()
 
 cats = load_catalogs()
 
