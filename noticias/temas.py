@@ -389,6 +389,20 @@ _OTROS_PAISES = _compile([
     "republica dominicana",
 ])
 
+# Señales FUERTES de otro pais - a diferencia de _OTROS_PAISES (que solo
+# actua cuando el puntaje PE/EC tambien es debil, pensado para "nuestro
+# pais menciona a un vecino de pasada"), estas excluyen SIEMPRE, sin
+# importar el puntaje. Bug real 2026-09-21 (auditoria en vivo): "Asamblea
+# Nacional" lo usan tanto Ecuador como Venezuela, y una nota 100%
+# venezolana ("Asamblea Nacional del regimen... TSJ... dialogo entre el
+# chavismo y la AN 2015 - NTN24", via "Google News EC — Ley Orgánica")
+# nunca nombra "Venezuela" pero si "chavismo" y "TSJ" (Tribunal Supremo de
+# Justicia - asi se llama SOLO en Venezuela, el de Ecuador es "Corte
+# Nacional de Justicia") - señales tan especificas que ninguna nota real
+# de Peru/Ecuador las usa, a diferencia de un nombre de pais generico que
+# si puede aparecer en una nota real nuestra sobre relaciones bilaterales.
+_OTRO_PAIS_FUERTE = _compile(["chavismo", "tsj"])
+
 # Fuentes cuyo `noticias_fuentes.pais` catalogado NO es confiable como
 # pais del articulo - medios/feeds regionales LATAM, verificados en vivo
 # 2026-09-20 (dominio no especifico a un pais, o el mismo feed cargado
@@ -398,6 +412,20 @@ FUENTES_MULTIPAIS: set[str] = {
     "Bloomberg en Linea", "Criptonoticias",
     "Asociacion Latinoamericana de Internet", "Ebiz Latam",
 }
+
+# Prefijos de fuentes "Google News PE/EC — <busqueda guardada>" - bug real
+# 2026-09-21 (auditoria en vivo): son resultados de BUSQUEDA por keyword
+# (ej. "Ley Orgánica"), no feeds geograficamente exclusivos pese al
+# "PE"/"EC" del nombre - una busqueda generica trae resultados de
+# cualquier pais que use ese termino. Verificado en vivo: "Google News EC
+# — Ley Orgánica" trajo una nota 100% venezolana etiquetada como Ecuador.
+_PREFIJOS_MULTIPAIS = ("Google News PE — ", "Google News EC — ")
+
+
+def es_fuente_multipais(nombre: str) -> bool:
+    """True si `noticias_fuentes.nombre` no es confiable como señal de
+    pais - hay que reclasificar por contenido via pais_por_contenido()."""
+    return nombre in FUENTES_MULTIPAIS or nombre.startswith(_PREFIJOS_MULTIPAIS)
 
 
 def pais_por_contenido(titulo: str | None, resumen: str | None,
@@ -416,6 +444,8 @@ def pais_por_contenido(titulo: str | None, resumen: str | None,
     texto = _norm(f"{titulo or ''} {resumen or ''}")
     if not texto.strip():
         return pais_fuente
+    if _OTRO_PAIS_FUERTE.search(texto):
+        return None
     puntos = {p: len(pat.findall(texto)) for p, pat in _PATTERNS_PAIS.items()}
     pe, ec = puntos.get("PE", 0), puntos.get("EC", 0)
     # Veto: si se nombra a OTRO pais de LATAM y la señal ganadora es una
@@ -470,6 +500,31 @@ def _demo():
         "La Cámara de Diputados solicitó a la ANDE informes...", "EC") == "EC", \
         '"camara de diputados" a secas es generico en LATAM, no exclusivo de Peru'
     print("OK temas: pais_por_contenido detecta por funcionarios/instituciones estables")
+
+
+def _test_venezuela_no_es_ecuador():
+    """Bug real 2026-09-21 (auditoria en vivo): "Asamblea Nacional" lo usan
+    tanto Ecuador como Venezuela - una nota 100% venezolana via una fuente
+    "Google News EC — X" (busqueda por keyword, no exclusiva de Ecuador)
+    quedaba etiquetada EC solo por el nombre del feed, sin nombrar
+    "Venezuela" en ningun lado (solo "chavismo"/"TSJ", especificos de
+    Venezuela)."""
+    assert es_fuente_multipais("Google News EC — Ley Orgánica")
+    assert es_fuente_multipais("Google News PE — Decreto de Urgencia")
+    assert not es_fuente_multipais("El Universo")
+    assert pais_por_contenido(
+        "Asamblea Nacional del régimen aprobó reforma parcial de Ley "
+        "Orgánica del TSJ acordada en el diálogo entre el chavismo y la "
+        "AN 2015 - NTN24", None, "EC") is None
+    assert pais_por_contenido(
+        "Asamblea Nacional aprueba por unanimidad reforma de la Ley "
+        "Orgánica del TSJ - El Aragueño", None, "EC") is None
+    # Una nota real de Ecuador (misma keyword "Asamblea Nacional", sin
+    # TSJ/chavismo) sigue clasificando EC normal.
+    assert pais_por_contenido(
+        "Ley de Aviación Civil pasa a votación del pleno de la Asamblea "
+        "Nacional", None, "EC") == "EC"
+    print("OK temas: contenido venezolano (TSJ/chavismo) no se cuela como Ecuador")
 
 
 def _test_tributo_no_es_homenaje():
@@ -563,6 +618,7 @@ def _test_es_deportivo():
 
 if __name__ == "__main__":
     _demo()
+    _test_venezuela_no_es_ecuador()
     _test_tributo_no_es_homenaje()
     _test_es_espectaculos()
     _test_ministro_no_es_proxy_de_tema()
