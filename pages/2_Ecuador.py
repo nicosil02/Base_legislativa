@@ -890,18 +890,10 @@ if selected_rows:
         )
 
         st.markdown(
-            f"""<div style="margin-top: 28px; padding: 24px 28px; border: 1px solid #CFD9E0;
-                          border-radius: 12px; background: #FFFFFF;">
-            <div style="font-size: 11px; font-weight: 800; letter-spacing: 0.22em;
-                       text-transform: uppercase; color: #0A294D; margin-bottom: 10px;">
-              Documentos del proyecto
-            </div>
-            <div style="font-size: 1.2rem; font-weight: 800; line-height: 1.25;
-                       color: #0A294D; margin-bottom: 4px;">
-              N. Trámite {sel_tramite}
-            </div>
-            <div style="font-size: 0.95rem; color: #435D74; margin-bottom: 12px;
-                       line-height: 1.4;">
+            f"""<div class="detail-card">
+            <div class="detail-eyebrow">Documentos del proyecto</div>
+            <div class="detail-title">N. Trámite {sel_tramite}</div>
+            <div style="font-size:0.95rem;color:var(--ink-soft);line-height:1.4;margin-bottom:12px;">
               {sel_titulo}
             </div>
             {unif_badge}
@@ -971,7 +963,7 @@ if selected_rows:
             )
 else:
     st.markdown(
-        '<div style="margin-top: 18px; font-size: 13px; color: #869FB2;">'
+        '<div style="margin-top: 18px; font-size: 13px; color: var(--ink-mute);">'
         '↑ Click sobre una fila para ver los documentos del proyecto.'
         '</div>',
         unsafe_allow_html=True,

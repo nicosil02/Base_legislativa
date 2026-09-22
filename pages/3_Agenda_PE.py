@@ -1136,7 +1136,7 @@ with tab_agenda:
                     st.markdown("---")
     else:
         st.markdown(
-            '<div style="margin-top: 18px; font-size: 13px; color: #869FB2;">'
+            '<div style="margin-top: 18px; font-size: 13px; color: var(--ink-mute);">'
             '↑ Click sobre una fila para ver agenda + PLs cruzados de la sesión.'
             '</div>',
             unsafe_allow_html=True,
@@ -1144,7 +1144,7 @@ with tab_agenda:
 
 with tab_comision:
     st.markdown(
-        '<p style="font-size:13px;color:#869FB2;margin-bottom:14px;">'
+        '<p style="font-size:13px;color:var(--ink-mute);margin-bottom:14px;">'
         'PLs únicos referenciados en agendas, agrupados por comisión. '
         'Cuenta cuántas sesiones discutieron cada PL en el rango seleccionado.</p>',
         unsafe_allow_html=True,
