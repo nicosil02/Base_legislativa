@@ -18,6 +18,7 @@ import streamlit as st
 from scraper.sync import FECHA_INICIO_BICAMERAL, PER_PAR_ID_ACTUAL
 from scraper.categorias import CATEGORIA_CLIENTES_PL
 from alerts.borradores_store import marcar_pendiente
+from ui_kit import inject_theme
 from clientes.matrices import matriz_bayer_crop
 
 CLIENTES_DIR = Path(__file__).resolve().parent.parent / "clientes"
@@ -85,23 +86,9 @@ def _hora_to_minutes(hora: str | None) -> int:
 
 
 # ====================== CSS (estetica Vali, identica a Peru) ======================
+inject_theme()
 st.markdown(
     """<style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
-:root {
-  --ink:#0A294D; --ink-soft:#435D74; --ink-mute:#869FB2;
-  --line:#CFD9E0; --line-soft:#E3E9ED;
-  --accent:#0A294D; --accent-red:#BF1A1A;
-  --bg:#FFFFFF; --bg-soft:#F4F6F8;
-}
-html, body, [class*="css"], .stApp {
-  font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif !important;
-  color:var(--ink); background-color:var(--bg);
-}
-section[data-testid="stSidebar"] { background-color:var(--ink) !important; border-right:0 !important; }
-section[data-testid="stSidebar"] *, section[data-testid="stSidebar"] a {
-  color:#FFFFFF !important; font-family:'Inter',sans-serif !important;
-}
 /* Date input en sidebar: caja blanca con texto navy (override del * blanco
    de arriba). Mismo patron que pages/1_Peru.py para consistencia visual. */
 section[data-testid="stSidebar"] [data-testid="stDateInput"] input {

@@ -21,6 +21,7 @@ from scraper.sync import FECHA_INICIO_BICAMERAL, PER_PAR_ID_ACTUAL
 from scraper.categorias import CATEGORIA_CLIENTES_PL
 from alerts.borradores_store import marcar_pendiente
 from clientes.matrices import matriz_bayer_crop
+from ui_kit import inject_theme
 
 
 @st.cache_data(ttl=60)
@@ -83,57 +84,9 @@ def _find_db_path() -> Path | None:
 # repetir st.logo() en cada página.
 
 # ====================== CSS estilo datadaf ======================
+inject_theme()
 st.markdown(
     """<style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
-:root {
-      /* Paleta corporativa Vali Consultores */
-      --ink:        #0A294D;   /* navy principal — titulos y texto */
-      --ink-soft:   #435D74;   /* navy medio — texto secundario */
-      --ink-mute:   #869FB2;   /* gris azulado — texto suave / labels */
-      --line:       #CFD9E0;   /* borde y separador */
-      --line-soft:  #E3E9ED;
-      --accent:     #0A294D;   /* navy como acento institucional */
-      --accent-red: #BF1A1A;   /* rojo Vali (del puntito del logo) */
-      --bg:         #FFFFFF;
-      --bg-soft:    #F4F6F8;
-    }
-
-    html, body, [class*="css"], .stApp {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
-      color: var(--ink);
-      background-color: var(--bg);
-    }
-
-    .stApp { background-color: var(--bg); }
-
-    /* === Sidebar navy + texto blanco === */
-    section[data-testid="stSidebar"] {
-      background-color: var(--ink) !important;
-      border-right: 0 !important;
-    }
-    section[data-testid="stSidebar"] *,
-    section[data-testid="stSidebar"] a,
-    section[data-testid="stSidebar"] p,
-    section[data-testid="stSidebar"] h1,
-    section[data-testid="stSidebar"] h2,
-    section[data-testid="stSidebar"] h3,
-    section[data-testid="stSidebar"] label,
-    section[data-testid="stSidebar"] span {
-      color: #FFFFFF !important;
-      font-family: 'Inter', sans-serif !important;
-    }
-    /* Nav links activos / hover */
-    section[data-testid="stSidebar"] [data-testid="stSidebarNav"] a {
-      background-color: transparent !important;
-    }
-    section[data-testid="stSidebar"] [data-testid="stSidebarNav"] a:hover {
-      background-color: rgba(255,255,255,0.06) !important;
-    }
-    section[data-testid="stSidebar"] [data-testid="stSidebarNav"] [aria-current="page"] {
-      background-color: rgba(255,255,255,0.10) !important;
-    }
-
     /* Cards internas del sidebar (date input, sync card) mantienen fondo blanco */
     section[data-testid="stSidebar"] [data-testid="stDateInput"] input,
     section[data-testid="stSidebar"] .sync-card {
@@ -182,40 +135,6 @@ st.markdown(
       color: #FFFFFF !important;
       border: 0 !important;
     }
-
-    /* === Ocultar TODO texto crudo de Material Symbols/Icons en sidebar === */
-    /* Cualquier elemento con clase relacionada a iconos Material, en sidebar */
-    [data-testid="stSidebar"] [class*="material-symbols"],
-    [data-testid="stSidebar"] [class*="material-icons"],
-    [data-testid="stSidebar"] [class*="MaterialSymbols"],
-    [data-testid="stSidebar"] [class*="MaterialIcons"],
-    [data-testid="stSidebar"] span[aria-hidden="true"]:not([class*="emoji"]),
-    [data-testid="stSidebar"] i[class*="icon"] {
-      font-size: 0 !important;
-      color: transparent !important;
-      line-height: 0 !important;
-      visibility: hidden !important;
-    }
-    /* Botones del header del sidebar (collapse) — esconder texto, poner icono propio */
-    [data-testid="stSidebarHeader"] button,
-    [data-testid="stSidebarHeader"] button *,
-    button[data-testid="stExpandSidebarButton"],
-    button[data-testid="stExpandSidebarButton"] *,
-    button[data-testid="stSidebarCollapsedControl"],
-    button[data-testid="stSidebarCollapsedControl"] *,
-    button[kind="header"],
-    button[kind="header"] * {
-      font-size: 0 !important;
-      color: transparent !important;
-      line-height: 0 !important;
-    }
-    /* El icono "‹" del boton de colapsar el sidebar ya lo pone app.py
-       (::before sobre [data-testid="stIconMaterial"], selector que SI
-       matchea el DOM real de Streamlit 1.57) - una regla vieja aca con
-       este mismo selector y !important le ganaba por orden de cascada
-       (esta pagina se inyecta despues de app.py) y quedaba "‹ vali ‹"
-       duplicado. Bug real 2026-09-22 (Nicolas: "arregla el icono
-       duplicado del sidebar"). */
 
     /* === Logo Vali: tamaño cómodo, centrado al tope === */
     [data-testid="stSidebarHeader"] {

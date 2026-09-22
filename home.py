@@ -14,81 +14,12 @@ import streamlit as st
 from scraper.sync import PER_PAR_ID_ACTUAL
 
 from alerts.borradores_store import list_borradores
-
+from ui_kit import inject_theme
 
 # ====================== CSS (estilo Vali) ======================
+inject_theme()
 st.markdown(
     """<style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
-:root {
-  --ink:        #0A294D;
-  --ink-soft:   #435D74;
-  --ink-mute:   #869FB2;
-  --line:       #CFD9E0;
-  --line-soft:  #E3E9ED;
-  --accent:     #0A294D;
-  --accent-red: #BF1A1A;
-  --bg:         #FFFFFF;
-  --bg-soft:    #F4F6F8;
-}
-html, body, [class*="css"], .stApp {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
-  color: var(--ink);
-  background-color: var(--bg);
-}
-/* === Sidebar navy + texto blanco === */
-section[data-testid="stSidebar"] {
-  background-color: var(--ink) !important;
-  border-right: 0 !important;
-}
-section[data-testid="stSidebar"] *,
-section[data-testid="stSidebar"] a,
-section[data-testid="stSidebar"] p,
-section[data-testid="stSidebar"] h1, section[data-testid="stSidebar"] h2,
-section[data-testid="stSidebar"] h3, section[data-testid="stSidebar"] label,
-section[data-testid="stSidebar"] span {
-  color: #FFFFFF !important;
-  font-family: 'Inter', sans-serif !important;
-}
-section[data-testid="stSidebar"] [data-testid="stSidebarNav"] a:hover {
-  background-color: rgba(255,255,255,0.06) !important;
-}
-section[data-testid="stSidebar"] [data-testid="stSidebarNav"] [aria-current="page"] {
-  background-color: rgba(255,255,255,0.10) !important;
-}
-
-/* Ocultar TODO texto crudo de Material Symbols/Icons en sidebar */
-[data-testid="stSidebar"] [class*="material-symbols"],
-[data-testid="stSidebar"] [class*="material-icons"],
-[data-testid="stSidebar"] [class*="MaterialSymbols"],
-[data-testid="stSidebar"] [class*="MaterialIcons"],
-[data-testid="stSidebar"] span[aria-hidden="true"]:not([class*="emoji"]),
-[data-testid="stSidebar"] i[class*="icon"] {
-  font-size: 0 !important;
-  color: transparent !important;
-  line-height: 0 !important;
-  visibility: hidden !important;
-}
-[data-testid="stSidebarHeader"] button,
-[data-testid="stSidebarHeader"] button *,
-button[data-testid="stExpandSidebarButton"],
-button[data-testid="stExpandSidebarButton"] *,
-button[data-testid="stSidebarCollapsedControl"],
-button[data-testid="stSidebarCollapsedControl"] *,
-button[kind="header"],
-button[kind="header"] * {
-  font-size: 0 !important;
-  color: transparent !important;
-  line-height: 0 !important;
-}
-/* El icono "‹" del boton de colapsar el sidebar ya lo pone app.py
-   (::before sobre [data-testid="stIconMaterial"], selector que SI
-   matchea el DOM real de Streamlit 1.57) - una regla vieja aca con este
-   mismo selector y !important le ganaba por orden de cascada (esta
-   pagina se inyecta despues de app.py) y quedaba "‹ vali ‹" duplicado.
-   Bug real 2026-09-22 (Nicolas: "arregla el icono duplicado del
-   sidebar"). */
-
 /* === Logo Vali: 200px centrado === */
 [data-testid="stSidebarHeader"] {
   padding: 24px 16px 20px 16px !important;
