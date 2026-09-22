@@ -24,7 +24,7 @@ from noticias.fuentes import (
     FUENTES_GENERALISTAS_FILTRAR_RUIDO,
 )
 from alerts.borradores_store import marcar_pendiente
-from noticias.feedback_store import list_descartadas, registrar_descarte
+from noticias.feedback_store import deshacer_descarte, list_descartadas, registrar_descarte
 from ui_kit import inject_theme
 
 CLIENTES_DIR = Path(__file__).resolve().parent.parent / "clientes"
@@ -468,6 +468,28 @@ if filtro_norma != "Todas":
 st.markdown(f"##### {len(df):,} noticia(s) · {sel_ventana.lower()}"
     + (" · " + " · ".join(_extras) if _extras else ""))
 
+# Undo de "Descartar" - critique 2026-09-21: un click, mismo peso visual
+# que Marcar/Combinar, escribia inmediato sin confirmacion ni forma de
+# deshacer. Bug real encontrado en vivo probando este mismo fix: un
+# st.session_state.pop() ANTES de renderizar el boton "Deshacer" hacia
+# que desapareciera en el rerun que sigue a su propio click, antes de
+# que Streamlit pudiera registrar que se lo apreto - el click se perdia
+# y nunca llamaba a deshacer_descarte(). Con .get() en vez de .pop() el
+# boton se re-renderiza igual en ese rerun y el click si se detecta;
+# se limpia explicito solo cuando el usuario deshace o cierra el aviso.
+_undo = st.session_state.get("ultimo_descartado")
+if _undo:
+    _u1, _u2, _u3 = st.columns([5, 1, 1])
+    _u1.info(f"Descartado: {_undo['titulo'][:100]}")
+    if _u2.button("↩️ Deshacer", key="deshacer_descarte"):
+        deshacer_descarte(_undo["id"])
+        load_noticias.clear()
+        del st.session_state["ultimo_descartado"]
+        st.rerun()
+    if _u3.button("✕", key="cerrar_descarte_banner", help="Cerrar aviso"):
+        del st.session_state["ultimo_descartado"]
+        st.rerun()
+
 
 def _chips(temas_list: list[str], es_norma: bool) -> str:
     chips_html = []
@@ -552,8 +574,9 @@ def _render_card(n, key_suffix: str = "") -> None:
             else:
                 combinar_items.pop(full_id, None)
         if cols[2].button("✕ Descartar", key=f"desc{sfx}", type="primary",
-                          help="No aparecerá más y sirve como feedback"):
+                          help="No aparecerá más — se puede deshacer arriba de la lista"):
             _feedback_descartar(nid)
+            st.session_state["ultimo_descartado"] = {"id": nid, "titulo": titulo}
             st.rerun()
 
 
