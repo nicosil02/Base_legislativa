@@ -39,18 +39,6 @@ html, body, [class*="css"], .stApp {
   color: var(--ink);
   background-color: var(--bg);
 }
-/* === Numeros de KPI en la misma serif que los titulos de pagina ===
-   Pase de diseno 2026-09-22 (frontend-design skill, "vamos mas lejos"):
-   los numeros grandes (total de PLs, sesiones, noticias...) SON el
-   contenido real de un registro legislativo - tratarlos como cifras de
-   un acta/certificado en vez de un numero de dashboard SaaS generico
-   conecta la identidad "registro oficial" con lo que el usuario mira
-   primero en cada pagina. Una sola regla centralizada: las 6 paginas ya
-   fijan color/weight/size en su propio bloque, esto solo agrega la
-   tipografia por encima sin tocar esas reglas. */
-div[data-testid="stMetricValue"] {
-  font-family: Georgia, 'Times New Roman', serif !important;
-}
 /* === Entrada escalonada de las tarjetas de KPI ===
    Hallazgo real 2026-09-22 (Nicolas: "no se ve nada mejorado, quiero
    animaciones, se siente lenta y fea"): las tarjetas de KPI (lo primero
@@ -72,6 +60,27 @@ div[data-testid="stMetric"] {
 [data-testid="stColumn"]:nth-child(6) div[data-testid="stMetric"] { animation-delay: 200ms; }
 [data-testid="stColumn"]:nth-child(7) div[data-testid="stMetric"] { animation-delay: 240ms; }
 [data-testid="stColumn"]:nth-child(8) div[data-testid="stMetric"] { animation-delay: 280ms; }
+/* === st.tabs con la marca (Agenda PE: Agenda/Por comisión/Mesas
+   tecnicas/Transcripciones/Seguimiento) - por defecto salen en gris
+   Streamlit generico, sin relacion con la paleta navy/rojo del resto. */
+[data-testid="stTabs"] [data-baseweb="tab-list"] {
+  gap: 4px; border-bottom: 1px solid var(--line);
+}
+[data-testid="stTabs"] [data-baseweb="tab"] {
+  height: auto; padding: 10px 16px; background: transparent;
+  font-size: 13px; font-weight: 700; color: var(--ink-mute);
+  transition: color 140ms ease;
+}
+[data-testid="stTabs"] [data-baseweb="tab"]:hover {
+  color: var(--ink);
+}
+[data-testid="stTabs"] [aria-selected="true"] {
+  color: var(--accent) !important;
+}
+[data-testid="stTabs"] [data-baseweb="tab-highlight"] {
+  background-color: var(--accent);
+  height: 2px;
+}
 /* === Sidebar navy + texto blanco === */
 section[data-testid="stSidebar"] {
   background-color: var(--ink) !important;

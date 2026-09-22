@@ -164,6 +164,13 @@ div[data-testid="stDataFrame"] [role="gridcell"] {
   background:var(--bg); border:1px solid var(--line); border-radius:14px;
   padding:24px 28px; margin-top:20px;
   animation: cardEnterList 320ms cubic-bezier(.16,1,.3,1) both;
+  transition: border-color .15s ease, box-shadow .15s ease,
+              transform .15s cubic-bezier(.16,1,.3,1);
+}
+.session-card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 2px 8px rgba(10,41,77,0.08);
+  transform: translateY(-1px);
 }
 .session-card .eyebrow {
   font-size:11px; font-weight:800; letter-spacing:0.22em;
