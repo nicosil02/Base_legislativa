@@ -156,9 +156,14 @@ div[data-testid="stDataFrame"] [role="gridcell"] {
   font-size:11px; font-weight:700; letter-spacing:0.18em;
   text-transform:uppercase; color:var(--ink-soft);
 }
+@keyframes cardEnterList {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
 .session-card {
   background:var(--bg); border:1px solid var(--line); border-radius:14px;
   padding:24px 28px; margin-top:20px;
+  animation: cardEnterList 320ms cubic-bezier(.16,1,.3,1) both;
 }
 .session-card .eyebrow {
   font-size:11px; font-weight:800; letter-spacing:0.22em;

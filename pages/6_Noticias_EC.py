@@ -150,12 +150,23 @@ h2,h3 { font-weight:800; color:var(--ink); letter-spacing:-0.01em; }
   font-size:11px; font-weight:800; letter-spacing:0.18em;
   text-transform:uppercase; color:var(--accent); margin: 30px 0 6px 0;
 }
+/* Entrada suave al renderizar - mismo fix que pages/5_Noticias_PE.py */
+@keyframes cardEnterList {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
 .noticia-card {
   border: 1px solid var(--line-soft); border-radius: 10px;
   padding: 14px 16px; margin: 8px 0;
-  transition: border-color .15s, box-shadow .15s;
+  transition: border-color .15s ease, box-shadow .15s ease,
+              transform .15s cubic-bezier(.16,1,.3,1);
+  animation: cardEnterList 320ms cubic-bezier(.16,1,.3,1) both;
 }
-.noticia-card:hover { border-color: var(--accent); box-shadow: 0 2px 8px rgba(10,41,77,0.08); }
+.noticia-card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 2px 8px rgba(10,41,77,0.08);
+  transform: translateY(-1px);
+}
 .noticia-fuente {
   font-size:11px; font-weight:700; color:var(--ink-mute);
   text-transform:uppercase; letter-spacing:0.06em;
