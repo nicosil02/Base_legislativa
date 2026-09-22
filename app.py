@@ -17,6 +17,8 @@ from pathlib import Path
 
 import streamlit as st
 
+from ui_kit import inject_button_polish
+
 # Cargar .env local (Streamlit Cloud usa st.secrets — se mapean a env vars
 # automaticamente via [secrets] section).
 _REPO_ROOT = Path(__file__).resolve().parent
@@ -512,6 +514,7 @@ section[data-testid="stSidebar"] div[data-testid="stSelectbox"] div[data-baseweb
 </style>""",
     unsafe_allow_html=True,
 )
+inject_button_polish()
 
 
 # Definir páginas explícitamente.
