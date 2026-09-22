@@ -34,6 +34,18 @@ html, body, [class*="css"], .stApp {
   color: var(--ink);
   background-color: var(--bg);
 }
+/* === Numeros de KPI en la misma serif que los titulos de pagina ===
+   Pase de diseno 2026-09-22 (frontend-design skill, "vamos mas lejos"):
+   los numeros grandes (total de PLs, sesiones, noticias...) SON el
+   contenido real de un registro legislativo - tratarlos como cifras de
+   un acta/certificado en vez de un numero de dashboard SaaS generico
+   conecta la identidad "registro oficial" con lo que el usuario mira
+   primero en cada pagina. Una sola regla centralizada: las 6 paginas ya
+   fijan color/weight/size en su propio bloque, esto solo agrega la
+   tipografia por encima sin tocar esas reglas. */
+div[data-testid="stMetricValue"] {
+  font-family: Georgia, 'Times New Roman', serif !important;
+}
 /* === Sidebar navy + texto blanco === */
 section[data-testid="stSidebar"] {
   background-color: var(--ink) !important;
