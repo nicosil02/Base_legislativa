@@ -135,8 +135,9 @@ st.markdown(
 }
 div[data-testid="stMetric"] {
   background-color:var(--bg); border:1px solid var(--line); border-radius:12px;
-  padding:16px 18px; box-shadow:none;
+  padding:16px 18px; box-shadow:none; transition:border-color .2s;
 }
+div[data-testid="stMetric"]:hover { border-color:var(--ink-mute); }
 div[data-testid="stMetricLabel"] {
   color:var(--ink-soft) !important; font-size:10px !important;
   text-transform:uppercase; letter-spacing:0.18em; font-weight:700 !important;
