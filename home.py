@@ -111,13 +111,17 @@ a.country-card:hover {
   /* Antes emoji de bandera - Windows lo renderiza como texto plano "PE"/
      "EC" sin color (par de indicador regional sin cobertura de fuente),
      y desaparecia del todo en el icono del sidebar - hallazgo real de
-     critique 2026-09-22. Se adopta el fallback como chip deliberado en
-     vez de depender de la fuente del SO. */
+     critique 2026-09-22. El fallback de chip navy+texto "PE"/"EC" quedo
+     repitiendo el codigo del pais al lado de su propio nombre 8 veces en
+     la pagina (Nicolas, 2026-09-22: "se ve feo") - reemplazado por un
+     mini SVG de la bandera real (inline, no depende de fuente/emoji del
+     SO, mismo problema que se evito la primera vez). */
   display: inline-flex; align-items: center; justify-content: center;
   width: 40px; height: 40px; border-radius: 8px;
-  background: var(--ink); color: #FFFFFF;
-  font-size: 13px; font-weight: 800; letter-spacing: 0.02em; line-height: 1;
+  overflow: hidden; flex-shrink: 0;
+  box-shadow: inset 0 0 0 1px rgba(10,41,77,0.12);
 }
+.country-card .flag svg { width: 100%; height: 100%; display: block; }
 .country-card .name {
   font-size: 1.75rem; font-weight: 800;
   letter-spacing: -0.02em; color: var(--ink); line-height: 1;
@@ -188,6 +192,23 @@ a.country-card:hover {
 footer { visibility: hidden; }
 </style>""",
     unsafe_allow_html=True,
+)
+
+
+# Mini SVG de cada bandera (inline, no emoji) - ver nota en el CSS de
+# .country-card .flag sobre por que no se usa el emoji de bandera nativo.
+_FLAG_PE = (
+    '<svg viewBox="0 0 3 2" preserveAspectRatio="xMidYMid slice">'
+    '<rect width="3" height="2" fill="#D91023"/>'
+    '<rect x="1" width="1" height="2" fill="#FFFFFF"/>'
+    '</svg>'
+)
+_FLAG_EC = (
+    '<svg viewBox="0 0 3 2" preserveAspectRatio="xMidYMid slice">'
+    '<rect width="3" height="1" fill="#FFD100"/>'
+    '<rect y="1" width="3" height="0.5" fill="#034EA2"/>'
+    '<rect y="1.5" width="3" height="0.5" fill="#EF3340"/>'
+    '</svg>'
 )
 
 
@@ -501,7 +522,7 @@ with cols[0]:
         f"""
         <a href="/peru" target="_self" class="country-card">
             <div class="country-header">
-                <div class="flag">PE</div>
+                <div class="flag">{_FLAG_PE}</div>
                 <div class="name">Perú</div>
             </div>
             <div class="institution">Congreso de la República · Período 2026–2031 (bicameral)</div>
@@ -527,7 +548,7 @@ with cols[1]:
         f"""
         <a href="/ecuador" target="_self" class="country-card">
             <div class="country-header">
-                <div class="flag">EC</div>
+                <div class="flag">{_FLAG_EC}</div>
                 <div class="name">Ecuador</div>
             </div>
             <div class="institution">Asamblea Nacional · Período 2025–2029</div>
@@ -567,7 +588,7 @@ with ag_cols[0]:
         f"""
         <a href="/peru-agenda" target="_self" class="country-card">
             <div class="country-header">
-                <div class="flag">PE</div>
+                <div class="flag">{_FLAG_PE}</div>
                 <div class="name">Perú</div>
             </div>
             <div class="institution">Congreso de la República · Período 2026–2031 (bicameral)</div>
@@ -591,7 +612,7 @@ with ag_cols[1]:
         f"""
         <a href="/ecuador-agenda" target="_self" class="country-card">
             <div class="country-header">
-                <div class="flag">EC</div>
+                <div class="flag">{_FLAG_EC}</div>
                 <div class="name">Ecuador</div>
             </div>
             <div class="institution">Asamblea Nacional · Período 2025–2029</div>
@@ -667,7 +688,7 @@ with nt_cols[0]:
         f"""
         <a href="/peru-noticias" target="_self" class="country-card">
             <div class="country-header">
-                <div class="flag">PE</div>
+                <div class="flag">{_FLAG_PE}</div>
                 <div class="name">Perú</div>
             </div>
             <div class="institution">Medios, instituciones, gremios sectoriales</div>
@@ -691,7 +712,7 @@ with nt_cols[1]:
         f"""
         <a href="/ecuador-noticias" target="_self" class="country-card">
             <div class="country-header">
-                <div class="flag">EC</div>
+                <div class="flag">{_FLAG_EC}</div>
                 <div class="name">Ecuador</div>
             </div>
             <div class="institution">Medios, instituciones, gremios sectoriales</div>
