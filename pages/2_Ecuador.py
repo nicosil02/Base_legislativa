@@ -92,11 +92,15 @@ def _noticias_tramite_recientes() -> list[dict]:
 
 
 @st.cache_data(ttl=300)
-def documentos_hoy() -> int:
-    """PLs + noticias detectados HOY (Ecuador) - gap real vs Dapper
-    identificado 2026-09-20 (ver memoria dapper-gap-analysis): ellos
-    muestran un contador de "documentos publicados hoy" en el dashboard.
-    Dato barato, ya lo tenemos - solo faltaba mostrarlo."""
+def documentos_hoy() -> tuple[int, int]:
+    """(PLs hoy, noticias hoy) - gap real vs Dapper identificado 2026-09-20
+    (ver memoria dapper-gap-analysis): ellos muestran un contador de
+    "documentos publicados hoy" en el dashboard. Dato barato, ya lo
+    tenemos - solo faltaba mostrarlo.
+
+    Antes se sumaban en un solo numero ("Nuevos hoy") al lado de metricas
+    puras de PL - hallazgo real de critique 2026-09-22, ver pages/1_Peru.py
+    para el detalle. Separado en 2 tiles, mismo fix que Peru."""
     conn = get_conn()
     pls_hoy = conn.execute(
         "SELECT COUNT(*) FROM proyectos WHERE date(first_seen_at)=date('now')"
@@ -114,7 +118,7 @@ def documentos_hoy() -> int:
             pass
         finally:
             nconn.close()
-    return pls_hoy + noticias_hoy
+    return pls_hoy, noticias_hoy
 
 
 # st.set_page_config NO se llama acá: ya lo hace app.py (entry de st.navigation).
@@ -481,11 +485,12 @@ st.markdown(
 
 # ---------- KPIs ----------
 totals = kpi_totals()
-cols = st.columns(len(totals) + 1)
+_pls_hoy, _noticias_hoy = documentos_hoy()
+cols = st.columns(len(totals) + 2)
 for col, (label, val) in zip(cols, totals.items()):
     col.metric(label, f"{val:,}")
-cols[-1].metric("Nuevos hoy", f"{documentos_hoy():,}",
-                 help="Proyectos de ley + noticias detectados hoy (Ecuador)")
+cols[-2].metric("PLs nuevos hoy", f"{_pls_hoy:,}")
+cols[-1].metric("Noticias hoy", f"{_noticias_hoy:,}")
 
 st.markdown("")
 
@@ -691,15 +696,26 @@ COLS_VISIBLES = ["N. Trámite", "_n_tramite_label", "Título", "Presentado",
                  "Comisión", "Tema", "Unificado con"]
 df_view = df_view[[c for c in COLS_VISIBLES if c in df_view.columns]]
 
-# CSS para wrap en celdas
+# CSS para wrap en celdas, con techo de 3 lineas - mismo fix que
+# pages/1_Peru.py (critique 2026-09-22): row_height fijo desperdiciaba
+# scroll en filas con celdas vacias. Texto completo a un click en el
+# link de N. Tramite.
 st.markdown(
     """<style>
     div[data-testid="stDataFrame"] [role="gridcell"] {
-        white-space: pre-wrap !important;
+        white-space: normal !important;
         overflow-wrap: break-word !important;
         line-height: 1.45 !important;
         padding-top: 10px !important;
         padding-bottom: 10px !important;
+    }
+    div[data-testid="stDataFrame"] [role="gridcell"] > div {
+        display: -webkit-box !important;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden !important;
+        text-overflow: ellipsis;
+        white-space: normal !important;
     }
     </style>""",
     unsafe_allow_html=True,
@@ -710,7 +726,7 @@ tabla = st.dataframe(
     hide_index=True,
     use_container_width=True,
     height=720,
-    row_height=160,
+    row_height=100,
     on_select="rerun",
     selection_mode="single-row",
     column_config={

@@ -97,7 +97,15 @@ a.country-card:hover {
   display: flex; align-items: center; gap: 14px; margin-bottom: 8px;
 }
 .country-card .flag {
-  font-size: 36px; line-height: 1;
+  /* Antes emoji de bandera - Windows lo renderiza como texto plano "PE"/
+     "EC" sin color (par de indicador regional sin cobertura de fuente),
+     y desaparecia del todo en el icono del sidebar - hallazgo real de
+     critique 2026-09-22. Se adopta el fallback como chip deliberado en
+     vez de depender de la fuente del SO. */
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 40px; height: 40px; border-radius: 8px;
+  background: var(--ink); color: #FFFFFF;
+  font-size: 13px; font-weight: 800; letter-spacing: 0.02em; line-height: 1;
 }
 .country-card .name {
   font-size: 1.75rem; font-weight: 800;
@@ -482,7 +490,7 @@ with cols[0]:
         f"""
         <a href="/peru" target="_self" class="country-card">
             <div class="country-header">
-                <div class="flag">🇵🇪</div>
+                <div class="flag">PE</div>
                 <div class="name">Perú</div>
             </div>
             <div class="institution">Congreso de la República · Período 2026–2031 (bicameral)</div>
@@ -508,7 +516,7 @@ with cols[1]:
         f"""
         <a href="/ecuador" target="_self" class="country-card">
             <div class="country-header">
-                <div class="flag">🇪🇨</div>
+                <div class="flag">EC</div>
                 <div class="name">Ecuador</div>
             </div>
             <div class="institution">Asamblea Nacional · Período 2025–2029</div>
@@ -548,7 +556,7 @@ with ag_cols[0]:
         f"""
         <a href="/peru-agenda" target="_self" class="country-card">
             <div class="country-header">
-                <div class="flag">🇵🇪</div>
+                <div class="flag">PE</div>
                 <div class="name">Perú</div>
             </div>
             <div class="institution">Congreso de la República · Período 2026–2031 (bicameral)</div>
@@ -572,7 +580,7 @@ with ag_cols[1]:
         f"""
         <a href="/ecuador-agenda" target="_self" class="country-card">
             <div class="country-header">
-                <div class="flag">🇪🇨</div>
+                <div class="flag">EC</div>
                 <div class="name">Ecuador</div>
             </div>
             <div class="institution">Asamblea Nacional · Período 2025–2029</div>
@@ -648,7 +656,7 @@ with nt_cols[0]:
         f"""
         <a href="/peru-noticias" target="_self" class="country-card">
             <div class="country-header">
-                <div class="flag">🇵🇪</div>
+                <div class="flag">PE</div>
                 <div class="name">Perú</div>
             </div>
             <div class="institution">Medios, instituciones, gremios sectoriales</div>
@@ -672,7 +680,7 @@ with nt_cols[1]:
         f"""
         <a href="/ecuador-noticias" target="_self" class="country-card">
             <div class="country-header">
-                <div class="flag">🇪🇨</div>
+                <div class="flag">EC</div>
                 <div class="name">Ecuador</div>
             </div>
             <div class="institution">Medios, instituciones, gremios sectoriales</div>
@@ -722,7 +730,7 @@ st.markdown(
     'copia el texto final.</p>',
     unsafe_allow_html=True,
 )
-al_cols = st.columns([1, 1, 1])
+al_cols = st.columns([2, 1])
 with al_cols[0]:
     _yo = st.user.get("email")
     _s_al = stats_alertas_mios(_yo)
@@ -754,8 +762,6 @@ with al_cols[0]:
         unsafe_allow_html=True,
     )
 with al_cols[1]:
-    st.markdown("&nbsp;", unsafe_allow_html=True)
-with al_cols[2]:
     st.markdown("&nbsp;", unsafe_allow_html=True)
 
 # Footer

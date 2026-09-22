@@ -392,13 +392,17 @@ st.markdown(
     }
 }
 
-/* Hover sutil sobre los links del sidebar nav (feedback antes del click) */
+/* Hover sutil sobre los links del sidebar nav (feedback antes del click).
+   Antes animaba padding-left (layout thrash) - hallazgo del detector de
+   Impeccable en critique 2026-09-22, contradecia la politica propia de
+   ui_kit.py de evitar animar propiedades de layout. transform no
+   dispara reflow. */
 [data-testid="stSidebarNav"] a {
     transition: background-color 180ms cubic-bezier(.16,1,.3,1),
-                padding-left 180ms cubic-bezier(.16,1,.3,1) !important;
+                transform 180ms cubic-bezier(.16,1,.3,1) !important;
 }
 [data-testid="stSidebarNav"] a:hover {
-    padding-left: 18px !important;
+    transform: translateX(4px);
 }
 [data-testid="stSidebarNav"] a:active {
     transform: scale(.98);
@@ -536,40 +540,48 @@ home = st.Page(
     default=True,
     url_path="",
 )
+# Iconos por herramienta (no por pais): los emoji de bandera son pares de
+# indicador regional que Windows no renderiza (queda vacio en el sidebar,
+# o cae a texto plano "PE"/"EC" en las cards del home) - hallazgo real de
+# critique 2026-09-22. Los Material Symbols (":material/xxx:") se probaron
+# primero pero resultaron PEOR: la fuente de iconos no cargo y quedo texto
+# crudo ("ount_balance", "lendar_month") pisando el sidebar - verificado
+# en vivo. Emoji de un solo codepoint (sin pares regionales) si renderizan
+# bien en todos lados, igual que 🧠/📝 que ya funcionaban antes de este fix.
 peru = st.Page(
     "pages/1_Peru.py",
     title="Perú",
-    icon="🇵🇪",
+    icon="🏛️",
     url_path="peru",
 )
 ecuador = st.Page(
     "pages/2_Ecuador.py",
     title="Ecuador",
-    icon="🇪🇨",
+    icon="🏛️",
     url_path="ecuador",
 )
 agenda_pe = st.Page(
     "pages/3_Agenda_PE.py",
     title="Perú",
-    icon="🇵🇪",
+    icon="📅",
     url_path="peru-agenda",
 )
 agenda_ec = st.Page(
     "pages/4_Agenda_EC.py",
     title="Ecuador",
-    icon="🇪🇨",
+    icon="📅",
     url_path="ecuador-agenda",
 )
 noticias_pe = st.Page(
     "pages/5_Noticias_PE.py",
     title="Perú",
-    icon="🇵🇪",
+    icon="📰",
     url_path="peru-noticias",
 )
 noticias_ec = st.Page(
     "pages/6_Noticias_EC.py",
     title="Ecuador",
-    icon="🇪🇨",
+    icon="📰",
     url_path="ecuador-noticias",
 )
 alertas = st.Page(
