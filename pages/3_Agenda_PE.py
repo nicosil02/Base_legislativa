@@ -440,7 +440,7 @@ def load_sesiones(fec_inicio: dt.date | None, fec_fin: dt.date | None) -> pd.Dat
              s.estado AS "Estado",
              s.nombre_sesion AS "Nombre",
              (SELECT COUNT(*) FROM sesion_pl_referenciado WHERE id_sesion=s.id_sesion) AS "_n_pls",
-             (SELECT GROUP_CONCAT(
+             COALESCE((SELECT GROUP_CONCAT(
                        COALESCE(p.proyecto_ley, pr.proyecto_ley_raw, 'PL ' || pr.pley_num),
                        ', ')
                 FROM sesion_pl_referenciado pr
@@ -457,7 +457,7 @@ def load_sesiones(fec_inicio: dt.date | None, fec_fin: dt.date | None) -> pd.Dat
                         )
                 WHERE pr.id_sesion = s.id_sesion
                 ORDER BY pr.pley_num
-              ) AS "PLs en agenda",
+              ), '—') AS "PLs en agenda",
              s.link_teams AS "_link_teams",
              s.link_video AS "_link_video"
       FROM sesiones s
@@ -485,7 +485,7 @@ def load_sesiones(fec_inicio: dt.date | None, fec_fin: dt.date | None) -> pd.Dat
                  CASE WHEN ps.fecha_sesion >= date('now') THEN 'Convocada' ELSE 'Realizada' END AS "Estado",
                  ps.titulo AS "Nombre",
                  (SELECT COUNT(*) FROM pleno_pl_referenciado WHERE cod_agenda=ps.cod_agenda) AS "_n_pls",
-                 (SELECT GROUP_CONCAT(
+                 COALESCE((SELECT GROUP_CONCAT(
                            COALESCE(p.proyecto_ley, pr.proyecto_ley_raw, 'PL ' || pr.pley_num),
                            ', ')
                     FROM pleno_pl_referenciado pr
@@ -502,7 +502,7 @@ def load_sesiones(fec_inicio: dt.date | None, fec_fin: dt.date | None) -> pd.Dat
                         )
                     WHERE pr.cod_agenda = ps.cod_agenda
                     ORDER BY pr.pley_num
-                  ) AS "PLs en agenda",
+                  ), '—') AS "PLs en agenda",
                  NULL AS "_link_teams",
                  NULL AS "_link_video"
           FROM pleno_sesiones ps
