@@ -281,51 +281,9 @@ st.markdown(
     }
     .sync-card .value { color: var(--ink); font-weight: 600; }
 
-    /* === Detail panel === */
-    .detail-card {
-      background: var(--bg);
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      padding: 28px 32px;
-      margin-top: 28px;
-    }
-    .detail-eyebrow {
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 10px;
-    }
-    .detail-title {
-      font-size: 1.6rem;
-      font-weight: 800;
-      letter-spacing: -0.015em;
-      line-height: 1.25;
-      color: var(--ink);
-      margin-bottom: 8px;
-    }
-    .detail-meta-label {
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--ink-mute);
-      margin-bottom: 4px;
-    }
-    .detail-meta-value {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--ink);
-    }
-    .detail-section-title {
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--ink-soft);
-      margin: 24px 0 8px 0;
-    }
+    /* .detail-card y afines: centralizados en ui_kit.py (usados por
+       Ecuador para el panel "Documentos del proyecto") - Perú no tiene
+       panel de detalle por PL, así que no hacía falta duplicarlos acá. */
 
     /* Footer minimalista */
     .footer-rule {
