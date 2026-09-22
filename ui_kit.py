@@ -16,7 +16,8 @@ THEME_CSS = """
 :root {
   --ink:        #0A294D;
   --ink-soft:   #435D74;
-  --ink-mute:   #869FB2;
+  --ink-mute:   #5D7286;  /* era #869FB2 (~2.6:1 sobre blanco, falla WCAG
+                             AA); critique 2026-09-22. Nuevo valor ~5:1. */
   --line:       #CFD9E0;
   --line-soft:  #E3E9ED;
   --accent:     #0A294D;
