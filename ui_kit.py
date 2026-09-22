@@ -140,6 +140,48 @@ div[data-testid="stMetric"] {
   border-color: var(--accent) !important;
   box-shadow: 0 2px 8px rgba(10,41,77,0.08);
 }
+/* === .detail-card (Ecuador: panel "Documentos del proyecto" al
+   seleccionar un PL en la tabla) - definida pero MUERTA en
+   pages/1_Peru.py (Perú no tiene panel de detalle por PL). Ecuador tenía
+   su propio panel con hex crudos inline (#FFFFFF, #CFD9E0, #0A294D,
+   #435D74) que no usaba ningún token del tema - quedaba blanco puro en
+   vez del papel cálido (--bg) del resto de la app, y sin la entrada
+   animada / hover que ya tienen session-card, noticia-card, item-card.
+   Centralizada acá con el mismo tratamiento. */
+@keyframes detailCardEnter {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.detail-card {
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 28px 32px;
+  margin-top: 28px;
+  animation: detailCardEnter 320ms cubic-bezier(.16,1,.3,1) both;
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+.detail-card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 2px 8px rgba(10,41,77,0.08);
+}
+.detail-eyebrow {
+  font-size: 11px; font-weight: 800; letter-spacing: 0.22em;
+  text-transform: uppercase; color: var(--accent); margin-bottom: 10px;
+}
+.detail-title {
+  font-size: 1.6rem; font-weight: 800; letter-spacing: -0.015em;
+  line-height: 1.25; color: var(--ink); margin-bottom: 8px;
+}
+.detail-meta-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--ink-mute); margin-bottom: 4px;
+}
+.detail-meta-value { font-size: 14px; font-weight: 600; color: var(--ink); }
+.detail-section-title {
+  font-size: 11px; font-weight: 800; letter-spacing: 0.22em;
+  text-transform: uppercase; color: var(--ink-soft); margin: 24px 0 8px 0;
+}
 /* === Sidebar navy + texto blanco === */
 section[data-testid="stSidebar"] {
   background-color: var(--ink) !important;

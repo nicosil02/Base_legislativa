@@ -612,7 +612,7 @@ if sel_rows:
 st.markdown("---")
 st.markdown("### Vista por cliente")
 st.markdown(
-    '<p style="font-size:13px;color:#869FB2;margin-bottom:14px;">'
+    '<p style="font-size:13px;color:var(--ink-mute);margin-bottom:14px;">'
     'PLs únicos referenciados en agendas, filtrados por relevancia para un cliente '
     '(categoría automática + matriz puntual de seguimiento).</p>',
     unsafe_allow_html=True,
