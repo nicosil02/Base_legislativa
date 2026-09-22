@@ -81,6 +81,29 @@ div[data-testid="stMetric"] {
   background-color: var(--accent);
   height: 2px;
 }
+/* === st.expander con la marca (Noticias: "Mas filtros"/"Seguimiento de
+   PL"; Alertas: lista "Ya redactados") - por defecto sale con borde gris
+   Streamlit generico y texto negro plano, sin relacion con la marca.
+   DOM real (verificado en vivo): [data-testid="stExpander"] > details >
+   summary > ... [data-testid="stIconMaterial"] (flecha) + stMarkdownContainer p. */
+[data-testid="stExpander"] {
+  border: 1px solid var(--line) !important;
+  border-radius: 10px !important;
+  background: var(--bg) !important;
+}
+[data-testid="stExpander"] summary p {
+  font-weight: 700 !important;
+  color: var(--ink-soft) !important;
+  transition: color 140ms ease;
+}
+[data-testid="stExpander"] [data-testid="stIconMaterial"] {
+  color: var(--ink-mute) !important;
+  transition: color 140ms ease;
+}
+[data-testid="stExpander"] summary:hover p,
+[data-testid="stExpander"] summary:hover [data-testid="stIconMaterial"] {
+  color: var(--accent) !important;
+}
 /* === Sidebar navy + texto blanco === */
 section[data-testid="stSidebar"] {
   background-color: var(--ink) !important;
