@@ -104,6 +104,27 @@ div[data-testid="stMetric"] {
 [data-testid="stExpander"] summary:hover [data-testid="stIconMaterial"] {
   color: var(--accent) !important;
 }
+/* === st.chat_message (Alertas: chat de redacción) - los avatares salen
+   en rojo/naranja default de Streamlit (#FF4B4B / #FFA421), sin relacion
+   con la paleta navy/rojo Vali, y la burbuja del usuario en gris frio
+   (#F0F2F6) en vez del gris calido (--bg-soft) del resto de la app -
+   verificado en vivo que el input de chat de abajo SI hereda bien el
+   tema (bg-soft + borde navy vía primaryColor de config.toml), solo los
+   mensajes quedaban afuera. */
+[data-testid="stChatMessageAvatarUser"],
+[data-testid="stChatMessageAvatarAssistant"] {
+  background-color: var(--ink) !important;
+}
+[data-testid="stChatMessageAvatarAssistant"] {
+  background-color: var(--ink-mute) !important;
+}
+[data-testid="stChatMessage"] {
+  background-color: var(--bg-soft) !important;
+  border-radius: 12px !important;
+}
+[data-testid="stChatMessage"]:has([data-testid="stChatMessageAvatarAssistant"]) {
+  background-color: transparent !important;
+}
 /* === Sidebar navy + texto blanco === */
 section[data-testid="stSidebar"] {
   background-color: var(--ink) !important;
