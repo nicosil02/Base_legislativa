@@ -77,7 +77,15 @@ st.markdown(
 }
 .tool-block { margin-top: 36px; }
 
-/* Country card — single clickable element */
+/* Country card — single clickable element.
+   Hallazgo real 2026-09-22: esta card es lo primero que ve cualquiera
+   que abre la app (es el Inicio) y era la UNICA card de toda la app sin
+   entrada animada — Agenda/Noticias/Alertas ya tienen cardEnterList,
+   acá faltaba justo donde mas se nota. */
+@keyframes countryCardEnter {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
 a.country-card, div.country-card {
   display: block;
   border: 1px solid var(--line);
@@ -87,7 +95,10 @@ a.country-card, div.country-card {
   color: var(--ink) !important;
   transition: border-color .2s, transform .2s, box-shadow .2s;
   background: var(--bg);
+  animation: countryCardEnter 420ms cubic-bezier(.16,1,.3,1) both;
 }
+[data-testid="stColumn"]:nth-child(2) .country-card { animation-delay: 70ms; }
+[data-testid="stColumn"]:nth-child(3) .country-card { animation-delay: 140ms; }
 a.country-card:hover {
   border-color: var(--accent);
   transform: translateY(-3px);
