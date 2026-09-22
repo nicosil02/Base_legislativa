@@ -563,7 +563,7 @@ def _render_card(n, key_suffix: str = "") -> None:
                 }
             else:
                 combinar_items.pop(full_id, None)
-        if cols[2].button("✕ Descartar", key=f"desc{sfx}",
+        if cols[2].button("✕ Descartar", key=f"desc{sfx}", type="primary",
                           help="No aparecerá más y sirve como feedback"):
             _feedback_descartar(nid)
             st.rerun()

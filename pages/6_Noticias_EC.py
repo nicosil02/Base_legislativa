@@ -590,7 +590,7 @@ def _render_card(n, key_suffix: str = "") -> None:
                     creado_por=st.user.get("email"),
                 )
                 st.success(f"Marcado para: {', '.join(sel)}. El agente lo redacta en la próxima hora.")
-        if cols[2].button("✕ Descartar", key=f"desc{sfx}",
+        if cols[2].button("✕ Descartar", key=f"desc{sfx}", type="primary",
                           help="No aparecerá más y sirve como feedback"):
             _feedback_descartar(nid)
             st.rerun()
