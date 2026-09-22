@@ -454,6 +454,15 @@ a.country-card:active {
     display: inline-block !important;
     width: 16px !important;
     height: 16px !important;
+    /* Bug real 2026-09-22 (Nicolas: "arregla el icono duplicado del
+       sidebar"): otra regla mas generica en cada pagina ("ocultar TODO
+       texto crudo de Material Symbols/Icons", span[aria-hidden="true"])
+       pone visibility:hidden !important sobre este mismo span - se
+       hereda al ::before de abajo y lo esconde del todo (antes esto no
+       se notaba porque un ::before viejo y duplicado en cada pagina
+       forzaba visibility:visible !important el sobre el mismo selector -
+       se saco por duplicado sin reponer este visible aca). */
+    visibility: visible !important;
 }
 [data-testid="stNavSectionHeader"] [data-testid="stIconMaterial"]::before {
     content: "▼";
@@ -465,6 +474,7 @@ a.country-card:active {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    visibility: visible !important;
 }
 [data-testid="stSidebarCollapseButton"] [data-testid="stIconMaterial"]::before {
     content: "‹";
@@ -477,6 +487,7 @@ a.country-card:active {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    visibility: visible !important;
 }
 
 /* Anular ::before viejo de home.py / pages/1_Peru.py sobre el button del

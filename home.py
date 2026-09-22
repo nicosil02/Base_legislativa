@@ -81,17 +81,13 @@ button[kind="header"] * {
   color: transparent !important;
   line-height: 0 !important;
 }
-[data-testid="stSidebarHeader"] button::before,
-button[data-testid="stExpandSidebarButton"]::before,
-button[kind="header"]::before {
-  content: "‹" !important;
-  font-size: 18px !important;
-  color: #FFFFFF !important;
-  visibility: visible !important;
-  display: inline-block !important;
-  line-height: 1 !important;
-  font-family: 'Inter', sans-serif !important;
-}
+/* El icono "‹" del boton de colapsar el sidebar ya lo pone app.py
+   (::before sobre [data-testid="stIconMaterial"], selector que SI
+   matchea el DOM real de Streamlit 1.57) - una regla vieja aca con este
+   mismo selector y !important le ganaba por orden de cascada (esta
+   pagina se inyecta despues de app.py) y quedaba "‹ vali ‹" duplicado.
+   Bug real 2026-09-22 (Nicolas: "arregla el icono duplicado del
+   sidebar"). */
 
 /* === Logo Vali: 200px centrado === */
 [data-testid="stSidebarHeader"] {
