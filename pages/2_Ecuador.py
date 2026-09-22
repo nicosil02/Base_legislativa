@@ -889,15 +889,20 @@ if selected_rows:
             if badges else ""
         )
 
+        # HTML en una sola linea (sin \n embebidos): un f-string multilinea
+        # con una linea que evalua a vacio (unif_badge=="" cuando el PL no
+        # esta unificado) deja una linea "en blanco" para el parser de
+        # Markdown, que ahi da por terminado el bloque HTML y renderiza el
+        # resto (el </div> de cierre) como texto literal - mismo bug real
+        # ya documentado y arreglado en pages/3_Agenda_PE.py.
         st.markdown(
-            f"""<div class="detail-card">
-            <div class="detail-eyebrow">Documentos del proyecto</div>
-            <div class="detail-title">N. Trámite {sel_tramite}</div>
-            <div style="font-size:0.95rem;color:var(--ink-soft);line-height:1.4;margin-bottom:12px;">
-              {sel_titulo}
-            </div>
-            {unif_badge}
-            </div>""",
+            f'<div class="detail-card">'
+            f'<div class="detail-eyebrow">Documentos del proyecto</div>'
+            f'<div class="detail-title">N. Trámite {sel_tramite}</div>'
+            f'<div style="font-size:0.95rem;color:var(--ink-soft);line-height:1.4;'
+            f'margin-bottom:12px;">{sel_titulo}</div>'
+            f'{unif_badge}'
+            f'</div>',
             unsafe_allow_html=True,
         )
 
