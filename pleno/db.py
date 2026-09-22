@@ -24,6 +24,13 @@ CREATE TABLE IF NOT EXISTS pleno_sesiones (
   fecha_fin_sesion     TEXT,                    -- a veces multi-dia
   titulo               TEXT,                    -- "Sesion del jueves 21 de mayo de 2026"
   presidente           TEXT,
+  camara               TEXT,                    -- 'D'/'S'/'C'/NULL - solo poblado para filas
+                                                 -- del bicameral via mesas_tecnicas (ver
+                                                 -- pleno/from_agenda_cms.py); la API vieja
+                                                 -- (adp-portal-service) no distingue camara
+  fuente               TEXT DEFAULT 'api',      -- 'api' (adp-portal-service, muerta post-
+                                                 -- bicameral) | 'agenda_cms' (comunicaciones.
+                                                 -- congreso.gob.pe, via mesas_tecnicas)
   estado_agenda        INTEGER,
   tipo_agenda          INTEGER,
   fec_publicacion      TEXT,
@@ -136,6 +143,13 @@ class Database:
     def init_schema(self) -> None:
         with self.tx() as c:
             c.executescript(SCHEMA)
+            # Migracion idempotente para DBs viejas (mismo patron que
+            # mesas_tecnicas/db.py): agregar camara/fuente si no existen.
+            cols = [r[1] for r in c.execute("PRAGMA table_info(pleno_sesiones)")]
+            if "camara" not in cols:
+                c.execute("ALTER TABLE pleno_sesiones ADD COLUMN camara TEXT")
+            if "fuente" not in cols:
+                c.execute("ALTER TABLE pleno_sesiones ADD COLUMN fuente TEXT DEFAULT 'api'")
 
     # ---------- upsert: lista de agendas ----------
     def upsert_from_lista(self, row: dict, now: str) -> tuple[bool, bool]:

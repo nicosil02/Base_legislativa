@@ -20,6 +20,8 @@ CREATE TABLE IF NOT EXISTS mesas_tecnicas (
   bancada         TEXT,                  -- bancada/grupo parlamentario
   comision        TEXT,                  -- comision si menciona alguna
   lugar           TEXT,
+  camara          TEXT,                  -- 'D'/'S'/'C'/NULL - solo para tipo='Pleno'
+                                          -- (parseado del titulo del post)
   pub_date        TEXT,                  -- pubDate del RSS (cuando se publico el post)
   first_seen_at   TEXT NOT NULL,
   last_seen_at    TEXT NOT NULL
@@ -80,6 +82,8 @@ class Database:
                 cols = [r[1] for r in c.execute("PRAGMA table_info(mesas_tecnicas)")]
                 if "tema" not in cols:
                     c.execute("ALTER TABLE mesas_tecnicas ADD COLUMN tema TEXT")
+                if "camara" not in cols:
+                    c.execute("ALTER TABLE mesas_tecnicas ADD COLUMN camara TEXT")
             except Exception:
                 pass
 
@@ -89,7 +93,7 @@ class Database:
         now = now_iso()
         existing = self.conn.execute(
             "SELECT titulo, tipo, tema, fecha, hora, organiza, congresista, "
-            "bancada, comision, lugar, pub_date FROM mesas_tecnicas WHERE url = ?",
+            "bancada, comision, lugar, pub_date, camara FROM mesas_tecnicas WHERE url = ?",
             (url,),
         ).fetchone()
         if existing is None:
@@ -97,21 +101,21 @@ class Database:
                 c.execute(
                     """INSERT INTO mesas_tecnicas
                        (url, titulo, tipo, tema, fecha, hora, organiza, congresista,
-                        bancada, comision, lugar, pub_date,
+                        bancada, comision, lugar, pub_date, camara,
                         first_seen_at, last_seen_at)
-                       VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+                       VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
                     (url, row.get("titulo"), row.get("tipo"), row.get("tema"),
                      row.get("fecha"), row.get("hora"), row.get("organiza"),
                      row.get("congresista"), row.get("bancada"),
                      row.get("comision"), row.get("lugar"),
-                     row.get("pub_date"), now, now),
+                     row.get("pub_date"), row.get("camara"), now, now),
                 )
             return True, True
 
         # Detectar cambios reales (cualquier campo distinto)
         changed = False
         for k in ("titulo", "tipo", "tema", "fecha", "hora", "organiza",
-                  "congresista", "bancada", "comision", "lugar", "pub_date"):
+                  "congresista", "bancada", "comision", "lugar", "pub_date", "camara"):
             new_v = row.get(k)
             old_v = existing[k] if k in existing.keys() else None
             if (new_v or None) != (old_v or None):
@@ -124,13 +128,13 @@ class Database:
                     """UPDATE mesas_tecnicas SET
                        titulo=?, tipo=?, tema=?, fecha=?, hora=?, organiza=?,
                        congresista=?, bancada=?, comision=?, lugar=?, pub_date=?,
-                       last_seen_at=?
+                       camara=?, last_seen_at=?
                        WHERE url=?""",
                     (row.get("titulo"), row.get("tipo"), row.get("tema"),
                      row.get("fecha"), row.get("hora"), row.get("organiza"),
                      row.get("congresista"), row.get("bancada"),
                      row.get("comision"), row.get("lugar"),
-                     row.get("pub_date"), now, url),
+                     row.get("pub_date"), row.get("camara"), now, url),
                 )
             else:
                 c.execute(
