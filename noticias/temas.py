@@ -170,7 +170,15 @@ TEMAS: dict[str, list[str]] = {
         "SBS", "UAF", "due diligence", "GAFI", "GAFILAT",
         "FinCEN", "compliance financiero", "compliance",
         "AFP", "ONP", "SUNAT", "SRI",
-        "tributo", "tributos", "impuesto",
+        # "tributo" (singular) se saco 2026-09-21 (auditoria en vivo,
+        # Nicolas: "sigue revisando el resto de temas") - es ambiguo en
+        # español ("tributo" = impuesto, pero tambien = homenaje/tribute),
+        # verificado en vivo con una nota real de una banda de heavy metal
+        # haciendo "un tributo a" una cancion, sin nada de fiscal. "tributos"
+        # (plural) se queda - en la practica siempre aparece en sentido
+        # fiscal (SUNAT, regimen tributario), nunca como "tributos" plural
+        # de homenaje.
+        "tributos", "impuesto",
         # ponytail (2026-09-15): "fiscal" sola se saco - es ambigua en
         # español ("fiscal" = tributario, pero tambien = del Ministerio
         # Publico/Fiscalia, sentido totalmente distinto), verificado en
@@ -464,6 +472,21 @@ def _demo():
     print("OK temas: pais_por_contenido detecta por funcionarios/instituciones estables")
 
 
+def _test_tributo_no_es_homenaje():
+    """Bug real 2026-09-21 (auditoria en vivo): "tributo" (KYC/AML/
+    Financiero) es ambiguo en español - impuesto vs. homenaje/tribute.
+    Caso real: nota de una banda de heavy metal haciendo "un tributo a"
+    una cancion clasificaba como KYC/AML/Financiero."""
+    assert clasificar(
+        "Black Sun une su heavy metal con la voz de Ñusta Picuasi en un "
+        "tributo a 'La Pinta, la Niña'") == []
+    # "tributos" (plural) se queda - sentido fiscal real.
+    assert clasificar(
+        "Tributos que no aparecen: 7 de cada 10 empresas en Perú sienten "
+        "que pagan a Sunat de más") == ["KYC / AML / Financiero"]
+    print("OK temas: 'tributo' (homenaje) ya no clasifica como KYC/AML/Financiero")
+
+
 def _test_es_espectaculos():
     """Casos reales 2026-09-21 (auditoria en vivo, Nicolas: "revisa lo del
     cancer/farandula tambien"): notas de farandula que mencionan una
@@ -540,6 +563,7 @@ def _test_es_deportivo():
 
 if __name__ == "__main__":
     _demo()
+    _test_tributo_no_es_homenaje()
     _test_es_espectaculos()
     _test_ministro_no_es_proxy_de_tema()
     _test_es_deportivo()
