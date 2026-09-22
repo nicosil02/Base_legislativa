@@ -453,27 +453,28 @@ fuentes = load_fuentes(PAIS)
 clientes = load_clientes()
 temas = todos_los_temas()
 
-fc1 = st.columns([1.1, 1.4, 1.4])
 TODAS = "Todas"
 TODOS = "Todos"
+fc1 = st.columns([1, 1.4, 2.6])
 sel_ventana = fc1[0].selectbox("Ventana", list(VENTANAS.keys()), index=0)
 sel_tema = fc1[1].selectbox("Tema", [TODAS] + temas,
     help="Clasificación por contenido (título + resumen). Una noticia puede tener varios temas.")
-sel_cat = fc1[2].selectbox("Categoría de fuente", [TODAS] + categorias_fuente,
-    help="Categoría del medio que publica (no del contenido)")
-
-fc2 = st.columns([1.2, 1.2, 2.1, 1.0])
-sel_fuente = fc2[0].selectbox("Fuente", [TODAS] + fuentes)
-sel_cliente = fc2[1].selectbox("Cliente", [TODOS] + clientes,
-    help="Fuentes relevantes para ese cliente (más las de interés general)")
-busqueda = fc2[2].text_input("Buscar en título o resumen",
+busqueda = fc1[2].text_input("Buscar en título o resumen",
     placeholder="ej. AFP, IA, agricultura")
-filtro_norma = fc2[3].selectbox(
-    "📋 Normativa", ["Sin normativa", "Todas", "Solo normativa"], index=0,
-    help="Decretos, resoluciones, leyes, reglamentos publicados. \"Sin "
-         "normativa\" (default) los oculta - antes solo existía \"Solo "
-         "normativa\" (mostrar únicamente) y no había forma de ocultarlos "
-         "del feed general.")
+
+with st.expander("🔍 Más filtros (Categoría de fuente, Fuente, Cliente, Normativa)"):
+    fc2 = st.columns([1.2, 1.2, 1.2, 1.0])
+    sel_cat = fc2[0].selectbox("Categoría de fuente", [TODAS] + categorias_fuente,
+        help="Categoría del medio que publica (no del contenido)")
+    sel_fuente = fc2[1].selectbox("Fuente", [TODAS] + fuentes)
+    sel_cliente = fc2[2].selectbox("Cliente", [TODOS] + clientes,
+        help="Fuentes relevantes para ese cliente (más las de interés general)")
+    filtro_norma = fc2[3].selectbox(
+        "📋 Normativa", ["Sin normativa", "Todas", "Solo normativa"], index=0,
+        help="Decretos, resoluciones, leyes, reglamentos publicados. \"Sin "
+             "normativa\" (default) los oculta - antes solo existía \"Solo "
+             "normativa\" (mostrar únicamente) y no había forma de ocultarlos "
+             "del feed general.")
 
 df = load_noticias(
     pais=PAIS,
