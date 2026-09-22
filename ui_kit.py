@@ -11,8 +11,13 @@ from __future__ import annotations
 
 import streamlit as st
 
+FONT_LINKS = """
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+"""
+
 THEME_CSS = """
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
 :root {
   --ink:        #0A294D;
   --ink-soft:   #435D74;
@@ -46,6 +51,27 @@ html, body, [class*="css"], .stApp {
 div[data-testid="stMetricValue"] {
   font-family: Georgia, 'Times New Roman', serif !important;
 }
+/* === Entrada escalonada de las tarjetas de KPI ===
+   Hallazgo real 2026-09-22 (Nicolas: "no se ve nada mejorado, quiero
+   animaciones, se siente lenta y fea"): las tarjetas de KPI (lo primero
+   que se ve en cada pagina) no tenian ningun movimiento, a diferencia
+   de las country-card del Inicio que si tienen entrada escalonada.
+   Mismo patron aca, aplicado centralizado para las 6 paginas. */
+@keyframes kpiEnter {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+div[data-testid="stMetric"] {
+  animation: kpiEnter 380ms cubic-bezier(.16,1,.3,1) both;
+}
+[data-testid="stColumn"]:nth-child(1) div[data-testid="stMetric"] { animation-delay: 0ms; }
+[data-testid="stColumn"]:nth-child(2) div[data-testid="stMetric"] { animation-delay: 40ms; }
+[data-testid="stColumn"]:nth-child(3) div[data-testid="stMetric"] { animation-delay: 80ms; }
+[data-testid="stColumn"]:nth-child(4) div[data-testid="stMetric"] { animation-delay: 120ms; }
+[data-testid="stColumn"]:nth-child(5) div[data-testid="stMetric"] { animation-delay: 160ms; }
+[data-testid="stColumn"]:nth-child(6) div[data-testid="stMetric"] { animation-delay: 200ms; }
+[data-testid="stColumn"]:nth-child(7) div[data-testid="stMetric"] { animation-delay: 240ms; }
+[data-testid="stColumn"]:nth-child(8) div[data-testid="stMetric"] { animation-delay: 280ms; }
 /* === Sidebar navy + texto blanco === */
 section[data-testid="stSidebar"] {
   background-color: var(--ink) !important;
@@ -73,7 +99,18 @@ def inject_theme() -> None:
     """Paleta Vali + tema base + texto del sidebar - antes copy-pasteado
     (con pequeñas variaciones de formato/orden) en las 9 paginas; una
     de esas variaciones tenia una regla vieja que causo el bug real del
-    icono duplicado del sidebar (2026-09-22). Una sola fuente ahora."""
+    icono duplicado del sidebar (2026-09-22). Una sola fuente ahora.
+
+    La fuente Inter se cargaba con @import DENTRO del <style> - eso
+    bloquea la aplicacion de TODO ese bloque (colores de marca, sidebar
+    navy, todo) hasta que Google Fonts responde, en cada carga de
+    pagina (Streamlit navega con hard-reload del browser entre paginas,
+    asi que esto se repetia constantemente). Hallazgo real 2026-09-22
+    (Nicolas: "se siente lenta"). <link rel="preconnect"> + <link
+    rel="stylesheet"> es el metodo que la propia Google Fonts recomienda
+    para produccion en vez de @import - el browser lo descarga en
+    paralelo con el resto de la pagina en lugar de bloquearla."""
+    st.markdown(FONT_LINKS, unsafe_allow_html=True)
     st.markdown(f"<style>{THEME_CSS}</style>", unsafe_allow_html=True)
 
 

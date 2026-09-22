@@ -96,9 +96,21 @@ st.markdown(
 .country-subtitle {
   font-size:1.05rem; color:var(--ink-soft); line-height:1.6; margin-bottom:28px;
 }
+@keyframes cardEnterList {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
 .item-card {
   border: 1px solid var(--line-soft); border-radius: 10px;
   padding: 14px 16px; margin: 8px 0 4px 0;
+  transition: border-color .15s ease, box-shadow .15s ease,
+              transform .15s cubic-bezier(.16,1,.3,1);
+  animation: cardEnterList 320ms cubic-bezier(.16,1,.3,1) both;
+}
+.item-card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 2px 8px rgba(10,41,77,0.08);
+  transform: translateY(-1px);
 }
 .item-fuente {
   font-size:11px; font-weight:700; color:var(--ink-mute);
