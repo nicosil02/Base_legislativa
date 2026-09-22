@@ -16,7 +16,9 @@ from pathlib import Path
 import pandas as pd
 import streamlit as st
 
-from noticias.temas import clasificar, es_normativa, todos_los_temas
+from noticias.temas import (
+    clasificar, es_fuente_multipais, es_normativa, pais_por_contenido, todos_los_temas,
+)
 from noticias.fuentes import (
     INSTITUCIONES_AMPLIAS, TEMAS_CLIENTE, PERFIL_ESTRICTO, matchea_perfil,
     FUENTES_GENERALISTAS_FILTRAR_RUIDO,
@@ -344,6 +346,14 @@ def load_noticias(pais: str,
     sql += " ORDER BY COALESCE(n.fecha_pub, n.first_seen_at) DESC LIMIT ?"
     params.append(limit)
     df = pd.read_sql_query(sql, conn, params=params)
+    if not df.empty:
+        # Ver comentario equivalente en pages/5_Noticias_PE.py - esta
+        # pagina nunca reclasificaba por contenido las fuentes multi-pais.
+        def _pais_real(row):
+            if not es_fuente_multipais(row["Fuente"]):
+                return pais
+            return pais_por_contenido(row["Título"], row["Resumen"], pais)
+        df = df[df.apply(_pais_real, axis=1) == pais]
     if not df.empty:
         descartadas = list_descartadas()
         if descartadas:
