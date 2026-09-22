@@ -121,6 +121,8 @@ a.country-card:hover {
   display: flex; gap: 36px; margin-bottom: 18px;
 }
 .country-card .stat-num {
+  font-family: Georgia, 'Times New Roman', serif;  /* misma serif que los
+    stMetricValue del resto de la app - ver ui_kit.py */
   font-size: 1.6rem; font-weight: 900; color: var(--ink);
   letter-spacing: -0.02em; line-height: 1;
 }
