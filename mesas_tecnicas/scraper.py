@@ -68,6 +68,20 @@ MES_NUM = {
 }
 
 
+def _fecha_aprox_de_pub_date(pub_date: str) -> str | None:
+    """'Wed, 09 Sep 2026 23:32:33 +0000' -> '2026-09-10' (fecha local Peru,
+    UTC-5) - aproximacion de la fecha de sesion del Pleno para posts que no
+    la tienen en su HTML (ver _parse_pleno_post)."""
+    from datetime import timedelta
+    from email.utils import parsedate_to_datetime
+    try:
+        dt = parsedate_to_datetime(pub_date)
+        dt_lima = dt - timedelta(hours=5)
+        return dt_lima.date().isoformat()
+    except (TypeError, ValueError):
+        return None
+
+
 def _strip_html(html: str) -> str:
     txt = re.sub(r"<script.*?</script>", " ", html, flags=re.DOTALL)
     txt = re.sub(r"<style.*?</style>", " ", txt, flags=re.DOTALL)
@@ -144,6 +158,62 @@ def _extract_lista_p(html: str) -> list[str]:
 _CATEGORIAS = {"mesa de trabajo", "ceremonia", "evento",
                 "sesión descentralizada", "sesion descentralizada"}
 
+# Sesiones del Pleno bicameral (Senado/Diputados/Congreso en general) -
+# hallazgo real 2026-09-22: pleno/api.py (adp-portal-service, la API vieja
+# del Pleno unicameral) dejo de recibir datos nuevos post-transicion
+# bicameral (ultimo registro real: 23 de junio, con periodo "2021-2026").
+# Las sesiones reales del Pleno bicameral SI se publican, pero como posts
+# normales en comunicaciones.congreso.gob.pe/agenda/ (el mismo feed que
+# este scraper ya lee para mesas de trabajo) - solo que con una estructura
+# de <p> distinta (sin categoria/tema, solo titulo+legislatura+presidente+
+# lugar) que antes caia en el fallback generico "Otro" sin distinguirse.
+_RE_PLENO = re.compile(r"^sesi[oó]n del pleno", re.IGNORECASE)
+_CAMARA_EN_TITULO = (
+    (re.compile(r"c[aá]mara de diputados", re.IGNORECASE), "D"),
+    (re.compile(r"senado de la rep[uú]blica", re.IGNORECASE), "S"),
+    (re.compile(r"congreso de la rep[uú]blica", re.IGNORECASE), "C"),
+)
+
+
+def _parse_pleno_post(paras: list[str], fallback_titulo: str) -> dict:
+    """Posts de 'Sesion del Pleno...' no tienen fecha/hora en el HTML del
+    post (solo el listado /agenda/ la tendria, y estos posts no aparecen
+    ahi en formato HORA/TEMA/ORGANIZA que run_sync_dias() sabe leer) - la
+    fecha real se aproxima con pub_date del RSS en run_sync() (se anuncian
+    0-2 dias antes de la sesion, es lo mejor disponible en esta fuente)."""
+    titulo = fallback_titulo or (paras[0] if paras else None)
+    out = {
+        "titulo": titulo,
+        "tipo": "Pleno", "tema": None, "comision": None, "organiza": None,
+        "congresista": None, "bancada": None, "lugar": None, "camara": None,
+    }
+    # paras[0] repite el titulo, paras[1] suele ser la legislatura
+    # ("Primera Legislatura Ordinaria 2026 - 2027.") - la guardamos como
+    # tema para que se vea algo de contexto en la UI.
+    resto = paras[1:] if len(paras) > 1 and paras[0].strip() == titulo else paras
+    if resto:
+        out["tema"] = resto[0]
+    for p in resto[:3]:
+        if re.search(r"\b(presidenta|presidente)\b", p, re.IGNORECASE):
+            out["organiza"] = p
+            break
+    # Camara: primero del titulo ("...de la Camara de Diputados" / "...del
+    # Senado..."); si el titulo es ambiguo (bare "Sesion del Pleno"), la
+    # linea de organiza casi siempre dice "Presidente del Senado/Camara..."
+    # igual - probamos ahi tambien antes de dejarlo sin clasificar.
+    for texto in (titulo or "", out["organiza"] or ""):
+        for pat, cam in _CAMARA_EN_TITULO:
+            if pat.search(texto):
+                out["camara"] = cam
+                break
+        if out["camara"]:
+            break
+    lugar_parts = [p for p in resto
+                   if re.search(r"\b(edificio|sala|hemiciclo|auditorio)\b", p, re.IGNORECASE)]
+    if lugar_parts:
+        out["lugar"] = " · ".join(lugar_parts)
+    return out
+
 
 def parse_post(html: str, fallback_titulo: str = "") -> dict:
     """Extrae los campos relevantes del HTML de un post individual.
@@ -167,6 +237,9 @@ def parse_post(html: str, fallback_titulo: str = "") -> dict:
              if not any(b in p.lower() for b in BLACKLIST_SNIPPETS)
              and len(p) > 2]
 
+    if _RE_PLENO.match(fallback_titulo or (paras[0] if paras else "")):
+        return _parse_pleno_post(paras, fallback_titulo)
+
     out = {
         "titulo": fallback_titulo or None,
         "tipo": None,
@@ -176,6 +249,7 @@ def parse_post(html: str, fallback_titulo: str = "") -> dict:
         "congresista": None,
         "bancada": None,
         "lugar": None,
+        "camara": None,
     }
 
     if not paras:
@@ -537,6 +611,7 @@ def run_sync(db, *, max_pages_rss: int = 5, fetch_details: bool = True,
                         "congresista": det.get("congresista"),
                         "bancada": det.get("bancada"),
                         "lugar": det.get("lugar"),
+                        "camara": det.get("camara"),
                     })
                 except Exception as e:
                     log.warning("error detail %s: %s", item["url"], e)
@@ -557,6 +632,14 @@ def run_sync(db, *, max_pages_rss: int = 5, fetch_details: bool = True,
 
             # Dejamos titulo generico (tipo) y tema separados — la UI usa
             # tema como el contenido principal cuando esta presente.
+
+            # Sesiones del Pleno no aparecen en el listado /agenda/ en el
+            # formato HORA/TEMA que _find_match() sabe leer, asi que nunca
+            # matchean arriba y fecha queda None. pub_date del RSS (cuando
+            # se publico el anuncio) es la mejor aproximacion disponible
+            # en esta fuente - se anuncian 0-2 dias antes de la sesion.
+            if row.get("tipo") == "Pleno" and not row.get("fecha") and row.get("pub_date"):
+                row["fecha"] = _fecha_aprox_de_pub_date(row["pub_date"])
 
             try:
                 is_new, changed = db.upsert(row)

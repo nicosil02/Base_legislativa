@@ -14,6 +14,7 @@ import logging
 import sys
 
 from pleno.db import Database
+from pleno.from_agenda_pdf import sync_from_agenda_pdf
 from pleno.sync import run_sync
 
 DEFAULT_DB = "proyectos.db"
@@ -49,6 +50,17 @@ def cmd_update(args) -> int:
             f"  vistas={stats.vistas} nuevas={stats.nuevas} "
             f"actualizadas={stats.actualizadas} detail_fetches={stats.detail_fetches} "
             f"errores={stats.errores}"
+        )
+        # Puente agenda_pdf: la API vieja (arriba) dejo de recibir sesiones
+        # nuevas post-transicion bicameral - ver pleno/from_agenda_pdf.py.
+        # No requiere red propia, solo lee pleno_agenda_pdf (ya sincronizada
+        # por el paso "pleno.agenda_pdf sync" en refrescar-pe.yml) y
+        # upsertea en pleno_sesiones para que el resto de la app la vea.
+        stats_pdf = sync_from_agenda_pdf(db)
+        print(
+            f"--- Puente agenda_pdf (Pleno bicameral via PDFs oficiales) ---\n"
+            f"  vistos={stats_pdf['vistos']} nuevos={stats_pdf['nuevos']} "
+            f"actualizados={stats_pdf['actualizados']}"
         )
     return 0
 

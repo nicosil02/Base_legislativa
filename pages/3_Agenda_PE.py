@@ -480,7 +480,10 @@ def load_sesiones(fec_inicio: dt.date | None, fec_fin: dt.date | None) -> pd.Dat
                  ps.fecha_sesion AS "Fecha",
                  NULL AS "Hora",
                  'Pleno del Congreso' AS "Comisión",
-                 NULL AS "Cámara",  -- el Pleno bicameral aún no publica agenda por esta vía (ver pleno/api.py)
+                 CASE ps.camara WHEN 'D' THEN 'Diputados' WHEN 'S' THEN 'Senado'
+                      WHEN 'C' THEN 'Congreso' ELSE NULL END AS "Cámara",  -- poblado
+                      -- para fuente='agenda_pdf' (ver pleno/from_agenda_pdf.py);
+                      -- NULL para las agendas viejas de la API unicameral
                  'Pleno' AS "Tipo",
                  CASE WHEN ps.fecha_sesion >= date('now') THEN 'Convocada' ELSE 'Realizada' END AS "Estado",
                  ps.titulo AS "Nombre",
@@ -584,7 +587,8 @@ def buscar_pl_en_agendas(pley_num: int) -> pd.DataFrame:
           SELECT ps.fecha_sesion AS "Fecha",
                  NULL AS "Hora",
                  'Pleno del Congreso' AS "Comisión",
-                 NULL AS "Cámara",  -- el Pleno bicameral aún no publica agenda por esta vía (ver pleno/api.py)
+                 CASE ps.camara WHEN 'D' THEN 'Diputados' WHEN 'S' THEN 'Senado'
+                      WHEN 'C' THEN 'Congreso' ELSE NULL END AS "Cámara",
                  'Pleno' AS "Tipo",
                  CASE WHEN ps.fecha_sesion >= date('now') THEN 'Convocada' ELSE 'Realizada' END AS "Estado sesión",
                  ps.titulo AS "Sesión",
