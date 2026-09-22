@@ -438,11 +438,17 @@ def kpi_totals() -> dict[str, int]:
 
 
 @st.cache_data(ttl=300)
-def documentos_hoy() -> int:
-    """PLs + noticias detectados HOY (Peru) - gap real vs Dapper identificado
-    2026-09-20 (ver memoria dapper-gap-analysis): ellos muestran un contador
-    de "documentos publicados hoy" en el dashboard. Dato barato, ya lo
-    tenemos - solo faltaba mostrarlo."""
+def documentos_hoy() -> tuple[int, int]:
+    """(PLs hoy, noticias hoy) - gap real vs Dapper identificado 2026-09-20
+    (ver memoria dapper-gap-analysis): ellos muestran un contador de
+    "documentos publicados hoy" en el dashboard. Dato barato, ya lo
+    tenemos - solo faltaba mostrarlo.
+
+    Antes se sumaban en un solo numero ("Nuevos hoy") al lado de metricas
+    puras de PL (Presentados, En comision, ...) - hallazgo real de
+    critique 2026-09-22: el numero combinado (210) opacaba a su vecino
+    "Presentados" (45) sin ninguna explicacion visible salvo un tooltip
+    hover, leyendo como un bug o un numero inflado. Separado en 2 tiles."""
     conn = get_conn()
     pls_hoy = conn.execute(
         "SELECT COUNT(*) FROM proyectos WHERE per_par_id=? AND date(first_seen_at)=date('now')",
@@ -456,7 +462,7 @@ def documentos_hoy() -> int:
         ).fetchone()[0]
     except sqlite3.OperationalError:
         pass
-    return pls_hoy + noticias_hoy
+    return pls_hoy, noticias_hoy
 
 
 @st.cache_data(ttl=60)
@@ -825,11 +831,12 @@ if _live.get("inserted", 0) > 0:
 
 # ---------- KPIs ----------
 totals = kpi_totals()
-cols = st.columns(len(totals) + 1)
+_pls_hoy, _noticias_hoy = documentos_hoy()
+cols = st.columns(len(totals) + 2)
 for col, (label, val) in zip(cols, totals.items()):
     col.metric(label, f"{val:,}")
-cols[-1].metric("Nuevos hoy", f"{documentos_hoy():,}",
-                 help="Proyectos de ley + noticias detectados hoy (Perú)")
+cols[-2].metric("PLs nuevos hoy", f"{_pls_hoy:,}")
+cols[-1].metric("Noticias hoy", f"{_noticias_hoy:,}")
 
 st.markdown("")
 
@@ -1104,20 +1111,28 @@ df_view = df_view.rename(columns={"Partido": "Bancada", "Autor(es)": "Autor"})
 COLS_VISIBLES = ["PL", "Cámara", "Título", "Presentado", "Estado", "Autor", "Bancada", "Comisión", "Tema"]
 df_view = df_view[[c for c in COLS_VISIBLES if c in df_view.columns]]
 
-# CSS para que el título envuelva (multi-línea) en lugar de truncar con "..."
+# CSS para que el título envuelva (multi-línea) en vez de truncar con "..." -
+# pero con techo de 3 líneas (line-clamp): antes envolvia sin limite con
+# row_height fijo en 170px para TODAS las filas (la mayoria con Autor/
+# Bancada/Comision vacios), desperdiciando scroll en la tabla mas densa y
+# revisada a diario - hallazgo real de critique 2026-09-22. El titulo
+# completo sigue a un click via el link de PL (portal del Congreso).
 st.markdown(
     """<style>
     div[data-testid="stDataFrame"] [role="gridcell"] {
-        white-space: pre-wrap !important;
+        white-space: normal !important;
         overflow-wrap: break-word !important;
         line-height: 1.45 !important;
         padding-top: 10px !important;
         padding-bottom: 10px !important;
     }
     div[data-testid="stDataFrame"] [role="gridcell"] > div {
-        white-space: pre-wrap !important;
-        overflow: visible !important;
-        text-overflow: clip !important;
+        display: -webkit-box !important;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden !important;
+        text-overflow: ellipsis;
+        white-space: normal !important;
     }
     </style>""",
     unsafe_allow_html=True,
@@ -1128,7 +1143,7 @@ tabla_pls = st.dataframe(
     hide_index=True,
     use_container_width=True,
     height=720,
-    row_height=170,  # más espacio vertical para que el título envuelva sin cortarse
+    row_height=100,  # techo de ~3 lineas de titulo (antes 170px fijo p/ toda fila)
     column_config={
         "PL":           st.column_config.LinkColumn(
             "PL",

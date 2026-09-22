@@ -161,6 +161,58 @@ def registrar_descarte(noticia_id: int, descartado_por: str | None = None) -> bo
     return True
 
 
+def deshacer_descarte(noticia_id: int) -> bool:
+    """Undo de registrar_descarte() - boton "Deshacer" agregado 2026-09-21
+    (critique: Descartar no tenia confirmacion ni undo, un click al lado
+    de acciones constructivas). Idempotente igual que registrar_descarte:
+    si ya no esta descartada, no hace nada."""
+    cfg = _gh_config()
+    usar_gh = bool(cfg["token"] and cfg["repo"])
+    remote = _fetch_remote() if usar_gh else None
+    state = remote or _read_local()
+    descartes = state["descartes"]
+
+    nuevos = [d for d in descartes if d.get("noticia_id") != noticia_id]
+    if len(nuevos) == len(descartes):
+        return True  # no estaba descartada, nada que deshacer
+
+    new_content = json.dumps(nuevos, ensure_ascii=False, indent=2)
+
+    if not usar_gh:
+        p = _local_path()
+        p.parent.mkdir(parents=True, exist_ok=True)
+        p.write_text(new_content, encoding="utf-8")
+        _cache["descartes"] = {"descartes": nuevos, "sha": None}
+        _cache["fetched_at"] = time.time()
+        return True
+
+    body = {
+        "message": f"noticias: deshacer descarte {noticia_id}",
+        "content": base64.b64encode(new_content.encode("utf-8")).decode("ascii"),
+        "branch": cfg["branch"],
+    }
+    if state.get("sha"):
+        body["sha"] = state["sha"]
+    url = "https://api.github.com/repos/" + cfg["repo"] + "/contents/" + FEEDBACK_PATH
+    req = urllib.request.Request(
+        url, data=json.dumps(body).encode("utf-8"), method="PUT",
+        headers={
+            "Authorization": "Bearer " + cfg["token"],
+            "Accept": "application/vnd.github+json",
+            "Content-Type": "application/json",
+            "User-Agent": "ValiIntelligence/1.0",
+        },
+    )
+    try:
+        urllib.request.urlopen(req, timeout=15)
+    except urllib.error.HTTPError as e:
+        err_body = e.read().decode("utf-8", errors="replace")
+        raise RuntimeError("GitHub PUT failed: " + str(e.code) + " " + err_body[:300]) from None
+    _cache["descartes"] = {"descartes": nuevos, "sha": None}
+    _cache["fetched_at"] = time.time()
+    return True
+
+
 # ============================================================
 # self-check (Ponytail: 1 chequeo ejecutable de la logica no trivial)
 # ============================================================
@@ -190,6 +242,14 @@ def _demo():
         registrar_descarte(202)
         assert list_descartadas() == {101, 202}
         print("OK list_descartadas: acumula varios ids")
+
+        assert deshacer_descarte(101)
+        assert list_descartadas() == {202}
+        print("OK deshacer_descarte: saca el id, deja el resto intacto")
+
+        assert deshacer_descarte(999)  # no estaba descartada - no debe fallar
+        assert list_descartadas() == {202}
+        print("OK deshacer_descarte: idempotente sobre un id que no estaba")
     finally:
         _local_path = old_local_path
         if old_token is not None:
