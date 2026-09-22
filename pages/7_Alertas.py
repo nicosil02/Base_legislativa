@@ -37,6 +37,7 @@ import streamlit as st
 
 from alerts.borradores_store import guardar_borrador, list_borradores
 from alerts.chat import nueva_conversacion
+from ui_kit import inject_theme
 
 CLIENTES_DIR = Path(__file__).resolve().parent.parent / "clientes"
 
@@ -78,23 +79,9 @@ def load_clientes() -> list[str]:
 
 
 # ====================== CSS (misma estetica que Noticias) ======================
+inject_theme()
 st.markdown(
     """<style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
-:root {
-  --ink:#0A294D; --ink-soft:#435D74; --ink-mute:#869FB2;
-  --line:#CFD9E0; --line-soft:#E3E9ED;
-  --accent:#0A294D; --accent-red:#BF1A1A;
-  --bg:#FFFFFF; --bg-soft:#F4F6F8;
-}
-html, body, [class*="css"], .stApp {
-  font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif !important;
-  color:var(--ink); background-color:var(--bg);
-}
-section[data-testid="stSidebar"] { background-color:var(--ink) !important; }
-section[data-testid="stSidebar"] *, section[data-testid="stSidebar"] a {
-  color:#FFFFFF !important; font-family:'Inter',sans-serif !important;
-}
 .block-container { padding-top:2rem; padding-bottom:4rem; max-width:1100px; }
 .country-eyebrow {
   font-size:11px; font-weight:800; letter-spacing:0.25em;
