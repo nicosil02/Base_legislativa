@@ -287,3 +287,42 @@ BUTTON_POLISH_CSS = """
 
 def inject_button_polish() -> None:
     st.markdown(f"<style>{BUTTON_POLISH_CSS}</style>", unsafe_allow_html=True)
+
+
+def render_evolucion_mensual(df, height: int = 340) -> None:
+    """Grafico de lineas por mes (Perú/Ecuador: "Evolución mensual") con
+    Altair en vez de st.line_chart. Bug real (Nicolas 2026-09-22, "el
+    grafico es pesimo, las fechas salen volteadas"): con solo 2-3 puntos
+    st.line_chart trata el eje X como categorico y Vega-Lite rota las
+    etiquetas ISO completas ("2026-08-01") a vertical para que no se
+    superpongan - con Altair se fija el eje como temporal, formato mes
+    corto + año, y las etiquetas quedan horizontales (labelAngle=0).
+    `df` es el DataFrame que devuelven evolucion_mensual() en Perú/Ecuador:
+    index = mes (string 'YYYY-MM-DD'), columnas = series a graficar."""
+    import altair as alt
+    import pandas as pd
+
+    d = df.reset_index()
+    mes_col = d.columns[0]
+    d[mes_col] = pd.to_datetime(d[mes_col])
+    d_melt = d.melt(mes_col, var_name="Serie", value_name="Cantidad")
+    chart = (
+        alt.Chart(d_melt)
+        .mark_line(point={"size": 60}, strokeWidth=2.5)
+        .encode(
+            x=alt.X(f"{mes_col}:T", title=None,
+                    # "%m/%Y" en vez de nombre de mes: los nombres cortos de
+                    # Vega-Lite salen en ingles (Aug/Sep) sin configurar un
+                    # locale aparte - inconsistente con el resto de la app
+                    # en español. Numerico evita el problema.
+                    axis=alt.Axis(format="%m/%Y", labelAngle=0, tickCount="month")),
+            y=alt.Y("Cantidad:Q", title=None, axis=alt.Axis(grid=True)),
+            color=alt.Color("Serie:N", title=None,
+                             scale=alt.Scale(range=["#0A294D", "#9C7A2E"]),
+                             legend=alt.Legend(orient="top", title=None)),
+            tooltip=[alt.Tooltip(f"{mes_col}:T", format="%m/%Y", title="Mes"),
+                     "Serie:N", "Cantidad:Q"],
+        )
+        .properties(height=height)
+    )
+    st.altair_chart(chart, use_container_width=True)
