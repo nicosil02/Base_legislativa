@@ -285,6 +285,48 @@ st.markdown(
        Ecuador para el panel "Documentos del proyecto") - Perú no tiene
        panel de detalle por PL, así que no hacía falta duplicarlos acá. */
 
+    /* === Proyectos por tema (tarjetas de sector, inspirado en Quals) === */
+    .temas-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+    .tema-card {
+      border: 1px solid var(--line-soft);
+      border-radius: 12px;
+      padding: 14px 16px;
+      background: var(--bg);
+      transition: border-color .15s ease, box-shadow .15s ease,
+                  transform .15s cubic-bezier(.16,1,.3,1);
+      animation: cardEnterList 320ms cubic-bezier(.16,1,.3,1) both;
+    }
+    .tema-card:hover {
+      border-color: var(--accent);
+      box-shadow: 0 2px 8px rgba(10,41,77,0.08);
+      transform: translateY(-1px);
+    }
+    .tema-card .tema-name {
+      font-size: 12.5px; font-weight: 700; color: var(--ink-soft);
+      margin-bottom: 8px; line-height: 1.3;
+      display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical;
+      overflow: hidden; text-overflow: ellipsis;
+    }
+    .tema-card .tema-row { display: flex; align-items: baseline; gap: 8px; }
+    .tema-card .tema-count {
+      font-size: 1.7rem; font-weight: 900; color: var(--ink);
+      letter-spacing: -0.02em; line-height: 1;
+    }
+    .tema-card .tema-recientes {
+      font-size: 10.5px; font-weight: 800; letter-spacing: 0.02em;
+      background: #F6EFDD; color: var(--gold);
+      padding: 2px 7px; border-radius: 999px; white-space: nowrap;
+    }
+    @keyframes cardEnterList {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
     /* Footer minimalista */
     .footer-rule {
       width: 32px; height: 2px; background: var(--ink);
@@ -393,6 +435,26 @@ def kpi_totals() -> dict[str, int]:
         "Autógrafas": r["autografa"] or 0,
         "Ley publicada": r["ley_publicada"] or 0,
     }
+
+
+@st.cache_data(ttl=60)
+def temas_resumen() -> list[dict]:
+    """PLs agrupados por tema - inspirado en las "tarjetas de sector" de
+    Quals (quals.apoyocomunicacion.com, pedido explicito de Nicolas
+    2026-09-22: no copiar su paleta/tipografia, solo la forma de tarjeta
+    que resume por categoria de un vistazo). Perú no tenia ninguna vista
+    de "cuánto hay de cada tema" - solo el filtro de Tema en la tabla,
+    que exige ya saber qué tema buscar."""
+    conn = get_conn()
+    rows = conn.execute(
+        """SELECT tema AS tema, COUNT(*) AS total,
+                  SUM(CASE WHEN date(first_seen_at) >= date('now', '-30 days')
+                      THEN 1 ELSE 0 END) AS recientes
+           FROM proyectos WHERE per_par_id=? AND tema IS NOT NULL
+           GROUP BY tema ORDER BY total DESC""",
+        (PER_PAR_ID_ACTUAL,),
+    ).fetchall()
+    return [dict(r) for r in rows]
 
 
 @st.cache_data(ttl=300)
@@ -797,6 +859,24 @@ cols[-2].metric("PLs nuevos hoy", f"{_pls_hoy:,}")
 cols[-1].metric("Noticias hoy", f"{_noticias_hoy:,}")
 
 st.markdown("")
+
+# ---------- Proyectos por tema (muestra: tarjetas de sector) ----------
+# Inspirado en Quals - Nicolas pidió ver esto primero en Perú antes de
+# decidir si se extiende (2026-09-22). Un vistazo de cuánto hay de cada
+# tema, algo que la página no tenía (solo el filtro "Tema" de la tabla,
+# que exige ya saber qué buscar).
+_temas_res = temas_resumen()
+if _temas_res:
+    st.markdown("##### Proyectos por tema")
+    _cards_html = "".join(
+        f'<div class="tema-card"><div class="tema-name">{t["tema"]}</div>'
+        f'<div class="tema-row"><span class="tema-count">{t["total"]}</span>'
+        + (f'<span class="tema-recientes">+{t["recientes"]} en 30d</span>' if t["recientes"] else '')
+        + '</div></div>'
+        for t in _temas_res
+    )
+    st.markdown(f'<div class="temas-grid">{_cards_html}</div>', unsafe_allow_html=True)
+    st.markdown("")
 
 # ---------- Sugerencias de reclasificacion (clasificador ML) ----------
 _sugerencias = sugerencias_pendientes()
