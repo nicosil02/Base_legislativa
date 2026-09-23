@@ -217,19 +217,23 @@ div[data-testid="stDataFrame"] {
   border-radius: 12px;
   overflow: hidden;
 }
+/* Header de tabla: antes bloque navy solido + blanco - mas liviano
+   ahora (pedido de Nicolas 2026-09-22, inspirado en como se ve la
+   tabla de Quals: fondo claro, texto en gris/navy, sin el bloque de
+   color pesado) - mismo espiritu, sin adoptar su paleta rojo/negro. */
 div[data-testid="stDataFrame"] thead th,
 div[data-testid="stDataFrame"] [role="columnheader"] {
-  background-color: var(--ink) !important;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  font-size: 11px !important;
+  background-color: var(--bg-soft) !important;
+  text-transform: none;
+  letter-spacing: 0.01em;
+  font-size: 12.5px !important;
   font-weight: 700 !important;
-  color: #FFFFFF !important;
-  border-bottom: 2px solid var(--ink) !important;
+  color: var(--ink-soft) !important;
+  border-bottom: 1px solid var(--line) !important;
 }
 div[data-testid="stDataFrame"] thead th *,
 div[data-testid="stDataFrame"] [role="columnheader"] * {
-  color: #FFFFFF !important;
+  color: var(--ink-soft) !important;
 }
 div[data-testid="stDataFrame"] tbody td {
   font-size: 13px;
@@ -331,6 +335,45 @@ def kpi_totals() -> dict[str, int]:
         "En debate": r["en_debate"] or 0,
         "Publicados": r["publicados"] or 0,
     }
+
+
+@st.cache_data(ttl=300)
+def evolucion_mensual() -> pd.DataFrame:
+    """PLs presentados y publicados en Registro Oficial por mes - mismo
+    grafico que pages/1_Peru.py, inspirado en "Evolucion mensual" de
+    Quals (pedido explicito de Nicolas 2026-09-22: no su paleta, solo la
+    idea). "Publicados" usa last_changed_at como proxy del mes de
+    publicacion - no hay historial completo de cambios de estado.
+
+    Acotado a '2025-05-01' (arranque del periodo 2025-2029, mismo
+    fallback informal que usa el date_input del sidebar mas abajo) -
+    a diferencia de Peru, la tabla de Ecuador no tiene un per_par_id que
+    aisle el periodo vigente de legislaturas viejas. Sin este corte,
+    entraban filas con fec_presentacion en 1900-01-01 (dato faltante/
+    default) y un historial disperso hasta 2015 - hallazgo real
+    probando la query, hacia el grafico ilegible."""
+    conn = get_conn()
+    presentados = pd.read_sql_query(
+        """SELECT date(fec_presentacion, 'start of month') AS mes,
+                  COUNT(*) AS "Presentados"
+           FROM proyectos WHERE fec_presentacion >= '2025-05-01'
+           GROUP BY mes""",
+        conn,
+    )
+    publicados = pd.read_sql_query(
+        """SELECT date(last_changed_at, 'start of month') AS mes,
+                  COUNT(*) AS "Publicados"
+           FROM proyectos WHERE UPPER(estado) = 'REGISTRO OFICIAL'
+                 AND fec_presentacion >= '2025-05-01'
+           GROUP BY mes""",
+        conn,
+    )
+    df = pd.merge(presentados, publicados, on="mes", how="outer").fillna(0)
+    if df.empty:
+        return df
+    df = df.sort_values("mes").set_index("mes")
+    df.index.name = "Mes"
+    return df.astype(int)
 
 
 @st.cache_data(ttl=60)
@@ -491,6 +534,14 @@ for col, (label, val) in zip(cols, totals.items()):
     col.metric(label, f"{val:,}")
 cols[-2].metric("PLs nuevos hoy", f"{_pls_hoy:,}")
 cols[-1].metric("Noticias hoy", f"{_noticias_hoy:,}")
+
+st.markdown("")
+
+# ---------- Evolucion mensual ----------
+_evol = evolucion_mensual()
+if not _evol.empty:
+    st.markdown("##### Evolución mensual")
+    st.line_chart(_evol, color=["#0A294D", "#9C7A2E"], height=260)
 
 st.markdown("")
 

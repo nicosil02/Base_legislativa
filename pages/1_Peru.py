@@ -241,20 +241,23 @@ st.markdown(
       border-radius: 12px;
       overflow: hidden;
     }
-    /* Header de tabla: fondo navy Vali + letras blancas */
+    /* Header de tabla: antes bloque navy solido + blanco - mas liviano
+       ahora (pedido de Nicolas 2026-09-22, inspirado en como se ve la
+       tabla de Quals: fondo claro, texto en gris/navy, sin el bloque de
+       color pesado) - mismo espiritu, sin adoptar su paleta rojo/negro. */
     div[data-testid="stDataFrame"] thead th,
     div[data-testid="stDataFrame"] [role="columnheader"] {
-      background-color: var(--ink) !important;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      font-size: 11px !important;
+      background-color: var(--bg-soft) !important;
+      text-transform: none;
+      letter-spacing: 0.01em;
+      font-size: 12.5px !important;
       font-weight: 700 !important;
-      color: #FFFFFF !important;
-      border-bottom: 2px solid var(--ink) !important;
+      color: var(--ink-soft) !important;
+      border-bottom: 1px solid var(--line) !important;
     }
     div[data-testid="stDataFrame"] thead th *,
     div[data-testid="stDataFrame"] [role="columnheader"] * {
-      color: #FFFFFF !important;
+      color: var(--ink-soft) !important;
     }
     div[data-testid="stDataFrame"] tbody td {
       font-size: 13px;
@@ -393,6 +396,41 @@ def kpi_totals() -> dict[str, int]:
         "Autógrafas": r["autografa"] or 0,
         "Ley publicada": r["ley_publicada"] or 0,
     }
+
+
+@st.cache_data(ttl=300)
+def evolucion_mensual() -> pd.DataFrame:
+    """PLs presentados y leyes publicadas por mes - inspirado en el
+    grafico "Evolucion mensual" de Quals (quals.apoyocomunicacion.com,
+    pedido explicito de Nicolas 2026-09-22: no su paleta rojo/negro, solo
+    la idea del grafico). "Leyes publicadas" usa last_changed_at como
+    proxy del mes de publicacion (no tenemos historial completo de
+    cambios de estado, solo el ultimo) - misma limitacion razonable que
+    tendria cualquier dashboard sin auditoria completa."""
+    conn = get_conn()
+    presentados = pd.read_sql_query(
+        """SELECT date(fec_presentacion, 'start of month') AS mes,
+                  COUNT(*) AS "Presentados"
+           FROM proyectos WHERE per_par_id=? AND fec_presentacion IS NOT NULL
+           GROUP BY mes""",
+        conn, params=(PER_PAR_ID_ACTUAL,),
+    )
+    publicadas = pd.read_sql_query(
+        """SELECT date(last_changed_at, 'start of month') AS mes,
+                  COUNT(*) AS "Leyes publicadas"
+           FROM proyectos
+           WHERE per_par_id=? AND (UPPER(estado) LIKE '%PUBLIC%PERUANO%'
+                 OR UPPER(estado) LIKE '%LEY PUBLICADA%'
+                 OR UPPER(estado) LIKE '%PUBLICACI%PERUANO%')
+           GROUP BY mes""",
+        conn, params=(PER_PAR_ID_ACTUAL,),
+    )
+    df = pd.merge(presentados, publicadas, on="mes", how="outer").fillna(0)
+    if df.empty:
+        return df
+    df = df.sort_values("mes").set_index("mes")
+    df.index.name = "Mes"
+    return df.astype(int)
 
 
 @st.cache_data(ttl=300)
@@ -795,6 +833,14 @@ for col, (label, val) in zip(cols, totals.items()):
     col.metric(label, f"{val:,}")
 cols[-2].metric("PLs nuevos hoy", f"{_pls_hoy:,}")
 cols[-1].metric("Noticias hoy", f"{_noticias_hoy:,}")
+
+st.markdown("")
+
+# ---------- Evolucion mensual ----------
+_evol = evolucion_mensual()
+if not _evol.empty:
+    st.markdown("##### Evolución mensual")
+    st.line_chart(_evol, color=["#0A294D", "#9C7A2E"], height=260)
 
 st.markdown("")
 
