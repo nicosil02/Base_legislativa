@@ -24,6 +24,14 @@ from noticias.avances_ec import noticias_tramite_recientes
 
 CLIENTES_DIR = Path(__file__).resolve().parent.parent / "clientes"
 
+# Instalación de la Asamblea Nacional del período vigente 2025-2029 -
+# equivalente a FECHA_INICIO_BICAMERAL en scraper/sync.py para Perú.
+# Ecuador no tiene un per_par_id que aisle el periodo vigente de
+# legislaturas viejas en la tabla `proyectos` (a diferencia de Perú), así
+# que las queries que deben acotarse al periodo actual (ej. el gráfico de
+# "Evolución mensual") usan esta constante en vez de un string suelto.
+FECHA_INICIO_PERIODO = "2025-05-14"
+
 
 @st.cache_data(ttl=60)
 def _matriz_pls_ec() -> dict[str, set[str]]:
@@ -345,10 +353,9 @@ def evolucion_mensual() -> pd.DataFrame:
     idea). "Publicados" usa last_changed_at como proxy del mes de
     publicacion - no hay historial completo de cambios de estado.
 
-    Acotado a '2025-05-01' (arranque del periodo 2025-2029, mismo
-    fallback informal que usa el date_input del sidebar mas abajo) -
-    a diferencia de Peru, la tabla de Ecuador no tiene un per_par_id que
-    aisle el periodo vigente de legislaturas viejas. Sin este corte,
+    Acotado a FECHA_INICIO_PERIODO (arranque real del periodo 2025-2029)
+    - a diferencia de Peru, la tabla de Ecuador no tiene un per_par_id
+    que aisle el periodo vigente de legislaturas viejas. Sin este corte,
     entraban filas con fec_presentacion en 1900-01-01 (dato faltante/
     default) y un historial disperso hasta 2015 - hallazgo real
     probando la query, hacia el grafico ilegible."""
@@ -356,17 +363,17 @@ def evolucion_mensual() -> pd.DataFrame:
     presentados = pd.read_sql_query(
         """SELECT date(fec_presentacion, 'start of month') AS mes,
                   COUNT(*) AS "Presentados"
-           FROM proyectos WHERE fec_presentacion >= '2025-05-01'
+           FROM proyectos WHERE fec_presentacion >= ?
            GROUP BY mes""",
-        conn,
+        conn, params=(FECHA_INICIO_PERIODO,),
     )
     publicados = pd.read_sql_query(
         """SELECT date(last_changed_at, 'start of month') AS mes,
                   COUNT(*) AS "Publicados"
            FROM proyectos WHERE UPPER(estado) = 'REGISTRO OFICIAL'
-                 AND fec_presentacion >= '2025-05-01'
+                 AND fec_presentacion >= ?
            GROUP BY mes""",
-        conn,
+        conn, params=(FECHA_INICIO_PERIODO,),
     )
     df = pd.merge(presentados, publicados, on="mes", how="outer").fillna(0)
     if df.empty:
@@ -571,7 +578,7 @@ cats = load_catalogs()
 # ---------- Sidebar: rango de fechas + estado de import ----------
 with st.sidebar:
     st.markdown("### Rango de fechas")
-    fec_min_iso = cats["fec_min"] or "2025-05-14"
+    fec_min_iso = cats["fec_min"] or FECHA_INICIO_PERIODO
     fec_max_iso = cats["fec_max"] or dt.date.today().isoformat()
     fec_min = dt.date.fromisoformat(fec_min_iso)
     fec_max = dt.date.fromisoformat(fec_max_iso)
