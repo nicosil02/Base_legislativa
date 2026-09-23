@@ -1474,7 +1474,7 @@
   },
   {
     "video_id": "JzzaUxFGPgc",
-    "resumen": "Sesion (tercera ordinaria del periodo 2026-2027) de la Comision de Procedimientos Especiales del Senado dedicada a las entrevistas personales de candidatos al proceso de eleccion de tres directores del Banco Central de Reserva del Peru (BCRP), tras un debate procedimental inicial en el que la presidencia y la mayoria de la comision rechazaron los pedidos de las bancadas Buen Gobierno y Obras para permitir modalidad virtual a dos candidatos que se encontraban fuera de Lima por trabajo, manteniendo el criterio de entrevista presencial aprobado por 9 votos a 1 en la sesion anterior. Se entrevisto a varios candidatos -entre ellos Diego Macera Poli, un candidato de apellido Molina Campodonico y, al cierre de la transcripcion, Juan Jose Martin Leon (postulante de la bancada Juntos por el Peru, quien recibio las calificaciones mas altas de la sesion)- sobre temas como el nivel optimo de reservas internacionales, el manejo del tipo de cambio, la independencia del Banco Central frente a la politica fiscal y el nuevo sistema de pagos digital del BCRP (proyecto TAP). La transcripcion corta a mitad de la ronda de evaluacion del ultimo candidato, sin cierre formal (sesion en curso al momento de este resumen).",
+    "resumen": "Sesion (tercera ordinaria del periodo 2026-2027) de la Comision de Procedimientos Especiales del Senado dedicada a las entrevistas personales de candidatos al proceso de eleccion de tres directores del Banco Central de Reserva del Peru (BCRP), tras un debate procedimental inicial en el que la presidencia y la mayoria de la comision rechazaron los pedidos de las bancadas Buen Gobierno y Obras para permitir modalidad virtual a dos candidatos que se encontraban fuera de Lima por trabajo, manteniendo el criterio de entrevista presencial aprobado por 9 votos a 1 en la sesion anterior. Se entrevisto a varios candidatos -entre ellos Diego Macera Poli, un candidato de apellido Molina Campodonico y, al cierre de la transcripcion, Juan Jose Martin Leon (postulante de la bancada Juntos por el Peru, quien recibio las calificaciones mas altas de la sesion)- sobre temas como el nivel optimo de reservas internacionales, el manejo del tipo de cambio, la independencia del Banco Central frente a la politica fiscal y el nuevo sistema de pagos digital del BCRP (proyecto TAP). La transcripcion capturada corta abruptamente a mitad de la ronda de evaluacion del ultimo candidato, probablemente por una interrupcion tecnica en la captura - no hay evidencia de que la sesion siguiera en curso a esta altura.",
     "ideas_clave": [
       "La comision entrevisto candidatos al proceso de eleccion de 3 directores del Banco Central de Reserva del Peru (BCRP), conforme al orden de ingreso en el sistema de tramite documentario (STD).",
       "El senador Figalo Rio de Neira (Buen Gobierno) pidio modalidad mixta/virtual para el candidato Javier Alfredo Escobal Danielo (fuera de Lima por trabajo, regresa el lunes); la bancada Obras (senador Armacanqui/Lopez Chau) pidio lo mismo para otro candidato de Juntos por el Peru. Ambos pedidos fueron rechazados por la presidencia al no lograr adhesion de otros senadores.",
@@ -1484,7 +1484,7 @@
       "Juan Jose Martin Leon, candidato de la bancada Juntos por el Peru, fue el ultimo entrevistado en la transcripcion y recibio puntajes de hasta 40 (el maximo posible) de varios senadores (Vasquez Villanueva, Ventura Angel, Mesia Ramirez, Melgar Valdez, Moyano Delgado).",
       "Cada bancada formulo una pregunta de un minuto por candidato con tres minutos para responder; los senadores calificaron a cada postulante en fichas de 0 a 40 puntos entregadas al secretario tecnico, quien leyo los puntajes en voz alta para transparencia del proceso."
     ],
-    "generated_at": "2026-09-23T17:50:51Z",
+    "generated_at": "2026-09-23T21:52:19Z",
     "duracion_seg": 2480,
     "agenda_cumplida": null
   },
@@ -1502,6 +1502,34 @@
     ],
     "generated_at": "2026-09-23T20:49:41Z",
     "duracion_seg": 1400,
+    "agenda_cumplida": null
+  },
+  {
+    "video_id": "Lc4LbRJDNx8",
+    "resumen": "Mesa de trabajo sobre 'Acceso a Medicamentos', convocada por la diputada Indira Huilca, en la que representantes de la Plataforma Ciudadana Salud y Derechos, CENARES, DIGEMID, EsSalud/SEABE, INDECOPI y el gremio de laboratorios farmaceuticos expusieron sobre las compras corporativas de medicamentos y la crisis de desabastecimiento en el sistema publico de salud, especialmente en regiones como Loreto y el oriente del pais. La sesion diagnostico problemas de financiamiento tardio, deficiencias normativas, deudas del Estado a proveedores y riesgo de colusion entre laboratorios, y cerro con el compromiso de continuar el trabajo en futuras mesas y de que CENARES informe sobre el plan de contingencia para 2027.",
+    "ideas_clave": [
+      "Javier Damaso (Plataforma Ciudadana Salud y Derechos) expuso que el gasto de bolsillo en salud de los afiliados al SIS paso de 17% en 2012 a 45.7%-47.9% en 2023 (dato del MINSA), muy por encima del 20% que recomienda la OMS, y que regiones de la selva/oriente como Loreto nunca lograron un abastecimiento completo de medicamentos ni en 2025 ni en 2026.",
+      "CENARES (Romelia Paredes) informo que la ejecucion presupuestal esta en 52% al 22 de septiembre de 2026, con expectativa de llegar a ~70% tras una transferencia de S/400 millones para 5 vacunas, y propuso impulsar una 'Ley de Medicamentos' especifica para las compras publicas del sector, similar a la de Chile.",
+      "El proyecto de presupuesto 2027, publicado el 31 de agosto, no incluye financiamiento para las compras corporativas de medicamentos segun advirtio CENARES, que ademas señalo que en 2026 el presupuesto para este rubro fue asignado recien en febrero (S/300 millones) y marzo (S/70 millones adicionales), tras haber arrancado el año en cero.",
+      "DIGEMID (Carmen Cuevas) presento un estudio de eficiencia (enero-julio 2024) que hallo que 61.9% de los proveedores que abastecen al Estado a nivel nacional se ubican en Lima Metropolitana, que 4.3% de los establecimientos farmaceuticos que vendieron al Estado eran no autorizados, y que los precios de compras institucionales fueron hasta 4 veces mas altos que los de la compra corporativa en el 38.3% de los items evaluados.",
+      "EsSalud (Antonio Riberos, gerente de la Central de Abastecimiento) reconocio que para la compra corporativa 2027 solo envio 17 productos farmaceuticos (valor S/21 millones) y ningun dispositivo medico, y pidio un marco normativo diferenciado para medicamentos y dispositivos medicos.",
+      "El gremio de laboratorios farmaceuticos denuncio una deuda acumulada del Estado a sus empresas asociadas de S/224.6 millones al 16 de septiembre de 2026 por pagos atrasados, y advirtio que Peru solo tiene 36 de 268 moleculas aprobadas en la region con disponibilidad completa, por debajo de Brasil, Colombia, Argentina y Mexico.",
+      "INDECOPI (Rodolfo Tupayachi) informo que en 2025 sanciono un acuerdo colusorio entre empresas de laboratorios farmaceuticos (actualmente en apelacion) y detallo patrones de alerta (cotizaciones conjuntas, desistimientos coordinados, rotacion de ganadores) para detectar colusion en licitaciones publicas de medicamentos."
+    ],
+    "generated_at": "2026-09-23T21:51:09Z",
+    "duracion_seg": 6390,
+    "agenda_cumplida": null
+  },
+  {
+    "video_id": "4H1DJbgx1Cw",
+    "resumen": "Sesion de la Comision de Procedimientos Especiales del Senado (23/09/2026), en su tramo inicial capturado, dedicada a una ronda de interrogantes de senadores de distintos grupos parlamentarios (Ahora Nacion, Obras) a un candidato o expositor invitado sobre temas de politica economica: los terminos de intercambio comercial del Peru y el riesgo regulatorio de monedas digitales privadas emitidas desde el extranjero (sesion en curso al momento de este resumen).",
+    "ideas_clave": [
+      "El senador Rolope Chavez (Grupo Parlamentario Ahora Nacion) pregunto sobre la relacion de causalidad entre productividad y terminos de intercambio comercial; el expositor respondio que una mejora en los terminos de intercambio precede a un aumento de la inversion privada en la realidad economica peruana.",
+      "El Grupo Parlamentario Obras formulo una pregunta sobre que medidas podria tomar el Estado peruano si una moneda digital privada de uso masivo en el pais fuera emitida desde el extranjero y la empresa emisora se negara a mantener reservas o representacion legal en el Peru; la respuesta del expositor quedo inconclusa al cierre de la transcripcion capturada.",
+      "La dinamica de la sesion es de interrogantes formuladas por representantes de cada grupo parlamentario a un unico expositor o candidato, en lo que parece ser un proceso de evaluacion o entrevista de la Comision de Procedimientos Especiales del Senado."
+    ],
+    "generated_at": "2026-09-23T21:51:40Z",
+    "duracion_seg": 200,
     "agenda_cumplida": null
   }
 ]
