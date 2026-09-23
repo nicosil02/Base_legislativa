@@ -1522,14 +1522,18 @@
   },
   {
     "video_id": "4H1DJbgx1Cw",
-    "resumen": "Sesion de la Comision de Procedimientos Especiales del Senado (23/09/2026), en su tramo inicial capturado, dedicada a una ronda de interrogantes de senadores de distintos grupos parlamentarios (Ahora Nacion, Obras) a un candidato o expositor invitado sobre temas de politica economica: los terminos de intercambio comercial del Peru y el riesgo regulatorio de monedas digitales privadas emitidas desde el extranjero (sesion en curso al momento de este resumen).",
+    "resumen": "Sesion de la Comision de Procedimientos Especiales del Senado (23/09/2026) dedicada a la evaluacion por entrevista de un candidato a un cargo tecnico vinculado a la politica monetaria (dirigido por los senadores como \"candidato Kurt Burneo\"), en la que legisladores de las bancadas Ahora Nacion, Obras, Renovacion Popular y Fuerza Popular indagaron sobre terminos de intercambio comercial, riesgos regulatorios de monedas digitales privadas extranjeras, compra de oro de origen ilegal por el BCR, el deficit fiscal y la politica de tasas de interes frente a la Fed. Concluida esa ronda de preguntas, los senadores presentes completaron y dieron lectura a sus fichas de evaluacion con puntajes individuales al candidato; la sesion se suspendio brevemente y luego retomo con una nueva ronda de interrogantes bajo un cuestionario casi identico al anterior, lo que sugiere el inicio de la evaluacion de otro candidato, cuya respuesta queda inconclusa al cierre de la transcripcion capturada (sesion en curso al momento de este resumen).",
     "ideas_clave": [
-      "El senador Rolope Chavez (Grupo Parlamentario Ahora Nacion) pregunto sobre la relacion de causalidad entre productividad y terminos de intercambio comercial; el expositor respondio que una mejora en los terminos de intercambio precede a un aumento de la inversion privada en la realidad economica peruana.",
-      "El Grupo Parlamentario Obras formulo una pregunta sobre que medidas podria tomar el Estado peruano si una moneda digital privada de uso masivo en el pais fuera emitida desde el extranjero y la empresa emisora se negara a mantener reservas o representacion legal en el Peru; la respuesta del expositor quedo inconclusa al cierre de la transcripcion capturada.",
-      "La dinamica de la sesion es de interrogantes formuladas por representantes de cada grupo parlamentario a un unico expositor o candidato, en lo que parece ser un proceso de evaluacion o entrevista de la Comision de Procedimientos Especiales del Senado."
+      "El candidato entrevistado (referido como Kurt Burneo) proyecto que el deficit fiscal 2026 cerraria en torno al 1% del PBI -por debajo de la proyeccion original de 1.4%-1.5%- pero advirtio que esa mejora se sostiene en ingresos temporales ligados al alto precio de los metales (oro por encima de USD 4,500 la onza) mientras el gasto asociado es de naturaleza permanente, generando un riesgo fiscal cuando bajen los precios.",
+      "Recomendo que el BCR evalue subir su tasa de interes de referencia si la Reserva Federal de EE.UU. continua elevando tasas, para evitar una salida desordenada de capitales de portafolio y presion al alza sobre el tipo de cambio.",
+      "Sobre una eventual compra de oro por el Banco Central, senalo que no lo consideraria adecuado mientras no se pueda garantizar la trazabilidad legal del origen del metal, dado que buena parte de la produccion de oro ilegal (con uso de mercurio) carece de canales de comercializacion transparentes.",
+      "Planteo que existe falta de coordinacion entre el MEF y el BCR en la emision de deuda publica (bonos soberanos del Tesoro frente a certificados de deposito del Banco Central), lo que segun el candidato encarece el costo de financiamiento del Estado.",
+      "Ante una pregunta sobre monedas digitales privadas emitidas desde el extranjero, respondio que su adopcion masiva suele responder a una perdida de confianza en el banco central local, vinculando el tema a la credibilidad del esquema de metas de inflacion del BCRP.",
+      "Al cierre de la primera ronda, los senadores presentes entregaron sus fichas de evaluacion con puntajes individuales al candidato: Morales Ramirez 40, Amarcanqui Morales 40, Moyano Delgado 15, Figallo Ribadeneira 20, Vasquez Villanueva 21, Cahuana Aymachoque 40 y Flores Ruiz 10 puntos.",
+      "Tras suspenderse la sesion con aviso de continuar al dia siguiente (jueves) a las 9:45 h, la transcripcion registra el inicio de una nueva ronda de interrogantes con un cuestionario casi identico al anterior -senales de una segunda evaluacion de candidato- que queda inconclusa en el punto donde termina la captura disponible."
     ],
-    "generated_at": "2026-09-23T21:51:40Z",
-    "duracion_seg": 200,
+    "generated_at": "2026-09-23T22:50:11Z",
+    "duracion_seg": 1200,
     "agenda_cumplida": null
   }
 ]
