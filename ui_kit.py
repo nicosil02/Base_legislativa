@@ -304,6 +304,7 @@ def render_evolucion_mensual(df, height: int = 340) -> None:
 
     d = df.reset_index()
     mes_col = d.columns[0]
+    series_orden = list(d.columns[1:])  # orden real de columnas del df
     d[mes_col] = pd.to_datetime(d[mes_col])
     d_melt = d.melt(mes_col, var_name="Serie", value_name="Cantidad")
     chart = (
@@ -317,8 +318,14 @@ def render_evolucion_mensual(df, height: int = 340) -> None:
                     # en español. Numerico evita el problema.
                     axis=alt.Axis(format="%m/%Y", labelAngle=0, tickCount="month")),
             y=alt.Y("Cantidad:Q", title=None, axis=alt.Axis(grid=True)),
+            # domain explicito: Altair ordena "Serie" alfabeticamente por
+            # default ("Leyes publicadas" < "Presentados"), lo que
+            # invertia los colores (bug real visto en vivo 2026-09-22 -
+            # "Leyes publicadas" salia en navy y "Presentados" en dorado,
+            # al reves de lo pensado).
             color=alt.Color("Serie:N", title=None,
-                             scale=alt.Scale(range=["#0A294D", "#9C7A2E"]),
+                             scale=alt.Scale(domain=series_orden,
+                                              range=["#0A294D", "#9C7A2E"]),
                              legend=alt.Legend(orient="top", title=None)),
             tooltip=[alt.Tooltip(f"{mes_col}:T", format="%m/%Y", title="Mes"),
                      "Serie:N", "Cantidad:Q"],
