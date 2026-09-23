@@ -406,24 +406,32 @@ def evolucion_mensual() -> pd.DataFrame:
     la idea del grafico). "Leyes publicadas" usa last_changed_at como
     proxy del mes de publicacion (no tenemos historial completo de
     cambios de estado, solo el ultimo) - misma limitacion razonable que
-    tendria cualquier dashboard sin auditoria completa."""
+    tendria cualquier dashboard sin auditoria completa.
+
+    Acotado explicitamente a FECHA_INICIO_BICAMERAL ademas del filtro
+    por per_par_id (pedido de Nicolas 2026-09-22: que la fecha no pase
+    de cuando arrancó la legislatura bicameral vigente) - per_par_id ya
+    debería garantizar esto solo, pero un filtro de fecha explícito no
+    depende de que ese campo esté bien cargado en cada fila."""
     conn = get_conn()
     presentados = pd.read_sql_query(
         """SELECT date(fec_presentacion, 'start of month') AS mes,
                   COUNT(*) AS "Presentados"
-           FROM proyectos WHERE per_par_id=? AND fec_presentacion IS NOT NULL
+           FROM proyectos
+           WHERE per_par_id=? AND fec_presentacion >= ?
            GROUP BY mes""",
-        conn, params=(PER_PAR_ID_ACTUAL,),
+        conn, params=(PER_PAR_ID_ACTUAL, FECHA_INICIO_BICAMERAL),
     )
     publicadas = pd.read_sql_query(
         """SELECT date(last_changed_at, 'start of month') AS mes,
                   COUNT(*) AS "Leyes publicadas"
            FROM proyectos
-           WHERE per_par_id=? AND (UPPER(estado) LIKE '%PUBLIC%PERUANO%'
-                 OR UPPER(estado) LIKE '%LEY PUBLICADA%'
-                 OR UPPER(estado) LIKE '%PUBLICACI%PERUANO%')
+           WHERE per_par_id=? AND fec_presentacion >= ?
+                 AND (UPPER(estado) LIKE '%PUBLIC%PERUANO%'
+                      OR UPPER(estado) LIKE '%LEY PUBLICADA%'
+                      OR UPPER(estado) LIKE '%PUBLICACI%PERUANO%')
            GROUP BY mes""",
-        conn, params=(PER_PAR_ID_ACTUAL,),
+        conn, params=(PER_PAR_ID_ACTUAL, FECHA_INICIO_BICAMERAL),
     )
     df = pd.merge(presentados, publicadas, on="mes", how="outer").fillna(0)
     if df.empty:
