@@ -18,7 +18,7 @@ import streamlit as st
 
 from scraper.categorias import CATEGORIA_CLIENTES_PL
 from alerts.borradores_store import marcar_pendiente
-from ui_kit import inject_theme
+from ui_kit import inject_theme, render_evolucion_mensual
 from clientes.matrices import matriz_bayer_crop, matriz_incode_ec
 from noticias.avances_ec import noticias_tramite_recientes
 
@@ -541,7 +541,7 @@ st.markdown("")
 _evol = evolucion_mensual()
 if not _evol.empty:
     st.markdown("##### Evolución mensual")
-    st.line_chart(_evol, color=["#0A294D", "#9C7A2E"], height=260)
+    render_evolucion_mensual(_evol)
 
 st.markdown("")
 
