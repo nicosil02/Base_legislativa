@@ -38,7 +38,8 @@ from datetime import datetime, timedelta, timezone
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
-from noticias.temas import FUENTES_MULTIPAIS, clasificar, es_fuente_multipais, pais_por_contenido
+from noticias.temas import (FUENTES_MULTIPAIS, clasificar, es_fuente_multipais,
+                            es_norma_de_interes, pais_por_contenido)
 
 UMBRAL_SIMILITUD = 0.35
 MAX_GRUPOS_POR_PAIS = 12
@@ -161,7 +162,15 @@ def _es_relevante(n: dict) -> bool:
     # "ministerial"/"suprema"/etc., no esta en su lista de keywords).
     tags = (n.get("tags") or "").split("|")
     if "normas" in tags or "normativa" in tags:
-        return False
+        # Excepcion (bug real 2026-09-24, SPDP datos biometricos): normas
+        # que tocan el foco de un cliente si pasan. RO EC ya viene marcado
+        # por su scraper (su resumen es el indice entero, no una norma);
+        # El Peruano trae 1 norma por fila y su resumen es la descripcion.
+        if "registro-oficial" in tags:
+            interes = "interes-cliente" in tags
+        else:
+            interes = es_norma_de_interes(n.get("resumen"))
+        return interes and _es_reciente(n)
     if not _es_reciente(n):
         return False
     # clasificar() puede devolver VARIOS temas a la vez, y "ministro"/

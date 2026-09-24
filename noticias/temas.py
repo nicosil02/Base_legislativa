@@ -239,6 +239,44 @@ def _compile(kws: list[str]) -> re.Pattern:
 _PATTERNS = {tema: _compile(kws) for tema, kws in TEMAS.items()}
 _PATTERN_NORMATIVA = _compile(KEYWORDS_NORMATIVA)
 
+# Bug real 2026-09-24 (Nicolas: "por que no lo mapeaste en nuestro sistema
+# de alertas"): la Norma General de Datos Biometricos de la SPDP (RO 376)
+# se capturo pero ningun canal la mando - el digest descarta TODA la
+# normativa (ver noticias/digest.py). Esta lista rescata solo las normas
+# que tocan el foco de los clientes (clientes/*/notas.md). Se matchea
+# contra la DESCRIPCION de la norma, nunca el nombre de la entidad:
+# "Direccion General de Medicamentos" o "Sanidad Agraria" como emisor
+# hacian pasar viajes/designaciones (9/9 falsos en la semana real).
+KEYWORDS_NORMA_INTERES = [
+    # Incode / Google
+    "datos personales", "proteccion de datos", "biometria", "biometrico",
+    "biometrica", "biometricos", "biometricas", "identidad digital",
+    "cedula digital", "dni electronico", "firma electronica", "firma digital",
+    "inteligencia artificial", "ciberseguridad", "gobierno digital",
+    "comercio electronico", "servicios digitales", "plataformas digitales",
+    # Bayer / Syngenta (agro)
+    "plaguicida", "plaguicidas", "fitosanitario", "fitosanitaria",
+    "fitosanitarios", "agroquimico", "agroquimicos", "semillas", "transgenicos",
+    "organismos vivos modificados", "fertilizantes", "bioinsumos",
+    # Bayer (salud)
+    "medicamentos", "productos farmaceuticos", "dispositivos medicos",
+    "registro sanitario",
+]
+_PATTERN_NORMA_INTERES = _compile(KEYWORDS_NORMA_INTERES)
+# Tramite interno que menciona el tema de pasada (verificado en la semana
+# real 2026-09-17/24: todos los falsos positivos empezaban asi).
+_PATTERN_NORMA_TRAMITE = re.compile(
+    r"^(designan|autorizan viaje|aceptan renuncia|encargan|dan por conclu|"
+    r"se designa|se autoriza el viaje|se acepta la renuncia)", re.IGNORECASE)
+
+
+def es_norma_de_interes(descripcion: str | None) -> bool:
+    """True si la descripcion de UNA norma (sin la entidad emisora) toca el
+    foco de algun cliente y no es tramite administrativo."""
+    d = _norm(descripcion).strip()
+    return bool(d) and not _PATTERN_NORMA_TRAMITE.match(d) \
+        and bool(_PATTERN_NORMA_INTERES.search(d))
+
 # Bug real 2026-09-21 (Nicolas, primero en las alertas de WhatsApp - "0
 # relevantes" - y confirmado despues tambien en las paginas Noticias
 # PE/EC via auditoria en vivo contra produccion, 2026-09-21 mas tarde el

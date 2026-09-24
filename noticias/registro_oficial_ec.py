@@ -29,7 +29,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from noticias.scraper import HEADERS, _make_session, parse_rss_feed
-from noticias.temas import clasificar
+from noticias.temas import clasificar, es_norma_de_interes
 
 log = logging.getLogger(__name__)
 
@@ -256,7 +256,8 @@ def _now_iso() -> str:
 
 
 def build_edition_noticia(edition: dict, indice_text: str, temas: list[str],
-                          pdf_excerpt: str | None = None) -> dict:
+                          pdf_excerpt: str | None = None,
+                          interes: list[dict] = ()) -> dict:
     """Convierte una edición completa del RO en una noticia clasificada.
 
     El resumen empieza con el índice (~500 chars) — así el usuario puede leer
@@ -267,13 +268,26 @@ def build_edition_noticia(edition: dict, indice_text: str, temas: list[str],
     resumen = re.sub(r"\s+", " ", indice_text).strip()[:500]
     if pdf_excerpt:
         resumen = f"{resumen}\n\n— Texto de la edición: {pdf_excerpt}"[:1500]
+    titulo = edition.get("titulo", "").strip()
+    tags = temas + ["registro-oficial", "normativa"]
+    # Normas de interés de cliente van ADELANTE: el índice se recorta a 500
+    # chars y la SPDP 0039-R (bug real 2026-09-24) venía al final, fuera
+    # del texto guardado - el digest nunca la habría visto.
+    if interes:
+        lineas = [f"{n.get('entidad') or ''}: {n.get('codigo') or ''} {n['titulo']}".strip()
+                  for n in interes]
+        titulo = f"{titulo} — {lineas[0]}"
+        if len(lineas) > 1:
+            titulo += f" (+{len(lineas) - 1} más de interés)"
+        resumen = f"Normas de interés: {' | '.join(lineas)}\n\n{resumen}"[:2000]
+        tags.append("interes-cliente")
     return {
         "url": edition["url"],
-        "titulo": edition.get("titulo", "").strip()[:500],
+        "titulo": titulo[:500],
         "resumen": resumen,
         "fecha_pub": edition.get("fecha_pub"),
         "autor": None,
-        "tags": "|".join(temas + ["registro-oficial", "normativa"]),
+        "tags": "|".join(tags),
     }
 
 
@@ -327,7 +341,8 @@ def run_sync(db, max_editions: int = 20) -> dict:
                 continue
 
             temas = clasificar(indice_text, None)
-            if not temas:
+            interes = [n for n in parse_norms(lines) if es_norma_de_interes(n["titulo"])]
+            if not temas and not interes:
                 continue  # sin sector de interés, ignoramos
             stats["matches"] += 1
 
@@ -352,7 +367,7 @@ def run_sync(db, max_editions: int = 20) -> dict:
                     except Exception as e:
                         log.warning("PDF fetch/extract fallo (%s): %s", ed["url"], e)
 
-            noticia = build_edition_noticia(ed, indice_text, temas, pdf_excerpt)
+            noticia = build_edition_noticia(ed, indice_text, temas, pdf_excerpt, interes)
             is_new, changed = db.upsert_noticia(fuente_id, noticia)
             if is_new:
                 stats["nuevas"] += 1
