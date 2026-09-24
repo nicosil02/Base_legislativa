@@ -47,6 +47,32 @@ def _open_ro(path):
     return conn
 
 
+def _normativa_interes(conn, since_iso):
+    """Normas de El Peruano / Registro Oficial EC nuevas que tocan el foco
+    de un cliente, por pais. Mismo filtro que el digest de WhatsApp
+    (noticias.temas.es_normativa_de_interes). Pedido de Nicolas 2026-09-24
+    tras perderse la norma SPDP de datos biometricos: el correo nunca
+    incluia normativa. Las noticias viven en proyectos.db (PE) para ambos
+    paises; se separan por noticias_fuentes.pais."""
+    from noticias.temas import es_normativa_de_interes
+
+    try:
+        rows = conn.execute(
+            """SELECT n.titulo, n.url, n.tags, n.resumen, f.pais, f.nombre
+               FROM noticias n JOIN noticias_fuentes f ON f.id = n.fuente_id
+               WHERE n.first_seen_at > ? AND n.tags LIKE '%normativa%'
+               ORDER BY n.id DESC""",
+            (since_iso,),
+        ).fetchall()
+    except sqlite3.OperationalError:
+        return {"PE": [], "EC": []}  # DB sin tablas de noticias
+    out = {"PE": [], "EC": []}
+    for r in rows:
+        if r["pais"] in out and es_normativa_de_interes(r["tags"], r["resumen"]):
+            out[r["pais"]].append({"titulo": r["titulo"], "url": r["url"], "tema": r["nombre"]})
+    return out
+
+
 def _peru_new_pls(conn, since_iso):
     # Filtramos por first_seen_at (cuando ENTRO a nuestra DB) en lugar
     # de fec_presentacion. Asi cada PL sale 1 sola vez en la primera
@@ -339,9 +365,10 @@ def build_alert(now=None, window_hours=24, db_pe_path=None, db_ec_path=None,
     payload = {
         "fecha": now.strftime("%Y-%m-%d"),
         "since": since_iso,
-        "peru":    {"dictamenes": [], "proyectos": [],
+        "peru":    {"dictamenes": [], "proyectos": [], "normativa": [],
                     "sesiones_proximas": [], "mesas_proximas": []},
-        "ecuador": {"dictamenes": [], "proyectos": [], "sesiones_proximas": []},
+        "ecuador": {"dictamenes": [], "proyectos": [], "normativa": [],
+                    "sesiones_proximas": []},
     }
 
     db_pe = db_pe_path or _find_db_file("proyectos.db")
@@ -357,6 +384,9 @@ def build_alert(now=None, window_hours=24, db_pe_path=None, db_ec_path=None,
                 payload["peru"]["mesas_proximas"] = _peru_mesas_tecnicas_proximas(
                     conn, days_ahead=sesiones_days_ahead
                 )
+                normativa = _normativa_interes(conn, since_iso)
+                payload["peru"]["normativa"] = normativa["PE"]
+                payload["ecuador"]["normativa"] = normativa["EC"]
             finally:
                 conn.close()
         except Exception as e:
@@ -382,9 +412,9 @@ def build_alert(now=None, window_hours=24, db_pe_path=None, db_ec_path=None,
 
 def has_content(payload):
     if any(
-        len(payload[country][section]) > 0
+        len(payload[country].get(section, [])) > 0
         for country in ("peru", "ecuador")
-        for section in ("dictamenes", "proyectos")
+        for section in ("dictamenes", "proyectos", "normativa")
     ):
         return True
     # Sesiones proximas con al menos 1 PL en agenda (en cualquier pais) cuentan
@@ -399,9 +429,9 @@ def has_content(payload):
 
 def count_items(payload):
     base = sum(
-        len(payload[country][section])
+        len(payload[country].get(section, []))
         for country in ("peru", "ecuador")
-        for section in ("dictamenes", "proyectos")
+        for section in ("dictamenes", "proyectos", "normativa")
     )
     sesiones_con_pls = sum(
         1

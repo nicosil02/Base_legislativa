@@ -16,6 +16,7 @@ from itertools import groupby
 DOT_DICTAMEN = "#21A179"
 DOT_PROYECTO = "#F4B942"
 DOT_SESION   = "#2563EB"
+DOT_NORMATIVA = "#DC2626"
 
 
 def _escape(s):
@@ -177,6 +178,7 @@ def _country_section(country_label, country_data, label_dictamenes,
     """
     dictamenes = country_data.get("dictamenes", [])
     proyectos = country_data.get("proyectos", [])
+    normativa = country_data.get("normativa", [])
     sesiones = country_data.get("sesiones_proximas", []) if include_sesiones else []
     mesas = country_data.get("mesas_proximas", []) if include_mesas else []
 
@@ -200,6 +202,10 @@ def _country_section(country_label, country_data, label_dictamenes,
         'color:#0A294D;letter-spacing:-0.015em;'
         f'font-family:Inter,Segoe UI,Arial,sans-serif;">{label_dictamenes}</h2>'
         + _items_html(dictamenes, DOT_DICTAMEN)
+        + '<h2 style="margin:24px 0 4px 0;font-size:18px;font-weight:800;'
+        'color:#0A294D;letter-spacing:-0.015em;'
+        'font-family:Inter,Segoe UI,Arial,sans-serif;">Normativa de interés</h2>'
+        + _items_html(normativa, DOT_NORMATIVA)
         + sesiones_block
         + mesas_block
     )
