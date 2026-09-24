@@ -39,6 +39,19 @@ def test_plaguicidas_clasifica_como_crop():
     assert "Crop" in C("TC declara fundada demanda sobre plaguicidas en zonas agrícolas", None)
 
 
+def test_norma_de_interes():
+    # Bug real 2026-09-24: SPDP datos biometricos (RO 376) nunca llego a
+    # ningun canal. Titulos reales.
+    from noticias.temas import es_norma_de_interes as E
+    assert E("Se expide la Norma General para el Tratamiento de Datos Biométricos")
+    # Falsos positivos reales de la semana: tramite que menciona el tema.
+    assert not E("Autorizan viaje de profesionales de la Dirección General de "
+                 "Medicamentos, Insumos y Drogas a Colombia")
+    assert not E("Designan Director Ejecutivo de la Dirección de Productos Farmacéuticos")
+    assert not E("Se aprueba el estatuto de la Iglesia Evangélica Bilingüe Unción Divina")
+    assert not E(None)
+
+
 if __name__ == "__main__":
     for name, fn in sorted(globals().items()):
         if name.startswith("test_") and callable(fn):
