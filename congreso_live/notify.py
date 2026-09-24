@@ -64,7 +64,15 @@ def enviar_whatsapp(mensaje: str) -> bool:
     try:
         r = requests.get(url, timeout=20)
         r.raise_for_status()
-        log.info("[notify] WhatsApp enviado (%d chars)", len(mensaje))
+        # CallMeBot devuelve 200 incluso cuando rechaza (apikey invalida,
+        # rate limit...) - el motivo viene en el HTML. Bug real 2026-09-24:
+        # se logueaba "enviado" y a Nicolas no le llegaba nada.
+        cuerpo = " ".join(r.text.split())[:300]
+        if "error" in cuerpo.lower() or "invalid" in cuerpo.lower():
+            log.warning("[notify] CallMeBot rechazo el WhatsApp: %s", cuerpo)
+            return False
+        log.info("[notify] WhatsApp enviado (%d chars) - CallMeBot: %s",
+                 len(mensaje), cuerpo)
         return True
     except Exception as e:
         log.warning("[notify] fallo envio WhatsApp: %s", e)
