@@ -819,7 +819,11 @@ FUENTES_EC: list[dict] = [
     {"categoria": "Temas KYC/AML", "pais": "EC",
      "nombre": "Superintendencia de Proteccion de Datos Personales",
      "url": "https://www.proteccionderechos.gob.ec/", "tipo": "html", "activa": 0,
-     "notas": "Desactivada 2026-09-16: dominio no resuelve (DNS NXDOMAIN), verificado en vivo."},
+     "notas": "Desactivada 2026-09-16: dominio no resuelve (DNS NXDOMAIN), verificado en vivo. "
+              "OJO 2026-09-24: ese dominio era el EQUIVOCADO - el real es spdp.gob.ec, pero "
+              "su /feed/ esta vacio y /wp-json/wp/v2/posts devuelve [] (las resoluciones "
+              "son paginas sueltas, ej. spdp.gob.ec/r39/). Sus normas llegan via "
+              "Registro Oficial EC (indice) con tag interes-cliente."},
     {"categoria": "Temas KYC/AML", "pais": "EC", "nombre": "DPL News Ecuador",
      "url": "https://dplnews.com/",
      "rss_url": "https://dplnews.com/feed/", "tipo": "rss"},
