@@ -1548,5 +1548,22 @@
     "generated_at": "2026-09-24T05:50:08Z",
     "duracion_seg": 3284,
     "agenda_cumplida": null
+  },
+  {
+    "video_id": "DlrnhARfHeE",
+    "resumen": "Sesion de la Comision de Procedimientos Especiales del Senado dedicada a entrevistas personales de candidatos al directorio del Banco Central de Reserva del Peru (BCR), bajo el mecanismo de una pregunta por grupo parlamentario (1 minuto de pregunta, 3 de respuesta) seguida de calificacion individual de cada senador. Se entrevisto a Raul Eduardo Mauro Machuca y a Jose Antonio Fernandez Baca y Amosas, mientras que el candidato Javier Alfredo Escobar Daniel no se presento a su turno programado. (sesion en curso al momento de este resumen)",
+    "ideas_clave": [
+      "Candidato Raul Eduardo Mauro Machuca fue calificado por los senadores presentes con: Ticona Coaila 40 puntos, Cabuana y Machoque 40 puntos, Vasquez Vianueva 20 puntos y Lopez Chaunava 40 puntos.",
+      "Candidato Jose Antonio Fernandez Baca y Amosas fue calificado por Armar Canqui Morales con 40 puntos y por Juarez Gallegos con 40 puntos.",
+      "El candidato Javier Alfredo Escobar Daniel no se presento a la entrevista, por lo que se paso directamente a llamar al siguiente candidato en sala de espera.",
+      "Mauro Machuca se pronuncio sobre la eliminacion de topes a las tasas de interes: dijo que respetaria la ley vigente pero que como docente favorece mas competencia bancaria para bajar tasas.",
+      "Fernandez Baca defendio la autonomia del BCR frente a propuestas de usar reservas internacionales para financiar infraestructura, citando el articulo 84 de la Constitucion y la ley organica del banco, y solo admitio intervenciones coyunturales como el programa Reactiva Peru.",
+      "Sobre Reactiva Peru, Fernandez Baca senalo que se inyectaron S/60 mil millones a mas de 500 mil creditos (mayormente pymes) con una morosidad final menor al 5%, muy por debajo del 15% que se proyectaba como riesgo.",
+      "Ambos candidatos coincidieron en defender el rango meta de inflacion del BCR entre 1% y 3%, con la inflacion subyacente actual cerca del 2% pese a presiones externas (energia, Fenomeno del Nino) que llevaron la inflacion interanual a cerca del 4%.",
+      "La sesion incluyo un receso al mediodia y una reanudacion a las 9:56 am del jueves 24 de septiembre con verificacion de quorum (8 senadores presentes) para continuar la tercera sesion ordinaria del periodo 2026-2027."
+    ],
+    "generated_at": "2026-09-24T16:50:11Z",
+    "duracion_seg": 2120,
+    "agenda_cumplida": null
   }
 ]
