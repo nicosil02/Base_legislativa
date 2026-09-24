@@ -277,6 +277,17 @@ def es_norma_de_interes(descripcion: str | None) -> bool:
     return bool(d) and not _PATTERN_NORMA_TRAMITE.match(d) \
         and bool(_PATTERN_NORMA_INTERES.search(d))
 
+
+def es_normativa_de_interes(tags: str | None, resumen: str | None) -> bool:
+    """Para una fila de `noticias` ya marcada normativa: ¿toca a un cliente?
+    Compartido por el digest de WhatsApp y el correo diario. RO EC ya viene
+    marcado por su scraper (su resumen es el indice entero, no una norma);
+    El Peruano trae 1 norma por fila y su resumen es la descripcion."""
+    t = (tags or "").split("|")
+    if "registro-oficial" in t:
+        return "interes-cliente" in t
+    return es_norma_de_interes(resumen)
+
 # Bug real 2026-09-21 (Nicolas, primero en las alertas de WhatsApp - "0
 # relevantes" - y confirmado despues tambien en las paginas Noticias
 # PE/EC via auditoria en vivo contra produccion, 2026-09-21 mas tarde el

@@ -229,11 +229,14 @@ class Database:
         )
         with self.tx() as c:
             if changed:
+                # tags tambien (2026-09-24): sin esto, una fila re-clasificada
+                # por un fix del scraper (ej. RO EC tag interes-cliente) se
+                # quedaba con los tags viejos para siempre.
                 c.execute(
                     """UPDATE noticias SET titulo=?, resumen=?, fecha_pub=?,
-                       last_seen_at=? WHERE url=?""",
+                       tags=COALESCE(?, tags), last_seen_at=? WHERE url=?""",
                     (row["titulo"], row.get("resumen"), row.get("fecha_pub"),
-                     now, url),
+                     row.get("tags"), now, url),
                 )
             else:
                 c.execute("UPDATE noticias SET last_seen_at=? WHERE url=?",
