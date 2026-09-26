@@ -23,6 +23,7 @@ from __future__ import annotations
 
 import base64
 import html as _html
+import functools
 import logging
 import re
 from datetime import datetime, timezone
@@ -121,17 +122,36 @@ def fetch_pdf_index(session) -> dict:
 OCR_MIN_CHARS = 20  # ponytail: umbral heuristico "pagina sin texto = escaneada". Subir si aparecen falsos negativos (paginas con poco texto real, ej. solo un titulo corto).
 
 
+@functools.lru_cache(maxsize=1)
+def _paddle_ocr():
+    """Carga PaddleOCR una sola vez por proceso (bajar/cargar modelos tarda
+    varios segundos). Modelos "small" de PP-OCRv6: ~2 s/pagina en CPU vs
+    ~12 s con los "medium" por defecto, misma lectura en las pruebas
+    (tildes y ñ incluidas). Los pasos de orientacion/enderezado van apagados:
+    una pagina renderizada desde PDF ya viene derecha."""
+    from paddleocr import PaddleOCR
+    return PaddleOCR(
+        text_detection_model_name="PP-OCRv6_small_det",
+        text_recognition_model_name="PP-OCRv6_small_rec",
+        use_doc_orientation_classify=False,
+        use_doc_unwarping=False,
+        use_textline_orientation=False,
+    )
+
+
 def _ocr_page(page) -> str:
-    """OCR de UNA página via pytesseract - nunca corre sobre el doc entero.
-    Requiere el binario tesseract-ocr instalado aparte (no viene con pip);
-    si falta, falla silencioso (logueado) y se sigue sin ese texto."""
+    """OCR de UNA página via PaddleOCR - nunca corre sobre el doc entero.
+    Si paddleocr no esta instalado (solo se instala en CI, ver
+    refrescar-pe.yml), falla silencioso (logueado) y se sigue sin ese texto."""
     try:
-        import pytesseract
-        from PIL import Image
         import io
+        import numpy as np
+        from PIL import Image
         pix = page.get_pixmap(dpi=200)
-        img = Image.open(io.BytesIO(pix.tobytes("png")))
-        return pytesseract.image_to_string(img, lang="spa").strip()
+        img = np.array(Image.open(io.BytesIO(pix.tobytes("png"))).convert("RGB"))
+        return "\n".join(
+            t for res in _paddle_ocr().predict(img) for t in res["rec_texts"]
+        ).strip()
     except Exception as e:
         log.warning("OCR de pagina fallo: %s", e)
         return ""
@@ -441,7 +461,7 @@ def _demo_extract_pdf_text():
     """extract_pdf_text sobre un PDF sintético de 2 páginas: una con texto
     real (no debe pasar por OCR) y una sin capa de texto (imagen pura, debe
     disparar el fallback OCR). Monkeypatchea _ocr_page para no depender del
-    binario tesseract-ocr (no instalado en todos los entornos dev/test) -
+    motor de OCR (paddleocr, no instalado en todos los entornos dev/test) -
     igual ejercita la lógica real de decisión por-página de extract_pdf_text."""
     import pymupdf as fitz
 
