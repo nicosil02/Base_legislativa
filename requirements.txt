@@ -20,11 +20,10 @@ cloudscraper
 # noticias.registro_oficial_ec: lee el PDF real de cada edicion (Corte
 # Constitucional EC) en vez de solo el indice en texto del post WP.
 # PyMuPDF extrae texto Y renderiza paginas a imagen sin depender de Poppler
-# (binario del sistema) - importa como `fitz`. pytesseract hace OCR de las
-# paginas que PyMuPDF no puede leer (escaneadas); requiere el binario
-# `tesseract-ocr` instalado aparte (apt-get en CI, no viene con pip).
+# (binario del sistema) - importa como `fitz`. El OCR de las paginas
+# escaneadas usa PaddleOCR, que NO va aca (pesa cientos de MB y la app
+# Streamlit no lo usa): se instala solo en refrescar-pe.yml.
 pymupdf>=1.24
-pytesseract>=0.3
 pillow>=10.0
 # congreso_live: deteccion de Pleno/comisiones EN VIVO en YouTube (antes
 # solo lo usaba el workflow vigilar-congreso.yml via pip install ad-hoc;

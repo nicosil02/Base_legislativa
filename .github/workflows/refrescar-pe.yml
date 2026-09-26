@@ -142,10 +142,11 @@ jobs:
           # Solo se instala en la corrida de las 8 AM Lima (ver "Actualizar
           # noticias" mas abajo) - no hace falta pagar este costo 15x/dia
           # cuando las ediciones del Registro Oficial EC salen 1x/dia.
-          pip install pymupdf pytesseract pillow
-          # tesseract-ocr NO viene preinstalado en el runner ubuntu-latest
-          # (confirmado contra actions/runner-images, 2026-09-12).
-          sudo apt-get update -qq && sudo apt-get install -y -qq tesseract-ocr tesseract-ocr-spa
+          # OCR de paginas escaneadas con PaddleOCR (antes tesseract).
+          # paddlepaddle fijo en 3.2.2: 3.3.x rompe en CPU con oneDNN
+          # ("ConvertPirAttribute2RuntimeAttribute not support", probado
+          # 2026-09-26) y apagar oneDNN lo deja en ~40 s/pagina.
+          pip install pymupdf pillow "paddlepaddle==3.2.2" paddleocr
 
       - name: Bootstrap DB Peru desde snapshot gz (solo si no hay cache)
         if: hashFiles('proyectos.db') == ''
