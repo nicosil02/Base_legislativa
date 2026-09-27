@@ -290,9 +290,15 @@ async def _preguntar(pregunta: str, modo: str) -> str:
     try:
         return await rag.aquery(pregunta, param=QueryParam(
             mode=modo,
-            user_prompt=("Respondé en español, como analista de asuntos públicos de Vali Consultores. "
-                         "Citá los PL, sesiones y noticias concretos en que te basás. Si el grafo no "
-                         "tiene la información, decilo en vez de suponer."),
+            enable_rerank=False,  # no hay modelo de rerank configurado (evita el aviso)
+            # Sin saludo ni tono de IA: probado 2026-09-27, sin esto abria con
+            # "Estimado equipo y aliados de Vali Consultores". Mismas reglas de
+            # escritura que las alertas (feedback de Nicolas: español simple,
+            # sin dos puntos como conector, sin jerga).
+            user_prompt=("Responde en español simple y directo, sin saludo ni introducción. "
+                         "Empieza por la respuesta. No uses los dos puntos como conector ni "
+                         "frases de relleno. Cita los PL, sesiones y noticias concretos en que "
+                         "te basas. Si la información no está, dilo en vez de suponer."),
         ))
     finally:
         await rag.finalize_storages()
