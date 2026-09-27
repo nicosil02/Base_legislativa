@@ -32,16 +32,22 @@ jobs:
               "Rinden tributo a Chabuca Granda en su natalicio",
           ]
           for m in ms[:3]:
+            for modo in ("lote", "uno_a_uno"):
               try:
                   t = time.time()
-                  r = c.models.embed_content(model=m, contents=[perfil] + textos,
-                                             config=types.EmbedContentConfig(output_dimensionality=256, task_type="SEMANTIC_SIMILARITY"))
-                  v = np.array([e.values for e in r.embeddings], dtype=np.float32)
+                  cfg = types.EmbedContentConfig(output_dimensionality=256)
+                  if modo == "lote":
+                      r = c.models.embed_content(model=m, contents=[perfil] + textos, config=cfg)
+                      embs = r.embeddings
+                  else:
+                      embs = [c.models.embed_content(model=m, contents=x, config=cfg).embeddings[0] for x in [perfil] + textos]
+                  print(f"RESULT {m} {modo} n_emb={len(embs)}")
+                  v = np.array([e.values for e in embs], dtype=np.float32)
                   v /= np.linalg.norm(v, axis=1, keepdims=True)
                   sims = v[1:] @ v[0]
-                  print(f"RESULT {m} dim={v.shape[1]} {time.time()-t:.1f}s sims=" + " | ".join(f"{s:.3f} {x[:35]}" for s, x in zip(sims, textos)))
+                  print(f"RESULT {m} {modo} dim={v.shape[1]} {time.time()-t:.1f}s sims=" + " | ".join(f"{s:.3f} {x[:35]}" for s, x in zip(sims, textos)))
               except Exception as e:
-                  print(f"RESULT {m} FAIL {str(e)[:150]}")
+                  print(f"RESULT {m} {modo} FAIL {str(e)[:150]}")
           db = sqlite3.connect(":memory:"); db.enable_load_extension(True); sqlite_vec.load(db)
           print("RESULT sqlite-vec", db.execute("select vec_version()").fetchone())
           EOF
