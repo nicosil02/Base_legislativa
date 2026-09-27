@@ -73,11 +73,10 @@ jobs:
         run: |
           python -m playwright install chromium --with-deps
 
-      - name: Bootstrap DB Ecuador desde snapshot gz
+      - name: Bootstrap DB Ecuador desde la rama datos
         run: |
-          if [ -f data/proyectos_ec.db.gz ]; then
-            echo "[bootstrap] decomprimiendo data/proyectos_ec.db.gz"
-            gunzip -kc data/proyectos_ec.db.gz > proyectos_ec.db
+          # La base vive en la rama `datos`, no en main (ver scripts/publicar_db.sh).
+          if bash scripts/bajar_db.sh proyectos_ec.db.gz proyectos_ec.db; then
             ls -lh proyectos_ec.db
           else
             echo "[bootstrap] no hay snapshot, importando CSV..."
@@ -172,35 +171,14 @@ jobs:
           print(f'[stats] proyectos={total} con_docs={con_docs} docs_total={docs_total} restantes={total-con_docs}')
           "
 
-      - name: Generar snapshot gz
-        run: |
-          python -m scraper_ec.cli --db proyectos_ec.db snapshot
-
-      - name: Auto-commit snapshot si cambio
+      - name: Publicar base en la rama datos
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/proyectos_ec.db.gz
-          if git diff --staged --quiet; then
-            echo "Sin cambios en el snapshot."
-            exit 0
-          fi
-          git commit -m "EC: auto-refresh documentos $(date -u +%Y-%m-%d) [skip ci]"
-          # Retry-on-conflict loop: si otro commit llego al remote entremedio,
-          # rebaseamos y reintentamos. Hasta 3 intentos.
-          for i in 1 2 3; do
-            if git push; then
-              echo "Push OK (intento $i)"
-              exit 0
-            fi
-            echo "Push fallo (intento $i), rebaseando con origin/main..."
-            git fetch origin main
-            # rebase con "their" preferido por si hay conflicto en el snapshot
-            git rebase -X theirs origin/main || {
-              echo "Rebase fallo, abortando intento $i"
-              git rebase --abort
-              sleep 5
-            }
-          done
-          echo "Push fallo despues de 3 intentos."
-          exit 1
+          # Ya no se commitea data/proyectos_ec.db.gz en main (el repo llego a
+          # 15 GB por las versiones de las bases, 2026-09-27). Va a la rama
+          # `datos` como un solo commit sin historial (scripts/publicar_db.sh).
+          # `unico`: este es el unico workflow que escribe la base de Ecuador,
+          # no hay nada que mezclar. Reemplaza el viejo "rebase -X theirs" (el
+          # mismo patron que borro transcripciones en Peru el 2026-09-15).
+          bash scripts/publicar_db.sh unico proyectos_ec.db

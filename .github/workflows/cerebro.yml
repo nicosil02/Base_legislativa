@@ -47,8 +47,8 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gunzip -kc data/proyectos.db.gz > proyectos.db
-          gunzip -kc data/proyectos_ec.db.gz > proyectos_ec.db
+          bash scripts/bajar_db.sh proyectos.db.gz proyectos.db
+          bash scripts/bajar_db.sh proyectos_ec.db.gz proyectos_ec.db
           # Primera vez el release no existe: se crea vacio y se embebe todo.
           gh release view cerebro > /dev/null 2>&1 || \
             gh release create cerebro --title "Cerebro (embeddings)" \

@@ -91,11 +91,8 @@ jobs:
           sleep 2
           curl -s -x http://127.0.0.1:8118 -o /dev/null -w "privoxy->WARP HTTP %{http_code}\n" https://www.youtube.com/
 
-      - name: Bootstrap DB Peru desde snapshot gz
-        run: |
-          if [ -f data/proyectos.db.gz ]; then
-            gunzip -kc data/proyectos.db.gz > proyectos.db
-          fi
+      - name: Bootstrap DB Peru desde la rama datos
+        run: bash scripts/bajar_db.sh proyectos.db.gz proyectos.db || true
 
       - name: Detectar y notificar
         env:
@@ -176,68 +173,28 @@ jobs:
             tick=$((tick + 1))
             echo "[commit-loop] tick $tick: watch_pid=$watch_pid vivo, chequeando proyectos.db"
             if [ -f proyectos.db ]; then
-              gzip -9nkf proyectos.db
-              echo "[commit-loop] gzip exit=$? tamano=$(stat -c%s proyectos.db.gz 2>/dev/null || echo '?')"
-              mv -f proyectos.db.gz data/proyectos.db.gz
-              git add data/proyectos.db.gz data/congreso_live_state.json
+              # La base va a la rama `datos` (un solo commit sin historial, ver
+              # scripts/publicar_db.sh): base_remota = lo publicado es la base y
+              # se le suman las transcripciones de este job, con reintento si
+              # otro workflow publico en el medio (mismo merge por filas que
+              # evito la perdida de transcripciones del 2026-09-15/16).
+              bash scripts/publicar_db.sh base_remota proyectos.db                 || echo "[commit-loop] tick $tick: [warn] no se pudo publicar la base, sigo"
+              # congreso_live_state.json (dedupe de avisos) sigue en main.
+              git add data/congreso_live_state.json
               if git diff --staged --quiet; then
-                echo "[commit-loop] tick $tick: sin cambios en data/proyectos.db.gz ni data/congreso_live_state.json"
+                echo "[commit-loop] tick $tick: estado sin cambios"
               else
-                git commit -m "Congreso live: transcripcion parcial $(date -u +%Y-%m-%d-%H%M) [skip ci]"
-                if git push; then
-                  echo "[commit-loop] tick $tick: push OK"
-                else
-                  # Causa raiz real de perdida de datos, verificada en vivo
-                  # 2026-09-15: "git rebase -X theirs" en un conflicto de
-                  # push descarta el archivo COMPLETO de un lado (proyectos.db.gz
-                  # es un blob binario compartido con refrescar-pe.yml, que
-                  # toca tablas totalmente distintas) - asi se borraron
-                  # Presupuesto/Transportes ya transcritos. Fix real: mergear
-                  # sesiones_transcripciones a nivel de filas SQL (merge_db.py)
-                  # en vez de pisar el archivo entero, y arrancar el commit
-                  # de nuevo sobre la punta real de origin (sin rebase).
+                git commit -m "Congreso live: estado $(date -u +%Y-%m-%d-%H%M) [skip ci]"
+                if ! git push; then
+                  # --hard, no --soft: bug real 2026-09-16 (un --soft revirtio
+                  # otros archivos que habian cambiado en origin).
                   git fetch origin main
-                  MERGED=""
-                  if git show origin/main:data/proyectos.db.gz > /tmp/origin_proyectos.db.gz 2>/dev/null \
-                      && [ -s /tmp/origin_proyectos.db.gz ]; then
-                    gunzip -c /tmp/origin_proyectos.db.gz > /tmp/origin_proyectos.db
-                    # ORIGEN es la base (no proyectos.db local): este job solo
-                    # escribe sesiones_transcripciones, pero origin puede tener
-                    # noticias/PLs/etc mas frescos que nuestro checkout - bug
-                    # real 2026-09-16, verificado en vivo: un sync de noticias
-                    # de refrescar-pe.yml corrio y publico bien, pero este job
-                    # (checkout viejo) le gano la carrera de push minutos
-                    # despues y el commit resultante -con proyectos.db local
-                    # como base- volvio a pisar noticias_sync_runs a un estado
-                    # de horas antes en silencio.
-                    python -X utf8 -m congreso_live.merge_db /tmp/origin_proyectos.db proyectos.db
-                    gzip -9nkf /tmp/origin_proyectos.db
-                    mv -f /tmp/origin_proyectos.db.gz /tmp/merged_proyectos.db.gz
-                    MERGED=1
-                  fi
                   cp data/congreso_live_state.json /tmp/merged_state.json
-                  # --hard, no --soft: bug real 2026-09-16 - con --soft el
-                  # index se queda con la base vieja del checkout y el
-                  # commit revierte sin querer cualquier OTRO archivo que
-                  # haya cambiado en origin mientras corria el job (paso lo
-                  # mismo en backfill-vod.yml #7 con los .yml de workflow).
-                  # --hard sincroniza todo con origin primero.
                   git reset --hard origin/main
-                  if [ -n "$MERGED" ]; then
-                    mv -f /tmp/merged_proyectos.db.gz data/proyectos.db.gz
-                  fi
                   mv -f /tmp/merged_state.json data/congreso_live_state.json
-                  git add data/proyectos.db.gz data/congreso_live_state.json
-                  if git diff --staged --quiet; then
-                    echo "[commit-loop] tick $tick: ya esta en origin/main tras el merge"
-                  else
-                  git commit -m "Congreso live: transcripcion parcial $(date -u +%Y-%m-%d-%H%M) [skip ci]"
-                  fi
-                  if git push; then
-                    echo "[commit-loop] tick $tick: push OK tras merge"
-                  else
-                    echo "[commit-loop] tick $tick: [warn] commit parcial no se pudo pushear, sigo"
-                  fi
+                  git add data/congreso_live_state.json
+                  git diff --staged --quiet || git commit -m "Congreso live: estado $(date -u +%Y-%m-%d-%H%M) [skip ci]"
+                  git push || echo "[commit-loop] tick $tick: [warn] estado no se pudo pushear, sigo"
                 fi
               fi
             else
@@ -248,86 +205,42 @@ jobs:
           wait "$watch_pid" || echo "[warn] live-watch fallo, sigo"
           set -e
 
-      - name: Guardar snapshot DB si cambio
-        run: |
-          # Mergear SIEMPRE lo ultimo de origin antes de generar el
-          # snapshot final, no solo cuando el push despues choca - bug
-          # real 2026-09-15: refrescar-pe.yml usa actions/cache para su
-          # proyectos.db, asi que cuando el cache trae una copia vieja
-          # el push sale limpio (la ancestria del commit sigue siendo
-          # valida, git no mira contenido) y el fallback de merge en
-          # caso de conflicto nunca se dispara - piso datos reales en
-          # silencio. Mergear aca, antes de commitear, lo evita sin
-          # depender de que el push falle para activarse.
-          if [ -f proyectos.db ]; then
-            git fetch origin main 2>/dev/null || true
-            if git show origin/main:data/proyectos.db.gz > /tmp/origin_proyectos.db.gz 2>/dev/null \
-                && [ -s /tmp/origin_proyectos.db.gz ]; then
-              gunzip -c /tmp/origin_proyectos.db.gz > /tmp/origin_proyectos.db
-              # ORIGEN como base, no proyectos.db local - ver comentario del
-              # bug real 2026-09-16 en el loop de commits periodicos arriba.
-              python -X utf8 -m congreso_live.merge_db /tmp/origin_proyectos.db proyectos.db
-              gzip -9nkf /tmp/origin_proyectos.db
-              mv -f /tmp/origin_proyectos.db.gz data/proyectos.db.gz
-            else
-              gzip -9nkf proyectos.db
-              mv proyectos.db.gz data/proyectos.db.gz
-            fi
-          fi
-
-      - name: Commitear estado + snapshot DB
+      - name: Publicar base en la rama datos
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/congreso_live_state.json data/proyectos.db.gz
+          # Publicacion final del tramo (el loop de arriba publica cada 5 min).
+          if [ -f proyectos.db ]; then
+            bash scripts/publicar_db.sh base_remota proyectos.db
+          fi
+
+      - name: Commitear estado
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/congreso_live_state.json
           if git diff --staged --quiet; then
             echo "sin cambios"
             exit 0
           fi
-          git commit -m "Congreso live: estado + transcripciones $(date -u +%Y-%m-%d-%H%M) [skip ci]"
+          git commit -m "Congreso live: estado $(date -u +%Y-%m-%d-%H%M) [skip ci]"
           for i in 1 2 3; do
             if git push; then
               echo "Push OK (intento $i)"
               exit 0
             fi
-            # Mergear a nivel de filas en vez de "rebase -X theirs" (que
-            # descarta el archivo binario COMPLETO de un lado) - ver
-            # merge_db.py y el comentario del loop de commit periodico
-            # arriba para el bug real que esto arregla.
-            echo "Push fallo (intento $i), mergeando con origin/main..."
+            echo "Push fallo (intento $i), reintentando sobre origin/main..."
             git fetch origin main
-            MERGED=""
-            if [ -f proyectos.db ] && git show origin/main:data/proyectos.db.gz > /tmp/origin_proyectos.db.gz 2>/dev/null \
-                && [ -s /tmp/origin_proyectos.db.gz ]; then
-              gunzip -c /tmp/origin_proyectos.db.gz > /tmp/origin_proyectos.db
-              # ORIGEN como base - ver comentario del bug real 2026-09-16 mas
-              # arriba en este mismo archivo.
-              python -X utf8 -m congreso_live.merge_db /tmp/origin_proyectos.db proyectos.db
-              gzip -9nkf /tmp/origin_proyectos.db
-              mv -f /tmp/origin_proyectos.db.gz /tmp/merged_proyectos.db.gz
-              MERGED=1
-            fi
             cp data/congreso_live_state.json /tmp/merged_state.json
-            # --hard, no --soft: bug real 2026-09-16 (backfill-vod.yml #7) -
-            # con --soft el index se queda con la base vieja del checkout y
-            # el commit revierte sin querer cualquier OTRO archivo que haya
-            # cambiado en origin mientras corria el job (en #7 reverti 3
-            # workflows .yml; solo lo freno el permiso "workflows" de GH).
-            # --hard sincroniza todo con origin primero.
+            # --hard, no --soft: bug real 2026-09-16 (backfill-vod.yml #7).
             git reset --hard origin/main
-            if [ -n "$MERGED" ]; then
-              mv -f /tmp/merged_proyectos.db.gz data/proyectos.db.gz
-            fi
             mv -f /tmp/merged_state.json data/congreso_live_state.json
-            git add data/congreso_live_state.json data/proyectos.db.gz
+            git add data/congreso_live_state.json
             if git diff --staged --quiet; then
-              # Origin ya tiene exactamente este contenido (p.ej. el loop
-              # de commits periodicos de "Transcribir sesiones en vivo" ya
-              # lo empujo) - convergimos, no es un fallo real.
-              echo "Ya esta en origin/main tras el merge, nada que commitear."
+              echo "Ya esta en origin/main, nada que commitear."
               exit 0
             fi
-            git commit -m "Congreso live: estado + transcripciones $(date -u +%Y-%m-%d-%H%M) [skip ci]"
+            git commit -m "Congreso live: estado $(date -u +%Y-%m-%d-%H%M) [skip ci]"
             sleep 5
           done
           echo "Push fallo despues de 3 intentos."

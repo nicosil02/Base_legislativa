@@ -84,11 +84,8 @@ jobs:
           sleep 5
           warp-cli --accept-tos status
 
-      - name: Bootstrap DB Peru desde snapshot gz
-        run: |
-          if [ -f data/proyectos.db.gz ]; then
-            gunzip -kc data/proyectos.db.gz > proyectos.db
-          fi
+      - name: Bootstrap DB Peru desde la rama datos
+        run: bash scripts/bajar_db.sh proyectos.db.gz proyectos.db || true
 
       - name: Bajar y transcribir el VOD completo
         env:
@@ -101,84 +98,10 @@ jobs:
               --tipo "${{ inputs.tipo }}" \
               --titulo "${{ inputs.titulo }}"
 
-      - name: Guardar snapshot DB si cambio
-        run: |
-          # Mergear SIEMPRE lo ultimo de origin antes de generar el
-          # snapshot, no solo si el push despues choca - ver el mismo
-          # comentario en vigilar-congreso.yml (bug real 2026-09-15:
-          # refrescar-pe.yml con actions/cache viejo empuja un push
-          # limpio que pisa datos sin disparar ningun fallback).
-          if [ -f proyectos.db ]; then
-            git fetch origin main 2>/dev/null || true
-            if git show origin/main:data/proyectos.db.gz > /tmp/origin_proyectos.db.gz 2>/dev/null \
-                && [ -s /tmp/origin_proyectos.db.gz ]; then
-              gunzip -c /tmp/origin_proyectos.db.gz > /tmp/origin_proyectos.db
-              # ORIGEN como base, no proyectos.db local - bug real 2026-09-16
-              # (verificado en vivo): este job solo escribe
-              # sesiones_transcripciones pero origin puede tener noticias/PLs
-              # mas frescos que nuestro checkout; usar proyectos.db local como
-              # base pisaba esas tablas en silencio al ganar la carrera de push.
-              python -X utf8 -m congreso_live.merge_db /tmp/origin_proyectos.db proyectos.db
-              gzip -9nkf /tmp/origin_proyectos.db
-              mv -f /tmp/origin_proyectos.db.gz data/proyectos.db.gz
-            else
-              gzip -9nkf proyectos.db
-              mv proyectos.db.gz data/proyectos.db.gz
-            fi
-          fi
-
-      - name: Commitear snapshot DB
+      - name: Publicar base en la rama datos
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/proyectos.db.gz
-          if git diff --staged --quiet; then
-            echo "sin cambios"
-            exit 0
-          fi
-          git commit -m "Backfill VOD: transcripcion de ${{ inputs.video_id }} $(date -u +%Y-%m-%d-%H%M) [skip ci]"
-          for i in 1 2 3; do
-            if git push; then
-              echo "Push OK (intento $i)"
-              exit 0
-            fi
-            # Mergear a nivel de filas en vez de "rebase -X theirs" (que
-            # descarta el archivo binario COMPLETO de un lado) - proyectos.db.gz
-            # es compartido con refrescar-pe.yml (tablas totalmente
-            # distintas). Ver congreso_live/merge_db.py.
-            echo "Push fallo (intento $i), mergeando con origin/main..."
-            git fetch origin main
-            MERGED=""
-            if [ -f proyectos.db ] && git show origin/main:data/proyectos.db.gz > /tmp/origin_proyectos.db.gz 2>/dev/null \
-                && [ -s /tmp/origin_proyectos.db.gz ]; then
-              gunzip -c /tmp/origin_proyectos.db.gz > /tmp/origin_proyectos.db
-              # ORIGEN como base - ver comentario del bug real 2026-09-16 mas
-              # arriba en este mismo archivo.
-              python -X utf8 -m congreso_live.merge_db /tmp/origin_proyectos.db proyectos.db
-              gzip -9nkf /tmp/origin_proyectos.db
-              mv -f /tmp/origin_proyectos.db.gz /tmp/merged_proyectos.db.gz
-              MERGED=1
-            fi
-            # --hard, no --soft: bug real 2026-09-16 (run #7 de este mismo
-            # workflow) - con --soft el index se queda con la base vieja del
-            # checkout, y si origin avanzo en OTROS archivos mientras corria
-            # el job (p.ej. un push a un .yml de workflow), el commit
-            # resultante los revierte a su version vieja sin querer. Aca nos
-            # salvo por suerte el permiso "workflows" de GH (rechazo el push
-            # por tocar un .yml), pero con un archivo cualquiera hubiera
-            # pisado datos en silencio. --hard sincroniza TODO el arbol con
-            # origin primero; despues reaplicamos solo nuestro cambio real.
-            git reset --hard origin/main
-            if [ -n "$MERGED" ]; then
-              mv -f /tmp/merged_proyectos.db.gz data/proyectos.db.gz
-              git add data/proyectos.db.gz
-            fi
-            if git diff --staged --quiet; then
-              echo "Ya esta en origin/main tras el merge, nada que commitear."
-              exit 0
-            fi
-            git commit -m "Backfill VOD: transcripcion de ${{ inputs.video_id }} $(date -u +%Y-%m-%d-%H%M) [skip ci]"
-            sleep 5
-          done
-          echo "Push fallo despues de 3 intentos."
-          exit 1
+          # base_remota: se suma la transcripcion de este VOD a la base
+          # publicada en `datos` (ver scripts/publicar_db.sh).
+          bash scripts/publicar_db.sh base_remota proyectos.db

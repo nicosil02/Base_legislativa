@@ -73,9 +73,8 @@ jobs:
       - name: Bootstrap DB Peru desde snapshot gzipped (solo si no hay cache)
         if: hashFiles('proyectos.db') == ''
         run: |
-          if [ -f data/proyectos.db.gz ]; then
-            echo "[bootstrap] descomprimiendo data/proyectos.db.gz"
-            gunzip -kc data/proyectos.db.gz > proyectos.db
+          # La base vive en la rama `datos` (ver scripts/publicar_db.sh).
+          if bash scripts/bajar_db.sh proyectos.db.gz proyectos.db; then
             ls -lh proyectos.db
           else
             echo "[bootstrap] sin snapshot — la DB se construira desde cero (lento, ~40 min)"
