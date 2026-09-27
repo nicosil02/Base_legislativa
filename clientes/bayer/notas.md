@@ -27,6 +27,9 @@ Lo que más le preocupa a Bayer en este momento. Pesa más que los temas general
 
 **Ecuador.** El reto es el avance de iniciativas legislativas con mayores regulaciones al sector. La más adelantada es la Ley Orgánica de Desarrollo Agropecuario, que crea una red interinstitucional de vigilancia sobre agroquímicos clasificados como contaminantes orgánicos persistentes, altamente peligrosos y disruptores endocrinos, con reportes semestrales obligatorios, y fija un mandato de reducción del uso de insumos sintéticos. La más adversa en contenido, aunque con menor probabilidad, es el Código Orgánico del Agro y la Pesca, que prohíbe las semillas transgénicas y plantea la eliminación progresiva de pesticidas peligrosos. Se suman la reforma a la Ley de Semillas, que elimina el ingreso de transgénicos con fines de investigación, y la Ley de Defensa de la Producción Agrícola. En el frente sanitario, el Fusarium raza 4 tropical en banano y la Xylella fastidiosa en café.
 
+
+**Drones.** También importa toda regulación sobre el uso de drones, aunque venga en leyes que no son agrarias, como la Ley de Aviación Civil de Ecuador o las normas de la DGAC en Perú. Registro, permisos, licencias de piloto, zonas de vuelo y multas para drones afectan directamente la aspersión de agroquímicos con drones.
+
 ### Farma
 
 **Perú.** El reto central es el abastecimiento de medicamentos. Persisten brechas de disponibilidad concentradas en regiones, con entregas incompletas de forma sostenida, y el problema responde tanto a recursos como a planificación y ejecución. El presupuesto de las compras centralizadas viene reduciéndose y su ejecución avanza con lentitud, mientras las deudas del Estado con los laboratorios llevan a proveedores a desistir de participar, lo que deriva en procesos desiertos y agrava el desabastecimiento.

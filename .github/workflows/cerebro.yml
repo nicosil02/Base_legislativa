@@ -41,7 +41,7 @@ jobs:
         with:
           python-version: '3.13'
 
-      - run: pip install -q google-genai sqlite-vec lightrag-hku fastembed
+      - run: pip install -q google-genai sqlite-vec lightrag-hku fastembed openpyxl  # openpyxl: matrices de PLs en el perfil del cliente
 
       - name: Bajar DBs y el cerebro publicado
         env:
