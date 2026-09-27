@@ -1401,7 +1401,7 @@ with tab_mesas:
             )
 
 # ---------- Transcripciones (captions de YouTube, Pleno/comisiones) ----------
-from congreso_live.detector import TIPO_PLENO_EC  # misma tabla, las de EC se muestran en Agenda EC
+# Misma tabla que Ecuador (Pleno y comisiones, tipo terminado en "(EC)") - esas se muestran en Agenda EC.
 @st.cache_data(ttl=300)
 def load_transcripciones(limit: int = 60) -> pd.DataFrame:
     # ponytail: limit fijo, no paginacion real - con varias comisiones en
@@ -1420,9 +1420,9 @@ def load_transcripciones(limit: int = 60) -> pd.DataFrame:
     return pd.read_sql_query(
         """SELECT video_id, tipo, titulo, fecha, duracion_seg, texto, temas
            FROM sesiones_transcripciones
-           WHERE tipo != ?
+           WHERE tipo NOT LIKE '%(EC)'
            ORDER BY fecha DESC, video_id DESC LIMIT ?""",
-        conn, params=(TIPO_PLENO_EC, limit),
+        conn, params=(limit,),
     )
 
 

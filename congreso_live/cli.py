@@ -131,6 +131,27 @@ def cmd_backfill_auto(args) -> int:
     return 0
 
 
+def cmd_comisiones_ec(args) -> int:
+    """Comisiones de la Asamblea EC (Facebook): transcribe con Whisper las
+    sesiones ya terminadas que falten - ver congreso_live/facebook_ec.py."""
+    try:
+        from congreso_live.facebook_ec import procesar_pendientes
+    except ImportError:
+        print("Falta playwright/faster-whisper: pip install playwright faster-whisper imageio-ffmpeg")
+        return 1
+    from congreso_live.transcripciones import _find_db_path
+
+    r = procesar_pendientes(_find_db_path(), max_n=args.max)
+    print(f"Comisiones EC: {r['vistas']} sesion(es) terminadas vistas en Facebook, "
+          f"{r['pendientes_totales']} sin transcribir. Procesados: {len(r['procesados'])}, "
+          f"fallidos: {len(r['fallidos'])}.")
+    for p in r["procesados"]:
+        print(f"  OK {p['video_id']} ({p['comision']}): {p['chars']} chars")
+    for f in r["fallidos"]:
+        print(f"  FALLO {f['video_id']} ({f['comision']}): {f['motivo']}")
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     p = argparse.ArgumentParser(prog="congreso_live")
     p.add_argument("-v", "--verbose", action="store_true")
@@ -165,6 +186,11 @@ def main(argv: list[str] | None = None) -> int:
     ba.add_argument("--max", type=int, default=4,
                     help="cuantas sesiones recuperar por corrida (default 4 - cada una cuesta red/CPU real)")
     ba.set_defaults(func=cmd_backfill_auto)
+    ce = sub.add_parser("comisiones-ec",
+                        help="comisiones de la Asamblea EC (Facebook): transcribe las sesiones terminadas que falten")
+    ce.add_argument("--max", type=int, default=3,
+                    help="cuantas sesiones transcribir por corrida (default 3 - Whisper sobre el audio completo)")
+    ce.set_defaults(func=cmd_comisiones_ec)
     args = p.parse_args(argv)
     logging.basicConfig(level=logging.DEBUG if args.verbose else logging.INFO,
                         format="%(asctime)s %(levelname)s %(message)s")
