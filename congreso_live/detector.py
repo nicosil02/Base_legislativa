@@ -140,6 +140,47 @@ def _ydl(opts: dict):
     return yt_dlp.YoutubeDL(base)
 
 
+def es_bloqueo_bot(texto: str | None) -> bool:
+    t = texto or ""
+    return "not a bot" in t or "429" in t
+
+
+# Cuantas veces se puede pedir IP nueva a WARP en un mismo proceso - cada
+# rotacion tarda ~10 s y, si YouTube bloquea todo WARP, reintentar sin
+# tope solo quema tiempo del job.
+MAX_ROTACIONES_WARP = 3
+_rotaciones_warp = 0
+
+
+def rotar_warp() -> bool:
+    """Pide a WARP una IP de salida nueva (registro nuevo). True si roto.
+
+    El bloqueo "Sign in to confirm you're not a bot" depende de la IP de
+    salida de WARP que toque, no de WARP en si: prueba real 2026-09-27
+    (_test_bloqueo_yt.yml) - la misma extraccion de video que 30 min antes
+    fallaba en backfill-auto (4/4 bloqueados) paso 2/2 por WARP en un runner
+    nuevo, y sin WARP fallo 2/2. Es lo mismo que "arreglaba" solo a Peru el
+    2026-09-18 al arrancar un job nuevo. Solo corre en CI (YT_DLP_PROXY
+    seteado y warp-cli instalado); en local no hace nada."""
+    global _rotaciones_warp
+    import shutil
+    import subprocess
+    from urllib.parse import urlparse
+
+    proxy = os.environ.get("YT_DLP_PROXY")
+    if not proxy or not shutil.which("warp-cli") or _rotaciones_warp >= MAX_ROTACIONES_WARP:
+        return False
+    _rotaciones_warp += 1
+    puerto = str(urlparse(proxy).port or 40000)
+    for args in (["disconnect"], ["registration", "delete"], ["registration", "new"],
+                 ["mode", "proxy"], ["proxy", "port", puerto], ["connect"]):
+        subprocess.run(["warp-cli", "--accept-tos", *args], capture_output=True, timeout=60)
+    time.sleep(6)
+    log.warning("WARP: IP de salida nueva (rotacion %d/%d) tras bloqueo de YouTube",
+                _rotaciones_warp, MAX_ROTACIONES_WARP)
+    return True
+
+
 # Cache de _streams_recientes(): tanto el loop principal de watch_and_transcribe
 # como CADA hilo de capturar_y_acumular_en_vivo (al re-chequear si su sesion
 # sigue viva) llaman vivos_de_interes() por su cuenta - sin cachear esto,
@@ -364,7 +405,33 @@ def _test_clasificar_ec():
     print("OK detector: clasificacion EC por numero de sesion, Peru intacto")
 
 
+def _test_rotar_warp():
+    """Sin WARP instalado/proxy no hace nada; con ambos, rota hasta el tope
+    y despues devuelve False (para que los reintentos no sean infinitos)."""
+    from unittest.mock import patch
+
+    import congreso_live.detector as det
+
+    assert det.es_bloqueo_bot("ERROR: Sign in to confirm you're not a bot")
+    assert det.es_bloqueo_bot("HTTP Error 429: Too Many Requests")
+    assert not det.es_bloqueo_bot("Video unavailable")
+    det._rotaciones_warp = 0
+    with patch.dict(os.environ, {}, clear=True):
+        assert det.rotar_warp() is False
+    llamadas = []
+    with patch.dict(os.environ, {"YT_DLP_PROXY": "socks5://127.0.0.1:40000"}), \
+         patch("shutil.which", lambda _: "/usr/bin/warp-cli"), \
+         patch("subprocess.run", lambda args, **kw: llamadas.append(args)), \
+         patch.object(det.time, "sleep", lambda s: None):
+        rotaciones = [det.rotar_warp() for _ in range(det.MAX_ROTACIONES_WARP + 2)]
+    assert rotaciones == [True] * det.MAX_ROTACIONES_WARP + [False, False], rotaciones
+    assert ["warp-cli", "--accept-tos", "proxy", "port", "40000"] in llamadas
+    det._rotaciones_warp = 0
+    print("OK detector: rotar_warp respeta el tope y no hace nada sin WARP")
+
+
 if __name__ == "__main__":
+    _test_rotar_warp()
     _demo()
     _test_vivos_de_interes_usa_live_status_del_flat()
     _test_clasificar_ec()

@@ -188,7 +188,11 @@ def descargar_audio_completo(video_id: str) -> Path | None:
     proxy = os.environ.get("YT_DLP_PROXY")
     if proxy:
         cmd += ["--proxy", proxy]
+    from congreso_live.detector import es_bloqueo_bot, rotar_warp
     r = subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE, text=True)
+    # IP de WARP quemada: pedir otra y reintentar (ver detector.rotar_warp).
+    while (r.returncode != 0 and es_bloqueo_bot(r.stderr) and rotar_warp()):
+        r = subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE, text=True)
     if r.returncode != 0 or not audio_path.exists():
         # No tragarse el error: bug real 2026-09-16 (backfill-vod #8) - con
         # stderr=DEVNULL un fallo de yt-dlp quedaba completamente opaco
