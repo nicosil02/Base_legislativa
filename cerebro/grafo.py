@@ -51,10 +51,23 @@ DIAS_NOTICIAS = 30
 AFINIDAD_NOTICIA = 0.62  # ponytail: a ojo sobre la prueba de Bayer (0.68-0.72 lo relevante, <0.55 lo ajeno); calibrar
 MAX_DOCS_POR_CORRIDA = 40  # techo de llamadas al LLM por corrida (tier gratuito)
 
-TIPOS_ENTIDAD = [
-    "proyecto_de_ley", "norma", "legislador", "funcionario", "comision",
-    "entidad_publica", "empresa", "gremio", "cliente", "tema_regulatorio", "producto",
-]
+# Formato que espera LightRAG 1.5 (addon_params["entity_types_guidance"]; la
+# lista "entity_types" vieja la ignora en silencio - verificado 2026-09-27:
+# el grafo salio con los tipos genericos Organization/Location).
+TIPOS_ENTIDAD = """Clasifica cada entidad con uno de estos tipos. Si ninguno aplica, usa `Otro`.
+
+- ProyectoDeLey: proyectos de ley con su numero (ej. PL 00438-2026-2031-CD)
+- Norma: leyes, decretos, resoluciones, reglamentos, sentencias
+- Legislador: congresistas, senadores, diputados, asambleistas
+- Funcionario: ministros, viceministros, jefes de entidades, presidentes de la Republica
+- Comision: comisiones del Congreso o de la Asamblea, y el Pleno
+- EntidadPublica: ministerios, organismos reguladores, tribunales, gobiernos regionales
+- Empresa: empresas privadas, incluidos los clientes de Vali (Bayer, Syngenta, Google, Incode)
+- Gremio: gremios, asociaciones, colegios profesionales, ONG
+- Partido: partidos y bancadas politicas
+- TemaRegulatorio: temas de politica publica (ej. desabastecimiento de medicamentos, datos personales)
+- Producto: productos, medicamentos, ingredientes activos, cultivos, tecnologias
+- Lugar: paises, regiones, ciudades"""
 
 
 def _clave_gemini() -> str:
@@ -117,7 +130,7 @@ async def _rag():
     rag = LightRAG(
         working_dir=str(GRAFO_DIR), llm_model_func=llm, llm_model_name=LLM, embedding_func=emb,
         llm_model_max_async=2,  # despacio: tier gratuito
-        addon_params={"language": "Spanish", "entity_types": TIPOS_ENTIDAD},
+        addon_params={"language": "Spanish", "entity_types_guidance": TIPOS_ENTIDAD},
     )
     await rag.initialize_storages()
     return rag
@@ -242,11 +255,18 @@ async def _construir(max_docs: int) -> dict:
         # Solo los PROCESSED cuentan como hechos: los FAILED (ej. corte por el
         # limite diario de Gemini) se vuelven a mandar en la proxima corrida.
         ya = set((await rag.doc_status.get_docs_by_statuses([DocStatus.PROCESSED])).keys())
+        fallidos = set((await rag.doc_status.get_docs_by_statuses([DocStatus.FAILED])).keys())
         # Lo mas nuevo primero, igual que cerebro/embeddings.py.
         nuevos = sorted([d for d in docs if d[0] not in ya], key=lambda d: d[0].split("_")[-1], reverse=True)
         nuevos = [d for d in nuevos if d[0].startswith("cliente_")] + \
                  [d for d in nuevos if not d[0].startswith("cliente_")]
         lote = nuevos[:max_docs]
+        # LightRAG no deja volver a insertar un id que quedo FAILED ("File name
+        # already exists... Status: failed" - bug real 2026-09-27, los 38 docs
+        # de una corrida se trabaron asi): se borra primero y se reinserta.
+        for doc_id, _ in lote:
+            if doc_id in fallidos:
+                await rag.adelete_by_doc_id(doc_id)
         if lote:
             await rag.ainsert([t for _, t in lote], ids=[i for i, _ in lote])
         return {"documentos": len(docs), "ya_en_grafo": len(ya), "insertados": len(lote),
