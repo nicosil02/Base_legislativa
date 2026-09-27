@@ -32,13 +32,16 @@ jobs:
               "Rinden tributo a Chabuca Granda en su natalicio",
           ]
           for m in ms[:3]:
-            for modo in ("lote", "uno_a_uno"):
+            for modo in ("lote_content",):
               try:
                   t = time.time()
                   cfg = types.EmbedContentConfig(output_dimensionality=256)
-                  if modo == "lote":
-                      r = c.models.embed_content(model=m, contents=[perfil] + textos, config=cfg)
-                      embs = r.embeddings
+                  if modo == "lote_content":
+                      xs = [perfil] + textos
+                      xs = xs * 17  # 102 textos, ver si aguanta un lote grande
+                      r = c.models.embed_content(model=m, contents=[types.Content(parts=[types.Part(text=x)]) for x in xs], config=cfg)
+                      embs = r.embeddings[:6]
+                      print(f"RESULT {m} lote102 n_emb={len(r.embeddings)} {time.time()-t:.1f}s")
                   else:
                       embs = [c.models.embed_content(model=m, contents=x, config=cfg).embeddings[0] for x in [perfil] + textos]
                   print(f"RESULT {m} {modo} n_emb={len(embs)}")
