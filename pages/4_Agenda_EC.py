@@ -176,6 +176,25 @@ div[data-testid="stDataFrame"] [role="gridcell"] {
   font-family:'Inter',monospace; letter-spacing:0.02em; margin-right:6px;
 }
 footer { visibility:hidden; }
+/* Banner "EN VIVO ahora" - Pleno/comisiones transmitiendo en YouTube */
+.live-banner {
+  border:1px solid #F2C4C4; background:#FDF2F2; border-radius:12px;
+  padding:16px 20px; margin-bottom:24px;
+}
+.live-banner-title {
+  font-size:11px; font-weight:800; letter-spacing:0.16em; text-transform:uppercase;
+  color:var(--accent-red); margin-bottom:10px;
+}
+.live-item { font-size:14px; color:var(--ink); padding:4px 0; }
+.live-item a { color:var(--accent-red); font-weight:700; text-decoration:none; }
+.live-item a:hover { text-decoration:underline; }
+.live-dot {
+  display:inline-block; width:8px; height:8px; border-radius:50%;
+  background:var(--accent-red); margin-right:8px; vertical-align:middle;
+  animation: livePulse 1.6s ease-in-out infinite;
+}
+@keyframes livePulse { 0%,100% { opacity:1; } 50% { opacity:.35; } }
+.live-titulo { color:var(--ink-soft); }
 </style>""",
     unsafe_allow_html=True,
 )
@@ -559,6 +578,21 @@ if _live.get("inserted", 0) > 0:
         icon="✅",
     )
 
+# ---------- En vivo ahora (mismo banner que Agenda PE) ----------
+_vivos = _plenos_ec_en_vivo()
+if _vivos:
+    _items_html = "".join(
+        f'<div class="live-item"><span class="live-dot"></span>'
+        f'<a href="{v["url"]}" target="_blank">{v["tipo"]}</a>'
+        f'<span class="live-titulo"> — {v["titulo"][:90]}</span></div>'
+        for v in _vivos
+    )
+    st.markdown(
+        f'<div class="live-banner"><div class="live-banner-title">🔴 En vivo ahora en YouTube</div>'
+        f'{_items_html}</div>',
+        unsafe_allow_html=True,
+    )
+
 # ---------- KPIs ----------
 totals = kpi_totals()
 cols = st.columns(len(totals))
@@ -600,239 +634,246 @@ def _opciones(col: str) -> list[str]:
         return [TODOS]
     return [TODOS] + sorted({str(v) for v in df_full[col].dropna().unique() if str(v).strip()})
 
-fc = st.columns([1.6, 1])
-sel_comision = fc[0].selectbox("Comisión", _opciones("Comisión"))
-con_pls = fc[1].selectbox("Con PLs en agenda", ["Todas", "Solo con PLs", "Sin PLs"])
-
-df = df_full
-if sel_comision != TODOS:
-    df = df[df["Comisión"] == sel_comision]
-if con_pls == "Solo con PLs":
-    df = df[df["_n_pls"] > 0]
-elif con_pls == "Sin PLs":
-    df = df[df["_n_pls"] == 0]
-
-st.markdown(f"##### {len(df):,} sesión(es) de {len(df_full):,} en el rango")
-
-# Columnas: Fecha, Hora, Comision, PLs en agenda, Nombre de sesion.
-# (Sin Estado — solo confunde, todas las sesiones del feed son CONFIRMED)
-# Cruce con las transcripciones (Pleno por YouTube, comisiones por Facebook):
-# misma comision + misma fecha. Pedido de Nicolas 2026-09-27: que las
-# transcripciones de Ecuador esten DENTRO de la agenda, como en Peru.
-_tr_idx = transcripciones_por_sesion()
-from congreso_live.resumenes_store import list_resumenes as _list_res
-_resumenes_ec = _list_res()
-
-
-def _estado_tr(row) -> str:
-    ts = _tr_idx.get((_clave_organo(row.get("Comisión")), row.get("Fecha") or ""), [])
-    if not ts:
-        return ""
-    return "✅ Resumen" if any(t["video_id"] in _resumenes_ec for t in ts) else "📝 Transcrita"
-
-
-df = df.assign(**{"Transcripción": df.apply(_estado_tr, axis=1) if not df.empty else []})
-COLS_VISIBLES = ["Fecha", "Hora", "Comisión", "Transcripción", "PLs en agenda", "Nombre de sesión"]
-df_view = df[[c for c in COLS_VISIBLES if c in df.columns]].copy()
-
-# Reset index para que el index numerico (0..N) sea el row id que devuelve
-# selection.rows — sin esto la seleccion mapea a el index original del df_full
-df_view = df_view.reset_index(drop=True)
-df_with_uid = df.reset_index(drop=True)  # paralelo, contiene UID para lookup
-
-tabla = st.dataframe(
-    df_view,
-    hide_index=True,
-    use_container_width=True,
-    height=620,
-    on_select="rerun",
-    selection_mode="single-row",
+# ---------- Pestañas: una vista a la vez, igual que Agenda PE ----------
+# Pedido de Nicolas 2026-09-27: "que tenga el mismo estilo que Peru... que no
+# este todo en una sola vista". Mesas técnicas y Seguimiento de Peru no
+# tienen equivalente en Ecuador (no hay esos datos), por eso son 3.
+tab_agenda, tab_comision, tab_transcripciones = st.tabs(
+    ["Agenda", "Por comisión", "Transcripciones"]
 )
 
-# ---------- Detalle de la sesion seleccionada ----------
-sel_rows = (tabla.selection or {}).get("rows", [])
-if sel_rows:
-    idx = sel_rows[0]
-    if 0 <= idx < len(df_with_uid):
-        uid = df_with_uid.iloc[idx]["UID"]
-        descripcion, location, fecha_sel, hora_sel = load_descripcion(uid)
-        comision_sel = df_with_uid.iloc[idx].get("Comisión") or "—"
-        titulo_sel = df_with_uid.iloc[idx].get("Nombre de sesión") or "—"
+with tab_agenda:
+    fc = st.columns([1.6, 1])
+    sel_comision = fc[0].selectbox("Comisión", _opciones("Comisión"))
+    con_pls = fc[1].selectbox("Con PLs en agenda", ["Todas", "Solo con PLs", "Sin PLs"])
 
-        st.markdown(
-            f"""
-            <div class="session-card">
-              <div class="eyebrow">Detalle de la sesión</div>
-              <div class="title">{titulo_sel}</div>
-              <div class="meta">📅 {fecha_sel} · ⏰ {hora_sel or "—"} · 📍 {location or "—"}</div>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
+    df = df_full
+    if sel_comision != TODOS:
+        df = df[df["Comisión"] == sel_comision]
+    if con_pls == "Solo con PLs":
+        df = df[df["_n_pls"] > 0]
+    elif con_pls == "Sin PLs":
+        df = df[df["_n_pls"] == 0]
 
-        if descripcion.strip():
-            with st.expander("Orden del día / descripción completa", expanded=True):
-                st.write(descripcion)
+    st.markdown(f"##### {len(df):,} sesión(es) de {len(df_full):,} en el rango")
 
-        _ts = _tr_idx.get((_clave_organo(comision_sel), fecha_sel or ""), [])
-        if _ts:
-            st.markdown(f"##### 🎙️ Qué pasó en la sesión ({len(_ts)} transmisión(es))")
-            for _t in _ts:
-                with st.container(border=True):
-                    _render_transcripcion_ec(_t, _resumenes_ec, key=f"det_{uid}")
-        else:
-            st.caption("🎙️ Todavía no hay transcripción de esta sesión (las comisiones se "
-                       "transcriben cuando termina la transmisión en Facebook).")
+    # Columnas: Fecha, Hora, Comision, PLs en agenda, Nombre de sesion.
+    # (Sin Estado — solo confunde, todas las sesiones del feed son CONFIRMED)
+    # Cruce con las transcripciones (Pleno por YouTube, comisiones por Facebook):
+    # misma comision + misma fecha. Pedido de Nicolas 2026-09-27: que las
+    # transcripciones de Ecuador esten DENTRO de la agenda, como en Peru.
+    _tr_idx = transcripciones_por_sesion()
+    from congreso_live.resumenes_store import list_resumenes as _list_res
+    _resumenes_ec = _list_res()
 
-        df_pls = load_pls_de_sesion(uid)
-        if not df_pls.empty:
-            st.markdown(f"##### PLs identificados ({len(df_pls)})")
-            st.dataframe(
-                df_pls.drop(columns=["_score"], errors="ignore"),
-                hide_index=True,
-                use_container_width=True,
-                column_config={
-                    "Nº trámite": st.column_config.LinkColumn(
-                        "Nº trámite",
-                        # Extrae el n_tramite del fragment '#XXX' al final
-                        # de la URL. Soporta numeros (480824) y alfanumericos
-                        # (AN-GBJL-2024-0092-M).
-                        display_text=r"#([A-Z0-9\-]+)$",
-                        help="Abre el PDF del proyecto directamente (o el portal si "
-                             "aun no enriquecimos sus documentos)",
-                    ),
-                },
-            )
-            st.caption(
-                "💡 Click en el Nº trámite abre el PDF del proyecto directamente. "
-                "Si todavía no tenemos sus documentos enriquecidos, abre el "
-                "portal Ppless v2 (pega el número en el filtro)."
-            )
-        else:
-            st.info("No se identificaron PLs específicos en esta sesión "
-                    "(la descripción puede referir a temas sin proyecto de ley registrado).")
 
-# ---------- Vista por cliente ----------
-st.markdown("---")
-st.markdown("### Vista por cliente")
-st.markdown(
-    '<p style="font-size:13px;color:var(--ink-mute);margin-bottom:14px;">'
-    'PLs únicos referenciados en agendas, filtrados por relevancia para un cliente '
-    '(categoría automática + matriz puntual de seguimiento).</p>',
-    unsafe_allow_html=True,
-)
+    def _estado_tr(row) -> str:
+        ts = _tr_idx.get((_clave_organo(row.get("Comisión")), row.get("Fecha") or ""), [])
+        if not ts:
+            return ""
+        return "✅ Resumen" if any(t["video_id"] in _resumenes_ec for t in ts) else "📝 Transcrita"
 
-df_agenda_cli = load_pls_agenda_ec(f_ini, f_fin)
-if df_agenda_cli.empty:
-    st.info("No hay PLs en agenda en el rango seleccionado.")
-else:
-    clientes = load_clientes()
-    TODOS_CLIENTES = "Todos"
-    sel_cliente_agenda = st.selectbox("Cliente", [TODOS_CLIENTES] + clientes, key="agenda_ec_cliente")
-    df_agenda_show = df_agenda_cli
-    matriz_cliente_agenda: set[str] = set()
-    if sel_cliente_agenda != TODOS_CLIENTES:
-        temas_cliente = CATEGORIA_CLIENTES_PL.get(sel_cliente_agenda, [])
-        matriz_cliente_agenda = _matriz_pls_ec().get(sel_cliente_agenda, set())
-        df_agenda_show = df_agenda_show[
-            df_agenda_show["Tema"].isin(temas_cliente)
-            | df_agenda_show["PL"].astype(str).isin(matriz_cliente_agenda)
-        ]
 
-    st.markdown(f"##### {len(df_agenda_show):,} PL(s) en agenda · {df_agenda_show['PL'].nunique():,} únicos")
-    if matriz_cliente_agenda:
-        _n_matriz = df_agenda_show["PL"].astype(str).isin(matriz_cliente_agenda).sum()
-        if _n_matriz:
-            st.caption(f"📋 {_n_matriz} de estos PLs están en tu matriz puntual de seguimiento.")
-    tabla_agenda_ec = st.dataframe(
-        df_agenda_show.drop(columns=["PL"]),
+    df = df.assign(**{"Transcripción": df.apply(_estado_tr, axis=1) if not df.empty else []})
+    COLS_VISIBLES = ["Fecha", "Hora", "Comisión", "Transcripción", "PLs en agenda", "Nombre de sesión"]
+    df_view = df[[c for c in COLS_VISIBLES if c in df.columns]].copy()
+
+    # Reset index para que el index numerico (0..N) sea el row id que devuelve
+    # selection.rows — sin esto la seleccion mapea a el index original del df_full
+    df_view = df_view.reset_index(drop=True)
+    df_with_uid = df.reset_index(drop=True)  # paralelo, contiene UID para lookup
+
+    tabla = st.dataframe(
+        df_view,
         hide_index=True,
         use_container_width=True,
-        height=520,
-        row_height=70,
+        height=620,
         on_select="rerun",
         selection_mode="single-row",
-        column_config={
-            "Comisión":      st.column_config.TextColumn("Comisión", width="medium"),
-            "Nº trámite":    st.column_config.LinkColumn("Nº trámite",
-                display_text=r"#([A-Z0-9\-]+)$",
-                width="small",
-                help="Click abre el PDF del proyecto directamente (o el portal Ppless v2)."),
-            "Tema":          st.column_config.TextColumn("Tema", width="small"),
-            "Estado del PL": st.column_config.TextColumn("Estado del PL", width="small"),
-            "Título":        st.column_config.TextColumn("Título", width="large"),
-            "Sesiones":      st.column_config.NumberColumn("Sesiones", width="small",
-                help="Cantidad de sesiones donde el PL apareció en agenda."),
-            "Primera":       st.column_config.TextColumn("1ra vez", width="small"),
-            "Última":        st.column_config.TextColumn("Última", width="small"),
-        },
     )
-    _fila_seleccionada = None
-    try:
-        _sel_rows = tabla_agenda_ec.selection.rows
-        if _sel_rows and _sel_rows[0] < len(df_agenda_show):
-            _fila_seleccionada = df_agenda_show.iloc[_sel_rows[0]]
-    except AttributeError:
-        pass
 
-    # ---------- Marcar PL de agenda para alerta ----------
-    if clientes and not df_agenda_show.empty:
-        st.markdown("##### 📌 Marcar PL para alerta")
-        opciones_pl = {
-            f"{row['PL']} · {row['Título'][:70]}": idx
-            for idx, row in df_agenda_show.iterrows()
-        }
-        _opciones_labels = list(opciones_pl.keys())
-        if _fila_seleccionada is not None:
-            st.caption(
-                f"PL seleccionado en la tabla: **{_fila_seleccionada['PL']}** · "
-                f"{_fila_seleccionada['Título'][:80]}"
-            )
-            _label_preseleccionado = f"{_fila_seleccionada['PL']} · {_fila_seleccionada['Título'][:70]}"
-            # Pasar index= a un selectbox con key ya inicializado en session_state
-            # no tiene efecto en los reruns siguientes - hay que setear el valor
-            # a mano, y solo cuando el click en la tabla cambio.
-            if (
-                st.session_state.get("_ultimo_pl_click_agenda_ec") != _fila_seleccionada["PL"]
-                and _label_preseleccionado in _opciones_labels
-            ):
-                st.session_state["marcar_agenda_ec_pl_sel"] = _label_preseleccionado
-                st.session_state["_ultimo_pl_click_agenda_ec"] = _fila_seleccionada["PL"]
-        else:
-            st.caption("Click en una fila de la tabla para elegirla acá, o buscala manualmente:")
-        mca = st.columns([3, 2, 1])
-        sel_pl_label = mca[0].selectbox("¿Qué PL?", _opciones_labels, key="marcar_agenda_ec_pl_sel")
-        sel_pl_clientes = mca[1].multiselect("¿Para qué cliente(s)?", clientes,
-                                              placeholder="Elige uno o más clientes", key="marcar_agenda_ec_pl_cli")
-        if mca[2].button("Marcar", key="marcar_agenda_ec_pl_btn", disabled=not sel_pl_clientes):
-            row = df_agenda_show.loc[opciones_pl[sel_pl_label]]
-            # Mismo esquema "pl_EC_<n_tramite>" que pages/2_Ecuador.py, para
-            # que marcar el mismo PL desde cualquiera de las dos paginas
-            # caiga en la MISMA entrada (marcar_pendiente hace upsert).
-            item_id = f"pl_EC_{row['PL']}"
-            marcar_pendiente(
-                clientes=sel_pl_clientes, item_id=item_id, item_tipo="pl",
-                pais="EC", item_titulo=f"{row['PL']}: {row['Título']}",
-                item_url=str(row["Nº trámite"]).split("#")[0],
-                item_resumen=f"En agenda de {row['Comisión']} - {row['Estado del PL']}",
-                creado_por=st.user.get("email"),
-            )
-            st.success(f"Marcado para: {', '.join(sel_pl_clientes)}. El agente lo redacta en la próxima hora.")
+    # ---------- Detalle de la sesion seleccionada ----------
+    sel_rows = (tabla.selection or {}).get("rows", [])
+    if sel_rows:
+        idx = sel_rows[0]
+        if 0 <= idx < len(df_with_uid):
+            uid = df_with_uid.iloc[idx]["UID"]
+            descripcion, location, fecha_sel, hora_sel = load_descripcion(uid)
+            comision_sel = df_with_uid.iloc[idx].get("Comisión") or "—"
+            titulo_sel = df_with_uid.iloc[idx].get("Nombre de sesión") or "—"
 
-st.markdown("---")
-st.markdown("### Sesiones de la Asamblea · transcripción y resumen")
-st.caption("Pleno (YouTube, también en vivo) y comisiones (Facebook, cuando la sesión termina).")
-for _v in _plenos_ec_en_vivo():
-    st.markdown(f"🔴 **En vivo ahora:** [{_v['titulo']}]({_v['url']}) — se está "
-                "transcribiendo sola; el resumen se actualiza cada hora.")
-df_plenos_ec = load_sesiones_ec_transcritas()
-if df_plenos_ec.empty:
-    st.caption("Todavía no hay sesiones transcritas.")
-else:
-    for _, _row in df_plenos_ec.head(40).iterrows():
-        _organo = _row["tipo"].split(":", 1)[-1].replace("(EC)", "").strip()
-        with st.expander(f"{_row['fecha'] or 'Sin fecha'} · {_organo} · {_row['titulo'][:90]}"):
-            _render_transcripcion_ec(_row.to_dict(), _resumenes_ec, key="lista")
+            st.markdown(
+                f"""
+                <div class="session-card">
+                  <div class="eyebrow">Detalle de la sesión</div>
+                  <div class="title">{titulo_sel}</div>
+                  <div class="meta">📅 {fecha_sel} · ⏰ {hora_sel or "—"} · 📍 {location or "—"}</div>
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
+
+            if descripcion.strip():
+                with st.expander("Orden del día / descripción completa", expanded=True):
+                    st.write(descripcion)
+
+            _ts = _tr_idx.get((_clave_organo(comision_sel), fecha_sel or ""), [])
+            if _ts:
+                st.markdown(f"##### 🎙️ Qué pasó en la sesión ({len(_ts)} transmisión(es))")
+                for _t in _ts:
+                    with st.container(border=True):
+                        _render_transcripcion_ec(_t, _resumenes_ec, key=f"det_{uid}")
+            else:
+                st.caption("🎙️ Todavía no hay transcripción de esta sesión (las comisiones se "
+                           "transcriben cuando termina la transmisión en Facebook).")
+
+            df_pls = load_pls_de_sesion(uid)
+            if not df_pls.empty:
+                st.markdown(f"##### PLs identificados ({len(df_pls)})")
+                st.dataframe(
+                    df_pls.drop(columns=["_score"], errors="ignore"),
+                    hide_index=True,
+                    use_container_width=True,
+                    column_config={
+                        "Nº trámite": st.column_config.LinkColumn(
+                            "Nº trámite",
+                            # Extrae el n_tramite del fragment '#XXX' al final
+                            # de la URL. Soporta numeros (480824) y alfanumericos
+                            # (AN-GBJL-2024-0092-M).
+                            display_text=r"#([A-Z0-9\-]+)$",
+                            help="Abre el PDF del proyecto directamente (o el portal si "
+                                 "aun no enriquecimos sus documentos)",
+                        ),
+                    },
+                )
+                st.caption(
+                    "💡 Click en el Nº trámite abre el PDF del proyecto directamente. "
+                    "Si todavía no tenemos sus documentos enriquecidos, abre el "
+                    "portal Ppless v2 (pega el número en el filtro)."
+                )
+            else:
+                st.info("No se identificaron PLs específicos en esta sesión "
+                        "(la descripción puede referir a temas sin proyecto de ley registrado).")
+
+with tab_comision:
+    st.markdown(
+        '<p style="font-size:13px;color:var(--ink-mute);margin-bottom:14px;">'
+        'PLs únicos referenciados en agendas, filtrados por relevancia para un cliente '
+        '(categoría automática + matriz puntual de seguimiento).</p>',
+        unsafe_allow_html=True,
+    )
+
+    df_agenda_cli = load_pls_agenda_ec(f_ini, f_fin)
+    if df_agenda_cli.empty:
+        st.info("No hay PLs en agenda en el rango seleccionado.")
+    else:
+        clientes = load_clientes()
+        TODOS_CLIENTES = "Todos"
+        sel_cliente_agenda = st.selectbox("Cliente", [TODOS_CLIENTES] + clientes, key="agenda_ec_cliente")
+        df_agenda_show = df_agenda_cli
+        matriz_cliente_agenda: set[str] = set()
+        if sel_cliente_agenda != TODOS_CLIENTES:
+            temas_cliente = CATEGORIA_CLIENTES_PL.get(sel_cliente_agenda, [])
+            matriz_cliente_agenda = _matriz_pls_ec().get(sel_cliente_agenda, set())
+            df_agenda_show = df_agenda_show[
+                df_agenda_show["Tema"].isin(temas_cliente)
+                | df_agenda_show["PL"].astype(str).isin(matriz_cliente_agenda)
+            ]
+
+        st.markdown(f"##### {len(df_agenda_show):,} PL(s) en agenda · {df_agenda_show['PL'].nunique():,} únicos")
+        if matriz_cliente_agenda:
+            _n_matriz = df_agenda_show["PL"].astype(str).isin(matriz_cliente_agenda).sum()
+            if _n_matriz:
+                st.caption(f"📋 {_n_matriz} de estos PLs están en tu matriz puntual de seguimiento.")
+        tabla_agenda_ec = st.dataframe(
+            df_agenda_show.drop(columns=["PL"]),
+            hide_index=True,
+            use_container_width=True,
+            height=520,
+            row_height=70,
+            on_select="rerun",
+            selection_mode="single-row",
+            column_config={
+                "Comisión":      st.column_config.TextColumn("Comisión", width="medium"),
+                "Nº trámite":    st.column_config.LinkColumn("Nº trámite",
+                    display_text=r"#([A-Z0-9\-]+)$",
+                    width="small",
+                    help="Click abre el PDF del proyecto directamente (o el portal Ppless v2)."),
+                "Tema":          st.column_config.TextColumn("Tema", width="small"),
+                "Estado del PL": st.column_config.TextColumn("Estado del PL", width="small"),
+                "Título":        st.column_config.TextColumn("Título", width="large"),
+                "Sesiones":      st.column_config.NumberColumn("Sesiones", width="small",
+                    help="Cantidad de sesiones donde el PL apareció en agenda."),
+                "Primera":       st.column_config.TextColumn("1ra vez", width="small"),
+                "Última":        st.column_config.TextColumn("Última", width="small"),
+            },
+        )
+        _fila_seleccionada = None
+        try:
+            _sel_rows = tabla_agenda_ec.selection.rows
+            if _sel_rows and _sel_rows[0] < len(df_agenda_show):
+                _fila_seleccionada = df_agenda_show.iloc[_sel_rows[0]]
+        except AttributeError:
+            pass
+
+        # ---------- Marcar PL de agenda para alerta ----------
+        if clientes and not df_agenda_show.empty:
+            st.markdown("##### 📌 Marcar PL para alerta")
+            opciones_pl = {
+                f"{row['PL']} · {row['Título'][:70]}": idx
+                for idx, row in df_agenda_show.iterrows()
+            }
+            _opciones_labels = list(opciones_pl.keys())
+            if _fila_seleccionada is not None:
+                st.caption(
+                    f"PL seleccionado en la tabla: **{_fila_seleccionada['PL']}** · "
+                    f"{_fila_seleccionada['Título'][:80]}"
+                )
+                _label_preseleccionado = f"{_fila_seleccionada['PL']} · {_fila_seleccionada['Título'][:70]}"
+                # Pasar index= a un selectbox con key ya inicializado en session_state
+                # no tiene efecto en los reruns siguientes - hay que setear el valor
+                # a mano, y solo cuando el click en la tabla cambio.
+                if (
+                    st.session_state.get("_ultimo_pl_click_agenda_ec") != _fila_seleccionada["PL"]
+                    and _label_preseleccionado in _opciones_labels
+                ):
+                    st.session_state["marcar_agenda_ec_pl_sel"] = _label_preseleccionado
+                    st.session_state["_ultimo_pl_click_agenda_ec"] = _fila_seleccionada["PL"]
+            else:
+                st.caption("Click en una fila de la tabla para elegirla acá, o buscala manualmente:")
+            mca = st.columns([3, 2, 1])
+            sel_pl_label = mca[0].selectbox("¿Qué PL?", _opciones_labels, key="marcar_agenda_ec_pl_sel")
+            sel_pl_clientes = mca[1].multiselect("¿Para qué cliente(s)?", clientes,
+                                                  placeholder="Elige uno o más clientes", key="marcar_agenda_ec_pl_cli")
+            if mca[2].button("Marcar", key="marcar_agenda_ec_pl_btn", disabled=not sel_pl_clientes):
+                row = df_agenda_show.loc[opciones_pl[sel_pl_label]]
+                # Mismo esquema "pl_EC_<n_tramite>" que pages/2_Ecuador.py, para
+                # que marcar el mismo PL desde cualquiera de las dos paginas
+                # caiga en la MISMA entrada (marcar_pendiente hace upsert).
+                item_id = f"pl_EC_{row['PL']}"
+                marcar_pendiente(
+                    clientes=sel_pl_clientes, item_id=item_id, item_tipo="pl",
+                    pais="EC", item_titulo=f"{row['PL']}: {row['Título']}",
+                    item_url=str(row["Nº trámite"]).split("#")[0],
+                    item_resumen=f"En agenda de {row['Comisión']} - {row['Estado del PL']}",
+                    creado_por=st.user.get("email"),
+                )
+                st.success(f"Marcado para: {', '.join(sel_pl_clientes)}. El agente lo redacta en la próxima hora.")
+
+
+with tab_transcripciones:
+    st.caption("Pleno (YouTube, también en vivo) y comisiones (Facebook, cuando la sesión termina).")
+    for _v in _vivos:
+        st.markdown(f"🔴 **En vivo ahora:** [{_v['titulo']}]({_v['url']}) — se está "
+                    "transcribiendo sola; el resumen se actualiza cada hora.")
+    df_plenos_ec = load_sesiones_ec_transcritas()
+    if df_plenos_ec.empty:
+        st.caption("Todavía no hay sesiones transcritas.")
+    else:
+        for _, _row in df_plenos_ec.head(40).iterrows():
+            _organo = _row["tipo"].split(":", 1)[-1].replace("(EC)", "").strip()
+            with st.expander(f"{_row['fecha'] or 'Sin fecha'} · {_organo} · {_row['titulo'][:90]}"):
+                _render_transcripcion_ec(_row.to_dict(), _resumenes_ec, key="lista")
 
 # ---------- Footer ----------
 st.markdown('<div class="footer-rule"></div>', unsafe_allow_html=True)
