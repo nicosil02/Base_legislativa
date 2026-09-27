@@ -1,0 +1,35 @@
+name: _Aviso unico por WhatsApp (temporal, borrar)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  aviso:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - run: pip install -q requests
+      - name: Enviar
+        env:
+          CALLMEBOT_PHONE: ${{ secrets.CALLMEBOT_PHONE }}
+          CALLMEBOT_APIKEY: ${{ secrets.CALLMEBOT_APIKEY }}
+          PYTHONIOENCODING: utf-8
+          MENSAJE: |
+            Hola Nicolás, update de Vali Intelligence.
+
+            ✅ La app quedó funcionando bien después del reinicio. Revisé Inicio, Agenda Ecuador y Buscar en todo, sin errores.
+
+            ✅ El repositorio bajó de 15 GB a 256 MB y ya no vuelve a crecer. Las bases ahora se guardan en una rama aparte y no se perdió ningún dato.
+
+            ✅ Buscar en todo ya funciona. Probé "datos biométricos" y encontró los PL de biometría y la norma de la SPDP de Ecuador.
+
+            ✅ Ecuador ya tiene plenos y comisiones transcritos y resumidos.
+
+            ⚠️ El chat de alertas puede fallar hasta mañana porque hoy se gastó su cupo diario de Gemini.
+
+            Mientras estás en el gym sigo con lo que me pediste. Transcripciones de Ecuador dentro de la agenda, cerebro conectado a noticias por cliente y sector, y PLs ordenados por afinidad.
+        run: python -X utf8 -c "import os; from congreso_live.notify import enviar_whatsapp; print('enviado:', enviar_whatsapp(os.environ['MENSAJE']))"
