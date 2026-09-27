@@ -34,3 +34,6 @@ yt-dlp>=2026.8
 # uso - decision de Nicolas 2026-09-15. GEMINI_API_KEY vive en st.secrets
 # (Streamlit Cloud) o .env (local), nunca en el codigo.
 google-genai>=1.0
+# cerebro/embeddings.py: busqueda por significado (vectores en data/cerebro.db,
+# bajado del release "cerebro" - ver .github/workflows/cerebro.yml).
+sqlite-vec>=0.1.6
