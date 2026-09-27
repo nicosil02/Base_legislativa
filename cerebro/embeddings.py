@@ -1,12 +1,19 @@
 """Busqueda por significado sobre TODO el corpus (PLs PE/EC, noticias,
-sesiones transcritas) con embeddings de Gemini + sqlite-vec.
+sesiones transcritas) con un modelo de embeddings LOCAL + sqlite-vec.
 
 Por que: la relevancia por cliente y el agrupado de noticias usaban TF-IDF
 (palabras sueltas) - de ahi los falsos positivos por homonimos que se
 arreglaron a mano uno por uno ("tributo" homenaje vs impuesto, "presidente"
-de club de futbol, etc.). Prueba real 2026-09-27 (_test_embeddings.yml,
-contra el perfil de Bayer): gemini-embedding-2 puso lo agricola en 0.68-0.72
-y lo ajeno en 0.43-0.53 ("Rinden tributo a Chabuca Granda" en 0.43).
+de club de futbol, etc.).
+
+Modelo (decidido 2026-09-27 con la misma prueba contra el perfil de Bayer:
+2 textos agricolas vs futbol, dengue y "Rinden tributo a Chabuca Granda"):
+- gemini-embedding-2: 0.68-0.72 vs 0.43-0.53 (margen ~0.15), y el tier
+  gratuito corta en 1000 textos/dia (el corpus son ~24 mil).
+- paraphrase-multilingual-MiniLM-L12-v2 local (fastembed/ONNX, ~120 MB,
+  sin API ni cupo): 0.41-0.52 vs -0.08-0.11 (margen ~0.29). Gana.
+Limite del modelo: lee ~128 tokens por texto (titulo + comienzo del
+resumen) - por eso los fragmentos de perfil de cliente son cortos.
 
 Donde vive: data/cerebro.db, FUERA de git a proposito - son vectores (casi
 no comprimen) y el repo ya se inflo a 14 GB por las versiones de
@@ -20,9 +27,9 @@ Uso:
 """
 from __future__ import annotations
 
+import functools
 import hashlib
 import json
-import os
 import sqlite3
 import struct
 import sys
@@ -34,53 +41,24 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 CEREBRO_DB = REPO_ROOT / "data" / "cerebro.db"
 RELEASE_URL = "https://github.com/nicosil02/Base_legislativa/releases/download/cerebro/cerebro.db"
 
-MODELO = "gemini-embedding-2"
-DIM = 256  # MRL: 256 alcanza para separar bien (prueba de arriba) y ocupa 1/12 de 3072
-LOTE = 100  # tope real de la API por pedido (400 INVALID_ARGUMENT arriba de 100)
-MAX_CHARS = 2000
+MODELO = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
+DIM = 384
+LOTE = 256
+MAX_CHARS = 2000  # igual el modelo corta en ~128 tokens; esto solo acota memoria
 
 
-# ------------------------------------------------------------------ Gemini
-
-def _cliente_gemini():
-    key = os.environ.get("GEMINI_API_KEY")
-    if not key:
-        try:
-            import streamlit as st
-            key = st.secrets.get("GEMINI_API_KEY")
-        except Exception:
-            key = None
-    if not key:
-        raise RuntimeError("Falta GEMINI_API_KEY")
-    from google import genai
-    return genai.Client(api_key=key)
+@functools.lru_cache(maxsize=1)
+def _modelo():
+    from fastembed import TextEmbedding
+    return TextEmbedding(MODELO)
 
 
 def embeber(textos: list[str]) -> list[list[float]]:
-    """Un vector normalizado por texto. OJO: con gemini-embedding-2 hay que
-    mandar cada texto como su propio Content - una lista de strings la API
-    la toma como UN solo contenido multi-parte y devuelve 1 vector para todo
-    el lote (verificado en la prueba de arriba)."""
-    from google.genai import types
-
-    cliente = _cliente_gemini()
-    cfg = types.EmbedContentConfig(output_dimensionality=DIM)
+    """Un vector normalizado (norma 1) por texto."""
     out: list[list[float]] = []
-    for i in range(0, len(textos), LOTE):
-        lote = [types.Content(parts=[types.Part(text=(t or " ")[:MAX_CHARS])])
-                for t in textos[i:i + LOTE]]
-        for intento in range(6):
-            try:
-                resp = cliente.models.embed_content(model=MODELO, contents=lote, config=cfg)
-                break
-            except Exception as e:  # 429 del tier gratuito: esperar y reintentar
-                if intento == 5 or "429" not in str(e) and "RESOURCE_EXHAUSTED" not in str(e):
-                    raise
-                time.sleep(20 * (intento + 1))
-        for e in resp.embeddings:
-            v = e.values
-            n = sum(x * x for x in v) ** 0.5 or 1.0
-            out.append([x / n for x in v])
+    for v in _modelo().embed([(t or " ")[:MAX_CHARS] for t in textos], batch_size=LOTE):
+        n = float((v * v).sum()) ** 0.5 or 1.0
+        out.append([float(x) / n for x in v])
     return out
 
 
@@ -103,7 +81,7 @@ def conectar(path: Path | None = None) -> sqlite3.Connection:
     conn.executescript(f"""
         CREATE TABLE IF NOT EXISTS items (
             id INTEGER PRIMARY KEY,
-            clave TEXT UNIQUE NOT NULL,   -- ej. pl_PE_2026_438, noticia_123, sesion_fb_111
+            clave TEXT UNIQUE NOT NULL,   -- ej. pl_PE_00438-2026-2031-CD, noticia_123, sesion_fb_111
             tipo TEXT NOT NULL,           -- pl | noticia | sesion
             pais TEXT NOT NULL,           -- PE | EC
             titulo TEXT, fecha TEXT, url TEXT, extra TEXT,
@@ -113,7 +91,24 @@ def conectar(path: Path | None = None) -> sqlite3.Connection:
             embedding float[{DIM}] distance_metric=cosine,
             tipo text, pais text
         );
+        -- Un cliente = varios fragmentos de su perfil (uno por tema); la
+        -- afinidad es la del fragmento MAS parecido. Bayer se preocupa de
+        -- agroquimicos Y de desabastecimiento de medicamentos: un solo vector
+        -- promedio no se parece bien a ninguno de los dos.
+        CREATE TABLE IF NOT EXISTS perfiles (cliente TEXT, idx INTEGER, hash TEXT, texto TEXT,
+                                             embedding BLOB, PRIMARY KEY (cliente, idx));
+        CREATE TABLE IF NOT EXISTS meta (k TEXT PRIMARY KEY, v TEXT);
     """)
+    modelo = conn.execute("SELECT v FROM meta WHERE k='modelo'").fetchone()
+    if modelo and modelo[0] != MODELO:
+        # Vectores de otro modelo no son comparables: se rehace todo.
+        print(f"[cerebro] modelo cambio ({modelo[0]} -> {MODELO}), rehago el indice")
+        conn.executescript("DROP TABLE items; DROP TABLE vec_items; DROP TABLE perfiles; DROP TABLE meta;")
+        conn.commit()
+        conn.close()
+        return conectar(path)
+    conn.execute("INSERT OR IGNORE INTO meta VALUES ('modelo', ?)", (MODELO,))
+    conn.commit()
     return conn
 
 
@@ -154,7 +149,9 @@ def corpus() -> list[dict]:
         c = sqlite3.connect(f"file:{pe}?mode=ro", uri=True)
         for r in c.execute("SELECT per_par_id, pley_num, proyecto_ley, titulo, sumilla, "
                            "fec_presentacion, tema, estado, url_portal FROM proyectos"):
-            items.append({"clave": f"pl_PE_{r[0]}_{r[1]}", "tipo": "pl", "pais": "PE",
+            # proyecto_ley ("00004-2026-2031-CD") y no el numero: en el Congreso
+            # bicameral el mismo numero existe en Diputados, Senado y Congreso.
+            items.append({"clave": f"pl_PE_{r[2]}", "tipo": "pl", "pais": "PE",
                           "titulo": f"PL {r[2]}: {r[3]}", "fecha": (r[5] or "")[:10], "url": r[8],
                           "extra": json.dumps({"tema": r[6], "estado": r[7]}, ensure_ascii=False),
                           "texto": f"{r[3] or ''}. {r[4] or ''}"})
@@ -214,6 +211,9 @@ def sincronizar(max_nuevos: int | None = None) -> dict:
     conn = conectar()
     ya = {r["clave"]: (r["id"], r["hash"]) for r in conn.execute("SELECT id, clave, hash FROM items")}
     pendientes = [it for it in corpus() if ya.get(it["clave"], (None, None))[1] != _hash(it["texto"])]
+    # Lo mas reciente primero (sesiones antes que nada): si algo corta la
+    # corrida a la mitad, lo que queda pendiente es lo mas viejo.
+    pendientes.sort(key=lambda it: (it["tipo"] == "sesion", it["fecha"] or ""), reverse=True)
     if max_nuevos:
         pendientes = pendientes[:max_nuevos]
     hechos = 0
@@ -234,9 +234,96 @@ def sincronizar(max_nuevos: int | None = None) -> dict:
         conn.commit()
         hechos += len(lote)
         print(f"[cerebro] {hechos}/{len(pendientes)} embebidos")
+    perfiles = sincronizar_perfiles(conn)
     total = conn.execute("SELECT count(*) FROM items").fetchone()[0]
     conn.close()
-    return {"nuevos": hechos, "total": total}
+    return {"nuevos": hechos, "total": total, "perfiles": perfiles}
+
+
+# ------------------------------------------------------------------ clientes
+
+CLIENTES = ("bayer", "syngenta", "google", "incode")
+
+
+def perfil_texto(slug: str) -> str:
+    """Lo que le importa al cliente, en prosa, de su notas.md: secciones de
+    temas/foco + "Perfil para prompts". No usa contacto, actores ni historial
+    (nombres propios y fechas meten ruido en un vector de "de que trata").
+    Incode no tiene "Temas de interes" sino "Foco principal"/"Temas
+    secundarios" - por eso se busca por palabra en el titulo de la seccion."""
+    path = REPO_ROOT / "clientes" / slug / "notas.md"
+    if not path.is_file():
+        return ""
+    partes, actual = [], None
+    for linea in path.read_text(encoding="utf-8").splitlines():
+        if linea.startswith("## "):
+            t = linea[3:].lower()
+            actual = [] if (("tema" in t or "foco" in t or "perfil para prompts" in t)
+                            and "pendiente" not in t) else None
+            if actual is not None:
+                partes.append(actual)
+            continue
+        if actual is not None:
+            actual.append(linea)
+    return "\n".join("\n".join(p) for p in partes).strip()
+
+
+def fragmentos_perfil(texto: str, objetivo: int = 450) -> list[str]:
+    """Parte el perfil en fragmentos de ~objetivo caracteres sin cortar
+    parrafos. Los titulos cortos (### Crop, **Peru.**) se pegan al parrafo
+    que sigue en vez de quedar como fragmento suelto."""
+    parrafos = [p.strip() for p in texto.split("\n\n") if p.strip()]
+    frags, actual = [], ""
+    for p in parrafos:
+        es_titulo = len(p) < 60  # "### Crop", "**Peru.**": abre fragmento nuevo
+        if actual and (len(actual) + len(p) > objetivo or es_titulo) and len(actual) > 120:
+            frags.append(actual)
+            actual = p
+        else:
+            actual = f"{actual}\n\n{p}" if actual else p
+    if actual:
+        frags.append(actual)
+    return frags
+
+
+def sincronizar_perfiles(conn: sqlite3.Connection | None = None) -> int:
+    """Re-embebe el perfil de un cliente solo si su texto cambio."""
+    conn = conn or conectar()
+    ya = {r[0]: r[1] for r in conn.execute("SELECT cliente, group_concat(hash) FROM perfiles "
+                                           "WHERE idx = 0 GROUP BY cliente")}
+    cambiados = 0
+    for c in CLIENTES:
+        t = perfil_texto(c)
+        if not t or ya.get(c) == _hash(t):
+            continue
+        frags = fragmentos_perfil(t)
+        conn.execute("DELETE FROM perfiles WHERE cliente=?", (c,))
+        for i, (fr, v) in enumerate(zip(frags, embeber(frags))):
+            # el hash del perfil entero va en idx=0: si cambia algo, se rehace todo
+            conn.execute("INSERT INTO perfiles VALUES (?,?,?,?,?)",
+                         (c, i, _hash(t) if i == 0 else "", fr, _blob(v)))
+        conn.commit()
+        cambiados += 1
+    return cambiados
+
+
+def afinidad(claves: list[str], cliente: str, conn: sqlite3.Connection | None = None) -> dict[str, float]:
+    """{clave: similitud 0-1 con el perfil del cliente} para las claves que
+    ya estan en el cerebro (las que todavia no, simplemente no aparecen)."""
+    conn = conn or conectar()
+    if not claves:
+        return {}
+    out: dict[str, float] = {}
+    for i in range(0, len(claves), 900):  # tope de parametros de sqlite
+        lote = claves[i:i + 900]
+        filas = conn.execute(
+            f"""SELECT i.clave, MAX(1 - vec_distance_cosine(v.embedding, p.embedding)) AS sim
+                FROM items i JOIN vec_items v ON v.rowid = i.id
+                JOIN perfiles p ON p.cliente = ?
+                WHERE i.clave IN ({",".join("?" * len(lote))})
+                GROUP BY i.clave""", [cliente, *lote]).fetchall()
+        out.update({r[0]: round(r[1], 4) for r in filas})
+    return out
 
 
 # ------------------------------------------------------------------ consultas
@@ -296,7 +383,7 @@ def _demo():
     ]
     with patch.dict(globals(), {"CEREBRO_DB": tmp, "embeber": _fake, "corpus": lambda: items}):
         r = sincronizar()
-        assert r == {"nuevos": 3, "total": 3}, r
+        assert r["nuevos"] == 3 and r["total"] == 3, r
         assert sincronizar()["nuevos"] == 0  # idempotente: nada cambio
         items[0]["texto"] = "agro plaguicidas SENASA"
         assert sincronizar()["nuevos"] == 1  # cambio el texto -> se re-embebe solo ese
@@ -304,6 +391,15 @@ def _demo():
         assert {t["clave"] for t in top[:2]} == {"a", "c"} and top[0]["similitud"] > 0.99, top
         assert [t["clave"] for t in buscar("agro", k=3, pais="EC")] == ["c"]
         assert [t["clave"] for t in buscar("agro", k=3, tipo="noticia")][0] == "a"
+        conn = conectar()
+        conn.execute("DELETE FROM perfiles WHERE cliente='bayer'")
+        conn.execute("INSERT INTO perfiles VALUES ('bayer',0,'x','agro',?)", (_blob(_fake(["agro"])[0]),))
+        conn.execute("INSERT INTO perfiles VALUES ('bayer',1,'','futbol',?)", (_blob(_fake(["futbol"])[0]),))
+        af = afinidad(["a", "b", "c", "no-existe"], "bayer", conn)
+        # max entre fragmentos: "a" (agro) y "b" (futbol) matchean cada uno su fragmento
+        assert af["a"] > 0.99 and af["b"] > 0.99 and "no-existe" not in af, af
+        frs = fragmentos_perfil("### Crop\n\n" + "x" * 500 + "\n\n**Peru.**\n\n" + "y" * 500)
+        assert len(frs) == 2 and frs[0].startswith("### Crop") and frs[1].startswith("**Peru.**"), frs
     print("OK cerebro.embeddings: sincroniza incremental, KNN y filtros por pais/tipo")
 
 

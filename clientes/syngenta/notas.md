@@ -10,6 +10,14 @@ este repo solo monitorea PE/EC.
 - **Canal:** correo semanal con alertas PE+EC, **todos los jueves antes de las 11:00 a.m.**, a la dirección
   de Celina. Intensidad de cuenta "intermedia". Reuniones ocasionales de actualización de contexto país.
 
+## Foco actual — preocupaciones de hoy en agro (escrito por Nicolás para Bayer Crop, sep 2026; aplica igual a Syngenta)
+
+Lo que más le preocupa al sector agroquímico en este momento. Pesa más que los temas generales de abajo cuando hay que decidir si algo es relevante.
+
+**Perú.** El principal reto es el aumento de la fiscalización sobre agroquímicos. El Tribunal Constitucional ordenó reevaluar cinco ingredientes activos (clorpirifos, metomil, glifosato, imidacloprid y clothianidin), y el Senasa suspendió su venta el 9 de septiembre con plazo hasta el 31 de diciembre para definir su situación. A ello se suma el pedido de facultades legislativas, que busca reformar las leyes de semillas, sanidad agraria, inocuidad y producción orgánica para reforzar la vigilancia, trazabilidad y fiscalización. Si bien contempla medidas favorables, como el fomento a la innovación agraria y el decomiso en frontera de agroquímicos de contrabando, también implica mayores controles sobre pesticidas, nuevas atribuciones sobre el control y la producción de semillas y el fortalecimiento del Senasa.
+
+**Ecuador.** El reto es el avance de iniciativas legislativas con mayores regulaciones al sector. La más adelantada es la Ley Orgánica de Desarrollo Agropecuario, que crea una red interinstitucional de vigilancia sobre agroquímicos clasificados como contaminantes orgánicos persistentes, altamente peligrosos y disruptores endocrinos, con reportes semestrales obligatorios, y fija un mandato de reducción del uso de insumos sintéticos. La más adversa en contenido, aunque con menor probabilidad, es el Código Orgánico del Agro y la Pesca, que prohíbe las semillas transgénicas y plantea la eliminación progresiva de pesticidas peligrosos. Se suman la reforma a la Ley de Semillas, que elimina el ingreso de transgénicos con fines de investigación, y la Ley de Defensa de la Producción Agrícola. En el frente sanitario, el Fusarium raza 4 tropical en banano y la Xylella fastidiosa en café.
+
 ## Temas de interés
 
 **Perú:**

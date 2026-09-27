@@ -591,6 +591,13 @@ alertas = st.Page(
     url_path="alertas",
 )
 
+buscar = st.Page(
+    "pages/8_Buscar.py",
+    title="Buscar en todo",
+    icon="🔎",
+    url_path="buscar",
+)
+
 
 if _google_auth_configured() and st.user.is_logged_in:
     with st.sidebar:
@@ -624,7 +631,7 @@ if _google_auth_configured() and st.user.is_logged_in:
 
 nav = st.navigation(
     {
-        "Vali Intelligence": [home],
+        "Vali Intelligence": [home, buscar],
         "Radar Legislativo": [peru, ecuador],
         "Agenda parlamentaria": [agenda_pe, agenda_ec],
         "Noticias y coyuntura": [noticias_pe, noticias_ec],
