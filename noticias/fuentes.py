@@ -464,8 +464,11 @@ FUENTES_PE: list[dict] = [
     {"categoria": "Temas Agrarios", "pais": "PE", "nombre": "CEPES",
      "url": "https://www.cepes.org.pe/",
      "rss_url": "https://www.cepes.org.pe/feed/", "tipo": "rss"},
-    {"categoria": "Temas Agrarios", "pais": "PE", "nombre": "Salud con Lupa",
-     "url": "https://saludconlupa.com/noticias/", "tipo": "html",
+    {"categoria": "Temas Salud", "pais": "PE", "nombre": "Salud con Lupa",
+     "url": "https://saludconlupa.com/noticias/",
+     # 2026-09-27: RSS propio (20 notas) en vez del html (11); era "Temas Agrarios"
+     # y eso le ponia el tema Crop a notas de salud (ollas comunes, adultos mayores).
+     "rss_url": "https://saludconlupa.com/feed/", "tipo": "rss",
      "notas": "Periodismo de investigacion (salud + regulacion agraria, ej. "
               "control de plaguicidas) - pedido explicito de Nicolas "
               "2026-09-16. En INSTITUCIONES_AMPLIAS: publican de todo "
@@ -904,9 +907,10 @@ FUENTES_EC: list[dict] = [
               "como CONAIE/SOLCA."},
     {"categoria": "Temas Salud", "pais": "EC", "nombre": "Edicion Medica",
      "url": "https://www.edicionmedica.ec/",
-     "rss_url": "https://www.edicionmedica.ec/rss", "tipo": "rss", "activa": 0,
-     "notas": "Desactivada 2026-09-16: rss_url da 404, autodiscovery contra la home tampoco "
-              "encontro un feed valido, verificado en vivo."},
+     "tipo": "html",
+     "notas": "Reactivada 2026-09-27 (pedido de Nicolas) leyendo la portada en html: el RSS "
+              "da 404 desde 2026-09-16 pero la portada trae ~27 notas, probado en vivo. "
+              "No existe edicion Peru (edicionmedica.com.pe no resuelve)."},
 
     # --- TEMAS TECH ---
     {"categoria": "Temas Tech", "pais": "EC", "nombre": "Criptonoticias",
