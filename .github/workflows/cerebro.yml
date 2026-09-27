@@ -1,0 +1,72 @@
+name: Cerebro (embeddings del corpus)
+
+# Mantiene data/cerebro.db (vectores de PLs, noticias y sesiones - ver
+# cerebro/embeddings.py) al dia: corre despues de cada workflow que trae
+# datos nuevos y embebe SOLO lo nuevo o cambiado.
+#
+# cerebro.db NO va a git: son vectores (casi no comprimen) y el repo ya se
+# inflo a 14 GB por las versiones de proyectos.db.gz. Se publica como adjunto
+# del release "cerebro", pisando el anterior (--clobber) - sin historial. La
+# app lo baja de ahi (cerebro.embeddings.descargar_si_falta).
+#
+# Disparo por workflow_run (no por schedule: el cron nativo de GitHub no es
+# confiable en este repo, ver backfill-auto.yml).
+
+on:
+  workflow_run:
+    workflows:
+      - "Actualizar Peru (PLs + snapshot)"
+      - "Actualizar Ecuador (CSV + documentos)"
+      - "Backfill automatico (sesiones perdidas)"
+    types: [completed]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: cerebro
+  cancel-in-progress: false
+
+jobs:
+  embeber:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main  # workflow_run arranca en el commit del disparo; queremos los datos mas nuevos
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - run: pip install -q google-genai sqlite-vec
+
+      - name: Bajar DBs y el cerebro publicado
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gunzip -kc data/proyectos.db.gz > proyectos.db
+          gunzip -kc data/proyectos_ec.db.gz > proyectos_ec.db
+          # Primera vez el release no existe: se crea vacio y se embebe todo.
+          gh release view cerebro > /dev/null 2>&1 || \
+            gh release create cerebro --title "Cerebro (embeddings)" \
+              --notes "data/cerebro.db generado por .github/workflows/cerebro.yml - no editar a mano." --latest=false
+          gh release download cerebro -p cerebro.db -D data --clobber || echo "sin cerebro.db previo, se arma de cero"
+
+      - name: Embeber lo nuevo
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          PYTHONIOENCODING: utf-8
+        run: python -X utf8 -u -m cerebro.embeddings sincronizar
+
+      - name: Publicar
+        # always(): si el paso anterior se corta a mitad (limite del tier
+        # gratuito de Gemini), lo ya embebido quedo guardado tanda por tanda
+        # y se publica igual - la proxima corrida sigue desde ahi.
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if [ -f data/cerebro.db ]; then gh release upload cerebro data/cerebro.db --clobber; fi
