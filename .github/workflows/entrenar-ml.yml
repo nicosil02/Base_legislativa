@@ -49,8 +49,8 @@ jobs:
 
       - name: Bootstrap DB Peru desde snapshot
         run: |
-          if [ -f data/proyectos.db.gz ]; then
-            gunzip -kc data/proyectos.db.gz > proyectos.db
+          # La base vive en la rama `datos` (ver scripts/publicar_db.sh).
+          if bash scripts/bajar_db.sh proyectos.db.gz proyectos.db; then
             ls -lh proyectos.db
           else
             echo "[bootstrap] sin snapshot, abortando"; exit 1

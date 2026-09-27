@@ -93,11 +93,8 @@ jobs:
           sleep 5
           warp-cli --accept-tos status
 
-      - name: Bootstrap DB Peru desde snapshot gz
-        run: |
-          if [ -f data/proyectos.db.gz ]; then
-            gunzip -kc data/proyectos.db.gz > proyectos.db
-          fi
+      - name: Bootstrap DB Peru desde la rama datos
+        run: bash scripts/bajar_db.sh proyectos.db.gz proyectos.db || true
 
       - name: Escanear canal y recuperar sesiones faltantes
         env:
@@ -124,66 +121,13 @@ jobs:
           timeout 9000 python -X utf8 -u -m congreso_live.cli comisiones-ec --max 3 \
               || echo "[warn] comisiones-ec termino con error, sigo al commit igual"
 
-      - name: Guardar snapshot DB si cambio
-        run: |
-          # Mergear SIEMPRE lo ultimo de origin antes de generar el
-          # snapshot - mismo criterio que backfill-vod.yml/vigilar-congreso.yml
-          # (bug real 2026-09-15/16: usar proyectos.db local como base pisa
-          # en silencio noticias/PLs mas frescos que llegaron mientras corria).
-          if [ -f proyectos.db ]; then
-            git fetch origin main 2>/dev/null || true
-            if git show origin/main:data/proyectos.db.gz > /tmp/origin_proyectos.db.gz 2>/dev/null \
-                && [ -s /tmp/origin_proyectos.db.gz ]; then
-              gunzip -c /tmp/origin_proyectos.db.gz > /tmp/origin_proyectos.db
-              python -X utf8 -m congreso_live.merge_db /tmp/origin_proyectos.db proyectos.db
-              gzip -9nkf /tmp/origin_proyectos.db
-              mv -f /tmp/origin_proyectos.db.gz data/proyectos.db.gz
-            else
-              gzip -9nkf proyectos.db
-              mv proyectos.db.gz data/proyectos.db.gz
-            fi
-          fi
-
-      - name: Commitear snapshot DB
+      - name: Publicar base en la rama datos
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/proyectos.db.gz
-          if git diff --staged --quiet; then
-            echo "sin cambios (nada pendiente esta corrida)"
-            exit 0
-          fi
-          git commit -m "Backfill automatico: sesiones recuperadas $(date -u +%Y-%m-%d-%H%M) [skip ci]"
-          for i in 1 2 3; do
-            if git push; then
-              echo "Push OK (intento $i)"
-              exit 0
-            fi
-            echo "Push fallo (intento $i), mergeando con origin/main..."
-            git fetch origin main
-            MERGED=""
-            if [ -f proyectos.db ] && git show origin/main:data/proyectos.db.gz > /tmp/origin_proyectos.db.gz 2>/dev/null \
-                && [ -s /tmp/origin_proyectos.db.gz ]; then
-              gunzip -c /tmp/origin_proyectos.db.gz > /tmp/origin_proyectos.db
-              python -X utf8 -m congreso_live.merge_db /tmp/origin_proyectos.db proyectos.db
-              gzip -9nkf /tmp/origin_proyectos.db
-              mv -f /tmp/origin_proyectos.db.gz /tmp/merged_proyectos.db.gz
-              MERGED=1
-            fi
-            # --hard, no --soft: mismo bug real 2026-09-16 documentado en
-            # backfill-vod.yml - con --soft el commit puede revertir OTROS
-            # archivos que avanzaron en origin mientras corria el job.
-            git reset --hard origin/main
-            if [ -n "$MERGED" ]; then
-              mv -f /tmp/merged_proyectos.db.gz data/proyectos.db.gz
-              git add data/proyectos.db.gz
-            fi
-            if git diff --staged --quiet; then
-              echo "Ya esta en origin/main tras el merge, nada que commitear."
-              exit 0
-            fi
-            git commit -m "Backfill automatico: sesiones recuperadas $(date -u +%Y-%m-%d-%H%M) [skip ci]"
-            sleep 5
-          done
-          echo "Push fallo despues de 3 intentos."
-          exit 1
+          # base_remota: la version publicada en `datos` es la base y se le
+          # suman las transcripciones recuperadas aca (este workflow no es
+          # dueño de PLs/agenda/noticias). Mismo merge que antes contra
+          # origin/main, ahora sin versionar la base en main (ver
+          # scripts/publicar_db.sh).
+          bash scripts/publicar_db.sh base_remota proyectos.db
