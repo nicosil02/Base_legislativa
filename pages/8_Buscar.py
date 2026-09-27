@@ -95,6 +95,13 @@ if consulta.strip():
 # La busqueda de arriba devuelve DOCUMENTOS parecidos; esto responde una
 # PREGUNTA cruzando hechos entre documentos (PLs, sesiones, noticias y el
 # perfil de cada cliente) - ver cerebro/grafo.py.
+# Apagado hasta que el grafo tenga cupo propio de Gemini: el gratuito de
+# gemini-3.6-flash es 20 pedidos/dia, compartido con el chat de alertas y el
+# de transcripciones (ver .github/workflows/cerebro.yml).
+GRAFO_ACTIVO = False
+if not GRAFO_ACTIVO:
+    st.stop()
+
 st.markdown("---")
 st.markdown("### Preguntarle al cerebro")
 st.caption("Responde cruzando proyectos de ley, sesiones, noticias y lo que le importa a cada cliente. "
