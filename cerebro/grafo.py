@@ -38,7 +38,14 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 GRAFO_DIR = REPO_ROOT / "data" / "grafo"
 RELEASE_URL = "https://github.com/nicosil02/Base_legislativa/releases/download/cerebro/grafo.tar.gz"
 
-LLM = "gemini-3.6-flash"  # mismo modelo que el resto del proyecto
+# NO gemini-3.6-flash (el del chat de alertas/transcripciones): su tier
+# gratuito es 20 pedidos/dia y una corrida del grafo lo agoto entero
+# (2026-09-27). Cada modelo tiene su propio cupo gratuito, asi que el grafo
+# usa modelos livianos aparte - probados extrayendo entidades de un texto
+# real (SENASA/TC/PL/congresista/partido): flash-lite 1.4 s, gemma 30 s,
+# los dos sin errores. Gemma solo si flash-lite se queda sin cupo.
+LLM = "gemini-3.5-flash-lite"
+LLM_RESPALDO = "gemma-4-26b-a4b-it"
 DIAS_PL = 60
 DIAS_NOTICIAS = 30
 AFINIDAD_NOTICIA = 0.62  # ponytail: a ojo sobre la prueba de Bayer (0.68-0.72 lo relevante, <0.55 lo ajeno); calibrar
@@ -77,13 +84,17 @@ async def _rag():
         # fallaron asi). LightRAG ya reintenta 3 veces en segundos; aca se
         # espera mas antes de rendirse - el doc queda FAILED y la proxima
         # corrida lo reintenta igual.
-        for intento in range(4):
+        modelo = LLM
+        for intento in range(5):
             try:
                 return await gemini_model_complete(prompt, system_prompt=system_prompt,
                                                    history_messages=history_messages, api_key=key,
-                                                   model_name=LLM, **kwargs)
+                                                   model_name=modelo, **kwargs)
             except Exception as e:
-                if intento == 3 or not any(x in str(e) for x in ("503", "UNAVAILABLE", "overloaded")):
+                if "RESOURCE_EXHAUSTED" in str(e) and modelo != LLM_RESPALDO:
+                    modelo = LLM_RESPALDO  # cupo del liviano agotado: sigue con Gemma
+                    continue
+                if intento == 4 or not any(x in str(e) for x in ("503", "UNAVAILABLE", "overloaded")):
                     raise
                 await asyncio.sleep(45 * (intento + 1))
 
