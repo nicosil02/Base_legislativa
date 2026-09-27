@@ -183,7 +183,7 @@ def corpus() -> list[dict]:
                                  FROM noticias n JOIN noticias_fuentes f ON f.id = n.fuente_id""").fetchall()
         except sqlite3.OperationalError:
             filas = []
-        from noticias.temas import es_fuente_multipais, pais_por_contenido
+        from noticias.temas import es_fuente_multipais, es_seccion_fuera_de_foco, pais_por_contenido
         for r in filas:
             # Mismo criterio que las paginas Noticias PE/EC: una fuente que
             # cubre varios paises (Mundo Agropecuario, DPL News...) se asigna
@@ -192,7 +192,7 @@ def corpus() -> list[dict]:
             # con tres neonicotinoides" salia arriba para Syngenta como si
             # fuera de Ecuador (pais de la fuente).
             pais = pais_por_contenido(r[1], r[2], r[5]) if es_fuente_multipais(r[6]) else r[5]
-            if not pais:
+            if not pais or es_seccion_fuera_de_foco(r[3]):
                 continue
             items.append({"clave": f"noticia_{r[0]}", "tipo": "noticia", "pais": pais,
                           "titulo": r[1], "fecha": (r[4] or "")[:10], "url": r[3],
