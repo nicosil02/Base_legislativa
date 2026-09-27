@@ -17,7 +17,8 @@ import pandas as pd
 import streamlit as st
 
 from noticias.temas import (
-    clasificar, es_fuente_multipais, es_normativa, pais_por_contenido, todos_los_temas,
+    clasificar, es_fuente_multipais, es_normativa, es_normativa_tag,
+    es_seccion_fuera_de_foco, pais_por_contenido, todos_los_temas,
 )
 from noticias.fuentes import (
     INSTITUCIONES_AMPLIAS, TEMAS_CLIENTE, PERFIL_ESTRICTO, matchea_perfil,
@@ -353,6 +354,8 @@ def load_noticias(pais: str,
                 return pais
             return pais_por_contenido(row["Título"], row["Resumen"], pais)
         df = df[df.apply(_pais_real, axis=1) == pais]
+        # Secciones internacional/deportes de medios nacionales (ver temas.py).
+        df = df[~df["Enlace"].map(es_seccion_fuera_de_foco)]
     if not df.empty:
         descartadas = list_descartadas()
         if descartadas:
@@ -385,7 +388,7 @@ def load_noticias(pais: str,
         df["EsNormativa"] = df.apply(
             # tags=="normas" viene del endpoint de normas de gob.pe (señal
             # autoritativa); el keyword es fallback para RSS/HTML.
-            lambda row: row.get("Tags") == "normas"
+            lambda row: es_normativa_tag(row.get("Tags"))
             or es_normativa(row["Título"], row["Resumen"]), axis=1
         )
         df["PL_relacionado"] = df.apply(
@@ -528,6 +531,31 @@ elif not df.empty and filtro_norma == "Solo normativa":
 # reglas de palabras de fuentes.py, no las reemplaza: no oculta nada, solo
 # ordena y muestra el puntaje. Si el cerebro no esta disponible, la pagina
 # queda igual que antes.
+# El cerebro FILTRA, no solo ordena (Nicolas 2026-09-27: "el cerebro afinaria
+# lo que le importa al cliente... veo cosas en noticias que no les importan").
+# Se oculta lo que no llega a relevancia Media para NINGUN cliente (o para el
+# elegido). Coyuntura politica pasa siempre (le importa a todos aunque ningun
+# notas.md lo describa) y lo que el cerebro aun no leyo (ultima hora) tambien.
+if not df.empty:
+    from cerebro.embeddings import AFINIDAD_MEDIA
+    from cerebro.ui import afinidad_noticias
+    _ids = tuple(int(i) for i in df["ID"])
+    _mejor: dict[int, float] = {}
+    for _c in ([sel_cliente] if sel_cliente != TODOS else clientes):
+        for _i, _v in afinidad_noticias(_ids, _c).items():
+            _mejor[_i] = max(_v, _mejor.get(_i, 0.0))
+    if _mejor:
+        _relevante = df.apply(
+            lambda r: _mejor.get(int(r["ID"]), 1.0) >= AFINIDAD_MEDIA
+            or "Coyuntura política" in (r["Temas"] or []), axis=1)
+        _n_ocultas = int((~_relevante).sum())
+        if _n_ocultas:
+            _quien = "tus clientes" if sel_cliente == TODOS else sel_cliente
+            if st.toggle(f"Solo lo relevante para {_quien} ({_n_ocultas} ocultas)", value=True,
+                         help="El cerebro compara cada noticia con lo que le importa a cada cliente "
+                              "(su notas.md) y esconde lo que no le toca a ninguno. Apágalo para ver todo."):
+                df = df[_relevante]
+
 _orden_afinidad = False
 if sel_cliente != TODOS and not df.empty:
     from cerebro.ui import afinidad_noticias
