@@ -467,21 +467,25 @@ temas = todos_los_temas()
 
 TODAS = "Todas"
 TODOS = "Todos"
-fc1 = st.columns([1, 1.4, 2.6])
+# Cliente arriba (antes escondido en "Más filtros"): pedido de Nicolas
+# 2026-09-27, con el cerebro ordena por lo que de verdad le importa a cada uno.
+fc1 = st.columns([1, 1.2, 1.2, 2.2])
 sel_ventana = fc1[0].selectbox("Ventana", list(VENTANAS.keys()), index=0)
-sel_tema = fc1[1].selectbox("Tema", [TODAS] + temas,
-    help="Clasificación por contenido (título + resumen). Una noticia puede tener varios temas.")
-busqueda = fc1[2].text_input("Buscar en título o resumen",
+sel_cliente = fc1[1].selectbox("Cliente", [TODOS] + clientes,
+    help="Fuentes relevantes para ese cliente, ordenadas por afinidad con lo que le importa "
+         "(su notas.md, incluido su foco actual)")
+sel_tema = fc1[2].selectbox("Sector / tema", [TODAS] + temas,
+    help="Por palabras clave Y por significado: también trae noticias del sector que no "
+         "usan las palabras exactas.")
+busqueda = fc1[3].text_input("Buscar en título o resumen",
     placeholder="ej. AFP, IA, agricultura")
 
-with st.expander("🔍 Más filtros (Categoría de fuente, Fuente, Cliente, Normativa)"):
-    fc2 = st.columns([1.2, 1.2, 1.2, 1.0])
+with st.expander("🔍 Más filtros (Categoría de fuente, Fuente, Normativa)"):
+    fc2 = st.columns([1.2, 1.2, 1.0])
     sel_cat = fc2[0].selectbox("Categoría de fuente", [TODAS] + categorias_fuente,
         help="Categoría del medio que publica (no del contenido)")
     sel_fuente = fc2[1].selectbox("Fuente", [TODAS] + fuentes)
-    sel_cliente = fc2[2].selectbox("Cliente", [TODOS] + clientes,
-        help="Fuentes relevantes para ese cliente (más las de interés general)")
-    filtro_norma = fc2[3].selectbox(
+    filtro_norma = fc2[2].selectbox(
         "📋 Normativa", ["Sin normativa", "Todas", "Solo normativa"], index=0,
         help="Decretos, resoluciones, leyes, reglamentos publicados. \"Sin "
              "normativa\" (default) los oculta - antes solo existía \"Solo "
@@ -499,8 +503,21 @@ df = load_noticias(
 )
 
 # Filtros post-clasificación (en pandas)
+# Sector: por keyword (clasificar) O por significado (cerebro), asi entran
+# notas del sector que no usan las palabras exactas ("gremios agrarios ante
+# El Nino" para Crop). Las que entran solo por significado se marcan.
+_af_sector: dict[int, float] = {}
 if sel_tema != TODAS and not df.empty:
-    df = df[df["Temas"].apply(lambda lst: sel_tema in (lst or []))]
+    from cerebro.embeddings import AFINIDAD_SECTOR
+    from cerebro.ui import afinidad_tema_noticias
+    _af_sector = afinidad_tema_noticias(tuple(int(i) for i in df["ID"]), sel_tema)
+    _por_kw = df["Temas"].apply(lambda lst: sel_tema in (lst or []))
+    _por_sentido = df["ID"].map(lambda i: (_af_sector.get(int(i)) or 0) >= AFINIDAD_SECTOR)
+    df = df[_por_kw | _por_sentido].assign(
+        SoloSentido=(~_por_kw & _por_sentido)[_por_kw | _por_sentido],
+        AfinidadSector=df["ID"].map(lambda i: _af_sector.get(int(i))))
+    if _af_sector:
+        df = df.sort_values("AfinidadSector", ascending=False, na_position="last")
 if not df.empty and filtro_norma == "Sin normativa":
     df = df[df["EsNormativa"] == False]  # noqa: E712
 elif not df.empty and filtro_norma == "Solo normativa":
@@ -577,11 +594,20 @@ def _chips(temas_list: list[str], es_norma: bool) -> str:
 
 
 def _chip_afinidad(n) -> str:
+    from cerebro.embeddings import nivel_afinidad
+    partes = []
     af = n.get("Afinidad") if hasattr(n, "get") else None
-    if af is None or af != af:  # sin puntaje (None/NaN)
+    nivel = nivel_afinidad(af)
+    if nivel:
+        color = {"Alta": "var(--accent)", "Media": "var(--ink-soft)"}.get(nivel, "var(--ink-mute)")
+        partes.append(f'Relevancia para {sel_cliente}: <strong style="color:{color}">{nivel}</strong>')
+    _ss = n.get("SoloSentido") if hasattr(n, "get") else None
+    if _ss is not None and _ss == _ss and bool(_ss):  # numpy.bool_, no "is True"
+        partes.append(f"del sector {sel_tema} por su contenido (sin las palabras clave)")
+    if not partes:
         return ""
-    return (f'<div style="margin-top:6px;font-size:11px;color:var(--ink-mute);">'
-            f'Afinidad con {sel_cliente}: <strong>{af:.2f}</strong></div>')
+    return ('<div style="margin-top:6px;font-size:11px;color:var(--ink-mute);">'
+            + " · ".join(partes) + "</div>")
 
 
 def _render_card(n, key_suffix: str = "") -> None:

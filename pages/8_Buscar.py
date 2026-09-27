@@ -78,6 +78,10 @@ if consulta.strip():
             st.error(f"No se pudo buscar: {e}")
             resultados = []
     etiqueta = {"pl": "Proyecto de ley", "noticia": "Noticia", "sesion": "Sesión"}
+    # Sin el puntaje crudo ("afinidad 0.56" confundia - feedback de Nicolas
+    # 2026-09-27): el orden ya dice que es lo mas parecido.
+    if resultados:
+        st.caption("Ordenados del más al menos parecido a lo que buscaste.")
     for r in resultados:
         extra = json.loads(r["extra"] or "{}")
         detalle = " · ".join(str(v) for v in (extra.get("fuente"), extra.get("organo"),
@@ -87,7 +91,7 @@ if consulta.strip():
             f'{r["pais"]} · {r["fecha"] or "sin fecha"}</div>'
             f'<div class="item-titulo"><a href="{html.escape(r["url"] or "#")}" target="_blank">'
             f'{html.escape(r["titulo"] or "(sin título)")}</a></div>'
-            f'<div class="item-meta">{html.escape(detalle)} · afinidad {r["similitud"]:.2f}</div></div>',
+            f'<div class="item-meta">{html.escape(detalle)}</div></div>',
             unsafe_allow_html=True,
         )
 
