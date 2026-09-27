@@ -100,9 +100,13 @@ def conectar(path: Path | None = None) -> sqlite3.Connection:
         CREATE TABLE IF NOT EXISTS meta (k TEXT PRIMARY KEY, v TEXT);
     """)
     modelo = conn.execute("SELECT v FROM meta WHERE k='modelo'").fetchone()
-    if modelo and modelo[0] != MODELO:
+    # Sin registro de modelo pero con items = cerebro.db de antes de esta
+    # tabla (el de Gemini, 256 dims): bug real 2026-09-27 ("Dimension
+    # mismatch... Expected 256 dimensions but received 384").
+    viejo_sin_meta = not modelo and conn.execute("SELECT count(*) FROM items").fetchone()[0] > 0
+    if viejo_sin_meta or (modelo and modelo[0] != MODELO):
         # Vectores de otro modelo no son comparables: se rehace todo.
-        print(f"[cerebro] modelo cambio ({modelo[0]} -> {MODELO}), rehago el indice")
+        print(f"[cerebro] modelo cambio ({modelo[0] if modelo else 'sin registro'} -> {MODELO}), rehago el indice")
         conn.executescript("DROP TABLE items; DROP TABLE vec_items; DROP TABLE perfiles; DROP TABLE meta;")
         conn.commit()
         conn.close()
