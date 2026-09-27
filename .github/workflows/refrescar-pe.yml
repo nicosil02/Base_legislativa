@@ -148,16 +148,12 @@ jobs:
           # 2026-09-26) y apagar oneDNN lo deja en ~40 s/pagina.
           pip install pymupdf pillow "paddlepaddle==3.2.2" paddleocr
 
-      - name: Bootstrap DB Peru desde snapshot gz (solo si no hay cache)
+      - name: Bootstrap DB Peru desde la rama datos (solo si no hay cache)
         if: hashFiles('proyectos.db') == ''
         run: |
-          if [ -f data/proyectos.db.gz ]; then
-            echo "[bootstrap] descomprimiendo data/proyectos.db.gz"
-            gunzip -kc data/proyectos.db.gz > proyectos.db
-            ls -lh proyectos.db
-          else
-            echo "[bootstrap] sin snapshot — la DB se construira desde cero (lento)"
-          fi
+          # La base vive en la rama `datos`, no en main (ver scripts/publicar_db.sh).
+          bash scripts/bajar_db.sh proyectos.db.gz proyectos.db \
+            || echo "[bootstrap] sin snapshot — la DB se construira desde cero (lento)"
 
       - name: Stats inicial
         run: |
@@ -507,30 +503,19 @@ jobs:
               print('[stats] (sin tablas pleno todavia — el primer sync las creara)')
           "
 
-      - name: Generar snapshot gz
+      - name: Publicar base en la rama datos
         run: |
-          # Mergear SIEMPRE sesiones_transcripciones de origin antes de
-          # generar el snapshot - bug real 2026-09-15: este workflow usa
-          # actions/cache para proyectos.db (restore-keys generico entre
-          # corridas), asi que cuando el cache trae una copia VIEJA, el
-          # push despues sale limpio (la ancestria del commit sigue
-          # siendo valida, git no mira contenido) y el fallback de merge
-          # por conflicto nunca se dispara - piso en silencio transcripciones
-          # reales que vigilar-congreso.yml/backfill-vod.yml habian
-          # guardado mientras el cache estaba desactualizado (paso 2 veces
-          # el mismo dia: Presupuesto/Transportes borrados asi).
-          git fetch origin main 2>/dev/null || true
-          if git show origin/main:data/proyectos.db.gz > /tmp/origin_proyectos.db.gz 2>/dev/null \
-              && [ -s /tmp/origin_proyectos.db.gz ]; then
-            gunzip -c /tmp/origin_proyectos.db.gz > /tmp/origin_proyectos.db
-            python -X utf8 -m congreso_live.merge_db proyectos.db /tmp/origin_proyectos.db
-          fi
-          # Comprimir con gzip -9 para minimizar tamano del .gz en el repo.
-          # -k mantiene el .db original para que el cache de la proxima corrida
-          # lo encuentre.
-          gzip -9nkf proyectos.db
-          mv proyectos.db.gz data/proyectos.db.gz
-          ls -lh data/proyectos.db.gz
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # Ya no se commitea data/proyectos.db.gz en main: sus versiones
+          # llevaron el repo a 15 GB (2026-09-27). publicar_db.sh la sube a la
+          # rama `datos` como UN solo commit sin historial, mezclando antes las
+          # transcripciones que otros workflows hayan publicado - el mismo
+          # merge que antes hacia este paso contra origin/main (bug real
+          # 2026-09-15: el cache de actions traia una copia vieja y se pisaban
+          # transcripciones). base_local: esta copia es la duena de PLs/agenda/
+          # noticias. --force-with-lease: si otro publico en el medio, reintenta.
+          bash scripts/publicar_db.sh base_local proyectos.db
 
       - name: Auto-commit snapshot si cambio
         run: |
@@ -542,13 +527,15 @@ jobs:
           # que alguien usa el boton Aceptar/Rechazar en pages/1_Peru.py,
           # asi que no existe todavia en un checkout nuevo. Rompio la
           # corrida entera (nada de PLs/noticias/etc se comiteo esa vez).
-          git add data/proyectos.db.gz data/pl_seguimiento_estado.json
+          git add data/pl_seguimiento_estado.json
           [ -f data/clasificador_decisiones.json ] && git add data/clasificador_decisiones.json
           if git diff --staged --quiet; then
             echo "Sin cambios en el snapshot PE."
             exit 0
           fi
           git commit -m "PE: auto-refresh PLs $(date -u +%Y-%m-%d-%H%M) [skip ci]"
+          # La base ya NO va en este commit (va a la rama datos, paso anterior):
+          # aca solo quedan los JSON chicos de estado.
           # Retry-on-conflict: otros workflows (vigilar-congreso.yml,
           # backfill-vod.yml, y el de Ecuador) pueden pushear en paralelo y
           # dejar nuestro push outdated. Bug real 2026-09-15: "rebase -X
@@ -565,17 +552,8 @@ jobs:
               echo "Push OK (intento $i)"
               exit 0
             fi
-            echo "Push fallo (intento $i), mergeando con origin/main..."
+            echo "Push fallo (intento $i), reintentando sobre origin/main..."
             git fetch origin main
-            MERGED=""
-            if [ -f proyectos.db ] && git show origin/main:data/proyectos.db.gz > /tmp/origin_proyectos.db.gz 2>/dev/null \
-                && [ -s /tmp/origin_proyectos.db.gz ]; then
-              gunzip -c /tmp/origin_proyectos.db.gz > /tmp/origin_proyectos.db
-              python -X utf8 -m congreso_live.merge_db proyectos.db /tmp/origin_proyectos.db
-              gzip -9nkf proyectos.db
-              mv -f proyectos.db.gz /tmp/merged_proyectos.db.gz
-              MERGED=1
-            fi
             # data/pl_seguimiento_estado.json (clientes/alertas_pl.py) y
             # data/clasificador_decisiones.json (clasificador/decisiones_store.py)
             # son OTROS archivos aparte de proyectos.db.gz - el --hard de
@@ -591,12 +569,9 @@ jobs:
             # workflows .yml; solo lo freno el permiso "workflows" de GH).
             # --hard sincroniza todo con origin primero.
             git reset --hard origin/main
-            if [ -n "$MERGED" ]; then
-              mv -f /tmp/merged_proyectos.db.gz data/proyectos.db.gz
-            fi
             [ -f /tmp/estado_pl.json ] && mv -f /tmp/estado_pl.json data/pl_seguimiento_estado.json
             [ -f /tmp/clasificador_decisiones.json ] && mv -f /tmp/clasificador_decisiones.json data/clasificador_decisiones.json
-            git add data/proyectos.db.gz data/pl_seguimiento_estado.json
+            git add data/pl_seguimiento_estado.json
             [ -f data/clasificador_decisiones.json ] && git add data/clasificador_decisiones.json
             if git diff --staged --quiet; then
               echo "Ya esta en origin/main tras el merge, nada que commitear."

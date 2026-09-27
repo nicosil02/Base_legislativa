@@ -91,6 +91,54 @@ def _get_bootstrap_lock() -> threading.Lock:
     return threading.Lock()
 
 
+# Las bases ya NO estan en main (sus versiones llevaron el repo a 15 GB,
+# 2026-09-27): los workflows las publican en la rama `datos` (ver
+# scripts/publicar_db.sh). Antes la app se enteraba de datos nuevos porque
+# cada commit de la base la redesplegaba; ahora baja el .gz de `datos` cada
+# DATOS_CADA_SEG como mucho, y solo si cambio (ETag -> 304 si no).
+DATOS_URL = "https://raw.githubusercontent.com/nicosil02/Base_legislativa/datos/data/{}"
+DATOS_CADA_SEG = 600
+
+
+@st.cache_resource
+def _estado_descarga_datos() -> dict:
+    return {}  # {nombre_gz: (ultimo_chequeo, etag)} - uno por proceso
+
+
+def _bajar_de_datos(gz_path: Path) -> None:
+    """Deja en gz_path la version publicada en `datos` si cambio desde la
+    ultima vez. Cualquier fallo (sin red, rama todavia no creada) deja lo
+    que haya - el bootstrap sigue igual que antes con el .gz local."""
+    import os
+    import tempfile
+    import time
+    import urllib.error
+    import urllib.request
+
+    estado = _estado_descarga_datos()
+    ultimo, etag = estado.get(gz_path.name, (0.0, None))
+    if time.time() - ultimo < DATOS_CADA_SEG:
+        return
+    estado[gz_path.name] = (time.time(), etag)
+    req = urllib.request.Request(DATOS_URL.format(gz_path.name))
+    if etag and gz_path.exists():
+        req.add_header("If-None-Match", etag)
+    try:
+        with urllib.request.urlopen(req, timeout=60) as r:
+            gz_path.parent.mkdir(parents=True, exist_ok=True)
+            fd, tmp = tempfile.mkstemp(dir=gz_path.parent, prefix=gz_path.name + ".", suffix=".tmp")
+            with os.fdopen(fd, "wb") as f:
+                f.write(r.read())
+            os.replace(tmp, gz_path)  # mtime nuevo -> _needs_restore lo ve "stale"
+            estado[gz_path.name] = (time.time(), r.headers.get("ETag"))
+            print(f"[datos] {gz_path.name} actualizado desde la rama datos")
+    except urllib.error.HTTPError as e:
+        if e.code != 304:
+            print(f"[datos] no pude bajar {gz_path.name}: HTTP {e.code}")
+    except Exception as e:
+        print(f"[datos] no pude bajar {gz_path.name}: {e}")
+
+
 def _bootstrap_dbs():
     lock = _get_bootstrap_lock()
     if not lock.acquire(blocking=True, timeout=60):
@@ -169,6 +217,7 @@ def _bootstrap_dbs_impl():
     # Perú: decomprimir data/proyectos.db.gz (14 MB) → proyectos.db (78 MB)
     pe_db = repo_root / "proyectos.db"
     pe_gz = repo_root / "data" / "proyectos.db.gz"
+    _bajar_de_datos(pe_gz)
     reason = _needs_restore(pe_db, pe_gz)
     if reason:
         try:
@@ -182,6 +231,7 @@ def _bootstrap_dbs_impl():
     ec_db = repo_root / "proyectos_ec.db"
     ec_gz = repo_root / "data" / "proyectos_ec.db.gz"
     ec_csv = repo_root / "data" / "ppless_listado_2025-2029_snapshot.csv"
+    _bajar_de_datos(ec_gz)
     reason = _needs_restore(ec_db, ec_gz)
     if reason:
         try:
