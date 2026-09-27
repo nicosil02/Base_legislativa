@@ -20,7 +20,7 @@ from pathlib import Path
 
 import yt_dlp
 
-from congreso_live.detector import _ydl, listar_streams
+from congreso_live.detector import _ydl, es_bloqueo_bot, listar_streams, rotar_warp
 from noticias.temas import clasificar as _clasificar_temas
 
 log = logging.getLogger(__name__)
@@ -99,13 +99,17 @@ def obtener_transcripcion(video_id: str) -> dict | None:
     """Si el video ya tiene captions automaticos en español, los baja y
     limpia. Devuelve None si todavia no estan disponibles (normal para
     sesiones muy recientes - YouTube tarda dias en procesarlos)."""
-    try:
-        with _ydl({}) as ydl:
-            info = ydl.extract_info(f"https://www.youtube.com/watch?v={video_id}",
-                                    download=False)
-    except Exception as e:
-        log.warning("no pude extraer info de %s: %s", video_id, e)
-        return None
+    info = None
+    while info is None:
+        try:
+            with _ydl({}) as ydl:
+                info = ydl.extract_info(f"https://www.youtube.com/watch?v={video_id}",
+                                        download=False)
+        except Exception as e:
+            log.warning("no pude extraer info de %s: %s", video_id, e)
+            # IP de WARP quemada: pedir otra y reintentar (ver detector.rotar_warp).
+            if not (es_bloqueo_bot(str(e)) and rotar_warp()):
+                return None
 
     auto = info.get("automatic_captions") or {}
     if "es" not in auto:
