@@ -15,12 +15,14 @@ def test_nitter_desactivadas():
         "todas las fuentes nitter.net deben quedar desactivadas")
 
 
-def test_primicias_y_registro_oficial_desactivadas():
-    # PRIMICIAS: rss_url da 404 real. Registro Oficial (generico html):
-    # redundante con el modulo dedicado registro_oficial_ec.py.
+def test_primicias_por_google_news_y_registro_oficial_desactivado():
+    # PRIMICIAS: su RSS da 404, desde 2026-09-27 entra por Google News
+    # filtrado al dominio. Registro Oficial (generico html): redundante con
+    # el modulo dedicado registro_oficial_ec.py.
     fs = all_fuentes()
     by_name = {f["nombre"]: f for f in fs}
-    assert by_name["PRIMICIAS"]["activa"] == 0
+    assert by_name["PRIMICIAS"].get("activa", 1) == 1
+    assert "site:primicias.ec" in by_name["PRIMICIAS"]["rss_url"]
     assert by_name["Registro Oficial"]["activa"] == 0
 
 
