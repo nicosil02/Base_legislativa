@@ -283,7 +283,7 @@ def es_normativa_de_interes(tags: str | None, resumen: str | None) -> bool:
     Compartido por el digest de WhatsApp y el correo diario. RO EC ya viene
     marcado por su scraper (su resumen es el indice entero, no una norma);
     El Peruano trae 1 norma por fila y su resumen es la descripcion."""
-    t = (tags or "").split("|")
+    t = tags.split("|") if isinstance(tags, str) else []
     if "registro-oficial" in t:
         return "interes-cliente" in t
     return es_norma_de_interes(resumen)
@@ -319,6 +319,30 @@ def es_deportivo(titulo: str | None, resumen: str | None = None) -> bool:
     if not texto.strip():
         return False
     return bool(_PATTERN_DEPORTES.search(texto))
+
+
+# Secciones del medio que nunca son foco de Vali (bug real 2026-09-27, Nicolas:
+# "veo cosas en noticias que no les importan a mis clientes y ni son de los
+# paises"): El Universo/El Comercio son fuentes catalogadas EC, asi que el
+# filtro de pais por contenido (solo para fuentes multipais) no las tocaba y
+# pasaban su seccion /internacional/ (Iran, Reino Unido, FARC) y /deportes/
+# (Liga de Quito) - 171 y 242 notas en la base. La seccion de la URL es la
+# señal confiable, igual que KEYWORDS_ESPECTACULOS_URL.
+KEYWORDS_SECCION_FUERA_URL = ["/internacional/", "/mundo/", "/deportes/", "/futbol/"]
+
+
+def es_seccion_fuera_de_foco(url: str | None) -> bool:
+    u = url.lower() if isinstance(url, str) else ""
+    return any(k in u for k in KEYWORDS_SECCION_FUERA_URL)
+
+
+def es_normativa_tag(tags: str | None) -> bool:
+    """El Peruano / Registro Oficial taggean pipe-joined ("...|normativa"),
+    los feeds gobpe usan "normas" - mismo bug que noticias/digest.py arreglo
+    el 2026-09-20 pero que las paginas Noticias PE/EC seguian teniendo (el
+    filtro "Sin normativa" dejaba pasar todas las resoluciones de El Peruano)."""
+    t = tags.split("|") if isinstance(tags, str) else []
+    return "normas" in t or "normativa" in t
 
 
 # Bug real 2026-09-21 (auditoria en vivo pedida por Nicolas: "revisa lo

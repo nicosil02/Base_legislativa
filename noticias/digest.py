@@ -39,7 +39,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
 from noticias.temas import (FUENTES_MULTIPAIS, clasificar, es_fuente_multipais,
-                            es_normativa_de_interes, pais_por_contenido)
+                            es_normativa_de_interes, es_seccion_fuera_de_foco, pais_por_contenido)
 
 UMBRAL_SIMILITUD = 0.35
 MAX_GRUPOS_POR_PAIS = 12
@@ -105,7 +105,7 @@ def _noticias_desde(conn: sqlite3.Connection, pais: str, desde_id: int) -> list[
         fuente, pais_fuente = r[4], r[6]
         pais_real = (pais_por_contenido(r[1], r[2], pais_fuente)
                      if es_fuente_multipais(fuente) else pais_fuente)
-        if pais_real != pais:
+        if pais_real != pais or es_seccion_fuera_de_foco(r[3]):
             continue
         salida.append({"id": r[0], "titulo": r[1], "resumen": r[2], "url": r[3],
                         "fuente": fuente, "tags": r[5], "fecha_pub": r[7]})
