@@ -63,13 +63,11 @@ jobs:
         run: python -X utf8 -u -m cerebro.embeddings sincronizar
 
       - name: Grafo de conocimiento (LightRAG) - agregar lo nuevo
-        # APAGADO 2026-09-27: el tier gratuito de gemini-3.6-flash permite
-        # solo 20 pedidos/dia (GenerateRequestsPerDayPerProjectPerModel-
-        # FreeTier = 20) y es el MISMO cupo que usan el chat de alertas, el
-        # chat de transcripciones y el juez de relevancia - una corrida del
-        # grafo lo agoto entero. Reactivar (sacar el `if: false`) solo con un
-        # modelo/cupo propio para el grafo (decision pendiente de Nicolas).
-        if: false
+        # Usa gemini-3.5-flash-lite / gemma (cupos gratuitos PROPIOS), nunca
+        # gemini-3.6-flash: ese tiene 20 pedidos/dia compartidos con el chat
+        # de alertas y una corrida del grafo lo agoto entero (2026-09-27).
+        # continue-on-error: si se corta por cupo, lo ya procesado queda
+        # guardado y la proxima corrida sigue.
         continue-on-error: true
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
