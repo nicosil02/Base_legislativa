@@ -1,0 +1,54 @@
+name: _TEST facebook comisiones EC (temporal, borrar)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  probar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - run: pip install -q yt-dlp playwright && python -m playwright install --with-deps chromium > /dev/null
+      - name: WARP
+        run: |
+          curl -fsSL --retry 3 https://pkg.cloudflareclient.com/pubkey.gpg | sudo gpg --yes --dearmor --output /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg
+          echo "deb [signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] https://pkg.cloudflareclient.com/ $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/cloudflare-client.list
+          sudo apt-get update -qq && sudo apt-get install -y -qq cloudflare-warp
+          sudo systemctl enable --now warp-svc; sleep 3
+          warp-cli --accept-tos registration new
+          warp-cli --accept-tos mode proxy
+          warp-cli --accept-tos proxy port 40000
+          warp-cli --accept-tos connect; sleep 5
+      - name: Script
+        run: |
+          cat > p.py <<'EOF'
+          import re, sys, yt_dlp
+          from playwright.sync_api import sync_playwright
+          label, proxy = sys.argv[1], (sys.argv[2] if len(sys.argv) > 2 else None)
+          with sync_playwright() as p:
+              b = p.chromium.launch(proxy={"server": proxy} if proxy else None)
+              pg = b.new_page(locale="es-EC", user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36")
+              for h in ["DesarrolloEcAN", "JusticiaAN"]:
+                  try:
+                      pg.goto(f"https://www.facebook.com/{h}/live_videos", wait_until="domcontentloaded", timeout=45000); pg.wait_for_timeout(6000)
+                      ids = sorted(set(re.findall(r"/videos/(\d{10,})", pg.content())))
+                      print(f"RESULT {label} LIST {h}: ids={len(ids)} title={pg.title()[:50]!r}")
+                  except Exception as e:
+                      print(f"RESULT {label} LIST {h}: FAIL {str(e)[:80]}")
+              b.close()
+          o = {"quiet": True, "no_warnings": True, "skip_download": True}
+          if proxy: o["proxy"] = proxy
+          try:
+              with yt_dlp.YoutubeDL(o) as y:
+                  i = y.extract_info("https://www.facebook.com/ComisionSoberaniaAN/videos/1101811082443338/", download=False)
+              print(f"RESULT {label} VIDEO: OK dur={i.get('duration')} audio={any(f.get('vcodec')=='none' for f in i.get('formats') or [])}")
+          except Exception as e:
+              print(f"RESULT {label} VIDEO: FAIL {str(e)[:90]}")
+          EOF
+      - name: A - directo (IP GitHub)
+        run: python p.py A_directo || true
+      - name: B - via WARP
+        run: python p.py B_warp socks5://127.0.0.1:40000 || true
