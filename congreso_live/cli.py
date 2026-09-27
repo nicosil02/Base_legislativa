@@ -47,7 +47,7 @@ def cmd_check(args) -> int:
     enviados = 0
     for v in nuevos:
         if _comision_seguida(v["tipo"], seguidas_norm):
-            msg = (f"🔴 Congreso EN VIVO — {v['tipo']}\n{v['titulo']}\n{v['url']}"
+            msg = (f"🔴 {'Asamblea EC' if v.get('pais') == 'EC' else 'Congreso'} EN VIVO — {v['tipo']}\n{v['titulo']}\n{v['url']}"
                    f"{agenda_extra_para(v)}")
             enviar_whatsapp(msg)
             enviados += 1

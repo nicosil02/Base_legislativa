@@ -715,6 +715,70 @@ else:
             )
             st.success(f"Marcado para: {', '.join(sel_pl_clientes)}. El agente lo redacta en la próxima hora.")
 
+# ---------- Plenos de la Asamblea: transcripcion + resumen ----------
+# Mismo pipeline que Peru (congreso_live: live-watch en vigilar-congreso.yml,
+# captions/backfill, rutina horaria de resumenes) - las filas viven en
+# `sesiones_transcripciones` de proyectos.db (la DB de Peru), marcadas con
+# TIPO_PLENO_EC. Las comisiones EC transmiten por Facebook, no estan aca.
+from congreso_live.detector import TIPO_PLENO_EC
+
+
+@st.cache_data(ttl=90)
+def _plenos_ec_en_vivo() -> list[dict]:
+    try:
+        from congreso_live.detector import vivos_de_interes
+        return [v for v in vivos_de_interes() if v.get("pais") == "EC"]
+    except Exception as e:
+        print(f"[agenda-ec] no se pudo chequear en vivo: {e}")
+        return []
+
+
+@st.cache_data(ttl=300)
+def load_plenos_ec(limit: int = 30) -> pd.DataFrame:
+    from congreso_live.transcripciones import _find_db_path as _db_pe
+    db = _db_pe()
+    if not db.exists():
+        return pd.DataFrame()
+    conn = sqlite3.connect(f"file:{db}?mode=ro&immutable=1", uri=True)
+    try:
+        return pd.read_sql_query(
+            """SELECT video_id, titulo, fecha, duracion_seg, texto
+               FROM sesiones_transcripciones WHERE tipo = ?
+               ORDER BY fecha DESC, video_id DESC LIMIT ?""",
+            conn, params=(TIPO_PLENO_EC, limit))
+    except Exception:
+        return pd.DataFrame()
+    finally:
+        conn.close()
+
+
+st.markdown("---")
+st.markdown("### Plenos de la Asamblea · transcripción y resumen")
+for _v in _plenos_ec_en_vivo():
+    st.markdown(f"🔴 **En vivo ahora:** [{_v['titulo']}]({_v['url']}) — se está "
+                "transcribiendo sola; el resumen se actualiza cada hora.")
+df_plenos_ec = load_plenos_ec()
+if df_plenos_ec.empty:
+    st.caption("Todavía no hay plenos transcritos.")
+else:
+    from congreso_live.resumenes_store import list_resumenes
+    _resumenes_ec = list_resumenes()
+    for _, _row in df_plenos_ec.iterrows():
+        _dur = _row["duracion_seg"]
+        _dur_txt = f"{int(_dur) // 3600}h {(int(_dur) % 3600) // 60}min" if _dur else "—"
+        with st.expander(f"{_row['fecha'] or 'Sin fecha'} · {_row['titulo'][:100]}"):
+            st.caption(f"Duración: {_dur_txt} · "
+                       f"[Ver en YouTube ↗](https://www.youtube.com/watch?v={_row['video_id']})")
+            _res = _resumenes_ec.get(_row["video_id"])
+            if _res:
+                st.markdown(_res["resumen"])
+                for _idea in _res.get("ideas_clave", []):
+                    st.markdown(f"- {_idea}")
+            else:
+                st.caption("Resumen pendiente — se genera en la próxima corrida horaria.")
+            if st.toggle("Ver transcripción completa", key=f"ec_tr_{_row['video_id']}"):
+                st.code(_row["texto"], language=None, wrap_lines=True, height=300)
+
 # ---------- Footer ----------
 st.markdown('<div class="footer-rule"></div>', unsafe_allow_html=True)
 st.markdown(

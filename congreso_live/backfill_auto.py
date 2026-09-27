@@ -33,7 +33,7 @@ import sqlite3
 from datetime import datetime, timezone
 from pathlib import Path
 
-from congreso_live.detector import CANAL, _ydl, clasificar_titulo
+from congreso_live.detector import listar_streams
 
 log = logging.getLogger(__name__)
 
@@ -45,17 +45,12 @@ def streams_terminados(n: int = CANDIDATOS_MAX) -> list[dict]:
     """Streams was_live (ya terminados, NO en vivo ahora mismo - evita
     chocar con vigilar-congreso.yml capturando algo en curso) del canal
     que son Pleno o comision de interes."""
-    with _ydl({"extract_flat": True, "playlistend": n}) as ydl:
-        info = ydl.extract_info(CANAL, download=False)
-    out: list[dict] = []
-    for e in (info.get("entries") or []):
-        if not e.get("id") or e.get("live_status") != "was_live":
-            continue
-        tipo = clasificar_titulo(e.get("title"))
-        if not tipo:
-            continue
-        out.append({"id": e["id"], "titulo": (e.get("title") or "").strip(), "tipo": tipo})
-    return out
+    # Peru primero (orden de listar_streams): procesar_pendientes toma los
+    # primeros max_n, asi que un hueco de Peru nunca queda detras de EC.
+    return [
+        {"id": e["id"], "titulo": (e.get("title") or "").strip(), "tipo": e["_tipo"]}
+        for e in listar_streams(n) if e.get("live_status") == "was_live"
+    ]
 
 
 def encontrar_pendientes(db_path: str | Path) -> list[dict]:
@@ -120,16 +115,26 @@ def _demo():
 
     import congreso_live.backfill_auto as ba
 
-    entries = [
-        {"id": "A", "title": "EN VIVO: Comision de Salud", "live_status": "was_live"},
-        {"id": "B", "title": "EN VIVO: Comision de Salud", "live_status": "is_live"},  # en curso ahora, no tocar
-        {"id": "C", "title": "Video institucional sin comision", "live_status": "was_live"},
-        {"id": "D", "title": "EN VIVO: Comision de Justicia y Derechos Humanos", "live_status": "was_live"},
-    ]
-    with patch.object(ba, "_ydl") as mock_ydl:
-        mock_ydl.return_value.__enter__.return_value.extract_info.return_value = {"entries": entries}
+    import congreso_live.detector as det
+
+    por_canal = {
+        det.CANAL: [
+            {"id": "A", "title": "EN VIVO: Comision de Salud", "live_status": "was_live"},
+            {"id": "B", "title": "EN VIVO: Comision de Salud", "live_status": "is_live"},  # en curso ahora, no tocar
+            {"id": "C", "title": "Video institucional sin comision", "live_status": "was_live"},
+            {"id": "D", "title": "EN VIVO: Comision de Justicia y Derechos Humanos", "live_status": "was_live"},
+        ],
+        det.CANAL_EC: [
+            {"id": "E", "title": "Sesión No. 126-AN-2025-2029 del pleno de la Asamblea Nacional", "live_status": "was_live"},
+            {"id": "F", "title": "Sesión Solemne de la Asamblea Nacional", "live_status": "was_live"},
+        ],
+    }
+    with patch.object(det, "_ydl") as mock_ydl:
+        mock_ydl.return_value.__enter__.return_value.extract_info.side_effect = (
+            lambda url, download=False: {"entries": por_canal[url]})
         candidatos = ba.streams_terminados()
-    assert {c["id"] for c in candidatos} == {"A", "D"}, candidatos
+    assert [c["id"] for c in candidatos] == ["A", "D", "E"], candidatos  # Peru primero
+    assert candidatos[-1]["tipo"] == det.TIPO_PLENO_EC
 
     with tempfile.TemporaryDirectory() as td:
         db_path = Path(td) / "test.db"
@@ -144,7 +149,7 @@ def _demo():
 
         with patch.object(ba, "streams_terminados", lambda: candidatos):
             pendientes = ba.encontrar_pendientes(db_path)
-        assert {p["id"] for p in pendientes} == {"D"}, pendientes
+        assert {p["id"] for p in pendientes} == {"D", "E"}, pendientes
     print("OK backfill_auto: filtra en vivo/sin comite y descarta lo ya guardado")
 
 
