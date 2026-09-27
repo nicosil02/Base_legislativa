@@ -308,7 +308,29 @@ def perfil_texto(slug: str) -> str:
             continue
         if actual is not None:
             actual.append(linea)
-    return "\n".join("\n".join(p) for p in partes).strip()
+    return ("\n".join("\n".join(p) for p in partes).strip() + _pls_de_matriz(slug)).strip()
+
+
+def _pls_de_matriz(slug: str) -> str:
+    """Los PLs que el cliente sigue en su matriz Excel (clientes/matrices.py),
+    uno por parrafo para que cada uno sea su propio fragmento del perfil.
+    Nicolas 2026-09-27: la Ley de Aviacion Civil (drones) salia Baja para
+    Bayer aunque su matriz ya sigue un PL de "Drones" (479168) - el cerebro
+    solo leia notas.md."""
+    from clientes.matrices import matriz_bayer_crop, matriz_incode_ec
+    try:
+        filas = (matriz_bayer_crop("PE") + matriz_bayer_crop("EC") if slug in ("bayer", "syngenta")
+                 else matriz_incode_ec() if slug == "incode" else [])
+    except Exception as e:
+        print(f"[cerebro] matriz de {slug} no se pudo leer: {e}")
+        return ""
+    vistos, parrafos = set(), []
+    for f in filas:
+        titulo = " ".join(str(f.get("titulo_matriz") or "").split())
+        if titulo and titulo not in vistos:
+            vistos.add(titulo)
+            parrafos.append(f"Proyecto de ley que el cliente sigue (tema {f.get('tema_matriz') or 'general'}): {titulo}")
+    return "\n\n" + "\n\n".join(parrafos) if parrafos else ""
 
 
 def fragmentos_perfil(texto: str, objetivo: int = 450) -> list[str]:
@@ -337,14 +359,17 @@ def sincronizar_perfiles(conn: sqlite3.Connection | None = None) -> int:
     cambiados = 0
     for c in CLIENTES:
         t = perfil_texto(c)
-        if not t or ya.get(c) == _hash(t):
+        # hash del texto ENTERO: _hash() corta en MAX_CHARS y el perfil de Bayer
+        # (6.8k) no registraba cambios al final (bug real 2026-09-27, parrafo drones)
+        h = hashlib.sha1(t.encode("utf-8")).hexdigest()[:16] if t else ""
+        if not t or ya.get(c) == h:
             continue
         frags = fragmentos_perfil(t)
         conn.execute("DELETE FROM perfiles WHERE cliente=?", (c,))
         for i, (fr, v) in enumerate(zip(frags, embeber(frags))):
             # el hash del perfil entero va en idx=0: si cambia algo, se rehace todo
             conn.execute("INSERT INTO perfiles VALUES (?,?,?,?,?)",
-                         (c, i, _hash(t) if i == 0 else "", fr, _blob(v)))
+                         (c, i, h if i == 0 else "", fr, _blob(v)))
         conn.commit()
         cambiados += 1
     return cambiados
