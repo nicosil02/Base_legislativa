@@ -18,6 +18,23 @@ log = logging.getLogger(__name__)
 
 CANAL = "https://www.youtube.com/@congresodelarepublicaperu/streams"
 
+# Ecuador (2026-09-26): canal oficial de la Asamblea Nacional (link sacado de
+# asambleanacional.gob.ec). Solo el Pleno por ahora - las comisiones EC
+# transmiten por Facebook, no aca. Mismo pipeline, misma tabla
+# sesiones_transcripciones; se distinguen por TIPO_PLENO_EC.
+CANAL_EC = "https://www.youtube.com/@asambleanacionalec/streams"
+TIPO_PLENO_EC = "Pleno: Asamblea Nacional (EC)"
+# Los titulos reales varian e incluso vienen en ingles ("National Assembly
+# Plenary Session No. 120-AN-2025-2029", "Continuacion de la Sesion No.
+# 113-AN-...") - el numero de sesion "NNN-AN-AAAA-AAAA" es lo unico estable.
+# Deja afuera las Sesiones Solemnes (sin numero), igual que Peru excluye
+# ceremonias.
+_SESION_EC = re.compile(r"\b\d+-an-\d{4}-\d{4}\b")
+# ponytail: tope de streams EC a mirar en backfill - sin esto el primer
+# backfill encola ~120 plenos historicos y atrasa los de Peru y la rutina
+# de resumenes por dias. Subir si se quiere historia mas vieja.
+MAX_EC = 20
+
 # Tokens cortos que aparecen en los titulos de YouTube (no los nombres formales
 # largos del catalogo). Si el titulo trae "Comision" + uno de estos -> ordinaria.
 #
@@ -73,8 +90,10 @@ def _norm(s: str | None) -> str:
     return re.sub(r"\s+", " ", s).strip()
 
 
-def clasificar_titulo(titulo: str | None) -> str | None:
+def clasificar_titulo(titulo: str | None, pais: str = "PE") -> str | None:
     """Devuelve 'Pleno: <camara>', 'Comision: <kw>' o None (no nos interesa).
+    Con pais="EC" (canal de la Asamblea) solo reconoce sesiones numeradas
+    del Pleno -> TIPO_PLENO_EC.
 
     El Congreso bicameral (vigente desde 2026) transmite el Pleno de cada
     camara por separado - titulos reales verificados en vivo 2026-09-15:
@@ -85,6 +104,8 @@ def clasificar_titulo(titulo: str | None) -> str | None:
     t = _norm(titulo)
     if not t:
         return None
+    if pais == "EC":
+        return TIPO_PLENO_EC if _SESION_EC.search(t) else None
     if any(x in t for x in EXCLUIR):
         return None
     if "pleno" in t:
@@ -132,13 +153,34 @@ _cache_streams: tuple[float, list[dict]] | None = None
 STREAMS_CACHE_TTL_SEG = 50
 
 
+def listar_streams(n: int) -> list[dict]:
+    """Entries flat de los canales PE y EC, cada una con "_pais" y "_tipo"
+    (clasificar_titulo) ya puestos - solo las de interes (_tipo no None).
+    Un fallo del canal EC se loguea y se sigue (no debe tumbar Peru); uno
+    del canal PE se propaga igual que antes (los llamadores ya tratan ese
+    caso como fallo transitorio)."""
+    out: list[dict] = []
+    for pais, url, tope in (("PE", CANAL, n), ("EC", CANAL_EC, min(n, MAX_EC))):
+        try:
+            with _ydl({"extract_flat": True, "playlistend": tope}) as ydl:
+                info = ydl.extract_info(url, download=False)
+        except Exception as e:
+            if pais == "PE":
+                raise
+            log.warning("no pude listar el canal %s: %s", pais, e)
+            continue
+        for e in (info.get("entries") or []):
+            tipo = clasificar_titulo(e.get("title"), pais) if e.get("id") else None
+            if tipo:
+                out.append({**e, "_pais": pais, "_tipo": tipo})
+    return out
+
+
 def _streams_recientes(n: int = 12) -> list[dict]:
     global _cache_streams
     if _cache_streams is not None and (time.time() - _cache_streams[0]) < STREAMS_CACHE_TTL_SEG:
         return _cache_streams[1]
-    with _ydl({"extract_flat": True, "playlistend": n}) as ydl:
-        info = ydl.extract_info(CANAL, download=False)
-    resultado = [e for e in (info.get("entries") or []) if e.get("id")]
+    resultado = listar_streams(n)
     _cache_streams = (time.time(), resultado)
     return resultado
 
@@ -208,9 +250,7 @@ def vivos_de_interes() -> list[dict]:
     queda solo como fallback si algun entry no trae el campo."""
     out: list[dict] = []
     for e in _streams_recientes():
-        tipo = clasificar_titulo(e.get("title"))
-        if not tipo:
-            continue
+        tipo = e["_tipo"]
         estado = e.get("live_status")
         if estado is None:
             if not _esta_en_vivo(e["id"]):
@@ -221,6 +261,7 @@ def vivos_de_interes() -> list[dict]:
             "id": e["id"],
             "titulo": (e.get("title") or "").strip(),
             "tipo": tipo,
+            "pais": e["_pais"],
             "url": f"https://www.youtube.com/watch?v={e['id']}",
         })
     return out
@@ -282,12 +323,14 @@ def _test_vivos_de_interes_usa_live_status_del_flat():
 
     import congreso_live.detector as det
 
+    # Ya filtradas/clasificadas por listar_streams() (lo no-de-interes ni
+    # llega hasta aca).
+    _c = {"title": "Comision de Salud en vivo", "_tipo": "Comision: Salud", "_pais": "PE"}
     entries = [
-        {"id": "A", "title": "Comision de Salud en vivo", "live_status": "is_live"},
-        {"id": "B", "title": "Comision de Salud en vivo", "live_status": "is_upcoming"},
-        {"id": "C", "title": "Comision de Salud en vivo", "live_status": "was_live"},
-        {"id": "D", "title": "Comision de Salud en vivo", "live_status": None},  # sin dato -> fallback
-        {"id": "E", "title": "Video sin relacion", "live_status": "is_live"},  # filtrado por titulo, ni se chequea
+        {**_c, "id": "A", "live_status": "is_live"},
+        {**_c, "id": "B", "live_status": "is_upcoming"},
+        {**_c, "id": "C", "live_status": "was_live"},
+        {**_c, "id": "D", "live_status": None},  # sin dato -> fallback
     ]
     llamadas_esta_en_vivo = []
 
@@ -305,6 +348,23 @@ def _test_vivos_de_interes_usa_live_status_del_flat():
     print("OK detector: vivos_de_interes usa live_status del flat, solo cae a extract completo si falta")
 
 
+def _test_clasificar_ec():
+    """Titulos reales del canal de la Asamblea (2026-09-26), incluidos los
+    que vienen en ingles."""
+    for t in ("Sesión No. 126-AN-2025-2029 del pleno de la Asamblea Nacional",
+              "National Assembly Plenary Session No. 120-AN-2025-2029",
+              "Virtual Session No. 119-AN-2025-2029 of the National Assembly Plenary",
+              "Continuación de la Sesión No. 113-AN-2025-2029 del pleno de la Asamblea Nacional"):
+        assert clasificar_titulo(t, "EC") == TIPO_PLENO_EC, t
+    assert clasificar_titulo("Sesión Solemne de la Asamblea Nacional - Día de la Fundación", "EC") is None
+    # Un titulo de comision del canal EC no debe caer en keywords de Peru.
+    assert clasificar_titulo("Comisión de Salud - Asamblea", "EC") is None
+    # Peru sin cambios.
+    assert clasificar_titulo("Sesion del Pleno del Senado de la Republica") == "Pleno: Senado"
+    print("OK detector: clasificacion EC por numero de sesion, Peru intacto")
+
+
 if __name__ == "__main__":
     _demo()
     _test_vivos_de_interes_usa_live_status_del_flat()
+    _test_clasificar_ec()
