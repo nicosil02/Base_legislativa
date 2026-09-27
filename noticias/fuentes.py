@@ -183,6 +183,9 @@ INSTITUCIONES_AMPLIAS: set[str] = {"MEF", "Salud con Lupa"}
 # LATAM/Fed/Argentina/Mexico, nada de Ecuador).
 FUENTES_GENERALISTAS_FILTRAR_RUIDO: set[str] = {
     "El Universo", "El Comercio", "Bloomberg Linea Ecuador",
+    # Medios generales agregados 2026-09-27 (traen deportes/espectaculos tambien)
+    "Gestion", "La Republica", "RPP", "Infobae Peru", "Andina", "Expreso", "Canal N",
+    "PRIMICIAS", "Expreso EC", "La Hora", "Vistazo", "Ecuavisa", "Teleamazonas", "El Telegrafo",
 }
 
 # Que tema(s) de noticias/temas.py::TEMAS le importan de verdad a cada
@@ -323,23 +326,39 @@ FUENTES_PE: list[dict] = [
     # --- COYUNTURA POLITICA: medios principales ---
     {"categoria": "Coyuntura Politica", "pais": "PE", "nombre": "El Comercio",
      "url": "https://elcomercio.pe/politica/",
-     "rss_url": "https://elcomercio.pe/feed/", "tipo": "rss", "activa": 0, "notas": "Feed roto - cubierto por Google News"},
+     "rss_url": "https://elcomercio.pe/arcio/rss/category/politica/", "tipo": "rss", "notas": "Reactivada 2026-09-27: el feed funciona (probado en vivo, notas del mismo dia). La nota vieja de feed roto estaba desactualizada."},
     {"categoria": "Coyuntura Politica", "pais": "PE", "nombre": "Gestion",
      "url": "https://gestion.pe/politica/",
-     "rss_url": "https://gestion.pe/arcio/rss/category/politica/", "tipo": "rss", "activa": 0, "notas": "Feed roto - cubierto por Google News"},
+     "rss_url": "https://gestion.pe/arcio/rss/category/peru/", "tipo": "rss", "notas": "Reactivada 2026-09-27: el feed funciona (probado en vivo, notas del mismo dia). La nota vieja de feed roto estaba desactualizada."},
     {"categoria": "Coyuntura Politica", "pais": "PE", "nombre": "La Republica",
      "url": "https://larepublica.pe/politica",
-     "rss_url": "https://larepublica.pe/feed/", "tipo": "rss", "activa": 0,
-     "notas": "Desactivada 2026-09-16: rss_url da 404, autodiscovery contra la "
-              "home tampoco encontro un feed valido, verificado en vivo - "
-              "cubierta igual por los periodistas de La Republica agregados via "
-              "Google News (Martin Hidalgo, Adrian Sarria, etc.)."},
+     "rss_url": "https://larepublica.pe/rss/politica.xml", "tipo": "rss", "notas": "Reactivada 2026-09-27: el feed funciona (probado en vivo, notas del mismo dia). La nota vieja de feed roto estaba desactualizada."},
     {"categoria": "Coyuntura Politica", "pais": "PE", "nombre": "Peru 21",
      "url": "https://peru21.pe/politica/",
      "rss_url": "https://peru21.pe/arcio/rss/category/politica/", "tipo": "rss"},
     {"categoria": "Coyuntura Politica", "pais": "PE", "nombre": "RPP",
      "url": "https://rpp.pe/politica",
-     "rss_url": "https://rpp.pe/politica.xml", "tipo": "rss", "activa": 0, "notas": "Feed roto - cubierto por Google News"},
+     "rss_url": "https://rpp.pe/feed/politica", "tipo": "rss", "notas": "Reactivada 2026-09-27: el feed funciona (probado en vivo, notas del mismo dia). La nota vieja de feed roto estaba desactualizada."},
+    # Medios que faltaban (Nicolas 2026-09-27: "algunas paginas no las tiene mapeadas").
+    # Los que no tienen RSS propio entran por Google News filtrado al dominio.
+    {"categoria": "Coyuntura Politica", "pais": "PE", "nombre": "Infobae Peru",
+     "url": "https://www.infobae.com/peru/",
+     "rss_url": "https://www.infobae.com/arc/outboundfeeds/rss/category/peru/", "tipo": "rss"},
+    {"categoria": "Coyuntura Politica", "pais": "PE", "nombre": "Andina",
+     "url": "https://andina.pe/",
+     "rss_url": "https://andina.pe/agencia/rss.aspx", "tipo": "rss"},
+    {"categoria": "Coyuntura Politica", "pais": "PE", "nombre": "IDL-Reporteros",
+     "url": "https://idl-reporteros.pe/",
+     "rss_url": "https://idl-reporteros.pe/feed/", "tipo": "rss"},
+    {"categoria": "Coyuntura Politica", "pais": "PE", "nombre": "Expreso",
+     "url": "https://www.expreso.com.pe/",
+     "rss_url": "https://news.google.com/rss/search?q=site:expreso.com.pe+when:1d&hl=es-419&gl=PE&ceid=PE:es", "tipo": "rss"},
+    {"categoria": "Coyuntura Politica", "pais": "PE", "nombre": "Canal N",
+     "url": "https://canaln.pe/",
+     "rss_url": "https://news.google.com/rss/search?q=site:canaln.pe+when:1d&hl=es-419&gl=PE&ceid=PE:es", "tipo": "rss"},
+    {"categoria": "Coyuntura Politica", "pais": "PE", "nombre": "Ojo Publico",
+     "url": "https://ojo-publico.com/",
+     "rss_url": "https://news.google.com/rss/search?q=site:ojo-publico.com+when:3d&hl=es-419&gl=PE&ceid=PE:es", "tipo": "rss"},
 
     # --- INSTITUCION: Congreso, ministerios, agencias ---
     {"categoria": "Institucion", "pais": "PE",
@@ -598,12 +617,26 @@ FUENTES_EC: list[dict] = [
      "rss_url": "https://www.eluniverso.com/rss/politica/", "tipo": "rss"},
     {"categoria": "Coyuntura Politica", "pais": "EC", "nombre": "PRIMICIAS",
      "url": "https://www.primicias.ec/politica/",
-     "rss_url": "https://www.primicias.ec/rss/", "tipo": "rss", "activa": 0,
-     "notas": "Desactivada 2026-09-16: rss_url da 404 (PRIMICIAS descontinuo "
-              "su RSS), y la pagina de politica es JS-rendered (los <h1-4> "
-              "del HTML estatico son nombres de auspiciantes, no titulares "
-              "reales - verificado en vivo) asi que tampoco sirve como html. "
-              "Cubierto parcialmente por las queries de Google News EC."},
+     "rss_url": "https://news.google.com/rss/search?q=site:primicias.ec+when:1d&hl=es-419&gl=EC&ceid=EC:es", "tipo": "rss",
+     "notas": "2026-09-27: sin RSS propio (404 desde 2026-09-16) - entra por Google News filtrado al dominio, probado en vivo con notas del dia."},
+    {"categoria": "Coyuntura Politica", "pais": "EC", "nombre": "Expreso EC",
+     "url": "https://www.expreso.ec/",
+     "rss_url": "https://news.google.com/rss/search?q=site:expreso.ec+when:1d&hl=es-419&gl=EC&ceid=EC:es", "tipo": "rss"},
+    {"categoria": "Coyuntura Politica", "pais": "EC", "nombre": "La Hora",
+     "url": "https://www.lahora.com.ec/",
+     "rss_url": "https://news.google.com/rss/search?q=site:lahora.com.ec+when:1d&hl=es-419&gl=EC&ceid=EC:es", "tipo": "rss"},
+    {"categoria": "Coyuntura Politica", "pais": "EC", "nombre": "Vistazo",
+     "url": "https://www.vistazo.com/",
+     "rss_url": "https://news.google.com/rss/search?q=site:vistazo.com+when:1d&hl=es-419&gl=EC&ceid=EC:es", "tipo": "rss"},
+    {"categoria": "Coyuntura Politica", "pais": "EC", "nombre": "Ecuavisa",
+     "url": "https://www.ecuavisa.com/",
+     "rss_url": "https://news.google.com/rss/search?q=site:ecuavisa.com+when:1d&hl=es-419&gl=EC&ceid=EC:es", "tipo": "rss"},
+    {"categoria": "Coyuntura Politica", "pais": "EC", "nombre": "Teleamazonas",
+     "url": "https://www.teleamazonas.com/",
+     "rss_url": "https://news.google.com/rss/search?q=site:teleamazonas.com+when:1d&hl=es-419&gl=EC&ceid=EC:es", "tipo": "rss"},
+    {"categoria": "Coyuntura Politica", "pais": "EC", "nombre": "El Telegrafo",
+     "url": "https://www.eltelegrafo.com.ec/",
+     "rss_url": "https://news.google.com/rss/search?q=site:eltelegrafo.com.ec+when:1d&hl=es-419&gl=EC&ceid=EC:es", "tipo": "rss"},
     {"categoria": "Coyuntura Politica", "pais": "EC", "nombre": "Gestion",
      "url": "https://www.revistagestion.ec/", "tipo": "html"},
     {"categoria": "Coyuntura Politica", "pais": "EC",
