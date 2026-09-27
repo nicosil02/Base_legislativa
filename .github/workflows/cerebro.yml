@@ -41,7 +41,7 @@ jobs:
         with:
           python-version: '3.13'
 
-      - run: pip install -q google-genai sqlite-vec
+      - run: pip install -q google-genai sqlite-vec lightrag-hku fastembed
 
       - name: Bajar DBs y el cerebro publicado
         env:
@@ -54,12 +54,22 @@ jobs:
             gh release create cerebro --title "Cerebro (embeddings)" \
               --notes "data/cerebro.db generado por .github/workflows/cerebro.yml - no editar a mano." --latest=false
           gh release download cerebro -p cerebro.db -D data --clobber || echo "sin cerebro.db previo, se arma de cero"
+          gh release download cerebro -p grafo.tar.gz -D data --clobber             && tar -xzf data/grafo.tar.gz -C data || echo "sin grafo previo, se arma de cero"
 
       - name: Embeber lo nuevo
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           PYTHONIOENCODING: utf-8
         run: python -X utf8 -u -m cerebro.embeddings sincronizar
+
+      - name: Grafo de conocimiento (LightRAG) - agregar lo nuevo
+        # continue-on-error: el grafo es un extra; si Gemini corta por cupo,
+        # lo ya procesado queda guardado y la proxima corrida sigue.
+        continue-on-error: true
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          PYTHONIOENCODING: utf-8
+        run: timeout 2400 python -X utf8 -u -m cerebro.grafo construir 40
 
       - name: Publicar
         # always(): si el paso anterior se corta a mitad (limite del tier
@@ -70,3 +80,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           if [ -f data/cerebro.db ]; then gh release upload cerebro data/cerebro.db --clobber; fi
+          if [ -d data/grafo ]; then
+            python -X utf8 -m cerebro.grafo empaquetar
+            gh release upload cerebro data/grafo.tar.gz --clobber
+          fi
