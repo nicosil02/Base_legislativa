@@ -438,6 +438,84 @@ def load_descripcion(uid: str) -> tuple[str, str, str, str]:
     return (r[0] or "", r[1] or "", r[2] or "", r[3] or "")
 
 
+# ---------- Pleno y comisiones de la Asamblea: transcripcion + resumen ----------
+# Mismo pipeline que Peru (congreso_live: live-watch en vigilar-congreso.yml,
+# captions/backfill, rutina horaria de resumenes) - las filas viven en
+# `sesiones_transcripciones` de proyectos.db (la DB de Peru), con tipo
+# terminado en "(EC)". Pleno por YouTube (en vivo + terminado); comisiones
+# por Facebook, solo ya terminadas (congreso_live/facebook_ec.py).
+from congreso_live.facebook_ec import url_video
+
+
+@st.cache_data(ttl=90)
+def _plenos_ec_en_vivo() -> list[dict]:
+    try:
+        from congreso_live.detector import vivos_de_interes
+        return [v for v in vivos_de_interes() if v.get("pais") == "EC"]
+    except Exception as e:
+        print(f"[agenda-ec] no se pudo chequear en vivo: {e}")
+        return []
+
+
+@st.cache_data(ttl=300)
+def load_sesiones_ec_transcritas(limit: int = 400) -> pd.DataFrame:
+    from congreso_live.transcripciones import _find_db_path as _db_pe
+    db = _db_pe()
+    if not db.exists():
+        return pd.DataFrame()
+    conn = sqlite3.connect(f"file:{db}?mode=ro&immutable=1", uri=True)
+    try:
+        return pd.read_sql_query(
+            """SELECT video_id, tipo, titulo, fecha, duracion_seg, texto
+               FROM sesiones_transcripciones WHERE tipo LIKE '%(EC)'
+               ORDER BY fecha DESC, video_id DESC LIMIT ?""",
+            conn, params=(limit,))
+    except Exception:
+        return pd.DataFrame()
+    finally:
+        conn.close()
+
+
+
+
+def _clave_organo(nombre: str | None) -> str:
+    """'Comision: Seguridad Integral (EC)' / 'Seguridad Integral' / 'Pleno'
+    -> clave comparable entre la agenda (sesiones_ec.nombre_comision) y las
+    transcripciones (tipo). Los nombres cortos de congreso_live/facebook_ec.py
+    son justamente los de la agenda, asi que alcanza con normalizar."""
+    import unicodedata
+    t = (nombre or "").split(":", 1)[-1].replace("(EC)", "").strip().lower()
+    t = "".join(c for c in unicodedata.normalize("NFD", t) if unicodedata.category(c) != "Mn")
+    return "pleno" if t.startswith("asamblea nacional") else t
+
+
+@st.cache_data(ttl=300)
+def transcripciones_por_sesion() -> dict[tuple[str, str], list[dict]]:
+    """{(organo, fecha): [transcripciones]} para cruzar con la agenda."""
+    df_t = load_sesiones_ec_transcritas()
+    out: dict[tuple[str, str], list[dict]] = {}
+    for _, r in df_t.iterrows():
+        out.setdefault((_clave_organo(r["tipo"]), r["fecha"] or ""), []).append(r.to_dict())
+    return out
+
+
+def _render_transcripcion_ec(t: dict, resumenes: dict, key: str) -> None:
+    """Resumen + ideas + enlace + texto completo de 1 transcripcion EC."""
+    _dur = t.get("duracion_seg")
+    _dur_txt = f"{int(_dur) // 3600}h {(int(_dur) % 3600) // 60}min" if _dur else "—"
+    _fuente = "Facebook" if str(t["video_id"]).startswith("fb_") else "YouTube"
+    st.caption(f"{t['titulo'][:120]} · Duración: {_dur_txt} · "
+               f"[Ver en {_fuente} ↗]({url_video(t['video_id'])})")
+    _res = resumenes.get(t["video_id"])
+    if _res:
+        st.markdown(_res["resumen"])
+        for _idea in _res.get("ideas_clave", []):
+            st.markdown(f"- {_idea}")
+    else:
+        st.caption("Resumen pendiente — se genera en la próxima corrida horaria.")
+    if st.toggle("Ver transcripción completa", key=f"ec_tr_{key}_{t['video_id']}"):
+        st.code(t["texto"], language=None, wrap_lines=True, height=300)
+
 # ====================== UI ======================
 
 st.markdown('<div class="country-eyebrow">Radar Legislativo · Agenda parlamentaria</div>', unsafe_allow_html=True)
@@ -538,7 +616,23 @@ st.markdown(f"##### {len(df):,} sesión(es) de {len(df_full):,} en el rango")
 
 # Columnas: Fecha, Hora, Comision, PLs en agenda, Nombre de sesion.
 # (Sin Estado — solo confunde, todas las sesiones del feed son CONFIRMED)
-COLS_VISIBLES = ["Fecha", "Hora", "Comisión", "PLs en agenda", "Nombre de sesión"]
+# Cruce con las transcripciones (Pleno por YouTube, comisiones por Facebook):
+# misma comision + misma fecha. Pedido de Nicolas 2026-09-27: que las
+# transcripciones de Ecuador esten DENTRO de la agenda, como en Peru.
+_tr_idx = transcripciones_por_sesion()
+from congreso_live.resumenes_store import list_resumenes as _list_res
+_resumenes_ec = _list_res()
+
+
+def _estado_tr(row) -> str:
+    ts = _tr_idx.get((_clave_organo(row.get("Comisión")), row.get("Fecha") or ""), [])
+    if not ts:
+        return ""
+    return "✅ Resumen" if any(t["video_id"] in _resumenes_ec for t in ts) else "📝 Transcrita"
+
+
+df = df.assign(**{"Transcripción": df.apply(_estado_tr, axis=1) if not df.empty else []})
+COLS_VISIBLES = ["Fecha", "Hora", "Comisión", "Transcripción", "PLs en agenda", "Nombre de sesión"]
 df_view = df[[c for c in COLS_VISIBLES if c in df.columns]].copy()
 
 # Reset index para que el index numerico (0..N) sea el row id que devuelve
@@ -579,6 +673,16 @@ if sel_rows:
         if descripcion.strip():
             with st.expander("Orden del día / descripción completa", expanded=True):
                 st.write(descripcion)
+
+        _ts = _tr_idx.get((_clave_organo(comision_sel), fecha_sel or ""), [])
+        if _ts:
+            st.markdown(f"##### 🎙️ Qué pasó en la sesión ({len(_ts)} transmisión(es))")
+            for _t in _ts:
+                with st.container(border=True):
+                    _render_transcripcion_ec(_t, _resumenes_ec, key=f"det_{uid}")
+        else:
+            st.caption("🎙️ Todavía no hay transcripción de esta sesión (las comisiones se "
+                       "transcriben cuando termina la transmisión en Facebook).")
 
         df_pls = load_pls_de_sesion(uid)
         if not df_pls.empty:
@@ -715,44 +819,6 @@ else:
             )
             st.success(f"Marcado para: {', '.join(sel_pl_clientes)}. El agente lo redacta en la próxima hora.")
 
-# ---------- Pleno y comisiones de la Asamblea: transcripcion + resumen ----------
-# Mismo pipeline que Peru (congreso_live: live-watch en vigilar-congreso.yml,
-# captions/backfill, rutina horaria de resumenes) - las filas viven en
-# `sesiones_transcripciones` de proyectos.db (la DB de Peru), con tipo
-# terminado en "(EC)". Pleno por YouTube (en vivo + terminado); comisiones
-# por Facebook, solo ya terminadas (congreso_live/facebook_ec.py).
-from congreso_live.facebook_ec import url_video
-
-
-@st.cache_data(ttl=90)
-def _plenos_ec_en_vivo() -> list[dict]:
-    try:
-        from congreso_live.detector import vivos_de_interes
-        return [v for v in vivos_de_interes() if v.get("pais") == "EC"]
-    except Exception as e:
-        print(f"[agenda-ec] no se pudo chequear en vivo: {e}")
-        return []
-
-
-@st.cache_data(ttl=300)
-def load_sesiones_ec_transcritas(limit: int = 60) -> pd.DataFrame:
-    from congreso_live.transcripciones import _find_db_path as _db_pe
-    db = _db_pe()
-    if not db.exists():
-        return pd.DataFrame()
-    conn = sqlite3.connect(f"file:{db}?mode=ro&immutable=1", uri=True)
-    try:
-        return pd.read_sql_query(
-            """SELECT video_id, tipo, titulo, fecha, duracion_seg, texto
-               FROM sesiones_transcripciones WHERE tipo LIKE '%(EC)'
-               ORDER BY fecha DESC, video_id DESC LIMIT ?""",
-            conn, params=(limit,))
-    except Exception:
-        return pd.DataFrame()
-    finally:
-        conn.close()
-
-
 st.markdown("---")
 st.markdown("### Sesiones de la Asamblea · transcripción y resumen")
 st.caption("Pleno (YouTube, también en vivo) y comisiones (Facebook, cuando la sesión termina).")
@@ -763,24 +829,10 @@ df_plenos_ec = load_sesiones_ec_transcritas()
 if df_plenos_ec.empty:
     st.caption("Todavía no hay sesiones transcritas.")
 else:
-    from congreso_live.resumenes_store import list_resumenes
-    _resumenes_ec = list_resumenes()
-    for _, _row in df_plenos_ec.iterrows():
-        _dur = _row["duracion_seg"]
-        _dur_txt = f"{int(_dur) // 3600}h {(int(_dur) % 3600) // 60}min" if _dur else "—"
+    for _, _row in df_plenos_ec.head(40).iterrows():
         _organo = _row["tipo"].split(":", 1)[-1].replace("(EC)", "").strip()
-        _fuente = "Facebook" if _row["video_id"].startswith("fb_") else "YouTube"
         with st.expander(f"{_row['fecha'] or 'Sin fecha'} · {_organo} · {_row['titulo'][:90]}"):
-            st.caption(f"Duración: {_dur_txt} · [Ver en {_fuente} ↗]({url_video(_row['video_id'])})")
-            _res = _resumenes_ec.get(_row["video_id"])
-            if _res:
-                st.markdown(_res["resumen"])
-                for _idea in _res.get("ideas_clave", []):
-                    st.markdown(f"- {_idea}")
-            else:
-                st.caption("Resumen pendiente — se genera en la próxima corrida horaria.")
-            if st.toggle("Ver transcripción completa", key=f"ec_tr_{_row['video_id']}"):
-                st.code(_row["texto"], language=None, wrap_lines=True, height=300)
+            _render_transcripcion_ec(_row.to_dict(), _resumenes_ec, key="lista")
 
 # ---------- Footer ----------
 st.markdown('<div class="footer-rule"></div>', unsafe_allow_html=True)

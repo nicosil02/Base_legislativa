@@ -1086,7 +1086,17 @@ if sel_cliente != TODOS_CLIENTES:
     # los 4 PLs de la matriz Bayer Crop cayeron en "Consumo masivo"/
     # "Tributos", no "Agricultura" - son leyes tributarias que afectan al
     # agro, no leyes agrarias en si).
-    df = df[df["Tema"].isin(temas_cliente) | df["PL"].isin(matriz_cliente)]
+    # + cerebro (2026-09-27): PLs con afinidad ALTA por significado con el
+    # perfil del cliente aunque su Tema no este en la tabla fija (el
+    # clasificador ve solo el tema literal). Se ordena por esa afinidad.
+    from cerebro.embeddings import AFINIDAD_ALTA, nivel_afinidad
+    from cerebro.ui import afinidad_claves
+    _af_pl = afinidad_claves(tuple(f"pl_PE_{p}" for p in df["PL"]), sel_cliente)
+    _afin = df["PL"].map(lambda p: _af_pl.get(f"pl_PE_{p}"))
+    df = df[df["Tema"].isin(temas_cliente) | df["PL"].isin(matriz_cliente)
+            | (_afin.fillna(0) >= AFINIDAD_ALTA)]
+    if _af_pl:
+        df = df.assign(_afin=_afin, Relevancia=_afin.map(nivel_afinidad))                .sort_values("_afin", ascending=False, na_position="last")
 if sel_estado != TODOS:
     df = df[df["Estado"] == sel_estado]
 if sel_comision != TODAS:
@@ -1121,6 +1131,8 @@ df_view["Autor(es)"] = (
 )
 df_view = df_view.rename(columns={"Partido": "Bancada", "Autor(es)": "Autor"})
 COLS_VISIBLES = ["PL", "Cámara", "Título", "Presentado", "Estado", "Autor", "Bancada", "Comisión", "Tema"]
+if "Relevancia" in df_view.columns:  # solo con un cliente elegido (cerebro)
+    COLS_VISIBLES = ["PL", "Relevancia"] + COLS_VISIBLES[1:]
 df_view = df_view[[c for c in COLS_VISIBLES if c in df_view.columns]]
 
 # CSS para que el título envuelva (multi-línea) en vez de truncar con "..." -

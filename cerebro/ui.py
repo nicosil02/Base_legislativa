@@ -31,3 +31,39 @@ def afinidad_noticias(ids: tuple[int, ...], cliente: str) -> dict[int, float]:
         print(f"[cerebro] afinidad fallo: {e}")
         return {}
     return {int(k.split("_", 1)[1]): v for k, v in af.items()}
+
+
+@st.cache_data(ttl=1800, show_spinner=False)
+def afinidad_claves(claves: tuple[str, ...], cliente: str) -> dict[str, float]:
+    """{clave del cerebro: afinidad con el cliente} (PLs: pl_PE_<proyecto_ley>,
+    pl_EC_<n_tramite>). {} si el cerebro no esta disponible."""
+    conn = conexion()
+    if conn is None or not claves:
+        return {}
+    from cerebro.embeddings import afinidad
+    try:
+        return afinidad(list(claves), cliente, conn)
+    except Exception as e:
+        print(f"[cerebro] afinidad fallo: {e}")
+        return {}
+
+
+@st.cache_resource(show_spinner=False)
+def _vector_tema(tema: str):
+    from cerebro.embeddings import descripcion_tema, embeber
+    return embeber([descripcion_tema(tema)])[0]
+
+
+@st.cache_data(ttl=1800, show_spinner=False)
+def afinidad_tema_noticias(ids: tuple[int, ...], tema: str) -> dict[int, float]:
+    """{id de noticia: afinidad con el tema/sector}. {} si no hay cerebro."""
+    conn = conexion()
+    if conn is None or not ids:
+        return {}
+    from cerebro.embeddings import afinidad_vector
+    try:
+        af = afinidad_vector([f"noticia_{i}" for i in ids], _vector_tema(tema), conn)
+    except Exception as e:
+        print(f"[cerebro] afinidad de tema fallo: {e}")
+        return {}
+    return {int(k.split("_", 1)[1]): v for k, v in af.items()}
