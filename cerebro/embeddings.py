@@ -165,8 +165,18 @@ def corpus() -> list[dict]:
                                  FROM noticias n JOIN noticias_fuentes f ON f.id = n.fuente_id""").fetchall()
         except sqlite3.OperationalError:
             filas = []
+        from noticias.temas import es_fuente_multipais, pais_por_contenido
         for r in filas:
-            items.append({"clave": f"noticia_{r[0]}", "tipo": "noticia", "pais": r[5] or "PE",
+            # Mismo criterio que las paginas Noticias PE/EC: una fuente que
+            # cubre varios paises (Mundo Agropecuario, DPL News...) se asigna
+            # por CONTENIDO, y si no habla de Peru ni Ecuador queda afuera.
+            # Bug real 2026-09-27: "Brasil ordena frenar la fumigacion aerea
+            # con tres neonicotinoides" salia arriba para Syngenta como si
+            # fuera de Ecuador (pais de la fuente).
+            pais = pais_por_contenido(r[1], r[2], r[5]) if es_fuente_multipais(r[6]) else r[5]
+            if not pais:
+                continue
+            items.append({"clave": f"noticia_{r[0]}", "tipo": "noticia", "pais": pais,
                           "titulo": r[1], "fecha": (r[4] or "")[:10], "url": r[3],
                           "extra": json.dumps({"fuente": r[6]}, ensure_ascii=False),
                           "texto": f"{r[1] or ''}. {r[2] or ''}"})
@@ -214,7 +224,18 @@ def sincronizar(max_nuevos: int | None = None) -> dict:
     """Embebe solo lo nuevo o cambiado (por hash del texto). Idempotente."""
     conn = conectar()
     ya = {r["clave"]: (r["id"], r["hash"]) for r in conn.execute("SELECT id, clave, hash FROM items")}
-    pendientes = [it for it in corpus() if ya.get(it["clave"], (None, None))[1] != _hash(it["texto"])]
+    todos = corpus()
+    # Lo que ya no esta en el corpus (ej. noticia de otro pais filtrada) sale
+    # del indice - si no, seguiria apareciendo en busquedas y afinidad.
+    vigentes = {it["clave"] for it in todos}
+    sobran = [(clave, rid) for clave, (rid, _) in ya.items() if clave not in vigentes]
+    for _, rid in sobran:
+        conn.execute("DELETE FROM vec_items WHERE rowid=?", (rid,))
+        conn.execute("DELETE FROM items WHERE id=?", (rid,))
+    if sobran:
+        conn.commit()
+        print(f"[cerebro] {len(sobran)} documentos fuera del corpus, borrados del indice")
+    pendientes = [it for it in todos if ya.get(it["clave"], (None, None))[1] != _hash(it["texto"])]
     # Lo mas reciente primero (sesiones antes que nada): si algo corta la
     # corrida a la mitad, lo que queda pendiente es lo mas viejo.
     pendientes.sort(key=lambda it: (it["tipo"] == "sesion", it["fecha"] or ""), reverse=True)
@@ -391,6 +412,10 @@ def _demo():
         assert sincronizar()["nuevos"] == 0  # idempotente: nada cambio
         items[0]["texto"] = "agro plaguicidas SENASA"
         assert sincronizar()["nuevos"] == 1  # cambio el texto -> se re-embebe solo ese
+        quitado = items.pop(1)
+        assert sincronizar()["total"] == 2  # salio del corpus -> sale del indice
+        items.insert(1, quitado)
+        assert sincronizar()["nuevos"] == 1
         top = buscar("agro", k=3)
         assert {t["clave"] for t in top[:2]} == {"a", "c"} and top[0]["similitud"] > 0.99, top
         assert [t["clave"] for t in buscar("agro", k=3, pais="EC")] == ["c"]
