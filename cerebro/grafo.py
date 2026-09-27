@@ -72,9 +72,20 @@ async def _rag():
     key = _clave_gemini()
 
     async def llm(prompt, system_prompt=None, history_messages=[], **kwargs):
-        return await gemini_model_complete(prompt, system_prompt=system_prompt,
-                                           history_messages=history_messages, api_key=key,
-                                           model_name=LLM, **kwargs)
+        # 503 "model is currently experiencing high demand" es saturacion
+        # pasajera de Google (bug real 2026-09-27: los 40 docs de una corrida
+        # fallaron asi). LightRAG ya reintenta 3 veces en segundos; aca se
+        # espera mas antes de rendirse - el doc queda FAILED y la proxima
+        # corrida lo reintenta igual.
+        for intento in range(4):
+            try:
+                return await gemini_model_complete(prompt, system_prompt=system_prompt,
+                                                   history_messages=history_messages, api_key=key,
+                                                   model_name=LLM, **kwargs)
+            except Exception as e:
+                if intento == 3 or not any(x in str(e) for x in ("503", "UNAVAILABLE", "overloaded")):
+                    raise
+                await asyncio.sleep(45 * (intento + 1))
 
     # Embeddings LOCALES (mismo modelo que cerebro/embeddings.py): el grafo
     # embebe miles de entidades y relaciones, y el tier gratuito de Gemini
@@ -82,7 +93,12 @@ async def _rag():
     # redactar respuestas.
     from cerebro.embeddings import DIM, MODELO, embeber
 
-    @wrap_embedding_func_with_attrs(embedding_dim=DIM, max_token_size=128, model_name=MODELO)
+    # max_token_size alto a proposito: con 128 (el limite real del modelo)
+    # LightRAG parte cada documento en pedazos de 128 tokens ANTES de extraer
+    # entidades - bug real 2026-09-27: 915 pedazos para 40 docs = ~20x mas
+    # llamadas a Gemini. El modelo local igual lee solo el comienzo de cada
+    # pedazo para su vector; la extraccion (Gemini) ve el texto completo.
+    @wrap_embedding_func_with_attrs(embedding_dim=DIM, max_token_size=8192, model_name=MODELO)
     async def emb(texts: list[str]) -> np.ndarray:
         return np.array(await asyncio.to_thread(embeber, texts), dtype=np.float32)
 
