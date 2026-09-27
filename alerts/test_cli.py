@@ -15,26 +15,26 @@ import alerts.send  # noqa: F401 - necesario para que patch() resuelva "alerts.s
 def _fake_payload():
     # Sin contenido real - lo que importa aca es la logica de envio/estado,
     # no el contenido del email (eso ya lo cubre alerts/build.py aparte).
+    return {"fecha": "2026-09-20", "peru": {"dictamenes": [], "proyectos": [{"pl": "1"}], "sesiones": []},
+            "ecuador": {"dictamenes": [], "proyectos": [], "sesiones": []}}
+
+
+def _payload_vacio():
     return {"fecha": "2026-09-20", "peru": {"dictamenes": [], "proyectos": [], "sesiones": []},
             "ecuador": {"dictamenes": [], "proyectos": [], "sesiones": []}}
 
 
-def test_am_pm_siempre_envian_aunque_no_haya_contenido():
-    """Bug real 2026-09-20: el viejo esquema (9am solo si hay contenido,
-    retry a las 10am) se quedaba callado si a las 9am no habia nada -
-    Nicolas: "a veces no me dice nada, o sea me llega sin ningun update".
-    Los 2 horarios fijos ahora SIEMPRE envian, con o sin contenido."""
+def test_sin_novedades_no_envia_ni_marca_el_slot():
+    """Nicolas 2026-09-27: "si no hay actualizaciones, no me envies nada".
+    Sin contenido no se manda, y el slot no queda marcado (la ventana del
+    proximo envio sigue siendo desde el ultimo correo REAL)."""
     with tempfile.TemporaryDirectory() as tmp:
         state_file = Path(tmp) / "alert_sent_log.json"
         enviados = []
-        with patch.object(cli, "STATE_FILE", state_file), \
-             patch.object(cli, "_today_str", lambda: "2026-09-20"), \
-             patch("alerts.build.build_alert", lambda since_iso=None: _fake_payload()), \
-             patch("alerts.send.send_email", lambda subject, html, recipient: enviados.append(recipient)), \
-             patch.object(cli, "_list_recipients", lambda: ["nico@example.com"]):
-            args = cli.main(["send", "--slot", "am"])
-            assert args == 0
-        assert len(enviados) == 1, "debe enviar aunque el payload este vacio"
+        with patch.object(cli, "STATE_FILE", state_file),              patch.object(cli, "_today_str", lambda: "2026-09-20"),              patch("alerts.build.build_alert", lambda since_iso=None: _payload_vacio()),              patch("alerts.send.send_email", lambda subject, html, recipient: enviados.append(recipient)),              patch.object(cli, "_list_recipients", lambda: ["nico@example.com"]):
+            assert cli.main(["send", "--slot", "am"]) == 0
+        assert enviados == [], "sin novedades no debe enviar"
+        assert not state_file.exists(), "no debe marcar el slot como enviado"
 
 
 def test_no_duplica_el_mismo_slot_el_mismo_dia():
