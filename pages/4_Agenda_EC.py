@@ -715,12 +715,13 @@ else:
             )
             st.success(f"Marcado para: {', '.join(sel_pl_clientes)}. El agente lo redacta en la próxima hora.")
 
-# ---------- Plenos de la Asamblea: transcripcion + resumen ----------
+# ---------- Pleno y comisiones de la Asamblea: transcripcion + resumen ----------
 # Mismo pipeline que Peru (congreso_live: live-watch en vigilar-congreso.yml,
 # captions/backfill, rutina horaria de resumenes) - las filas viven en
-# `sesiones_transcripciones` de proyectos.db (la DB de Peru), marcadas con
-# TIPO_PLENO_EC. Las comisiones EC transmiten por Facebook, no estan aca.
-from congreso_live.detector import TIPO_PLENO_EC
+# `sesiones_transcripciones` de proyectos.db (la DB de Peru), con tipo
+# terminado en "(EC)". Pleno por YouTube (en vivo + terminado); comisiones
+# por Facebook, solo ya terminadas (congreso_live/facebook_ec.py).
+from congreso_live.facebook_ec import url_video
 
 
 @st.cache_data(ttl=90)
@@ -734,7 +735,7 @@ def _plenos_ec_en_vivo() -> list[dict]:
 
 
 @st.cache_data(ttl=300)
-def load_plenos_ec(limit: int = 30) -> pd.DataFrame:
+def load_sesiones_ec_transcritas(limit: int = 60) -> pd.DataFrame:
     from congreso_live.transcripciones import _find_db_path as _db_pe
     db = _db_pe()
     if not db.exists():
@@ -742,10 +743,10 @@ def load_plenos_ec(limit: int = 30) -> pd.DataFrame:
     conn = sqlite3.connect(f"file:{db}?mode=ro&immutable=1", uri=True)
     try:
         return pd.read_sql_query(
-            """SELECT video_id, titulo, fecha, duracion_seg, texto
-               FROM sesiones_transcripciones WHERE tipo = ?
+            """SELECT video_id, tipo, titulo, fecha, duracion_seg, texto
+               FROM sesiones_transcripciones WHERE tipo LIKE '%(EC)'
                ORDER BY fecha DESC, video_id DESC LIMIT ?""",
-            conn, params=(TIPO_PLENO_EC, limit))
+            conn, params=(limit,))
     except Exception:
         return pd.DataFrame()
     finally:
@@ -753,22 +754,24 @@ def load_plenos_ec(limit: int = 30) -> pd.DataFrame:
 
 
 st.markdown("---")
-st.markdown("### Plenos de la Asamblea · transcripción y resumen")
+st.markdown("### Sesiones de la Asamblea · transcripción y resumen")
+st.caption("Pleno (YouTube, también en vivo) y comisiones (Facebook, cuando la sesión termina).")
 for _v in _plenos_ec_en_vivo():
     st.markdown(f"🔴 **En vivo ahora:** [{_v['titulo']}]({_v['url']}) — se está "
                 "transcribiendo sola; el resumen se actualiza cada hora.")
-df_plenos_ec = load_plenos_ec()
+df_plenos_ec = load_sesiones_ec_transcritas()
 if df_plenos_ec.empty:
-    st.caption("Todavía no hay plenos transcritos.")
+    st.caption("Todavía no hay sesiones transcritas.")
 else:
     from congreso_live.resumenes_store import list_resumenes
     _resumenes_ec = list_resumenes()
     for _, _row in df_plenos_ec.iterrows():
         _dur = _row["duracion_seg"]
         _dur_txt = f"{int(_dur) // 3600}h {(int(_dur) % 3600) // 60}min" if _dur else "—"
-        with st.expander(f"{_row['fecha'] or 'Sin fecha'} · {_row['titulo'][:100]}"):
-            st.caption(f"Duración: {_dur_txt} · "
-                       f"[Ver en YouTube ↗](https://www.youtube.com/watch?v={_row['video_id']})")
+        _organo = _row["tipo"].split(":", 1)[-1].replace("(EC)", "").strip()
+        _fuente = "Facebook" if _row["video_id"].startswith("fb_") else "YouTube"
+        with st.expander(f"{_row['fecha'] or 'Sin fecha'} · {_organo} · {_row['titulo'][:90]}"):
+            st.caption(f"Duración: {_dur_txt} · [Ver en {_fuente} ↗]({url_video(_row['video_id'])})")
             _res = _resumenes_ec.get(_row["video_id"])
             if _res:
                 st.markdown(_res["resumen"])

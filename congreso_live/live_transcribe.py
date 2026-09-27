@@ -169,12 +169,13 @@ def capturar_audio_en_vivo(video_id: str, segundos: int = 30) -> Path | None:
     return wav_path
 
 
-def descargar_audio_completo(video_id: str) -> Path | None:
+def descargar_audio_completo(video_id: str, url: str | None = None) -> Path | None:
     """Baja el audio COMPLETO de un video YA TERMINADO (VOD) - a diferencia
     de capturar_audio_en_vivo (pensada para clips cortos de streams en
     vivo, con timeout de unos segundos), esta espera lo que haga falta
     para bajar el archivo entero. Usa YT_DLP_PROXY (WARP) igual que el
-    resto del modulo - corre en CI igual que en local."""
+    resto del modulo - corre en CI igual que en local. `url` para videos que
+    no son de YouTube (Facebook, ver facebook_ec.py)."""
     ffmpeg_local = _ffmpeg_bin()
     tmp_dir = Path(tempfile.mkdtemp(prefix="vali_vod_"))
     audio_path = tmp_dir / "audio.m4a"
@@ -183,7 +184,7 @@ def descargar_audio_completo(video_id: str) -> Path | None:
         "--ffmpeg-location", str(ffmpeg_local.parent),
         "-f", "bestaudio",
         "-o", str(audio_path),
-        f"https://www.youtube.com/watch?v={video_id}",
+        url or f"https://www.youtube.com/watch?v={video_id}",
     ]
     proxy = os.environ.get("YT_DLP_PROXY")
     if proxy:
@@ -213,7 +214,8 @@ def descargar_audio_completo(video_id: str) -> Path | None:
     return wav_path
 
 
-def transcribir_vod(video_id: str, tipo: str, titulo: str, modelo=None, db_path=None) -> dict:
+def transcribir_vod(video_id: str, tipo: str, titulo: str, modelo=None, db_path=None,
+                    url: str | None = None, fecha: str | None = None) -> dict:
     """Sesion YA TERMINADA: baja el audio completo y lo transcribe de una
     con Whisper, sin esperar los captions automaticos de YouTube (esos
     tardan de horas a dias - ver transcripciones.py). Pensado para
@@ -226,7 +228,7 @@ def transcribir_vod(video_id: str, tipo: str, titulo: str, modelo=None, db_path=
     from congreso_live.transcripciones import _find_db_path, init_schema
     from noticias.temas import clasificar as _clasificar_temas
 
-    wav = descargar_audio_completo(video_id)
+    wav = descargar_audio_completo(video_id, url) if url else descargar_audio_completo(video_id)
     if wav is None:
         return {"ok": False, "motivo": "no se pudo bajar/convertir el audio"}
     if modelo is None:
@@ -246,7 +248,7 @@ def transcribir_vod(video_id: str, tipo: str, titulo: str, modelo=None, db_path=
         """INSERT OR REPLACE INTO sesiones_transcripciones
            (video_id, tipo, titulo, fecha, duracion_seg, texto, temas, fetched_at)
            VALUES (?,?,?,?,?,?,?,?)""",
-        (video_id, tipo, titulo, datetime.now(timezone.utc).date().isoformat(),
+        (video_id, tipo, titulo, fecha or datetime.now(timezone.utc).date().isoformat(),
          duracion, texto, ",".join(temas), datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")),
     )
     conn.commit()
