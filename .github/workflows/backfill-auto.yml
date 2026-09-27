@@ -69,7 +69,10 @@ jobs:
 
       - name: Instalar deps
         run: |
-          pip install -q yt-dlp requests faster-whisper imageio-ffmpeg
+          pip install -q yt-dlp requests faster-whisper imageio-ffmpeg playwright
+          # Chromium para listar las paginas de Facebook de las comisiones EC
+          # (congreso_live/facebook_ec.py - yt-dlp no sabe listar paginas).
+          python -m playwright install --with-deps chromium > /dev/null
           # Ver vigilar-congreso.yml: el binario portable de imageio-ffmpeg
           # crasheaba (SIGSEGV) en runners de GitHub Actions - el de apt
           # (probado para este mismo Ubuntu) no.
@@ -109,6 +112,17 @@ jobs:
           if [ -z "$MAX" ]; then MAX=4; fi
           python -X utf8 -u -m congreso_live.cli backfill-auto \
               --max "$MAX" || echo "[warn] backfill-auto termino con error, sigo al commit igual"
+
+      - name: Comisiones Asamblea EC (Facebook) - transcribir sesiones terminadas
+        env:
+          PYTHONIOENCODING: utf-8
+          FFMPEG_BIN: /usr/bin/ffmpeg
+        run: |
+          # Sin YT_DLP_PROXY a proposito: Facebook no bloquea las IPs de
+          # GitHub (verificado 2026-09-27, listado + audio directo OK), y asi
+          # WARP queda solo para YouTube.
+          timeout 9000 python -X utf8 -u -m congreso_live.cli comisiones-ec --max 3 \
+              || echo "[warn] comisiones-ec termino con error, sigo al commit igual"
 
       - name: Guardar snapshot DB si cambio
         run: |
