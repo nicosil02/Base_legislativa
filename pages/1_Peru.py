@@ -1269,6 +1269,12 @@ if clientes and not df.empty:
         )
         st.success(f"Marcado para: {', '.join(sel_pl_clientes)}. El agente lo redacta en la próxima hora.")
 
+    # ---------- Preparar reunion (mismo PL elegido arriba) ----------
+    from alerts.reunion import render_panel
+    _r = df.loc[opciones_pl[sel_pl_label]]
+    render_panel({k: _r.get(k) for k in ("PL", "Título", "Estado", "Autor", "Bancada", "Comisión", "Tema", "Portal")},
+                 "PE", clientes, key="pe")
+
 # ---------- Footer ----------
 st.markdown('<div class="footer-rule"></div>', unsafe_allow_html=True)
 st.markdown(

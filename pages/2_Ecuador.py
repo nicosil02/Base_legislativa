@@ -885,6 +885,13 @@ if clientes and not df.empty:
         )
         st.success(f"Marcado para: {', '.join(sel_pl_clientes)}. El agente lo redacta en la próxima hora.")
 
+    # ---------- Preparar reunion (mismo PL elegido arriba) ----------
+    from alerts.reunion import render_panel
+    _r = df.loc[opciones_pl[sel_pl_label]]
+    _pl = {k: _r.get(k) for k in ("Título", "Estado", "Tipo proponente", "Proponente principal",
+                                   "Comisión", "Tema", "Unificado con")}
+    render_panel({"PL": _r["_n_tramite_label"], **_pl}, "EC", clientes, key="ec")
+
 # ---------- Panel de documentos del proyecto seleccionado ----------
 if selected_rows:
     row_idx = selected_rows[0]
