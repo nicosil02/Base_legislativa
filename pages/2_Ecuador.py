@@ -706,7 +706,16 @@ if sel_cliente != TODOS_CLIENTES:
     # Union categoria-clasificador OR matriz puntual - ver misma nota en
     # pages/1_Peru.py (el clasificador se pierde casos reales que la matriz
     # de Nicolas si tiene identificados).
-    df = df[df["Tema"].isin(temas_cliente) | df["_n_tramite_label"].astype(str).isin(matriz_cliente)]
+    # + cerebro (2026-09-27): afinidad ALTA por significado con el perfil del
+    # cliente, aunque el Tema no este en la tabla fija; se ordena por ella.
+    from cerebro.embeddings import AFINIDAD_ALTA, nivel_afinidad
+    from cerebro.ui import afinidad_claves
+    _af_pl = afinidad_claves(tuple(f"pl_EC_{t}" for t in df["_n_tramite_label"].astype(str)), sel_cliente)
+    _afin = df["_n_tramite_label"].astype(str).map(lambda t: _af_pl.get(f"pl_EC_{t}"))
+    df = df[df["Tema"].isin(temas_cliente) | df["_n_tramite_label"].astype(str).isin(matriz_cliente)
+            | (_afin.fillna(0) >= AFINIDAD_ALTA)]
+    if _af_pl:
+        df = df.assign(_afin=_afin, Relevancia=_afin.map(nivel_afinidad))                .sort_values("_afin", ascending=False, na_position="last")
 if sel_estado != TODOS:
     df = df[df["Estado"] == sel_estado]
 if sel_comision != TODAS:
@@ -753,6 +762,8 @@ df_view["Proponente principal"] = (
 COLS_VISIBLES = ["N. Trámite", "_n_tramite_label", "Título", "Presentado",
                  "Estado", "Tipo proponente", "Proponente principal",
                  "Comisión", "Tema", "Unificado con"]
+if "Relevancia" in df_view.columns:  # solo con un cliente elegido (cerebro)
+    COLS_VISIBLES = COLS_VISIBLES[:2] + ["Relevancia"] + COLS_VISIBLES[2:]
 df_view = df_view[[c for c in COLS_VISIBLES if c in df_view.columns]]
 
 # CSS para wrap en celdas, con techo de 3 lineas - mismo fix que

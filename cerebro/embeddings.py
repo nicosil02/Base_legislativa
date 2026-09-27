@@ -30,6 +30,7 @@ from __future__ import annotations
 import functools
 import hashlib
 import json
+import re
 import sqlite3
 import struct
 import sys
@@ -144,6 +145,21 @@ def _db(nombre: str) -> Path | None:
     return None
 
 
+_RE_ACTUALIZACION = re.compile(
+    r"^\s*ACTUALIZACI[OÓ]N DE CONFORMIDAD.*?CONGRESO\s*\)\.?\s*", re.IGNORECASE | re.DOTALL)
+
+
+def _limpiar_titulo_pl(titulo: str | None) -> str:
+    """Saca el encabezado "ACTUALIZACION DE CONFORMIDAD CON LA SEGUNDA
+    DISPOSICION COMPLEMENTARIA TRANSITORIA DEL REGLAMENTO DEL CONGRESO - (ANTES
+    PL 00015/2021-CR - CONGRESO)" que tienen ~165 PLs re-presentados en el
+    Congreso bicameral (37% del periodo, 2026-09-27): el modelo solo leia esa
+    formula y no el tema, y esos PLs salian "afines" a cualquier cliente."""
+    t = (titulo or "").strip()
+    limpio = _RE_ACTUALIZACION.sub("", t).strip()
+    return limpio or t
+
+
 def corpus() -> list[dict]:
     """Todo lo que el cerebro conoce: {clave, tipo, pais, titulo, fecha, url,
     extra, texto}. `texto` es lo que se embebe."""
@@ -155,10 +171,12 @@ def corpus() -> list[dict]:
                            "fec_presentacion, tema, estado, url_portal FROM proyectos"):
             # proyecto_ley ("00004-2026-2031-CD") y no el numero: en el Congreso
             # bicameral el mismo numero existe en Diputados, Senado y Congreso.
+            titulo = _limpiar_titulo_pl(r[3])
             items.append({"clave": f"pl_PE_{r[2]}", "tipo": "pl", "pais": "PE",
-                          "titulo": f"PL {r[2]}: {r[3]}", "fecha": (r[5] or "")[:10], "url": r[8],
+                          "titulo": f"PL {r[2]}: {titulo}", "fecha": (r[5] or "")[:10], "url": r[8],
                           "extra": json.dumps({"tema": r[6], "estado": r[7]}, ensure_ascii=False),
-                          "texto": f"{r[3] or ''}. {r[4] or ''}"})
+                          # sumilla primero: el modelo lee ~128 tokens y ahi esta el tema
+                          "texto": f"{r[4] or ''}. {titulo}"})
         try:
             filas = c.execute("""SELECT n.id, n.titulo, n.resumen, n.url,
                                         COALESCE(n.fecha_pub, n.first_seen_at), f.pais, f.nombre
@@ -347,6 +365,48 @@ def afinidad(claves: list[str], cliente: str, conn: sqlite3.Connection | None = 
                 JOIN perfiles p ON p.cliente = ?
                 WHERE i.clave IN ({",".join("?" * len(lote))})
                 GROUP BY i.clave""", [cliente, *lote]).fetchall()
+        out.update({r[0]: round(r[1], 4) for r in filas})
+    return out
+
+
+# ------------------------------------------------------------------ niveles
+
+# Calibrado 2026-09-27 contra PLs y noticias reales (perfil de cliente vs
+# documento): >= 0.62 relevante de verdad (Bayer: contrabando agricola, agro;
+# Incode: proteccion digital); ~0.55 ya mezcla ruido ("reeleccion encubierta
+# de gobernadores"). ponytail: umbrales fijos a ojo, recalibrar con lo que
+# Nicolas descarte en Noticias si hace falta.
+AFINIDAD_ALTA = 0.62
+AFINIDAD_MEDIA = 0.55
+# Tema/sector (descripcion armada con las keywords de noticias/temas.py vs
+# noticia): la escala es mas baja; >= 0.48 trae lo del sector que las
+# keywords no agarran ("El Nino: prioridades de los gremios agrarios",
+# "floracion de frutales" para Crop).
+AFINIDAD_SECTOR = 0.48
+
+
+def nivel_afinidad(sim: float | None) -> str:
+    if sim is None or sim != sim:
+        return ""
+    return "Alta" if sim >= AFINIDAD_ALTA else "Media" if sim >= AFINIDAD_MEDIA else "Baja"
+
+
+def descripcion_tema(tema: str) -> str:
+    from noticias.temas import TEMAS
+    return f"Noticias sobre {tema}: " + ", ".join(TEMAS.get(tema, [])[:60])
+
+
+def afinidad_vector(claves: list[str], vector: list[float],
+                    conn: sqlite3.Connection | None = None) -> dict[str, float]:
+    """{clave: similitud} de cada clave contra un vector cualquiera."""
+    conn = conn or conectar()
+    out: dict[str, float] = {}
+    for i in range(0, len(claves), 900):
+        lote = claves[i:i + 900]
+        filas = conn.execute(
+            f"""SELECT i.clave, 1 - vec_distance_cosine(v.embedding, ?)
+                FROM items i JOIN vec_items v ON v.rowid = i.id
+                WHERE i.clave IN ({",".join("?" * len(lote))})""", [_blob(vector), *lote]).fetchall()
         out.update({r[0]: round(r[1], 4) for r in filas})
     return out
 
