@@ -18,7 +18,6 @@ live_watch.log
 # se restauran con `python -m scraper.cli restaurar`.
 !data/
 !data/ProyectosDeLey.xlsx
-!data/proyectos.db.gz
 
 # CSV descargado fresco cada corrida por scraper_ec.cli actualizar-csv -
 # efimero, NUNCA commitear (bug real 2026-09-17: reusar el seed trackeado
@@ -31,7 +30,6 @@ data/ppless_actual.csv
 
 # Lista de usuarios registrados (escrito por la app via GitHub API)
 !data/users.json
-!data/proyectos_ec.db.gz
 scripts/recon_agenda_output.json
 
 # Proyecto aparte (mapas electorales geopandas), creado aquí por error
@@ -74,3 +72,10 @@ clientes/*/*
 !clientes/140125 - Matriz - Matriz Legislativa y Regulatoria INCODE.xlsx
 !clientes/matrices.py
 !clientes/alertas_pl.py
+
+# Las bases comprimidas YA NO van en main (2026-09-27): sus versiones llevaron
+# el repo a 15 GB. Viven en la rama `datos` (scripts/publicar_db.sh); la app y
+# los workflows las bajan de ahi (scripts/bajar_db.sh, app.py::_bajar_de_datos).
+data/proyectos.db.gz
+data/proyectos_ec.db.gz
+data/*.db.gz.*.tmp
