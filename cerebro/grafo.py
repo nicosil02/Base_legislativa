@@ -86,30 +86,34 @@ def _clave_gemini() -> str:
 async def _rag():
     import numpy as np
     from lightrag import LightRAG
-    from lightrag.llm.gemini import gemini_model_complete
+    from lightrag.llm.gemini import gemini_complete_if_cache
     from lightrag.utils import wrap_embedding_func_with_attrs
 
     key = _clave_gemini()
 
     async def llm(prompt, system_prompt=None, history_messages=[], **kwargs):
-        # 503 "model is currently experiencing high demand" es saturacion
-        # pasajera de Google (bug real 2026-09-27: los 40 docs de una corrida
-        # fallaron asi). LightRAG ya reintenta 3 veces en segundos; aca se
-        # espera mas antes de rendirse - el doc queda FAILED y la proxima
-        # corrida lo reintenta igual.
+        # gemini_complete_if_cache directo (no gemini_model_complete): esa
+        # funcion IGNORA el model_name que se le pasa y usa siempre el
+        # llm_model_name configurado - bug real 2026-09-27, el "respaldo" a
+        # Gemma volvia a pegarle al mismo modelo saturado.
+        #   - 429 por MINUTO (flash-lite gratis = 15/min): esperar y reintentar.
+        #   - 429 por DIA: pasar a Gemma (cupo propio).
+        #   - 503 (saturacion de Google): esperar y reintentar.
         modelo = LLM
-        for intento in range(5):
+        for intento in range(8):
             try:
-                return await gemini_model_complete(prompt, system_prompt=system_prompt,
-                                                   history_messages=history_messages, api_key=key,
-                                                   model_name=modelo, **kwargs)
+                return await gemini_complete_if_cache(
+                    modelo, prompt, system_prompt=system_prompt,
+                    history_messages=history_messages, api_key=key, **kwargs)
             except Exception as e:
-                if "RESOURCE_EXHAUSTED" in str(e) and modelo != LLM_RESPALDO:
-                    modelo = LLM_RESPALDO  # cupo del liviano agotado: sigue con Gemma
+                txt = str(e)
+                if "PerDay" in txt and modelo != LLM_RESPALDO:
+                    modelo = LLM_RESPALDO
                     continue
-                if intento == 4 or not any(x in str(e) for x in ("503", "UNAVAILABLE", "overloaded")):
-                    raise
-                await asyncio.sleep(45 * (intento + 1))
+                if intento < 7 and ("PerMinute" in txt or "503" in txt or "UNAVAILABLE" in txt):
+                    await asyncio.sleep(65)
+                    continue
+                raise
 
     # Embeddings LOCALES (mismo modelo que cerebro/embeddings.py): el grafo
     # embebe miles de entidades y relaciones, y el tier gratuito de Gemini
@@ -129,7 +133,8 @@ async def _rag():
     GRAFO_DIR.mkdir(parents=True, exist_ok=True)
     rag = LightRAG(
         working_dir=str(GRAFO_DIR), llm_model_func=llm, llm_model_name=LLM, embedding_func=emb,
-        llm_model_max_async=2,  # despacio: tier gratuito
+        llm_model_max_async=1,  # de a uno: el gratuito de flash-lite es 15 pedidos/minuto
+        default_llm_timeout=900,  # las esperas por cupo (65 s x hasta 7) no deben contar como cuelgue
         addon_params={"language": "Spanish", "entity_types_guidance": TIPOS_ENTIDAD},
     )
     await rag.initialize_storages()
