@@ -45,6 +45,25 @@ pena, no un resumen más largo de la misma nota. Antes de dar por buena una aler
 más allá de la única fuente? ¿hay algo que ya se sabe sobre cómo funciona esa institución/actor que cambie
 cómo se debe leer la noticia?
 
+## Regla de impacto (2026-09-27, adaptada del skill public-affairs-policy-analyst)
+Nunca escribir impactos genéricos como "podría afectar al sector" o "es un tema a seguir". Antes de
+redactar el bullet de análisis, responder en la cabeza estas preguntas y usar solo las que tengan respuesta
+concreta.
+
+1. **Quién decide.** Qué institución tiene la decisión formal (comisión, Pleno, ministerio, regulador).
+2. **Con qué instrumento.** Ley, decreto, resolución, reglamento, dictamen, anuncio. Un anuncio o una
+   declaración NO es una obligación todavía, y la alerta tiene que dejarlo claro.
+3. **Qué paso falta.** Qué tiene que pasar para que sea obligatorio (dictamen, votación en Pleno,
+   segunda votación, reglamento, publicación) y más o menos cuándo.
+4. **Qué cambia en concreto para el cliente.** Seguir la cadena completa, la norma lleva a un requisito
+   nuevo, el requisito afecta a un área puntual (registro de productos, precios, datos personales,
+   importación, venta) y eso trae una consecuencia comercial. Nombrar el área y la consecuencia.
+
+Separar siempre lo que es un hecho comprobado de lo que es interpretación o pronóstico. El hecho va en
+"¿Qué pasó?", la lectura propia va en el bullet de análisis y el pronóstico en "Probabilidades de avance".
+No presentar una posición de un actor como segura si solo se infiere; si no hay una declaración pública
+verificable, decir que es lo que se espera por su interés, no que ya lo dijo.
+
 ## Regla de tono (Nicolas, 2026-09-12)
 Tiene que sonar natural, como lo escribiría una persona, no como IA. **Evitar dos puntos (`:`) y guiones
 largos/em-dash como conectores de idea** (ej. "sin decreto todavía — vale seguir su evolución") — son un
