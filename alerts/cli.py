@@ -115,6 +115,13 @@ def cmd_send(args):
     elif args.slot in ("am", "pm"):
         if ya_enviado_este_slot:
             should_send, reason = False, f"ya se envio el slot {args.slot} hoy"
+        # Cambio de criterio de Nicolas 2026-09-27: "si no hay actualizaciones,
+        # no me envies nada... solo cuando salgan cosas nuevas o avances en
+        # PLs" - revierte el "siempre enviar" del 2026-09-20. Sin marcar el
+        # slot: la ventana sigue siendo "desde el ultimo envio real", asi el
+        # proximo correo con contenido cubre todo lo acumulado.
+        elif n == 0:
+            should_send, reason = False, "sin novedades"
         else:
             should_send, reason = True, f"horario fijo ({args.slot})"
     else:
