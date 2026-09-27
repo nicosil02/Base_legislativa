@@ -417,7 +417,7 @@ def _avisar_si_no_avisado(v: dict) -> None:
     if v["id"] in set(state.get("alertados", [])):
         return
     if comision_seguida(v["tipo"], seguidas_activas()):
-        enviar_whatsapp(f"🔴 Congreso EN VIVO — {v['tipo']}\n{v['titulo']}\n{v['url']}"
+        enviar_whatsapp(f"🔴 {'Asamblea EC' if v.get('pais') == 'EC' else 'Congreso'} EN VIVO — {v['tipo']}\n{v['titulo']}\n{v['url']}"
                          f"{agenda_extra_para(v)}")
     state.setdefault("alertados", []).append(v["id"])
     state.setdefault("sesiones", []).append(

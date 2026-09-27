@@ -20,7 +20,7 @@ from pathlib import Path
 
 import yt_dlp
 
-from congreso_live.detector import CANAL, _ydl, clasificar_titulo
+from congreso_live.detector import _ydl, listar_streams
 from noticias.temas import clasificar as _clasificar_temas
 
 log = logging.getLogger(__name__)
@@ -54,24 +54,17 @@ def init_schema(conn: sqlite3.Connection) -> None:
 
 
 def sesiones_terminadas_recientes(n: int = 20) -> list[dict]:
-    """Streams YA TERMINADOS del canal (was_live) que son Pleno o comision
-    ordinaria - candidatos a tener transcripcion disponible."""
-    with _ydl({"extract_flat": True, "playlistend": n}) as ydl:
-        info = ydl.extract_info(CANAL, download=False)
-    out = []
-    for e in (info.get("entries") or []):
-        if not e.get("id") or e.get("live_status") != "was_live":
-            continue
-        tipo = clasificar_titulo(e.get("title"))
-        if not tipo:
-            continue
-        out.append({
+    """Streams YA TERMINADOS (was_live) de los canales PE y EC que son de
+    interes - candidatos a tener transcripcion disponible."""
+    return [
+        {
             "id": e["id"],
             "titulo": (e.get("title") or "").strip(),
-            "tipo": tipo,
+            "tipo": e["_tipo"],
             "url": f"https://www.youtube.com/watch?v={e['id']}",
-        })
-    return out
+        }
+        for e in listar_streams(n) if e.get("live_status") == "was_live"
+    ]
 
 
 def _limpiar_vtt(vtt_text: str) -> str:

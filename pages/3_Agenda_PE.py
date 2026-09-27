@@ -841,7 +841,8 @@ def _vivos_ahora() -> list[dict]:
     90s para no pegarle a YouTube en cada rerun de Streamlit."""
     try:
         from congreso_live.detector import vivos_de_interes
-        return vivos_de_interes()
+        # El Pleno de Ecuador sale por el mismo detector - va en Agenda EC.
+        return [v for v in vivos_de_interes() if v.get("pais") != "EC"]
     except Exception as e:
         print(f"[agenda-pe] no se pudo chequear en vivo: {e}")
         return []
@@ -1400,6 +1401,7 @@ with tab_mesas:
             )
 
 # ---------- Transcripciones (captions de YouTube, Pleno/comisiones) ----------
+from congreso_live.detector import TIPO_PLENO_EC  # misma tabla, las de EC se muestran en Agenda EC
 @st.cache_data(ttl=300)
 def load_transcripciones(limit: int = 60) -> pd.DataFrame:
     # ponytail: limit fijo, no paginacion real - con varias comisiones en
@@ -1418,8 +1420,9 @@ def load_transcripciones(limit: int = 60) -> pd.DataFrame:
     return pd.read_sql_query(
         """SELECT video_id, tipo, titulo, fecha, duracion_seg, texto, temas
            FROM sesiones_transcripciones
+           WHERE tipo != ?
            ORDER BY fecha DESC, video_id DESC LIMIT ?""",
-        conn, params=(limit,),
+        conn, params=(TIPO_PLENO_EC, limit),
     )
 
 
