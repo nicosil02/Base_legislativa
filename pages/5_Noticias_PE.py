@@ -474,6 +474,25 @@ if not df.empty and filtro_norma == "Sin normativa":
 elif not df.empty and filtro_norma == "Solo normativa":
     df = df[df["EsNormativa"] == True]  # noqa: E712
 
+# Afinidad por SIGNIFICADO con el perfil del cliente (cerebro/embeddings.py:
+# notas.md partido por tema, vs. el vector de cada noticia). Complementa las
+# reglas de palabras de fuentes.py, no las reemplaza: no oculta nada, solo
+# ordena y muestra el puntaje. Si el cerebro no esta disponible, la pagina
+# queda igual que antes.
+_orden_afinidad = False
+if sel_cliente != TODOS and not df.empty:
+    from cerebro.ui import afinidad_noticias
+    _af = afinidad_noticias(tuple(int(i) for i in df["ID"]), sel_cliente)
+    if _af:
+        df = df.assign(Afinidad=df["ID"].map(lambda i: _af.get(int(i))))
+        _orden_afinidad = st.toggle(
+            f"Ordenar por afinidad con {sel_cliente}", value=True,
+            help="Qué tan cerca está cada noticia, por su significado, de lo que le importa "
+                 "al cliente según su notas.md (incluido su foco actual). Las noticias de la "
+                 "última hora pueden no tener puntaje todavía y van al final.")
+        if _orden_afinidad:
+            df = df.sort_values("Afinidad", ascending=False, na_position="last")
+
 _extras = []
 if sel_tema != TODAS:
     _extras.append(f"tema: **{sel_tema}**")
@@ -534,6 +553,14 @@ def _chips(temas_list: list[str], es_norma: bool) -> str:
     return f'<div style="margin-top:6px;">{"".join(chips_html)}</div>'
 
 
+def _chip_afinidad(n) -> str:
+    af = n.get("Afinidad") if hasattr(n, "get") else None
+    if af is None or af != af:  # sin puntaje (None/NaN)
+        return ""
+    return (f'<div style="margin-top:6px;font-size:11px;color:var(--ink-mute);">'
+            f'Afinidad con {sel_cliente}: <strong>{af:.2f}</strong></div>')
+
+
 def _render_card(n, key_suffix: str = "") -> None:
     """Render de una noticia. key_suffix distingue la misma noticia
     cuando se renderiza en múltiples grupos (una noticia con varios temas)."""
@@ -553,6 +580,7 @@ def _render_card(n, key_suffix: str = "") -> None:
         f'</div>'
         + (f'<div class="noticia-resumen">{resumen}</div>' if resumen else '')
         + _chips(temas_list, es_norma)
+        + _chip_afinidad(n)
         + '</div>',
         unsafe_allow_html=True,
     )
@@ -604,7 +632,7 @@ if df.empty:
     st.info("Sin noticias con esos filtros. Prueba ampliar la **Ventana**, "
             "cambiar el **Tema** a *Todas*, o limpiar la búsqueda.")
 else:
-    if sel_tema != TODAS or sel_cat != TODAS:
+    if sel_tema != TODAS or sel_cat != TODAS or _orden_afinidad:
         # Filtro específico: lista plana
         for _, n in df.head(150).iterrows():
             _render_card(n)
