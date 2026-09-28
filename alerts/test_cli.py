@@ -31,7 +31,7 @@ def test_sin_novedades_no_envia_ni_marca_el_slot():
     with tempfile.TemporaryDirectory() as tmp:
         state_file = Path(tmp) / "alert_sent_log.json"
         enviados = []
-        with patch.object(cli, "STATE_FILE", state_file),              patch.object(cli, "_today_str", lambda: "2026-09-20"),              patch("alerts.build.build_alert", lambda since_iso=None: _payload_vacio()),              patch("alerts.send.send_email", lambda subject, html, recipient: enviados.append(recipient)),              patch.object(cli, "_list_recipients", lambda: ["nico@example.com"]):
+        with patch.object(cli, "STATE_FILE", state_file), patch.object(cli, "_state_db", lambda: None),              patch.object(cli, "_today_str", lambda: "2026-09-20"),              patch("alerts.build.build_alert", lambda since_iso=None: _payload_vacio()),              patch("alerts.send.send_email", lambda subject, html, recipient: enviados.append(recipient)),              patch.object(cli, "_list_recipients", lambda: ["nico@example.com"]):
             assert cli.main(["send", "--slot", "am"]) == 0
         assert enviados == [], "sin novedades no debe enviar"
         assert not state_file.exists(), "no debe marcar el slot como enviado"
@@ -42,7 +42,7 @@ def test_no_duplica_el_mismo_slot_el_mismo_dia():
     with tempfile.TemporaryDirectory() as tmp:
         state_file = Path(tmp) / "alert_sent_log.json"
         enviados = []
-        with patch.object(cli, "STATE_FILE", state_file), \
+        with patch.object(cli, "STATE_FILE", state_file), patch.object(cli, "_state_db", lambda: None), \
              patch.object(cli, "_today_str", lambda: "2026-09-20"), \
              patch("alerts.build.build_alert", lambda since_iso=None: _fake_payload()), \
              patch("alerts.send.send_email", lambda subject, html, recipient: enviados.append(recipient)), \
@@ -58,7 +58,7 @@ def test_am_y_pm_son_independientes():
     with tempfile.TemporaryDirectory() as tmp:
         state_file = Path(tmp) / "alert_sent_log.json"
         enviados = []
-        with patch.object(cli, "STATE_FILE", state_file), \
+        with patch.object(cli, "STATE_FILE", state_file), patch.object(cli, "_state_db", lambda: None), \
              patch.object(cli, "_today_str", lambda: "2026-09-20"), \
              patch("alerts.build.build_alert", lambda since_iso=None: _fake_payload()), \
              patch("alerts.send.send_email", lambda subject, html, recipient: enviados.append(recipient)), \
@@ -75,7 +75,7 @@ def test_manual_no_marca_estado():
     with tempfile.TemporaryDirectory() as tmp:
         state_file = Path(tmp) / "alert_sent_log.json"
         enviados = []
-        with patch.object(cli, "STATE_FILE", state_file), \
+        with patch.object(cli, "STATE_FILE", state_file), patch.object(cli, "_state_db", lambda: None), \
              patch.object(cli, "_today_str", lambda: "2026-09-20"), \
              patch("alerts.build.build_alert", lambda since_iso=None: _fake_payload()), \
              patch("alerts.send.send_email", lambda subject, html, recipient: enviados.append(recipient)), \
@@ -83,6 +83,39 @@ def test_manual_no_marca_estado():
             cli.main(["send", "--slot", "manual"])
             cli.main(["send", "--slot", "am"])
         assert len(enviados) == 2, "manual no debe bloquear el envio real del slot am"
+
+
+def test_solo_agenda_no_envia():
+    """Nicolas 2026-09-28: la agenda de proximas sesiones/mesas existe todos
+    los dias; sin PLs, dictamenes ni normativa nuevos no sale correo."""
+    solo_agenda = {"fecha": "2026-09-28",
+                   "peru": {"dictamenes": [], "proyectos": [], "normativa": [],
+                            "sesiones_proximas": [{"pls": ["1"]}], "mesas_proximas": [{"t": "m"}]},
+                   "ecuador": {"dictamenes": [], "proyectos": [], "normativa": [], "sesiones_proximas": []}}
+    with tempfile.TemporaryDirectory() as tmp:
+        enviados = []
+        with patch.object(cli, "STATE_FILE", Path(tmp) / "s.json"), patch.object(cli, "_state_db", lambda: None),              patch.object(cli, "_today_str", lambda: "2026-09-28"),              patch("alerts.build.build_alert", lambda since_iso=None: solo_agenda),              patch("alerts.send.send_email", lambda subject, html, recipient: enviados.append(recipient)),              patch.object(cli, "_list_recipients", lambda: ["nico@example.com"]):
+            assert cli.main(["send", "--slot", "pm"]) == 0
+        assert enviados == []
+
+
+def test_estado_persiste_en_la_base():
+    """El registro de envios se guarda en proyectos.db (app_state): una
+    corrida nueva, sin el JSON, igual sabe que el slot ya salio."""
+    import sqlite3
+    with tempfile.TemporaryDirectory() as tmp:
+        db = str(Path(tmp) / "proyectos.db")
+        def _db():
+            c = sqlite3.connect(db)
+            c.execute("CREATE TABLE IF NOT EXISTS app_state (k TEXT PRIMARY KEY, v TEXT)")
+            return c
+        enviados = []
+        with patch.object(cli, "_state_db", _db),              patch.object(cli, "_today_str", lambda: "2026-09-28"),              patch("alerts.build.build_alert", lambda since_iso=None: _fake_payload()),              patch("alerts.send.send_email", lambda subject, html, recipient: enviados.append(recipient)),              patch.object(cli, "_list_recipients", lambda: ["nico@example.com"]):
+            with patch.object(cli, "STATE_FILE", Path(tmp) / "a.json"):
+                cli.main(["send", "--slot", "pm"])
+            with patch.object(cli, "STATE_FILE", Path(tmp) / "otro_checkout_sin_json.json"):
+                cli.main(["send", "--slot", "pm"])  # otra corrida del workflow, JSON no commiteado
+        assert len(enviados) == 1, "la segunda corrida debe ver el envio guardado en la base"
 
 
 if __name__ == "__main__":

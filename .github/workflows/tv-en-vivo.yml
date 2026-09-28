@@ -92,6 +92,8 @@ jobs:
           FFMPEG_BIN: /usr/bin/ffmpeg
           FFMPEG_HTTP_PROXY: http://127.0.0.1:8118
           TV_PUBLICAR: "1"
+          CALLMEBOT_PHONE: ${{ secrets.CALLMEBOT_PHONE }}
+          CALLMEBOT_APIKEY: ${{ secrets.CALLMEBOT_APIKEY }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"

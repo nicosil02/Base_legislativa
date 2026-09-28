@@ -384,8 +384,9 @@ def run(conn: sqlite3.Connection, dry_run: bool = False) -> dict:
     # llama a esto 2 veces al dia (9am/2pm Lima, horarios fijos - ver el
     # `if` de ese workflow), "sin novedades" es una respuesta explicita y
     # esperada en vez de silencio ambiguo.
-    if not mensajes:
-        mensajes = ["📰 Sin noticias relevantes nuevas desde el último chequeo."]
+    # Revertido 2026-09-28 (Nicolas: "quiero que me envie cuando haya
+    # update"): mismo criterio que el correo desde el 27/09 - sin nada
+    # relevante no se manda nada.
 
     enviado = False
     if not dry_run:
@@ -594,10 +595,8 @@ def _test_run_manda_sin_novedades_si_no_hay_nada():
     with patch("congreso_live.notify.enviar_whatsapp", lambda msg: enviados.append(msg) or True), \
          patch("clientes.matrices.pls_trackeados_ec", lambda: []):
         resultado = run(conn)
-    assert len(enviados) == 1, "debe enviar aunque no haya nada relevante"
-    assert "Sin noticias relevantes" in enviados[0]
-    assert resultado["enviado"] is True
-    print("OK digest: run() manda 'sin novedades' en vez de quedarse en silencio")
+    assert enviados == [], "sin nada relevante no se manda nada (Nicolas 2026-09-28)"
+    print("OK digest: run() no manda nada si no hay novedades")
 
 
 def _test_formatear_grupo_acorta_urls_largas():
