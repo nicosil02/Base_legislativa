@@ -61,7 +61,10 @@ def encontrar_pendientes(db_path: str | Path) -> list[dict]:
     except sqlite3.OperationalError:
         ya = set()
     conn.close()
-    return [c for c in streams_terminados() if c["id"] not in ya]
+    # Pedidos manuales de videos de autoridades (boton en Noticias) van
+    # primero: alguien los esta esperando.
+    from noticias.videos import pedidos
+    return [c for c in pedidos() + streams_terminados() if c["id"] not in ya]
 
 
 def procesar_pendientes(db_path: str | Path, max_n: int = PROCESAR_MAX) -> dict:

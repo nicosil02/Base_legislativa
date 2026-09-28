@@ -763,6 +763,11 @@ if _combinar_items:
         st.rerun()
 
 
+# ---------- Videos de autoridades ----------
+from noticias.videos_ui import render as render_videos
+render_videos(get_conn(), PAIS)
+
+
 # ---------- Footer ----------
 st.markdown('<div class="footer-rule"></div>', unsafe_allow_html=True)
 st.markdown(
