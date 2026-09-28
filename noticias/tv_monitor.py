@@ -72,6 +72,7 @@ POR_CANAL = 6          # ultimos N de /streams y de /videos por canal
 NUEVOS_MAX = 40        # videos a leer por corrida (cada uno = 2 requests a YouTube)
 DURACION_MIN = 300     # programas y entrevistas, no clips
 VENTANA_SEG = 25       # contexto a cada lado de la mencion
+DIAS_MAX = 7           # programas mas viejos no se procesan
 
 SCHEMA = [
     """CREATE TABLE IF NOT EXISTS tv_vistos (
@@ -214,7 +215,7 @@ def escanear(db_path: str | Path, max_n: int = NUEVOS_MAX) -> dict:
     res = {"leidos": 0, "sin_subtitulos": 0, "menciones": 0}
     for c in nuevos:
         try:
-            lineas, _ = _subtitulos(c["id"])
+            lineas, _info = _subtitulos(c["id"])
         except Exception as e:
             log.warning("subtitulos de %s fallaron: %s", c["id"], e)
             continue
@@ -223,7 +224,12 @@ def escanear(db_path: str | Path, max_n: int = NUEVOS_MAX) -> dict:
             # como visto, la proxima corrida lo reintenta.
             res["sin_subtitulos"] += 1
             continue
-        menciones = buscar_menciones(lineas)
+        # Los canales dejan transmisiones viejas en /streams (ej. la
+        # juramentacion del gabinete de julio entro el 2026-09-28): lo subido
+        # hace mas de DIAS_MAX se marca visto sin menciones.
+        subido = _info.get("timestamp") or _info.get("release_timestamp")
+        viejo = bool(subido) and (datetime.now(timezone.utc).timestamp() - subido) > DIAS_MAX * 86400
+        menciones = [] if viejo else buscar_menciones(lineas)
         texto = "\n".join(txt for _, txt in lineas) if menciones else None
         conn.execute("INSERT OR REPLACE INTO tv_vistos VALUES (?,?,?,?,?,?,?,?)",
                      (c["id"], c["pais"], c["canal"], c["titulo"], c["duracion"],
