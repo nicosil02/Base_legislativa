@@ -89,19 +89,41 @@ def _norm(s: str | None) -> str:
     return n(s)
 
 
+# Se nombran en casi todos los programas (451 menciones de Keiko en 37
+# programas, primera corrida 2026-09-28): solas no dicen nada, solo cuentan
+# junto a un tema de clientes o un ministro.
+CONTEXTO = {"Keiko Fujimori", "Luis Galarreta", "Daniel Noboa"}
+# Apellidos que tambien son palabras o nombres comunes ("Cuba" el pais,
+# "Valencia", "Espa" contra otras palabras en subtitulos): exigen nombre
+# completo o el cargo delante.
+AMBIGUOS = {"cuba", "valencia", "espa", "luque", "dyer"}
+
+
 def _patrones() -> list[tuple[str, re.Pattern]]:
-    """(etiqueta, regex). Autoridades por nombre completo o apellido (los
-    subtitulos suelen decir "el ministro Vinelli"), temas por frase."""
+    """(etiqueta, regex). Autoridades por apellido (los subtitulos suelen
+    decir "el ministro Vinelli"), temas por frase."""
     pats = []
     for lista in AUTORIDADES.values():
         for nombre, _ in lista:
-            apellido = re.escape(_norm(nombre.split()[-1]))
-            # los subtitulos automaticos simplifican letras dobles ("Vineli")
-            apellido = re.sub(r"(\w)\1", r"\1{1,2}", apellido)
-            pats.append((nombre, re.compile(rf"\b{apellido}\b")))
+            ap = _norm(nombre.split()[-1])
+            if ap in AMBIGUOS:
+                rx = r"\b(" + re.escape(_norm(nombre)) + r"|(ministr[oa]|canciller) " + re.escape(ap) + r")\b"
+            else:
+                # los subtitulos automaticos simplifican letras dobles ("Vineli")
+                rx = r"\b" + re.sub(r"(\w)\1", r"\1{1,2}", re.escape(ap)) + r"\b"
+            pats.append((nombre, re.compile(rx)))
     for t in TERMINOS:
-        pats.append((t, re.compile(rf"\b{re.escape(t)}")))
+        pats.append((t, re.compile(r"\b" + re.escape(t))))
     return pats
+
+
+def terminos_de(texto: str) -> list[str]:
+    n = _norm(texto)
+    return sorted({etiqueta for etiqueta, p in _patrones() if p.search(n)})
+
+
+def relevante(terminos: list[str]) -> bool:
+    return any(t not in CONTEXTO for t in terminos)
 
 
 def parse_json3(data: dict) -> list[tuple[float, str]]:
@@ -133,6 +155,8 @@ def buscar_menciones(lineas: list[tuple[float, str]]) -> list[dict]:
             grupos.append({"ini": t, "fin": t, "terminos": {etiqueta}})
     salida = []
     for g in grupos:
+        if not relevante(g["terminos"]):
+            continue
         a, b = g["ini"] - VENTANA_SEG, g["fin"] + VENTANA_SEG
         frag = " ".join(txt for t, txt in lineas if a <= t <= b)
         salida.append({"t_seg": int(max(a, 0)), "terminos": sorted(g["terminos"]), "fragmento": frag})
@@ -182,7 +206,11 @@ def escanear(db_path: str | Path, max_n: int = NUEVOS_MAX) -> dict:
         conn.execute(s)
     ya = {r[0] for r in conn.execute("SELECT video_id FROM tv_vistos")}
     ahora = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
-    nuevos = [c for c in _candidatos() if c["id"] not in ya][:max_n]
+    pend = [c for c in _candidatos() if c["id"] not in ya]
+    # Intercalar paises: con el tope por corrida, Peru (primero en CANALES)
+    # se comia todo y Ecuador no entraba (primera corrida 2026-09-28).
+    por_pais = [[c for c in pend if c["pais"] == p] for p in CANALES]
+    nuevos = [c for tanda in __import__("itertools").zip_longest(*por_pais) for c in tanda if c][:max_n]
     res = {"leidos": 0, "sin_subtitulos": 0, "menciones": 0}
     for c in nuevos:
         try:
@@ -222,6 +250,10 @@ def _demo():
     assert "deportes" not in ms[0]["fragmento"]
     assert ms[1]["terminos"] == ["fenomeno el nino", "senasa"], ms[1]
     assert not buscar_menciones([(0, "gol de Cueva en el minuto 90")])
+    assert not buscar_menciones([(0, "la presidenta Keiko Fujimori viajo")])  # solo contexto
+    assert buscar_menciones([(0, "Keiko Fujimori y el fenomeno El Niño")])
+    assert not buscar_menciones([(0, "viajo a Cuba y a Valencia, mas esta diciendo")])
+    assert buscar_menciones([(0, "el canciller Espa dijo")])[0]["terminos"] == ["Carlos Espá"]
     assert parse_json3({"events": [{"tStartMs": 1500, "segs": [{"utf8": "hola "}, {"utf8": "mundo"}]},
                                    {"tStartMs": 2000}]}) == [(1.5, "hola mundo")]
     print("OK tv_monitor: menciones agrupadas por cercania, sin falsos positivos, json3")
