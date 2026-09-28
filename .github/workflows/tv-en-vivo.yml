@@ -1,6 +1,6 @@
-name: TV en vivo (RPP y America)
+name: TV en vivo (RPP, America, Willax, Exitosa)
 
-# Escucha el directo de RPP y America Noticias mientras sale al aire,
+# Escucha el directo de RPP, America Noticias, Willax y Exitosa mientras sale al aire,
 # lo transcribe en tramos de 1 min (Whisper) y guarda las menciones de
 # autoridades y temas de clientes (noticias/tv_monitor.py, en_vivo).
 # Publica la base cada 15 min para que la app las muestre sin esperar.
@@ -29,6 +29,12 @@ concurrency:
 jobs:
   escuchar:
     runs-on: ubuntu-latest
+    # Dos maquinas en paralelo, dos canales cada una: con los 4 Whisper en
+    # una sola, la transcripcion no alcanzaba el ritmo del directo.
+    strategy:
+      fail-fast: false
+      matrix:
+        canales: ["RPP Noticias,América Noticias", "Willax,Exitosa Noticias"]
     timeout-minutes: 280
     steps:
       - uses: actions/checkout@v4
@@ -82,7 +88,7 @@ jobs:
             # por horario: la corrida de la mañana escucha 240 min, la de la noche 120
             if [ "$(date -u +%H)" -lt 6 ]; then MIN=120; else MIN=240; fi
           fi
-          python -X utf8 -u -m noticias.tv_monitor en-vivo proyectos.db "$MIN" \
+          python -X utf8 -u -m noticias.tv_monitor en-vivo proyectos.db "$MIN" "${{ matrix.canales }}" \
               || echo "[warn] en-vivo termino con error, publico lo que haya"
 
       - name: Publicar base en la rama datos
