@@ -634,6 +634,18 @@ noticias_ec = st.Page(
     icon="📰",
     url_path="ecuador-noticias",
 )
+tv_pe = st.Page(
+    "pages/9_TV_PE.py",
+    title="Perú",
+    icon="📺",
+    url_path="peru-tv",
+)
+tv_ec = st.Page(
+    "pages/10_TV_EC.py",
+    title="Ecuador",
+    icon="📺",
+    url_path="ecuador-tv",
+)
 alertas = st.Page(
     "pages/7_Alertas.py",
     title="Borradores",
@@ -685,6 +697,7 @@ nav = st.navigation(
         "Radar Legislativo": [peru, ecuador],
         "Agenda parlamentaria": [agenda_pe, agenda_ec],
         "Noticias y coyuntura": [noticias_pe, noticias_ec],
+        "TV y entrevistas": [tv_pe, tv_ec],
         "Alertas": [alertas],
     },
     position="sidebar",

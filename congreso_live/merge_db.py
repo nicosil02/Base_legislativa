@@ -36,12 +36,16 @@ def merge_sesiones(base_path: str, donor_path: str) -> int:
             WHERE b.video_id = d.video_id AND length(b.texto) >= length(d.texto)
         )
     """)
-    # videos_autoridades (noticias/videos.py) la escribe backfill-auto.yml,
-    # que publica en modo base_remota - sin esto se perderia en el merge.
-    if base.execute("SELECT 1 FROM donor.sqlite_master WHERE name='videos_autoridades'").fetchone():
-        from noticias.videos import SCHEMA
-        base.execute(SCHEMA)
-        base.execute("INSERT OR IGNORE INTO videos_autoridades SELECT * FROM donor.videos_autoridades")
+    # Tablas que escriben workflows que publican en modo base_remota
+    # (noticias/videos.py, noticias/tv_monitor.py) - sin esto se perderian
+    # en el merge. Solo se agregan filas nuevas, nunca se pisan.
+    from noticias.tv_monitor import SCHEMA as SCHEMA_TV
+    from noticias.videos import SCHEMA as SCHEMA_VIDEOS
+    for tabla, schema in (("videos_autoridades", SCHEMA_VIDEOS), ("tv_vistos", SCHEMA_TV[0]),
+                          ("tv_menciones", SCHEMA_TV[1])):
+        if base.execute("SELECT 1 FROM donor.sqlite_master WHERE name=?", (tabla,)).fetchone():
+            base.execute(schema)
+            base.execute(f"INSERT OR IGNORE INTO {tabla} SELECT * FROM donor.{tabla}")
     base.commit()
     despues = base.execute("SELECT COUNT(*) FROM sesiones_transcripciones").fetchone()[0]
     nuevas_o_actualizadas = base.total_changes

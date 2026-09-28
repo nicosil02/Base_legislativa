@@ -430,10 +430,6 @@ for col, (label, val) in zip(cols, kpis.items()):
 
 st.markdown("")
 
-# Videos de autoridades (noticias/videos_ui.py) - arriba y plegado.
-from noticias.videos_ui import render as render_videos
-render_videos(get_conn(), PAIS)
-
 # Filtros
 categorias_fuente = load_categorias_fuente(PAIS)
 fuentes = load_fuentes(PAIS)
