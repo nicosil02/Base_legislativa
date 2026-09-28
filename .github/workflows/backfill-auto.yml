@@ -110,18 +110,6 @@ jobs:
           python -X utf8 -u -m congreso_live.cli backfill-auto \
               --max "$MAX" || echo "[warn] backfill-auto termino con error, sigo al commit igual"
 
-      - name: Videos de autoridades (noticias/videos.py) - buscar los de esta semana
-        env:
-          PYTHONIOENCODING: utf-8
-          YT_DLP_PROXY: socks5://127.0.0.1:40000
-        run: python -X utf8 -u -m noticias.videos buscar proyectos.db || echo "[warn] busqueda de videos fallo"
-
-      - name: Publicar ya lo de YouTube (no esperar a las comisiones EC, que tardan horas)
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          bash scripts/publicar_db.sh base_remota proyectos.db
-
       - name: Comisiones Asamblea EC (Facebook) - transcribir sesiones terminadas
         env:
           PYTHONIOENCODING: utf-8

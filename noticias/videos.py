@@ -60,6 +60,23 @@ AUTORIDADES: dict[str, list[tuple[str, str]]] = {
 # titulos no vengan auto-traducidos al ingles.
 _SP_ESTA_SEMANA = "EgIIAw%253D%253D"
 POR_AUTORIDAD = 20
+# Solo medios formales (TV, radio, diarios) y cuentas oficiales del Estado -
+# pedido de Nicolas 2026-09-28 ("en todos los medios tipo Epicentro, RPP,
+# canal 4"); antes se colaban canales de chismes y opinion. Substrings del
+# nombre del canal, sin tildes y en minusculas.
+MEDIOS = (
+    "rpp", "epicentro", "willax", "america", "latina", "panamericana", "panorama",
+    "buenos dias peru", "exitosa", "tvperu", "tv peru", "atv", "canal n", "cuarto poder",
+    "el comercio", "la republica", "gestion", "peru21", "correo", "expreso", "infobae",
+    "andina", "ojo publico", "idl", "sudaca", "la encerrona", "punto final",
+    "ecuavisa", "teleamazonas", "tc television", "gamavision", "rts", "radio pichincha",
+    "radio centro", "el universo", "primicias", "vistazo", "la hora", "el telegrafo",
+    "publica fm", "radio vision", "radio i99", "cnn", "ntn24",
+    "ministerio", "presidencia", "gobierno", "congreso", "asamblea", "midagri", "minsa",
+    # genericos: canales regionales de TV/radio (ej. Catequil Television re-sube Cuarto Poder)
+    "television", "radio", "noticias", "diario",
+    "hildebrandt", "canal i", "24 horas", "a3rnet", "comite", "fuerte y claro", "justiciatv",
+)
 DURACION_MIN = 120  # ponytail: corta shorts/clips sueltos; bajar si se pierden declaraciones cortas utiles
 PEDIDOS_DIR = "data/videos_pedidos"
 
@@ -89,6 +106,7 @@ def es_relevante(entry: dict, nombre: str) -> bool:
     return (apellido in _norm(entry.get("title"))
             and (entry.get("duration") or 0) >= DURACION_MIN
             and entry.get("live_status") != "is_live"
+            and any(m in _norm(entry.get("channel")) for m in MEDIOS)
             # canal con el mismo nombre = homonimo (caso real: un musico
             # "Marco Vinelli" con su propio canal, video de 2021)
             and _norm(entry.get("channel")) != _norm(nombre))
@@ -180,8 +198,12 @@ def pedidos(raiz: str | Path = ".") -> list[dict]:
 
 def _demo():
     import tempfile
-    assert es_relevante({"title": "#Entrevista | Marco Vinelli - Ministro", "duration": 990}, "Marco Vinelli")
-    assert es_relevante({"title": "MINISTRO VINELLI EN CUARTO PODER", "duration": 900}, "Marco Vinelli")
+    assert es_relevante({"title": "#Entrevista | Marco Vinelli - Ministro", "duration": 990,
+                         "channel": "Catequil Televisión | Cuarto Poder"}, "Marco Vinelli")  # re-sube Cuarto Poder
+    assert es_relevante({"title": "MINISTRO VINELLI EN CUARTO PODER", "duration": 900,
+                         "channel": "América Noticias"}, "Marco Vinelli")
+    assert not es_relevante({"title": "¿CARLOS ESPÁ PROTAGONIZA...?", "duration": 900,
+                             "channel": "Pitucos Marrones"}, "Carlos Espá")
     assert not es_relevante({"title": "Marco Vinelli: El Niño", "duration": 35}, "Marco Vinelli")
     assert not es_relevante({"title": "KEIKO'S PLAN B", "duration": 118}, "Marco Vinelli")
     assert not es_relevante({"title": "César Astudillo en vivo", "duration": 900, "live_status": "is_live"},

@@ -359,6 +359,12 @@ FUENTES_PE: list[dict] = [
     {"categoria": "Coyuntura Politica", "pais": "PE", "nombre": "Ojo Publico",
      "url": "https://ojo-publico.com/",
      "rss_url": "https://news.google.com/rss/search?q=site:ojo-publico.com+when:3d&hl=es-419&gl=PE&ceid=PE:es", "tipo": "rss"},
+    # Epicentro TV (pedido de Nicolas 2026-09-28): epicentro.tv no tiene RSS
+    # (DASTcms, /feed da 404) y X no se puede leer sin cuenta; Google News
+    # si indexa sus notas y programas (verificado: 100 items, del dia).
+    {"categoria": "Coyuntura Politica", "pais": "PE", "nombre": "Epicentro TV",
+     "url": "https://epicentro.tv/",
+     "rss_url": "https://news.google.com/rss/search?q=site:epicentro.tv+when:3d&hl=es-419&gl=PE&ceid=PE:es", "tipo": "rss"},
 
     # --- INSTITUCION: Congreso, ministerios, agencias ---
     {"categoria": "Institucion", "pais": "PE",
