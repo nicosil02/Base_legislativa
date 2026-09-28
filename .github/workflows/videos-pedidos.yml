@@ -1,0 +1,77 @@
+name: Transcribir videos pedidos (autoridades)
+
+# Boton "Transcribir y resumir" de la seccion Videos de autoridades en
+# Noticias PE/EC (ver noticias/videos.py): crea data/videos_pedidos/<id>.json
+# y ese push dispara esto. Workflow propio y corto (no backfill-auto.yml)
+# porque ese corre hasta 4 h con las comisiones EC y el pedido quedaba
+# esperando en su cola. Mismo esquema WARP y publicacion que backfill-vod.yml.
+
+on:
+  push:
+    paths:
+      - 'data/videos_pedidos/**'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: videos-pedidos
+  cancel-in-progress: false
+
+jobs:
+  transcribir:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Cache pip + modelo Whisper (persiste entre runs)
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/pip
+            ~/.cache/huggingface
+          key: vigilar-congreso-deps-${{ hashFiles('.github/workflows/vigilar-congreso.yml') }}
+
+      - name: Instalar deps
+        run: |
+          pip install -q yt-dlp requests faster-whisper imageio-ffmpeg
+          sudo apt-get install -y -qq ffmpeg
+
+      - name: Instalar Cloudflare WARP en modo proxy (SOCKS5 :40000)
+        run: |
+          curl -fsSL --retry 3 --retry-delay 2 --retry-all-errors https://pkg.cloudflareclient.com/pubkey.gpg | sudo gpg --yes --dearmor --output /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg
+          echo "deb [signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] https://pkg.cloudflareclient.com/ $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/cloudflare-client.list
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq cloudflare-warp
+          sudo systemctl enable --now warp-svc
+          sleep 3
+          warp-cli --accept-tos registration new
+          warp-cli --accept-tos mode proxy
+          warp-cli --accept-tos proxy port 40000
+          warp-cli --accept-tos connect
+          sleep 5
+          warp-cli --accept-tos status
+
+      - name: Bootstrap DB Peru desde la rama datos
+        run: bash scripts/bajar_db.sh proyectos.db.gz proyectos.db || true
+
+      - name: Transcribir los pedidos que falten
+        env:
+          PYTHONIOENCODING: utf-8
+          YT_DLP_PROXY: socks5://127.0.0.1:40000
+          FFMPEG_BIN: /usr/bin/ffmpeg
+        run: |
+          python -X utf8 -u -m congreso_live.cli backfill-auto --solo-pedidos --max 5 \
+              || echo "[warn] termino con error, publico lo que haya"
+
+      - name: Publicar base en la rama datos
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          bash scripts/publicar_db.sh base_remota proyectos.db

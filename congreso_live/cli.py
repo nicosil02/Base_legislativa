@@ -121,7 +121,7 @@ def cmd_backfill_auto(args) -> int:
         return 1
     from congreso_live.transcripciones import _find_db_path
 
-    r = procesar_pendientes(_find_db_path(), max_n=args.max)
+    r = procesar_pendientes(_find_db_path(), max_n=args.max, solo_pedidos=args.solo_pedidos)
     print(f"Pendientes encontrados: {r['pendientes_totales']}. "
           f"Procesados: {len(r['procesados'])}, fallidos: {len(r['fallidos'])}.")
     for p in r["procesados"]:
@@ -141,7 +141,7 @@ def cmd_comisiones_ec(args) -> int:
         return 1
     from congreso_live.transcripciones import _find_db_path
 
-    r = procesar_pendientes(_find_db_path(), max_n=args.max)
+    r = procesar_pendientes(_find_db_path(), max_n=args.max, solo_pedidos=args.solo_pedidos)
     print(f"Comisiones EC: {r['vistas']} sesion(es) terminadas vistas en Facebook, "
           f"{r['pendientes_totales']} sin transcribir. Procesados: {len(r['procesados'])}, "
           f"fallidos: {len(r['fallidos'])}.")
@@ -185,6 +185,8 @@ def main(argv: list[str] | None = None) -> int:
                         help="escanea el canal solo y recupera sesiones reales que faltan, sin intervencion manual")
     ba.add_argument("--max", type=int, default=4,
                     help="cuantas sesiones recuperar por corrida (default 4 - cada una cuesta red/CPU real)")
+    ba.add_argument("--solo-pedidos", action="store_true",
+                    help="solo los videos pedidos desde Noticias (data/videos_pedidos/), sin escanear el canal")
     ba.set_defaults(func=cmd_backfill_auto)
     ce = sub.add_parser("comisiones-ec",
                         help="comisiones de la Asamblea EC (Facebook): transcribe las sesiones terminadas que falten")

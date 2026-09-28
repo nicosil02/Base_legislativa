@@ -53,7 +53,7 @@ def streams_terminados(n: int = CANDIDATOS_MAX) -> list[dict]:
     ]
 
 
-def encontrar_pendientes(db_path: str | Path) -> list[dict]:
+def encontrar_pendientes(db_path: str | Path, solo_pedidos: bool = False) -> list[dict]:
     """Candidatos cuyo video_id todavia NO esta en sesiones_transcripciones."""
     conn = sqlite3.connect(str(db_path))
     try:
@@ -64,17 +64,19 @@ def encontrar_pendientes(db_path: str | Path) -> list[dict]:
     # Pedidos manuales de videos de autoridades (boton en Noticias) van
     # primero: alguien los esta esperando.
     from noticias.videos import pedidos
-    return [c for c in pedidos() + streams_terminados() if c["id"] not in ya]
+    candidatos = pedidos() if solo_pedidos else pedidos() + streams_terminados()
+    return [c for c in candidatos if c["id"] not in ya]
 
 
-def procesar_pendientes(db_path: str | Path, max_n: int = PROCESAR_MAX) -> dict:
+def procesar_pendientes(db_path: str | Path, max_n: int = PROCESAR_MAX,
+                        solo_pedidos: bool = False) -> dict:
     """Recupera hasta `max_n` pendientes: captions primero (rapido), VOD
     completo + Whisper como fallback (lento). Devuelve un resumen para
     loggear en el workflow."""
     from congreso_live.transcripciones import init_schema, obtener_transcripcion
     from noticias.temas import clasificar as clasificar_temas
 
-    todos = encontrar_pendientes(db_path)
+    todos = encontrar_pendientes(db_path, solo_pedidos)
     resultado = {"pendientes_totales": len(todos), "procesados": [], "fallidos": []}
 
     conn = sqlite3.connect(str(db_path))

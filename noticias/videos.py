@@ -9,8 +9,8 @@ Flujo:
    videos_autoridades. La tabla viaja a `datos` via merge_db.
 2. La pagina de Noticias lista esos videos. El boton "Transcribir" crea
    data/videos_pedidos/<video_id>.json (Contents API, archivo nuevo, sin
-   read-modify-write) y ese push dispara backfill-auto.yml.
-3. backfill_auto toma los pedidos primero y los transcribe con el mismo
+   read-modify-write) y ese push dispara videos-pedidos.yml.
+3. videos-pedidos.yml (backfill-auto --solo-pedidos) los transcribe con el mismo
    camino que las sesiones (captions o Whisper), con tipo
    "Entrevista: <autoridad>". La rutina de resumenes los resume igual que
    cualquier otra transcripcion.
