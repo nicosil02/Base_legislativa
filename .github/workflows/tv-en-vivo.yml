@@ -34,7 +34,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        grupo: [1, 2]  # cada maquina toma la mitad de los directos de noticias elegidos
+        grupo: [1, 2, 3]  # cada maquina toma un tercio de los directos elegidos (4 Peru + Ecuavisa/Teleamazonas)
     timeout-minutes: 280
     steps:
       - uses: actions/checkout@v4
