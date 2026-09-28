@@ -462,6 +462,10 @@ for col, (label, val) in zip(cols, kpis.items()):
 
 st.markdown("")
 
+# Videos de autoridades (noticias/videos_ui.py) - arriba y plegado.
+from noticias.videos_ui import render as render_videos
+render_videos(get_conn(), PAIS)
+
 # Filtros
 categorias_fuente = load_categorias_fuente(PAIS)
 fuentes = load_fuentes(PAIS)
@@ -808,11 +812,6 @@ with st.expander("🔎 Seguimiento de PL de interés"):
             _df_seguimiento, hide_index=True, use_container_width=True,
             column_config={"Enlace": st.column_config.LinkColumn("Enlace", display_text="Ver ↗")},
         )
-
-# ---------- Videos de autoridades ----------
-from noticias.videos_ui import render as render_videos
-render_videos(get_conn(), PAIS)
-
 
 # ---------- Footer ----------
 st.markdown('<div class="footer-rule"></div>', unsafe_allow_html=True)
