@@ -28,7 +28,8 @@ name: Backfill automatico (sesiones perdidas)
 on:
   push:
     paths:
-      - 'data/.backfill_trigger'  schedule:
+      - 'data/.backfill_trigger'
+  schedule:
     - cron: '20 */6 * * *'  # cada 6 horas - no confiable solo, ver comentario arriba
   workflow_dispatch:
     inputs:
