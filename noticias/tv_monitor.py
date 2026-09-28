@@ -61,7 +61,9 @@ CANALES: dict[str, list[tuple[str, str]]] = {
 TERMINOS = [
     "facultades legislativas", "delegacion de facultades",
     "midagri", "senasa", "digemid", "minsa", "essalud", "agrocalidad", "arcsa",
-    "plaguicida", "pesticida", "agroquimico", "glifosato", "transgenico", "semillas",
+    "plaguicida", "pesticida", "agroquimico", "glifosato", "transgenico",
+    # "semillas" suelta saltaba en un segmento de maquillaje (Teleamazonas)
+    "ley de semillas", "semilla certificada", "semillas certificadas", "semillas mejoradas",
     "sanidad agraria", "inocuidad", "medicamentos", "vacuna",
     "datos personales", "inteligencia artificial", "biometri", "identidad digital",
     "ciberseguridad", "lavado de activos", "open finance", "fintech",
@@ -111,7 +113,9 @@ def _patrones() -> list[tuple[str, re.Pattern]]:
                 rx = r"\b(" + re.escape(_norm(nombre)) + r"|(ministr[oa]|canciller) " + re.escape(ap) + r")\b"
             else:
                 # los subtitulos automaticos simplifican letras dobles ("Vineli")
-                rx = r"\b" + re.sub(r"(\w)\1", r"\1{1,2}", re.escape(ap)) + r"\b"
+                rx = re.sub(r"(\w)\1", r"\1{1,2}", re.escape(ap))
+                # y confunden b/v ("Novoa" por Noboa)
+                rx = r"\b" + re.sub(r"[bv]", "[bv]", rx) + r"\b"
             pats.append((nombre, re.compile(rx)))
     for t in TERMINOS:
         pats.append((t, re.compile(r"\b" + re.escape(t))))
@@ -154,12 +158,18 @@ def buscar_menciones(lineas: list[tuple[float, str]]) -> list[dict]:
             grupos[-1]["terminos"].add(etiqueta)
         else:
             grupos.append({"ini": t, "fin": t, "terminos": {etiqueta}})
-    salida = []
+    salida, vistos = [], set()
     for g in grupos:
         if not relevante(g["terminos"]):
             continue
         a, b = g["ini"] - VENTANA_SEG, g["fin"] + VENTANA_SEG
         frag = " ".join(txt for t, txt in lineas if a <= t <= b)
+        # Publicidad que se repite en el programa (ej. la promo de "El After"
+        # de Teleamazonas nombra la IA cada tanda): mismo texto, una sola vez.
+        huella = " ".join(_norm(frag).split()[5:25])
+        if huella in vistos:
+            continue
+        vistos.add(huella)
         salida.append({"t_seg": int(max(a, 0)), "terminos": sorted(g["terminos"]), "fragmento": frag})
     return salida
 
@@ -382,6 +392,10 @@ def _demo():
             "hola el ministro Vinelli y el Senasa", 1)
         c.close()
     assert buscar_menciones([(0, "el ministro Vineli dijo")])[0]["terminos"] == ["Marco Vinelli"]
+    assert terminos_de("el presidente Novoa") == ["Daniel Noboa"]
+    promo = "no vea el acto si quiere ver candidatos abusar de la inteligencia artificial de una manera ridicula"
+    assert len(buscar_menciones([(0, promo), (300, promo), (600, promo)])) == 1
+    assert not buscar_menciones([(0, "maquillaje hecho con semillas y flores")])
     lineas = [(0, "buenas noches"), (10, "hoy nos acompaña el ministro Vinelli"),
               (20, "hablamos de las facultades legislativas"), (200, "pasamos a deportes"),
               (400, "el fenómeno El Niño y el Senasa")]
