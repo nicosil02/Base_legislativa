@@ -152,7 +152,7 @@ def _demo():
         conn.commit()
         conn.close()
 
-        with patch.object(ba, "streams_terminados", lambda: candidatos):
+        with patch.object(ba, "streams_terminados", lambda: candidatos),              patch("noticias.videos.pedidos", lambda: []):
             pendientes = ba.encontrar_pendientes(db_path)
         assert {p["id"] for p in pendientes} == {"D", "E"}, pendientes
     print("OK backfill_auto: filtra en vivo/sin comite y descarta lo ya guardado")
@@ -177,7 +177,7 @@ def _test_procesar_pendientes_via_captions():
 
     with tempfile.TemporaryDirectory() as td:
         db_path = Path(td) / "test.db"
-        with patch.object(ba, "encontrar_pendientes", lambda db_path: candidatos), \
+        with patch.object(ba, "encontrar_pendientes", lambda db_path, solo_pedidos=False: candidatos), \
              patch("congreso_live.transcripciones.obtener_transcripcion", _fake_obtener):
             resultado = ba.procesar_pendientes(db_path, max_n=1)
 
