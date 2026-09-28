@@ -23,7 +23,7 @@ def _cargar(conn: sqlite3.Connection, pais: str) -> pd.DataFrame:
                FROM videos_autoridades v
                LEFT JOIN sesiones_transcripciones t ON t.video_id = v.video_id
                WHERE v.pais = ? AND v.first_seen_at >= datetime('now', '-14 days')
-               ORDER BY v.first_seen_at DESC, v.autoridad""",
+               ORDER BY (t.texto IS NULL), v.first_seen_at DESC, v.duracion_seg DESC""",
             conn, params=(pais,))
     except Exception:  # tabla todavia no creada (primera corrida de backfill-auto pendiente)
         return pd.DataFrame()
