@@ -30,14 +30,20 @@ def _cargar(conn: sqlite3.Connection, pais: str) -> pd.DataFrame:
 
 
 def render(conn: sqlite3.Connection, pais: str) -> None:
-    st.markdown("---")
-    st.markdown("##### 🎥 Videos de autoridades")
-    st.caption("Entrevistas y declaraciones en YouTube (TV, radio, medios) de las autoridades "
-               "que seguimos, subidas en los últimos días. Se actualiza cada 6 horas.")
+    # Arriba de la pagina y plegado: al final quedaba debajo de 100+
+    # noticias y Nicolas no lo encontraba (2026-09-28).
     df = _cargar(conn, pais)
-    if df.empty:
-        st.info("Todavía no hay videos. La primera búsqueda corre con el próximo backfill automático.")
-        return
+    n_tr = int(df["texto"].notna().sum()) if not df.empty else 0
+    with st.expander(f"🎥 Videos de autoridades · {len(df)} esta semana · {n_tr} transcritos"):
+        st.caption("Entrevistas y declaraciones en YouTube (TV, radio, medios) de las autoridades "
+                   "que seguimos. Se actualiza cada 6 horas.")
+        if df.empty:
+            st.info("Todavía no hay videos. La búsqueda corre cada 6 horas.")
+            return
+        _lista(df, pais)
+
+
+def _lista(df: pd.DataFrame, pais: str) -> None:
 
     autoridades = ["Todas"] + sorted(df["autoridad"].unique())
     sel = st.selectbox("Autoridad", autoridades, key=f"videos_aut_{pais}")
@@ -53,8 +59,14 @@ def render(conn: sqlite3.Connection, pais: str) -> None:
         transcrito = isinstance(r.texto, str) and bool(r.texto)
         pedido = r.video_id in pedidos_ss or (_RAIZ / PEDIDOS_DIR / f"{r.video_id}.json").exists()
         estado = "✅ Transcrito" if transcrito else ("⏳ En cola" if pedido else "")
-        with st.expander(f"{r.autoridad} · {r.titulo}  ({mins} min) {estado}"):
-            st.markdown(f"[Abrir en YouTube]({url}) · {r.canal or ''} · {r.cargo or ''}")
+        # container + toggle (no expander): va dentro del expander de render()
+        # y Streamlit no permite expanders anidados.
+        with st.container(border=True):
+            st.markdown(f"**{r.autoridad}** · [{r.titulo}]({url})  \n"
+                        f"<span style='font-size:12px;color:var(--ink-mute)'>{r.canal or ''} · {mins} min "
+                        f"{estado}</span>", unsafe_allow_html=True)
+            if not st.toggle("Ver video y detalle", key=f"ver_{r.video_id}"):
+                continue
             st.video(url)
             if transcrito:
                 res = resumenes.get(r.video_id)
