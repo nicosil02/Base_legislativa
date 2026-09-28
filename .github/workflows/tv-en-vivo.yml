@@ -97,9 +97,15 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           MIN="${{ github.event.inputs.minutos }}"
           if [ -z "$MIN" ]; then
-            # por horario: la corrida de la mañana escucha 240 min, la de la noche 120
-            if [ "$(date -u +%H)" -lt 6 ]; then MIN=120; else MIN=240; fi
+            # Sin minutos explicitos (schedule o disparo desde tv-monitor.yml):
+            # escuchar hasta el fin de la franja, 10:00 o 23:00 Lima. Fuera de
+            # franja (ej. una corrida duplicada que quedo en cola) no escucha.
+            ahora=$(( 10#$(TZ=America/Lima date +%H) * 60 + 10#$(TZ=America/Lima date +%M) ))
+            if [ "$ahora" -ge 360 ] && [ "$ahora" -lt 600 ]; then MIN=$(( 600 - ahora ));
+            elif [ "$ahora" -ge 1260 ] && [ "$ahora" -lt 1380 ]; then MIN=$(( 1380 - ahora ));
+            else MIN=0; fi
           fi
+          if [ "$MIN" -lt 5 ]; then echo "fuera de franja, no escucho"; exit 0; fi
           python -X utf8 -u -m noticias.tv_monitor en-vivo proyectos.db "$MIN" "${{ matrix.canales }}" \
               || echo "[warn] en-vivo termino con error, publico lo que haya"
 
