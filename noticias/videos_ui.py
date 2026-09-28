@@ -184,12 +184,18 @@ def contenido(conn: sqlite3.Connection, pais: str, clientes: list[str]) -> None:
     if menciones.empty:
         st.info("Sin menciones con esos filtros.")
     for r in menciones.head(80).itertuples():
-        url = f"https://www.youtube.com/watch?v={r.video_id}&t={r.t_seg}s"
         mm, ss = divmod(int(r.t_seg), 60)
         hh, mm = divmod(mm, 60)
-        minuto = f"{hh}:{mm:02d}:{ss:02d}" if hh else f"{mm}:{ss:02d}"
+        if hh >= 12:
+            # Escuchado en vivo en una señal de 24 h (tv_monitor.en_vivo): el
+            # minuto desde que arranco la señal no sirve, se muestra la hora.
+            hora = pd.Timestamp(r.first_seen_at).tz_convert("America/Lima").strftime("%H:%M")
+            donde, url = f"en vivo · {hora}", f"https://www.youtube.com/watch?v={r.video_id}"
+        else:
+            minuto = f"{hh}:{mm:02d}:{ss:02d}" if hh else f"{mm}:{ss:02d}"
+            donde, url = f"minuto {minuto}", f"https://www.youtube.com/watch?v={r.video_id}&t={r.t_seg}s"
         frag = r.fragmento if len(r.fragmento) <= 700 else r.fragmento[:700] + "…"
-        _card(f"{r.canal} · minuto {minuto}", r.first_seen_at, r.titulo, url, f"«{frag}»",
+        _card(f"{r.canal} · {donde}", r.first_seen_at, r.titulo, url, f"«{frag}»",
               r.terminos.split(", "))
         c = st.columns([6, 2, 2])
         with c[1]:

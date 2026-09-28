@@ -1,0 +1,92 @@
+name: TV en vivo (RPP y America)
+
+# Escucha el directo de RPP y America Noticias mientras sale al aire,
+# lo transcribe en tramos de 1 min (Whisper) y guarda las menciones de
+# autoridades y temas de clientes (noticias/tv_monitor.py, en_vivo).
+# Publica la base cada 15 min para que la app las muestre sin esperar.
+# Horarios (Lima = UTC-5): 6 a 10 am y 9 a 11 pm, franjas de noticieros.
+# ponytail: el schedule de GitHub puede arrancar con 10-30 min de retraso;
+# si hace falta puntualidad, dispararlo desde cron-job.org como vigilar-congreso.
+
+on:
+  schedule:
+    - cron: '0 11 * * *'   # 6:00 Lima, 240 min
+    - cron: '0 2 * * *'    # 21:00 Lima, 120 min
+  workflow_dispatch:
+    inputs:
+      minutos:
+        description: "Minutos de escucha"
+        required: false
+        default: "60"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: tv-en-vivo
+  cancel-in-progress: false
+
+jobs:
+  escuchar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 280
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Cache pip + modelo Whisper (persiste entre runs)
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/pip
+            ~/.cache/huggingface
+          key: vigilar-congreso-deps-${{ hashFiles('.github/workflows/vigilar-congreso.yml') }}
+
+      - name: Instalar deps
+        run: |
+          pip install -q yt-dlp requests faster-whisper imageio-ffmpeg
+          sudo apt-get install -y -qq ffmpeg
+
+      - name: Instalar Cloudflare WARP en modo proxy (SOCKS5 :40000)
+        run: |
+          curl -fsSL --retry 3 --retry-delay 2 --retry-all-errors https://pkg.cloudflareclient.com/pubkey.gpg | sudo gpg --yes --dearmor --output /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg
+          echo "deb [signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] https://pkg.cloudflareclient.com/ $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/cloudflare-client.list
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq cloudflare-warp
+          sudo systemctl enable --now warp-svc
+          sleep 3
+          warp-cli --accept-tos registration new
+          warp-cli --accept-tos mode proxy
+          warp-cli --accept-tos proxy port 40000
+          warp-cli --accept-tos connect
+          sleep 5
+          warp-cli --accept-tos status
+
+      - name: Bootstrap DB Peru desde la rama datos
+        run: bash scripts/bajar_db.sh proyectos.db.gz proyectos.db || true
+
+      - name: Escuchar en vivo
+        env:
+          PYTHONIOENCODING: utf-8
+          YT_DLP_PROXY: socks5://127.0.0.1:40000
+          FFMPEG_BIN: /usr/bin/ffmpeg
+          TV_PUBLICAR: "1"
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          MIN="${{ github.event.inputs.minutos }}"
+          if [ -z "$MIN" ]; then
+            # por horario: la corrida de la mañana escucha 240 min, la de la noche 120
+            if [ "$(date -u +%H)" -lt 6 ]; then MIN=120; else MIN=240; fi
+          fi
+          python -X utf8 -u -m noticias.tv_monitor en-vivo proyectos.db "$MIN" \
+              || echo "[warn] en-vivo termino con error, publico lo que haya"
+
+      - name: Publicar base en la rama datos
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          bash scripts/publicar_db.sh base_remota proyectos.db
