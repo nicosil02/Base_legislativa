@@ -71,9 +71,14 @@ jobs:
             echo "=== vuelta $i $(TZ=America/Lima date '+%H:%M') Lima"
             # Escucha en vivo en las franjas de noticieros, si no hay una ya corriendo
             H=$(TZ=America/Lima date +%H)
-            if [ "$H" = "06" ] || [ "$H" = "21" ]; then
-              activos=$(gh run list --workflow=tv-en-vivo.yml -L 5 --json status --jq '[.[]|select(.status!="completed")]|length' || echo 1)
-              if [ "$activos" = "0" ]; then gh workflow run tv-en-vivo.yml && echo "disparada tv-en-vivo"; fi
+            activos=$(gh run list --workflow=tv-en-vivo.yml -L 5 --json status --jq '[.[]|select(.status!="completed")]|length' || echo 1)
+            if [ "$activos" = "0" ]; then
+              if [ "$H" = "06" ] || [ "$H" = "21" ]; then
+                gh workflow run tv-en-vivo.yml && echo "disparada tv-en-vivo (franja)"
+              elif python -X utf8 -m noticias.tv_monitor hay-vivo-interes; then
+                # fuera de franja: un directo de noticias con autoridad/entrevista en el titulo
+                gh workflow run tv-en-vivo.yml -f minutos=60 && echo "disparada tv-en-vivo (vivo de interes)"
+              fi
             fi
             python -X utf8 -u -m noticias.videos buscar proyectos.db || echo "[warn] busqueda de videos fallo"
             python -X utf8 -u -m noticias.tv_monitor escanear proyectos.db || echo "[warn] monitor de TV fallo"

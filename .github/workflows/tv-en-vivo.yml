@@ -34,7 +34,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        canales: ["RPP Noticias,América Noticias", "Willax,Exitosa Noticias"]
+        grupo: [1, 2]  # cada maquina toma la mitad de los directos de noticias elegidos
     timeout-minutes: 280
     steps:
       - uses: actions/checkout@v4
@@ -106,7 +106,7 @@ jobs:
             else MIN=0; fi
           fi
           if [ "$MIN" -lt 5 ]; then echo "fuera de franja, no escucho"; exit 0; fi
-          python -X utf8 -u -m noticias.tv_monitor en-vivo proyectos.db "$MIN" "${{ matrix.canales }}" \
+          python -X utf8 -u -m noticias.tv_monitor en-vivo proyectos.db "$MIN" "${{ matrix.grupo }}" \
               || echo "[warn] en-vivo termino con error, publico lo que haya"
 
       - name: Publicar base en la rama datos
