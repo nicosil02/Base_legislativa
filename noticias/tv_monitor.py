@@ -324,7 +324,10 @@ def escuchar_canal(canal: str, urls: list[str], db_path: str | Path, hasta: floa
         t0 = time.time()
         wav = capturar_audio_en_vivo(vivo["id"], segundos=TRAMO_SEG)
         if wav is None:
-            vivo = None  # termino o fallo: volver a mirar /live
+            # termino o fallo: volver a mirar /live, sin martillar a YouTube
+            # (la primera prueba en CI reintentaba cada 6 s)
+            vivo = None
+            time.sleep(30)
             continue
         if modelo is None:
             from faster_whisper import WhisperModel
