@@ -43,7 +43,32 @@ def _today_str():
     return datetime.utcnow().date().isoformat()
 
 
+# El estado vive en proyectos.db (tabla app_state), no en el JSON: el JSON
+# dejo de commitearse el 2026-09-19 y cada corrida arrancaba sin saber que
+# ya habia enviado - correo del slot pm duplicado (27 y 28/09) y ventana
+# "desde el ultimo envio" siempre en 24 h. proyectos.db la publica
+# refrescar-pe.yml en `datos` (modo base_local), asi que persiste.
+def _state_db():
+    import sqlite3
+    from alerts.build import _find_db_file
+    p = _find_db_file("proyectos.db")
+    if not p:
+        return None
+    c = sqlite3.connect(str(p))
+    c.execute("CREATE TABLE IF NOT EXISTS app_state (k TEXT PRIMARY KEY, v TEXT)")
+    return c
+
+
 def _load_state():
+    try:
+        c = _state_db()
+        if c:
+            r = c.execute("SELECT v FROM app_state WHERE k='alert_sent_log'").fetchone()
+            c.close()
+            if r:
+                return json.loads(r[0])
+    except Exception as e:
+        print(f"[alerts] no pude leer el estado de la base: {e}")
     if not STATE_FILE.exists():
         return {}
     try:
@@ -53,10 +78,26 @@ def _load_state():
 
 
 def _save_state(state):
+    texto = json.dumps(state, ensure_ascii=False, indent=2)
+    try:
+        c = _state_db()
+        if c:
+            c.execute("INSERT OR REPLACE INTO app_state VALUES ('alert_sent_log', ?)", (texto,))
+            c.commit()
+            c.close()
+    except Exception as e:
+        print(f"[alerts] no pude guardar el estado en la base: {e}")
     STATE_FILE.parent.mkdir(parents=True, exist_ok=True)
-    STATE_FILE.write_text(
-        json.dumps(state, ensure_ascii=False, indent=2), encoding="utf-8"
-    )
+    STATE_FILE.write_text(texto, encoding="utf-8")
+
+
+def count_novedades(payload):
+    """Solo lo que cambia: dictamenes, proyectos nuevos/con cambios y
+    normativa. La agenda de proximas sesiones y mesas existe todos los dias
+    y no justifica un correo por si sola (Nicolas 2026-09-28: 'me sigue
+    enviando todos los dias asi no haya nada')."""
+    return sum(len(payload[p].get(s, []) or []) for p in ("peru", "ecuador")
+               for s in ("dictamenes", "proyectos", "normativa"))
 
 
 def cmd_send(args):
@@ -120,8 +161,8 @@ def cmd_send(args):
         # PLs" - revierte el "siempre enviar" del 2026-09-20. Sin marcar el
         # slot: la ventana sigue siendo "desde el ultimo envio real", asi el
         # proximo correo con contenido cubre todo lo acumulado.
-        elif n == 0:
-            should_send, reason = False, "sin novedades"
+        elif count_novedades(payload) == 0:
+            should_send, reason = False, "sin novedades (solo agenda)" if n else "sin novedades"
         else:
             should_send, reason = True, f"horario fijo ({args.slot})"
     else:
