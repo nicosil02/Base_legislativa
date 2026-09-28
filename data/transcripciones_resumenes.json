@@ -2640,5 +2640,85 @@
     "generated_at": "2026-09-28T15:50:53Z",
     "duracion_seg": 240,
     "agenda_cumplida": null
+  },
+  {
+    "video_id": "26ArNLd6rEc",
+    "resumen": "Entrevista al ministro de Salud Publica de Ecuador, Juan Carlos Aveiga, en el programa Panorama593, sobre la infiltracion del crimen organizado en el sector salud (certificados medicos falsos), el estado del abastecimiento de medicamentos y la modernizacion tecnologica del sistema publico de salud. El ministro tambien hablo de sus visitas de inspeccion a hospitales y de la preparacion del sector ante el fenomeno de El Nino.",
+    "ideas_clave": [
+      "El ministro confirmo que hubo detenciones de medicos y ex medicos del MSP vinculados a certificados medicos falsos y crimen organizado, tema que investiga la Fiscalia junto con la Secretaria de Integridad Publica",
+      "El MSP habilito un canal de denuncia anonima (via Secretaria de Integridad Publica) para que empleadores, pacientes o colegas denuncien certificados falsos u otras irregularidades sin temor a represalias",
+      "El abastecimiento de medicamentos subio cerca de 13 puntos porcentuales desde que asumio (hace mes y medio), y las bodegas centrales estan al 200% de capacidad, aunque persisten fallas de trazabilidad hasta el ultimo eslabon (centros de salud)",
+      "La proxima semana (semana del 5 de octubre 2026) comienza a operar una nueva empresa publica de logistica y distribucion de medicamentos, que se encargara de las entregas directas a las 24 direcciones provinciales, liberando al MSP de tramites administrativos",
+      "Confirmo que la compra de medicamentos a India sigue en curso (memorando de entendimiento en elaboracion), sin fecha exacta de cierre",
+      "Se reportaron mas de 81 millones de unidades de medicamentos y dispositivos recibidas, de las cuales 44 millones ya fueron distribuidas",
+      "La plataforma Dedalus, contratada a traves de la empresa publica CNT (Senete), conectara a 1,742 establecimientos de salud en un plazo de hasta 3 anos para lograr historia clinica electronica, interoperabilidad entre hospitales y trazabilidad de medicinas; el despliegue sera gradual, comenzando por hospitales grandes"
+    ],
+    "generated_at": "2026-09-28T16:48:20Z",
+    "duracion_seg": 1617,
+    "agenda_cumplida": null
+  },
+  {
+    "video_id": "2_2IVUs6p08",
+    "resumen": "Entrevista al ministro de Salud del Peru, Luis Dyer, en el programa Al Dia con Willax, centrada en el pedido de facultades legislativas del Ejecutivo (transformacion digital, simplificacion administrativa) que el Congreso aun no aprueba, la reorganizacion de PRONIS y PECRI por obras paralizadas, la respuesta ante el fenomeno de El Nino en el norte del pais, sus criticas al modelo de descentralizacion en salud, y su respuesta a acusaciones periodisticas sobre una reunion de un asesor suyo con un tercero vinculado a la empresa de su familia.",
+    "ideas_clave": [
+      "El ministro pidio al Congreso facultades legislativas para digitalizar el MINSA (hoy la norma obliga a guardar documentos en papel entre 5 y 20 anos, lo que le cuesta al sector mantener 8 almacenes, 3 propios y 5 alquilados, a un costo de 15,000 a 25,000 soles cada uno) y para simplificar procesos administrativos internos de hasta 10 pasos a solo 3",
+      "Reporto 75 obras de infraestructura de salud paralizadas a nivel nacional, de montos que van desde 18-40 millones hasta 500-600 millones de soles, por falta de flujo de financiamiento asegurado desde el gobierno anterior",
+      "Anuncio la reorganizacion de PRONIS (cambio de director, ahora David Miranda, ex MEF) y de PECRI, entidad con financiamiento del Banco Mundial que duplicaba funciones de PRONIS; PECRI redujo su personal de 104 a 40 personas, mientras PRONIS mantiene 600",
+      "Senalo que hacer solo el perfil y expediente tecnico de una obra tomaba entre 2 y 4 anos y costaba entre 10 y 80 millones de soles, y que los presupuestos finales terminaban muy por encima de lo proyectado (ej. un hospital presupuestado en 350 millones termino en 1,000 millones)",
+      "Confirmo que ya visito 4 de las 5 regiones afectadas por El Nino (Tumbes, Piura, Ancash y La Libertad, falta Lambayeque) y que el sector trabaja con hospitales de campana montados en almacenes cedidos por el sector privado ante la falta de infraestructura adecuada",
+      "Critico el modelo de descentralizacion de la salud en las regiones (cito el caso del hospital de Chimbote con camas de 50 anos de antiguedad pese a los recursos de Ancash) y propuso que un referendum decida si la salud regional vuelve a ser manejada por el gobierno central",
+      "Nego vinculacion con la reunion denunciada por el periodista Paolo Benza entre un asesor del MINSA y una persona identificada como Victor Zuniga de la asociacion CERSA/Acerta (vinculada a la Sociedad Nacional de Industrias), afirmando que fue una reunion sobre estrategia comunicacional gratuita y que ni el ni su despacho tuvieron contacto directo con esa persona"
+    ],
+    "generated_at": "2026-09-28T16:48:38Z",
+    "duracion_seg": 1701,
+    "agenda_cumplida": null
+  },
+  {
+    "video_id": "KMRe_RHdznU",
+    "resumen": "Entrevista al ministro de Desarrollo Agrario y Riego del Peru, Marco Vinelli, en Peru21, centrada en el avance de las obras de prevencion ante el fenomeno de El Nino en los rios del norte (Piura, Tumbes, Lambayeque, La Libertad), las defensas ribereñas caidas por obras regionales deficientes, el pedido de 66 facultades legislativas al Congreso para agilizar la entrega de ayuda humanitaria, y los ejes de gestion del ministerio (agua, asistencia tecnica, credito y mecanizacion).",
+    "ideas_clave": [
+      "El ejido del rio Piura esta limpiado al 60% y el Chira al 78%; la meta es que el rio Piura pase de soportar 1,600 a 4,000 metros cubicos por segundo antes del 30 de noviembre (en 2017 el rio recibio 3,400 m3/s y se desbordo)",
+      "En Tumbes se limpia el rio en el sector Puente Franco (sin intervencion en 10 anos) para elevar su capacidad de 800 a 2,000 m3/s, con apoyo de la empresa privada retirando 300,000 m3 de sedimento",
+      "El ministro mostro imagenes de defensas ribereñas de concreto armado construidas por una gestion regional anterior en Piura que ya colapsaron; el ministerio dejo 15 metros de ancho de cauce libre y pidio al gobierno regional activar los seguros de esas obras para repararlas",
+      "El Ejecutivo pidio al Congreso 66 facultades legislativas, entre ellas modificar la ley para que INDECI y el Ministerio de Defensa puedan entregar ayuda humanitaria directamente a la poblacion afectada desde el primer dia de la emergencia (hoy la ley exige que primero pase por el 60% de responsabilidad del gobierno local/regional)",
+      "El fondo de contingencia recibido al asumir (28 de julio) era de solo 800 millones de soles; via modificaciones presupuestarias en todos los pliegos se acumularon 2,500 millones, de los cuales 1,500 millones fueron reasignados a Defensa, Agricultura, Vivienda, Transportes, Cultura y Produccion para el fenomeno de El Nino",
+      "Confirmo el cambio de Rafael Rey como ministro de Transportes por motivos de salud, reemplazado por Angelo (su ex viceministro de Agricultura)",
+      "Anuncio 4 ejes de gestion del ministerio hasta 2031: entrega de 5,000 reservorios/represas/canales de agua, asistencia tecnica a 2 millones de agricultores, ampliar credito formal (hoy solo 1 de cada 10 accede) y entrega de 5,000 tractores (ya entregados en Cusco y Puno), ademas de un seguro agrario catastrofico y aplazamientos de creditos con la SBS para agricultores afectados por las lluvias"
+    ],
+    "generated_at": "2026-09-28T16:48:58Z",
+    "duracion_seg": 1885,
+    "agenda_cumplida": null
+  },
+  {
+    "video_id": "VetKAWGmZqo",
+    "resumen": "Entrevista al ministro de Desarrollo Agrario y Riego del Peru, Marco Vinelli (arquitecto del plan de gobierno de Fuerza Popular), en Al Dia con Willax, centrada en el pedido de 66 facultades legislativas al Ejecutivo (43 relacionadas a seguridad y fenomeno de El Nino) que la Camara de Diputados aun no resuelve, el avance de la limpieza de rios en 536 de los 1,700 puntos criticos a nivel nacional, y su postura sobre la tension entre la presidenta Keiko Fujimori y el Poder Judicial, ademas de comentarios sobre violencia sexual escolar.",
+    "ideas_clave": [
+      "El Ejecutivo pidio 66 facultades legislativas al Congreso; de ellas 43 corresponden a seguridad ciudadana y fenomeno de El Nino, y el resto a ejecucion del plan de gobierno (simplificacion administrativa, modificacion de la ley de APPs y de obras por impuesto)",
+      "Explico que sin facultades solo pueden usar decretos de urgencia (medidas presupuestales/economicas de emergencia) y decretos supremos (distribucion de recursos), pero no pueden modificar leyes, como la que exige que INDECI entregue ayuda humanitaria via el gobierno local en vez de directo al damnificado (circuito que demora 8-10 dias)",
+      "De 1,700 puntos criticos identificados a nivel nacional, el gobierno esta interviniendo 536 con presupuesto propio; el resto se cubre con apoyo del sector privado (Cajamarca, Arequipa, Moquegua, Lurin) y de gobiernos regionales/locales (Callao en el rio Rimac)",
+      "El fondo de contingencia recibido al asumir (28 de julio) era de 800 millones de soles; via modificaciones presupuestarias con el MEF se distribuyeron mas de 1,800 millones a Defensa, Transportes, Agricultura, Vivienda, Cultura, Educacion y municipios",
+      "Proyecto una posible afectacion a 1.2 millones de personas en un escenario catastrofico por El Nino; reporto que la produccion agricola de enero a julio 2026 cayo 0.8% y que productos como uva, limon, mango y banano en el norte, y papa, quinua y arroz en la sierra, podrian verse afectados por lluvias o sequia",
+      "Sobre la tension entre la presidenta Fujimori (quien menciono en la ONU el juicio a militares y policias) y la presidenta del Poder Judicial, Vinelli nego que exista una crisis entre poderes y pidio al Poder Judicial acelerar procesos que llevan mas de 20 anos, evitando referirse a la acusacion de presion politica sobre jueces",
+      "Sobre el caso del Liceo Naval y mas de 1,000 denuncias de violencia sexual escolar, senalo que el plan de gobierno de Fuerza Popular incluye devolver autoridad a directores y profesores en las aulas mediante cambios normativos que impulsaria el ministro de Educacion, Antonio Chang"
+    ],
+    "generated_at": "2026-09-28T16:49:18Z",
+    "duracion_seg": 1944,
+    "agenda_cumplida": null
+  },
+  {
+    "video_id": "nUWrZgh6mLg",
+    "resumen": "Entrevista radial al ministro de Desarrollo Agrario y Riego del Peru, Marco Vinelli, coordinador de la Comision del Fenomeno El Nino, sobre los planes de prevencion ante las lluvias en el norte, el pedido de facultades legislativas vencido ante la Camara de Diputados, los procesos judiciales que enfrenta por su gestion hace una decada en Agro Rural, y el balance de los primeros 60 dias de gobierno de Keiko Fujimori.",
+    "ideas_clave": [
+      "La empresa minera Apucor, mediante convenio con la Autoridad Nacional del Agua, limpiara 300,000 metros cubicos en el rio Tumbes en 6 semanas (a doble turno) para que el cauce soporte 2,000 m3/s en vez de los 800 m3/s actuales, antes de fines de octubre",
+      "De los 1,700 puntos criticos identificados a nivel nacional, el gobierno atiende 530 con fondos propios (cerca de 2,000 millones de soles distribuidos via decretos de urgencia y supremos) y usa el mecanismo de servicio por impuesto para que empresas privadas (Grupo Romero/AGAP, mineras Southern, Antamina, Nexa) ejecuten obras a cambio de descuento tributario",
+      "El plazo reglamentario de 15 dias para que el Congreso responda al pedido de 66 facultades legislativas vencio (senalado por el presidente del Senado, Torres), y Vinelli espera que la Comision de Constitucion debata el dictamen la semana siguiente; hasta la fecha ninguna ley fue aprobada por la Camara de Diputados ni por el Senado",
+      "Confirmo que enfrenta tres procesos en la Fiscalia por su gestion en Agro Rural hace mas de 10 anos (acusacion de colusion simple), que rechaza tajantemente por falta de pruebas; senalo que el nuevo ministro de Transportes, Angelo Tanguerlini (su ex viceministro), enfrenta acusaciones por los mismos hechos",
+      "Informo que la presidenta Fujimori entrego una represa de 0.7 millones de m3 en Pacaritambo, Cusco, que beneficiara a 5 comunidades y mas de 1,000 familias, pasando de 10 a 52 semanas de agua al ano; ademas se aprobaron 10 millones de soles en fondos concursables para organizaciones de mujeres rurales (cuyes, flores, lacteos)",
+      "Relato la intervencion presidencial en Purus (provincia mas aislada del Peru) tras el pedido de un diputado de Juntos por el Peru, logrando reactivar vuelos humanitarios pausando el mantenimiento de la pista a cargo de CORPAC",
+      "Anuncio la firma este mes del contrato del sifon del proyecto Chavimochic (tercera etapa) y para noviembre el contrato para terminar la represa, ademas de sostener que el proyecto de masificacion de gas de la sierra (propuesta Calidda) no deberia esperar hasta 2035 como se habia planteado"
+    ],
+    "generated_at": "2026-09-28T16:50:00Z",
+    "duracion_seg": 2519,
+    "agenda_cumplida": null
   }
 ]
