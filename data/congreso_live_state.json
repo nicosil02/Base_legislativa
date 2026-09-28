@@ -34,7 +34,8 @@
   "ANdQ7RryOU4",
   "xFa9V6y8irs",
   "AVQLA8wwh5I",
-  "F4MpBbNtBQg"
+  "F4MpBbNtBQg",
+  "5O6nUoysRYU"
  ],
  "sesiones": [
   {
@@ -287,6 +288,14 @@
    "pais": "PE",
    "url": "https://www.youtube.com/watch?v=F4MpBbNtBQg",
    "visto_at": "2026-09-28T17:01:57Z"
+  },
+  {
+   "id": "5O6nUoysRYU",
+   "titulo": "🔴EN VIVO: Audiencia pública descentralizada de la Comisión de Inclusión Social",
+   "tipo": "Comision: Inclusion Social",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=5O6nUoysRYU",
+   "visto_at": "2026-09-28T19:46:40Z"
   }
  ]
 }
