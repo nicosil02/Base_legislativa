@@ -245,7 +245,136 @@ def escanear(db_path: str | Path, max_n: int = NUEVOS_MAX) -> dict:
     return res
 
 
+# ---------- En vivo: escuchar el directo mientras sale al aire ----------
+# Pedido de Nicolas 2026-09-28: "RPP, Canal 4, Canal N". Canal N no se puede:
+# es de cable (exclusivo Movistar), sin señal publica en su web ni en YouTube.
+# Mismo camino que el Congreso en vivo (congreso_live.live_transcribe):
+# tramos de audio via yt-dlp + Whisper. Cada canal = un hilo.
+# (nombre, urls de canal a probar en orden: la primera que este en vivo)
+EN_VIVO: list[tuple[str, list[str]]] = [
+    ("RPP Noticias", ["https://www.youtube.com/@RPPNoticias"]),
+    # America Noticias transmite solo sus noticieros; fuera de eso, la señal
+    # 24 h de America TV Internacional.
+    ("América Noticias", ["https://www.youtube.com/channel/UCPhm2I2wk4vqjENwhn3px8A",
+                          "https://www.youtube.com/channel/UC6NVDkuzY2exMOVFw4i9oHw"]),
+]
+TRAMO_SEG = 60
+RECHEQUEO_SEG = 600  # RPP abre un video nuevo por programa: re-mirar /live cada 10 min
+
+
+def _vivo_actual(urls: list[str]) -> dict | None:
+    from congreso_live.detector import _ydl
+    for u in urls:
+        try:
+            with _ydl({"extractor_args": {"youtube": {"lang": ["es"]}}}) as ydl:
+                info = ydl.extract_info(f"{u}/live", download=False)
+        except Exception:
+            continue  # "The channel is not currently live" o bloqueo transitorio
+        if info.get("is_live"):
+            return {"id": info["id"], "titulo": info.get("title") or "",
+                    "inicio": info.get("release_timestamp") or info.get("timestamp")}
+    return None
+
+
+def guardar_tramo(conn: sqlite3.Connection, pais: str, canal: str, vivo: dict,
+                  lineas: list[tuple[float, str]]) -> int:
+    """Suma un tramo transcrito al video en vivo: texto acumulado en
+    tv_vistos y menciones nuevas en tv_menciones. Devuelve cuantas menciones."""
+    ahora = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    menciones = buscar_menciones(lineas)
+    tramo = " ".join(t for _, t in lineas)
+    if conn.execute("SELECT 1 FROM tv_vistos WHERE video_id=?", (vivo["id"],)).fetchone():
+        conn.execute("UPDATE tv_vistos SET texto = COALESCE(texto,'') || ' ' || ?, "
+                     "n_menciones = n_menciones + ? WHERE video_id=?",
+                     (tramo, len(menciones), vivo["id"]))
+    else:
+        conn.execute("INSERT INTO tv_vistos VALUES (?,?,?,?,?,?,?,?)",
+                     (vivo["id"], pais, canal, vivo["titulo"], None, len(menciones), tramo, ahora))
+    for m in menciones:
+        conn.execute("INSERT OR IGNORE INTO tv_menciones VALUES (?,?,?,?,?,?,?,?)",
+                     (vivo["id"], m["t_seg"], pais, canal, vivo["titulo"],
+                      ", ".join(m["terminos"]), m["fragmento"], ahora))
+    conn.commit()
+    return len(menciones)
+
+
+def escuchar_canal(canal: str, urls: list[str], db_path: str | Path, hasta: float) -> dict:
+    """Loop bloqueante hasta `hasta` (epoch): captura TRAMO_SEG de audio del
+    directo, lo transcribe y guarda menciones.
+    ponytail: captura y transcripcion van en serie, asi que entre tramos se
+    pierden los ~15-20 s que tarda Whisper; con un hilo capturando y otro
+    transcribiendo no se perderia nada, si hiciera falta."""
+    import time
+    from congreso_live.live_transcribe import capturar_audio_en_vivo, transcribir_audio
+    conn = sqlite3.connect(str(db_path), timeout=30)
+    for s in SCHEMA:
+        conn.execute(s)
+    modelo, vivo, visto_en = None, None, 0.0
+    res = {"tramos": 0, "menciones": 0}
+    while time.time() < hasta:
+        if vivo is None or time.time() - visto_en > RECHEQUEO_SEG:
+            vivo, visto_en = _vivo_actual(urls), time.time()
+            if vivo:
+                print(f"[tv-en-vivo] {canal}: {vivo['id']} {vivo['titulo'][:70]}", flush=True)
+        if not vivo:
+            time.sleep(120)
+            continue
+        t0 = time.time()
+        wav = capturar_audio_en_vivo(vivo["id"], segundos=TRAMO_SEG)
+        if wav is None:
+            vivo = None  # termino o fallo: volver a mirar /live
+            continue
+        if modelo is None:
+            from faster_whisper import WhisperModel
+            modelo = WhisperModel("small", device="cpu", compute_type="int8")
+        segs = transcribir_audio(wav, modelo)
+        if not segs:
+            continue
+        # t_seg relativo al inicio de la transmision: el mismo minuto sirve
+        # para el enlace &t= cuando YouTube la guarde como video.
+        base = t0 - (vivo["inicio"] or t0)
+        n = guardar_tramo(conn, "PE", canal, vivo, [(base + s["start"], s["text"]) for s in segs])
+        res["tramos"] += 1
+        res["menciones"] += n
+        if n:
+            print(f"[tv-en-vivo] {canal}: {n} mencion(es)", flush=True)
+    conn.close()
+    return res
+
+
+def en_vivo(db_path: str | Path, minutos: float, publicar_cada_min: float = 15) -> dict:
+    """Un hilo por canal de EN_VIVO; con TV_PUBLICAR=1 (el workflow) publica
+    la base en `datos` cada `publicar_cada_min` para que la app vea las
+    menciones sin esperar a que termine la corrida."""
+    import os
+    import subprocess
+    import threading
+    import time
+    hasta = time.time() + minutos * 60
+    resultados: dict = {}
+    hilos = [threading.Thread(target=lambda c=c, u=u: resultados.__setitem__(c, escuchar_canal(c, u, db_path, hasta)),
+                              daemon=True) for c, u in EN_VIVO]
+    for h in hilos:
+        h.start()
+    while any(h.is_alive() for h in hilos):
+        time.sleep(min(publicar_cada_min * 60, max(hasta - time.time(), 1)))
+        if os.environ.get("TV_PUBLICAR"):
+            subprocess.run(["bash", "scripts/publicar_db.sh", "base_remota", str(db_path)], check=False)
+    return resultados
+
+
 def _demo():
+    import tempfile
+    with tempfile.TemporaryDirectory() as td:
+        c = sqlite3.connect(str(Path(td) / "t.db"))
+        for s in SCHEMA:
+            c.execute(s)
+        vivo = {"id": "LIVE1", "titulo": "RPP en vivo", "inicio": 0}
+        assert guardar_tramo(c, "PE", "RPP Noticias", vivo, [(10, "hola")]) == 0
+        assert guardar_tramo(c, "PE", "RPP Noticias", vivo, [(70, "el ministro Vinelli y el Senasa")]) == 1
+        assert c.execute("SELECT texto, n_menciones FROM tv_vistos").fetchone() == (
+            "hola el ministro Vinelli y el Senasa", 1)
+        c.close()
     assert buscar_menciones([(0, "el ministro Vineli dijo")])[0]["terminos"] == ["Marco Vinelli"]
     lineas = [(0, "buenas noches"), (10, "hoy nos acompaña el ministro Vinelli"),
               (20, "hablamos de las facultades legislativas"), (200, "pasamos a deportes"),
@@ -269,5 +398,7 @@ if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
     if len(sys.argv) == 3 and sys.argv[1] == "escanear":
         print(f"tv_monitor: {escanear(sys.argv[2])}")
+    elif len(sys.argv) == 4 and sys.argv[1] == "en-vivo":
+        print(f"tv_monitor en vivo: {en_vivo(sys.argv[2], float(sys.argv[3]))}")
     else:
         _demo()
