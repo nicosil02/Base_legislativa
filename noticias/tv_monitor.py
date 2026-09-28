@@ -257,6 +257,8 @@ EN_VIVO: list[tuple[str, list[str]]] = [
     # 24 h de America TV Internacional.
     ("América Noticias", ["https://www.youtube.com/channel/UCPhm2I2wk4vqjENwhn3px8A",
                           "https://www.youtube.com/channel/UC6NVDkuzY2exMOVFw4i9oHw"]),
+    ("Willax", ["https://www.youtube.com/@WillaxTV"]),
+    ("Exitosa Noticias", ["https://www.youtube.com/channel/UCxgO_rak_BKZP8VNVmYqbWg"]),
 ]
 TRAMO_SEG = 60
 RECHEQUEO_SEG = 600  # RPP abre un video nuevo por programa: re-mirar /live cada 10 min
@@ -342,7 +344,8 @@ def escuchar_canal(canal: str, urls: list[str], db_path: str | Path, hasta: floa
     return res
 
 
-def en_vivo(db_path: str | Path, minutos: float, publicar_cada_min: float = 15) -> dict:
+def en_vivo(db_path: str | Path, minutos: float, publicar_cada_min: float = 15,
+            canales: list[str] | None = None) -> dict:
     """Un hilo por canal de EN_VIVO; con TV_PUBLICAR=1 (el workflow) publica
     la base en `datos` cada `publicar_cada_min` para que la app vea las
     menciones sin esperar a que termine la corrida."""
@@ -353,7 +356,7 @@ def en_vivo(db_path: str | Path, minutos: float, publicar_cada_min: float = 15) 
     hasta = time.time() + minutos * 60
     resultados: dict = {}
     hilos = [threading.Thread(target=lambda c=c, u=u: resultados.__setitem__(c, escuchar_canal(c, u, db_path, hasta)),
-                              daemon=True) for c, u in EN_VIVO]
+                              daemon=True) for c, u in EN_VIVO if not canales or c in canales]
     for h in hilos:
         h.start()
     while any(h.is_alive() for h in hilos):
@@ -398,7 +401,10 @@ if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
     if len(sys.argv) == 3 and sys.argv[1] == "escanear":
         print(f"tv_monitor: {escanear(sys.argv[2])}")
-    elif len(sys.argv) == 4 and sys.argv[1] == "en-vivo":
-        print(f"tv_monitor en vivo: {en_vivo(sys.argv[2], float(sys.argv[3]))}")
+    elif len(sys.argv) in (4, 5) and sys.argv[1] == "en-vivo":
+        # 5to argumento opcional: canales separados por coma (el workflow reparte
+        # los canales en dos maquinas; 4 Whisper en una sola se atrasaban)
+        canales = sys.argv[4].split(",") if len(sys.argv) == 5 else None
+        print(f"tv_monitor en vivo: {en_vivo(sys.argv[2], float(sys.argv[3]), canales=canales)}")
     else:
         _demo()
