@@ -1,8 +1,8 @@
-"""Pagina "TV y entrevistas" (PE/EC): entrevistas de autoridades en YouTube
+"""Pestaña "TV y entrevistas" de Noticias (PE/EC): entrevistas de autoridades en YouTube
 (noticias/videos.py) y menciones en programas de TV (noticias/tv_monitor.py),
 con el mismo formato de tarjetas que las paginas de Noticias. Pedido de
 Nicolas 2026-09-28: sin reproductor de video, solo resumen y transcripcion,
-en su propia pagina (no arriba de Noticias)."""
+como pestaña dentro de Noticias, igual que Agenda parlamentaria."""
 from __future__ import annotations
 
 import sqlite3
@@ -14,7 +14,6 @@ import streamlit as st
 from alerts.borradores_store import marcar_pendiente
 from congreso_live.resumenes_store import list_resumenes
 from noticias.videos import PEDIDOS_DIR, pedir_transcripcion
-from ui_kit import inject_theme
 
 _RAIZ = Path(__file__).resolve().parent.parent
 VENTANAS = {"Últimos 3 días": 3, "Última semana": 7, "Últimas 2 semanas": 14}
@@ -86,18 +85,13 @@ def _q(conn, sql: str, params: tuple) -> pd.DataFrame:
         return pd.DataFrame()
 
 
-def pagina(conn: sqlite3.Connection, pais: str, pais_label: str, clientes: list[str]) -> None:
-    inject_theme()
+def contenido(conn: sqlite3.Connection, pais: str, clientes: list[str]) -> None:
+    """Pestaña "TV y entrevistas" dentro de las paginas de Noticias PE/EC
+    (mismo esquema de pestañas que Agenda parlamentaria)."""
     st.markdown(_CSS, unsafe_allow_html=True)
-    st.markdown('<div class="country-eyebrow">Radar Legislativo · TV y entrevistas</div>',
-                unsafe_allow_html=True)
-    st.markdown(f'<h1 class="country-title"><span class="accent">{pais_label}</span> · '
-                f'TV y entrevistas</h1>', unsafe_allow_html=True)
-    st.markdown('<p class="country-subtitle">Entrevistas de las autoridades que seguimos en medios '
-                'de TV y radio, y lo que se dijo en los programas de noticias sobre ellas y sobre '
-                'los temas de los clientes. Se lee lo que los medios publican en YouTube.</p>',
-                unsafe_allow_html=True)
-
+    st.caption("Entrevistas de las autoridades que seguimos en medios de TV y radio, y lo que se "
+               "dijo en los programas de noticias sobre ellas y sobre los temas de los clientes. "
+               "Se lee lo que los medios publican en YouTube, cada hora.")
     f = st.columns([1, 1.4, 2.2])
     dias = VENTANAS[f[0].selectbox("Ventana", list(VENTANAS), index=1)]
     desde = f"-{dias} days"
@@ -117,6 +111,13 @@ def pagina(conn: sqlite3.Connection, pais: str, pais_label: str, clientes: list[
     if not videos.empty:  # filas guardadas antes del filtro de medios formales
         from noticias.videos import MEDIOS, _norm
         videos = videos[videos["canal"].map(lambda c: any(m in _norm(c) for m in MEDIOS))]
+    if not menciones.empty:
+        # Se re-evalua cada fragmento con las reglas actuales de
+        # tv_monitor (menciones guardadas antes del filtro de contexto y
+        # apellidos ambiguos, 2026-09-28).
+        from noticias.tv_monitor import relevante, terminos_de
+        menciones["terminos"] = menciones["fragmento"].map(lambda f: ", ".join(terminos_de(f)))
+        menciones = menciones[menciones["terminos"].map(lambda t: relevante(t.split(", ")) if t else False)]
     etiquetas = set(videos["autoridad"]) if not videos.empty else set()
     if not menciones.empty:
         etiquetas |= {t.strip() for ts in menciones["terminos"] for t in ts.split(",")}

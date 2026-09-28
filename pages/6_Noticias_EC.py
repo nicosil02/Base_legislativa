@@ -454,6 +454,18 @@ if not has_tables(PAIS):
     )
     st.stop()
 
+# ---------- Pestañas (mismo esquema que Agenda parlamentaria) ----------
+tab_noticias, tab_tv = st.tabs(["Noticias", "TV y entrevistas"])
+with tab_tv:
+    from noticias.videos_ui import contenido as tv_contenido
+    tv_contenido(get_conn(), PAIS, load_clientes())
+# Todo lo que sigue (KPIs, filtros, tarjetas, footer) va en la pestaña
+# Noticias. ponytail: se entra al contexto sin `with` para no reindentar
+# ~340 lineas con strings de markdown/HTML adentro (una sangria de mas los
+# volveria bloques de codigo). Si la pagina se refactoriza a funciones,
+# pasar a `with tab_noticias:`.
+tab_noticias.__enter__()
+
 # KPIs
 kpis = load_kpis(PAIS)
 cols = st.columns(len(kpis))
