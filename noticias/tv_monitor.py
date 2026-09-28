@@ -327,10 +327,30 @@ def hay_vivo_interes() -> bool:
     return False
 
 
+# WhatsApp de menciones en vivo (Nicolas 2026-09-28: "y tambien me envia
+# alertas? eso tmb habria que incluir"). Solo lo especifico: una autoridad
+# que no sea contexto o un tema de cliente; lo general (El Niño, IA...)
+# queda en la app. Maximo un aviso cada AVISO_CADA_SEG por programa.
+NO_AVISAR = {"fenomeno del nino", "fenomeno el nino", "inteligencia artificial", "vacuna", "minsa"}
+AVISO_CADA_SEG = 1200
+
+
+def vale_aviso(terminos: list[str]) -> bool:
+    return any(t not in CONTEXTO and t not in NO_AVISAR for t in terminos)
+
+
+def mensaje_aviso(canal: str, vivo: dict, m: dict) -> str:
+    hora = datetime.now(timezone.utc).astimezone(__import__("zoneinfo").ZoneInfo("America/Lima")).strftime("%H:%M")
+    frag = m["fragmento"] if len(m["fragmento"]) <= 400 else m["fragmento"][:400] + "…"
+    return (f"📺 En vivo · {canal} · {hora}\n{vivo['titulo'][:90]}\n"
+            f"Menciona: {', '.join(m['terminos'])}\n«{frag}»\n"
+            f"https://www.youtube.com/watch?v={vivo['id']}")
+
+
 def guardar_tramo(conn: sqlite3.Connection, pais: str, canal: str, vivo: dict,
-                  lineas: list[tuple[float, str]]) -> int:
+                  lineas: list[tuple[float, str]]) -> list[dict]:
     """Suma un tramo transcrito al video en vivo: texto acumulado en
-    tv_vistos y menciones nuevas en tv_menciones. Devuelve cuantas menciones."""
+    tv_vistos y menciones nuevas en tv_menciones. Devuelve las menciones."""
     ahora = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     menciones = buscar_menciones(lineas)
     tramo = " ".join(t for _, t in lineas)
@@ -346,7 +366,7 @@ def guardar_tramo(conn: sqlite3.Connection, pais: str, canal: str, vivo: dict,
                      (vivo["id"], m["t_seg"], pais, canal, vivo["titulo"],
                       ", ".join(m["terminos"]), m["fragmento"], ahora))
     conn.commit()
-    return len(menciones)
+    return menciones
 
 
 def escuchar_canal(canal: str, urls: list[str], db_path: str | Path, hasta: float,
@@ -363,6 +383,7 @@ def escuchar_canal(canal: str, urls: list[str], db_path: str | Path, hasta: floa
         conn.execute(s)
     modelo, vivo, visto_en = None, None, 0.0
     res = {"tramos": 0, "menciones": 0}
+    ultimo_aviso: dict[str, float] = {}
     while time.time() < hasta:
         if vivo is None or time.time() - visto_en > RECHEQUEO_SEG:
             vivo, visto_en = _vivo_actual(urls), time.time()
@@ -388,11 +409,17 @@ def escuchar_canal(canal: str, urls: list[str], db_path: str | Path, hasta: floa
         # t_seg relativo al inicio de la transmision: el mismo minuto sirve
         # para el enlace &t= cuando YouTube la guarde como video.
         base = t0 - (vivo["inicio"] or t0)
-        n = guardar_tramo(conn, pais, canal, vivo, [(base + s["start"], s["text"]) for s in segs])
+        ms = guardar_tramo(conn, pais, canal, vivo, [(base + s["start"], s["text"]) for s in segs])
         res["tramos"] += 1
-        res["menciones"] += n
-        if n:
-            print(f"[tv-en-vivo] {canal}: {n} mencion(es)", flush=True)
+        res["menciones"] += len(ms)
+        if ms:
+            print(f"[tv-en-vivo] {canal}: {len(ms)} mencion(es)", flush=True)
+        buena = next((m for m in ms if vale_aviso(m["terminos"])), None)
+        if buena and time.time() - ultimo_aviso.get(vivo["id"], 0) > AVISO_CADA_SEG:
+            from congreso_live.notify import enviar_whatsapp
+            if enviar_whatsapp(mensaje_aviso(canal, vivo, buena)):
+                ultimo_aviso[vivo["id"]] = time.time()
+                print(f"[tv-en-vivo] {canal}: aviso WhatsApp enviado", flush=True)
     conn.close()
     return res
 
@@ -432,8 +459,11 @@ def _demo():
         for s in SCHEMA:
             c.execute(s)
         vivo = {"id": "LIVE1", "titulo": "RPP en vivo", "inicio": 0}
-        assert guardar_tramo(c, "PE", "RPP Noticias", vivo, [(10, "hola")]) == 0
-        assert guardar_tramo(c, "PE", "RPP Noticias", vivo, [(70, "el ministro Vinelli y el Senasa")]) == 1
+        assert guardar_tramo(c, "PE", "RPP Noticias", vivo, [(10, "hola")]) == []
+        ms = guardar_tramo(c, "PE", "RPP Noticias", vivo, [(70, "el ministro Vinelli y el Senasa")])
+        assert len(ms) == 1 and vale_aviso(ms[0]["terminos"])
+        assert "📺 En vivo · RPP Noticias" in mensaje_aviso("RPP Noticias", vivo, ms[0])
+        assert not vale_aviso(["fenomeno del nino", "Keiko Fujimori"])  # general: queda en la app
         assert c.execute("SELECT texto, n_menciones FROM tv_vistos").fetchone() == (
             "hola el ministro Vinelli y el Senasa", 1)
         c.close()
