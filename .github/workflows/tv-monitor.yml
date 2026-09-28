@@ -1,0 +1,66 @@
+name: Monitor de TV y entrevistas (YouTube)
+
+# Cada hora: busca entrevistas de autoridades subidas esta semana
+# (noticias/videos.py) y lee los subtitulos de los programas de los canales
+# de noticias PE/EC buscando menciones de valor (noticias/tv_monitor.py).
+# ponytail: el schedule nativo de GitHub a esta frecuencia no es confiable
+# (ver backfill-auto.yml); si se saltea horas no se pierde nada, cada
+# corrida mira los ultimos programas de cada canal.
+
+on:
+  schedule:
+    - cron: '35 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: tv-monitor
+  cancel-in-progress: false
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Instalar deps
+        run: pip install -q yt-dlp requests
+
+      - name: Instalar Cloudflare WARP en modo proxy (SOCKS5 :40000)
+        run: |
+          curl -fsSL --retry 3 --retry-delay 2 --retry-all-errors https://pkg.cloudflareclient.com/pubkey.gpg | sudo gpg --yes --dearmor --output /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg
+          echo "deb [signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] https://pkg.cloudflareclient.com/ $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/cloudflare-client.list
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq cloudflare-warp
+          sudo systemctl enable --now warp-svc
+          sleep 3
+          warp-cli --accept-tos registration new
+          warp-cli --accept-tos mode proxy
+          warp-cli --accept-tos proxy port 40000
+          warp-cli --accept-tos connect
+          sleep 5
+          warp-cli --accept-tos status
+
+      - name: Bootstrap DB Peru desde la rama datos
+        run: bash scripts/bajar_db.sh proyectos.db.gz proyectos.db || true
+
+      - name: Entrevistas de autoridades y menciones en TV
+        env:
+          PYTHONIOENCODING: utf-8
+          YT_DLP_PROXY: socks5://127.0.0.1:40000
+        run: |
+          python -X utf8 -u -m noticias.videos buscar proyectos.db || echo "[warn] busqueda de videos fallo"
+          python -X utf8 -u -m noticias.tv_monitor escanear proyectos.db || echo "[warn] monitor de TV fallo"
+
+      - name: Publicar base en la rama datos
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          bash scripts/publicar_db.sh base_remota proyectos.db
