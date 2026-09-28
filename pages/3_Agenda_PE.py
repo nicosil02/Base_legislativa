@@ -1420,7 +1420,7 @@ def load_transcripciones(limit: int = 60) -> pd.DataFrame:
     return pd.read_sql_query(
         """SELECT video_id, tipo, titulo, fecha, duracion_seg, texto, temas
            FROM sesiones_transcripciones
-           WHERE tipo NOT LIKE '%(EC)'
+           WHERE tipo NOT LIKE '%(EC)' AND tipo NOT LIKE 'Entrevista:%'
            ORDER BY fecha DESC, video_id DESC LIMIT ?""",
         conn, params=(limit,),
     )

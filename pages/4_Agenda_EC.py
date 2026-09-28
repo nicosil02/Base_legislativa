@@ -486,7 +486,7 @@ def load_sesiones_ec_transcritas(limit: int = 400) -> pd.DataFrame:
     try:
         return pd.read_sql_query(
             """SELECT video_id, tipo, titulo, fecha, duracion_seg, texto
-               FROM sesiones_transcripciones WHERE tipo LIKE '%(EC)'
+               FROM sesiones_transcripciones WHERE tipo LIKE '%(EC)' AND tipo NOT LIKE 'Entrevista:%'
                ORDER BY fecha DESC, video_id DESC LIMIT ?""",
             conn, params=(limit,))
     except Exception:

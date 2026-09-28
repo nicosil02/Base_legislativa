@@ -36,6 +36,12 @@ def merge_sesiones(base_path: str, donor_path: str) -> int:
             WHERE b.video_id = d.video_id AND length(b.texto) >= length(d.texto)
         )
     """)
+    # videos_autoridades (noticias/videos.py) la escribe backfill-auto.yml,
+    # que publica en modo base_remota - sin esto se perderia en el merge.
+    if base.execute("SELECT 1 FROM donor.sqlite_master WHERE name='videos_autoridades'").fetchone():
+        from noticias.videos import SCHEMA
+        base.execute(SCHEMA)
+        base.execute("INSERT OR IGNORE INTO videos_autoridades SELECT * FROM donor.videos_autoridades")
     base.commit()
     despues = base.execute("SELECT COUNT(*) FROM sesiones_transcripciones").fetchone()[0]
     nuevas_o_actualizadas = base.total_changes
