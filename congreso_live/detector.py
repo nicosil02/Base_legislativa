@@ -81,6 +81,13 @@ EXCLUIR = (
 )
 
 
+EVENTO_KEYWORDS = ("mesa de trabajo", "mesa tecnica", "foro", "conversatorio")
+# tema de noticias.temas.clasificar() -> etiqueta en el tipo. Solo los de
+# Bayer; sumar "Tech / Digital"/"KYC / AML / Financiero" si se quieren las
+# mesas de Google/Incode tambien.
+MESA_TEMAS = {"Salud": "Salud", "Crop": "Agro"}
+
+
 def _norm(s: str | None) -> str:
     if not s:
         return ""
@@ -118,6 +125,16 @@ def clasificar_titulo(titulo: str | None, pais: str = "PE") -> str | None:
         for kw in ORDINARIA_KEYWORDS:
             if kw in t:
                 return f"Comision: {kw.title()}"
+    # Mesas de trabajo/foros de un congresista (sin "comision" en el titulo)
+    # solo si el tema es de interes de Bayer (Salud/Crop). Caso real
+    # 2026-09-23: la mesa "Acceso a Medicamentos" de Indira Huilca nunca se
+    # detecto y hubo que dispararla a mano. Mismo formato de tipo que se uso
+    # esa vez a mano ("Comision: Mesa de trabajo ...").
+    if any(x in t for x in EVENTO_KEYWORDS):
+        from noticias.temas import clasificar
+        for tema in clasificar(titulo):
+            if tema in MESA_TEMAS:
+                return f"Comision: Mesa de trabajo {MESA_TEMAS[tema]}"
     return None
 
 
@@ -430,8 +447,21 @@ def _test_rotar_warp():
     print("OK detector: rotar_warp respeta el tope y no hace nada sin WARP")
 
 
+def _test_clasificar_mesas():
+    """Mesas/foros sin "comision" en el titulo: solo pasan si el tema es de
+    Bayer. Titulos reales de la agenda del Congreso (2026-09)."""
+    assert clasificar_titulo("🔴EN VIVO: Mesa de trabajo “Proposición Legislativa Acceso a Medicamentos” l 23/09/2026")         == "Comision: Mesa de trabajo Salud"
+    assert clasificar_titulo("EN VIVO: Foro sanidad agraria y plaguicidas") == "Comision: Mesa de trabajo Agro"
+    assert clasificar_titulo("EN VIVO: Mesa de trabajo “Sindicato SUNAFIL”") is None
+    assert clasificar_titulo("Mesa de trabajo “Validación del proyecto de Ley de acoso”") is None
+    # Sin palabra de evento no alcanza con el tema.
+    assert clasificar_titulo("Campaña de vacunación en el Congreso") is None
+    print("OK detector: mesas de trabajo solo de temas Bayer")
+
+
 if __name__ == "__main__":
     _test_rotar_warp()
     _demo()
     _test_vivos_de_interes_usa_live_status_del_flat()
     _test_clasificar_ec()
+    _test_clasificar_mesas()
