@@ -260,16 +260,25 @@ def escanear(db_path: str | Path, max_n: int = NUEVOS_MAX) -> dict:
 # es de cable (exclusivo Movistar), sin señal publica en su web ni en YouTube.
 # Mismo camino que el Congreso en vivo (congreso_live.live_transcribe):
 # tramos de audio via yt-dlp + Whisper. Cada canal = un hilo.
-# (nombre, urls de canal a probar en orden: la primera que este en vivo)
-EN_VIVO: list[tuple[str, list[str]]] = [
-    ("RPP Noticias", ["https://www.youtube.com/@RPPNoticias"]),
-    # America Noticias transmite solo sus noticieros; fuera de eso, la señal
-    # 24 h de America TV Internacional.
-    ("América Noticias", ["https://www.youtube.com/channel/UCPhm2I2wk4vqjENwhn3px8A",
-                          "https://www.youtube.com/channel/UC6NVDkuzY2exMOVFw4i9oHw"]),
-    ("Willax", ["https://www.youtube.com/@WillaxTV"]),
-    ("Exitosa Noticias", ["https://www.youtube.com/channel/UCxgO_rak_BKZP8VNVmYqbWg"]),
-]
+# Canales candidatos en orden de prioridad (Nicolas: RPP, Canal 4, Willax,
+# Exitosa primero). Se escuchan los MAX_VIVOS que esten transmitiendo
+# noticias en ese momento (ver vivos_noticias): a las 3 pm RPP/Exitosa
+# estaban en deportes y Willax en novela, mientras America, TVPeru y
+# Latina tenian noticiero (2026-09-28).
+PRIORIDAD = ["RPP Noticias", "América Noticias", "Willax", "Exitosa Noticias",
+             "Latina Noticias", "TVPerú Noticias", "ATV Noticias", "Panamericana Noticias",
+             "Epicentro TV", "Ecuavisa", "Teleamazonas", "TC Televisión", "Radio Pichincha",
+             "Radio Centro", "El Universo", "Diario Expreso", "RTS"]
+EN_VIVO: list[tuple[str, list[str], str]] = sorted(
+    [(c, [u], p) for p, lista in CANALES.items() for c, u in lista],
+    key=lambda x: PRIORIDAD.index(x[0]) if x[0] in PRIORIDAD else 99)
+MAX_VIVOS = 4  # dos maquinas del workflow, dos canales cada una
+# Titulos de directos que no son noticias.
+NO_NOTICIAS = re.compile(r"deporte|futbol|seleccion|mundial|amor y fuego|novela|podcast|happy hour|"
+                         r"after office|musica|reality|esto es guerra|cocina|farandula|magaly")
+# Titulos que justifican escuchar fuera de las franjas (hay-vivo-interes).
+TITULO_INTERES = re.compile(r"entrevista|ministr|president|premier|congreso|facultades|"
+                            r"conferencia de prensa|mensaje a la nacion|asamblea")
 TRAMO_SEG = 60
 RECHEQUEO_SEG = 600  # RPP abre un video nuevo por programa: re-mirar /live cada 10 min
 
@@ -286,6 +295,29 @@ def _vivo_actual(urls: list[str]) -> dict | None:
             return {"id": info["id"], "titulo": info.get("title") or "",
                     "inicio": info.get("release_timestamp") or info.get("timestamp")}
     return None
+
+
+def vivos_noticias(max_n: int = MAX_VIVOS) -> list[dict]:
+    """Directos de noticias en este momento, en orden de PRIORIDAD."""
+    out = []
+    for canal, urls, pais in EN_VIVO:
+        v = _vivo_actual(urls)
+        if v and not NO_NOTICIAS.search(_norm(v["titulo"])):
+            out.append({"canal": canal, "urls": urls, "pais": pais, "vivo": v})
+            if len(out) >= max_n:
+                break
+    return out
+
+
+def hay_vivo_interes() -> bool:
+    """Para las vueltas horarias fuera de franja: un directo de noticias cuyo
+    titulo nombra a una autoridad o dice entrevista/ministro/Congreso..."""
+    for v in vivos_noticias(max_n=len(EN_VIVO)):
+        t = _norm(v["vivo"]["titulo"])
+        if TITULO_INTERES.search(t) or terminos_de(t):
+            print(f"vivo de interes: {v['canal']} | {v['vivo']['titulo'][:80]}")
+            return True
+    return False
 
 
 def guardar_tramo(conn: sqlite3.Connection, pais: str, canal: str, vivo: dict,
@@ -310,7 +342,8 @@ def guardar_tramo(conn: sqlite3.Connection, pais: str, canal: str, vivo: dict,
     return len(menciones)
 
 
-def escuchar_canal(canal: str, urls: list[str], db_path: str | Path, hasta: float) -> dict:
+def escuchar_canal(canal: str, urls: list[str], db_path: str | Path, hasta: float,
+                   pais: str = "PE") -> dict:
     """Loop bloqueante hasta `hasta` (epoch): captura TRAMO_SEG de audio del
     directo, lo transcribe y guarda menciones.
     ponytail: captura y transcripcion van en serie, asi que entre tramos se
@@ -348,7 +381,7 @@ def escuchar_canal(canal: str, urls: list[str], db_path: str | Path, hasta: floa
         # t_seg relativo al inicio de la transmision: el mismo minuto sirve
         # para el enlace &t= cuando YouTube la guarde como video.
         base = t0 - (vivo["inicio"] or t0)
-        n = guardar_tramo(conn, "PE", canal, vivo, [(base + s["start"], s["text"]) for s in segs])
+        n = guardar_tramo(conn, pais, canal, vivo, [(base + s["start"], s["text"]) for s in segs])
         res["tramos"] += 1
         res["menciones"] += n
         if n:
@@ -358,18 +391,24 @@ def escuchar_canal(canal: str, urls: list[str], db_path: str | Path, hasta: floa
 
 
 def en_vivo(db_path: str | Path, minutos: float, publicar_cada_min: float = 15,
-            canales: list[str] | None = None) -> dict:
-    """Un hilo por canal de EN_VIVO; con TV_PUBLICAR=1 (el workflow) publica
-    la base en `datos` cada `publicar_cada_min` para que la app vea las
-    menciones sin esperar a que termine la corrida."""
+            grupo: int | None = None, n_grupos: int = 2) -> dict:
+    """Un hilo por cada directo de noticias elegido (vivos_noticias). Con
+    `grupo` (1..n_grupos) cada maquina del workflow toma su parte de la
+    lista. Con TV_PUBLICAR=1 publica la base en `datos` cada
+    `publicar_cada_min` para que la app vea las menciones sin esperar."""
     import os
     import subprocess
     import threading
     import time
     hasta = time.time() + minutos * 60
+    elegidos = vivos_noticias()
+    if grupo:
+        elegidos = elegidos[grupo - 1::n_grupos]
+    print("[tv-en-vivo] escucho:", [e["canal"] for e in elegidos], flush=True)
     resultados: dict = {}
-    hilos = [threading.Thread(target=lambda c=c, u=u: resultados.__setitem__(c, escuchar_canal(c, u, db_path, hasta)),
-                              daemon=True) for c, u in EN_VIVO if not canales or c in canales]
+    hilos = [threading.Thread(target=lambda e=e: resultados.__setitem__(
+                 e["canal"], escuchar_canal(e["canal"], e["urls"], db_path, hasta, e["pais"])),
+             daemon=True) for e in elegidos]
     for h in hilos:
         h.start()
     while any(h.is_alive() for h in hilos):
@@ -393,6 +432,10 @@ def _demo():
         c.close()
     assert buscar_menciones([(0, "el ministro Vineli dijo")])[0]["terminos"] == ["Marco Vinelli"]
     assert terminos_de("el presidente Novoa") == ["Daniel Noboa"]
+    assert NO_NOTICIAS.search(_norm("EXITOSA DEPORTES ⚽ con ÓSCAR PAZ"))
+    assert NO_NOTICIAS.search(_norm("Willax en vivo - AMOR Y FUEGO - 28/09/2026"))
+    assert not NO_NOTICIAS.search(_norm("🔴 América Noticias - EN VIVO | 28/09/26"))
+    assert EN_VIVO[0][0] == "RPP Noticias" and EN_VIVO[1][0] == "América Noticias"
     promo = "no vea el acto si quiere ver candidatos abusar de la inteligencia artificial de una manera ridicula"
     assert len(buscar_menciones([(0, promo), (300, promo), (600, promo)])) == 1
     assert not buscar_menciones([(0, "maquillaje hecho con semillas y flores")])
@@ -419,9 +462,11 @@ if __name__ == "__main__":
     if len(sys.argv) == 3 and sys.argv[1] == "escanear":
         print(f"tv_monitor: {escanear(sys.argv[2])}")
     elif len(sys.argv) in (4, 5) and sys.argv[1] == "en-vivo":
-        # 5to argumento opcional: canales separados por coma (el workflow reparte
-        # los canales en dos maquinas; 4 Whisper en una sola se atrasaban)
-        canales = sys.argv[4].split(",") if len(sys.argv) == 5 else None
-        print(f"tv_monitor en vivo: {en_vivo(sys.argv[2], float(sys.argv[3]), canales=canales)}")
+        # 5to argumento opcional: grupo 1 o 2 (el workflow reparte los canales
+        # en dos maquinas; 4 Whisper en una sola se atrasaban)
+        grupo = int(sys.argv[4]) if len(sys.argv) == 5 else None
+        print(f"tv_monitor en vivo: {en_vivo(sys.argv[2], float(sys.argv[3]), grupo=grupo)}")
+    elif len(sys.argv) == 2 and sys.argv[1] == "hay-vivo-interes":
+        sys.exit(0 if hay_vivo_interes() else 1)
     else:
         _demo()
