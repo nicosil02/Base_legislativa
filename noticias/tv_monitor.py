@@ -272,7 +272,13 @@ PRIORIDAD = ["RPP Noticias", "América Noticias", "Willax", "Exitosa Noticias",
 EN_VIVO: list[tuple[str, list[str], str]] = sorted(
     [(c, [u], p) for p, lista in CANALES.items() for c, u in lista],
     key=lambda x: PRIORIDAD.index(x[0]) if x[0] in PRIORIDAD else 99)
-MAX_VIVOS = 4  # dos maquinas del workflow, dos canales cada una
+MAX_VIVOS = 4  # de la lista de prioridad
+# Ecuador con lugar propio (pedido de Nicolas 2026-09-28): sus noticieros de
+# la mañana se escuchan siempre que esten al aire, aparte de los MAX_VIVOS
+# (si no, los 4 de Peru los dejaban siempre afuera). 4 + 2 = 6 canales,
+# repartidos en las 3 maquinas del workflow.
+EC_SIEMPRE = ["Ecuavisa", "Teleamazonas"]
+N_GRUPOS = 3
 # Titulos de directos que no son noticias.
 NO_NOTICIAS = re.compile(r"deporte|futbol|seleccion|mundial|amor y fuego|novela|podcast|happy hour|"
                          r"after office|musica|reality|esto es guerra|cocina|farandula|magaly")
@@ -299,14 +305,15 @@ def _vivo_actual(urls: list[str]) -> dict | None:
 
 def vivos_noticias(max_n: int = MAX_VIVOS) -> list[dict]:
     """Directos de noticias en este momento, en orden de PRIORIDAD."""
-    out = []
+    out, extra = [], []
     for canal, urls, pais in EN_VIVO:
+        cupo = canal in EC_SIEMPRE
+        if not cupo and len(out) >= max_n:
+            continue
         v = _vivo_actual(urls)
         if v and not NO_NOTICIAS.search(_norm(v["titulo"])):
-            out.append({"canal": canal, "urls": urls, "pais": pais, "vivo": v})
-            if len(out) >= max_n:
-                break
-    return out
+            (extra if cupo else out).append({"canal": canal, "urls": urls, "pais": pais, "vivo": v})
+    return out + extra
 
 
 def hay_vivo_interes() -> bool:
@@ -391,7 +398,7 @@ def escuchar_canal(canal: str, urls: list[str], db_path: str | Path, hasta: floa
 
 
 def en_vivo(db_path: str | Path, minutos: float, publicar_cada_min: float = 15,
-            grupo: int | None = None, n_grupos: int = 2) -> dict:
+            grupo: int | None = None, n_grupos: int = N_GRUPOS) -> dict:
     """Un hilo por cada directo de noticias elegido (vivos_noticias). Con
     `grupo` (1..n_grupos) cada maquina del workflow toma su parte de la
     lista. Con TV_PUBLICAR=1 publica la base en `datos` cada
