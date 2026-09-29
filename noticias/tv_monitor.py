@@ -417,70 +417,152 @@ def guardar_tramo(conn: sqlite3.Connection, pais: str, canal: str, vivo: dict,
     return menciones
 
 
+def _avisar_si_vale(conn, canal: str, vivo: dict, ms: list[dict], ultimo_aviso: dict) -> None:
+    """WhatsApp de una mencion de cliente, resumida por Gemini, sin repetir
+    historias ya avisadas (tv_avisos, ultimas 6 h) ni mas de uno cada
+    AVISO_CADA_SEG por programa."""
+    import time
+    buena = next((m for m in ms if vale_aviso(m["terminos"])), None)
+    if not buena or time.time() - ultimo_aviso.get(vivo["id"], 0) <= AVISO_CADA_SEG:
+        return
+    r = resumir_aviso(canal, vivo, buena)
+    recientes = [q for (q,) in conn.execute(
+        "SELECT que FROM tv_avisos WHERE ts >= strftime('%Y-%m-%dT%H:%M:%SZ','now','-6 hours')")]
+    from noticias.historias import ya_avisado
+    if r is None:
+        print(f"[tv-en-vivo] {canal}: mencion sin valor para aviso (Gemini)", flush=True)
+    elif ya_avisado(r["que"], recientes):
+        print(f"[tv-en-vivo] {canal}: misma historia ya avisada, no repito", flush=True)
+    else:
+        from congreso_live.notify import enviar_whatsapp
+        if enviar_whatsapp(mensaje_aviso(canal, vivo, buena, r)):
+            ultimo_aviso[vivo["id"]] = time.time()
+            conn.execute("INSERT OR IGNORE INTO tv_avisos VALUES (strftime('%Y-%m-%dT%H:%M:%SZ','now'),?,?,?)",
+                         (canal, vivo["id"], r["que"]))
+            conn.commit()
+            print(f"[tv-en-vivo] {canal}: aviso WhatsApp enviado", flush=True)
+
+
+def _url_hls(video_id: str) -> str | None:
+    """URL del manifiesto HLS del directo (el formato de menor calidad: solo
+    necesitamos el audio y asi se baja menos)."""
+    from congreso_live.detector import _ydl
+    try:
+        with _ydl({}) as ydl:
+            info = ydl.extract_info(f"https://www.youtube.com/watch?v={video_id}", download=False)
+    except Exception as e:
+        print(f"[tv-en-vivo] no pude resolver el HLS de {video_id}: {e}", flush=True)
+        return None
+    hls = [f for f in info.get("formats") or [] if "m3u8" in (f.get("protocol") or "")]
+    hls.sort(key=lambda f: f.get("tbr") or f.get("height") or 0)
+    return hls[0]["url"] if hls else info.get("url")
+
+
+def _lanzar_ffmpeg(url: str, carpeta: Path):
+    """ffmpeg lee el directo sin parar y lo corta en wav de TRAMO_SEG
+    segundos (16 kHz mono, lo que espera Whisper)."""
+    import os
+    import subprocess
+    from congreso_live.live_transcribe import _ffmpeg_bin
+    cmd = [str(_ffmpeg_bin()), "-hide_banner", "-loglevel", "error"]
+    proxy = os.environ.get("FFMPEG_HTTP_PROXY")  # privoxy: ffmpeg no entiende socks5://
+    if proxy:
+        cmd += ["-http_proxy", proxy]
+    cmd += ["-i", url, "-vn", "-ac", "1", "-ar", "16000", "-f", "segment",
+            "-segment_time", str(TRAMO_SEG), "-reset_timestamps", "1", str(carpeta / "seg%05d.wav")]
+    return subprocess.Popen(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE,
+                            start_new_session=(os.name != "nt"))
+
+
+def _parar(proc) -> None:
+    import os
+    import signal
+    if proc and proc.poll() is None:
+        try:
+            if os.name == "nt":
+                proc.kill()
+            else:
+                os.killpg(os.getpgid(proc.pid), signal.SIGKILL)
+        except Exception:
+            proc.kill()
+
+
 def escuchar_canal(canal: str, urls: list[str], db_path: str | Path, hasta: float,
                    pais: str = "PE") -> dict:
-    """Loop bloqueante hasta `hasta` (epoch): captura TRAMO_SEG de audio del
-    directo, lo transcribe y guarda menciones.
-    ponytail: captura y transcripcion van en serie, asi que entre tramos se
-    pierden los ~15-20 s que tarda Whisper; con un hilo capturando y otro
-    transcribiendo no se perderia nada, si hiciera falta."""
+    """Loop bloqueante hasta `hasta` (epoch). Captura continua: ffmpeg graba
+    el directo sin parar en tramos de TRAMO_SEG y este loop transcribe los
+    tramos ya cerrados en paralelo. Antes (captura y transcripcion en serie)
+    se perdian ~15-20 s por minuto mientras corria Whisper (punto 2 de la
+    revision de repos de monitoreo de medios, 2026-09-28)."""
+    import shutil
+    import tempfile
     import time
-    from congreso_live.live_transcribe import capturar_audio_en_vivo, transcribir_audio
+    from congreso_live.live_transcribe import transcribir_audio
     conn = sqlite3.connect(str(db_path), timeout=30)
     for s in SCHEMA:
         conn.execute(s)
-    modelo, vivo, visto_en = None, None, 0.0
+    modelo, vivo, visto_en, proc, carpeta, t_ffmpeg, hechos = None, None, 0.0, None, None, 0.0, set()
     res = {"tramos": 0, "menciones": 0}
     ultimo_aviso: dict[str, float] = {}
-    while time.time() < hasta:
-        if vivo is None or time.time() - visto_en > RECHEQUEO_SEG:
-            vivo, visto_en = _vivo_actual(urls), time.time()
-            if vivo:
-                print(f"[tv-en-vivo] {canal}: {vivo['id']} {vivo['titulo'][:70]}", flush=True)
-        if not vivo:
-            time.sleep(120)
-            continue
-        t0 = time.time()
-        wav = capturar_audio_en_vivo(vivo["id"], segundos=TRAMO_SEG)
-        if wav is None:
-            # termino o fallo: volver a mirar /live, sin martillar a YouTube
-            # (la primera prueba en CI reintentaba cada 6 s)
-            vivo = None
-            time.sleep(30)
-            continue
-        if modelo is None:
-            from faster_whisper import WhisperModel
-            modelo = WhisperModel("small", device="cpu", compute_type="int8")
-        segs = transcribir_audio(wav, modelo)
-        if not segs:
-            continue
-        # t_seg relativo al inicio de la transmision: el mismo minuto sirve
-        # para el enlace &t= cuando YouTube la guarde como video.
-        base = t0 - (vivo["inicio"] or t0)
-        ms = guardar_tramo(conn, pais, canal, vivo, [(base + s["start"], s["text"]) for s in segs])
-        res["tramos"] += 1
-        res["menciones"] += len(ms)
-        if ms:
-            print(f"[tv-en-vivo] {canal}: {len(ms)} mencion(es)", flush=True)
-        buena = next((m for m in ms if vale_aviso(m["terminos"])), None)
-        if buena and time.time() - ultimo_aviso.get(vivo["id"], 0) > AVISO_CADA_SEG:
-            r = resumir_aviso(canal, vivo, buena)
-            recientes = [q for (q,) in conn.execute(
-                "SELECT que FROM tv_avisos WHERE ts >= strftime('%Y-%m-%dT%H:%M:%SZ','now','-6 hours')")]
-            from noticias.historias import ya_avisado
-            if r is None:
-                print(f"[tv-en-vivo] {canal}: mencion sin valor para aviso (Gemini)", flush=True)
-            elif ya_avisado(r["que"], recientes):
-                print(f"[tv-en-vivo] {canal}: misma historia ya avisada, no repito", flush=True)
-            else:
-                from congreso_live.notify import enviar_whatsapp
-                if enviar_whatsapp(mensaje_aviso(canal, vivo, buena, r)):
-                    ultimo_aviso[vivo["id"]] = time.time()
-                    conn.execute("INSERT OR IGNORE INTO tv_avisos VALUES (strftime('%Y-%m-%dT%H:%M:%SZ','now'),?,?,?)",
-                                 (canal, vivo["id"], r["que"]))
-                    conn.commit()
-                    print(f"[tv-en-vivo] {canal}: aviso WhatsApp enviado", flush=True)
-    conn.close()
+    try:
+        while time.time() < hasta:
+            if vivo is None or time.time() - visto_en > RECHEQUEO_SEG:
+                nuevo, visto_en = _vivo_actual(urls), time.time()
+                if not nuevo or not vivo or nuevo["id"] != vivo["id"]:
+                    _parar(proc)
+                    proc = None  # cambio de programa (RPP abre un video por programa) o termino
+                vivo = nuevo
+                if vivo:
+                    print(f"[tv-en-vivo] {canal}: {vivo['id']} {vivo['titulo'][:70]}", flush=True)
+            if not vivo:
+                time.sleep(120)
+                continue
+            if proc is None or proc.poll() is not None:
+                if proc is not None:
+                    err = (proc.stderr.read() or b"").decode("utf-8", "replace")[-300:]
+                    print(f"[tv-en-vivo] {canal}: ffmpeg termino ({proc.returncode}) {err}", flush=True)
+                    time.sleep(30)
+                url = _url_hls(vivo["id"])
+                if not url:
+                    vivo = None
+                    time.sleep(30)
+                    continue
+                if carpeta:
+                    shutil.rmtree(carpeta, ignore_errors=True)
+                carpeta, hechos = Path(tempfile.mkdtemp(prefix="tv_vivo_")), set()
+                proc, t_ffmpeg = _lanzar_ffmpeg(url, carpeta), time.time()
+            # Todos los tramos menos el ultimo (ffmpeg lo esta escribiendo).
+            listos = sorted(carpeta.glob("seg*.wav"))[:-1]
+            pendientes = [p for p in listos if p.name not in hechos]
+            if not pendientes:
+                time.sleep(5)
+                continue
+            for wav in pendientes:
+                hechos.add(wav.name)
+                if modelo is None:
+                    from faster_whisper import WhisperModel
+                    modelo = WhisperModel("small", device="cpu", compute_type="int8")
+                segs = transcribir_audio(wav, modelo)
+                wav.unlink(missing_ok=True)
+                if not segs:
+                    continue
+                # inicio del tramo = arranque de ffmpeg + n * TRAMO_SEG; t_seg
+                # relativo al inicio de la transmision (sirve para &t= luego).
+                n = int(wav.stem.replace("seg", ""))
+                base = t_ffmpeg + n * TRAMO_SEG - (vivo["inicio"] or t_ffmpeg)
+                ms = guardar_tramo(conn, pais, canal, vivo, [(base + s["start"], s["text"]) for s in segs])
+                res["tramos"] += 1
+                res["menciones"] += len(ms)
+                if ms:
+                    print(f"[tv-en-vivo] {canal}: {len(ms)} mencion(es)", flush=True)
+                _avisar_si_vale(conn, canal, vivo, ms, ultimo_aviso)
+            if len(pendientes) > 3:
+                print(f"[tv-en-vivo] {canal}: {len(pendientes)} tramos en cola, Whisper no alcanza el ritmo", flush=True)
+    finally:
+        _parar(proc)
+        if carpeta:
+            shutil.rmtree(carpeta, ignore_errors=True)
+        conn.close()
     return res
 
 
