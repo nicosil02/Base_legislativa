@@ -45,7 +45,10 @@
   "ipQMvu-3IhA",
   "84YkBjiHZjE",
   "nnFXuYNsQ4M",
-  "dJgoU_hXbxg"
+  "dJgoU_hXbxg",
+  "HC9xy-tY2vY",
+  "YD5_VYk_plA",
+  "sCHBjXPFuN8"
  ],
  "sesiones": [
   {
@@ -386,6 +389,30 @@
    "pais": "PE",
    "url": "https://www.youtube.com/watch?v=dJgoU_hXbxg",
    "visto_at": "2026-09-29T17:11:14Z"
+  },
+  {
+   "id": "HC9xy-tY2vY",
+   "titulo": "🔴EN VIVO: Comisión de Constitución, Reglamento y Relaciones Exteriores 29/09/2026",
+   "tipo": "Comision: Constitucion",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=HC9xy-tY2vY",
+   "visto_at": "2026-09-29T20:06:40Z"
+  },
+  {
+   "id": "YD5_VYk_plA",
+   "titulo": "🔴EN VIVO: Comisión Bicameral de Presupuesto y Cuenta General de la República | 29/09/2026",
+   "tipo": "Comision: Presupuesto",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=YD5_VYk_plA",
+   "visto_at": "2026-09-29T20:06:40Z"
+  },
+  {
+   "id": "sCHBjXPFuN8",
+   "titulo": "🔴EN VIVO: Comisión en asuntos de Gestión del Estado y Contraloría del Senado | 29/09/2026",
+   "tipo": "Comision: Gestion Del Estado",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=sCHBjXPFuN8",
+   "visto_at": "2026-09-29T20:08:41Z"
   }
  ]
 }
