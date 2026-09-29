@@ -50,7 +50,8 @@
   "YD5_VYk_plA",
   "sCHBjXPFuN8",
   "SdVCXptXx5E",
-  "fEAZS43fAYs"
+  "fEAZS43fAYs",
+  "Ya-OokzbluI"
  ],
  "sesiones": [
   {
@@ -431,6 +432,14 @@
    "pais": "PE",
    "url": "https://www.youtube.com/watch?v=fEAZS43fAYs",
    "visto_at": "2026-09-29T20:14:42Z"
+  },
+  {
+   "id": "Ya-OokzbluI",
+   "titulo": "🔴EN VIVO: Comisión de Ciencia, Innovación Tecnológica y Sociedad Digital",
+   "tipo": "Comision: Ciencia",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=Ya-OokzbluI",
+   "visto_at": "2026-09-29T20:34:42Z"
   }
  ]
 }
