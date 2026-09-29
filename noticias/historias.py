@@ -64,6 +64,87 @@ def ya_avisado(que: str, recientes: list[str], umbral: float = 0.5) -> bool:
     return any(a and len(a & (b := _tokens(r))) / len(a | b) >= umbral for r in recientes)
 
 
+_RELLENO = {"gobierno", "presentado", "presento", "considerarlo", "considera", "anuncio", "resolvio",
+            "senalo", "afirmo", "indico", "desde", "sobre", "segun", "tiene", "hacia", "entre", "porque",
+            "tambien", "manera", "mediante", "respecto", "importa", "busca", "podria", "seria", "ademas",
+            "acreditar", "amplio", "urgencia", "nuevo", "nueva", "durante"}
+
+
+def _claves_busqueda(que: str) -> list[str]:
+    """Nombres propios primero (Keiko, Senasa, Vinelli), despues las palabras
+    largas con contenido; sin verbos de relleno ("resolvio", "presentado")
+    que vuelven la busqueda demasiado especifica y no trae nada."""
+    import unicodedata
+    def n(w):
+        return "".join(c for c in unicodedata.normalize("NFD", w.lower()) if unicodedata.category(c) != "Mn")
+    palabras = re.findall(r"\w{4,}", que)
+    propios = [w for w in palabras[1:] if w[0].isupper() and n(w) not in _RELLENO]
+    resto = sorted({w for w in palabras if not w[0].isupper() and n(w) not in _RELLENO}, key=len, reverse=True)
+    vistos, out = set(), []
+    for w in propios + resto:
+        if n(w) not in vistos:
+            vistos.add(n(w))
+            out.append(w)
+    return out[:5]
+
+
+def titulos_prensa(que: str, pais: str = "PE") -> list[str]:
+    """Titulos de Google News de las ultimas 24 h para las palabras clave de
+    `que` (sin API key, el mismo RSS que ya usa noticias/fuentes.py)."""
+    import html
+    import urllib.parse
+    import urllib.request
+    claves = _claves_busqueda(que)
+    if not claves:
+        return []
+    q = urllib.parse.quote(" ".join(claves) + " when:1d")
+    gl = "EC" if pais == "EC" else "PE"
+    url = f"https://news.google.com/rss/search?q={q}&hl=es-419&gl={gl}&ceid={gl}:es-419"
+    try:
+        req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+        xml = urllib.request.urlopen(req, timeout=15).read().decode("utf-8", "replace")
+    except Exception:
+        return []
+    return [html.unescape(t) for t in re.findall(r"<item>.*?<title>(.*?)</title>", xml, re.S)]
+
+
+def ya_en_prensa(que: str, pais: str = "PE") -> str | None:
+    """Titulo de prensa escrita (Google News, 24 h) que ya cuenta el mismo
+    hecho, o None. Pedido de Nicolas 2026-09-28: el aviso de TV sirve si se
+    adelanta a la prensa; el predictamen de facultades ya estaba en
+    Infobae/RPP 2 h antes del aviso. Gemini compara (mismo hecho con otras
+    palabras: 'propone rechazar' vs 'resolvio rechazar'); sin key, palabras."""
+    import json
+    import os
+    titulos = titulos_prensa(que, pais)[:15]
+    if not titulos:
+        return None
+    if os.environ.get("GEMINI_API_KEY"):
+        try:
+            from google import genai
+            from google.genai import types
+            client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
+            lista = "\n".join(f"{i}. {t}" for i, t in enumerate(titulos))
+            resp = client.models.generate_content(
+                model="gemini-3.5-flash-lite",
+                contents=f"Hecho: {que}\n\nTitulares:\n{lista}",
+                config=types.GenerateContentConfig(
+                    system_instruction="Decidi si alguno de los titulares informa el MISMO hecho concreto "
+                                       "(no solo el mismo tema). Responde SOLO JSON {\"indice\": n} con el "
+                                       "numero del titular, o {\"indice\": null} si ninguno.",
+                    response_mime_type="application/json"))
+            i = json.loads(resp.text or "{}").get("indice")
+            return titulos[i] if isinstance(i, int) and 0 <= i < len(titulos) else None
+        except Exception:
+            pass
+    a = _tokens(que)
+    for t in titulos:
+        b2 = _tokens(t)
+        if a and len(a & b2) / min(len(a), len(b2) or 1) >= 0.4:
+            return t
+    return None
+
+
 def _demo():
     import numpy as np
     sims = np.array([[1, .9, .1], [.9, 1, .2], [.1, .2, 1]])

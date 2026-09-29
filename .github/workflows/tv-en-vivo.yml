@@ -18,10 +18,6 @@ on:
         description: "Minutos de escucha"
         required: false
         default: "60"
-      prueba:
-        description: "Solo probar el resumen de avisos con Gemini (no escucha)"
-        required: false
-        default: "false"
 
 permissions:
   contents: write
@@ -102,10 +98,6 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          if [ "${{ github.event.inputs.prueba }}" = "true" ]; then
-            [ "${{ matrix.grupo }}" = "1" ] && python -X utf8 -m noticias.tv_monitor probar-aviso
-            exit 0
-          fi
           MIN="${{ github.event.inputs.minutos }}"
           if [ -z "$MIN" ]; then
             # Sin minutos explicitos (schedule o disparo desde tv-monitor.yml):
