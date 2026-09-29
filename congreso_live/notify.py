@@ -11,6 +11,7 @@ cambiar a Twilio WhatsApp aqui mismo (misma firma).
 """
 from __future__ import annotations
 
+import json
 import logging
 import os
 from urllib.parse import quote
@@ -53,6 +54,10 @@ def acortar_url(url: str | None) -> str | None:
 
 
 def enviar_whatsapp(mensaje: str) -> bool:
+    # CallMeBot paso a cupo limitado el 2026-09-29 ("You have N messages
+    # left"). El texto completo queda en el log de Actions como respaldo:
+    # una sesion de Claude lo lee desde ahi y se lo pasa a Nicolas por chat.
+    log.info("[notify] ALERTA_TXT %s", json.dumps(mensaje, ensure_ascii=False))
     phone = os.environ.get("CALLMEBOT_PHONE")
     apikey = os.environ.get("CALLMEBOT_APIKEY")
     if not phone or not apikey:
