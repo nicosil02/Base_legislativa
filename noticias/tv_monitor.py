@@ -438,7 +438,7 @@ def _avisar_si_vale(conn, canal: str, vivo: dict, ms: list[dict], ultimo_aviso: 
         print(f"[tv-en-vivo] {canal}: mencion sin valor para aviso (Gemini)", flush=True)
     elif ya_avisado(r["que"], recientes):
         print(f"[tv-en-vivo] {canal}: misma historia ya avisada, no repito", flush=True)
-    elif (prensa := ya_en_prensa(r["que"], pais)):
+    elif (prensa := ya_en_prensa(f"{r.get('quien', '')} {r['que']}".strip(), pais)):
         # La idea es captar lo que la prensa escrita todavia no publico (la TV
         # suele salir antes); si ya esta en Google News, ya lo tenemos en Noticias.
         print(f"[tv-en-vivo] {canal}: ya en prensa ({prensa[:80]}), no aviso", flush=True)
@@ -698,8 +698,9 @@ if __name__ == "__main__":
              "altamente toxicos y darle al Senasa mas facultades de control y fiscalizacion. El decreto sale este mes."),
         ]
         from noticias.historias import ya_en_prensa
-        for que in ["Resolvió rechazar el pedido de facultades legislativas presentado por el gobierno "
-                    "de Keiko Fujimori por considerarlo amplio y sin acreditar urgencia.",
+        os.environ["TV_AVISO_DEBUG"] = "1"
+        for que in ["Comisión de Constitución de la Cámara de Diputados. Resolvió rechazar el pedido de facultades "
+                    "legislativas presentado por el gobierno de Keiko Fujimori por considerarlo amplio y sin acreditar urgencia.",
                     "Vinelli anunció que el Senasa prohibirá tres plaguicidas altamente tóxicos desde noviembre."]:
             print(f"== ya en prensa? {que[:60]} -> {ya_en_prensa(que)}")
         for canal, vivo, frag in casos:
