@@ -18,6 +18,7 @@ from __future__ import annotations
 
 import json
 import logging
+import os
 import re
 import sqlite3
 import sys
@@ -383,6 +384,8 @@ def resumir_aviso(canal: str, vivo: dict, m: dict) -> dict | None:
             config=types.GenerateContentConfig(system_instruction=SYSTEM_AVISO,
                                                response_mime_type="application/json"))
         d = json.loads(resp.text or "{}")
+        if os.environ.get("TV_AVISO_DEBUG"):
+            print(f"[tv-en-vivo] Gemini: {d}", flush=True)
     except Exception as e:
         print(f"[tv-en-vivo] resumen del aviso fallo: {e}", flush=True)
         return None
@@ -663,9 +666,14 @@ if __name__ == "__main__":
              "laborales al 70 por ciento de peruanos en la informalidad, sin vacaciones, sin CTS, sin seguro "
              "social. La idea en la delegacion de facultades es que nos permitan legislar en ese sentido. "
              "Podriamos hacerlo via proyectos de ley, pero los tiempos parlamentarios son mucho mas lentos."),
+            ("RPP Noticias", {"id": "x", "titulo": "Ampliacion de Noticias"},
+             "esta con nosotros el ministro de Desarrollo Agrario Marco Vinelli. Ministro, que va a cambiar? Vamos "
+             "a modificar la Ley de Inocuidad de los Alimentos para regular con mas exigencia el uso de plaguicidas "
+             "altamente toxicos y darle al Senasa mas facultades de control y fiscalizacion. El decreto sale este mes."),
         ]
         for canal, vivo, frag in casos:
-            m = {"terminos": ["delegacion de facultades"], "fragmento": frag, "t_seg": 0}
+            m = {"terminos": terminos_de(frag) or ["delegacion de facultades"], "fragmento": frag, "t_seg": 0}
+            os.environ["TV_AVISO_DEBUG"] = "1"
             r = resumir_aviso(canal, vivo, m)
             print(f"== {canal}: {'AVISA' if r else 'NO AVISA'}")
             if r:
