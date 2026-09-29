@@ -421,7 +421,8 @@ def guardar_tramo(conn: sqlite3.Connection, pais: str, canal: str, vivo: dict,
     return menciones
 
 
-def _avisar_si_vale(conn, canal: str, vivo: dict, ms: list[dict], ultimo_aviso: dict) -> None:
+def _avisar_si_vale(conn, canal: str, vivo: dict, ms: list[dict], ultimo_aviso: dict,
+                    pais: str = "PE") -> None:
     """WhatsApp de una mencion de cliente, resumida por Gemini, sin repetir
     historias ya avisadas (tv_avisos, ultimas 6 h) ni mas de uno cada
     AVISO_CADA_SEG por programa."""
@@ -432,11 +433,15 @@ def _avisar_si_vale(conn, canal: str, vivo: dict, ms: list[dict], ultimo_aviso: 
     r = resumir_aviso(canal, vivo, buena)
     recientes = [q for (q,) in conn.execute(
         "SELECT que FROM tv_avisos WHERE ts >= strftime('%Y-%m-%dT%H:%M:%SZ','now','-6 hours')")]
-    from noticias.historias import ya_avisado
+    from noticias.historias import ya_avisado, ya_en_prensa
     if r is None:
         print(f"[tv-en-vivo] {canal}: mencion sin valor para aviso (Gemini)", flush=True)
     elif ya_avisado(r["que"], recientes):
         print(f"[tv-en-vivo] {canal}: misma historia ya avisada, no repito", flush=True)
+    elif (prensa := ya_en_prensa(r["que"], pais)):
+        # La idea es captar lo que la prensa escrita todavia no publico (la TV
+        # suele salir antes); si ya esta en Google News, ya lo tenemos en Noticias.
+        print(f"[tv-en-vivo] {canal}: ya en prensa ({prensa[:80]}), no aviso", flush=True)
     else:
         from congreso_live.notify import enviar_whatsapp
         if enviar_whatsapp(mensaje_aviso(canal, vivo, buena, r)):
@@ -580,7 +585,7 @@ def escuchar_canal(canal: str, urls: list[str], db_path: str | Path, hasta: floa
                 res["menciones"] += len(ms)
                 if ms:
                     print(f"[tv-en-vivo] {canal}: {len(ms)} mencion(es)", flush=True)
-                _avisar_si_vale(conn, canal, vivo, ms, ultimo_aviso)
+                _avisar_si_vale(conn, canal, vivo, ms, ultimo_aviso, pais)
             if len(pendientes) > 3:
                 print(f"[tv-en-vivo] {canal}: {len(pendientes)} tramos en cola, Whisper no alcanza el ritmo", flush=True)
     finally:
@@ -692,6 +697,11 @@ if __name__ == "__main__":
              "a modificar la Ley de Inocuidad de los Alimentos para regular con mas exigencia el uso de plaguicidas "
              "altamente toxicos y darle al Senasa mas facultades de control y fiscalizacion. El decreto sale este mes."),
         ]
+        from noticias.historias import ya_en_prensa
+        for que in ["Resolvió rechazar el pedido de facultades legislativas presentado por el gobierno "
+                    "de Keiko Fujimori por considerarlo amplio y sin acreditar urgencia.",
+                    "Vinelli anunció que el Senasa prohibirá tres plaguicidas altamente tóxicos desde noviembre."]:
+            print(f"== ya en prensa? {que[:60]} -> {ya_en_prensa(que)}")
         for canal, vivo, frag in casos:
             m = {"terminos": terminos_de(frag) or ["delegacion de facultades"], "fragmento": frag, "t_seg": 0}
             os.environ["TV_AVISO_DEBUG"] = "1"
