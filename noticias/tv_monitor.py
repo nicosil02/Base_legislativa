@@ -285,7 +285,8 @@ EC_SIEMPRE = ["Ecuavisa", "Teleamazonas"]
 N_GRUPOS = 3
 # Titulos de directos que no son noticias.
 NO_NOTICIAS = re.compile(r"deporte|futbol|seleccion|mundial|amor y fuego|novela|podcast|happy hour|"
-                         r"after office|musica|reality|esto es guerra|cocina|farandula|magaly")
+                         r"after office|musica|reality|esto es guerra|cocina|farandula|magaly|"
+                         r"beto a saber")  # opinion pura (primer aviso inutil, 28/09)
 # Titulos que justifican escuchar fuera de las franjas (hay-vivo-interes).
 TITULO_INTERES = re.compile(r"entrevista|ministr|president|premier|congreso|facultades|"
                             r"conferencia de prensa|mensaje a la nacion|asamblea")
