@@ -447,15 +447,31 @@ def _avisar_si_vale(conn, canal: str, vivo: dict, ms: list[dict], ultimo_aviso: 
             print(f"[tv-en-vivo] {canal}: aviso WhatsApp enviado", flush=True)
 
 
+_LOCK_WARP = __import__("threading").Lock()
+
+
 def _url_hls(video_id: str) -> str | None:
     """URL del manifiesto HLS del directo (el formato de menor calidad: solo
     necesitamos el audio y asi se baja menos)."""
-    from congreso_live.detector import _ydl
-    try:
-        with _ydl({}) as ydl:
-            info = ydl.extract_info(f"https://www.youtube.com/watch?v={video_id}", download=False)
-    except Exception as e:
-        print(f"[tv-en-vivo] no pude resolver el HLS de {video_id}: {e}", flush=True)
+    from congreso_live.detector import _ydl, es_bloqueo_bot, rotar_warp
+    info = None
+    for intento in (1, 2):
+        try:
+            with _ydl({}) as ydl:
+                info = ydl.extract_info(f"https://www.youtube.com/watch?v={video_id}", download=False)
+            break
+        except Exception as e:
+            print(f"[tv-en-vivo] no pude resolver el HLS de {video_id}: {str(e)[:120]}", flush=True)
+            # "Sign in to confirm you're not a bot": depende de la IP de salida
+            # de WARP (prueba del 28/09, 1 de 3 maquinas bloqueada). IP nueva y
+            # un reintento, como en el monitor del Congreso. Un solo hilo rota a
+            # la vez: rotar corta la conexion de los demas por unos segundos.
+            if intento == 1 and es_bloqueo_bot(str(e)):
+                with _LOCK_WARP:
+                    rotar_warp()
+                continue
+            return None
+    if info is None:
         return None
     hls = [f for f in info.get("formats") or [] if "m3u8" in (f.get("protocol") or "")]
     hls.sort(key=lambda f: f.get("tbr") or f.get("height") or 0)
@@ -506,6 +522,7 @@ def escuchar_canal(canal: str, urls: list[str], db_path: str | Path, hasta: floa
     for s in SCHEMA:
         conn.execute(s)
     modelo, vivo, visto_en, proc, carpeta, t_ffmpeg, hechos = None, None, 0.0, None, None, 0.0, set()
+    fallos_hls = 0
     res = {"tramos": 0, "menciones": 0}
     ultimo_aviso: dict[str, float] = {}
     try:
@@ -528,9 +545,13 @@ def escuchar_canal(canal: str, urls: list[str], db_path: str | Path, hasta: floa
                     time.sleep(30)
                 url = _url_hls(vivo["id"])
                 if not url:
+                    # espera creciente (30 s, 1, 2, 4, 5 min): martillar a
+                    # YouTube cada 30 s con la IP bloqueada solo empeora el bloqueo
+                    fallos_hls += 1
                     vivo = None
-                    time.sleep(30)
+                    time.sleep(min(30 * 2 ** (fallos_hls - 1), 300))
                     continue
+                fallos_hls = 0
                 if carpeta:
                     shutil.rmtree(carpeta, ignore_errors=True)
                 carpeta, hechos = Path(tempfile.mkdtemp(prefix="tv_vivo_")), set()
