@@ -134,6 +134,8 @@ def ya_en_prensa(que: str, pais: str = "PE") -> str | None:
                                        "numero del titular, o {\"indice\": null} si ninguno.",
                     response_mime_type="application/json"))
             i = json.loads(resp.text or "{}").get("indice")
+            if os.environ.get("TV_AVISO_DEBUG"):
+                print(f"[prensa] {len(titulos)} titulares, Gemini indice={i}", flush=True)
             return titulos[i] if isinstance(i, int) and 0 <= i < len(titulos) else None
         except Exception:
             pass
