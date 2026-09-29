@@ -18,6 +18,10 @@ on:
         description: "Minutos de escucha"
         required: false
         default: "60"
+      prueba:
+        description: "Solo probar el resumen de avisos con Gemini (no escucha)"
+        required: false
+        default: "false"
 
 permissions:
   contents: write
@@ -53,7 +57,7 @@ jobs:
 
       - name: Instalar deps
         run: |
-          pip install -q yt-dlp requests faster-whisper imageio-ffmpeg
+          pip install -q yt-dlp requests faster-whisper imageio-ffmpeg google-genai
           sudo apt-get install -y -qq ffmpeg
 
       - name: Instalar Cloudflare WARP en modo proxy (SOCKS5 :40000)
@@ -94,9 +98,14 @@ jobs:
           TV_PUBLICAR: "1"
           CALLMEBOT_PHONE: ${{ secrets.CALLMEBOT_PHONE }}
           CALLMEBOT_APIKEY: ${{ secrets.CALLMEBOT_APIKEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          if [ "${{ github.event.inputs.prueba }}" = "true" ]; then
+            [ "${{ matrix.grupo }}" = "1" ] && python -X utf8 -m noticias.tv_monitor probar-aviso
+            exit 0
+          fi
           MIN="${{ github.event.inputs.minutos }}"
           if [ -z "$MIN" ]; then
             # Sin minutos explicitos (schedule o disparo desde tv-monitor.yml):
