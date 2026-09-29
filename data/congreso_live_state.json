@@ -48,7 +48,8 @@
   "dJgoU_hXbxg",
   "HC9xy-tY2vY",
   "YD5_VYk_plA",
-  "sCHBjXPFuN8"
+  "sCHBjXPFuN8",
+  "SdVCXptXx5E"
  ],
  "sesiones": [
   {
@@ -413,6 +414,14 @@
    "pais": "PE",
    "url": "https://www.youtube.com/watch?v=sCHBjXPFuN8",
    "visto_at": "2026-09-29T20:08:41Z"
+  },
+  {
+   "id": "SdVCXptXx5E",
+   "titulo": "🔴EN VIVO: Comisión de Desarrollo Agrario",
+   "tipo": "Comision: Agrario",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=SdVCXptXx5E",
+   "visto_at": "2026-09-29T20:13:41Z"
   }
  ]
 }
