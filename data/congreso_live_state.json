@@ -44,7 +44,8 @@
   "OVia5LG6gQM",
   "ipQMvu-3IhA",
   "84YkBjiHZjE",
-  "nnFXuYNsQ4M"
+  "nnFXuYNsQ4M",
+  "dJgoU_hXbxg"
  ],
  "sesiones": [
   {
@@ -377,6 +378,14 @@
    "pais": "PE",
    "url": "https://www.youtube.com/watch?v=nnFXuYNsQ4M",
    "visto_at": "2026-09-29T17:08:14Z"
+  },
+  {
+   "id": "dJgoU_hXbxg",
+   "titulo": "🔴EN VIVO: Comisión de Infraestructura, Vivienda y Transportes de la Cámara de Diputados | 29/09/2026",
+   "tipo": "Comision: Transportes",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=dJgoU_hXbxg",
+   "visto_at": "2026-09-29T17:11:14Z"
   }
  ]
 }
