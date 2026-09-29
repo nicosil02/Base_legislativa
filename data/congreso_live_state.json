@@ -42,7 +42,8 @@
   "zBYMjnaQr5w",
   "VtjEoqHvp0M",
   "OVia5LG6gQM",
-  "ipQMvu-3IhA"
+  "ipQMvu-3IhA",
+  "84YkBjiHZjE"
  ],
  "sesiones": [
   {
@@ -359,6 +360,14 @@
    "pais": "PE",
    "url": "https://www.youtube.com/watch?v=ipQMvu-3IhA",
    "visto_at": "2026-09-29T15:03:59Z"
+  },
+  {
+   "id": "84YkBjiHZjE",
+   "titulo": "Sesión No. 127-AN-2025-2029 del pleno de la Asamblea Nacional",
+   "tipo": "Pleno: Asamblea Nacional (EC)",
+   "pais": "EC",
+   "url": "https://www.youtube.com/watch?v=84YkBjiHZjE",
+   "visto_at": "2026-09-29T15:06:59Z"
   }
  ]
 }
