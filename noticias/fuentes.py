@@ -1410,8 +1410,191 @@ FUENTES_GOOGLE_NEWS: list[dict] = [
 ]
 
 
+# ============================================================
+# CUENTAS X VERIFICADAS (2026-09-29)
+# ============================================================
+# Busqueda con fuente por cada handle (web oficial que enlaza a X, nota de
+# prensa o tuit de 2026). Quedan activa=0 con tipo "twitter" (scraper.py lo
+# salta): no hay lector de X todavia - nitter murio y twscrape necesita una
+# cuenta aparte que Nicolas no ha decidido crear. Prioridad A/B/C va en notas.
+def _x(pais, categoria, nombre, handle, prio, clientes, nota):
+    return {"categoria": categoria, "pais": pais, "nombre": f"X - {nombre}",
+            "url": f"https://x.com/{handle}", "tipo": "twitter", "activa": 0,
+            "clientes": clientes, "notas": f"Prioridad {prio}. {nota}"}
+
+
+_T, _B, _S, _G, _I = ["todos"], ["bayer"], ["syngenta"], ["google"], ["incode"]
+_CROP = _B + _S
+_TECH = _G + _I
+
+FUENTES_X_2026: list[dict] = [
+    # --- PE: instituciones ---
+    _x("PE", "Temas Agrarios", "SENASA", "Senasa_Peru", "A", _CROP, "gob.pe/senasa"),
+    _x("PE", "Temas Agrarios", "MINAM", "MinamPeru", "A", _CROP, "gob.pe/minam"),
+    _x("PE", "Institucion", "MEF", "MEF_Peru", "B", _T, "gob.pe/mef"),
+    _x("PE", "Temas Tech", "INDECOPI", "IndecopiOficial", "B", _TECH, "gob.pe/indecopi"),
+    _x("PE", "Institucion", "Tribunal Constitucional", "tc_peru", "B", _T, "tc.gob.pe"),
+    _x("PE", "Institucion", "Contraloria", "ContraloriaPeru", "C", _T, "gob.pe/contraloria"),
+    _x("PE", "Institucion", "SUNAT", "SUNATOficial", "B", _G, "sunat.gob.pe"),
+    _x("PE", "Institucion", "El Peruano (diario oficial)", "DiarioElPeruano", "A", _T, "elperuano.pe"),
+    _x("PE", "Institucion", "MTC (incluye DGAC, drones)", "MTC_GobPeru", "B", _CROP + _G, "gob.pe/mtc"),
+    # --- PE: gremios, ONG y medios sectoriales ---
+    _x("PE", "Temas Agrarios", "SPDA", "spdaorg", "B", _CROP, "spda.org.pe"),
+    _x("PE", "Temas Agrarios", "CONVEAGRO", "CONVEAGROPERU", "A", _CROP, "conveagro.org.pe"),
+    _x("PE", "Temas Agrarios", "AGAP", "AGAP_PERU", "A", _CROP, "x.com/agap_peru"),
+    _x("PE", "Temas Agrarios", "Consorcio Agroecologico Peruano", "CAP_Peru", "A", _CROP,
+       "ONG antitransgenicos"),
+    _x("PE", "Temas Salud", "Salud con Lupa", "saludconlupa", "A", _B, "saludconlupa.com"),
+    _x("PE", "Temas Agrarios", "Agraria.pe", "Agrariape", "A", _CROP, "agraria.pe"),
+    _x("PE", "Temas Salud", "ALAFARPE", "Alafarpe", "A", _B, "gremio farmaceutico"),
+    _x("PE", "Coyuntura Politica", "Ojo Publico", "Ojo_Publico", "B", _T, "ojo-publico.com"),
+    _x("PE", "Coyuntura Politica", "Convoca", "convocape", "B", _T, "convoca.pe"),
+    _x("PE", "Temas Tech", "Hiperderecho", "hiperderecho", "A", _TECH,
+       "derechos digitales, datos, IA; activo 2026"),
+    _x("PE", "Temas Tech", "Erick Iriarte (IALaw)", "coyotegris", "A", _TECH,
+       "abogado datos personales / regulacion digital; activo 2026"),
+    # --- PE: autoridades (cargo confirmado 2026-09-29) ---
+    _x("PE", "Institucion", "Keiko Fujimori (Presidenta)", "KeikoFujimori", "A", _T,
+       "Presidenta desde 28/07/2026"),
+    _x("PE", "Institucion", "Luis Galarreta (PCM)", "luchogalarreta", "A", _T,
+       "Presidente del Consejo de Ministros"),
+    _x("PE", "Institucion", "Juan Sheput (Trabajo)", "JuanSheput", "B", _T,
+       "Ministro de Trabajo, ve EsSalud"),
+    _x("PE", "Temas Agrarios", "Vladimiro Huaroc (MINAM)", "VladimiroHuaroc", "A", _CROP,
+       "Ministro del Ambiente"),
+    _x("PE", "Temas Salud", "Susana Matute (Comision Salud Senado)", "MatuteCharun", "A", _B + _I,
+       "Preside Comision de Salud y otras materias del Senado (El Peruano)"),
+    _x("PE", "Institucion", "Oscar Reto (Pdte. Diputados)", "OscarReto62", "B", _T,
+       "Presidente de la Camara de Diputados"),
+    # --- PE: periodistas y seguimiento ---
+    _x("PE", "Coyuntura Politica", "Graciela Villasis", "gvillasis", "A", _T,
+       "Primicias Ejecutivo (adelanto renuncia de Boluarte)"),
+    _x("PE", "Coyuntura Politica", "Juliana Oxenford", "julianaoxenford", "B", _T, "periodista"),
+    _x("PE", "Coyuntura Politica", "Christopher Acosta", "TrujiYo", "B", _T, "investigacion Latina"),
+    _x("PE", "Coyuntura Politica", "Marco Sifuentes", "ocram", "B", _T, "La Encerrona"),
+    _x("PE", "Coyuntura Politica", "Augusto Alvarez Rodrich", "alvarezrodrich", "B", _T, "periodista"),
+    _x("PE", "Coyuntura Politica", "Beto Ortiz", "PolloFarsantePe", "B", _T, "Willax"),
+    _x("PE", "Coyuntura Politica", "Milagros Leiva (programa)", "MLEntrevista", "C", _T,
+       "cuenta de su programa en Willax"),
+    _x("PE", "Coyuntura Politica", "Diana Seminario", "Dianasemi", "A", _T, "Congreso, Canal N"),
+    _x("PE", "Coyuntura Politica", "Cesar Romero", "CesarRomeroC", "A", _T,
+       "editor general La Republica, Congreso"),
+    _x("PE", "Coyuntura Politica", "Juan Carlos Tafur", "jctafur", "B", _T, "director Sudaca"),
+    _x("PE", "Coyuntura Politica", "Daniel Yovera", "danielyovera", "B", _T, "Epicentro TV"),
+    _x("PE", "Coyuntura Politica", "Nelly Luna Amancio", "nellylun", "A", _T + _CROP,
+       "directora Ojo Publico, Congreso y ambiente"),
+    _x("PE", "Coyuntura Politica", "Lima Gris", "Limagris", "C", _T,
+       "adelanta nombramientos (adelanto el de Dyer en MINSA)"),
+    _x("PE", "Temas Salud", "Fabiola Torres", "fabiolatorres", "A", _CROP,
+       "directora Salud con Lupa: salud, farma y plaguicidas"),
+    _x("PE", "Coyuntura Politica", "IPE", "ipeopinion", "B", _T, "actividad 2026 no confirmada"),
+    _x("PE", "Coyuntura Politica", "Diego Macera (IPE)", "dmacera", "B", _T, "actividad 2026 no confirmada"),
+    _x("PE", "Coyuntura Politica", "IEP", "IEPeruanos", "A", _T, "encuestas, Congreso"),
+    _x("PE", "Coyuntura Politica", "Ipsos Peru", "ipsosperu", "B", _T, "encuestas"),
+    _x("PE", "Coyuntura Politica", "Alfredo Torres (Ipsos)", "AlfredoMTorres", "B", _T, "encuestas"),
+    _x("PE", "Coyuntura Politica", "Transparencia", "ACTransparencia", "B", _T, "observatorio civico"),
+    _x("PE", "Coyuntura Politica", "Proetica", "ProeticaPeru", "B", _T, "anticorrupcion, designaciones"),
+    _x("PE", "Coyuntura Politica", "Fernando Tuesta", "tuesta", "A", _T, "reforma politica, bicameralidad"),
+    _x("PE", "Coyuntura Politica", "Eduardo Dargent", "DargentEduardo", "B", _T, "politologo PUCP"),
+    _x("PE", "Coyuntura Politica", "Gonzalo Banda", "gonza_banda", "C", _T, "analista"),
+    _x("PE", "Coyuntura Politica", "Politica La Republica", "Politica_LR", "A", _T, "gabinete, Congreso"),
+    _x("PE", "Coyuntura Politica", "Canal N", "canalN_", "A", _T, "Congreso, Ejecutivo"),
+    _x("PE", "Coyuntura Politica", "Infobae Peru", "infobaeperu", "A", _T, "Congreso, Ejecutivo"),
+    _x("PE", "Coyuntura Politica", "Exitosa", "exitosape", "B", _T, "Congreso en vivo"),
+    _x("PE", "Coyuntura Politica", "Peru21", "peru21noticias", "B", _T, "politica"),
+    _x("PE", "Coyuntura Politica", "Willax TV", "willaxtv", "B", _T, "entrevistas a ministros"),
+    _x("PE", "Coyuntura Politica", "N60 Noticias", "N60Noticias", "C", _T, "agregador"),
+    _x("PE", "Coyuntura Politica", "Sudaca", "SudacaPeru", "C", _T, "medio digital"),
+
+    # --- EC: instituciones ---
+    _x("EC", "Institucion", "Presidencia Ecuador", "Presidencia_Ec", "A", _T, "decretos, Ejecutivo"),
+    _x("EC", "Institucion", "Comunicacion Presidencia", "ComunicacionEc", "A", _T,
+       "Secretaria General de Comunicacion"),
+    _x("EC", "Institucion", "Asamblea Nacional", "AsambleaEcuador", "A", _T, "asambleanacional.gob.ec"),
+    _x("EC", "Institucion", "TV Legislativa", "TvlEcuador", "A", _T, "plenos y comisiones en vivo"),
+    _x("EC", "Institucion", "Corte Constitucional", "CorteConstEcu", "B", _T,
+       "corteconstitucional.gob.ec"),
+    _x("EC", "Institucion", "Registro Oficial", "RegistrOficial", "A", _T, "registroficial.gob.ec"),
+    _x("EC", "Temas Salud", "Ministerio de Salud Publica", "Salud_Ec", "A", _B, "MSP"),
+    _x("EC", "Temas Salud", "IESS", "IESSec", "B", _B, "iess.gob.ec"),
+    _x("EC", "Temas Salud", "ARCSA", "Arcsa_Ec", "A", _B, "agencia sanitaria"),
+    _x("EC", "Institucion", "SERCOP", "SERCOPec", "B", _B + _G, "compras publicas"),
+    _x("EC", "Temas Agrarios", "DGAC Ecuador", "dgac_ecuador", "B", _CROP, "aviacion civil, drones"),
+    # --- EC: gremios, ONG y medios ---
+    _x("EC", "Temas Agrarios", "AEBE", "aebeecuador", "A", _CROP, "exportadores de banano"),
+    _x("EC", "Temas Agrarios", "CONAIE", "CONAIE_Ecuador", "B", _CROP, "movimiento indigena"),
+    _x("EC", "Temas Agrarios", "Mundo Agropecuario", "Munagropecuario", "B", _CROP, "agro, plagas"),
+    _x("EC", "Temas Salud", "Edicion Medica", "edicionmedEC", "A", _B,
+       "MSP, ARCSA, IESS, medicamentos; actividad 2026 no confirmada"),
+    _x("EC", "Coyuntura Politica", "Primicias", "primicias", "A", _T, "primicias.ec"),
+    _x("EC", "Coyuntura Politica", "Expreso", "expresoec", "B", _T, "expreso.ec"),
+    _x("EC", "Coyuntura Politica", "El Universo", "eluniversocom", "B", _T, "eluniverso.com"),
+    _x("EC", "Coyuntura Politica", "El Comercio EC", "elcomerciocom", "B", _T, "medio"),
+    _x("EC", "Coyuntura Politica", "Vistazo", "revistavistazo", "B", _T, "vistazo.com"),
+    _x("EC", "Coyuntura Politica", "Ecuavisa", "ecuavisa", "B", _T, "cuenta general"),
+    _x("EC", "Coyuntura Politica", "Ecuavisa Informa", "EcuavisaInforma", "B", _T, "cuenta de noticias"),
+    _x("EC", "Coyuntura Politica", "Teleamazonas", "teleamazonasec", "B", _T, "teleamazonas.com"),
+    _x("EC", "Coyuntura Politica", "El Balance", "ElBalance_EC", "B", _T, "contratos publicos"),
+    _x("EC", "Coyuntura Politica", "Politicamente Correcto", "politikcorrecta", "B", _T + _B,
+       "programa Ecuavisa, ministros e IESS"),
+    _x("EC", "Coyuntura Politica", "GK", "GKecuador", "B", _T, "politica, fiscal"),
+    _x("EC", "Coyuntura Politica", "Plan V", "revistaPlanV", "B", _T, "investigacion"),
+    _x("EC", "Coyuntura Politica", "RTP Ecuador", "RtpEcuador", "B", _T, "decretos, nombramientos"),
+    _x("EC", "Coyuntura Politica", "Ecuadorinmediato", "ecuainm_oficial", "B", _T, "decretos #URGENTE"),
+    _x("EC", "Temas Tech", "La Hora", "lahoraecuador", "B", _T + _TECH, "politica, datos personales"),
+    _x("EC", "Coyuntura Politica", "El Dato Ec", "ElDatoEcua", "C", _T, "agregador de urgentes"),
+    _x("EC", "Coyuntura Politica", "La Data", "ladataec", "C", _T, "agregador progobierno"),
+    _x("EC", "Coyuntura Politica", "Tiempo Real", "TiempoRealEC", "C", _T, "decretos, avisos oficiales"),
+    _x("EC", "Coyuntura Politica", "W Radio Ecuador", "WRadioEc", "C", _T, "decretos"),
+    _x("EC", "Coyuntura Politica", "El Mercurio Manta", "elmercuriomanta", "C", _T, "Asamblea"),
+    _x("EC", "Coyuntura Politica", "KCH Radio", "kchradio", "C", _T, "Asamblea, Ejecutivo"),
+    _x("EC", "Coyuntura Politica", "La Radio Asamblea", "LaRadioAsamblea", "C", _T,
+       "actividad 2026 no confirmada"),
+    _x("EC", "Coyuntura Politica", "Analisis Semanal", "analisissemanal", "C", _T,
+       "actividad 2026 no confirmada"),
+    _x("EC", "Coyuntura Politica", "Participacion Ciudadana", "ParticipacionPC", "B", _T,
+       "observacion democratica, Asamblea"),
+    _x("EC", "Coyuntura Politica", "Grupo FARO", "FARO_org", "B", _T, "actividad 2026 no confirmada"),
+    _x("EC", "Coyuntura Politica", "Fundamedios", "FUNDAMEDIOS", "B", _G, "libertad de prensa"),
+    _x("EC", "Coyuntura Politica", "Ecuador Chequea", "ECUADORCHEQUEA", "B", _T, "verificador"),
+    _x("EC", "Coyuntura Politica", "Lupa Media", "LupaMediaEC", "C", _T, "verificador"),
+    # --- EC: autoridades (cargo confirmado 2026-09-29) ---
+    _x("EC", "Institucion", "Daniel Noboa (Presidente)", "DanielNoboaOk", "A", _T, "Presidente"),
+    _x("EC", "Institucion", "Mishel Mancheno (Pdta. Asamblea)", "mishelmanchenok", "A", _T,
+       "Presidenta de la Asamblea desde 08/06/2026"),
+    _x("EC", "Temas Agrarios", "Camila Leon (Comision Biodiversidad)", "camileonok", "A", _CROP,
+       "preside Comision de Biodiversidad (ley de Bioeconomia)"),
+    _x("EC", "Institucion", "Valentina Centeno (Comision Desarrollo Economico)", "ValenCenteno",
+       "A", _T, "cargo confirmado hasta dic-2025, 2026 sin reconfirmar"),
+    # --- EC: periodistas y seguimiento ---
+    _x("EC", "Coyuntura Politica", "Janet Hinostroza", "janethinostroza", "A", _T,
+       "primicias Ejecutivo"),
+    _x("EC", "Coyuntura Politica", "Fabricio Vela", "fabriciovelav", "A", _T,
+       "periodista legislativo, primicias"),
+    _x("EC", "Coyuntura Politica", "Martin Pallares", "Martinminguchi", "B", _T, "Expreso / 4Pelagatos"),
+    _x("EC", "Coyuntura Politica", "Lenin Artieda", "LeninArtieda", "B", _T, "Ecuavisa"),
+    _x("EC", "Coyuntura Politica", "Arturo Torres", "Cascabelito09", "B", _T, "director Codigo Vidrio"),
+    _x("EC", "Coyuntura Politica", "Codigo Vidrio", "CodigoVidrioEc", "B", _T, "investigacion"),
+    _x("EC", "Coyuntura Politica", "Carlos Vera", "CarlosVerareal", "C", _T,
+       "OJO: existe clon @CarlosVerareaI (I mayuscula)"),
+    _x("EC", "Coyuntura Politica", "Andersson Boscan", "AnderssonBoscan", "C", _T, "periodista"),
+    _x("EC", "Coyuntura Politica", "Carlos Rojas Araujo", "carlosrojasecu", "A", _T + _B,
+       "director Politicamente Correcto, politica y salud"),
+    _x("EC", "Coyuntura Politica", "Alvaro Espinosa", "alvatin18", "A", _T,
+       "director El Balance, adelanta nombramientos"),
+    _x("EC", "Coyuntura Politica", "Andrea Orbe", "AndreaOrbe5", "B", _T, "radio Quito, Ejecutivo"),
+    _x("EC", "Coyuntura Politica", "Sara Ortiz", "saritortiz", "B", _T, "Expreso, investigacion"),
+    _x("EC", "Coyuntura Politica", "Monica Velasquez", "MoniVelasquezV", "C", _T, "investigacion"),
+    _x("EC", "Coyuntura Politica", "Alondra Santiago", "cubalondra", "C", _T, "periodista"),
+    _x("EC", "Coyuntura Politica", "Alberto Acosta-Burneo", "ALBERTOACOSTAB", "B", _T,
+       "editor Analisis Semanal, economia"),
+    _x("EC", "Coyuntura Politica", "Ximena Ron Erraez", "XRonErraez", "B", _T,
+       "analista constitucional, sigue a la Corte"),
+]
+
+
 def all_fuentes() -> list[dict]:
-    fuentes = FUENTES_PE + FUENTES_EC + FUENTES_GOOGLE_NEWS
+    fuentes = FUENTES_PE + FUENTES_EC + FUENTES_GOOGLE_NEWS + FUENTES_X_2026
     for f in fuentes:
         f.setdefault("clientes", _clientes_de(f))
         # Bug real 2026-09-16: las ~125 fuentes "X - ..." (cuentas de
