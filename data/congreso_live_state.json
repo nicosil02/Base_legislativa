@@ -40,7 +40,9 @@
   "w3odhH37Y8g",
   "vOmL2yLIyBM",
   "zBYMjnaQr5w",
-  "VtjEoqHvp0M"
+  "VtjEoqHvp0M",
+  "OVia5LG6gQM",
+  "ipQMvu-3IhA"
  ],
  "sesiones": [
   {
@@ -341,6 +343,22 @@
    "pais": "PE",
    "url": "https://www.youtube.com/watch?v=VtjEoqHvp0M",
    "visto_at": "2026-09-29T14:15:58Z"
+  },
+  {
+   "id": "OVia5LG6gQM",
+   "titulo": "🔴EN VIVO: Comisión de Constitución, Reglamento y Relaciones Exteriores del Senado | 29/09/2026",
+   "tipo": "Comision: Constitucion",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=OVia5LG6gQM",
+   "visto_at": "2026-09-29T15:00:59Z"
+  },
+  {
+   "id": "ipQMvu-3IhA",
+   "titulo": "🔴EN VIVO: Comisión de Defensa Nacional y Orden Interno de la Cámara de Diputados | 29/09/2026",
+   "tipo": "Comision: Defensa Nacional",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=ipQMvu-3IhA",
+   "visto_at": "2026-09-29T15:03:59Z"
   }
  ]
 }
