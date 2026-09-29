@@ -84,6 +84,10 @@ SCHEMA = [
       video_id TEXT, t_seg INTEGER, pais TEXT, canal TEXT, titulo TEXT,
       terminos TEXT, fragmento TEXT, first_seen_at TEXT,
       PRIMARY KEY (video_id, t_seg))""",
+    # Avisos de WhatsApp ya enviados: para no repetir la misma historia
+    # contada por otro canal (noticias/historias.ya_avisado).
+    """CREATE TABLE IF NOT EXISTS tv_avisos (
+      ts TEXT, canal TEXT, video_id TEXT, que TEXT, PRIMARY KEY (ts, video_id))""",
 ]
 
 
@@ -461,12 +465,20 @@ def escuchar_canal(canal: str, urls: list[str], db_path: str | Path, hasta: floa
         buena = next((m for m in ms if vale_aviso(m["terminos"])), None)
         if buena and time.time() - ultimo_aviso.get(vivo["id"], 0) > AVISO_CADA_SEG:
             r = resumir_aviso(canal, vivo, buena)
+            recientes = [q for (q,) in conn.execute(
+                "SELECT que FROM tv_avisos WHERE ts >= strftime('%Y-%m-%dT%H:%M:%SZ','now','-6 hours')")]
+            from noticias.historias import ya_avisado
             if r is None:
                 print(f"[tv-en-vivo] {canal}: mencion sin valor para aviso (Gemini)", flush=True)
+            elif ya_avisado(r["que"], recientes):
+                print(f"[tv-en-vivo] {canal}: misma historia ya avisada, no repito", flush=True)
             else:
                 from congreso_live.notify import enviar_whatsapp
                 if enviar_whatsapp(mensaje_aviso(canal, vivo, buena, r)):
                     ultimo_aviso[vivo["id"]] = time.time()
+                    conn.execute("INSERT OR IGNORE INTO tv_avisos VALUES (strftime('%Y-%m-%dT%H:%M:%SZ','now'),?,?,?)",
+                                 (canal, vivo["id"], r["que"]))
+                    conn.commit()
                     print(f"[tv-en-vivo] {canal}: aviso WhatsApp enviado", flush=True)
     conn.close()
     return res

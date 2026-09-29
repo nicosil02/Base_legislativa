@@ -42,7 +42,7 @@ def merge_sesiones(base_path: str, donor_path: str) -> int:
     from noticias.tv_monitor import SCHEMA as SCHEMA_TV
     from noticias.videos import SCHEMA as SCHEMA_VIDEOS
     for tabla, schema in (("videos_autoridades", SCHEMA_VIDEOS), ("tv_vistos", SCHEMA_TV[0]),
-                          ("tv_menciones", SCHEMA_TV[1])):
+                          ("tv_menciones", SCHEMA_TV[1]), ("tv_avisos", SCHEMA_TV[2])):
         if base.execute("SELECT 1 FROM donor.sqlite_master WHERE name=?", (tabla,)).fetchone():
             base.execute(schema)
             base.execute(f"INSERT OR IGNORE INTO {tabla} SELECT * FROM donor.{tabla}")

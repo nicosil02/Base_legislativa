@@ -178,27 +178,57 @@ def contenido(conn: sqlite3.Connection, pais: str, clientes: list[str]) -> None:
             except Exception as e:
                 st.error(f"No se pudo pedir la transcripción: {e}")
 
+    # Misma historia en varios canales o repetida en el mismo programa: una
+    # sola tarjeta con "Tambien en" (noticias/historias.py, pedido de Nicolas
+    # 2026-09-28). Las mas recientes primero, asi el representante es el ultimo.
+    menciones = menciones.head(250).reset_index(drop=True)
+    if not menciones.empty:
+        menciones["historia"] = _historias(tuple(menciones["fragmento"]))
+    n_hist = menciones["historia"].nunique() if not menciones.empty else 0
     st.markdown(f'<div class="categoria-eyebrow">Menciones en programas de TV '
-                f'<span style="color:var(--ink-mute);font-weight:500;">· {len(menciones)}</span></div>',
-                unsafe_allow_html=True)
+                f'<span style="color:var(--ink-mute);font-weight:500;">· {n_hist} historias '
+                f'({len(menciones)} menciones)</span></div>', unsafe_allow_html=True)
     if menciones.empty:
         st.info("Sin menciones con esos filtros.")
-    for r in menciones.head(80).itertuples():
-        mm, ss = divmod(int(r.t_seg), 60)
-        hh, mm = divmod(mm, 60)
-        if hh >= 12:
-            # Escuchado en vivo en una señal de 24 h (tv_monitor.en_vivo): el
-            # minuto desde que arranco la señal no sirve, se muestra la hora.
-            hora = pd.Timestamp(r.first_seen_at).tz_convert("America/Lima").strftime("%H:%M")
-            donde, url = f"en vivo · {hora}", f"https://www.youtube.com/watch?v={r.video_id}"
-        else:
-            minuto = f"{hh}:{mm:02d}:{ss:02d}" if hh else f"{mm}:{ss:02d}"
-            donde, url = f"minuto {minuto}", f"https://www.youtube.com/watch?v={r.video_id}&t={r.t_seg}s"
+        return
+    for _, grupo in list(menciones.groupby("historia", sort=False))[:80]:
+        r = next(grupo.itertuples())
+        donde, url = _donde(r)
         frag = r.fragmento if len(r.fragmento) <= 700 else r.fragmento[:700] + "…"
-        _card(f"{r.canal} · {donde}", r.first_seen_at, r.titulo, url, f"«{frag}»",
-              r.terminos.split(", "))
+        otros = [o for o in grupo.iloc[1:].itertuples()]
+        tambien = ""
+        if otros:
+            vistos, links = set(), []
+            for o in otros:
+                d, u = _donde(o)
+                k = (o.canal, d)
+                if k not in vistos:
+                    vistos.add(k)
+                    links.append(f'<a href="{u}" target="_blank">{o.canal} ({d})</a>')
+            tambien = f'<br><span style="font-size:12px;">También en {", ".join(links[:8])}</span>'
+        terminos = sorted({t for ts in grupo["terminos"] for t in ts.split(", ") if t})
+        _card(f"{r.canal} · {donde}", r.first_seen_at, r.titulo, url, f"«{frag}»{tambien}", terminos)
         c = st.columns([6, 2, 2])
         with c[1]:
             _marcar(f"tv_{r.video_id}_{r.t_seg}", pais, r.titulo, url, r.fragmento, clientes)
         if isinstance(r.texto, str) and r.texto:
             _transcripcion(f"{r.video_id}_{r.t_seg}", r.titulo, url, r.texto, f"{r.canal} - {r.video_id}")
+
+
+@st.cache_data(ttl=3600, show_spinner=False)
+def _historias(fragmentos: tuple[str, ...]) -> list[int]:
+    from noticias.historias import agrupar
+    return agrupar(list(fragmentos))
+
+
+def _donde(r) -> tuple[str, str]:
+    """("minuto 12:30" o "en vivo · 16:11", enlace al momento)."""
+    mm, ss = divmod(int(r.t_seg), 60)
+    hh, mm = divmod(mm, 60)
+    if hh >= 12:
+        # Escuchado en vivo en una señal de 24 h (tv_monitor.en_vivo): el
+        # minuto desde que arranco la señal no sirve, se muestra la hora.
+        hora = pd.Timestamp(r.first_seen_at).tz_convert("America/Lima").strftime("%H:%M")
+        return f"en vivo · {hora}", f"https://www.youtube.com/watch?v={r.video_id}"
+    minuto = f"{hh}:{mm:02d}:{ss:02d}" if hh else f"{mm}:{ss:02d}"
+    return f"minuto {minuto}", f"https://www.youtube.com/watch?v={r.video_id}&t={r.t_seg}s"
