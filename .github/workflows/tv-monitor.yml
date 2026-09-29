@@ -5,7 +5,7 @@ name: Monitor de TV y entrevistas (YouTube)
 # de noticias PE/EC buscando menciones de valor (noticias/tv_monitor.py).
 # Tambien dispara la escucha en vivo (tv-en-vivo.yml) a las 6 am y 9 pm Lima.
 #
-# Se encadena solo: cada corrida hace VUELTAS pasadas, una por hora, y al
+# Se encadena solo: cada corrida hace VUELTAS pasadas, una cada 30 min, y al
 # final se relanza (workflow_dispatch con GITHUB_TOKEN si dispara runs). El
 # schedule de GitHub no disparo nunca las primeras horas (2026-09-28), igual
 # que con backfill-auto.yml; queda solo como respaldo si la cadena se corta.
@@ -24,7 +24,7 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  VUELTAS: 5
+  VUELTAS: 10  # una cada 30 min, ~5 h por corrida
 
 jobs:
   monitor:
@@ -73,7 +73,9 @@ jobs:
             H=$(TZ=America/Lima date +%H)
             activos=$(gh run list --workflow=tv-en-vivo.yml -L 5 --json status --jq '[.[]|select(.status!="completed")]|length' || echo 1)
             if [ "$activos" = "0" ]; then
-              if [ "$H" = "06" ] || [ "$H" = "21" ]; then
+              # Dentro de la franja (6-10 y 21-23 Lima), no solo en la hora exacta:
+              # si la vuelta cae tarde o la escucha se corto, la siguiente la retoma.
+              if [ "$((10#$H))" -ge 6 ] && [ "$((10#$H))" -lt 10 ] || [ "$((10#$H))" -ge 21 ] && [ "$((10#$H))" -lt 23 ]; then
                 gh workflow run tv-en-vivo.yml && echo "disparada tv-en-vivo (franja)"
               elif python -X utf8 -m noticias.tv_monitor hay-vivo-interes; then
                 # fuera de franja: un directo de noticias con autoridad/entrevista en el titulo
@@ -84,7 +86,7 @@ jobs:
             python -X utf8 -u -m noticias.tv_monitor escanear proyectos.db || echo "[warn] monitor de TV fallo"
             bash scripts/publicar_db.sh base_remota proyectos.db || echo "[warn] publicar fallo"
             if [ "$i" -lt "$VUELTAS" ]; then
-              espera=$(( 3600 - ($(date +%s) - t0) ))
+              espera=$(( 1800 - ($(date +%s) - t0) ))
               [ "$espera" -gt 0 ] && sleep "$espera"
             fi
           done
