@@ -27,6 +27,7 @@ tener que anotar cada uno de los ~90 dicts a mano:
      Syngenta es agroquimicos/semillas, no farmaceutica, confirmado en su
      notas.md).
 """
+from urllib.parse import quote_plus
 
 INSTITUCION_CLIENTES: dict[str, list[str]] = {
     # --- PE: backbone legislativo/politico general ---
@@ -1591,6 +1592,81 @@ FUENTES_X_2026: list[dict] = [
     _x("EC", "Coyuntura Politica", "Ximena Ron Erraez", "XRonErraez", "B", _T,
        "analista constitucional, sigue a la Corte"),
 ]
+
+
+# Activacion via Google News (Nicolas 2026-09-29): sin cuenta de X, se sigue
+# lo que la prensa publica SOBRE cada persona/institucion, no el tuit. Probado
+# en vivo: autoridades y analistas traen notas reales por nombre; nombres
+# comunes necesitan contexto ("Fabiola Torres" solo traia Chile/Grecia).
+# Medios/agregadores no se buscan por nombre (ruido): la mayoria ya tiene su
+# web/RSS propia en el catalogo; los 3 que no, van por site:.
+_GN_QUERY = {
+    "Fabiola Torres": '"Fabiola Torres" "Salud con Lupa"',
+    "Camila Leon (Comision Biodiversidad)": '"Camila León" asambleísta',
+    "Sara Ortiz": '"Sara Ortiz" Expreso',
+    "Arturo Torres": '"Arturo Torres" "Código Vidrio"',
+    "Carlos Vera": '"Carlos Vera" periodista Ecuador',
+    "Monica Velasquez": '"Mónica Velásquez" periodista Ecuador',
+    "Carlos Rojas Araujo": '"Carlos Rojas" "Políticamente Correcto"',
+    "Alvaro Espinosa": '"Álvaro Espinosa" "El Balance"',
+    "Cesar Romero": '"César Romero" "La República"',
+    "Alfredo Torres (Ipsos)": '"Alfredo Torres" Ipsos',
+    "Lima Gris": '"Lima Gris" revista',
+    "Andrea Orbe": '"Andrea Orbe" periodista',
+    "Fabricio Vela": '"Fabricio Vela" Ecuador',
+    "Janet Hinostroza": '"Janet Hinostroza"',
+    "MEF": '"MEF" Perú',
+    "MTC (incluye DGAC, drones)": '"MTC" Perú drones OR aeronáutica OR telecomunicaciones',
+    "DGAC Ecuador": '"Aviación Civil" Ecuador',
+    "Tribunal Constitucional": '"Tribunal Constitucional" Perú',
+    "Corte Constitucional": '"Corte Constitucional" Ecuador',
+    "Contraloria": '"Contraloría" Perú',
+    "Asamblea Nacional": '"Asamblea Nacional" Ecuador',
+    "Ministerio de Salud Publica": '"Ministerio de Salud Pública" Ecuador',
+    "IPE": '"Instituto Peruano de Economía"',
+    "IEP": '"IEP" encuesta',
+    "Transparencia": '"Asociación Civil Transparencia"',
+    "Participacion Ciudadana": '"Participación Ciudadana" Ecuador',
+    "Consorcio Agroecologico Peruano": '"Consorcio Agroecológico Peruano"',
+    "Keiko Fujimori (Presidenta)": '"Keiko Fujimori"',
+    "Luis Galarreta (PCM)": '"Luis Galarreta"',
+    "Juan Sheput (Trabajo)": '"Juan Sheput"',
+    "Vladimiro Huaroc (MINAM)": '"Vladimiro Huaroc" OR "ministro Huaroc"',
+    "Susana Matute (Comision Salud Senado)": '"Susana Matute"',
+    "Oscar Reto (Pdte. Diputados)": '"Óscar Reto" OR "Oscar Reto"',
+    "Daniel Noboa (Presidente)": '"Daniel Noboa"',
+    "Mishel Mancheno (Pdta. Asamblea)": '"Mishel Mancheno"',
+    "Valentina Centeno (Comision Desarrollo Economico)": '"Valentina Centeno"',
+    "Diego Macera (IPE)": '"Diego Macera"',
+    "Milagros Leiva (programa)": '"Milagros Leiva"',
+    "Erick Iriarte (IALaw)": '"Erick Iriarte"',
+    "Agraria.pe": "site:agraria.pe",
+    "Convoca": "site:convoca.pe",
+    "GK": "site:gk.city",
+}
+_SIN_GN = {  # medios/agregadores ya cubiertos por su web, o sin query util
+    "DiarioElPeruano", "saludconlupa", "Ojo_Publico", "Politica_LR", "canalN_",
+    "infobaeperu", "exitosape", "peru21noticias", "willaxtv", "N60Noticias",
+    "SudacaPeru", "MLEntrevista", "ipsosperu", "Presidencia_Ec", "ComunicacionEc",
+    "TvlEcuador", "RegistrOficial", "Munagropecuario", "edicionmedEC", "primicias",
+    "expresoec", "eluniversocom", "elcomerciocom", "revistavistazo", "ecuavisa",
+    "EcuavisaInforma", "teleamazonasec", "ElBalance_EC", "politikcorrecta",
+    "revistaPlanV", "RtpEcuador", "ecuainm_oficial", "lahoraecuador", "ElDatoEcua",
+    "ladataec", "TiempoRealEC", "WRadioEc", "elmercuriomanta", "kchradio",
+    "LaRadioAsamblea", "analisissemanal", "LupaMediaEC", "CodigoVidrioEc",
+    "ECUADORCHEQUEA", "politikcorrecta",
+}
+for _f in FUENTES_X_2026:
+    _handle = _f["url"].rsplit("/", 1)[1]
+    _base = _f["nombre"].removeprefix("X - ")
+    if _handle in _SIN_GN:
+        continue
+    _q = _GN_QUERY.get(_base) or f'"{_base.split(" (")[0]}"'
+    _p = _f["pais"]
+    _f.update(tipo="rss", activa=1,
+              rss_url=f"https://news.google.com/rss/search?q={quote_plus(_q)}"
+                      f"&hl=es-419&gl={_p}&ceid={_p}:es")
+    _f["notas"] += " | Seguido via Google News (lo que la prensa publica sobre la cuenta, no el tuit)."
 
 
 def all_fuentes() -> list[dict]:
