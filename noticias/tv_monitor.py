@@ -336,14 +336,58 @@ AVISO_CADA_SEG = 1200
 
 
 def vale_aviso(terminos: list[str]) -> bool:
-    return any(t not in CONTEXTO and t not in NO_AVISAR for t in terminos)
+    """Solo un TEMA de cliente dispara el aviso. Un ministro nombrado solo no
+    alcanza: primer aviso real (2026-09-28) fue Beto Ortiz opinando sobre
+    Astudillo, que con la censura en curso sale en todos los programas.
+    Nicolas: 'esa alerta es horrible, no me dice nada'."""
+    nombres = {n for lista in AUTORIDADES.values() for n, _ in lista}
+    return any(t not in CONTEXTO and t not in NO_AVISAR and t not in nombres for t in terminos)
 
 
-def mensaje_aviso(canal: str, vivo: dict, m: dict) -> str:
+SYSTEM_AVISO = (
+    "Sos analista de asuntos publicos en Peru y Ecuador para una consultora cuyos clientes son "
+    "Bayer (farma y agro), Syngenta (agro), Google e Incode (tecnologia, identidad digital, datos "
+    "personales, KYC). Recibis un fragmento transcrito automaticamente de un programa de TV o radio "
+    "en vivo. Decidi si es algo que el equipo querria saber YA: un anuncio, dato nuevo, decision o "
+    "posicion concreta de una autoridad o actor directo (ministro, congresista, regulador, gremio) "
+    "sobre normas, proyectos de ley, facultades, regulacion o politicas que tocan a esos clientes. "
+    "NO es relevante: opinion o comentario de conductores y analistas, repeticion de noticias ya "
+    "conocidas, farandula, publicidad. Responde SOLO JSON: "
+    '{"relevante": true/false, "quien": "quien habla, con cargo, o vacio si no se sabe", '
+    '"que": "que dijo en concreto, una oracion", "por_que": "por que importa y a que cliente, una oracion"}. '
+    "Español simple, sin dos puntos como conector, sin inventar nada que no este en el fragmento."
+)
+
+
+def resumir_aviso(canal: str, vivo: dict, m: dict) -> dict | None:
+    """Gemini (flash-lite, gratis) decide si vale avisar y arma el texto.
+    None = no avisar (irrelevante o sin respuesta usable). Sin GEMINI_API_KEY
+    no se avisa: un fragmento crudo es justo lo que Nicolas no quiere."""
+    import json
+    import os
+    if not os.environ.get("GEMINI_API_KEY"):
+        return None
+    try:
+        from google import genai
+        from google.genai import types
+        client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
+        prompt = (f"Canal: {canal}\nPrograma: {vivo['titulo']}\nTemas detectados: "
+                  f"{', '.join(m['terminos'])}\nFragmento: {m['fragmento']}")
+        resp = client.models.generate_content(
+            model="gemini-3.5-flash-lite", contents=prompt,
+            config=types.GenerateContentConfig(system_instruction=SYSTEM_AVISO,
+                                               response_mime_type="application/json"))
+        d = json.loads(resp.text or "{}")
+    except Exception as e:
+        print(f"[tv-en-vivo] resumen del aviso fallo: {e}", flush=True)
+        return None
+    return d if d.get("relevante") and d.get("que") else None
+
+
+def mensaje_aviso(canal: str, vivo: dict, m: dict, r: dict) -> str:
     hora = datetime.now(timezone.utc).astimezone(__import__("zoneinfo").ZoneInfo("America/Lima")).strftime("%H:%M")
-    frag = m["fragmento"] if len(m["fragmento"]) <= 400 else m["fragmento"][:400] + "…"
-    return (f"📺 En vivo · {canal} · {hora}\n{vivo['titulo'][:90]}\n"
-            f"Menciona: {', '.join(m['terminos'])}\n«{frag}»\n"
+    quien = f"{r['quien']}. " if r.get("quien") else ""
+    return (f"📺 {canal} en vivo, {hora}\n{quien}{r['que']}\n{r.get('por_que', '')}\n"
             f"https://www.youtube.com/watch?v={vivo['id']}")
 
 
@@ -416,10 +460,14 @@ def escuchar_canal(canal: str, urls: list[str], db_path: str | Path, hasta: floa
             print(f"[tv-en-vivo] {canal}: {len(ms)} mencion(es)", flush=True)
         buena = next((m for m in ms if vale_aviso(m["terminos"])), None)
         if buena and time.time() - ultimo_aviso.get(vivo["id"], 0) > AVISO_CADA_SEG:
-            from congreso_live.notify import enviar_whatsapp
-            if enviar_whatsapp(mensaje_aviso(canal, vivo, buena)):
-                ultimo_aviso[vivo["id"]] = time.time()
-                print(f"[tv-en-vivo] {canal}: aviso WhatsApp enviado", flush=True)
+            r = resumir_aviso(canal, vivo, buena)
+            if r is None:
+                print(f"[tv-en-vivo] {canal}: mencion sin valor para aviso (Gemini)", flush=True)
+            else:
+                from congreso_live.notify import enviar_whatsapp
+                if enviar_whatsapp(mensaje_aviso(canal, vivo, buena, r)):
+                    ultimo_aviso[vivo["id"]] = time.time()
+                    print(f"[tv-en-vivo] {canal}: aviso WhatsApp enviado", flush=True)
     conn.close()
     return res
 
@@ -461,9 +509,13 @@ def _demo():
         vivo = {"id": "LIVE1", "titulo": "RPP en vivo", "inicio": 0}
         assert guardar_tramo(c, "PE", "RPP Noticias", vivo, [(10, "hola")]) == []
         ms = guardar_tramo(c, "PE", "RPP Noticias", vivo, [(70, "el ministro Vinelli y el Senasa")])
-        assert len(ms) == 1 and vale_aviso(ms[0]["terminos"])
-        assert "📺 En vivo · RPP Noticias" in mensaje_aviso("RPP Noticias", vivo, ms[0])
+        assert len(ms) == 1 and vale_aviso(ms[0]["terminos"])  # Senasa = tema de cliente
+        r = {"relevante": True, "quien": "Marco Vinelli, ministro de Agricultura",
+             "que": "Anunció cambios en el Senasa.", "por_que": "Toca a Bayer y Syngenta."}
+        txt = mensaje_aviso("RPP Noticias", vivo, ms[0], r)
+        assert txt.startswith("📺 RPP Noticias en vivo") and "Marco Vinelli" in txt
         assert not vale_aviso(["fenomeno del nino", "Keiko Fujimori"])  # general: queda en la app
+        assert not vale_aviso(["César Astudillo"])  # ministro solo: queda en la app (aviso de Beto Ortiz)
         assert c.execute("SELECT texto, n_menciones FROM tv_vistos").fetchone() == (
             "hola el ministro Vinelli y el Senasa", 1)
         c.close()
@@ -503,6 +555,26 @@ if __name__ == "__main__":
         # en dos maquinas; 4 Whisper en una sola se atrasaban)
         grupo = int(sys.argv[4]) if len(sys.argv) == 5 else None
         print(f"tv_monitor en vivo: {en_vivo(sys.argv[2], float(sys.argv[3]), grupo=grupo)}")
+    elif len(sys.argv) == 2 and sys.argv[1] == "probar-aviso":
+        # Prueba real de resumir_aviso con Gemini (tv-en-vivo.yml, input prueba):
+        # opinion de conductor -> no avisa; anuncio de un ministro -> avisa.
+        casos = [
+            ("Willax", {"id": "U8tjtLL7KkA", "titulo": "Willax en vivo - CONTRACORRIENTE - BETO A SABER"},
+             "entregan la cabeza de Oscar Arreola, el comandante general de la policia. Y permiten ademas que "
+             "fustiguen a ministros del interior, ahorita al borde de una censura, a 50 dias de haber empezado "
+             "el gobierno, un heroe de la patria como Cesar Astudillo. Eso es absolutamente inaceptable."),
+            ("TVPerú Noticias", {"id": "So8nGfsTN44", "titulo": "Aliados por la seguridad: estado de emergencia"},
+             "habla el ministro de Trabajo. La preocupacion del gobierno es como le damos acceso a los derechos "
+             "laborales al 70 por ciento de peruanos en la informalidad, sin vacaciones, sin CTS, sin seguro "
+             "social. La idea en la delegacion de facultades es que nos permitan legislar en ese sentido. "
+             "Podriamos hacerlo via proyectos de ley, pero los tiempos parlamentarios son mucho mas lentos."),
+        ]
+        for canal, vivo, frag in casos:
+            m = {"terminos": ["delegacion de facultades"], "fragmento": frag, "t_seg": 0}
+            r = resumir_aviso(canal, vivo, m)
+            print(f"== {canal}: {'AVISA' if r else 'NO AVISA'}")
+            if r:
+                print(mensaje_aviso(canal, vivo, m, r))
     elif len(sys.argv) == 2 and sys.argv[1] == "hay-vivo-interes":
         sys.exit(0 if hay_vivo_interes() else 1)
     else:
