@@ -51,7 +51,8 @@
   "sCHBjXPFuN8",
   "SdVCXptXx5E",
   "fEAZS43fAYs",
-  "Ya-OokzbluI"
+  "Ya-OokzbluI",
+  "K8BI2XXMRsQ"
  ],
  "sesiones": [
   {
@@ -440,6 +441,14 @@
    "pais": "PE",
    "url": "https://www.youtube.com/watch?v=Ya-OokzbluI",
    "visto_at": "2026-09-29T20:34:42Z"
+  },
+  {
+   "id": "K8BI2XXMRsQ",
+   "titulo": "🔴EN VIVO: Comisión de Ética Parlamentaria 29/09/2026",
+   "tipo": "Comision: Etica Parlamentaria",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=K8BI2XXMRsQ",
+   "visto_at": "2026-09-29T21:36:45Z"
   }
  ]
 }
