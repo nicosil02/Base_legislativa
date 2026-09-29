@@ -37,7 +37,8 @@
   "F4MpBbNtBQg",
   "5O6nUoysRYU",
   "GbF8Pc_j7d8",
-  "w3odhH37Y8g"
+  "w3odhH37Y8g",
+  "vOmL2yLIyBM"
  ],
  "sesiones": [
   {
@@ -314,6 +315,14 @@
    "pais": "PE",
    "url": "https://www.youtube.com/watch?v=w3odhH37Y8g",
    "visto_at": "2026-09-28T21:22:57Z"
+  },
+  {
+   "id": "vOmL2yLIyBM",
+   "titulo": "🔴EN VIVO: Sesión de la Comision de Salud de la Cámara de Diputados | 29/09/2026",
+   "tipo": "Comision: Salud",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=vOmL2yLIyBM",
+   "visto_at": "2026-09-29T13:08:02Z"
   }
  ]
 }
