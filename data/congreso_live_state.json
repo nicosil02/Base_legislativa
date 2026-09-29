@@ -49,7 +49,8 @@
   "HC9xy-tY2vY",
   "YD5_VYk_plA",
   "sCHBjXPFuN8",
-  "SdVCXptXx5E"
+  "SdVCXptXx5E",
+  "fEAZS43fAYs"
  ],
  "sesiones": [
   {
@@ -422,6 +423,14 @@
    "pais": "PE",
    "url": "https://www.youtube.com/watch?v=SdVCXptXx5E",
    "visto_at": "2026-09-29T20:13:41Z"
+  },
+  {
+   "id": "fEAZS43fAYs",
+   "titulo": "🔴EN VIVO: Comisión de Justicia y Derechos Humanos de la Cámara de Diputados | 29/09/2026",
+   "tipo": "Comision: Justicia",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=fEAZS43fAYs",
+   "visto_at": "2026-09-29T20:14:42Z"
   }
  ]
 }
