@@ -1,0 +1,26 @@
+name: Probar avisos de TV (Gemini)
+
+# Prueba real de noticias.tv_monitor.resumir_aviso y noticias.historias.ya_en_prensa
+# con la GEMINI_API_KEY del repo (no esta en las PCs). Aparte de tv-en-vivo.yml
+# para no esperar a que termine una escucha en curso.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  probar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: pip install -q google-genai requests yt-dlp
+      - env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          PYTHONIOENCODING: utf-8
+        run: python -X utf8 -m noticias.tv_monitor probar-aviso
