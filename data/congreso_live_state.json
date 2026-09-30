@@ -58,7 +58,9 @@
   "d0xRlt22xk4",
   "rxbXRinvspY",
   "yesokbyiQQ0",
-  "FskzOM2zSBE"
+  "FskzOM2zSBE",
+  "Iaibsvq5w3U",
+  "SNjHv207_U4"
  ],
  "sesiones": [
   {
@@ -503,6 +505,22 @@
    "pais": "PE",
    "url": "https://www.youtube.com/watch?v=FskzOM2zSBE",
    "visto_at": "2026-09-30T17:31:03Z"
+  },
+  {
+   "id": "Iaibsvq5w3U",
+   "titulo": "🔴EN VIVO: Comisión de Trabajo y Seguridad Social | 30/09/2026",
+   "tipo": "Comision: Trabajo",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=Iaibsvq5w3U",
+   "visto_at": "2026-09-30T20:02:12Z"
+  },
+  {
+   "id": "SNjHv207_U4",
+   "titulo": "🔴EN VIVO: Comisión de Educación, Cultura y Deporte  30/09/2026",
+   "tipo": "Comision: Cultura",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=SNjHv207_U4",
+   "visto_at": "2026-09-30T20:03:14Z"
   }
  ]
 }
