@@ -63,7 +63,7 @@ jobs:
 
       - name: Instalar deps
         run: |
-          pip install -q yt-dlp requests faster-whisper imageio-ffmpeg
+          pip install -q yt-dlp requests faster-whisper "av<19" imageio-ffmpeg
           # Ver vigilar-congreso.yml: el binario portable de imageio-ffmpeg
           # crasheaba (SIGSEGV) en runners de GitHub Actions - el de apt
           # (probado para este mismo Ubuntu) no.

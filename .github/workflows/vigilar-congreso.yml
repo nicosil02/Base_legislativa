@@ -52,7 +52,7 @@ jobs:
 
       - name: Instalar deps
         run: |
-          pip install -q yt-dlp requests faster-whisper imageio-ffmpeg
+          pip install -q yt-dlp requests faster-whisper "av<19" imageio-ffmpeg
           # El binario portable de imageio-ffmpeg crasheaba con SIGSEGV en
           # este runner incluso para una conversion LOCAL sin red de por
           # medio (bug real encontrado en vivo 2026-09-15, corrida #795) -
