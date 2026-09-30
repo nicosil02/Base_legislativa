@@ -342,80 +342,96 @@ def _enrich_single(page, n_tramite: str, archives_buffer: list[dict]) -> list[di
 
     # 4. Por cada attach_file en el modal: click + esperar respuesta API.
     #    En cada click, captura las fases y archivos asociados.
-    attaches = page.locator(SEL_MODAL_ATTACH)
-    n_attach = attaches.count()
-    if n_attach == 0:
-        _close_modal(page)
-        return []
+    # El modal pagina las fases de a 5 ("1 – 5 of 8"): las fases de debate
+    # quedan en la pagina 2+. Se recorren todas las paginas.
+    # Tope de paginas por si el paginador no avanza (8 fases hoy = 2 paginas).
+    for _pagina in range(10):
+        attaches = page.locator(SEL_MODAL_ATTACH)
+        n_attach = attaches.count()
+        if n_attach == 0 and not archives_buffer:
+            _close_modal(page)
+            return []
 
-    # Recolectar el texto de cada fila de fase para asociar attach → fase
-    fase_per_index: list[str] = []
-    rows = page.locator(f"{SEL_MODAL} mat-row, {SEL_MODAL} tr.mat-row")
-    for i in range(rows.count()):
-        try:
-            txt = rows.nth(i).inner_text(timeout=1500)
-            fase = txt.split("\t")[0].split("\n")[0].strip()
-            fase_per_index.append(fase)
-        except Exception:
-            fase_per_index.append("")
-
-    # Click cada attach_file via dispatch_event('click'), que envia el evento
-    # directamente al elemento sin chequear visibilidad/oclusion. Es el unico
-    # approach que funciona cuando el primer click abre un sub-panel que cubre
-    # a los siguientes attach_files de la lista. El response listener corre
-    # async y captura las archives sin importar si el click "visual" funciona.
-    #
-    # Para asociar correctamente cada archivo capturado a su fase: antes de
-    # cada click, leemos el texto del row padre del attach (que contiene el
-    # nombre de la fase). Marcamos el size del buffer pre-click; los archives
-    # que aparezcan después pertenecen a este click. Asi evitamos el bug del
-    # fallback `fase_per_index[i]`, que fallaba cuando una fase generaba >1
-    # archivo y los indices del buffer dejaban de calzar con los rows.
-    for i in range(n_attach):
-        try:
-            current = page.locator(SEL_MODAL_ATTACH)
-            if i >= current.count():
-                break
-
-            attach = current.nth(i)
-
-            # Leer fase del row padre ANTES del click (despues del click el
-            # DOM puede cambiar). xpath: el primer mat-row o tr.mat-row hacia
-            # arriba en el arbol.
-            fase_i: str | None = None
+        # Recolectar el texto de cada fila de fase para asociar attach → fase
+        fase_per_index: list[str] = []
+        rows = page.locator(f"{SEL_MODAL} mat-row, {SEL_MODAL} tr.mat-row")
+        for i in range(rows.count()):
             try:
-                row = attach.locator(
-                    "xpath=ancestor::mat-row[1] | ancestor::tr[1]"
-                ).first
-                if row.count() > 0:
-                    txt = row.inner_text(timeout=1500)
-                    raw = txt.split("\t")[0].split("\n")[0].strip()
-                    # El inner_text incluye el texto del icono Material
-                    # ("attach_file") cuando la fuente no carga. Lo removemos
-                    # para no contaminar el nombre de la fase.
-                    if raw.endswith("attach_file"):
-                        raw = raw[: -len("attach_file")].rstrip()
-                    fase_i = raw or None
+                txt = rows.nth(i).inner_text(timeout=1500)
+                fase = txt.split("\t")[0].split("\n")[0].strip()
+                fase_per_index.append(fase)
             except Exception:
-                pass
-            # Fallback: si no se pudo leer el row, usar el indice por fila
-            # del modal recolectado al principio (sirve cuando hay 1:1).
-            if not fase_i and i < len(fase_per_index):
-                fase_i = fase_per_index[i] or None
+                fase_per_index.append("")
 
-            # Marcar el buffer antes del click; los archives que aparezcan
-            # despues son los de este click.
-            start = len(archives_buffer)
-            # dispatch_event('click') bypassa actionability + overlays.
-            attach.dispatch_event("click", timeout=4000)
-            page.wait_for_timeout(1500)
+        # Click cada attach_file via dispatch_event('click'), que envia el evento
+        # directamente al elemento sin chequear visibilidad/oclusion. Es el unico
+        # approach que funciona cuando el primer click abre un sub-panel que cubre
+        # a los siguientes attach_files de la lista. El response listener corre
+        # async y captura las archives sin importar si el click "visual" funciona.
+        #
+        # Para asociar correctamente cada archivo capturado a su fase: antes de
+        # cada click, leemos el texto del row padre del attach (que contiene el
+        # nombre de la fase). Marcamos el size del buffer pre-click; los archives
+        # que aparezcan después pertenecen a este click. Asi evitamos el bug del
+        # fallback `fase_per_index[i]`, que fallaba cuando una fase generaba >1
+        # archivo y los indices del buffer dejaban de calzar con los rows.
+        for i in range(n_attach):
+            try:
+                current = page.locator(SEL_MODAL_ATTACH)
+                if i >= current.count():
+                    break
 
-            # Etiquetar los archives recien capturados con la fase del click.
-            for a in archives_buffer[start:]:
-                a["_fase_click"] = fase_i
-        except Exception as e:
-            print(f"    [warn] attach {i+1}/{n_attach}: {type(e).__name__}: {str(e)[:80]}")
-            continue
+                attach = current.nth(i)
+
+                # Leer fase del row padre ANTES del click (despues del click el
+                # DOM puede cambiar). xpath: el primer mat-row o tr.mat-row hacia
+                # arriba en el arbol.
+                fase_i: str | None = None
+                try:
+                    row = attach.locator(
+                        "xpath=ancestor::mat-row[1] | ancestor::tr[1]"
+                    ).first
+                    if row.count() > 0:
+                        txt = row.inner_text(timeout=1500)
+                        raw = txt.split("\t")[0].split("\n")[0].strip()
+                        # El inner_text incluye el texto del icono Material
+                        # ("attach_file") cuando la fuente no carga. Lo removemos
+                        # para no contaminar el nombre de la fase.
+                        if raw.endswith("attach_file"):
+                            raw = raw[: -len("attach_file")].rstrip()
+                        fase_i = raw or None
+                except Exception:
+                    pass
+                # Fallback: si no se pudo leer el row, usar el indice por fila
+                # del modal recolectado al principio (sirve cuando hay 1:1).
+                if not fase_i and i < len(fase_per_index):
+                    fase_i = fase_per_index[i] or None
+
+                # Marcar el buffer antes del click; los archives que aparezcan
+                # despues son los de este click.
+                start = len(archives_buffer)
+                # dispatch_event('click') bypassa actionability + overlays.
+                attach.dispatch_event("click", timeout=4000)
+                page.wait_for_timeout(1500)
+
+                # Etiquetar los archives recien capturados con la fase del click.
+                for a in archives_buffer[start:]:
+                    a["_fase_click"] = fase_i
+            except Exception as e:
+                print(f"    [warn] attach {i+1}/{n_attach}: {type(e).__name__}: {str(e)[:80]}")
+                continue
+
+
+        nxt = page.locator(
+            # El paginador de las fases; hay otro dentro de la fila expandida
+            # (lista de archivos) que no hay que tocar.
+            f"{SEL_MODAL} .main-container-table-report > mat-paginator "
+            "button.mat-paginator-navigation-next:not([disabled])"
+        )
+        if nxt.count() == 0:
+            break
+        nxt.first.dispatch_event("click")
+        page.wait_for_timeout(1000)
 
     _close_modal(page)
     # ESC adicional por si quedó un overlay flotante

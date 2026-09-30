@@ -317,11 +317,22 @@ def cmd_enriquecer_documentos(args) -> int:
                 "WHERE fase IS NULL OR fase = '')"
             )
         elif not args.force:
-            # Default: solo proyectos sin documentos enriquecidos
-            where.append("n_tramite NOT IN (SELECT DISTINCT n_tramite FROM documentos)")
+            # Default: proyectos sin documentos + los que cambiaron de estado
+            # en los ultimos 14 dias (cada fase nueva sube PDFs nuevos:
+            # informes de debate, texto aprobado). Antes solo se miraban los
+            # sin docs y un PL nunca volvia a revisarse (Aviacion Civil tenia
+            # 2 docs de mayo con el segundo debate ya votado, 2026-09-30).
+            where.append(
+                "(n_tramite NOT IN (SELECT DISTINCT n_tramite FROM documentos) "
+                "OR n_tramite IN (SELECT n_tramite FROM historial_cambios "
+                "WHERE campo = 'estado' AND changed_at > "
+                "strftime('%Y-%m-%dT%H:%M:%SZ', 'now', '-14 days')))"
+            )
         if where:
             sql += " WHERE " + " AND ".join(where)
-        sql += " ORDER BY fec_presentacion DESC"
+        # Los sin documentos primero, luego los mas recientes.
+        sql += (" ORDER BY n_tramite IN (SELECT n_tramite FROM documentos),"
+                " fec_presentacion DESC")
         if args.limit:
             sql += f" LIMIT {int(args.limit)}"
         n_tramites = [r["n_tramite"] for r in db.conn.execute(sql, params).fetchall()]
@@ -329,9 +340,9 @@ def cmd_enriquecer_documentos(args) -> int:
         def progress(ntr, idx, total):
             print(f"[{idx}/{total}] {ntr}")
 
-        # En modo --solo-sin-fase o --force, no skipear los que ya tienen docs:
-        # justamente queremos re-procesar para sobrescribir las fases mal asignadas.
-        skip_with_docs = not (args.force or getattr(args, "solo_sin_fase", False))
+        # El filtro ya lo hace el SQL de arriba (que incluye PLs con docs
+        # que cambiaron de estado), asi que aca nunca se salta nada.
+        skip_with_docs = False
 
         stats = enrich_documentos(
             db,
