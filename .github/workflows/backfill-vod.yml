@@ -38,14 +38,20 @@ permissions:
 # workflow dispara cada 10 min y le ganaba la cola a cualquier dispatch
 # manual de este (verificado en vivo 2026-09-15: 2 intentos de backfill
 # de Salud cancelados antes de arrancar, nunca llegaron a correr).
+#
+# Grupo por video (2026-09-30): con un solo grupo GitHub deja UNA corrida
+# en espera y cancela las demas, y 6 sesiones perdidas tardaban ~3 h en
+# fila. publicar_db.sh ya mezcla por fila con reintentos, asi que videos
+# distintos pueden correr a la vez; el mismo video no se duplica.
 concurrency:
-  group: backfill-vod
+  group: backfill-vod-${{ inputs.video_id }}
   cancel-in-progress: false
 
 jobs:
   backfill:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    # 120: una sesion de 3 h (Justicia 29/09) no entraba en 60 con Whisper en CPU.
+    timeout-minutes: 120
     steps:
       - uses: actions/checkout@v4
 
