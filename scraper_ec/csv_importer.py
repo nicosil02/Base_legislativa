@@ -21,6 +21,7 @@ Se aplica automáticamente al importar.
 from __future__ import annotations
 
 import csv
+import hashlib
 import re
 from pathlib import Path
 from typing import Iterator
@@ -135,6 +136,7 @@ def iter_rows(csv_path: str | Path) -> Iterator[dict]:
                 f"Headers encontrados: {reader.fieldnames}"
             )
 
+        rows: list[dict] = []
         for raw_row in reader:
             row: dict = {}
             for header, key in HEADER_MAP.items():
@@ -157,7 +159,22 @@ def iter_rows(csv_path: str | Path) -> Iterator[dict]:
 
             row["periodo"] = "2025-2029"
 
-            yield row
+            rows.append(row)
+
+    # El portal a veces le da el mismo N. Trámite a dos proyectos distintos
+    # (460570, 474840, 476315 en 2026-09). Con n_tramite como clave, cada
+    # import pisaba uno con el otro y el historial alternaba titulos. El de
+    # titulo alfabeticamente primero conserva el numero; los demas llevan
+    # "~" + hash del titulo (el "~" no aparece en tramites reales).
+    grupos: dict[str, list[dict]] = {}
+    for row in rows:
+        grupos.setdefault(row["n_tramite"], []).append(row)
+    for grupo in grupos.values():
+        grupo.sort(key=lambda r: r["titulo"])
+        for row in grupo[1:]:
+            h = hashlib.sha1(row["titulo"].encode("utf-8")).hexdigest()[:6]
+            row["n_tramite"] = f"{row['n_tramite']}~{h}"
+    yield from rows
 
 
 def import_csv(csv_path: str | Path, db) -> dict:
