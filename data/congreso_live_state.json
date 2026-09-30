@@ -55,7 +55,8 @@
   "K8BI2XXMRsQ",
   "E1FzlT1JdII",
   "7_6irbY4z1Y",
-  "d0xRlt22xk4"
+  "d0xRlt22xk4",
+  "rxbXRinvspY"
  ],
  "sesiones": [
   {
@@ -476,6 +477,14 @@
    "pais": "PE",
    "url": "https://www.youtube.com/watch?v=d0xRlt22xk4",
    "visto_at": "2026-09-30T14:34:01Z"
+  },
+  {
+   "id": "rxbXRinvspY",
+   "titulo": "🔴EN VIVO: Comisión de Modernización de la Gestión del Estado de la Cámara de Diputados | 30/09/2026",
+   "tipo": "Comision: Gestion Del Estado",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=rxbXRinvspY",
+   "visto_at": "2026-09-30T16:56:59Z"
   }
  ]
 }
