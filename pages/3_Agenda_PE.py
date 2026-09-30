@@ -1115,7 +1115,7 @@ def load_sesiones_youtube(fec_inicio: dt.date | None, fec_fin: dt.date | None,
                  "Diputados": _DIPUTADOS_COMISIONES_ORDEN}.get(camara, ())
         comision = next((n for n in orden if _norm(f"comision de {n}") in _norm(titulo)), None)
         if not comision:
-            comision = re.sub(r"^.*?EN VIVO:?\s*|\s*[|l]\s*\d{2}/\d{2}/\d{2,4}.*$", "", titulo)
+            comision = re.sub(r"^.*?EN VIVO:?\s*|\s*(?:[|l]\s*)?\d{2}/\d{2}/\d{2,4}.*$", "", titulo)
             comision = re.sub(r"^Sesi[oó]n de la\s+", "", comision.strip()) or tipo
         out.append({
             "ID": -(zlib.crc32(vid.encode()) % 10**9), "_fuente": "youtube",
