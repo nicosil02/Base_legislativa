@@ -287,7 +287,11 @@ def enrich_documentos(
                 on_progress(ntr, idx + 1, len(targets))
             archives_buffer.clear()
             try:
-                docs = _enrich_single(page, ntr, archives_buffer)
+                r = db.conn.execute(
+                    "SELECT titulo FROM proyectos WHERE n_tramite = ?", (ntr,)
+                ).fetchone()
+                docs = _enrich_single(page, ntr, archives_buffer,
+                                      titulo=r[0] if r else None)
                 if docs:
                     db.replace_documentos(ntr, docs)
                     stats["con_docs"] += 1
@@ -307,7 +311,8 @@ def enrich_documentos(
     return stats
 
 
-def _enrich_single(page, n_tramite: str, archives_buffer: list[dict]) -> list[dict]:
+def _enrich_single(page, n_tramite: str, archives_buffer: list[dict],
+                   titulo: str | None = None) -> list[dict]:
     """Captura los documentos de UN proyecto.
 
     Pasos:
@@ -327,7 +332,9 @@ def _enrich_single(page, n_tramite: str, archives_buffer: list[dict]) -> list[di
         pass
 
     # 2. Filtrar
-    page.locator(SEL_FILTER_TRAMITE).first.fill(str(n_tramite))
+    # "460570~a1b2c3" = segundo proyecto con el mismo tramite en el portal
+    # (ver csv_importer.iter_rows): se busca por el numero real.
+    page.locator(SEL_FILTER_TRAMITE).first.fill(str(n_tramite).split("~")[0])
     page.click(SEL_BTN_BUSCAR)
     page.wait_for_timeout(1500)
 
@@ -335,8 +342,17 @@ def _enrich_single(page, n_tramite: str, archives_buffer: list[dict]) -> list[di
     if icons.count() == 0:
         return []
 
-    # 3. Abrir modal de detalle
-    icons.first.click()
+    # 3. Abrir modal de detalle. Con tramite repetido hay >1 resultado:
+    # se abre el de la fila cuyo titulo coincide.
+    icon = icons.first
+    if icons.count() > 1 and titulo:
+        for i in range(icons.count()):
+            fila = icons.nth(i).locator(
+                "xpath=ancestor::mat-row[1] | ancestor::tr[1]").first
+            if titulo[:80] in fila.inner_text(timeout=1500):
+                icon = icons.nth(i)
+                break
+    icon.click()
     page.wait_for_selector(SEL_MODAL, timeout=10000)
     page.wait_for_timeout(700)
 
