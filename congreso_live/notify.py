@@ -53,11 +53,41 @@ def acortar_url(url: str | None) -> str | None:
     return url
 
 
+def enviar_telegram(mensaje: str, token: str, chat_id: str) -> bool:
+    """Telegram Bot API: gratis y sin cupo. Reemplazo de CallMeBot desde
+    2026-09-30 (CallMeBot quedo en "You have 0 messages left" el 29/09 y no
+    se renovo). Los mensajes usan *negrita* estilo WhatsApp, que el modo
+    Markdown legacy de Telegram entiende igual; si el texto rompe el parser
+    (un `_` o `*` suelto en una URL o titulo) se reintenta en texto plano."""
+    url = f"https://api.telegram.org/bot{token}/sendMessage"
+    for parse_mode in ("Markdown", None):
+        data = {"chat_id": chat_id, "text": mensaje[:4096],
+                "disable_web_page_preview": True}
+        if parse_mode:
+            data["parse_mode"] = parse_mode
+        try:
+            r = requests.post(url, data=data, timeout=20)
+            if r.ok:
+                log.info("[notify] Telegram enviado (%d chars)", len(mensaje))
+                return True
+            log.warning("[notify] Telegram rechazo (%s): %s", parse_mode, r.text[:200])
+        except Exception as e:
+            log.warning("[notify] fallo envio Telegram: %s", e)
+            return False
+    return False
+
+
 def enviar_whatsapp(mensaje: str) -> bool:
     # CallMeBot paso a cupo limitado el 2026-09-29 ("You have N messages
     # left"). El texto completo queda en el log de Actions como respaldo:
     # una sesion de Claude lo lee desde ahi y se lo pasa a Nicolas por chat.
     log.info("[notify] ALERTA_TXT %s", json.dumps(mensaje, ensure_ascii=False))
+    # Nombre historico: todos los callers llaman enviar_whatsapp. Si hay
+    # Telegram configurado va por ahi; CallMeBot queda como respaldo.
+    tg_token = os.environ.get("TELEGRAM_BOT_TOKEN")
+    tg_chat = os.environ.get("TELEGRAM_CHAT_ID")
+    if tg_token and tg_chat:
+        return enviar_telegram(mensaje, tg_token, tg_chat)
     phone = os.environ.get("CALLMEBOT_PHONE")
     apikey = os.environ.get("CALLMEBOT_APIKEY")
     if not phone or not apikey:
