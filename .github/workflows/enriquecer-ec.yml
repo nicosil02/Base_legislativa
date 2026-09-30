@@ -14,9 +14,9 @@ on:
   workflow_dispatch:
     inputs:
       limit:
-        description: 'Maximo de proyectos a procesar (default 100)'
+        description: 'Maximo de proyectos a procesar (default 60)'
         required: false
-        default: '100'
+        default: '60'
       force:
         description: 'Re-procesar PLs que ya tienen docs (true/false)'
         required: false
@@ -114,7 +114,7 @@ jobs:
       - name: Determinar parametros
         id: params
         run: |
-          LIMIT="${{ inputs.limit || '100' }}"
+          LIMIT="${{ inputs.limit || '60' }}"
           FORCE="${{ inputs.force || 'false' }}"
           SOLO_SIN_FASE="${{ inputs.solo_sin_fase || 'false' }}"
           ESTADO="${{ inputs.estado || '' }}"
