@@ -54,7 +54,8 @@
   "Ya-OokzbluI",
   "K8BI2XXMRsQ",
   "E1FzlT1JdII",
-  "7_6irbY4z1Y"
+  "7_6irbY4z1Y",
+  "d0xRlt22xk4"
  ],
  "sesiones": [
   {
@@ -467,6 +468,14 @@
    "pais": "PE",
    "url": "https://www.youtube.com/watch?v=7_6irbY4z1Y",
    "visto_at": "2026-09-30T14:11:35Z"
+  },
+  {
+   "id": "d0xRlt22xk4",
+   "titulo": "Comisión de Constitución, Reglamento y Relaciones Exteriores | 30/09/2026",
+   "tipo": "Comision: Constitucion",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=d0xRlt22xk4",
+   "visto_at": "2026-09-30T14:34:01Z"
   }
  ]
 }
