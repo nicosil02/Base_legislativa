@@ -218,7 +218,9 @@ def contenido(conn: sqlite3.Connection, pais: str, clientes: list[str]) -> None:
 @st.cache_data(ttl=3600, show_spinner=False)
 def _historias(fragmentos: tuple[str, ...]) -> list[int]:
     from noticias.historias import agrupar
-    return agrupar(list(fragmentos))
+    # TF-IDF y no el modelo: cargarlo en Streamlit Cloud costaba ~600 MB por
+    # abrir Noticias y tumbo la app por memoria (2026-09-29).
+    return agrupar(list(fragmentos), modelo=False)
 
 
 def _donde(r) -> tuple[str, str]:
