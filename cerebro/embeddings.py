@@ -278,6 +278,7 @@ def sincronizar(max_nuevos: int | None = None) -> dict:
         hechos += len(lote)
         print(f"[cerebro] {hechos}/{len(pendientes)} embebidos")
     perfiles = sincronizar_perfiles(conn)
+    sincronizar_temas(conn)
     total = conn.execute("SELECT count(*) FROM items").fetchone()[0]
     conn.close()
     return {"nuevos": hechos, "total": total, "perfiles": perfiles}
@@ -419,6 +420,30 @@ def nivel_afinidad(sim: float | None) -> str:
 def descripcion_tema(tema: str) -> str:
     from noticias.temas import TEMAS
     return f"Noticias sobre {tema}: " + ", ".join(TEMAS.get(tema, [])[:60])
+
+
+def sincronizar_temas(conn: sqlite3.Connection) -> None:
+    """Guarda en meta el vector de cada tema/sector (se calcula aca, en el
+    workflow). La app web solo lo lee: cargar el modelo en Streamlit Cloud
+    costaba ~600 MB de RAM (2026-09-29)."""
+    import json
+    from noticias.temas import TEMAS
+    for tema in TEMAS:
+        desc = descripcion_tema(tema)
+        h = hashlib.sha1(desc.encode("utf-8")).hexdigest()[:16]
+        previo = conn.execute("SELECT v FROM meta WHERE k=?", (f"tema:{tema}",)).fetchone()
+        if previo and json.loads(previo[0]).get("hash") == h:
+            continue
+        conn.execute("INSERT OR REPLACE INTO meta VALUES (?, ?)",
+                     (f"tema:{tema}", json.dumps({"hash": h, "v": embeber([desc])[0]})))
+    conn.commit()
+
+
+def vector_tema(tema: str, conn: sqlite3.Connection) -> list[float] | None:
+    """Vector precalculado del tema, o None si el cerebro aun no lo tiene."""
+    import json
+    fila = conn.execute("SELECT v FROM meta WHERE k=?", (f"tema:{tema}",)).fetchone()
+    return json.loads(fila[0])["v"] if fila else None
 
 
 def afinidad_vector(claves: list[str], vector: list[float],
