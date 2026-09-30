@@ -40,7 +40,7 @@ jobs:
 
       - name: Instalar deps
         run: |
-          pip install -q yt-dlp requests faster-whisper imageio-ffmpeg
+          pip install -q yt-dlp requests faster-whisper "av<19" imageio-ffmpeg
           sudo apt-get install -y -qq ffmpeg
 
       - name: Instalar Cloudflare WARP en modo proxy (SOCKS5 :40000)
