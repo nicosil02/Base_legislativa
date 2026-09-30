@@ -48,10 +48,37 @@ LOTE = 256
 MAX_CHARS = 2000  # igual el modelo corta en ~128 tokens; esto solo acota memoria
 
 
+def _en_app_web() -> bool:
+    """True dentro del servidor de Streamlit (la app web)."""
+    try:
+        from streamlit import runtime
+        return runtime.exists()
+    except Exception:
+        return False
+
+
 @functools.lru_cache(maxsize=1)
 def _modelo():
+    # Candado: el modelo ocupa ~600 MB de RAM y queda cargado para siempre.
+    # Dentro de la app web tumbo Streamlit Cloud por memoria (2026-09-29, lo
+    # cargaba la pestana de TV al abrir Noticias). En la web se usan vectores
+    # precalculados, TF-IDF, o embeber_aparte() (proceso que libera al salir).
+    if _en_app_web():
+        raise RuntimeError("el modelo de embeddings no se carga en la app web: usa embeber_aparte()")
     from fastembed import TextEmbedding
     return TextEmbedding(MODELO)
+
+
+def embeber_aparte(textos: list[str]) -> list[list[float]]:
+    """embeber() en un proceso aparte: la memoria del modelo se libera al
+    terminar. Para la app web (Buscar), donde _modelo() esta prohibido."""
+    import subprocess
+    r = subprocess.run([sys.executable, "-X", "utf8", "-m", "cerebro.embeddings", "embeber"],
+                       input=json.dumps(textos), capture_output=True, text=True, encoding="utf-8",
+                       timeout=180, cwd=str(Path(__file__).resolve().parent.parent))
+    if r.returncode != 0:
+        raise RuntimeError(f"embeber_aparte fallo: {r.stderr[-300:]}")
+    return json.loads(r.stdout.strip().splitlines()[-1])
 
 
 def embeber(textos: list[str]) -> list[list[float]]:
@@ -468,7 +495,8 @@ def buscar(consulta: str, k: int = 20, tipo: str | None = None, pais: str | None
     """Los k items mas parecidos en significado a `consulta` (texto libre).
     `similitud` = 1 - distancia coseno (1 = identico)."""
     conn = conn or conectar()
-    return vecinos(embeber([consulta])[0], k=k, tipo=tipo, pais=pais, conn=conn)
+    vector = (embeber_aparte if _en_app_web() else embeber)([consulta])[0]
+    return vecinos(vector, k=k, tipo=tipo, pais=pais, conn=conn)
 
 
 def vecinos(vector: list[float], k: int = 20, tipo: str | None = None,
@@ -539,12 +567,22 @@ def _demo():
         assert af["a"] > 0.99 and af["b"] > 0.99 and "no-existe" not in af, af
         frs = fragmentos_perfil("### Crop\n\n" + "x" * 500 + "\n\n**Peru.**\n\n" + "y" * 500)
         assert len(frs) == 2 and frs[0].startswith("### Crop") and frs[1].startswith("**Peru.**"), frs
-    print("OK cerebro.embeddings: sincroniza incremental, KNN y filtros por pais/tipo")
+    # Candado de memoria: dentro de la app web el modelo no se carga nunca.
+    _modelo.cache_clear()
+    with patch.dict(globals(), {"_en_app_web": lambda: True}):
+        try:
+            _modelo()
+            raise AssertionError("el modelo se cargo dentro de la app web")
+        except RuntimeError:
+            pass
+    print("OK cerebro.embeddings: sincroniza incremental, KNN, filtros por pais/tipo y candado de memoria")
 
 
 if __name__ == "__main__":
     cmd = sys.argv[1] if len(sys.argv) > 1 else "demo"
-    if cmd == "sincronizar":
+    if cmd == "embeber":  # usado por embeber_aparte(): JSON por stdin -> JSON por stdout
+        print(json.dumps(embeber(json.loads(sys.stdin.read()))))
+    elif cmd == "sincronizar":
         print(sincronizar(int(sys.argv[2]) if len(sys.argv) > 2 else None))
     elif cmd == "buscar":
         for r in buscar(" ".join(sys.argv[2:]), k=10):
