@@ -16,9 +16,11 @@ UMBRAL_EMB = 0.78    # ponytail: elegido con los fragmentos reales del 28/09 (su
 UMBRAL_TFIDF = 0.45
 
 
-def _similitudes(textos: list[str]):
+def _similitudes(textos: list[str], modelo: bool = True):
     import numpy as np
     try:
+        if not modelo:
+            raise RuntimeError("sin modelo")
         from cerebro.embeddings import embeber
         v = np.array(embeber(textos), dtype="float32")
         v /= np.linalg.norm(v, axis=1, keepdims=True) + 1e-9
@@ -30,14 +32,16 @@ def _similitudes(textos: list[str]):
         return cosine_similarity(m), UMBRAL_TFIDF
 
 
-def agrupar(textos: list[str], sims=None, umbral: float | None = None) -> list[int]:
+def agrupar(textos: list[str], sims=None, umbral: float | None = None,
+            modelo: bool = True) -> list[int]:
     """Indice de grupo por texto. Greedy: cada texto entra al primer grupo
     cuyo representante (el primero, o sea el mas reciente si vienen
-    ordenados) supera el umbral."""
+    ordenados) supera el umbral. modelo=False usa TF-IDF (para la app web:
+    cargar el modelo de embeddings ahi cuesta ~600 MB de RAM)."""
     if not textos:
         return []
     if sims is None:
-        sims, umbral_def = _similitudes(textos)
+        sims, umbral_def = _similitudes(textos, modelo)
         umbral = umbral if umbral is not None else umbral_def
     grupo = [-1] * len(textos)
     reps: list[int] = []

@@ -48,21 +48,20 @@ def afinidad_claves(claves: tuple[str, ...], cliente: str) -> dict[str, float]:
         return {}
 
 
-@st.cache_resource(show_spinner=False)
-def _vector_tema(tema: str):
-    from cerebro.embeddings import descripcion_tema, embeber
-    return embeber([descripcion_tema(tema)])[0]
-
-
 @st.cache_data(ttl=1800, show_spinner=False)
 def afinidad_tema_noticias(ids: tuple[int, ...], tema: str) -> dict[int, float]:
-    """{id de noticia: afinidad con el tema/sector}. {} si no hay cerebro."""
+    """{id de noticia: afinidad con el tema/sector}. {} si no hay cerebro.
+    El vector del tema viene precalculado del workflow (cerebro.db, meta):
+    la app nunca carga el modelo de embeddings (~600 MB de RAM)."""
     conn = conexion()
     if conn is None or not ids:
         return {}
-    from cerebro.embeddings import afinidad_vector
+    from cerebro.embeddings import afinidad_vector, vector_tema
     try:
-        af = afinidad_vector([f"noticia_{i}" for i in ids], _vector_tema(tema), conn)
+        v = vector_tema(tema, conn)
+        if v is None:
+            return {}
+        af = afinidad_vector([f"noticia_{i}" for i in ids], v, conn)
     except Exception as e:
         print(f"[cerebro] afinidad de tema fallo: {e}")
         return {}
