@@ -57,7 +57,8 @@
   "7_6irbY4z1Y",
   "d0xRlt22xk4",
   "rxbXRinvspY",
-  "yesokbyiQQ0"
+  "yesokbyiQQ0",
+  "FskzOM2zSBE"
  ],
  "sesiones": [
   {
@@ -494,6 +495,14 @@
    "pais": "PE",
    "url": "https://www.youtube.com/watch?v=yesokbyiQQ0",
    "visto_at": "2026-09-30T17:12:01Z"
+  },
+  {
+   "id": "FskzOM2zSBE",
+   "titulo": "🔴EN VIVO: Sesión del Pleno del Senado de la República | 30/09/2026",
+   "tipo": "Pleno: Senado",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=FskzOM2zSBE",
+   "visto_at": "2026-09-30T17:31:03Z"
   }
  ]
 }
