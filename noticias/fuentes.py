@@ -340,6 +340,11 @@ FUENTES_PE: list[dict] = [
     {"categoria": "Coyuntura Politica", "pais": "PE", "nombre": "RPP",
      "url": "https://rpp.pe/politica",
      "rss_url": "https://rpp.pe/feed/politica", "tipo": "rss", "notas": "Reactivada 2026-09-27: el feed funciona (probado en vivo, notas del mismo dia). La nota vieja de feed roto estaba desactualizada."},
+    {"categoria": "Coyuntura Politica", "pais": "PE", "nombre": "Congrezoo",
+     "url": "https://congrezoo.pe/",
+     "rss_url": "https://congrezoo.pe/feed/", "tipo": "rss",
+     "notas": "Alerta parlamentaria que sube los documentos oficiales en PDF (pedido de facultades, "
+              "exposicion de motivos, dictamenes). Agregado por Nicolas 2026-09-29; feed probado en vivo."},
     # Medios que faltaban (Nicolas 2026-09-27: "algunas paginas no las tiene mapeadas").
     # Los que no tienen RSS propio entran por Google News filtrado al dominio.
     {"categoria": "Coyuntura Politica", "pais": "PE", "nombre": "Infobae Peru",
