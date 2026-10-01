@@ -62,7 +62,8 @@
   "Iaibsvq5w3U",
   "SNjHv207_U4",
   "_g8iB60yKC8",
-  "4D9U7qdV0bY"
+  "4D9U7qdV0bY",
+  "TuiZAwqngDw"
  ],
  "sesiones": [
   {
@@ -539,6 +540,14 @@
    "pais": "PE",
    "url": "https://www.youtube.com/watch?v=4D9U7qdV0bY",
    "visto_at": "2026-10-01T15:11:12Z"
+  },
+  {
+   "id": "TuiZAwqngDw",
+   "titulo": "Sesión No. 128-AN-2025-2029 del pleno de la Asamblea Nacional",
+   "tipo": "Pleno: Asamblea Nacional (EC)",
+   "pais": "EC",
+   "url": "https://www.youtube.com/watch?v=TuiZAwqngDw",
+   "visto_at": "2026-10-01T15:59:52Z"
   }
  ]
 }
