@@ -3353,7 +3353,7 @@
   },
   {
     "video_id": "RUaZt2rRNy0",
-    "resumen": "Mesa tecnica de la Comision de Ordenamiento y Seguimiento Legislativo (02/10/2026) dedicada a explicar el funcionamiento del Sistema Peruano de Informacion Juridica (SPIJ) y el registro de derogaciones tacitas de normas. Un expositor del Ministerio de Justicia detallo el marco legal de la Ley 31772 y su reglamento, y hizo una demostracion practica de la plataforma SPIJ (la transcripcion capturada corta abruptamente aca, probablemente por una interrupcion tecnica en la captura - no hay evidencia de que la sesion siguiera en curso a esta altura).",
+    "resumen": "Mesa tecnica de la Comision de Ordenamiento y Seguimiento Legislativo (02/10/2026) sobre el funcionamiento del Sistema Peruano de Informacion Juridica (SPIJ) y el registro de derogaciones tacitas de normas. Un expositor del Ministerio de Justicia explico el marco legal de la Ley 31772 y su reglamento, y hizo una demostracion practica de la plataforma SPIJ (la transcripcion capturada corta aca; han pasado mas de 7 horas sin que la duracion capturada crezca, asi que la sesion ya termino y la captura se corto por una interrupcion tecnica, no porque siguiera en curso).",
     "ideas_clave": [
       "Las derogaciones tacitas se registran en el SPIJ en base a la Ley 31772 y su reglamento aprobado por Decreto Supremo 011-2023-JUS.",
       "Estan obligadas a remitir informacion sobre derogaciones tacitas las entidades del articulo 1 del titulo preliminar de la Ley 27444: Poder Ejecutivo (ministerios y organismos publicos), Poder Judicial, Gobiernos Regionales, Gobiernos Locales y organismos con autonomia constitucional.",
@@ -3361,7 +3361,7 @@
       "Se mostro como ejemplo la anotacion de derogacion tacita sobre el articulo 50 del Decreto Legislativo 52 (Ley Organica del Ministerio Publico), establecida por la Junta Nacional de Justicia.",
       "La plataforma SPIJ tiene dos modos de acceso: acceso libre (normas de uso frecuente como la Constitucion, codigos vigentes, leyes organicas y TUPA) y acceso de usuario suscrito (con usuario y contrasena del Ministerio de Justicia) para la totalidad de la informacion juridica sistematizada."
     ],
-    "generated_at": "2026-10-02T18:49:55Z",
+    "generated_at": "2026-10-03T01:49:47Z",
     "duracion_seg": 240,
     "agenda_cumplida": null
   }
