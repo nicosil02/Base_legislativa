@@ -72,7 +72,9 @@
   "sb4adhQvgzI",
   "38iTKgwON5A",
   "D0RiZFWp9QY",
-  "O3DZ5ig2H_4"
+  "O3DZ5ig2H_4",
+  "UB1ZjnbIaqU",
+  "9iHZnpP-DNg"
  ],
  "sesiones": [
   {
@@ -629,6 +631,22 @@
    "pais": "PE",
    "url": "https://www.youtube.com/watch?v=O3DZ5ig2H_4",
    "visto_at": "2026-10-05T19:14:05Z"
+  },
+  {
+   "id": "UB1ZjnbIaqU",
+   "titulo": "🔴EN VIVO: Comisión de Economía, Medio Ambiente y Defensa del Consumidor",
+   "tipo": "Comision: Defensa Del Consumidor",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=UB1ZjnbIaqU",
+   "visto_at": "2026-10-05T20:06:07Z"
+  },
+  {
+   "id": "9iHZnpP-DNg",
+   "titulo": "🔴EN VIVO: Comisión Bicameral de Presupuesto y Cuenta General de la Repúblic",
+   "tipo": "Comision: Presupuesto",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=9iHZnpP-DNg",
+   "visto_at": "2026-10-05T20:10:08Z"
   }
  ]
 }
