@@ -71,7 +71,8 @@
   "2T6CGbrg-Ec",
   "sb4adhQvgzI",
   "38iTKgwON5A",
-  "D0RiZFWp9QY"
+  "D0RiZFWp9QY",
+  "O3DZ5ig2H_4"
  ],
  "sesiones": [
   {
@@ -620,6 +621,14 @@
    "pais": "PE",
    "url": "https://www.youtube.com/watch?v=D0RiZFWp9QY",
    "visto_at": "2026-10-05T16:09:15Z"
+  },
+  {
+   "id": "O3DZ5ig2H_4",
+   "titulo": "🔴EN VIVO: Comisión de Constitución y Relaciones Exteriores de la Cámara de Diputados | 05/10/2026",
+   "tipo": "Comision: Constitucion",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=O3DZ5ig2H_4",
+   "visto_at": "2026-10-05T19:14:05Z"
   }
  ]
 }
