@@ -70,7 +70,8 @@
   "RUaZt2rRNy0",
   "2T6CGbrg-Ec",
   "sb4adhQvgzI",
-  "38iTKgwON5A"
+  "38iTKgwON5A",
+  "D0RiZFWp9QY"
  ],
  "sesiones": [
   {
@@ -611,6 +612,14 @@
    "pais": "PE",
    "url": "https://www.youtube.com/watch?v=38iTKgwON5A",
    "visto_at": "2026-10-05T16:07:12Z"
+  },
+  {
+   "id": "D0RiZFWp9QY",
+   "titulo": "🔴EN VIVO: Comisión de Defensa del Consumidor y Regulación de los Servicios Públicos | 05/10/2026",
+   "tipo": "Comision: Defensa Del Consumidor",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=D0RiZFWp9QY",
+   "visto_at": "2026-10-05T16:09:15Z"
   }
  ]
 }
