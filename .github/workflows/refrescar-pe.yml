@@ -320,6 +320,11 @@ jobs:
           # como buffer historico para evitar que la DB crezca infinito.
           timeout 120 python -X utf8 -m noticias.cli purge --dias 7 \
               || echo "[warn] noticias purge fallo, sigo"
+          # Pedido de Nicolas 2026-10-05: avisar por Telegram cuando
+          # Agrocalidad publique el Anexo 1 (zonas de cuarentena Foc R4T)
+          # de la Res. 0085-R. Se apaga solo el 2026-12-31.
+          timeout 120 python -X utf8 scripts/vigilar_anexo_foc.py \
+              || echo "[warn] vigilar_anexo_foc fallo, sigo"
 
       - name: Instalar Cloudflare WARP en modo proxy (SOCKS5 :40000)
         # Ventana 8-9am Lima (13-14 UTC), no solo el minuto exacto - bug
