@@ -67,7 +67,9 @@
   "lAWaIH4-PzU",
   "T2HWWS6Xfvk",
   "o6ocvV5iWIk",
-  "RUaZt2rRNy0"
+  "RUaZt2rRNy0",
+  "2T6CGbrg-Ec",
+  "sb4adhQvgzI"
  ],
  "sesiones": [
   {
@@ -584,6 +586,22 @@
    "pais": "PE",
    "url": "https://www.youtube.com/watch?v=RUaZt2rRNy0",
    "visto_at": "2026-10-02T15:32:39Z"
+  },
+  {
+   "id": "2T6CGbrg-Ec",
+   "titulo": "🔴EN VIVO: Comisión de Medio Ambiente y Sostenibilidad de la Cámara de Diputados | 05/10/2026",
+   "tipo": "Comision: Medio Ambiente",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=2T6CGbrg-Ec",
+   "visto_at": "2026-10-05T14:09:38Z"
+  },
+  {
+   "id": "sb4adhQvgzI",
+   "titulo": "🔴EN VIVO: Comisión Bicameral de Presupuesto y Cuenta General de la República | 05/10/2026",
+   "tipo": "Comision: Presupuesto",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=sb4adhQvgzI",
+   "visto_at": "2026-10-05T14:11:41Z"
   }
  ]
 }
