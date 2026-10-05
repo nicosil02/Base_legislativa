@@ -74,7 +74,8 @@
   "D0RiZFWp9QY",
   "O3DZ5ig2H_4",
   "UB1ZjnbIaqU",
-  "9iHZnpP-DNg"
+  "9iHZnpP-DNg",
+  "5c-s423_LwI"
  ],
  "sesiones": [
   {
@@ -647,6 +648,14 @@
    "pais": "PE",
    "url": "https://www.youtube.com/watch?v=9iHZnpP-DNg",
    "visto_at": "2026-10-05T20:10:08Z"
+  },
+  {
+   "id": "5c-s423_LwI",
+   "titulo": "🔴EN VIVO: Comisión de Inclusión Social, Familia, Mujer y Pueblos Andinos, Amazónicos y Afroperuanos",
+   "tipo": "Comision: Inclusion Social",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=5c-s423_LwI",
+   "visto_at": "2026-10-05T21:15:09Z"
   }
  ]
 }
