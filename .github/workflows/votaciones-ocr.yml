@@ -65,6 +65,8 @@ jobs:
         run: |
           pip install requests
           python -X utf8 -m votaciones.ocr_pleno juntar --salida votaciones_pe.db partes/*/*.db
+          # Rearma con el parser de main (por si se corrigio despues del OCR)
+          python -X utf8 -m votaciones.ocr_pleno reparsear --db votaciones_pe.db
           gh release view votaciones > /dev/null 2>&1 || \
             gh release create votaciones --title "Votaciones Pleno PE (OCR)" \
               --notes "votaciones_pe.db: votaciones nominales del Pleno 2021-2026 extraidas por OCR (ver votaciones/ocr_pleno.py)"
