@@ -83,7 +83,8 @@
   "fLpsqihx33U",
   "Eg1EgY1LI20",
   "7uWszM8UMnw",
-  "gyPeBm7X_4M"
+  "gyPeBm7X_4M",
+  "cEnzueyjs5Q"
  ],
  "sesiones": [
   {
@@ -728,6 +729,14 @@
    "pais": "PE",
    "url": "https://www.youtube.com/watch?v=gyPeBm7X_4M",
    "visto_at": "2026-10-06T21:02:14Z"
+  },
+  {
+   "id": "cEnzueyjs5Q",
+   "titulo": "🔴EN VIVO: Comisión de Ética Parlamentaria 06/10/2026",
+   "tipo": "Comision: Etica Parlamentaria",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=cEnzueyjs5Q",
+   "visto_at": "2026-10-06T21:35:20Z"
   }
  ]
 }
