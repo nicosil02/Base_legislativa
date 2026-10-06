@@ -76,7 +76,8 @@
   "UB1ZjnbIaqU",
   "9iHZnpP-DNg",
   "5c-s423_LwI",
-  "zJLB9vf7Ycs"
+  "zJLB9vf7Ycs",
+  "RLA-kC1bZ38"
  ],
  "sesiones": [
   {
@@ -665,6 +666,14 @@
    "pais": "PE",
    "url": "https://www.youtube.com/watch?v=zJLB9vf7Ycs",
    "visto_at": "2026-10-06T13:06:24Z"
+  },
+  {
+   "id": "RLA-kC1bZ38",
+   "titulo": "Comisión de Defensa Nacional y Orden Interno Cámara de Diputados",
+   "tipo": "Comision: Defensa Nacional",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=RLA-kC1bZ38",
+   "visto_at": "2026-10-06T13:31:48Z"
   }
  ]
 }
