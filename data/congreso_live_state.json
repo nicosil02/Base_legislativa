@@ -77,7 +77,9 @@
   "9iHZnpP-DNg",
   "5c-s423_LwI",
   "zJLB9vf7Ycs",
-  "RLA-kC1bZ38"
+  "RLA-kC1bZ38",
+  "IOLK6U45SJQ",
+  "l1zNB5Gj-a8"
  ],
  "sesiones": [
   {
@@ -674,6 +676,22 @@
    "pais": "PE",
    "url": "https://www.youtube.com/watch?v=RLA-kC1bZ38",
    "visto_at": "2026-10-06T13:31:48Z"
+  },
+  {
+   "id": "IOLK6U45SJQ",
+   "titulo": "🔴EN VIVO: Sesión del Pleno de la Cámara de Diputados l 06 DE OCTUBRE DEL 2026",
+   "tipo": "Pleno: Diputados",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=IOLK6U45SJQ",
+   "visto_at": "2026-10-06T14:59:41Z"
+  },
+  {
+   "id": "l1zNB5Gj-a8",
+   "titulo": "🔴EN VIVO: Comisión de Constitución, Reglamento y Relaciones Exteriores del Senado l 06/10/2026",
+   "tipo": "Comision: Constitucion",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=l1zNB5Gj-a8",
+   "visto_at": "2026-10-06T15:01:44Z"
   }
  ]
 }
