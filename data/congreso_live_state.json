@@ -82,7 +82,8 @@
   "l1zNB5Gj-a8",
   "fLpsqihx33U",
   "Eg1EgY1LI20",
-  "7uWszM8UMnw"
+  "7uWszM8UMnw",
+  "gyPeBm7X_4M"
  ],
  "sesiones": [
   {
@@ -719,6 +720,14 @@
    "pais": "PE",
    "url": "https://www.youtube.com/watch?v=7uWszM8UMnw",
    "visto_at": "2026-10-06T20:15:44Z"
+  },
+  {
+   "id": "gyPeBm7X_4M",
+   "titulo": "🔴 EN VIVO: Comisión en asuntos de Desarrollo Productivo, Energía y Minas, Infraestructura y Trabajo",
+   "tipo": "Comision: Energia Y Minas",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=gyPeBm7X_4M",
+   "visto_at": "2026-10-06T21:02:14Z"
   }
  ]
 }
