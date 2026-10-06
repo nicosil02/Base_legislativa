@@ -19,6 +19,7 @@ import html
 import io
 import json
 import re
+import unicodedata
 import zlib
 import sqlite3
 import sys
@@ -126,7 +127,8 @@ def _fila(grupo: list) -> tuple | None:
     """Una fila de una columna, ordenada por x: [bancada] nombre... [voto].
     El nombre puede venir partido en 2 cajas y con '.' en vez de ','
     ("BARBARAN REYES." + "ROSANGELLA ANDREA")."""
-    g = sorted(grupo, key=lambda c: c[1])
+    # NFKC: el OCR a veces devuelve la coma de ancho completo "，".
+    g = sorted(((y, x, unicodedata.normalize("NFKC", t)) for y, x, t in grupo), key=lambda c: c[1])
     bancada = voto = None
     if len(g) > 1 and _BANCADA_RE.match(g[0][2].strip()):
         bancada = g.pop(0)[2].strip()
@@ -135,7 +137,8 @@ def _fila(grupo: list) -> tuple | None:
     if not g:
         return None
     y, x = g[0][0], g[0][1]
-    nombre = " ".join(t.strip() for _, _, t in g).strip().rstrip("* ")  # "***" = preside
+    nombre = " ".join(t.strip() for _, _, t in g).strip()
+    nombre = re.sub(r"[^A-Za-zÁÉÍÓÚÑÜáéíóúñü0-9,.'\- +]+$", "", nombre).rstrip("* ")  # "***" = preside
     # Bancada pegada delante y mal leida: "B5 ROBLES ARAUJO, SILVANA".
     mb = re.match(r"^([A-Z0-9]{2,4}(-[A-Z0-9]{2,4})?)\s+(?=[A-ZÁÉÍÓÚÑ]+ [A-ZÁÉÍÓÚÑ ]*,)", nombre)
     if mb:
@@ -238,6 +241,36 @@ def procesar_sesion(con: sqlite3.Connection, ocr, rec, s: dict) -> int:
     return n
 
 
+def reparsear(db: str) -> int:
+    """Rearma votacion/voto desde pagina_ocr con el parser actual, sin OCR.
+    Los votos que solo habia recuperado la 2da pasada (recorte de imagen)
+    se conservan si el parser nuevo deja ese voto vacio."""
+    con = sqlite3.connect(db)
+    viejos = {(u, pg, n): v for u, pg, n, v in con.execute(
+        "SELECT o.sesion_url, o.pagina, w.congresista, w.voto FROM votacion o "
+        "JOIN voto w ON w.votacion_id = o.id WHERE w.voto IS NOT NULL")}
+    filas = con.execute("SELECT sesion_url, pagina, ancho, items FROM pagina_ocr").fetchall()
+    con.execute("DELETE FROM voto")
+    con.execute("DELETE FROM votacion")
+    n = 0
+    for url, pg, ancho, blob in filas:
+        p = parsear_pagina([tuple(x) for x in json.loads(zlib.decompress(blob))], ancho)
+        if not p or len(p["votos"]) < 50:
+            continue
+        fecha = re.search(r"(\d{1,2})[-_](\d{1,2})[-_](\d{4})", url)
+        cur = con.execute(
+            "INSERT INTO votacion (sesion_url,pagina,fecha,hora,asunto,n_votos) VALUES (?,?,?,?,?,?)",
+            (url, pg, p["fecha"] or (f"{fecha.group(3)}-{int(fecha.group(2)):02d}-{int(fecha.group(1)):02d}"
+                                      if fecha else None), p["hora"], p["asunto"], len(p["votos"])))
+        con.executemany("INSERT INTO voto VALUES (?,?,?,?)",
+                        [(cur.lastrowid, nom, ban, vot or viejos.get((url, pg, nom)))
+                         for nom, ban, vot, *_ in p["votos"]])
+        n += 1
+    con.commit()
+    print(f"[votaciones] reparseadas {n} votaciones")
+    return 0
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser()
     sub = ap.add_subparsers(dest="cmd", required=True)
@@ -248,10 +281,14 @@ def main(argv=None) -> int:
     p.add_argument("--parte", type=int, default=0)
     p.add_argument("--partes", type=int, default=1)
     p.add_argument("--db", default="votaciones_pe.db")
+    r = sub.add_parser("reparsear")
+    r.add_argument("--db", default="votaciones_pe.db")
     j = sub.add_parser("juntar")
     j.add_argument("--salida", default="votaciones_pe.db")
     j.add_argument("partes", nargs="+")
     a = ap.parse_args(argv)
+    if a.cmd == "reparsear":
+        return reparsear(a.db)
     if a.cmd == "juntar":
         con = sqlite3.connect(a.salida)
         con.executescript(ESQUEMA)
