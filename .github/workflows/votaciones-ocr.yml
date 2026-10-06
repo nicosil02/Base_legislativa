@@ -1,0 +1,71 @@
+name: Votaciones Pleno PE (OCR 2021-2026)
+
+# Pedido de Nicolas 2026-10-06: votaciones nominales del periodo anterior
+# para perfilar a los congresistas reelectos (disciplina de bancada, temas).
+# Openpolitica ya extrajo hasta el 2024-03-07; esto hace el resto por OCR
+# (PDFs escaneados, ~20 s/pagina en CPU) repartido en N maquinas y junta
+# todo en un solo votaciones_pe.db publicado en el release "votaciones".
+# Corrida unica (manual): el periodo 2021-2026 ya termino.
+
+on:
+  workflow_dispatch:
+    inputs:
+      desde:
+        description: 'Fecha desde (YYYY-MM-DD)'
+        default: '2024-03-08'
+      hasta:
+        description: 'Fecha hasta (YYYY-MM-DD)'
+        default: '2026-07-26'
+
+permissions:
+  contents: write
+
+jobs:
+  ocr:
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    strategy:
+      fail-fast: false
+      # ponytail: 10 maquinas fijas; con ~5000 paginas son ~3 h cada una.
+      # max-parallel deja runners libres para vigilar-congreso y tv-en-vivo.
+      max-parallel: 10
+      matrix:
+        parte: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Instalar OCR
+        # paddlepaddle fijo en 3.2.2 (3.3.x rompe en CPU con oneDNN, ver refrescar-pe.yml)
+        run: pip install requests pymupdf pillow numpy "paddlepaddle==3.2.2" paddleocr
+      - name: OCR de su parte
+        run: |
+          python -X utf8 -u -m votaciones.ocr_pleno procesar \
+            --desde "${{ inputs.desde }}" --hasta "${{ inputs.hasta }}" \
+            --parte ${{ matrix.parte }} --partes 10 --db votaciones_${{ matrix.parte }}.db
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: votaciones-${{ matrix.parte }}
+          path: votaciones_${{ matrix.parte }}.db
+
+  juntar:
+    needs: ocr
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/download-artifact@v4
+        with:
+          path: partes
+      - name: Juntar y publicar
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          pip install requests
+          python -X utf8 -m votaciones.ocr_pleno juntar --salida votaciones_pe.db partes/*/*.db
+          gh release view votaciones > /dev/null 2>&1 || \
+            gh release create votaciones --title "Votaciones Pleno PE (OCR)" \
+              --notes "votaciones_pe.db: votaciones nominales del Pleno 2021-2026 extraidas por OCR (ver votaciones/ocr_pleno.py)"
+          gh release upload votaciones votaciones_pe.db --clobber
