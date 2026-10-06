@@ -17,7 +17,9 @@ import argparse
 import csv
 import html
 import io
+import json
 import re
+import zlib
 import sqlite3
 import sys
 from pathlib import Path
@@ -102,12 +104,22 @@ def completar_votos(p: dict, img, rec) -> int:
 
 
 def normalizar_voto(t: str) -> str | None:
-    m = _VOTO_RE.match(t.strip())
+    t = re.sub(r"^[5S][I1l](?=\s|\+|$)", "SI", t.strip())  # el OCR lee "5I +++"
+    t = re.sub(r"^N[O0](?=\s|-|$)", "NO", t)
+    m = _VOTO_RE.match(t)
     return VOTOS[m.group(1).upper()] if m else None
 
 
 _BANCADA_RE = re.compile(r"^[A-Z]{2,4}(-[A-Z]{2,4})?$")
-_VOTO_PEGADO = re.compile(r"\s((SI|NO)\s*[+\-]{2,3}|Abst\.|SinRes|aus)$")
+# Voto pegado al final del nombre, a veces con la bancada de la columna
+# siguiente detras: "ACUÑA PERALTA, MARIA GRIMANEZA SI +++ BS".
+_VOTO_PEGADO = re.compile(
+    r"\s(([S5][I1]|N[O0])\s*[+\-]{0,3}|Abst\.?|SinRes|aus|LO|LE|LP|L25A|Sus)(\s+[A-Z5]{2,4}(-[A-Z]{2,4})?)?$")
+# Mayusculas con coma, o al menos 3 palabras si el OCR se comio la coma
+# ("LAURA ROJAS JUDITH"); el resumen por bancada queda fuera por _FIN_TABLA.
+_NOMBRE_RE = re.compile(r"^[A-ZÁÉÍÓÚÑÜ][A-ZÁÉÍÓÚÑÜ '.\-]+(,[A-ZÁÉÍÓÚÑÜ '.\-]+|( [A-ZÁÉÍÓÚÑÜ'.\-]+){2,})$")
+# Lo que viene despues de la tabla de votos (resumen por bancada, constancias).
+_FIN_TABLA = re.compile(r"(?i)^resultados|grupo parlamentario|deja constancia|en este reporte")
 
 
 def _fila(grupo: list) -> tuple | None:
@@ -123,13 +135,21 @@ def _fila(grupo: list) -> tuple | None:
     if not g:
         return None
     y, x = g[0][0], g[0][1]
-    nombre = " ".join(t.strip() for _, _, t in g).strip()
+    nombre = " ".join(t.strip() for _, _, t in g).strip().rstrip("* ")  # "***" = preside
+    # Bancada pegada delante y mal leida: "B5 ROBLES ARAUJO, SILVANA".
+    mb = re.match(r"^([A-Z0-9]{2,4}(-[A-Z0-9]{2,4})?)\s+(?=[A-ZÁÉÍÓÚÑ]+ [A-ZÁÉÍÓÚÑ ]*,)", nombre)
+    if mb:
+        bancada = bancada or mb.group(1).replace("5", "S").replace("0", "O")
+        nombre = nombre[mb.end():]
     m = _VOTO_PEGADO.search(nombre)  # "AZURIN LOAYZA, ALFREDO SI +++"
-    if m and not voto:
-        voto, nombre = normalizar_voto(m.group(1)), nombre[:m.start()].strip()
+    if m:
+        voto = voto or normalizar_voto(m.group(1))
+        nombre = nombre[:m.start()].strip()
     if "," not in nombre:
         nombre = nombre.replace(".", ",", 1)
-    return (re.sub(r"\s+", " ", nombre), bancada, voto, x, y) if nombre else None
+    nombre = re.sub(r"\s+", " ", nombre)
+    # Basura del resumen o de las constancias que se cuela como fila.
+    return (nombre, bancada, voto, x, y) if _NOMBRE_RE.match(nombre) else None
 
 
 def parsear_pagina(items: list[tuple[str, list[int]]], ancho: int) -> dict | None:
@@ -145,7 +165,7 @@ def parsear_pagina(items: list[tuple[str, list[int]]], ancho: int) -> dict | Non
     y_asunto = next((b[1] for t, b in items if t.strip().lower().startswith("asunto")), None)
     y_ini = next((b[1] for t, b in items if _BANCADA_RE.match(t.strip()) and b[0] < ancho * 0.1
                   and (y_asunto is None or b[1] > y_asunto + 10)), 0)
-    fin = next((b[1] for t, b in items if t.strip().lower().startswith("resultados de")), 10**9)
+    fin = next((b[1] for t, b in items if b[1] > y_ini + 20 and _FIN_TABLA.search(t.strip())), 10**9)
     asunto = ""
     if y_asunto is not None:
         asunto = " ".join(t for t, b in items if y_asunto + 5 < b[1] < y_ini - 5).strip()
@@ -182,6 +202,8 @@ CREATE TABLE IF NOT EXISTS votacion (
 CREATE TABLE IF NOT EXISTS voto (
   votacion_id INT, congresista TEXT, bancada TEXT, voto TEXT);
 CREATE TABLE IF NOT EXISTS sesion_procesada (url TEXT PRIMARY KEY, paginas INT, votaciones INT);
+CREATE TABLE IF NOT EXISTS pagina_ocr (
+  sesion_url TEXT, pagina INT, ancho INT, items BLOB, PRIMARY KEY (sesion_url, pagina));
 """
 
 
@@ -194,6 +216,9 @@ def procesar_sesion(con: sqlite3.Connection, ocr, rec, s: dict) -> int:
     for i, page in enumerate(pdf):
         try:
             items, ancho, img = ocr_pagina(ocr, page)
+            # Texto crudo guardado para poder re-parsear sin repetir el OCR.
+            con.execute("INSERT OR REPLACE INTO pagina_ocr VALUES (?,?,?,?)",
+                        (s["url"], i, ancho, zlib.compress(json.dumps(items, ensure_ascii=False).encode())))
             p = parsear_pagina(items, ancho)
             if not p or len(p["votos"]) < 50:  # asistencia o pagina rota
                 continue
@@ -238,6 +263,7 @@ def main(argv=None) -> int:
                         "asunto, n_votos FROM p.votacion", (base,))
             con.execute("INSERT INTO voto SELECT votacion_id + ?, congresista, bancada, voto FROM p.voto", (base,))
             con.execute("INSERT OR IGNORE INTO sesion_procesada SELECT * FROM p.sesion_procesada")
+            con.execute("INSERT OR IGNORE INTO pagina_ocr SELECT * FROM p.pagina_ocr")
             con.commit()
             con.execute("DETACH p")
         print(f"[votaciones] {con.execute('SELECT COUNT(*) FROM votacion').fetchone()[0]} votaciones juntadas")
