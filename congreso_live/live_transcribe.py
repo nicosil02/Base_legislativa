@@ -15,6 +15,7 @@ esto SI corre en GitHub Actions ademas de local.
 from __future__ import annotations
 
 import os
+import re
 import shutil
 import signal
 import sqlite3
@@ -279,6 +280,32 @@ def transcribir_audio(wav_path: Path, modelo) -> list[dict]:
     return out
 
 
+# Pedido de Nicolas 2026-10-06: aviso por Telegram cuando en un Pleno (PE o
+# EC) se vota algo o pasa a cuarto intermedio, con el texto previo (que
+# suele traer lo que se esta votando). Frases reales de ambos Plenos:
+# "han votado a favor 60", "88 votos afirmativos", "ha sido aprobada".
+# ponytail: regex sobre el texto de Whisper, sin LLM; si el extracto crudo
+# no alcanza, resumirlo con Gemini antes de mandarlo.
+# Exige un conteo en cifras: "ha sido aprobado" suelto salta con las actas,
+# y los comentaristas de TV dicen los numeros en palabras ("con ocho votos").
+_VOTACION = re.compile(
+    r"(?i)votad[oa]s? a favor,? \d+|\d+ votos? (a favor|en contra|afirmativos|negativos)|"
+    r"cuarto intermedio")
+AVISO_VOTACION_COOLDOWN_SEG = 180  # anuncio + "ha sido aprobado" llegan en chunks seguidos
+
+
+def detectar_votacion(contexto: str, nuevo: str) -> str | None:
+    """Si el chunk nuevo trae un resultado de votacion, devuelve un extracto
+    (lo anterior + el resultado) para el aviso; si no, None."""
+    m = _VOTACION.search(nuevo)
+    if not m:
+        return None
+    texto = (contexto + " " + nuevo).strip()
+    fin = len(texto) - len(nuevo) + m.end()
+    # 900 chars antes (lo que se vota) y 350 despues ("ha sido aprobado...").
+    return "…" + texto[max(0, fin - 900):fin + 350].strip() + "…"
+
+
 def capturar_y_acumular_en_vivo(
     video_id: str,
     tipo: str,
@@ -332,6 +359,7 @@ def capturar_y_acumular_en_vivo(
     chunks_ok = 0
     misses_seguidos = 0
     t_inicio = time.time()
+    t_ultimo_aviso = 0.0
     try:
         while True:
             if max_minutos is not None and (time.time() - t_inicio) > max_minutos * 60:
@@ -376,6 +404,15 @@ def capturar_y_acumular_en_vivo(
             if not nuevo_texto:
                 print(f"[live-transcribe] {video_id}: audio capturado sin habla clara, sigo")
                 continue
+
+            if tipo.startswith("Pleno") and time.time() - t_ultimo_aviso > AVISO_VOTACION_COOLDOWN_SEG:
+                extracto = detectar_votacion(texto_acumulado[-1500:], nuevo_texto)
+                if extracto:
+                    from congreso_live.notify import enviar_whatsapp
+                    enviar_whatsapp(f"🗳️ {tipo}: votación o cuarto intermedio\n"
+                                    f"{titulo}\n\n{extracto}\n\n"
+                                    f"https://www.youtube.com/watch?v={video_id}")
+                    t_ultimo_aviso = time.time()
 
             texto_acumulado = (texto_acumulado + " " + nuevo_texto).strip()
             duracion_acumulada += intervalo_seg
@@ -783,7 +820,21 @@ def _test_avisar_si_no_avisado_no_duplica():
     print("OK live_transcribe: _avisar_si_no_avisado no duplica un aviso ya enviado")
 
 
+def _test_detectar_votacion():
+    # Frases reales: Senado PE 30/09, Asamblea EC 24/09 (Aviacion Civil).
+    assert detectar_votacion("al voto el acuerdo", "votación cerrada han votado a favor 50 señores senadores")
+    assert detectar_votacion("", "contamos con 88 votos afirmativos, 60 votos negativos")
+    assert detectar_votacion("", "propongo pasar a un cuarto intermedio")
+    # Ruido real que no debe avisar: actas y comentaristas de TV.
+    assert not detectar_votacion("", "las actas han sido aprobadas señores senadores")
+    assert not detectar_votacion("", "aprobó con ocho votos afirmativos este informe")
+    e = detectar_votacion("x" * 2000 + " se vota el texto sustitutorio", " 60 votos a favor")
+    assert "texto sustitutorio" in e and len(e) < 1300
+    print("OK live_transcribe: detectar_votacion")
+
+
 if __name__ == "__main__":
+    _test_detectar_votacion()
     _demo()
     _test_killpg_mata_el_arbol_completo()
     _test_acumulacion()
