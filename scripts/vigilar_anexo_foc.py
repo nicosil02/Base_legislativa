@@ -70,12 +70,26 @@ def candidatos_registro_oficial(db: str) -> list[tuple[str, str]]:
     if not Path(db).exists():
         return []
     c = sqlite3.connect(db)
+    # El resumen en la DB se corta en 1500 caracteres y el sumario de una
+    # edicion es mas largo, asi que se lee la pagina completa de cada
+    # edicion de los ultimos 3 dias (son ~5 por dia).
     filas = c.execute(
-        "SELECT n.url, n.titulo, n.resumen FROM noticias n "
+        "SELECT DISTINCT n.url, n.titulo FROM noticias n "
         "JOIN noticias_fuentes f ON f.id = n.fuente_id "
         "WHERE f.nombre LIKE 'Registro Oficial%' AND n.fecha_pub > '2026-10-02' "
-        "AND (n.resumen LIKE '%R4T%' OR n.resumen LIKE '%Fusarium%')").fetchall()
-    return [(u, f"Registro Oficial: {t} menciona Foc R4T") for u, t, _ in filas]
+        "AND n.fecha_pub > datetime('now', '-3 days') "
+        "AND n.url LIKE '%registroficial.gob.ec%'").fetchall()
+    out = []
+    for u, t in filas:
+        try:
+            pagina = requests.get(u, headers=UA, timeout=30).text
+        except Exception as e:
+            print(f"[foc] fallo {u}: {e}")
+            continue
+        texto = re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", " ", pagina)))
+        if FOC.search(texto) or "Foc R4T" in texto:
+            out.append((u, f"Registro Oficial: {t} menciona Foc R4T"))
+    return out
 
 
 def candidatos_google_news() -> list[tuple[str, str]]:
