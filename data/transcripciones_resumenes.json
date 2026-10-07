@@ -3762,17 +3762,17 @@
   },
   {
     "video_id": "J8gei_kQM1Y",
-    "resumen": "Sesión del Pleno del Senado del 7 de octubre de 2026, centrada en el debate y posterior aprobación del proyecto de resolución legislativa que autoriza a la presidenta Keiko Fujimori a salir del país del 28 al 31 de octubre (visita oficial a El Salvador) y del 2 al 6 de noviembre (cumbre iberoamericana en Madrid). El debate giró en torno a si el modelo de seguridad de El Salvador de Bukele es aplicable al Perú, con senadores oficialistas respaldando el viaje y de oposición cuestionando la gestión de seguridad del gobierno; el proyecto fue aprobado por 37 votos a favor, 11 en contra y 1 abstención. A continuación, el pleno pasó a debatir la conformación de una Comisión Especial Multipartidaria de Seguimiento Estratégico para la prevención de conflictos sociales (sesión en curso al momento de este resumen).",
+    "resumen": "Sesion del Pleno del Senado del 7 de octubre de 2026, centrada en el debate y posterior aprobacion del proyecto de resolucion legislativa que autoriza a la presidenta Keiko Fujimori a salir del pais del 28 al 31 de octubre (visita oficial a El Salvador) y del 2 al 6 de noviembre (cumbre iberoamericana en Madrid). El debate giro en torno a si el modelo de seguridad de El Salvador de Bukele es aplicable al Peru, con senadores oficialistas respaldando el viaje y de oposicion cuestionando la gestion de seguridad del gobierno; el proyecto fue aprobado por 37 votos a favor, 11 en contra y 1 abstencion. A continuacion, el pleno paso a votar la conformacion de una Comision Especial Multipartidaria de Seguimiento Estrategico para la prevencion de conflictos sociales, pero la transcripcion capturada corta abruptamente justo al iniciar ese registro de asistencia, probablemente por una interrupcion tecnica en la captura - no hay evidencia de que la sesion siguiera en curso a esta altura.",
     "ideas_clave": [
-      "Se aprobó sin observaciones el acta de la séptima sesión del 30 de septiembre de 2026.",
-      "El proyecto de resolución legislativa autoriza el viaje presidencial del 28-31 de octubre a San Salvador y Tecoluca (invitación del gobierno salvadoreño) y del 2-6 de noviembre a Madrid para la XXX Cumbre Iberoamericana de Jefas y Jefes de Estado y de Gobierno.",
-      "El pleno aprobó el proyecto de resolución legislativa con 37 votos a favor, 11 en contra y 1 abstención.",
-      "La senadora Ruth Luque pidió votación separada de los dos viajes y cuestionó que el modelo de seguridad de El Salvador sea la respuesta a la inseguridad, criticando las llamadas 'leyes procrimen'.",
-      "Senadores oficialistas (Carlos Salomásquez, Carlos Mecías, entre otros) defendieron el viaje y pidieron no obstruir las facultades legislativas que solicita el Ejecutivo, destacando la adhesión del Perú a la 'Alianza Escudo de las Américas' contra el crimen organizado.",
-      "Concluida la votación, el pleno pasó a debatir la conformación de una Comisión Especial Multipartidaria de Estudio y Seguimiento para la prevención de conflictos sociales.",
-      "La sesión se instaló con 39 senadores presentes sobre 27 requeridos para el quorum reglamentario y lamentó el fallecimiento de dos suboficiales de la Policía Nacional."
+      "Se aprobo sin observaciones el acta de la septima sesion del 30 de septiembre de 2026.",
+      "El proyecto de resolucion legislativa autoriza el viaje presidencial del 28-31 de octubre a San Salvador y Tecoluca (invitacion del gobierno salvadoreno) y del 2-6 de noviembre a Madrid para la XXX Cumbre Iberoamericana de Jefas y Jefes de Estado y de Gobierno.",
+      "El pleno aprobo el proyecto de resolucion legislativa con 37 votos a favor, 11 en contra y 1 abstencion.",
+      "La senadora Ruth Luque pidio votacion separada de los dos viajes y cuestiono que el modelo de seguridad de El Salvador sea la respuesta a la inseguridad, criticando las llamadas 'leyes procrimen'.",
+      "Senadores oficialistas (Carlos Salomasquez, Carlos Mecias, entre otros) defendieron el viaje y pidieron no obstruir las facultades legislativas que solicita el Ejecutivo, destacando la adhesion del Peru a la 'Alianza Escudo de las Americas' contra el crimen organizado.",
+      "Concluida la votacion sobre el viaje, el pleno paso a consultar la conformacion de una Comision Especial Multipartidaria de Estudio y Seguimiento para la prevencion de conflictos sociales, pero la transcripcion se corta antes de conocerse el resultado.",
+      "La sesion se instalo con 39 senadores presentes sobre 27 requeridos para el quorum reglamentario y lamento el fallecimiento de dos suboficiales de la Policia Nacional."
     ],
-    "generated_at": "2026-10-07T18:52:26Z",
+    "generated_at": "2026-10-07T22:50:18Z",
     "duracion_seg": 2200,
     "agenda_cumplida": null
   },
@@ -3788,6 +3788,21 @@
     ],
     "generated_at": "2026-10-07T19:55:43Z",
     "duracion_seg": 800,
+    "agenda_cumplida": null
+  },
+  {
+    "video_id": "uyecbhX7cKo",
+    "resumen": "Fragmento final de una sesion de la Comision de Trabajo y Seguridad Social de la Camara de Diputados (07/10/2026), centrada en la comparecencia de la presidenta ejecutiva de EsSalud ante consultas de los diputados sobre especialistas medicos y atencion primaria en Ayacucho. La funcionaria respondio preguntas puntuales y la sesion se suspendio por breve termino al cierre de su intervencion.",
+    "ideas_clave": [
+      "La presidenta ejecutiva de EsSalud comparecio ante la Comision de Trabajo y Seguridad Social por consultas sobre especialistas medicos y residencias.",
+      "Solicito que no haya contraprestacion en la formacion del medico residente, replicando una medida que impulso cuando estuvo en el Minsa.",
+      "Se comprometio a enviar por escrito, con copia a la presidencia de la comision, las respuestas sobre los centros de atencion primaria de salud en Ayacucho.",
+      "Senalo que EsSalud no cuenta con presupuesto suficiente actualmente y que evaluara solicitar apoyo al empresariado privado.",
+      "Remarco que, a diferencia del Minsa, en EsSalud no puede recurrir libremente a fondos de terceros porque son recursos de los asegurados.",
+      "La sesion se suspendio por breve termino tras agradecer la participacion de la funcionaria."
+    ],
+    "generated_at": "2026-10-07T22:49:01Z",
+    "duracion_seg": 240,
     "agenda_cumplida": null
   }
 ]
