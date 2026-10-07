@@ -85,7 +85,9 @@
   "7uWszM8UMnw",
   "gyPeBm7X_4M",
   "cEnzueyjs5Q",
-  "pv-mz5znyFY"
+  "pv-mz5znyFY",
+  "KqEnB2t2Kts",
+  "l9yfl2bNSnc"
  ],
  "sesiones": [
   {
@@ -746,6 +748,22 @@
    "pais": "PE",
    "url": "https://www.youtube.com/watch?v=pv-mz5znyFY",
    "visto_at": "2026-10-07T01:02:48Z"
+  },
+  {
+   "id": "KqEnB2t2Kts",
+   "titulo": "🔴EN VIVO: Comisión de Justicia y Derechos Humanos del Senado de la República | 07/10/2026",
+   "tipo": "Comision: Justicia",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=KqEnB2t2Kts",
+   "visto_at": "2026-10-07T13:43:01Z"
+  },
+  {
+   "id": "l9yfl2bNSnc",
+   "titulo": "🔴EN VIVO: Comisión Bicameral de Presupuesto y Cuenta General de la República | 07/10/2026",
+   "tipo": "Comision: Presupuesto",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=l9yfl2bNSnc",
+   "visto_at": "2026-10-07T13:43:01Z"
   }
  ]
 }
