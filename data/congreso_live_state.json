@@ -94,7 +94,8 @@
   "dwuTTFEt2jY",
   "uyecbhX7cKo",
   "Yq67qNJ6M_g",
-  "9FlcWcokKBc"
+  "9FlcWcokKBc",
+  "0ptcJPKAH8U"
  ],
  "sesiones": [
   {
@@ -827,6 +828,14 @@
    "pais": "PE",
    "url": "https://www.youtube.com/watch?v=9FlcWcokKBc",
    "visto_at": "2026-10-09T14:15:06Z"
+  },
+  {
+   "id": "0ptcJPKAH8U",
+   "titulo": "🔴EN VIVO: Comisión de Constitución, Reglamento y Relaciones Exteriores del Senado | 09/10/2026",
+   "tipo": "Comision: Constitucion",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=0ptcJPKAH8U",
+   "visto_at": "2026-10-09T15:06:50Z"
   }
  ]
 }
