@@ -3849,18 +3849,34 @@
   },
   {
     "video_id": "9FlcWcokKBc",
-    "resumen": "Sesión de la Comisión Bicameral de Presupuesto y Cuenta General de la República del 9 de octubre de 2026, dedicada a la sustentación de presupuestos institucionales 2027 de gobiernos regionales. Tras el pase de lista y anunciarse cambios en la conformación de la comisión (ingreso de diputados suplentes a propuesta del grupo parlamentario Partido Cívico Obras), la sesión se suspendió brevemente para dar paso a la exposición del Gobierno Regional de Tumbes, a cargo de su titular (registrado en la transcripción como Segismundo Cruzes Ordinola); la convocatoria también incluía al Gobierno Regional de Lambayeque, cuya exposición no llega a registrarse en el tramo capturado. (sesión en curso al momento de este resumen)",
+    "resumen": "Sesión de la Comisión Bicameral de Presupuesto y Cuenta General de la República del 9 de octubre de 2026, dedicada a la sustentación de presupuestos institucionales 2027 de gobiernos regionales. Expuso primero el Gobierno Regional de Tumbes (titular registrado en la transcripción como Segismundo Cruzes Ordinola), seguido de una ronda de preguntas de parlamentarios, y luego el Gobierno Regional de Lambayeque, a cargo de su titular Jorge Luis Pérez Flores, quien centró su exposición en el recorte histórico del presupuesto de inversiones 2027 y en el reclamo por el bajo presupuesto per cápita de la región. (sesion en curso al momento de este resumen)",
     "ideas_clave": [
-      "La Comisión Bicameral de Presupuesto modificó su conformación: ingresaron diputados suplentes a propuesta del grupo parlamentario Partido Cívico Obras, tras la aprobación del Pleno de la Cámara de Diputados del 6 de octubre de 2026",
-      "Se convocó para sustentar presupuesto 2027 al pliego 452 (Gobierno Regional de Lambayeque, titular Jorge Luis Pérez Flores) y al pliego 461 (Gobierno Regional de Tumbes), aunque solo se alcanza a escuchar la exposición de Tumbes",
-      "El Gobierno Regional de Tumbes presentó un presupuesto 2027 de S/ 720 millones (financiado principalmente con recursos del FONDES), 3.6% menor al PIA 2026",
-      "Prioriza educación básica regular (S/ 437.4 millones, 60.7% del presupuesto) y salud (S/ 170.6 millones, 23.7%), incluyendo la culminación de un hospital regional en construcción",
-      "Reportó una ejecución de inversiones de 69.4% al 5 de octubre de 2026 y se comprometió a cerrar el año fiscal con ejecución superior al 97% por toda fuente de financiamiento",
-      "En educación se construyeron 19 instituciones educativas en el periodo y se proyectan 7 adicionales para 2027; en el sector agropecuario continúan los planes de negocio Procompite para pequeños productores de plátano, banano y crianza pecuaria",
-      "El gobierno regional indicó que ya no administra el pago de pensiones (transferido a la ONP) pero mantiene una deuda de pensiones devengadas pendiente de reprogramación por el MEF"
+      "La Comisión Bicameral de Presupuesto modificó su conformación: ingresaron diputados suplentes a propuesta del grupo parlamentario Partido Cívico Obras, tras la aprobación del Pleno de la Cámara de Diputados del 6 de octubre de 2026.",
+      "Tumbes presentó un presupuesto 2027 de S/ 720 millones (3.6% menor al PIA 2026, financiado principalmente con FONDES), priorizando educación básica (S/ 437.4 millones, 60.7%) y salud (S/ 170.6 millones, 23.7%), con 69.4% de ejecución de inversiones al 5 de octubre.",
+      "El gobernador de Tumbes pidió una demanda adicional de S/ 78.4 millones para proyectos de inversión, entre ellos S/ 55 millones para la continuidad del hospital de apoyo Saúl Garrido Rosillo, y una disposición que permita al MEF asumir devengados e intereses legales reconocidos por la ONP.",
+      "En la ronda de preguntas a Tumbes, el senador Absalón Vásquez cuestionó que con un presupuesto 2026 de S/ 811 millones la ejecución apenas llegue a 69.7% a mediados de octubre, y señaló trabajos pendientes de descolmatación de ríos tras la emergencia por lluvias.",
+      "Lambayeque (pliego 452) reportó un recorte histórico de 11.56% en su presupuesto de inversiones 2027 respecto al pico de S/ 2,534 millones alcanzado en 2026, con una ejecución proyectada de cierre del 97% para el año fiscal.",
+      "El gobernador de Lambayeque, Jorge Luis Pérez Flores, denunció que la región recibe solo S/ 1,745 de presupuesto per cápita frente a S/ 4,800 de otras regiones como Ica o Arequipa, pese a ser una de las que más aporta al país, y reclamó mayor equidad en la distribución del PIA regional.",
+      "Pérez Flores destacó que ya no hay obras paralizadas en la región (incluye obras por impuestos como la autopista Chiclayo-Pomalca) y que se ha impulsado inversión privada vía obras por impuestos, APP y concesiones para complementar el financiamiento público."
     ],
-    "generated_at": "2026-10-09T14:50:52Z",
-    "duracion_seg": 1360,
+    "generated_at": "2026-10-09T15:50:54Z",
+    "duracion_seg": 4400,
+    "agenda_cumplida": null
+  },
+  {
+    "video_id": "0ptcJPKAH8U",
+    "resumen": "Primera sesión no ordinaria de la Comisión de Constitución, Reglamento y Relaciones Exteriores del Senado (9/10/2026), realizada en conferencia con las comisiones de Justicia y Derechos Humanos, Defensa Nacional y Orden Interno, y Salud/Educación/Cultura/Mujer/Desarrollo Social, para tratar el proyecto de delegación de facultades legislativas al Poder Ejecutivo en seguridad ciudadana y fenómeno de El Niño (PL 00003/2023-2031-CD). Expusieron el presidente del Consejo de Ministros, Luis Fernando Galarreta, y el ministro de Desarrollo Agrario y Riego, Marco Antonio Vinelli, mientras varios senadores cuestionaron el procedimiento y pidieron precisar antes los límites de la delegación. (sesion en curso al momento de este resumen)",
+    "ideas_clave": [
+      "El Ejecutivo pide facultades legislativas en 8 materias (entre ellas seguridad ciudadana, modernización del Estado y simplificación administrativa); la Cámara de Diputados ya aprobó temas en 6 de esas 8 materias.",
+      "El premier Galarreta aclaró que el \"fenómeno del niño\" no es una materia propia de la delegación, sino un eje transversal presente en varias de las 8 materias solicitadas.",
+      "El ministro Vinelli propuso modificar la Ley de Recursos Hídricos para agilizar permisos de pozos (hoy demoran 8-10 meses) y permitir que los agricultores tramiten licencias de agua en su propia cuenca, sin desplazarse entre regiones.",
+      "Se plantea reducir el plazo de titulación de predios agrícolas de más de 400 días a 90 días modificando la ley de saneamiento físico legal, citando como ejemplo la represa de Chonta (Cajamarca), con expediente técnico listo pero frenada por falta de saneamiento legal de predios.",
+      "Se solicitan cambios a la legislación forestal para dar titularidad aprovechable (ecoturismo, venta de productos no maderables, madera) a nuevas plantaciones de bosque, frente a una deforestación estimada en 140.000-160.000 hectáreas por año.",
+      "Varios senadores, entre ellos Lourdes Alcorta, cuestionaron el orden del debate y exigieron precisar primero los límites de la naturaleza de la delegación antes de permitir la exposición de los ministros.",
+      "El premier Galarreta argumentó que el pedido de facultades no constituye una situación de \"emergencia\" sino una práctica habitual bajo el artículo 104 de la Constitución, y que el Congreso puede recortar el plazo solicitado o negarlo."
+    ],
+    "generated_at": "2026-10-09T15:49:48Z",
+    "duracion_seg": 1760,
     "agenda_cumplida": null
   }
 ]
