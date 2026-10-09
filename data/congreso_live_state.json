@@ -93,7 +93,8 @@
   "J8gei_kQM1Y",
   "dwuTTFEt2jY",
   "uyecbhX7cKo",
-  "Yq67qNJ6M_g"
+  "Yq67qNJ6M_g",
+  "9FlcWcokKBc"
  ],
  "sesiones": [
   {
@@ -818,6 +819,14 @@
    "pais": "PE",
    "url": "https://www.youtube.com/watch?v=Yq67qNJ6M_g",
    "visto_at": "2026-10-07T23:03:35Z"
+  },
+  {
+   "id": "9FlcWcokKBc",
+   "titulo": "🔴EN VIVO: Comisión Bicameral de Presupuesto y Cuenta General de la República | 09/10/2026",
+   "tipo": "Comision: Presupuesto",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=9FlcWcokKBc",
+   "visto_at": "2026-10-09T14:15:06Z"
   }
  ]
 }
