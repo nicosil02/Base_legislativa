@@ -3881,5 +3881,21 @@
     "generated_at": "2026-10-10T07:53:39Z",
     "duracion_seg": 12920,
     "agenda_cumplida": null
+  },
+  {
+    "video_id": "QwizHuL-mt4",
+    "resumen": "La Comisión de Constitución, Reglamento y Relaciones Exteriores del Senado debatió un pedido de facultades legislativas delegadas al Ejecutivo en materia de seguridad y justicia penal. El ministro de Justicia expuso primero sobre la crisis del sistema penitenciario (falta de carrera para agentes del INPE, sueldos bajos, hacinamiento) y propuso separar a internos violentos de no violentos, antes de plantear cuatro temas puntuales de su sector para incluir en la delegación de facultades; a continuación tomó la palabra el ministro del Interior para presentar temas adicionales, entre ellos una reforma a la ley de armas, quedando la transcripción cortada en ese punto (la transcripción capturada corta abruptamente aca, probablemente por una interrupción técnica en la captura - no hay evidencia de que la sesión siguiera en curso a esta altura).",
+    "ideas_clave": [
+      "El ministro de Justicia planteó cuatro temas de su sector para incorporar a la delegación de facultades legislativas: (1) un marco jurídico para la participación permanente de las Fuerzas Armadas junto a la PNP en seguridad penitenciaria a través de un \"comando unificado\" de operaciones e inteligencia; (2) libertad vigilada pospenitenciaria, solo para delitos especialmente graves (sicariato, liderazgo de extorsión), para cubrir el vacío entre cumplir la pena y estar efectivamente rehabilitado; (3) un marco jurídico que trate la extorsión como \"terrorismo por lucro\" con herramientas de inteligencia financiera, distinguiéndola de los \"grupos hostiles\" armados que controlan territorio (remanentes de las FARC en el norte de Colombia/Putumayo y el Comando Vermelho en la frontera con Brasil, en Madre de Dios); (4) modificar el inciso 3 del artículo 20 del Código Penal sobre legítima defensa, para presumir la racionalidad de la defensa del ciudadano o policía e invertir la carga de la prueba hacia el fiscal.",
+      "El ministro de Justicia señaló que actualmente hay un agente del INPE por cada 80 internos, y que el técnico 1 del INPE gana apenas 1.200 soles mensuales, lo que calificó como un incentivo estructural a la corrupción por ausencia de una carrera penitenciaria.",
+      "Citó el caso de internas en el penal de Chorrillos (anexo de máxima peligrosidad) que, tras 10-12 años de prisión, mantenían comunicación telefónica diaria con sus hijos y lograban resocializarse mediante el programa \"cárceles productivas\" (venta de textiles), como evidencia de que la rehabilitación de mujeres difiere de la de hombres.",
+      "Propuso reorganizar los penales por nivel de peligrosidad en lugar de por tipo de delito, concentrando a los internos de alta peligrosidad en 4 o 5 penales especializados de alto costo, señalando que familiares de internos por delitos no violentos son usados por las bandas como canal de comunicación durante las visitas.",
+      "Sobre legítima defensa, argumentó que el estándar actual de proporcionalidad es inviable frente a sicarios armados (ejemplo: un chofer de transporte público que recibe varios disparos antes de poder reaccionar) y propuso que la ley presuma la racionalidad de la defensa del ciudadano, trasladando al fiscal la carga de probar lo contrario.",
+      "Argumentó que las facultades delegadas no constituyen un \"bono político\" para el Ejecutivo, señalando que ningún gobierno peruano que las recibió logró la reelección como partido, y que el Legislativo conserva la capacidad de derogar o modificar cualquier decreto legislativo emitido.",
+      "Al cierre de la intervención, tomó la palabra el ministro del Interior (identificado en la transcripción como \"César Astudio\", posible error de reconocimiento automático de voz) para presentar \"cuatro puntos técnicos\" adicionales de su sector, comenzando con una reforma a la ley de armas (tenencia de hasta dos o tres pistolas por persona), sin que la transcripción alcance a capturar el resto de su exposición."
+    ],
+    "generated_at": "2026-10-10T15:50:45Z",
+    "duracion_seg": 1400,
+    "agenda_cumplida": null
   }
 ]
