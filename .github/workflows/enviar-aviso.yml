@@ -1,0 +1,32 @@
+name: Enviar aviso manual
+
+# Mensaje puntual a Telegram (las claves solo viven en los secrets del repo).
+# Lo usa una sesion de Claude para avisar en tiempo real: gh workflow run enviar-aviso.yml -f mensaje="..."
+
+on:
+  workflow_dispatch:
+    inputs:
+      mensaje:
+        required: true
+
+permissions:
+  contents: read
+
+jobs:
+  enviar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: pip install -q requests
+      - env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          CALLMEBOT_PHONE: ${{ secrets.CALLMEBOT_PHONE }}
+          CALLMEBOT_APIKEY: ${{ secrets.CALLMEBOT_APIKEY }}
+          MENSAJE: ${{ inputs.mensaje }}
+          PYTHONIOENCODING: utf-8
+        run: python -X utf8 -c "import os,sys; from congreso_live.notify import enviar_whatsapp; sys.exit(0 if enviar_whatsapp(os.environ['MENSAJE']) else 1)"
