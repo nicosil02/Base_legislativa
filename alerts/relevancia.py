@@ -260,7 +260,16 @@ cliente puntual. Respondé con una lista JSON, un objeto por item:
 === ITEMS ===
 {chr(10).join(items_txt)}
 """
-    respuesta = _gemini(prompt, SYSTEM_JUEZ, schema=SCHEMA_VEREDICTOS)
+    try:
+        respuesta = _gemini(prompt, SYSTEM_JUEZ, schema=SCHEMA_VEREDICTOS)
+    except RuntimeError:
+        raise  # falta GEMINI_API_KEY: no tiene sentido reintentar
+    except Exception as e:
+        # Si el modelo rechaza el schema, reintentar sin el: el prompt igual
+        # pide JSON y el parser de abajo lo lee (o cae al de lineas).
+        print(f"[relevancia] Gemini con schema fallo ({e}), reintento sin schema")
+        respuesta = _gemini(prompt, SYSTEM_JUEZ)
+    respuesta = re.sub(r"^```(?:json)?\s*|\s*```$", "", respuesta.strip())
     veredictos = _parsear_veredictos_json(respuesta)
     if veredictos is None:
         # JSON roto (no deberia pasar con schema): rescatar con el parser de
