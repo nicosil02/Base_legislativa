@@ -82,6 +82,11 @@ TEMAS: dict[str, list[str]] = {
         "covid", "salud mental",
         # Farma (consolidado dentro de Salud)
         "medicamento", "medicamentos", "vacuna", "vacunación",
+        # "medicinas"/"fármacos": miss real 2026-10-12 (compra de medicinas a
+        # la India, EC). Solo plural para "medicina": en la DB el plural es
+        # casi siempre abastecimiento/compra; el singular trae carrera/
+        # facultad de Medicina, medicina legal/regenerativa (~1/3 ruido).
+        "medicinas", "fármaco", "fármacos",
         "vacunacion", "antibiótico", "antibiotico", "laboratorio",
         "farmaceutica", "farmacéutica", "industria farma",
         "ARCSA", "DIGEMID", "ANVISA", "FDA", "EMA",
@@ -734,8 +739,21 @@ def _test_es_deportivo():
           "Emelec) como Coyuntura política, pero si a presidentes reales")
 
 
+def _test_medicinas_es_salud():
+    """Miss real 2026-10-12: "medicinas" (EC/PE coloquial por medicamentos)
+    no clasificaba como Salud y la compra a la India no alerto."""
+    assert clasificar("Compra de medicinas a la India se concretaría en las "
+                       "próximas semanas") == ["Salud"]
+    assert clasificar("Pacientes protestan por falta de fármacos oncológicos") == ["Salud"]
+    # Singular fuera a proposito: la carrera no es tema Salud.
+    assert clasificar("Estudiar Medicina: carrera de alta demanda, largo "
+                       "camino y alto costo") == []
+    print("OK temas: 'medicinas'/'fármacos' clasifican como Salud, la carrera de Medicina no")
+
+
 if __name__ == "__main__":
     _demo()
+    _test_medicinas_es_salud()
     _test_sin_senal_no_es_pais_fuente_aunque_nombre_otro_pais()
     _test_venezuela_no_es_ecuador()
     _test_tributo_no_es_homenaje()
