@@ -98,6 +98,12 @@ TEMAS: dict[str, list[str]] = {
         "enfermedades raras", "FEPPER",
         # Ministro de Salud actual (gabinete Galarreta)
         "Luis Dyer", "Dyer Fernández", "Dyer Fernandez",
+        # Eval 2026-10-12 (clasificador/eval): "salud" a secas no estaba y
+        # era la mayor causa de misses (campañas, Comité de Salud, MSP).
+        # Va aparte, solo en el titulo (_SALUD_EN_TITULO). Resto: misses
+        # reales del set de oro sin sentido alternativo comun.
+        "telemedicina", "hepatitis", "infeccion", "farmacia",
+        "botica", "brigada medica", "brigadas medicas", "vigilancia sanitaria",
     ],
     "Tech / Digital": [
         "digital", "tecnología", "tecnologia", "ciberseguridad",
@@ -109,7 +115,16 @@ TEMAS: dict[str, list[str]] = {
         "fraude digital", "ecommerce", "comercio electrónico",
         "comercio electronico", "neutralidad de red",
         "transformación digital", "transformacion digital",
-        "INDECOPI", "Niubox", "Hiperderecho", "ALAI",
+        # "INDECOPI" se saco 2026-10-12 (eval, 14 de 14 menciones del set de
+        # oro sin nada digital: antidumping de inodoros, tubulares en Nasca,
+        # BTS, combustibles). Si la nota es de Indecopi sobre algo digital,
+        # otra palabra de esta lista ya la marca.
+        "Niubox", "Hiperderecho", "ALAI",
+        # Misses reales del eval 2026-10-12 (los plurales "digitales" ya los
+        # cubre _compile). "IA" exacta, en mayuscula no choca con "dia".
+        "telemedicina", "cibernetico", "cibernetica",
+        "digitalizacion", "dinero electronico", "firma electronica",
+        "fibra optica", "banda ancha", "IA",
         "MinTel", "DPL", "Forbes Digital", "CECE",
         # Autoridad de datos PE (MINJUS/MINJUSDH)
         "ANPD", "APDP", "MINJUS", "MINJUSDH",
@@ -164,6 +179,11 @@ TEMAS: dict[str, list[str]] = {
         "agroquímico", "agroquimico", "agroquímicos", "agroquimicos",
         "glifosato", "herbicida", "herbicidas", "insecticida", "insecticidas",
         "fungicida", "fungicidas",
+        # Misses reales del eval 2026-10-12: notas de campo sin ninguna de
+        # las palabras de arriba ("hectáreas de cultivos", "ganaderos",
+        # "maíz nacional"). Plurales via _compile.
+        "cultivo", "ganadero", "ganadera", "maiz", "agroecologia",
+        "fitosanitario", "fitosanitaria", "agroindustria", "agroindustrial",
         # Ministros actuales de sector (gabinete Galarreta)
         "Vinelli",     # MIDAGRI (agro)
         "Huaroc",      # MINAM (ambiente)
@@ -195,7 +215,38 @@ TEMAS: dict[str, list[str]] = {
         "regimen tributario",
         "superintendencia de banca", "banca y seguros",
         "lavado", "activos ilícitos", "activos ilicitos",
+        # Misses reales del eval 2026-10-12 (pagos digitales del BCRP,
+        # finanzas abiertas SBS, inclusion financiera). "pagos" a secas no:
+        # "pago a prestadores de salud", "pagos a docentes". "bancos" va en
+        # _EXTRA_REGEX.
+        "financiero", "financiera",
+        "dinero electronico", "billetera digital", "billeteras digitales",
+        "pagos digitales", "pago digital", "medios de pago", "sistema de pagos",
+        "ecosistema de pagos", "pagos electronicos", "finanzas abiertas", "fintech",
     ],
+}
+
+# Keywords que necesitan un "no seguido de" (sentido figurado/homonimo) -
+# se suman al patron del tema tal cual, sobre texto ya normalizado.
+_EXTRA_REGEX: dict[str, list[str]] = {
+    # "redes sociales" solo como objeto de regulacion: "lo compartio en sus
+    # redes sociales" (farandula, sucesos) era la mayoria en la semana real.
+    "Tech / Digital": [
+        r"(?:menores|regula\w*|prohib\w*|ley|plataformas?)\W+(?:\w+\W+){0,4}redes sociales"
+        r"|redes sociales\W+(?:\w+\W+){0,4}(?:menores|regula\w*|prohib\w*|ley)\b"],
+    # Solo "bancos" (el sector): el singular era Banco Mundial/BID/Banco
+    # Central/"retiro del banco" (ruido en la semana real 2026-10-12).
+    "KYC / AML / Financiero": [
+        r"\bbancos\b(?! de (?:sangre|alimentos|leche|germoplasma|semillas|"
+        r"datos|ojos|tejidos|preguntas|proyectos|arena|niebla|peces|habitat)|"
+        r" comunitarios)"],
+    # "ganado" sustantivo, no participio ("tras haber ganado en Pekin" era
+    # Crop): solo con articulo/"de" delante o con el tipo de ganado detras.
+    "Crop": [r"\b(?:el|del|de|al|su|sus|los) ganados?\b"
+             r"|\bganados? (?:vacuno|bovino|ovino|caprino|lechero|porcino|de carne)"],
+    # "influenza aviar" es sanidad animal (ya cae en Crop via SENASA/aves).
+    # ("salud" a secas va aparte, solo en titulo: ver _SALUD_EN_TITULO.)
+    "Salud": [r"\binfluenza\b(?! aviar)"],
 }
 
 
@@ -230,18 +281,27 @@ def _norm(s: str | None) -> str:
     return re.sub(r"\s+", " ", s)
 
 
-def _compile(kws: list[str]) -> re.Pattern:
+def _compile(kws: list[str], plural: bool = False,
+             extra: list[str] | None = None) -> re.Pattern:
+    """plural=True: una palabra suelta en minuscula de 4+ letras acepta
+    tambien su plural ("digital" -> "digitales", "agroexportacion" ->
+    "agroexportaciones"; eval 2026-10-12, era la causa #1 de misses). Siglas
+    y nombres propios (con mayuscula en la lista: SIS, MAG, Noboa) quedan
+    exactos. Las frases ya matchean como substring, su plural final pasa."""
     alts = []
     for kw in kws:
         n = _norm(kw)
         if " " in n:
             alts.append(re.escape(n))
+        elif plural and kw == kw.lower() and len(n) >= 4 and n.isalpha():
+            alts.append(rf"\b{re.escape(n)}(?:e?s)?\b")
         else:
             alts.append(rf"\b{re.escape(n)}\b")
-    return re.compile("|".join(alts), re.IGNORECASE)
+    return re.compile("|".join(alts + (extra or [])), re.IGNORECASE)
 
 
-_PATTERNS = {tema: _compile(kws) for tema, kws in TEMAS.items()}
+_PATTERNS = {tema: _compile(kws, plural=True, extra=_EXTRA_REGEX.get(tema))
+             for tema, kws in TEMAS.items()}
 _PATTERN_NORMATIVA = _compile(KEYWORDS_NORMATIVA)
 
 # Bug real 2026-09-24 (Nicolas: "por que no lo mapeaste en nuestro sistema
@@ -272,7 +332,11 @@ _PATTERN_NORMA_INTERES = _compile(KEYWORDS_NORMA_INTERES)
 # real 2026-09-17/24: todos los falsos positivos empezaban asi).
 _PATTERN_NORMA_TRAMITE = re.compile(
     r"^(designan|autorizan viaje|aceptan renuncia|encargan|dan por conclu|"
-    r"se designa|se autoriza el viaje|se acepta la renuncia)", re.IGNORECASE)
+    r"se designa|se autoriza el viaje|se acepta la renuncia|"
+    # eval 2026-10-12: mismos tramites de MIDAGRI/SENASA con otra redaccion
+    r"se encarga|conformar la comision|conforman la comision|"
+    r"se autoriza una modificacion presupuestaria|otorgan licencia|"
+    r"se otorga licencia)", re.IGNORECASE)
 
 
 def es_norma_de_interes(descripcion: str | None) -> bool:
@@ -312,6 +376,9 @@ KEYWORDS_DEPORTES = [
     "cuadrangular", "hexagonal", "hinchas", "hinchada", "estadio",
     "futbolista", "futbolistas", "delantero", "defensor", "arquero",
     "director tecnico", "director técnico", "barcelona sc", "emelec",
+    # eval 2026-10-12: "IESS le certificó a FEF que Santa Fe ... Ascenso
+    # Nacional no afilió a los jugadores" salia como Salud.
+    "FEF", "ascenso nacional",
 ]
 _PATTERN_DEPORTES = _compile(KEYWORDS_DEPORTES)
 
@@ -382,15 +449,75 @@ def es_espectaculos(url: str | None) -> bool:
 def clasificar(titulo: str | None, resumen: str | None = None,
                url: str | None = None) -> list[str]:
     """Lista de temas detectados en el contenido. Orden estable."""
-    texto = _norm(f"{titulo or ''} {resumen or ''}")
+    texto = _norm(_sin_homonimos(titulo, resumen))
     if not texto.strip():
         return []
-    temas = [t for t, pat in _PATTERNS.items() if pat.search(texto)]
-    if "Coyuntura política" in temas and _PATTERN_DEPORTES.search(texto):
-        temas = [t for t in temas if t != "Coyuntura política"]
+    texto = _FRASES_NEUTRAS.sub(" ", texto)
+    if _SENASA_DOMINICANA.search(texto) or "SeNaSa" in f"{titulo} {resumen}":
+        texto = re.sub(r"\bsenasa\b", " ", texto)
+    en_titulo = _norm(_SUFIJO_MEDIO_DIGITAL.sub("", titulo or ""))
+    temas = [t for t, pat in _PATTERNS.items() if pat.search(texto)
+             or (t == "Salud" and _SALUD_EN_TITULO.search(en_titulo))]
+    if _PATTERN_DEPORTES.search(texto):
+        temas = [t for t in temas if t not in ("Coyuntura política", "Salud")]
     if "Salud" in temas and es_espectaculos(url):
         temas = [t for t in temas if t != "Salud"]
+    if _PATTERN_TIPO_CAMBIO.search(texto):
+        temas = [t for t in temas if t != "KYC / AML / Financiero"]
+    if _es_norma_tramite(titulo, resumen):
+        temas = [t for t in temas if t == "Coyuntura política"]
     return temas
+
+
+# --- Eval 2026-10-12 (clasificador/eval/gold_noticias.csv) ---
+# "salud" a secas era la mayor causa de misses de Salud (campañas, Comité de
+# Salud, crisis hospitalaria del MSP). Solo en el TITULO: en el resumen la
+# semana real traia mitad enumeraciones ("educación, salud y agua", Obras por
+# Impuestos, "trasladado a una casa de salud").
+_SALUD_EN_TITULO = re.compile(r"\bsalud\b(?! (?:financiera|economica|fiscal|"
+                              r"democratica|de la democracia|de la economia))")
+# Sufijo de medio de Google News con "Digital" en el nombre ("... - Maraco
+# Digital", "- Hoy Digital"): el nombre del diario no dice nada del tema.
+_SUFIJO_MEDIO_DIGITAL = re.compile(r"\s[-–|]\s[^-–|]{0,40}\bdigital\s*$", re.IGNORECASE)
+# "Lavado" apellido (Marino Lavado, diputado) marcaba KYC/AML. Se exige
+# Nombre + Lavado con mayusculas y que no siga "de activos/dinero/capitales".
+_APELLIDO_LAVADO = re.compile(
+    r"\b([A-ZÁÉÍÓÚÑ][a-záéíóúñ]+) Lavado\b(?! [dD][eE] [aAdDcC])")
+# "siembra incertidumbre/dudas" (politica) marcaba Crop.
+_FRASES_NEUTRAS = re.compile(
+    r"\bsiembra (?:la |el )?(?:incertidumbre|dudas?|miedo|terror|panico|caos|"
+    r"desconfianza|zozobra|polemica|temor|confusion|division)"
+    # "Obras/Servicios por Impuestos" es un mecanismo de inversion publica,
+    # no tributacion (con el plural "impuestos" entraba como KYC).
+    r"|\b(?:obras|servicios) por impuestos\b"
+    # "Autorizan transferencia financiera a favor de..." = tramite
+    # presupuestal entre entidades publicas (El Peruano, a diario).
+    r"|\btransferencias? financieras?\b")
+# SeNaSa de Republica Dominicana = Seguro Nacional de Salud, no sanidad
+# agraria. La prensa dominicana lo escribe "SeNaSa" (se mira el original).
+_SENASA_DOMINICANA = re.compile(r"seguro nacional de salud|dominican")
+# Nota diaria del precio del dolar: nombra a Sunat (su tipo de cambio) sin
+# ser noticia tributaria ni financiera para los clientes.
+_PATTERN_TIPO_CAMBIO = re.compile(
+    r"precio del dolar|dolar hoy|dolar sunat|cotizacion del dolar|tipo de cambio hoy")
+
+
+def _sin_homonimos(titulo: str | None, resumen: str | None) -> str:
+    t = _SUFIJO_MEDIO_DIGITAL.sub("", titulo or "")
+    return _APELLIDO_LAVADO.sub(r"\1", f"{t} {resumen or ''}")
+
+
+def _es_norma_tramite(titulo: str | None, resumen: str | None) -> bool:
+    """Norma de El Peruano/gob.pe ("ENTIDAD — RESOLUCIÓN ...: Designan ...",
+    "D000429-2026-MIDAGRI-DM — Se encarga ...") que es tramite interno.
+    Solo filas con el " — " de esos scrapers: una NOTICIA "Designan nuevo
+    ministro de Salud" si es tema."""
+    if " — " not in (titulo or ""):
+        return False
+    cola = (titulo or "").split(" — ", 1)[1]
+    cola = cola.split(": ", 1)[1] if ": " in cola[:90] else cola
+    return any(_PATTERN_NORMA_TRAMITE.match(_norm(x).strip())
+               for x in (cola, resumen) if x)
 
 
 def es_normativa(titulo: str | None, resumen: str | None = None) -> bool:
@@ -751,8 +878,81 @@ def _test_medicinas_es_salud():
     print("OK temas: 'medicinas'/'fármacos' clasifican como Salud, la carrera de Medicina no")
 
 
+def _test_plurales_y_keywords_eval():
+    """Eval 2026-10-12 (clasificador/eval): plurales y keywords nuevas, con
+    su contraejemplo. Titulos reales del set de oro / la semana real."""
+    S, C_, T_, K = "Salud", "Crop", "Tech / Digital", "KYC / AML / Financiero"
+    assert _compile(["digital"], plural=True).search("plataformas digitales")
+    assert not _compile(["SIS"], plural=True).search("sises"), "siglas exactas"
+    assert T_ in clasificar("Pagos digitales tendrán nuevas reglas desde 2027")
+    assert C_ in clasificar("Negro amanecer para las agroexportaciones peruanas")
+    # salud: solo en el titulo y no figurada
+    assert S in clasificar("Campaña de salud gratis para este domingo 11 de octubre")
+    assert S not in clasificar("Cinco claves para cuidar la salud financiera del hogar")
+    assert S not in clasificar("Crédito suplementario contempla S/8 228 millones",
+                               "financiar intervenciones en educación, salud, agua")
+    assert S not in clasificar("Senasa capacitó a veterinarios para enfrentar la influenza aviar")
+    # Crop: cultivos/ganado sustantivo, no "haber ganado"
+    assert C_ in clasificar("Lluvias afectan 5.600 hectáreas de cultivos en Los Ríos")
+    assert C_ in clasificar("Ganaderos de Ecuador, golpeados por caída de cabezas de ganado")
+    assert C_ not in clasificar("Djokovic cae en Shanghái",
+                                "Tres días después de haber ganado en Pekín el título 102")
+    # Tech: redes sociales como objeto de regulacion, no "lo compartio en redes"
+    assert T_ in clasificar("Marino Lavado plantea prohibir redes sociales a menores de 16 años")
+    assert T_ not in clasificar("Gianella Marquina dio a luz",
+                                "La hija compartió en sus redes sociales una fotografía")
+    # KYC: pagos/finanzas, "bancos" (no banco de sangre)
+    assert K in clasificar("BCRP prepara nuevas reglas para impulsar un ecosistema de pagos")
+    assert K in clasificar("Bancos de América Latina multiplican sus ventas con IA")
+    assert K not in clasificar("Hospital pide donantes: bancos de sangre en mínimos")
+    print("OK temas: plurales + keywords del eval (con sus contraejemplos)")
+
+
+def _test_vetos_eval():
+    """Eval 2026-10-12: homonimos y tramites que marcaban un tema de cliente."""
+    S, C_, T_, K = "Salud", "Crop", "Tech / Digital", "KYC / AML / Financiero"
+    # "Lavado" apellido vs lavado de activos
+    assert K not in clasificar("Marino Lavado: “El peligro está ahí” ante posible "
+                               "modificación de facultades en el Senado - Canal N")
+    assert K in clasificar("Dos procesados reciben 10 años de cárcel por lavado")
+    assert K in clasificar("Detienen a tres por Lavado de Activos en Guayaquil")
+    # Nota del precio del dolar / Obras por Impuestos
+    assert K not in clasificar("El dólar Sunat cotiza en S/ 3.442 para la venta este lunes")
+    assert K not in clasificar("Adjudicaciones de Obras por Impuestos suman S/ 9409 millones")
+    assert K in clasificar("Sunat fiscalizará impuestos a plataformas extranjeras")
+    assert K not in clasificar("Aprueban transferencia financiera a favor de la Contraloría")
+    assert K not in clasificar("Bancos comunitarios para el salvamento de las semillas nativas")
+    assert K in clasificar("Primera entidad financiera 100% digital en Perú recibe luz verde")
+    # INDECOPI ya no es Tech por si solo
+    assert T_ not in clasificar("Indecopi multa con 455 UIT a empresa de tubulares")
+    # Medio con "Digital" en el nombre (sufijo de Google News)
+    assert T_ not in clasificar("Reunión de la COPROSA con el SENASA - Maraco Digital")
+    assert T_ in clasificar("Gobierno lanza agenda digital 2030")
+    # siembra figurada
+    assert C_ not in clasificar("José Cabrera siembra incertidumbre sobre la fecha de las elecciones")
+    assert C_ in clasificar("Inicia la siembra de arroz en Piura")
+    # SeNaSa dominicano (seguro de salud) no es sanidad agraria
+    assert C_ not in clasificar("Exfiscal enfrentará en libertad el juicio por el caso SeNaSa")
+    assert C_ in clasificar("Senasa declara emergencia fitosanitaria por Fusarium R4T")
+    # Tramite de norma (El Peruano / gob.pe) vs noticia de designacion
+    assert clasificar("D000429-2026-MIDAGRI-DM — Se encarga a la señora MIRIAM BUSTAMANTE, "
+                      "las funciones de Secretaria General") == []
+    assert clasificar("DESARROLLO AGRARIO Y RIEGO — RESOLUCIÓN MINISTERIAL N° D000414-2026-"
+                      "MIDAGRI-DM: Designan Jefa de Programación Multianual") == []
+    assert C_ in clasificar("DESARROLLO AGRARIO Y RIEGO — DECRETO SUPREMO N° 012-2026-MIDAGRI: "
+                            "Aprueban el Reglamento de plaguicidas de uso agrícola")
+    assert S in clasificar("Designan a nuevo ministro de Salud tras renuncia")
+    # Futbol: IESS/FEF no es Salud
+    assert S not in clasificar("IESS le certificó a FEF que Santa Fe de Imbabura, en el "
+                               "Ascenso Nacional, no afilió a los jugadores")
+    print("OK temas: vetos del eval (Lavado apellido, dolar, Indecopi, medio Digital, "
+          "siembra figurada, SeNaSa RD, tramites, futbol)")
+
+
 if __name__ == "__main__":
     _demo()
+    _test_plurales_y_keywords_eval()
+    _test_vetos_eval()
     _test_medicinas_es_salud()
     _test_sin_senal_no_es_pais_fuente_aunque_nombre_otro_pais()
     _test_venezuela_no_es_ecuador()
