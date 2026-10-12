@@ -129,9 +129,11 @@ def _leer_plantilla_alerta() -> str:
     return path.read_text(encoding="utf-8") if path.is_file() else ""
 
 
-def _gemini(prompt: str, system: str) -> str:
+def _gemini(prompt: str, system: str, schema: dict | None = None) -> str:
     """Llamada minima a Gemini - mismo patron/modelo que congreso_live.qa_chat
-    (tier gratuito, GEMINI_API_KEY). Levanta RuntimeError si falta la key."""
+    (tier gratuito, GEMINI_API_KEY). Levanta RuntimeError si falta la key.
+    Con `schema`, pide JSON con esa forma (salida estructurada); sin el,
+    texto libre (redactar_alerta_llm necesita prosa, no JSON)."""
     import os
 
     api_key = os.environ.get("GEMINI_API_KEY")
@@ -141,10 +143,12 @@ def _gemini(prompt: str, system: str) -> str:
     from google import genai
     from google.genai import types
 
+    extra = ({"response_mime_type": "application/json", "response_schema": schema}
+             if schema else {})
     client = genai.Client(api_key=api_key)
     resp = client.models.generate_content(
         model="gemini-3.6-flash", contents=prompt,
-        config=types.GenerateContentConfig(system_instruction=system),
+        config=types.GenerateContentConfig(system_instruction=system, **extra),
     )
     return (resp.text or "").strip()
 
@@ -170,6 +174,46 @@ def _parsear_veredictos(texto: str) -> dict[int, dict]:
     return out
 
 
+# Salida estructurada del juez: antes era texto libre "1: SI - razon" y si
+# Gemini se salia del formato las lineas se perdian en silencio (items reales
+# desaparecian de la alerta). Con schema el modelo queda atado a esta forma.
+SCHEMA_VEREDICTOS = {
+    "type": "ARRAY",
+    "items": {
+        "type": "OBJECT",
+        "properties": {
+            "indice": {"type": "INTEGER"},
+            "relevante": {"type": "BOOLEAN"},
+            "razon": {"type": "STRING"},
+        },
+        "required": ["indice", "relevante", "razon"],
+    },
+}
+
+
+def _parsear_veredictos_json(texto: str) -> dict[int, dict] | None:
+    """Parsea la respuesta JSON del juez. Devuelve None si no es JSON valido
+    con la forma esperada (el caller cae al parser de lineas viejo). Entradas
+    sueltas mal formadas se ignoran, igual que las lineas sin formato."""
+    import json
+
+    try:
+        data = json.loads(texto)
+    except (json.JSONDecodeError, TypeError):
+        return None
+    if not isinstance(data, list):
+        return None
+    out: dict[int, dict] = {}
+    for v in data:
+        if not isinstance(v, dict):
+            continue
+        idx, rel = v.get("indice"), v.get("relevante")
+        if not isinstance(idx, int) or not isinstance(rel, bool):
+            continue
+        out[idx] = {"relevante": rel, "razon": str(v.get("razon") or "").strip()}
+    return out
+
+
 SYSTEM_JUEZ = (
     "Sos un analista senior de asuntos publicos/regulatorios de una "
     "consultora (Vali Consultores) que decide, con criterio real de "
@@ -184,7 +228,7 @@ SYSTEM_JUEZ = (
 def juzgar_relevancia_llm(slug: str, candidatos: list[dict]) -> list[dict]:
     """Un solo llamado a Gemini con el notas.md COMPLETO del cliente + TODOS
     los candidatos de la ventana, pidiendo un veredicto SI/NO + razon por
-    item. Devuelve solo los candidatos marcados relevantes, con `razon_llm`
+    item (JSON con SCHEMA_VEREDICTOS; fallback al formato de lineas viejo). Devuelve solo los candidatos marcados relevantes, con `razon_llm`
     agregado. Items sin veredicto parseable (respuesta rara de Gemini) NO
     se incluyen - mas vale perder uno raro que inundar sin filtro real."""
     if not candidatos:
@@ -210,17 +254,18 @@ entidades y actores clave a monitorear, historial de notas):
 {notas}
 
 Evalua CADA uno de los siguientes {len(candidatos)} items y decidi si es relevante para este
-cliente puntual. Respondé en este formato EXACTO, una linea por item, SIN texto adicional antes
-ni despues:
-
-<numero>: SI - <razon en una frase>
-<numero>: NO - <razon en una frase>
+cliente puntual. Respondé con una lista JSON, un objeto por item:
+{{"indice": <numero del item>, "relevante": true/false, "razon": "<razon en una frase>"}}
 
 === ITEMS ===
 {chr(10).join(items_txt)}
 """
-    respuesta = _gemini(prompt, SYSTEM_JUEZ)
-    veredictos = _parsear_veredictos(respuesta)
+    respuesta = _gemini(prompt, SYSTEM_JUEZ, schema=SCHEMA_VEREDICTOS)
+    veredictos = _parsear_veredictos_json(respuesta)
+    if veredictos is None:
+        # JSON roto (no deberia pasar con schema): rescatar con el parser de
+        # lineas viejo antes que perder todos los items de la corrida.
+        veredictos = _parsear_veredictos(respuesta)
 
     out = []
     for i, c in enumerate(candidatos, 1):
