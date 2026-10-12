@@ -130,6 +130,31 @@ def test_juzgar_relevancia_fallback_lineas():
     assert [c["titulo"] for c in out] == ["t3"]
 
 
+def test_juzgar_relevancia_reintenta_sin_schema():
+    # Si el modelo rechaza el schema, se reintenta sin el (respuesta en
+    # bloque ```json``` incluida) en vez de perder la corrida entera.
+    import alerts.relevancia as rel
+
+    vistos = []
+
+    def falso(prompt, system, schema=None):
+        vistos.append(schema is not None)
+        if schema:
+            raise ValueError("schema no soportado")
+        return '```json\n[{"indice": 2, "relevante": true, "razon": "si"}]\n```'
+
+    cands = [{"tipo": "noticia", "pais": "PE", "titulo": f"t{i}", "resumen": "",
+              "fuente": "f", "fecha": "", "tema": None} for i in (1, 2)]
+    orig = rel._gemini
+    rel._gemini = falso
+    try:
+        out = rel.juzgar_relevancia_llm("bayer", cands)
+    finally:
+        rel._gemini = orig
+    assert vistos == [True, False]
+    assert [c["titulo"] for c in out] == ["t2"]
+
+
 def test_redactar_alerta_no_pide_schema():
     # La redaccion es prosa: no debe pasarle schema JSON a Gemini.
     import alerts.relevancia as rel
