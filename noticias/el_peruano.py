@@ -33,6 +33,7 @@ log = logging.getLogger(__name__)
 
 BASE_URL = "https://busquedas.elperuano.pe"
 FUENTE_NOMBRE = "El Peruano — Normas Legales"
+_LIMA = timezone(timedelta(hours=-5))
 
 
 # Regex del bloque card: sector + tipo + numero + titulo.
@@ -157,21 +158,23 @@ def run_sync(db, dias: int = 1) -> dict:
         "clientes": ["todos"],
     })
 
-    hoy = datetime.now(timezone.utc)
-    ini = (hoy - timedelta(days=dias - 1)).strftime("%Y%m%d")
-    fin = hoy.strftime("%Y%m%d")
-    log.info("El Peruano: rango %s → %s (%d dia(s))", ini, fin, dias)
+    # Un dia por consulta y fecha de Lima. Bug real 2026-10-12: se pedia
+    # el rango ayer+hoy (UTC) y a todo se le ponia la fecha de hoy; como
+    # upsert_noticia() reescribe fecha_pub, el DS 011-2026-MIDAGRI (El
+    # Peruano del 9/10) quedo con fecha 10/10 y parecio norma nueva.
+    hoy = datetime.now(_LIMA).date()
+    pares = []
+    for i in range(dias - 1, -1, -1):
+        dia = (hoy - timedelta(days=i)).strftime("%Y%m%d")
+        try:
+            pares += [(it, _fecha_a_iso(dia)) for it in fetch_range(session, dia, dia)]
+        except Exception as e:
+            log.warning("El Peruano fetch_range error (%s): %s", dia, e)
+            stats["errores"] += 1
+    log.info("El Peruano: %d dia(s) hasta %s", dias, hoy)
 
-    try:
-        items = fetch_range(session, ini, fin)
-    except Exception as e:
-        log.warning("El Peruano fetch_range error: %s", e)
-        stats["errores"] += 1
-        return stats
-
-    stats["items_totales"] = len(items)
-    fecha_iso = _fecha_a_iso(fin)  # Usamos la fecha_fin como pub_date aproximada
-    for it in items:
+    stats["items_totales"] = len(pares)
+    for it, fecha_iso in pares:
         # Guardamos TODAS las normas, sin filtrar por tema - inconsistencia
         # real encontrada en vivo 2026-09-15: esta era la UNICA fuente
         # "Institucion" que descartaba items sin match de tema (scraper.py,
@@ -259,6 +262,31 @@ def _test_run_sync_guarda_todo_sin_filtrar_tema():
     print("OK el_peruano: run_sync guarda todas las normas, sin filtrar por tema")
 
 
+def _test_fecha_es_la_del_dia_de_publicacion():
+    """Una norma de ayer debe quedar con fecha de ayer, aunque se vuelva a
+    ver en el sync de hoy (bug real 2026-10-12, DS 011-2026-MIDAGRI)."""
+    import tempfile
+    from pathlib import Path
+    from unittest.mock import patch
+
+    import noticias.el_peruano as ep
+    from noticias.db import Database
+
+    ayer = (datetime.now(_LIMA).date() - timedelta(days=1)).strftime("%Y%m%d")
+    norma = {"sector": "MIDAGRI", "url": "https://x/9", "id_dispositivo": "9-2026",
+             "tipo": "DECRETO SUPREMO", "numero": "N° 011-2026-MIDAGRI",
+             "titulo": "Reglamento de residuos"}
+    falso = lambda s, ini, fin, **k: [norma] if ini == ayer else []
+    with tempfile.TemporaryDirectory() as td:
+        with patch.object(ep, "fetch_range", falso), Database(Path(td) / "t.db") as db:
+            db.init_schema()
+            ep.run_sync(db, dias=2)
+            ep.run_sync(db, dias=2)  # 2da pasada no debe correr la fecha
+            f = db.conn.execute("SELECT fecha_pub FROM noticias").fetchone()[0]
+    assert f == _fecha_a_iso(ayer), f"esperaba {ayer}, quedo {f}"
+    print("OK el_peruano: fecha_pub = dia real de publicacion")
+
+
 if __name__ == "__main__":
     import argparse
     p = argparse.ArgumentParser()
@@ -272,6 +300,7 @@ if __name__ == "__main__":
         _demo()
     elif args.cmd == "test":
         _test_run_sync_guarda_todo_sin_filtrar_tema()
+        _test_fecha_es_la_del_dia_de_publicacion()
     else:
         from noticias.db import Database
         with Database(args.db) as db:
