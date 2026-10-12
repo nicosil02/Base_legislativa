@@ -44,7 +44,8 @@ st.markdown('<h1 class="country-title">Buscar <span class="accent">por significa
 st.markdown(
     '<p class="country-subtitle">Proyectos de ley, noticias y sesiones de Perú y Ecuador en un solo '
     'lugar. Escribe una idea, no palabras exactas: "datos biométricos" encuentra también '
-    '"reconocimiento facial" o "identidad digital".</p>',
+    '"reconocimiento facial" o "identidad digital". También encuentra números de PL, siglas '
+    'y códigos de normas ("PL 565", "UAFE", "MIDAGRI-SENASA").</p>',
     unsafe_allow_html=True,
 )
 
