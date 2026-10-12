@@ -250,6 +250,9 @@ PERFIL_KEYWORDS: dict[str, list[str]] = {
         "abastecimiento", "desabastecimiento", "essalud",
         "colegio de quimicos farmaceuticos", "hemofilia", "medicamento",
         "autoridad reguladora", "arcsa",
+        # substring: "medicinas" (no "medicina", que trae la carrera/facultad)
+        # y "farmaco" cubre fármaco/fármacos. Ver temas.py, miss 2026-10-12.
+        "medicinas", "farmaco",
         # Crop (compartido con syngenta, ver abajo)
         "senasa", "plaguicida", "fitosanit", "semilla", "transgenic",
         "organismo vivo modificado", "agroecolog", "agricultura regenerativa",
