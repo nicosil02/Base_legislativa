@@ -90,6 +90,60 @@ def test_juzgar_relevancia_exige_gemini_api_key():
             os.environ["GEMINI_API_KEY"] = saved
 
 
+def _juzgar_con_respuesta_falsa(respuesta: str) -> tuple[list[dict], list]:
+    """Corre juzgar_relevancia_llm con _gemini mockeado (sin red). Devuelve
+    (relevantes, kwargs de cada llamada a _gemini)."""
+    import alerts.relevancia as rel
+
+    llamadas = []
+
+    def falso(prompt, system, schema=None):
+        llamadas.append({"schema": schema})
+        return respuesta
+
+    cands = [{"tipo": "noticia", "pais": "PE", "titulo": f"t{i}", "resumen": "",
+              "fuente": "f", "fecha": "", "tema": None} for i in (1, 2, 3)]
+    orig = rel._gemini
+    rel._gemini = falso
+    try:
+        return rel.juzgar_relevancia_llm("bayer", cands), llamadas
+    finally:
+        rel._gemini = orig
+
+
+def test_juzgar_relevancia_json_estructurado():
+    from alerts.relevancia import SCHEMA_VEREDICTOS
+
+    # item 3 sin veredicto -> afuera (sin falsos positivos); entrada basura ignorada
+    respuesta = ('[{"indice": 1, "relevante": true, "razon": "toca SENASA"},'
+                 ' {"indice": 2, "relevante": false, "razon": "nada que ver"},'
+                 ' {"indice": "x", "relevante": true}]')
+    out, llamadas = _juzgar_con_respuesta_falsa(respuesta)
+    assert [c["titulo"] for c in out] == ["t1"]
+    assert out[0]["razon_llm"] == "toca SENASA"
+    assert llamadas[0]["schema"] is SCHEMA_VEREDICTOS
+
+
+def test_juzgar_relevancia_fallback_lineas():
+    # Si Gemini devuelve texto en vez de JSON, el parser de lineas rescata.
+    out, _ = _juzgar_con_respuesta_falsa("1: NO - no\n3: SI - si aplica\n")
+    assert [c["titulo"] for c in out] == ["t3"]
+
+
+def test_redactar_alerta_no_pide_schema():
+    # La redaccion es prosa: no debe pasarle schema JSON a Gemini.
+    import alerts.relevancia as rel
+
+    vistos = []
+    orig = rel._gemini
+    rel._gemini = lambda prompt, system, schema=None: vistos.append(schema) or "texto"
+    try:
+        rel.redactar_alerta_llm("bayer", {"tipo": "noticia", "pais": "PE", "titulo": "t"}, [])
+    finally:
+        rel._gemini = orig
+    assert vistos == [None]
+
+
 if __name__ == "__main__":
     for name, fn in list(globals().items()):
         if name.startswith("test_"):
