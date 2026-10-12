@@ -135,13 +135,33 @@ def conectar(path: Path | None = None) -> sqlite3.Connection:
     if viejo_sin_meta or (modelo and modelo[0] != MODELO):
         # Vectores de otro modelo no son comparables: se rehace todo.
         print(f"[cerebro] modelo cambio ({modelo[0] if modelo else 'sin registro'} -> {MODELO}), rehago el indice")
-        conn.executescript("DROP TABLE items; DROP TABLE vec_items; DROP TABLE perfiles; DROP TABLE meta;")
+        conn.executescript("DROP TABLE items; DROP TABLE vec_items; DROP TABLE perfiles; DROP TABLE meta;"
+                           "DROP TABLE IF EXISTS items_fts;")
         conn.commit()
         conn.close()
         return conectar(path)
     conn.execute("INSERT OR IGNORE INTO meta VALUES ('modelo', ?)", (MODELO,))
+    # Indice de palabras (FTS5) para la busqueda hibrida: el vector no
+    # encuentra codigos exactos ("UAFE", "PL 565", "D000035-2026-MIDAGRI-...").
+    # Sin contenido guardado (content=''): solo el indice, el texto ya esta en
+    # corpus(). sincronizar() lo rehace entero; un cerebro.db bajado de antes
+    # de esta tabla se rellena aca con titulo + clave (texto completo recien
+    # en el proximo sincronizar del workflow).
+    if not conn.execute("SELECT 1 FROM sqlite_master WHERE name='items_fts'").fetchone():
+        conn.execute("CREATE VIRTUAL TABLE items_fts USING fts5(titulo, texto, content='', "
+                     "tokenize='unicode61 remove_diacritics 2')")
+        for rid, titulo, clave in conn.execute("SELECT id, titulo, clave FROM items").fetchall():
+            conn.execute("INSERT INTO items_fts (rowid, titulo, texto) VALUES (?,?,?)",
+                         (rid, _texto_fts(titulo), _texto_fts(clave)))
     conn.commit()
     return conn
+
+
+def _texto_fts(t: str | None) -> str:
+    """Agrega los numeros sin ceros a la izquierda: "PL 565" tiene que
+    encontrar "00565-2026-2031-CD" (el tokenizador ve "00565" != "565")."""
+    t = t or ""
+    return t + " " + " ".join(re.findall(r"(?<!\d)0+([1-9]\d*)", t))
 
 
 def descargar_si_falta(path: Path | None = None, max_edad_seg: int = 3 * 3600) -> Path | None:
@@ -304,6 +324,15 @@ def sincronizar(max_nuevos: int | None = None) -> dict:
         conn.commit()
         hechos += len(lote)
         print(f"[cerebro] {hechos}/{len(pendientes)} embebidos")
+    # Indice de palabras rehecho entero (~24 mil textos, segundos): asi sigue
+    # a items en altas, cambios y bajas sin llevar la cuenta aparte.
+    ids = {r[0]: r[1] for r in conn.execute("SELECT clave, id FROM items")}
+    conn.execute("INSERT INTO items_fts (items_fts) VALUES ('delete-all')")
+    conn.executemany("INSERT INTO items_fts (rowid, titulo, texto) VALUES (?,?,?)",
+                     [(ids[it["clave"]], _texto_fts(it["titulo"]),
+                       _texto_fts(f'{it["clave"]} {it["texto"][:MAX_CHARS]}'))
+                      for it in todos if it["clave"] in ids])
+    conn.commit()
     perfiles = sincronizar_perfiles(conn)
     sincronizar_temas(conn)
     total = conn.execute("SELECT count(*) FROM items").fetchone()[0]
@@ -492,11 +521,72 @@ def afinidad_vector(claves: list[str], vector: list[float],
 
 def buscar(consulta: str, k: int = 20, tipo: str | None = None, pais: str | None = None,
            conn: sqlite3.Connection | None = None) -> list[dict]:
-    """Los k items mas parecidos en significado a `consulta` (texto libre).
-    `similitud` = 1 - distancia coseno (1 = identico)."""
+    """Busqueda hibrida: los k items mas parecidos a `consulta` por
+    significado (vectores) Y por palabras exactas (FTS5), fusionados con
+    Reciprocal Rank Fusion. Sin coincidencias por palabras = igual que
+    vecinos(). `similitud` = 1 - distancia coseno (1 = identico);
+    `coincide` = "significado" | "palabras" | "ambos"."""
     conn = conn or conectar()
     vector = (embeber_aparte if _en_app_web() else embeber)([consulta])[0]
-    return vecinos(vector, k=k, tipo=tipo, pais=pais, conn=conn)
+    por_palabras = palabras(consulta, k=2 * k, tipo=tipo, pais=pais, conn=conn)
+    if not por_palabras:
+        return vecinos(vector, k=k, tipo=tipo, pais=pais, conn=conn)
+    por_vector = vecinos(vector, k=2 * k, tipo=tipo, pais=pais, conn=conn)
+    pos_palabras = {rid: i for i, rid in enumerate(por_palabras)}
+    vistos = {r["id"]: r for r in por_vector}
+    rrf: dict[int, float] = {}
+    for lista in (por_palabras, list(vistos)):
+        for pos, rid in enumerate(lista, 1):
+            rrf[rid] = rrf.get(rid, 0) + 1 / (RRF_K + pos)
+    # Empate (1o por palabras vs 1o por vector, cada uno solo en su lista):
+    # gana el de palabras - si alguien escribe un codigo exacto, es eso lo que busca.
+    orden = sorted(rrf, key=lambda rid: (-rrf[rid], pos_palabras.get(rid, len(pos_palabras))))[:k]
+    en_vector = set(vistos)
+    faltan = [rid for rid in orden if rid not in vistos]
+    if faltan:  # solo por palabras: se les calcula la similitud igual
+        filas = conn.execute(
+            f"""SELECT i.*, vec_distance_cosine(v.embedding, ?) AS distance
+                FROM items i JOIN vec_items v ON v.rowid = i.id
+                WHERE i.id IN ({",".join("?" * len(faltan))})""", [_blob(vector), *faltan]).fetchall()
+        vistos.update({r["id"]: {**dict(r), "similitud": round(1 - r["distance"], 4)} for r in filas})
+    return [{**vistos[rid], "coincide": "ambos" if rid in pos_palabras and rid in en_vector
+             else "palabras" if rid in pos_palabras else "significado"}
+            for rid in orden if rid in vistos]
+
+
+RRF_K = 60  # el k habitual de Reciprocal Rank Fusion (Cormack et al. 2009)
+
+
+def _consulta_fts(consulta: str) -> str:
+    """Cada palabra entre comillas (frase FTS5): "00565-2026-2031-CD" o
+    "D000035-2026-MIDAGRI-SENASA-DSV" no rompen la sintaxis de MATCH. Las
+    palabras se exigen todas (AND implicito)."""
+    return " ".join('"' + t.replace('"', '""') + '"' for t in consulta.split() if re.search(r"\w", t))
+
+
+def palabras(consulta: str, k: int = 20, tipo: str | None = None, pais: str | None = None,
+             conn: sqlite3.Connection | None = None) -> list[int]:
+    """ids de items que contienen todas las palabras de `consulta`, mejor
+    bm25 primero (el titulo pesa 3x). [] si no hay indice o nada coincide."""
+    conn = conn or conectar()
+    q = _consulta_fts(_texto_fts(consulta))
+    if not q:
+        return []
+    filtros, params = "", [q]
+    if tipo:
+        filtros += " AND i.tipo = ?"
+        params.append(tipo)
+    if pais:
+        filtros += " AND i.pais = ?"
+        params.append(pais)
+    try:
+        return [r[0] for r in conn.execute(
+            f"""SELECT i.id FROM items_fts f JOIN items i ON i.id = f.rowid
+                WHERE items_fts MATCH ? {filtros}
+                ORDER BY bm25(items_fts, 3.0, 1.0) LIMIT ?""", [*params, k])]
+    except sqlite3.OperationalError as e:  # sin FTS5 / consulta rara: queda la busqueda por vector
+        print(f"[cerebro] busqueda por palabras fallo: {e}")
+        return []
 
 
 def vecinos(vector: list[float], k: int = 20, tipo: str | None = None,
@@ -534,7 +624,7 @@ def _demo():
         out = []
         for t in textos:
             v = [0.0] * DIM
-            v[0 if "agro" in t else 1 if "futbol" in t else 2] = 1.0
+            v[0 if "agro" in t else 1 if "futbol" in t else 3 if "lavado" in t else 2] = 1.0
             out.append(v)
         return out
 
@@ -558,6 +648,33 @@ def _demo():
         assert {t["clave"] for t in top[:2]} == {"a", "c"} and top[0]["similitud"] > 0.99, top
         assert [t["clave"] for t in buscar("agro", k=3, pais="EC")] == ["c"]
         assert [t["clave"] for t in buscar("agro", k=3, tipo="noticia")][0] == "a"
+        # Hibrida: codigos exactos que el vector no encuentra.
+        items += [
+            {"clave": "d", "tipo": "noticia", "pais": "EC", "titulo": "Nueva resolución contra el lavado",
+             "fecha": "", "url": "", "extra": "{}", "texto": "Resolucion UAFE-DG-2026-0014 sobre lavado"},
+            {"clave": "pl_PE_00565-2026-2031-CD", "tipo": "pl", "pais": "PE", "fecha": "", "url": "",
+             "titulo": "PL 00565-2026-2031-CD: Ley de semillas", "extra": "{}", "texto": "semillas certificadas"},
+        ] + [{"clave": f"r{i}", "tipo": "noticia", "pais": "EC", "titulo": f"R{i}", "fecha": "", "url": "",
+              "extra": "{}", "texto": f"relleno {i}"} for i in range(5)]
+        assert sincronizar()["nuevos"] == 7
+        q = "UAFE-DG-2026-0014"
+        assert vecinos(_fake([q])[0], k=3)[0]["clave"] != "d"  # solo vector: no lo encuentra arriba
+        top = buscar(q, k=3)
+        assert top[0]["clave"] == "d" and top[0]["coincide"] == "palabras", top
+        assert buscar("uafe", k=3, pais="EC")[0]["clave"] == "d"
+        assert buscar("uafe", k=3, pais="PE")[0]["clave"] != "d"  # filtro por pais tambien en palabras
+        assert buscar("PL 565", k=3)[0]["clave"] == "pl_PE_00565-2026-2031-CD"
+        assert buscar("resolución", k=3)[0]["clave"] == "d"  # sin tilde en el texto, con tilde en la consulta
+        # Sin coincidencias por palabras = exactamente lo de antes (solo vector).
+        assert buscar("biometria", k=4) == vecinos(_fake(["biometria"])[0], k=4)
+        for raro in ('"; DROP -- ("', "a*b", "NEAR(x y)", "-", "AND OR NOT"):
+            buscar(raro, k=2)  # no revienta la sintaxis de MATCH
+        # cerebro.db viejo (bajado del release) sin la tabla: se crea y rellena con titulos.
+        conn = conectar()
+        conn.execute("DROP TABLE items_fts")
+        conn.commit()
+        conn.close()
+        assert palabras("lavado", conn=conectar()) and not palabras("UAFE", conn=conectar())
         conn = conectar()
         conn.execute("DELETE FROM perfiles WHERE cliente='bayer'")
         conn.execute("INSERT INTO perfiles VALUES ('bayer',0,'x','agro',?)", (_blob(_fake(["agro"])[0]),))
@@ -575,7 +692,7 @@ def _demo():
             raise AssertionError("el modelo se cargo dentro de la app web")
         except RuntimeError:
             pass
-    print("OK cerebro.embeddings: sincroniza incremental, KNN, filtros por pais/tipo y candado de memoria")
+    print("OK cerebro.embeddings: sincroniza incremental, KNN, filtros por pais/tipo, busqueda hibrida y candado de memoria")
 
 
 if __name__ == "__main__":
