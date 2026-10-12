@@ -325,6 +325,11 @@ jobs:
           # de la Res. 0085-R. Se apaga solo el 2026-12-31.
           timeout 120 python -X utf8 scripts/vigilar_anexo_foc.py \
               || echo "[warn] vigilar_anexo_foc fallo, sigo"
+          # Pedido de Nicolas 2026-10-12: avisar por Telegram cuando haya
+          # noticias de la firma/llegada de la compra de medicinas a India
+          # (AIL EP). Se apaga solo el 2026-12-31.
+          timeout 120 python -X utf8 scripts/vigilar_medicinas_india.py \
+              || echo "[warn] vigilar_medicinas_india fallo, sigo"
 
       - name: Instalar Cloudflare WARP en modo proxy (SOCKS5 :40000)
         # Ventana 8-9am Lima (13-14 UTC), no solo el minuto exacto - bug
