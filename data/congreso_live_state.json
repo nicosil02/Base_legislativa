@@ -101,7 +101,8 @@
   "s3EGAcpYP4s",
   "pqwft33Sgok",
   "gq_zDWFiiaE",
-  "iyEO8b-JAwQ"
+  "iyEO8b-JAwQ",
+  "GTShjieQP9Q"
  ],
  "sesiones": [
   {
@@ -890,6 +891,14 @@
    "pais": "PE",
    "url": "https://www.youtube.com/watch?v=iyEO8b-JAwQ",
    "visto_at": "2026-10-13T16:20:50Z"
+  },
+  {
+   "id": "GTShjieQP9Q",
+   "titulo": "Sesión No. 129-AN-2025-2029 del pleno de la Asamblea Nacional",
+   "tipo": "Pleno: Asamblea Nacional (EC)",
+   "pais": "EC",
+   "url": "https://www.youtube.com/watch?v=GTShjieQP9Q",
+   "visto_at": "2026-10-13T16:24:50Z"
   }
  ]
 }
