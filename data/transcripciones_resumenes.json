@@ -3995,5 +3995,21 @@
     "generated_at": "2026-10-13T23:50:18Z",
     "duracion_seg": 17920,
     "agenda_cumplida": null
+  },
+  {
+    "video_id": "e27sj3LJjQ0",
+    "resumen": "Mesa de trabajo convocada por la Comision de Economia del Senado del Peru sobre las deficiencias en la atencion y los servicios de salud de EsSalud, con participacion de la Superintendencia Nacional de Salud (Susalud), la Contraloria General, el Colegio Medico del Peru y especialistas externos (Oscar Ugarte, Flor de Maria Felix, Midori Musa, entre otros). Se presento un diagnostico de la crisis financiera y de gestion de EsSalud (debilidad del primer nivel de atencion, desabastecimiento de medicamentos, deudas del Estado, gobernanza) y se plantearon propuestas de reforma. (sesion en curso al momento de este resumen)",
+    "ideas_clave": [
+      "Susalud reporto 66,175 denuncias de asegurados de EsSalud en el periodo evaluado, con un 88% resueltas via intermediacion (frente a mas de 95% en el caso de MINSA/Gore, donde el delegado de Susalud tiene mayor presencia).",
+      "EsSalud acumula 68 millones de soles en multas impuestas por Susalud (81 sanciones via IAFAS y 12,193 via IPRESS), fondos que compiten con el presupuesto para medicamentos e insumos.",
+      "La Contraloria identifico que 221 entidades publicas (principalmente municipalidades) adeudan 297 millones de soles a EsSalud; la Municipalidad Provincial de Chiclayo encabeza la lista con S/32.03 millones.",
+      "De 104 situaciones adversas detectadas por la Contraloria entre 2024 y 2025, solo 52 estan corregidas, 39 permanecen sin corregir y 9 fueron desestimadas; de 170 recomendaciones emitidas en 42 informes de control solo 10 se implementaron.",
+      "El ex director de DIGEMID, Victor Dongo, propuso retomar el procedimiento especial de compra (DS 012-2013 y DS 017-2014), que en su gestion redujo de 45 a 2 dias la espera para cirugias de cataratas mediante compra abierta de servicios a terceros.",
+      "Varios expositores (Oscar Ugarte, Flor de Maria Felix, Midori Musa) coincidieron en la necesidad de reformar la Ley 26790 de gobernanza de EsSalud para que el directorio, y no solo el Poder Ejecutivo, decida al presidente ejecutivo.",
+      "El presupuesto anual de EsSalud asciende a S/19,000 millones (crecio 50% en 5 anos), pero persiste un deficit estructural atribuido al modelo hospitalocentrico y a la debilidad del primer nivel de atencion."
+    ],
+    "generated_at": "2026-10-14T19:50:05Z",
+    "duracion_seg": 7080,
+    "agenda_cumplida": null
   }
 ]
