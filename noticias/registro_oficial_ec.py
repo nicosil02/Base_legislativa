@@ -128,7 +128,12 @@ def _paddle_ocr():
     varios segundos). Modelos "small" de PP-OCRv6: ~2 s/pagina en CPU vs
     ~12 s con los "medium" por defecto, misma lectura en las pruebas
     (tildes y ñ incluidas). Los pasos de orientacion/enderezado van apagados:
-    una pagina renderizada desde PDF ya viene derecha."""
+    una pagina renderizada desde PDF ya viene derecha.
+    Con paddlepaddle-gpu usa la GPU solo (~0,75 s/pagina en la RTX 2060)."""
+    try:
+        import torch  # noqa: F401  antes que paddle-gpu, si no WinError 127
+    except ImportError:
+        pass
     from paddleocr import PaddleOCR
     return PaddleOCR(
         text_detection_model_name="PP-OCRv6_small_det",

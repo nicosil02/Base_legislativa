@@ -58,8 +58,19 @@ def listar_sesiones(periodo: str = "2021 - 2026") -> list[dict]:
     return out
 
 
+def _torch_antes_que_paddle():
+    # Con paddlepaddle-gpu en Windows, si paddle carga antes que torch
+    # (paddleocr lo importa via modelscope) torch falla con WinError 127.
+    # PaddleOCR usa la GPU solo si paddle tiene CUDA; si no, CPU.
+    try:
+        import torch  # noqa: F401
+    except ImportError:
+        pass
+
+
 def _ocr():
     # Mismos modelos "small" que noticias/registro_oficial_ec.py.
+    _torch_antes_que_paddle()
     from paddleocr import PaddleOCR
     return PaddleOCR(text_detection_model_name="PP-OCRv6_small_det",
                      text_recognition_model_name="PP-OCRv6_small_rec",
@@ -68,6 +79,7 @@ def _ocr():
 
 
 def _rec():
+    _torch_antes_que_paddle()
     from paddleocr import TextRecognition
     return TextRecognition(model_name="PP-OCRv6_small_rec")
 
