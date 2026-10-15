@@ -4011,5 +4011,20 @@
     "generated_at": "2026-10-15T08:49:40Z",
     "duracion_seg": 7080,
     "agenda_cumplida": null
+  },
+  {
+    "video_id": "kuM7UI39IxA",
+    "resumen": "Fragmento inicial de una sesion descentralizada de la Comision de Desarrollo Agrario de la Camara de Diputados, centrada en la respuesta de funcionarios tecnicos a preguntas de legisladores sobre puntos criticos de riesgo de inundacion y erosion fluvial en zonas agricolas de una region de la costa norte especialmente vulnerable al Fenomeno El Nino, de cara a medidas de encauzamiento y proteccion de riberas. (sesion en curso al momento de este resumen)",
+    "ideas_clave": [
+      "Un funcionario respondio a una pregunta de los diputados sobre cuantos fundos agricolas criticos por inundaciones, desbordes y erosion fluvial fueron identificados, donde se ubican y cuales representan mayor riesgo.",
+      "Se informo un total de 224 puntos criticos identificados (el nombre de la entidad que los relevo no se distingue con claridad en el audio, posible error de transcripcion).",
+      "El 75% de esos puntos criticos se concentra en una zona especifica de la region (no se distingue el nombre exacto por errores de transcripcion del audio).",
+      "Se menciono un total de aproximadamente 245 kilometros de cauce/defensas asociados a los puntos criticos relevados.",
+      "De los 224 puntos criticos, 103 fueron clasificados en la categoria de mayor nivel de peligro (el audio transcribe la palabra como \"muy alivio\", probable error de reconocimiento por \"muy alto\").",
+      "La transcripcion capturada es muy breve (apenas unos minutos) y corta a mitad de la exposicion del funcionario, por lo que no se alcanzan a capturar las siguientes respuestas ni las conclusiones de la sesion."
+    ],
+    "generated_at": "2026-10-15T14:49:59Z",
+    "duracion_seg": 160,
+    "agenda_cumplida": null
   }
 ]
