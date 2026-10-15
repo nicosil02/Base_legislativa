@@ -4061,7 +4061,7 @@
   },
   {
     "video_id": "1Xnv6hHYipQ",
-    "resumen": "Sesion ordinaria continuada de la Comision de Constitucion, Reglamento y Relaciones Exteriores del Senado (15/10/2026), con un unico punto de agenda: el debate y votacion del dictamen sobre la proposicion legislativa 003-2026-2031-S, que delega facultades legislativas al Poder Ejecutivo en materia de seguridad ciudadana y del fenomeno de El Nino por 90 dias, remitida originalmente por la Camara de Diputados (proposicion 0098-2026-2031-CD). La sesion arranco con un extenso incidente de quorum y procedimiento sobre una cuestion de orden y su votacion -con cuestionamientos sobre problemas de conexion virtual y pedidos de rectificacion- que llevo a un receso y al retiro temporal de varias bancadas, antes de reanudarse con quorum para sustentar y debatir el dictamen propiamente. (sesion en curso al momento de este resumen)",
+    "resumen": "Sesion ordinaria continuada de la Comision de Constitucion, Reglamento y Relaciones Exteriores del Senado (15/10/2026), con un unico punto de agenda: el debate y votacion del dictamen sobre la proposicion legislativa 003-2026-2031-S, que delega facultades legislativas al Poder Ejecutivo en materia de seguridad ciudadana y del fenomeno de El Nino por 90 dias, remitida originalmente por la Camara de Diputados (proposicion 0098-2026-2031-CD). La sesion arranco con un extenso incidente de quorum y procedimiento sobre una cuestion de orden y su votacion -con cuestionamientos sobre problemas de conexion virtual y pedidos de rectificacion- que llevo a un receso y al retiro temporal de varias bancadas, antes de reanudarse con quorum para sustentar y debatir el dictamen propiamente (la transcripcion capturada corta abruptamente aqui, probablemente por una interrupcion tecnica en la captura - no hay evidencia de que la sesion continuara desarrollandose a esta altura).",
     "ideas_clave": [
       "Una cuestion de orden planteada por la bancada de Fuerza Popular (para discutir los limites del Senado al revisar lo remitido por la Camara de Diputados, articulos 25A, 108, 145 y 149 del reglamento) fue sometida a dos votaciones distintas por disputas sobre la conectividad virtual de un senador suplente (Aguinaga/Del Aguila Cardenas): la primera dio 6 a favor y 5 en contra, pero tras el reclamo se aplico el articulo 91 (rectificacion) y una segunda votacion desecho la cuestion de orden por 7 votos en contra.",
       "El dictamen, sustentado por la presidencia de la comision, mantiene las 20 materias aprobadas por la Camara de Diputados (6 de seguridad ciudadana y 14 de prevencion/atencion/recuperacion frente al fenomeno de El Nino) por un plazo de 90 dias, e incorpora 7 materias adicionales de seguridad propuestas por el Senado.",
@@ -4071,7 +4071,7 @@
       "Senadores oficialistas y aliados (Ventura, Rodrich, Alcorta) acusaron a las bancadas que se retiraron de actuar con 'obstruccionismo' y 'tecnicismos' para dilatar el debate, mientras otros (Moyano, Juarez) defendieron que el procedimiento de votacion tuvo errores reales que ameritaban rectificacion.",
       "La comision tiene un plazo perentorio de 7 dias para resolver el dictamen de delegacion de facultades, segun lo señalado por mas de una senadora durante el debate."
     ],
-    "generated_at": "2026-10-15T18:52:19Z",
+    "generated_at": "2026-10-15T22:52:24Z",
     "duracion_seg": 4600,
     "agenda_cumplida": null
   },
@@ -4089,6 +4089,21 @@
     ],
     "generated_at": "2026-10-15T21:50:00Z",
     "duracion_seg": 5520,
+    "agenda_cumplida": null
+  },
+  {
+    "video_id": "Gj8Xusw0Vnc",
+    "resumen": "Continuacion del debate en la Comision de Constitucion, Reglamento y Relaciones Exteriores del Senado (15/10/2026) sobre el dictamen de delegacion de facultades legislativas al Poder Ejecutivo en materia de seguridad ciudadana y del Fenomeno El Nino, remitido por la Camara de Diputados. Varias bancadas de oposicion abandonaron la sala antes de la votacion, lo que derivo en una sesion marcada por acusaciones cruzadas de boicot entre los senadores presentes (Juarez, Aguayo, Alcorta, Flores, Ventura, Moyano) y una breve suspension por un incidente con asesores que intentaron dejar un documento en representacion de senadores ausentes. (sesion en curso al momento de este resumen)",
+    "ideas_clave": [
+      "Varias bancadas de oposicion se retiraron de la sala antes de someter a votacion las 66 facultades legislativas solicitadas por el Ejecutivo, lo que los senadores presentes (Juarez, entre otros) calificaron de boicot a la votacion.",
+      "La senadora Lourdes Alcorta argumento que el Senado si puede modificar o incluso eliminar materias del dictamen remitido por Diputados 'siempre y cuando no se desnaturalice' el nucleo de seguridad, en referencia a 7 puntos adicionales en discusion.",
+      "La sesion se suspendio brevemente a las 5:27 p.m. luego de que asesores de senadores ausentes intentaran entregar un documento de posicion en su representacion, lo que los senadores presentes calificaron de inadmisible.",
+      "El senador Flores cuestiono que las bancadas ausentes pretendan que se apruebe el dictamen 'tal como llego' de Diputados sin ninguna modificacion, y califico de 'cobarde' el envio de asesores en lugar de los propios senadores titulares.",
+      "Las senadoras Juarez y Aguayo acusaron a las bancadas ausentes de priorizar intereses politicos por sobre la lucha contra el sicariato y la extorsion, y sobre necesidades basicas de agua, luz y saneamiento de 17 millones de peruanos.",
+      "El senador Ventura y la senadora Alcorta remarcaron que, segun la tradicion parlamentaria, ninguna oposicion ha negado historicamente facultades legislativas a un gobierno, sino que las ha otorgado acompanadas de mecanismos de control posterior."
+    ],
+    "generated_at": "2026-10-15T22:51:45Z",
+    "duracion_seg": 1640,
     "agenda_cumplida": null
   }
 ]
