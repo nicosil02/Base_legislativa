@@ -103,7 +103,8 @@
   "gq_zDWFiiaE",
   "iyEO8b-JAwQ",
   "GTShjieQP9Q",
-  "e27sj3LJjQ0"
+  "e27sj3LJjQ0",
+  "kuM7UI39IxA"
  ],
  "sesiones": [
   {
@@ -908,6 +909,14 @@
    "pais": "PE",
    "url": "https://www.youtube.com/watch?v=e27sj3LJjQ0",
    "visto_at": "2026-10-14T16:31:04Z"
+  },
+  {
+   "id": "kuM7UI39IxA",
+   "titulo": "Sesiòn descentralizada de la Comisiòn de Desarrollo Agrario de la Cámara de Diputados l 15/10/2026",
+   "tipo": "Comision: Agrario",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=kuM7UI39IxA",
+   "visto_at": "2026-10-15T14:41:36Z"
   }
  ]
 }
