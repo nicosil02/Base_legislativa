@@ -104,7 +104,9 @@
   "iyEO8b-JAwQ",
   "GTShjieQP9Q",
   "e27sj3LJjQ0",
-  "kuM7UI39IxA"
+  "kuM7UI39IxA",
+  "R5cUYC-e7dk",
+  "F_GAByuRCYY"
  ],
  "sesiones": [
   {
@@ -917,6 +919,22 @@
    "pais": "PE",
    "url": "https://www.youtube.com/watch?v=kuM7UI39IxA",
    "visto_at": "2026-10-15T14:41:36Z"
+  },
+  {
+   "id": "R5cUYC-e7dk",
+   "titulo": "Sesión No. 130-AN-2025-2029 del pleno de la Asamblea Nacional",
+   "tipo": "Pleno: Asamblea Nacional (EC)",
+   "pais": "EC",
+   "url": "https://www.youtube.com/watch?v=R5cUYC-e7dk",
+   "visto_at": "2026-10-15T15:15:42Z"
+  },
+  {
+   "id": "F_GAByuRCYY",
+   "titulo": "🔴EN VIVO: Comisión de Desarrollo Agrario de la Cámara de Diputados l 15/10/2026",
+   "tipo": "Comision: Agrario",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=F_GAByuRCYY",
+   "visto_at": "2026-10-15T15:17:44Z"
   }
  ]
 }
