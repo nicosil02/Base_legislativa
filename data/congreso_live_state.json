@@ -109,7 +109,8 @@
   "F_GAByuRCYY",
   "1Xnv6hHYipQ",
   "oRd4w7fIewo",
-  "Gj8Xusw0Vnc"
+  "Gj8Xusw0Vnc",
+  "v9GiYDQ1Nw8"
  ],
  "sesiones": [
   {
@@ -962,6 +963,14 @@
    "pais": "PE",
    "url": "https://www.youtube.com/watch?v=Gj8Xusw0Vnc",
    "visto_at": "2026-10-15T22:08:50Z"
+  },
+  {
+   "id": "v9GiYDQ1Nw8",
+   "titulo": "🔴EN VIVO: Comisión de Presupuesto y Cuenta General de la República | 16/10/2026",
+   "tipo": "Comision: Presupuesto",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=v9GiYDQ1Nw8",
+   "visto_at": "2026-10-16T14:06:14Z"
   }
  ]
 }
