@@ -20,6 +20,10 @@ from scraper.categorias import CATEGORIA_CLIENTES_PL
 from alerts import armar, historial
 from ui_kit import inject_theme
 from consultas.agenda_pe import (
+    has_mesas_table,
+    load_mesas,
+    load_transcripciones,
+    _estado_transcripcion_vivo,
     get_conn,
     fetch_live_agenda_pe,
     has_sesiones_table,
@@ -930,100 +934,8 @@ with tab_comision:
                     f"En agenda de {row['Comisión']} - {row['Estado del PL']}", "PE", tipo="pl")],
                     sel_pl_cliente)
 
-# ---------- Mesas de trabajo + eventos ----------
-@st.cache_data(ttl=60)
-def has_mesas_table() -> bool:
-    conn = get_conn()
-    try:
-        r = conn.execute(
-            "SELECT name FROM sqlite_master WHERE type='table' AND name='mesas_tecnicas'"
-        ).fetchone()
-        if not r:
-            return False
-        n = conn.execute("SELECT COUNT(*) FROM mesas_tecnicas").fetchone()[0]
-        return n > 0
-    except Exception:
-        return False
 
 
-@st.cache_data(ttl=60)
-def load_mesas(limit: int = 80) -> pd.DataFrame:
-    """Carga mesas + eventos con campos ya normalizados para display."""
-    import datetime as _dt
-    import re as _re
-    conn = get_conn()
-    df = pd.read_sql_query(
-        """SELECT
-             fecha,
-             pub_date,
-             hora,
-             tipo,
-             tema,
-             COALESCE(congresista, organiza, '') AS organiza_raw,
-             COALESCE(bancada, '') AS bancada,
-             COALESCE(comision, '') AS comision,
-             url
-           FROM mesas_tecnicas
-           ORDER BY COALESCE(fecha, substr(pub_date, 1, 10)) DESC,
-                    pub_date DESC
-           LIMIT ?""",
-        conn, params=(limit,),
-    )
-
-    # Fecha en formato ISO YYYY-MM-DD, mismo que el resto de la app.
-    def _safe_str(v) -> str:
-        if v is None:
-            return ""
-        try:
-            if pd.isna(v):
-                return ""
-        except (TypeError, ValueError):
-            pass
-        return str(v)
-
-    def _fmt_fecha_iso(fecha_iso, pub_date) -> str:
-        # Preferir fecha del evento (ya en YYYY-MM-DD)
-        iso = _safe_str(fecha_iso)[:10]
-        if iso and len(iso) == 10:
-            return iso
-        pub = _safe_str(pub_date)
-        if pub:
-            # Parse RFC822: "Thu, 21 May 2026 13:00:00 +0000"
-            try:
-                dt = _dt.datetime.strptime(
-                    pub[:25].strip(),
-                    "%a, %d %b %Y %H:%M:%S",
-                )
-                return dt.strftime("%Y-%m-%d")
-            except Exception:
-                return pub[:10]
-        return ""
-
-    df["Fecha"] = df.apply(
-        lambda r: _fmt_fecha_iso(r["fecha"], r["pub_date"]), axis=1
-    )
-    df["Hora"] = df["hora"].fillna("")
-    df["Tipo"] = df["tipo"]
-    df["Tema"] = df["tema"]
-    # Quitar prefijo "Congresista " del organiza
-    df["Organiza"] = df["organiza_raw"].apply(
-        lambda s: _re.sub(r"^\s*congresista\s+", "", _safe_str(s),
-                          flags=_re.IGNORECASE)
-    )
-    # Quitar prefijo "Grupo Parlamentario " de la bancada
-    df["Bancada"] = df["bancada"].apply(
-        lambda s: _re.sub(r"^\s*grupo\s+parlamentario\s+", "",
-                          _safe_str(s), flags=_re.IGNORECASE)
-    )
-    df["Comisión"] = df["comision"]
-    df["Enlace"] = df["url"]
-    # Sort final por fecha DESC (la SQL puede no haber ordenado bien por
-    # pub_date RFC822 vs fecha ISO mezclados). Re-ordenamos sobre Fecha
-    # calculada que ya esta en ISO consistente.
-    df = df.sort_values("Fecha", ascending=False, kind="stable").reset_index(drop=True)
-    # Devolver solo las cols finales en el orden deseado
-    return df[["Fecha", "Hora", "Tipo", "Tema", "Organiza", "Bancada",
-                "Comisión", "Enlace"]]
 
 with tab_mesas:
     st.markdown(
@@ -1067,50 +979,8 @@ with tab_mesas:
                 },
             )
 
-# ---------- Transcripciones (captions de YouTube, Pleno/comisiones) ----------
-# Misma tabla que Ecuador (Pleno y comisiones, tipo terminado en "(EC)") - esas se muestran en Agenda EC.
-@st.cache_data(ttl=300)
-def load_transcripciones(limit: int = 60) -> pd.DataFrame:
-    # ponytail: limit fijo, no paginacion real - con varias comisiones en
-    # simultaneo por dia esto se vuelve a llenar en 1-2 semanas. Si vuelve
-    # a pasar, agregar filtro de fecha/busqueda en vez de subir el numero.
-    conn = get_conn()
-    try:
-        existe = conn.execute(
-            "SELECT name FROM sqlite_master WHERE type='table' "
-            "AND name='sesiones_transcripciones'"
-        ).fetchone()
-    except sqlite3.OperationalError:
-        existe = None
-    if not existe:
-        return pd.DataFrame()
-    return pd.read_sql_query(
-        """SELECT video_id, tipo, titulo, fecha, duracion_seg, texto, temas
-           FROM sesiones_transcripciones
-           WHERE tipo NOT LIKE '%(EC)' AND tipo NOT LIKE 'Entrevista:%'
-           ORDER BY fecha DESC, video_id DESC LIMIT ?""",
-        conn, params=(limit,),
-    )
 
 
-@st.cache_data(ttl=45)
-def _estado_transcripcion_vivo(video_id: str) -> dict | None:
-    """Si `congreso_live.cli live-watch` (o el boton manual) ya viene
-    acumulando esta sesion, devuelve {duracion_seg, fetched_at}. None si
-    todavia no arranco a transcribirse. TTL corto (45s) porque esto
-    cambia mientras la sesion sigue en vivo."""
-    conn = get_conn()
-    try:
-        r = conn.execute(
-            "SELECT duracion_seg, fetched_at FROM sesiones_transcripciones "
-            "WHERE video_id=?",
-            (video_id,),
-        ).fetchone()
-    except sqlite3.OperationalError:
-        return None
-    if not r:
-        return None
-    return {"duracion_seg": r["duracion_seg"], "fetched_at": r["fetched_at"]}
 
 
 @st.cache_resource(show_spinner=False)

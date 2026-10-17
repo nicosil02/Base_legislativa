@@ -10,7 +10,6 @@ data implica: descargar CSV → `python -m scraper_ec.cli importar-csv <archivo>
 from __future__ import annotations
 
 import datetime as dt
-import sqlite3
 
 import pandas as pd
 import streamlit as st
@@ -19,7 +18,8 @@ from scraper.categorias import CATEGORIA_CLIENTES_PL
 from alerts import armar, historial
 from ui_kit import inject_theme, render_evolucion_mensual
 from consultas.ecuador import (
-    get_conn,
+    detalle_pl,
+    proyectos_por_tramite,
     _noticias_tramite_recientes,
     documentos_hoy,
     load_catalogs,
@@ -598,42 +598,7 @@ if selected_rows:
         sel_tramite = df_view.iloc[row_idx]["_n_tramite_label"]
         sel_titulo = df_view.iloc[row_idx]["Título"]
 
-        # Query docs from DB
-        conn = get_conn()
-        docs = conn.execute(
-            "SELECT fase, descripcion, url, orden FROM documentos "
-            "WHERE n_tramite = ? ORDER BY orden ASC",
-            (str(sel_tramite),),
-        ).fetchall()
-
-        # Info de unificacion (defensivo: si tabla no existe, unif=None)
-        has_unif_tbl = conn.execute(
-            "SELECT 1 FROM sqlite_master WHERE type='table' AND name='unificacion_pl'"
-        ).fetchone() is not None
-        if has_unif_tbl:
-            unif = conn.execute(
-                """SELECT g.id, g.nombre, g.descripcion, g.n_tramite_principal,
-                          GROUP_CONCAT(up2.n_tramite, ',') AS miembros
-                   FROM unificacion_pl up
-                   JOIN unificacion_grupos g ON g.id = up.grupo_id
-                   JOIN unificacion_pl up2 ON up2.grupo_id = up.grupo_id
-                   WHERE up.n_tramite = ?
-                   GROUP BY g.id""",
-                (str(sel_tramite),),
-            ).fetchone()
-        else:
-            unif = None
-
-        # Flag del portal (independiente del grupo manual)
-        es_unif_portal = False
-        try:
-            r = conn.execute(
-                "SELECT COALESCE(es_unificado, 0) FROM proyectos WHERE n_tramite = ?",
-                (str(sel_tramite),),
-            ).fetchone()
-            es_unif_portal = bool(r and r[0])
-        except sqlite3.OperationalError:
-            pass
+        docs, unif, es_unif_portal = detalle_pl(str(sel_tramite))
 
         # Badge de unificacion (HTML compacto)
         badges = []
@@ -690,12 +655,7 @@ if selected_rows:
             ):
                 if unif["descripcion"]:
                     st.markdown(f"*{unif['descripcion']}*")
-                miembros_data = conn.execute(
-                    f"""SELECT n_tramite, titulo, estado
-                        FROM proyectos
-                        WHERE n_tramite IN ({','.join('?'*len(miembros_list))})""",
-                    miembros_list,
-                ).fetchall()
+                miembros_data = proyectos_por_tramite(miembros_list)
                 import pandas as _pd
                 df_miembros = _pd.DataFrame(
                     [
