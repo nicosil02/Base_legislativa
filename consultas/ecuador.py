@@ -235,3 +235,38 @@ def load_proyectos(fec_inicio: dt.date | None, fec_fin: dt.date | None) -> pd.Da
         sql += " WHERE " + " AND ".join(where)
     sql += " ORDER BY date(p.fec_presentacion) DESC, p.n_tramite DESC"
     return pd.read_sql_query(sql, conn, params=params)
+
+
+def detalle_pl(tramite: str) -> tuple[list, sqlite3.Row | None, bool]:
+    """(documentos, grupo de unificacion manual o None, ¿el portal lo marca unificado?)."""
+    conn = get_conn()
+    docs = conn.execute(
+        "SELECT fase, descripcion, url, orden FROM documentos WHERE n_tramite = ? ORDER BY orden ASC",
+        (tramite,),
+    ).fetchall()
+    unif = None
+    if conn.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='unificacion_pl'").fetchone():
+        unif = conn.execute(
+            """SELECT g.id, g.nombre, g.descripcion, g.n_tramite_principal,
+                      GROUP_CONCAT(up2.n_tramite, ',') AS miembros
+               FROM unificacion_pl up
+               JOIN unificacion_grupos g ON g.id = up.grupo_id
+               JOIN unificacion_pl up2 ON up2.grupo_id = up.grupo_id
+               WHERE up.n_tramite = ?
+               GROUP BY g.id""",
+            (tramite,),
+        ).fetchone()
+    try:
+        r = conn.execute("SELECT COALESCE(es_unificado, 0) FROM proyectos WHERE n_tramite = ?",
+                         (tramite,)).fetchone()
+        es_unif_portal = bool(r and r[0])
+    except sqlite3.OperationalError:
+        es_unif_portal = False
+    return docs, unif, es_unif_portal
+
+
+def proyectos_por_tramite(tramites: list[str]) -> list[sqlite3.Row]:
+    return get_conn().execute(
+        f"SELECT n_tramite, titulo, estado FROM proyectos WHERE n_tramite IN ({','.join('?' * len(tramites))})",
+        tramites,
+    ).fetchall()
