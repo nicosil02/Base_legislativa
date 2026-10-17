@@ -4168,5 +4168,53 @@
     "generated_at": "2026-10-17T19:49:31Z",
     "duracion_seg": 3553,
     "agenda_cumplida": null
+  },
+  {
+    "video_id": "fb_2663522467415565",
+    "resumen": "Sesión ordinaria N.° 140 de la Comisión de Justicia y Estructura del Estado de la Asamblea Nacional de Ecuador, en el marco del segundo debate del proyecto de Ley Orgánica Reformatoria de la Ley Orgánica de Gestión de la Identidad y Datos Civiles (cédula digital). La comisión recibió en comisión general a dos expertas/os invitados -Camila Calle (derecho digital y protección de datos) y Luis Tamayo (seguridad de la información)- quienes expusieron observaciones técnicas y legales al proyecto.",
+    "ideas_clave": [
+      "Camila Calle (experta en derecho digital) señaló que el texto trata la cédula digital como un documento independiente sin vinculación clara con la cédula física, y recomendó corregir esa concepción desde el articulado.",
+      "Calle pidió incorporar expresamente los principios de minimización, pertinencia, seguridad y conservación de datos (Ley Orgánica de Protección de Datos Personales) y advirtió que la cédula digital también debe contemplar a niños y adolescentes, no solo a mayores de edad.",
+      "Calle alertó que la captura de pantalla o fotografía de la cédula digital no constituye un proceso válido de verificación de identidad y abre la puerta a suplantación de identidad.",
+      "Luis Tamayo (seguridad de la información) explicó que ya existen las apps GOB.EC (con código QR) y la nueva Data593, que reemplazará a GOB.EC e incluye cédula, licencia de conducir y autenticación biométrica local en el dispositivo.",
+      "Tamayo identificó un riesgo de recuperación de cuenta: si un atacante accede al celular o al correo vinculado, podría recuperar la contraseña y vincular un nuevo dispositivo; recomendó que la normativa exija mecanismos de revocación de dispositivos (similar a WhatsApp Web).",
+      "Ambos expertos coincidieron en que el proyecto es técnicamente sólido pero requiere reforzar los protocolos de verificación, el principio de minimización de datos y las reglas de revocación/recuperación de acceso, dejándolo como insumo para el informe de segundo debate.",
+      "No hubo pedidos de uso de la palabra por parte de los asambleístas de la comisión tras ninguna de las dos exposiciones; la sesión se clausuró tras agotar el punto único del orden del día."
+    ],
+    "generated_at": "2026-10-17T21:49:56Z",
+    "duracion_seg": 2428,
+    "agenda_cumplida": null
+  },
+  {
+    "video_id": "fb_1639935074184937",
+    "resumen": "Sesión ordinaria N.° 131 de la Comisión de Biodiversidad y Recursos Naturales de la Asamblea Nacional de Ecuador, en el marco del primer debate del proyecto de Ley Orgánica de Fomento de la Bioeconomía, Biocomercio Productivo y operativización del acceso regulado a recursos genéticos. La comisión recibió en comisión general al ingeniero Andrés Gamboa, experto en biocombustibles y fundador de una empresa familiar de pellets de madera en Baños, quien expuso su experiencia como caso de bioeconomía aplicada y respondió preguntas de asambleístas.",
+    "ideas_clave": [
+      "Andrés Gamboa relató que su empresa (Gamboa Pellets, con sede en la vía Ambato-Baños) produce pellets de madera a partir de aserrín desechado, como alternativa al gas licuado y el diésel subsidiados que antes usaba el negocio familiar.",
+      "Señaló un ahorro de costos de aproximadamente 25% al pasar de gas/diésel a pellets, y afirmó que ese ahorro beneficia indirectamente al Estado al reducir el contrabando y subsidio de combustibles fósiles.",
+      "La empresa ya exporta pellets a España e Italia y planea abrir dos nuevas plantas en los próximos 6-7 meses, una en Cuenca y otra en Quevedo (en sociedad con la empresa Will Pack), ampliando el uso de materia prima como el \"piwe\" (especie considerada maleza) y residuos como cascarilla de arroz y bagazo de caña.",
+      "Una asambleísta preguntó sobre el artículo 12 del proyecto, que crea una \"certificación de cumplimiento bioeconómico\"; Gamboa respondió que su empresa ya trabaja en obtener certificaciones de biocombustible y que no tala bosques, usando solo material de desecho (unas 250 hectáreas de piwe).",
+      "Gamboa destacó que el pellet es usado industrialmente en piscinas, hoteles, camaroneras, avícolas y floricultura, y que ayuda a prevenir incendios forestales al dar un destino económico a la madera que de otro modo se quema in situ.",
+      "Hubo un corte de conexión del invitado durante su intervención por problemas de señal, que se resolvió en pocos minutos sin afectar el resto de la sesión.",
+      "La sesión se clausuró sin puntos adicionales en el orden del día, agradeciendo la intervención del comisionado invitado."
+    ],
+    "generated_at": "2026-10-17T21:49:56Z",
+    "duracion_seg": 2299,
+    "agenda_cumplida": null
+  },
+  {
+    "video_id": "fb_1791866098759820",
+    "resumen": "Sesión N.° 197-2025-2027 de la Comisión de Desarrollo Económico, Productivo y la Microempresa de la Asamblea Nacional de Ecuador, dedicada a continuar el tratamiento del proyecto de ley de concurso preventivo para el fortalecimiento de la continuidad empresarial. Comparecieron delegadas del Ministerio de Trabajo y Desarrollo Humano y de la Procuraduría General del Estado, quienes presentaron observaciones institucionales y técnicas al proyecto.",
+    "ideas_clave": [
+      "La ministra de Trabajo, Diana Ramírez Villacís, delegó su comparecencia en la subsecretaria normativa Cindy Bolaños y la coordinadora general de asesoría jurídica Amaranta Andrade Ortega.",
+      "El Ministerio de Trabajo, por voz de Cindy Bolaños, señaló que el proyecto no vulnera derechos laborales: los trabajadores mantienen su condición de acreedores de primer orden y no son parte de las negociaciones con otros acreedores previstas en el concurso preventivo.",
+      "El procurador general del Estado, Juan Carlos Larrea Valencia, delegó su comparecencia en Jennifer Rodas, directora nacional de iniciativa legislativa e investigaciones jurídicas.",
+      "La Procuraduría planteó tres observaciones de técnica legislativa: (1) revisar el uso de \"términos\" (días) vs. \"plazos\" (meses/años) en los artículos 10.3, 15, 18, 29.1, 43, 56.6, 66, 72 y las disposiciones general primera y transitorias segunda y tercera.",
+      "(2) corregir la numeración decimal de artículos (ej. 29.1), que según la Procuraduría solo debería usarse para insertar artículos en cuerpos normativos ya vigentes, no en una ley nueva como esta.",
+      "(3) reubicar las disposiciones reformatorias tercera, décimo cuarta y décimo séptima hacia el apartado de disposiciones derogatorias, al tratarse de normas que derogan o suprimen en lugar de reformar.",
+      "Ningún asambleísta solicitó la palabra tras las dos comparecencias; la sesión se clausuró sin puntos adicionales, dejando las observaciones como insumo para la preparación del informe."
+    ],
+    "generated_at": "2026-10-17T21:49:56Z",
+    "duracion_seg": 1017,
+    "agenda_cumplida": null
   }
 ]
