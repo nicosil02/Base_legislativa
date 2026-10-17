@@ -119,20 +119,7 @@ def capturar_audio_en_vivo(video_id: str, segundos: int = 30) -> Path | None:
     try:
         proc.wait(timeout=segundos)
     except subprocess.TimeoutExpired:
-        if os.name == "nt":
-            subprocess.run(
-                ["taskkill", "/F", "/T", "/PID", str(proc.pid)],
-                stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
-            )
-        else:
-            try:
-                os.killpg(os.getpgid(proc.pid), signal.SIGKILL)
-            except ProcessLookupError:
-                proc.kill()
-        try:
-            proc.wait(timeout=10)
-        except subprocess.TimeoutExpired:
-            pass
+        _matar_arbol(proc)
 
     part_path = clip_path.with_suffix(clip_path.suffix + ".part")
     src = part_path if part_path.exists() else clip_path
@@ -168,6 +155,94 @@ def capturar_audio_en_vivo(video_id: str, segundos: int = 30) -> Path | None:
               f"(returncode={r.returncode}): {err}")
         return None
     return wav_path
+
+
+def _matar_arbol(proc: subprocess.Popen) -> None:
+    """Mata el proceso y sus hijos (ver comentario de start_new_session en
+    capturar_audio_en_vivo: yt-dlp lanza ffmpeg como nieto)."""
+    if proc.poll() is not None:
+        return
+    if os.name == "nt":
+        subprocess.run(["taskkill", "/F", "/T", "/PID", str(proc.pid)],
+                       stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    else:
+        try:
+            os.killpg(os.getpgid(proc.pid), signal.SIGKILL)
+        except ProcessLookupError:
+            proc.kill()
+    try:
+        proc.wait(timeout=10)
+    except subprocess.TimeoutExpired:
+        pass
+
+
+SR = 16_000  # Whisper espera mono a 16 kHz
+
+
+def abrir_audio_en_vivo(video_id: str):
+    """Audio continuo de un stream en vivo: un solo ffmpeg leyendo el HLS
+    de YouTube y entregando PCM 16 kHz mono. Devuelve (cola, cerrar) o None.
+    La cola recibe trozos float32 de 0,1 s y None cuando el stream se corta.
+
+    Reemplaza a capturar_audio_en_vivo en el loop en vivo (pedido de
+    Nicolas 2026-10-17, idea de la sesion 13 del curso de Data Science):
+    antes cada chunk de 40 s lanzaba un yt-dlp nuevo, y todo lo que se
+    decia mientras se transcribia el chunk anterior se perdia.
+    Leer ffmpeg en un hilo aparte evita que Whisper frene la descarga."""
+    import queue
+    import threading
+
+    import numpy as np
+
+    from congreso_live.detector import es_bloqueo_bot, rotar_warp
+
+    cmd = [sys.executable, "-m", "yt_dlp", "-g", "-f", "233/234/bestaudio/best",
+           f"https://www.youtube.com/watch?v={video_id}"]
+    if os.environ.get("YT_DLP_PROXY"):
+        cmd += ["--proxy", os.environ["YT_DLP_PROXY"]]
+    r = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
+    while r.returncode != 0 and es_bloqueo_bot(r.stderr) and rotar_warp():
+        r = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
+    url = r.stdout.strip().splitlines()[0] if r.returncode == 0 and r.stdout.strip() else None
+    if not url:
+        print(f"[live-transcribe] {video_id}: yt-dlp -g no dio URL: {r.stderr[-500:]}")
+        return None
+
+    ff = [str(_ffmpeg_bin()), "-loglevel", "error"]
+    # ffmpeg no entiende socks5:// (ver capturar_audio_en_vivo): va por privoxy
+    if os.environ.get("FFMPEG_HTTP_PROXY"):
+        ff += ["-http_proxy", os.environ["FFMPEG_HTTP_PROXY"]]
+    ff += ["-live_start_index", "-1", "-i", url, "-vn", "-ac", "1", "-ar", str(SR), "-f", "s16le", "-"]
+    proc = subprocess.Popen(ff, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL,
+                            start_new_session=(os.name != "nt"))
+    cola: queue.Queue = queue.Queue()
+
+    def leer():
+        while datos := proc.stdout.read(SR // 10 * 2):  # 0,1 s de int16
+            cola.put(np.frombuffer(datos, dtype=np.int16).astype(np.float32) / 32768)
+        cola.put(None)
+
+    threading.Thread(target=leer, daemon=True, name=f"ffmpeg-{video_id}").start()
+    return cola, lambda: _matar_arbol(proc)
+
+
+def corte_de_frase(audio, pausa: float = 0.6, max_frase: float = 15.0) -> int | None:
+    """Cuantas muestras de `audio` forman una frase cerrada (el orador hizo
+    una pausa de `pausa` s, o ya van `max_frase` s). None = seguir esperando,
+    0 = solo silencio. Misma logica que CasiEnVivo de la sesion 13."""
+    from faster_whisper.vad import VadOptions, get_speech_timestamps
+
+    dur = len(audio) / SR
+    if dur < 1.0:
+        return None
+    tramos = get_speech_timestamps(audio, VadOptions(
+        min_silence_duration_ms=int(pausa * 1000), max_speech_duration_s=max_frase, speech_pad_ms=200))
+    if not tramos:
+        return 0
+    fin_voz = tramos[-1]["end"]
+    if len(audio) - fin_voz >= pausa * SR:
+        return fin_voz
+    return len(audio) if dur >= max_frase else None
 
 
 def descargar_audio_completo(video_id: str, url: str | None = None) -> Path | None:
@@ -257,8 +332,10 @@ def transcribir_vod(video_id: str, tipo: str, titulo: str, modelo=None, db_path=
     return {"ok": True, "chars": len(texto), "duracion_seg": duracion}
 
 
-def transcribir_audio(wav_path: Path, modelo) -> list[dict]:
-    """Corre un WhisperModel (faster_whisper) ya cargado sobre el wav.
+def transcribir_audio(wav_path, modelo, contexto: str | None = None) -> list[dict]:
+    """Corre un WhisperModel (faster_whisper) ya cargado sobre el wav (o un
+    arreglo float32 a 16 kHz). `contexto`: vocabulario que Whisper debe
+    escribir bien (initial_prompt, idea de la sesion 13 del curso).
     Devuelve lista de {start, end, text}, descartando segmentos de baja
     confianza. Whisper "alucina" texto sin sentido (tipico: un token
     repetido muchas veces, ej. "y y y y y...") cuando el audio no tiene
@@ -267,8 +344,9 @@ def transcribir_audio(wav_path: Path, modelo) -> list[dict]:
     metricas de confianza que el propio modelo calcula por segmento -
     mas confiable que inventar un filtro de texto a mano."""
     segments, _info = modelo.transcribe(
-        str(wav_path), language="es", beam_size=1,
+        wav_path if hasattr(wav_path, "dtype") else str(wav_path), language="es", beam_size=1,
         vad_filter=True,  # corta silencios antes de mandarlos al modelo
+        initial_prompt=contexto,
     )
     out = []
     for s in segments:
@@ -356,14 +434,78 @@ def capturar_y_acumular_en_vivo(
     texto_acumulado = row[0] if row else ""
     duracion_acumulada = (row[1] or 0) if row else 0
 
+    import numpy as np
+
+    # Whisper escribe mejor lo que ya "espera" oir. El padron completo no
+    # entra: initial_prompt se corta a ~220 tokens. Los nombres se
+    # normalizan despues contra el padron en oradores.py.
+    contexto = (f"{titulo}. Señor presidente, señores congresistas, dictamen, "
+                "proyecto de ley, texto sustitutorio, cuarto intermedio, votación.")
     chunks_ok = 0
     misses_seguidos = 0
     t_inicio = time.time()
     t_ultimo_aviso = 0.0
+    abierto = None  # (cola, cerrar) del ffmpeg continuo
+    pendiente = np.zeros(0, dtype=np.float32)
     try:
         while True:
             if max_minutos is not None and (time.time() - t_inicio) > max_minutos * 60:
                 break
+            if abierto is not None:
+                cola, cerrar = abierto
+                try:
+                    trozo = cola.get(timeout=30)
+                except Exception:  # queue.Empty: ffmpeg colgado sin datos
+                    print(f"[live-transcribe] {video_id}: 30 s sin audio, reabro el stream")
+                    trozo = None
+                if trozo is None:
+                    cerrar()
+                    abierto = None
+                    corte = len(pendiente) if len(pendiente) > SR // 2 else 0
+                else:
+                    pendiente = np.concatenate([pendiente, trozo])
+                    corte = corte_de_frase(pendiente)
+                    if corte is None:
+                        continue
+                if corte == 0:  # solo silencio: se descarta
+                    pendiente = pendiente[-SR // 2:]
+                    continue
+                frase, pendiente = pendiente[:corte], pendiente[corte:]
+                if modelo is None:
+                    from faster_whisper import WhisperModel
+                    modelo = WhisperModel("small", device="cpu", compute_type="int8")
+                segs = transcribir_audio(frase, modelo, contexto)
+                nuevo_texto = " ".join(s["text"] for s in segs)
+                if not nuevo_texto:
+                    continue
+
+                if tipo.startswith("Pleno") and time.time() - t_ultimo_aviso > AVISO_VOTACION_COOLDOWN_SEG:
+                    extracto = detectar_votacion(texto_acumulado[-1500:], nuevo_texto)
+                    if extracto:
+                        from congreso_live.notify import enviar_whatsapp
+                        enviar_whatsapp(f"🗳️ {tipo}: votación o cuarto intermedio\n"
+                                        f"{titulo}\n\n{extracto}\n\n"
+                                        f"https://www.youtube.com/watch?v={video_id}")
+                        t_ultimo_aviso = time.time()
+
+                texto_acumulado = (texto_acumulado + " " + nuevo_texto).strip()
+                duracion_acumulada += round(len(frase) / SR)
+                chunks_ok += 1
+                temas = _clasificar_temas(titulo, texto_acumulado[:5000])
+                conn.execute(
+                    """INSERT OR REPLACE INTO sesiones_transcripciones
+                       (video_id, tipo, titulo, fecha, duracion_seg, texto, temas, fetched_at)
+                       VALUES (?,?,?,?,?,?,?,?)""",
+                    (video_id, tipo, titulo, datetime.now(timezone.utc).date().isoformat(),
+                     duracion_acumulada, texto_acumulado, ",".join(temas),
+                     datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")),
+                )
+                conn.commit()
+                print(f"[live-transcribe] frase {chunks_ok}: {nuevo_texto[:120]}")
+                continue
+
+            # Sin stream abierto (arranque, o ffmpeg termino): solo se sigue si
+            # la sesion sigue en vivo.
             # vivos_de_interes() vuelve a pegarle a YouTube via WARP - un
             # fallo transitorio (bot-check, WARP cargado) NO debe cortar
             # una captura que recien arranco. Bug real encontrado en vivo
@@ -386,51 +528,13 @@ def capturar_y_acumular_en_vivo(
                 continue
             misses_seguidos = 0
 
-            wav = capturar_audio_en_vivo(video_id, segundos=intervalo_seg)
-            if wav is None:
-                # Antes esto fallaba en silencio - sin print, no habia forma
-                # de saber desde el log si el cuello de botella era la
-                # descarga de audio en si (yt-dlp/WARP) o algo mas. Bug real
-                # encontrado en vivo 2026-09-15: con la deteccion ya
-                # arreglada, 4 sesiones arrancaron threads pero 0 chunks en
-                # 2+ min, sin ninguna pista de por que.
-                print(f"[live-transcribe] {video_id}: no se pudo capturar/convertir audio, sigo")
-                continue
-            if modelo is None:
-                from faster_whisper import WhisperModel
-                modelo = WhisperModel("small", device="cpu", compute_type="int8")
-            segs = transcribir_audio(wav, modelo)
-            nuevo_texto = " ".join(s["text"] for s in segs)
-            if not nuevo_texto:
-                print(f"[live-transcribe] {video_id}: audio capturado sin habla clara, sigo")
-                continue
-
-            if tipo.startswith("Pleno") and time.time() - t_ultimo_aviso > AVISO_VOTACION_COOLDOWN_SEG:
-                extracto = detectar_votacion(texto_acumulado[-1500:], nuevo_texto)
-                if extracto:
-                    from congreso_live.notify import enviar_whatsapp
-                    enviar_whatsapp(f"🗳️ {tipo}: votación o cuarto intermedio\n"
-                                    f"{titulo}\n\n{extracto}\n\n"
-                                    f"https://www.youtube.com/watch?v={video_id}")
-                    t_ultimo_aviso = time.time()
-
-            texto_acumulado = (texto_acumulado + " " + nuevo_texto).strip()
-            duracion_acumulada += intervalo_seg
-            chunks_ok += 1
-            temas = _clasificar_temas(titulo, texto_acumulado[:5000])
-            conn.execute(
-                """INSERT OR REPLACE INTO sesiones_transcripciones
-                   (video_id, tipo, titulo, fecha, duracion_seg, texto, temas, fetched_at)
-                   VALUES (?,?,?,?,?,?,?,?)""",
-                (video_id, tipo, titulo, datetime.now(timezone.utc).date().isoformat(),
-                 duracion_acumulada, texto_acumulado, ",".join(temas),
-                 datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")),
-            )
-            conn.commit()
-            print(f"[live-transcribe] chunk {chunks_ok}: "
-                  f"+{len(nuevo_texto)} chars (total {len(texto_acumulado)} chars, "
-                  f"{duracion_acumulada}s cubiertos)")
+            abierto = abrir_audio_en_vivo(video_id)
+            if abierto is None:
+                print(f"[live-transcribe] {video_id}: no se pudo abrir el audio en vivo, reintento")
+                time.sleep(intervalo_seg)
     finally:
+        if abierto is not None:
+            abierto[1]()
         conn.close()
     return {"chunks": chunks_ok, "duracion_seg": duracion_acumulada,
             "chars": len(texto_acumulado)}
@@ -618,33 +722,42 @@ def _test_acumulacion():
 
     import congreso_live.live_transcribe as lt
 
+    import queue
+
+    import numpy as np
+
     chunks_falsos = iter(["Primera parte de la sesion.",
                           "Segunda parte, sigue hablando.",
-                          ""])  # el tercer chunk simula silencio (se ignora)
+                          ""])  # la tercera frase simula silencio (se ignora)
     vivos_falsos = iter([
-        [{"id": "TEST123"}], [{"id": "TEST123"}], [{"id": "TEST123"}],
+        [{"id": "TEST123"}],
         [], [],  # 2 misses SEGUIDOS: recien ahi se asume terminada
     ])
 
-    def _fake_capturar(video_id, segundos):
-        return "fake.wav"
+    def _fake_abrir(video_id):
+        cola = queue.Queue()
+        for _ in range(3):  # 3 frases de 1 s y despues el stream se corta
+            cola.put(np.zeros(lt.SR, dtype=np.float32))
+        cola.put(None)
+        return cola, lambda: None
 
-    def _fake_transcribir(wav_path, modelo):
+    def _fake_transcribir(audio, modelo, contexto=None):
         texto = next(chunks_falsos, "")
-        return [{"start": 0, "end": segundos_fake, "text": texto}] if texto else []
+        return [{"start": 0, "end": 1, "text": texto}] if texto else []
 
-    segundos_fake = 5
     with tempfile.TemporaryDirectory() as td:
         db_path = Path(td) / "test.db"
-        with patch.object(lt, "capturar_audio_en_vivo", _fake_capturar), \
+        with patch.object(lt, "abrir_audio_en_vivo", _fake_abrir), \
+             patch.object(lt, "corte_de_frase", lambda audio: len(audio)), \
              patch.object(lt, "transcribir_audio", _fake_transcribir), \
              patch("congreso_live.detector.vivos_de_interes", lambda: next(vivos_falsos)):
             resultado = lt.capturar_y_acumular_en_vivo(
                 "TEST123", "Comision: Test", "Sesion de prueba",
-                intervalo_seg=segundos_fake, modelo="modelo-fake", db_path=db_path,
+                intervalo_seg=0, modelo="modelo-fake", db_path=db_path,
             )
 
         assert resultado["chunks"] == 2, resultado
+        assert resultado["duracion_seg"] == 2, resultado
         conn = sqlite3.connect(str(db_path))
         texto, temas = conn.execute(
             "SELECT texto, temas FROM sesiones_transcripciones WHERE video_id='TEST123'"
@@ -665,6 +778,10 @@ def _test_tolera_fallo_transitorio():
 
     import congreso_live.live_transcribe as lt
 
+    import queue
+
+    import numpy as np
+
     chunks_falsos = iter(["Antes del fallo.", "Despues del fallo."])
     secuencia = iter([
         [{"id": "TEST123"}],
@@ -672,6 +789,7 @@ def _test_tolera_fallo_transitorio():
         [{"id": "TEST123"}],
         [], [],  # recien ahi termina de verdad
     ])
+    aperturas = iter([True, False, True])  # el stream se cae y una reapertura falla
 
     def _vivos_falsos():
         v = next(secuencia)
@@ -679,21 +797,27 @@ def _test_tolera_fallo_transitorio():
             raise RuntimeError("Sign in to confirm you're not a bot")
         return v
 
-    def _fake_capturar(video_id, segundos):
-        return "fake.wav"
+    def _fake_abrir(video_id):
+        if not next(aperturas):
+            return None
+        cola = queue.Queue()
+        cola.put(np.zeros(lt.SR, dtype=np.float32))
+        cola.put(None)
+        return cola, lambda: None
 
-    def _fake_transcribir(wav_path, modelo):
+    def _fake_transcribir(audio, modelo, contexto=None):
         texto = next(chunks_falsos, "")
-        return [{"start": 0, "end": 5, "text": texto}] if texto else []
+        return [{"start": 0, "end": 1, "text": texto}] if texto else []
 
     with tempfile.TemporaryDirectory() as td:
         db_path = Path(td) / "test.db"
-        with patch.object(lt, "capturar_audio_en_vivo", _fake_capturar), \
+        with patch.object(lt, "abrir_audio_en_vivo", _fake_abrir), \
+             patch.object(lt, "corte_de_frase", lambda audio: len(audio)), \
              patch.object(lt, "transcribir_audio", _fake_transcribir), \
              patch("congreso_live.detector.vivos_de_interes", _vivos_falsos):
             resultado = lt.capturar_y_acumular_en_vivo(
                 "TEST123", "Comision: Test", "Sesion de prueba",
-                intervalo_seg=1, modelo="modelo-fake", db_path=db_path,
+                intervalo_seg=0, modelo="modelo-fake", db_path=db_path,
             )
     assert resultado["chunks"] == 2, resultado
     print("OK live_transcribe: un fallo transitorio de deteccion no corta la captura")
@@ -833,7 +957,15 @@ def _test_detectar_votacion():
     print("OK live_transcribe: detectar_votacion")
 
 
+def _test_corte_de_frase():
+    import numpy as np
+    assert corte_de_frase(np.zeros(SR // 2, dtype=np.float32)) is None  # < 1 s: esperar
+    assert corte_de_frase(np.zeros(3 * SR, dtype=np.float32)) == 0  # solo silencio
+    print("OK live_transcribe: corte_de_frase")
+
+
 if __name__ == "__main__":
+    _test_corte_de_frase()
     _test_detectar_votacion()
     _demo()
     _test_killpg_mata_el_arbol_completo()
