@@ -4,6 +4,8 @@ Fuente: `bluebook/Bluebook Google Peru.md` (convertido de Word, recibido 2026-09
 de EE.UU. (Alphabet) — participa como intermediario digital en múltiples frentes regulatorios. Perú tiene
 prioridad "bajada" para Google por inestabilidad política + tamaño de equipo, pero el monitoreo sigue.
 
+Países: PE
+
 ## Contacto y canal
 - **Irene Velandia** — Senior Manager Government Affairs & Public Policy (basada en Bogotá, cubre PE),
   `ivelandia@google.com`. Prefiere relacionamiento con funcionarios de alto nivel (congresistas,
@@ -28,6 +30,12 @@ acceso a Internet como derecho, red dorsal / conectividad (MTC), rol internacion
 EE.UU.** (es empresa norteamericana, igual que Incode) y en general **coyuntura/anuncios de gobierno,
 formación de comisiones del Congreso**, etc. — sumar como eje transversal, no solo lo estrictamente
 digital.
+
+**Eje Perú–EE.UU. y cooperación (Nicolas, 2026-10-17):** le interesa toda la relación Perú–EE.UU.
+(visitas, acuerdos, embajada, comercio, declaraciones del gobierno de EE.UU. sobre Perú), la cooperación
+en inteligencia, seguridad y tecnología (con EE.UU. u otros países), la regulación de plataformas
+digitales y los anuncios del Ejecutivo o del Congreso sobre estas materias, aunque todavía no sean una
+norma o un PL.
 
 ## Comisiones y entidades a monitorear
 Comisión de Economía, Comisión de la Mujer, Comisión de Constitución, Comisión de Ciencia Innovación y

@@ -4,6 +4,8 @@ Fuente: `bluebook/Bluebook Syngenta_final PE-EC 2025.md` (convertido de Word, re
 de semillas y pesticidas (sede admin. en Suiza, propiedad de ChemChina). Cuenta cubre PE, EC, CO, BO —
 este repo solo monitorea PE/EC.
 
+Países: PE, EC
+
 ## Contacto y canal
 - **Maria Celina Kaseta** — External Affairs Manager (`celina.kaseta@syngenta.com`, basada en Santiago de
   Chile), coordina PE/CO/EC/BO con un country manager por país.

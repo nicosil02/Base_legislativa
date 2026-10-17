@@ -3,6 +3,8 @@
 **Fuente: de conversación con Nicolas (2026-09-11), sin bluebook — no hay documento formal para este
 cliente.** Incode es una empresa de **soluciones biométricas** (identidad digital), estadounidense.
 
+Países: PE, EC
+
 ## Foco principal (lo más importante para el cliente)
 Su sector de negocio directo: **biometría / verificación de identidad digital**. Trabajan con actores que
 sí tienen partnership directo con RENIEC — Incode mismo **no tiene partnership directo con RENIEC**, así

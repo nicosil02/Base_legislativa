@@ -27,9 +27,10 @@ SYSTEM = ("Sos analista de asuntos publicos en Vali Consultores (Peru y Ecuador)
           "una noticia merece una alerta para un cliente puntual, segun su perfil real. Se "
           "estricto: interesa solo si hay una decision o propuesta publica concreta (norma, "
           "proyecto de ley, accion de un regulador o ministerio, compra publica, cambio de "
-          "autoridad) sobre sus temas, o un actor de su perfil. Encuestas, tendencias de "
-          "mercado, columnas de opinion, coyuntura general o algo que solo comparte palabras "
-          "con su sector, no.")
+          "autoridad) sobre sus temas, un actor de su perfil, o un eje que el perfil pide "
+          "explicitamente (ej. relacion con EE.UU. o anuncios de gobierno, si el perfil los "
+          "nombra). Encuestas, tendencias de mercado, columnas de opinion, coyuntura general "
+          "o algo que solo comparte palabras con su sector, no.")
 
 SCHEMA = {"type": "array", "items": {"type": "object", "properties": {
     "indice": {"type": "integer"}, "interesa": {"type": "boolean"},
@@ -82,8 +83,13 @@ def candidatos(cerebro: sqlite3.Connection, noticias: sqlite3.Connection, slug: 
     af = afinidad([f"noticia_{i}" for i in filas if f"noticia_{i}" not in ya], slug, cerebro)
     elegidas = sorted((c for c, v in af.items() if v >= AFINIDAD_MEDIA), key=af.get, reverse=True)
     out = []
-    for clave in elegidas[:MAX_POR_CLIENTE]:
+    cubiertos = historial.paises(slug)
+    for clave in elegidas:
         _, titulo, resumen, fecha, fuente, pais = filas[int(clave.split("_", 1)[1])]
+        if pais not in cubiertos:
+            continue
+        if len(out) == MAX_POR_CLIENTE:
+            break
         out.append({"clave": clave, "titulo": titulo, "resumen": (resumen or "")[:500],
                     "fecha": (fecha or "")[:10], "fuente": fuente, "pais": pais})
     return out

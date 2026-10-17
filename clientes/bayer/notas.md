@@ -5,6 +5,8 @@ químico-farmacéutica alemana, dos líneas de negocio con intereses distintos: 
 y **Crop** (Bayer CropScience: protección de cultivos, semillas, biotecnología vegetal). Cuenta cubre
 Colombia, Perú y Ecuador — este repo solo monitorea PE/EC.
 
+Países: PE, EC
+
 ## Contacto y canal
 - **Germán Fernández** (Head of Comms/Public Affairs Andean & CAM, `german.fernandez@bayer.com`) — recibe
   ambas líneas.

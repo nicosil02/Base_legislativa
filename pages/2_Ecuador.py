@@ -17,12 +17,11 @@ import pandas as pd
 import streamlit as st
 
 from scraper.categorias import CATEGORIA_CLIENTES_PL
-from alerts import armar
+from alerts import armar, historial
 from ui_kit import inject_theme, render_evolucion_mensual
 from clientes.matrices import matriz_bayer_crop, matriz_incode_ec
 from noticias.avances_ec import noticias_tramite_recientes
 
-CLIENTES_DIR = Path(__file__).resolve().parent.parent / "clientes"
 
 # Instalación de la Asamblea Nacional del período vigente 2025-2029 -
 # equivalente a FECHA_INICIO_BICAMERAL en scraper/sync.py para Perú.
@@ -44,15 +43,6 @@ def _matriz_pls_ec() -> dict[str, set[str]]:
     bayer_ec = {f["pl_numero"] for f in matriz_bayer_crop("EC")}
     incode_ec = {f["pl_numero"] for f in matriz_incode_ec()}
     return {"bayer": bayer_ec, "syngenta": bayer_ec, "incode": incode_ec}
-
-
-def load_clientes() -> list[str]:
-    if not CLIENTES_DIR.is_dir():
-        return []
-    return sorted(
-        p.name for p in CLIENTES_DIR.iterdir()
-        if p.is_dir() and not p.name.startswith("_")
-    )
 
 
 def _find_db_path() -> Path | None:
@@ -666,7 +656,7 @@ def _opciones_proponente() -> list[str]:
 # "Cliente" quedaba pegado aparte al final en vez de ser un filtro de
 # primera clase). El resto (Comisión, Tipo proponente, Proponente) es para
 # investigación puntual - se mueve a un expander colapsado.
-clientes = load_clientes()
+clientes = historial.clientes("EC")
 TODOS_CLIENTES = "Todos"
 
 fc = st.columns([0.9, 1.3, 1, 1])

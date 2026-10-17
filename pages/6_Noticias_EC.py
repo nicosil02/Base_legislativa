@@ -25,7 +25,7 @@ from noticias.fuentes import (
     INSTITUCIONES_AMPLIAS, TEMAS_CLIENTE, PERFIL_ESTRICTO, matchea_perfil,
     FUENTES_GENERALISTAS_FILTRAR_RUIDO,
 )
-from alerts import armar
+from alerts import armar, historial
 from clientes.matrices import pls_trackeados_ec, coincide_con_noticia
 from noticias.feedback_store import deshacer_descarte, list_descartadas, registrar_descarte
 from ui_kit import inject_theme
@@ -80,7 +80,6 @@ def _seguimiento_pl_ec(dias: int = 90) -> pd.DataFrame:
         })
     return pd.DataFrame(filas)
 
-CLIENTES_DIR = Path(__file__).resolve().parent.parent / "clientes"
 
 # Una noticia con varios temas se renderiza una vez por cada grupo de tema
 # (ver el loop de mas abajo) - el checkbox "combinar" solo debe existir UNA
@@ -256,18 +255,6 @@ def load_fuentes(pais: str) -> list[str]:
         "ORDER BY nombre", (pais,),
     ).fetchall()
     return [r[0] for r in rows]
-
-
-@st.cache_data(ttl=300)
-def load_clientes() -> list[str]:
-    """Slugs de clientes/<slug>/ (carpeta con notas.md real) - "_plantillas"
-    no es un cliente, se excluye."""
-    if not CLIENTES_DIR.is_dir():
-        return []
-    return sorted(
-        p.name for p in CLIENTES_DIR.iterdir()
-        if p.is_dir() and not p.name.startswith("_")
-    )
 
 
 @st.cache_data(ttl=60)
@@ -459,7 +446,7 @@ if not has_tables(PAIS):
 tab_noticias, tab_tv = st.tabs(["Noticias", "TV y entrevistas"])
 with tab_tv:
     from noticias.videos_ui import contenido as tv_contenido
-    tv_contenido(get_conn(), PAIS, load_clientes())
+    tv_contenido(get_conn(), PAIS, historial.clientes("EC"))
 # Todo lo que sigue (KPIs, filtros, tarjetas, footer) va en la pestaña
 # Noticias. ponytail: se entra al contexto sin `with` para no reindentar
 # ~340 lineas con strings de markdown/HTML adentro (una sangria de mas los
@@ -478,7 +465,7 @@ st.markdown("")
 # Filtros
 categorias_fuente = load_categorias_fuente(PAIS)
 fuentes = load_fuentes(PAIS)
-clientes = load_clientes()
+clientes = historial.clientes("EC")
 temas = todos_los_temas()
 
 TODAS = "Todas"

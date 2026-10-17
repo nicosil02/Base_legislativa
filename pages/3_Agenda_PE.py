@@ -17,20 +17,10 @@ import streamlit as st
 
 from scraper.sync import FECHA_INICIO_BICAMERAL, PER_PAR_ID_ACTUAL
 from scraper.categorias import CATEGORIA_CLIENTES_PL
-from alerts import armar
+from alerts import armar, historial
 from ui_kit import inject_theme
 from clientes.matrices import matriz_bayer_crop
 
-CLIENTES_DIR = Path(__file__).resolve().parent.parent / "clientes"
-
-
-def load_clientes() -> list[str]:
-    if not CLIENTES_DIR.is_dir():
-        return []
-    return sorted(
-        p.name for p in CLIENTES_DIR.iterdir()
-        if p.is_dir() and not p.name.startswith("_")
-    )
 
 
 @st.cache_data(ttl=60)
@@ -1486,7 +1476,7 @@ with tab_comision:
                 else f"{x} — {resumen.loc[resumen['Comisión']==x,'pls_unicos'].iloc[0]} PLs únicos"
             ),
         )
-        clientes = load_clientes()
+        clientes = historial.clientes("PE")
         TODOS_CLIENTES = "Todos"
         sel_cliente = fcv[1].selectbox("Cliente", [TODOS_CLIENTES] + clientes)
         if sel_com_v == "(todas)":

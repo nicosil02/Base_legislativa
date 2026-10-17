@@ -19,7 +19,7 @@ import streamlit as st
 
 from scraper.sync import FECHA_INICIO_BICAMERAL, PER_PAR_ID_ACTUAL
 from scraper.categorias import CATEGORIA_CLIENTES_PL
-from alerts import armar
+from alerts import armar, historial
 from clientes.matrices import matriz_bayer_crop
 from ui_kit import inject_theme, render_evolucion_mensual
 
@@ -34,16 +34,6 @@ def _matriz_pls_pe() -> dict[str, set[str]]:
     numeros = {f["pl_numero"] for f in matriz_bayer_crop("PE")}
     return {"bayer": numeros, "syngenta": numeros}
 
-CLIENTES_DIR = Path(__file__).resolve().parent.parent / "clientes"
-
-
-def load_clientes() -> list[str]:
-    if not CLIENTES_DIR.is_dir():
-        return []
-    return sorted(
-        p.name for p in CLIENTES_DIR.iterdir()
-        if p.is_dir() and not p.name.startswith("_")
-    )
 
 
 COMISIONES_ESPECIALES_LABEL = "Comisiones Especiales"
@@ -1038,7 +1028,7 @@ def _opciones_autor() -> list[str]:
 # aparte al final en vez de ser un filtro de primera clase). El resto
 # (Camara, Comision, Bancada, Proponente, Autor) es para investigacion
 # puntual, no el habito diario - se mueve a un expander colapsado.
-clientes = load_clientes()
+clientes = historial.clientes("PE")
 TODOS_CLIENTES = "Todos"
 
 fc = st.columns([0.9, 1.3, 1, 1])
