@@ -80,3 +80,9 @@ clientes/*/*
 data/proyectos.db.gz
 data/proyectos_ec.db.gz
 data/*.db.gz.*.tmp
+
+# Cerebro y juez "mismo hecho": van al release "cerebro", nunca a git
+data/grafo/
+data/grafo.tar.gz
+data/mismo_hecho_modelo/
+data/mismo_hecho_modelo.tar.gz

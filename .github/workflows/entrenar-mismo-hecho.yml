@@ -1,0 +1,80 @@
+name: Entrenar juez "mismo hecho" (noticias)
+
+# Gemini etiqueta pares de noticias de portales distintos (¿mismo hecho?),
+# con eso se afina un cross-encoder multilingue y se compara contra el umbral
+# de vectores (ver noticias/mismo_hecho.py). El modelo se publica en el release
+# "cerebro" y cerebro.yml lo usa en vez de Gemini si le gana.
+
+on:
+  workflow_dispatch:
+    inputs:
+      dias:
+        description: "Dias de noticias para sacar pares"
+        default: "30"
+      max:
+        description: "Pares que etiqueta Gemini (30 por llamada)"
+        default: "1500"
+      etiquetar:
+        description: "Pedir etiquetas nuevas a Gemini antes de entrenar"
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: cerebro   # el mismo que cerebro.yml: los dos suben cerebro.db
+  cancel-in-progress: false
+
+jobs:
+  entrenar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - run: |
+          pip install -q torch --index-url https://download.pytorch.org/whl/cpu
+          pip install -q transformers google-genai sqlite-vec numpy
+
+      - name: Bajar DBs y el cerebro publicado
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          bash scripts/bajar_db.sh proyectos.db.gz proyectos.db
+          gh release download cerebro -p cerebro.db -D data --clobber
+
+      - name: Gemini etiqueta pares
+        if: inputs.etiquetar
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          PYTHONIOENCODING: utf-8
+        run: python -X utf8 -u -m noticias.mismo_hecho etiquetar --dias ${{ inputs.dias }} --max ${{ inputs.max }}
+
+      - name: Publicar etiquetas
+        if: inputs.etiquetar
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release upload cerebro data/cerebro.db --clobber
+
+      - name: Afinar y evaluar
+        env:
+          PYTHONIOENCODING: utf-8
+        run: python -X utf8 -u -m noticias.mismo_hecho entrenar
+
+      - name: Publicar modelo y resultados
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          tar -czf data/mismo_hecho_modelo.tar.gz -C data mismo_hecho_modelo
+          gh release upload cerebro data/mismo_hecho_modelo.tar.gz --clobber
+          {
+            echo '### Juez "mismo hecho": modelo afinado vs umbral de vectores'
+            echo '```json'
+            cat data/mismo_hecho_modelo/metricas.json
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
