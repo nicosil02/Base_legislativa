@@ -66,3 +66,23 @@ def afinidad_tema_noticias(ids: tuple[int, ...], tema: str) -> dict[int, float]:
         print(f"[cerebro] afinidad de tema fallo: {e}")
         return {}
     return {int(k.split("_", 1)[1]): v for k, v in af.items()}
+
+
+@st.cache_data(ttl=1800, show_spinner=False)
+def le_interesa(ids: tuple[int, ...]) -> dict[int, list[tuple[str, str]]]:
+    """{id de noticia: [(cliente, por que)]} segun alerts/filtro.py, solo las
+    que SI le interesan a alguien. {} si no hay cerebro o aun no hay veredictos."""
+    conn = conexion()
+    if conn is None or not ids:
+        return {}
+    out: dict[int, list[tuple[str, str]]] = {}
+    try:
+        for i in range(0, len(ids), 900):
+            lote = [f"noticia_{x}" for x in ids[i:i + 900]]
+            for clave, cliente, por_que in conn.execute(
+                    f"SELECT clave, cliente, por_que FROM relevancia WHERE interesa = 1 "
+                    f"AND clave IN ({','.join('?' * len(lote))})", lote):
+                out.setdefault(int(clave.split("_", 1)[1]), []).append((cliente, por_que))
+    except Exception as e:  # tabla todavia no creada en el cerebro.db publicado
+        print(f"[cerebro] relevancia no disponible: {e}")
+    return out

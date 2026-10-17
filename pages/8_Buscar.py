@@ -62,7 +62,7 @@ cols = st.columns([4, 1.2, 1.4, 1])
 consulta = cols[0].text_input("Qué buscas", placeholder="Ej.: regulación de plaguicidas, biometría, "
                               "impuesto a servicios digitales...", label_visibility="collapsed")
 pais = cols[1].selectbox("País", ["Ambos", "PE", "EC"], label_visibility="collapsed")
-tipo = cols[2].selectbox("Tipo", ["Todo", "Proyectos de ley", "Noticias", "Sesiones"],
+tipo = cols[2].selectbox("Tipo", ["Todo", "Proyectos de ley", "Noticias", "Sesiones", "Alertas enviadas"],
                          label_visibility="collapsed")
 k = cols[3].selectbox("Resultados", [15, 30, 60], label_visibility="collapsed")
 st.caption(f"{total:,} documentos en el cerebro.")
@@ -70,7 +70,7 @@ st.caption(f"{total:,} documentos en el cerebro.")
 if consulta.strip():
     from cerebro.embeddings import buscar
 
-    tipo_db = {"Proyectos de ley": "pl", "Noticias": "noticia", "Sesiones": "sesion"}.get(tipo)
+    tipo_db = {"Proyectos de ley": "pl", "Noticias": "noticia", "Sesiones": "sesion", "Alertas enviadas": "alerta"}.get(tipo)
     with st.spinner("Buscando..."):
         try:
             resultados = buscar(consulta, k=k, tipo=tipo_db,
@@ -78,7 +78,7 @@ if consulta.strip():
         except Exception as e:
             st.error(f"No se pudo buscar: {e}")
             resultados = []
-    etiqueta = {"pl": "Proyecto de ley", "noticia": "Noticia", "sesion": "Sesión"}
+    etiqueta = {"pl": "Proyecto de ley", "noticia": "Noticia", "sesion": "Sesión", "alerta": "Alerta enviada"}
     # Sin el puntaje crudo ("afinidad 0.56" confundia - feedback de Nicolas
     # 2026-09-27): el orden ya dice que es lo mas parecido.
     if resultados:
