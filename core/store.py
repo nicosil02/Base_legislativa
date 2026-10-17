@@ -1,4 +1,5 @@
-"""Archivos JSON del repo leidos y escritos con la Contents API de GitHub.
+"""Archivos del repo (JSON o texto) leidos y escritos con la Contents API de
+GitHub.
 
 La app de Streamlit no puede escribir en disco de forma duradera (se borra en
 cada redeploy), asi que lo que marca la gente desde la UI se guarda como un
@@ -33,15 +34,23 @@ def _pedir(url: str, token: str, data: dict | None = None, timeout: int = 10):
         return json.loads(resp.read() or b"{}")
 
 
-def _leer_local(path: str, default: Any) -> Any:
+def _texto_local(path: str, default: str | None) -> str | None:
     p = ROOT / path
     try:
-        return json.loads(p.read_text(encoding="utf-8")) if p.exists() else default
-    except (OSError, ValueError):
+        return p.read_text(encoding="utf-8") if p.exists() else default
+    except OSError:
         return default
 
 
-def leer(path: str, default: Any) -> tuple[Any, str | None]:
+def _leer_local(path: str, default: Any) -> Any:
+    """El JSON del checkout local, sin pasar por GitHub."""
+    try:
+        return json.loads(_texto_local(path, None) or "null") or default
+    except ValueError:
+        return default
+
+
+def leer_texto(path: str, default: str | None = None) -> tuple[str | None, str | None]:
     """(contenido, sha). Archivo que no existe en GitHub -> default. Si
     GitHub falla por otra razon, la copia local del repo."""
     cfg = _cfg()
@@ -49,13 +58,55 @@ def leer(path: str, default: Any) -> tuple[Any, str | None]:
         token, repo, branch = cfg
         try:
             d = _pedir(f"https://api.github.com/repos/{repo}/contents/{path}?ref={branch}", token)
-            return json.loads(base64.b64decode(d.get("content", "")).decode("utf-8")), d.get("sha")
+            return base64.b64decode(d.get("content", "")).decode("utf-8"), d.get("sha")
         except urllib.error.HTTPError as e:
             if e.code == 404:
                 return default, None
         except Exception:
             pass
-    return _leer_local(path, default), None
+    return _texto_local(path, default), None
+
+
+def _escribir_texto(path: str, texto: str, mensaje: str, sha: str | None) -> None:
+    cfg = _cfg()
+    if cfg:
+        token, repo, branch = cfg
+        body = {"message": mensaje, "branch": branch,
+                "content": base64.b64encode(texto.encode("utf-8")).decode("ascii")}
+        if sha:
+            body["sha"] = sha
+        try:
+            _pedir(f"https://api.github.com/repos/{repo}/contents/{path}", token, body, timeout=15)
+        except urllib.error.HTTPError as e:
+            raise RuntimeError(f"GitHub PUT fallo: {e.code} "
+                               f"{e.read().decode('utf-8', 'replace')[:300]}") from None
+    else:
+        p = ROOT / path
+        p.parent.mkdir(parents=True, exist_ok=True)
+        p.write_text(texto, encoding="utf-8")
+
+
+def actualizar_texto(path: str, cambio: Callable[[str], str | None], mensaje: str,
+                     default: str = "") -> str:
+    """Como actualizar(), para archivos de texto (ej. un .md)."""
+    texto, sha = leer_texto(path, default)
+    nuevo = cambio(texto if texto is not None else default)
+    if nuevo is None:
+        return texto
+    _escribir_texto(path, nuevo, mensaje, sha)
+    _cache.pop(path, None)
+    return nuevo
+
+
+def leer(path: str, default: Any) -> tuple[Any, str | None]:
+    """(contenido JSON, sha). Mismas reglas que leer_texto()."""
+    texto, sha = leer_texto(path)
+    if texto is None:
+        return default, sha
+    try:
+        return json.loads(texto), sha
+    except ValueError:
+        return default, sha
 
 
 def cargar(path: str, default: Any, ttl: float = 300) -> Any:
@@ -76,22 +127,6 @@ def actualizar(path: str, cambio: Callable[[Any], Any], mensaje: str, default: A
     nuevo = cambio(data)
     if nuevo is None:
         return data
-    texto = json.dumps(nuevo, ensure_ascii=False, indent=2)
-    cfg = _cfg()
-    if cfg:
-        token, repo, branch = cfg
-        body = {"message": mensaje, "branch": branch,
-                "content": base64.b64encode(texto.encode("utf-8")).decode("ascii")}
-        if sha:
-            body["sha"] = sha
-        try:
-            _pedir(f"https://api.github.com/repos/{repo}/contents/{path}", token, body, timeout=15)
-        except urllib.error.HTTPError as e:
-            raise RuntimeError(f"GitHub PUT fallo: {e.code} "
-                               f"{e.read().decode('utf-8', 'replace')[:300]}") from None
-    else:
-        p = ROOT / path
-        p.parent.mkdir(parents=True, exist_ok=True)
-        p.write_text(texto, encoding="utf-8")
+    _escribir_texto(path, json.dumps(nuevo, ensure_ascii=False, indent=2), mensaje, sha)
     _cache[path] = (time.time(), nuevo)
     return nuevo

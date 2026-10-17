@@ -19,7 +19,7 @@ import pandas as pd
 import streamlit as st
 
 from scraper.categorias import CATEGORIA_CLIENTES_PL
-from alerts.borradores_store import marcar_pendiente
+from alerts import armar
 from clientes.matrices import matriz_bayer_crop, matriz_incode_ec
 from ui_kit import inject_theme
 
@@ -818,7 +818,7 @@ with tab_comision:
 
         # ---------- Marcar PL de agenda para alerta ----------
         if clientes and not df_agenda_show.empty:
-            st.markdown("##### 📌 Marcar PL para alerta")
+            st.markdown("##### ✍️ Armar alerta de un PL")
             opciones_pl = {
                 f"{row['PL']} · {row['Título'][:70]}": idx
                 for idx, row in df_agenda_show.iterrows()
@@ -843,22 +843,15 @@ with tab_comision:
                 st.caption("Click en una fila de la tabla para elegirla acá, o buscala manualmente:")
             mca = st.columns([3, 2, 1])
             sel_pl_label = mca[0].selectbox("¿Qué PL?", _opciones_labels, key="marcar_agenda_ec_pl_sel")
-            sel_pl_clientes = mca[1].multiselect("¿Para qué cliente(s)?", clientes,
-                                                  placeholder="Elige uno o más clientes", key="marcar_agenda_ec_pl_cli")
-            if mca[2].button("Marcar", key="marcar_agenda_ec_pl_btn", disabled=not sel_pl_clientes):
+            sel_pl_cliente = mca[1].selectbox("¿Para qué cliente?", clientes, index=None,
+                                              placeholder="Elige el cliente", key="marcar_agenda_ec_pl_cli")
+            if mca[2].button("✍️ Armar alerta", key="marcar_agenda_ec_pl_btn", disabled=not sel_pl_cliente,
+                             type="primary"):
                 row = df_agenda_show.loc[opciones_pl[sel_pl_label]]
-                # Mismo esquema "pl_EC_<n_tramite>" que pages/2_Ecuador.py, para
-                # que marcar el mismo PL desde cualquiera de las dos paginas
-                # caiga en la MISMA entrada (marcar_pendiente hace upsert).
-                item_id = f"pl_EC_{row['PL']}"
-                marcar_pendiente(
-                    clientes=sel_pl_clientes, item_id=item_id, item_tipo="pl",
-                    pais="EC", item_titulo=f"{row['PL']}: {row['Título']}",
-                    item_url=str(row["Nº trámite"]).split("#")[0],
-                    item_resumen=f"En agenda de {row['Comisión']} - {row['Estado del PL']}",
-                    creado_por=st.user.get("email"),
-                )
-                st.success(f"Marcado para: {', '.join(sel_pl_clientes)}. El agente lo redacta en la próxima hora.")
+                armar.ir_al_chat([armar.item(
+                    f"PL {row['PL']}: {row['Título']}", str(row["Nº trámite"]).split("#")[0],
+                    f"En agenda de {row['Comisión']} - {row['Estado del PL']}", "EC", tipo="pl")],
+                    sel_pl_cliente)
 
 
 with tab_transcripciones:

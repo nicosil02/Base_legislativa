@@ -23,8 +23,10 @@ def _leer(path: Path) -> str:
 def construir_system_prompt(slug: str) -> str:
     """Contexto completo del cliente, igual al que tendria Nicolas leyendo
     todo a mano - no una version resumida/vectorizada."""
+    from alerts.historial import leer as leer_historial
+
     notas = _leer(CLIENTES_DIR / slug / "notas.md")
-    historial = _leer(CLIENTES_DIR / slug / "historial_alertas.md")
+    historial = leer_historial(slug)
     formato = _leer(CLIENTES_DIR / "_plantillas" / "whatsapp_alerta.md")
     ejemplos = _leer(CLIENTES_DIR / "_plantillas" / "ejemplos_alertas.md")
 
@@ -53,6 +55,47 @@ analisis, no como dato de relleno separado) ===
 redaccion real del equipo, estudiala) ===
 {ejemplos}
 """
+
+
+_ETIQUETA = {"pl": "PL", "noticia": "Noticia", "sesion": "Sesión", "alerta": "Alerta enviada"}
+
+
+def contexto_relacionado(consulta: str, pais: str | None = None, k: int = 8,
+                         excluir_url: str | None = None) -> str:
+    """Lo que el cerebro tiene parecido a `consulta` (PL, sesiones, noticias
+    y alertas anteriores), una linea por item, sin links (Gemini no los abre).
+    "" si el cerebro no esta."""
+    try:
+        from cerebro.embeddings import buscar, descargar_si_falta
+        if not descargar_si_falta():
+            return ""
+        res = buscar(consulta[:600], k=k + 1, pais=pais)
+    except Exception as e:
+        print(f"[chat] cerebro no disponible: {e}")
+        return ""
+    lineas = [f"- [{_ETIQUETA.get(r['tipo'], r['tipo'])} · {r.get('fecha') or 's/f'}] {r.get('titulo')}"
+              for r in res if not excluir_url or r.get("url") != excluir_url]
+    return "\n".join(lineas[:k])
+
+
+def mensaje_inicial(semilla: dict, contexto: str) -> str:
+    """Primer mensaje del chat cuando se llega desde "Armar alerta"."""
+    items = semilla["items"]
+    bloques = []
+    for i, it in enumerate(items):
+        cab = "Principal" if i == 0 and len(items) > 1 else ("Otra fuente" if i else "Material")
+        bloques.append("\n".join(x for x in (
+            f"[{cab}] {it['titulo']}",
+            " · ".join(p for p in (it.get("fuente"), it.get("fecha"), it.get("pais")) if p),
+            it.get("resumen") or "", it.get("url") or "") if x))
+    partes = [f"Armá la alerta para {semilla['cliente']} a partir de esto:", *bloques]
+    if semilla.get("por_que"):
+        partes.append(f"Por qué le interesaría (filtro automático): {semilla['por_que']}")
+    if contexto:
+        partes.append("Contexto relacionado que encontré en el cerebro (PL, sesiones, noticias y "
+                      "alertas anteriores). Usalo solo si de verdad se conecta:\n" + contexto)
+    partes.append("Si falta información para escribirla bien, preguntame antes de inventar.")
+    return "\n\n".join(partes)
 
 
 def nueva_conversacion(slug: str, historial: list[dict] | None = None):

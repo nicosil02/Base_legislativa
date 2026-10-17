@@ -11,7 +11,7 @@ from pathlib import Path
 import pandas as pd
 import streamlit as st
 
-from alerts.borradores_store import marcar_pendiente
+from alerts import armar
 from congreso_live.resumenes_store import list_resumenes
 from noticias.videos import PEDIDOS_DIR, pedir_transcripcion
 
@@ -56,18 +56,9 @@ def _card(fuente: str, fecha: str, titulo: str, url: str, cuerpo: str, etiquetas
         unsafe_allow_html=True)
 
 
-def _marcar(key: str, pais: str, titulo: str, url: str, resumen: str | None, clientes: list[str]) -> None:
-    with st.popover("📌 Marcar", help="Marcar para que se redacte una alerta de esto"):
-        sel = st.multiselect("¿Para qué cliente(s)?", clientes, placeholder="Elige uno o más clientes",
-                             key=f"marcar_cli_{key}")
-        if st.button("Marcar", key=f"marcar_btn_{key}", disabled=not sel):
-            try:
-                email = st.user.get("email")
-            except Exception:
-                email = None
-            marcar_pendiente(clientes=sel, item_id=key, item_tipo="video", pais=pais,
-                             item_titulo=titulo, item_url=url, item_resumen=resumen, creado_por=email)
-            st.success(f"Marcado para: {', '.join(sel)}.")
+def _marcar(key: str, pais: str, titulo: str, url: str, resumen: str | None, clientes: list[str],
+            fuente: str | None = None, fecha: str | None = None) -> None:
+    armar.boton([armar.item(titulo, url, resumen, pais, fuente, fecha, tipo="video")], clientes, key=key)
 
 
 def _transcripcion(key: str, titulo: str, url: str, texto: str, nombre: str) -> None:
@@ -164,7 +155,8 @@ def contenido(conn: sqlite3.Connection, pais: str, clientes: list[str]) -> None:
               [r.autoridad, f"{int((r.duracion_seg or 0) // 60)} min"])
         c = st.columns([6, 2, 2])
         with c[1]:
-            _marcar(f"video_{r.video_id}", pais, r.titulo, url, res.get("resumen"), clientes)
+            _marcar(f"video_{r.video_id}", pais, r.titulo, url, res.get("resumen"), clientes,
+                    r.canal, r.first_seen_at)
         pedido = r.video_id in pedidos_ss or (_RAIZ / PEDIDOS_DIR / f"{r.video_id}.json").exists()
         if transcrito:
             _transcripcion(r.video_id, r.titulo, url, r.texto, f"{r.autoridad} - {r.video_id}")
@@ -210,7 +202,8 @@ def contenido(conn: sqlite3.Connection, pais: str, clientes: list[str]) -> None:
         _card(f"{r.canal} · {donde}", r.first_seen_at, r.titulo, url, f"«{frag}»{tambien}", terminos)
         c = st.columns([6, 2, 2])
         with c[1]:
-            _marcar(f"tv_{r.video_id}_{r.t_seg}", pais, r.titulo, url, r.fragmento, clientes)
+            _marcar(f"tv_{r.video_id}_{r.t_seg}", pais, r.titulo, url, r.fragmento, clientes,
+                    r.canal, r.first_seen_at)
         if isinstance(r.texto, str) and r.texto:
             _transcripcion(f"{r.video_id}_{r.t_seg}", r.titulo, url, r.texto, f"{r.canal} - {r.video_id}")
 

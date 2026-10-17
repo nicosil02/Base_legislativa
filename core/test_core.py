@@ -40,5 +40,14 @@ def test_store_local(tmp_path, monkeypatch):
     assert store.cargar("data/x.json", []) == [1]
 
 
+def test_store_texto_local(tmp_path, monkeypatch):
+    monkeypatch.delenv("GH_TOKEN", raising=False)
+    monkeypatch.setattr(store, "ROOT", tmp_path)
+    assert store.leer_texto("c/h.md", "") == ("", None)
+    store.actualizar_texto("c/h.md", lambda t: t + "uno\n", "msg")
+    store.actualizar_texto("c/h.md", lambda t: t + "dos\n", "msg")
+    assert (tmp_path / "c/h.md").read_text(encoding="utf-8") == "uno\ndos\n"
+
+
 def test_lima():
     assert tiempo.ahora_lima().utcoffset().total_seconds() == -5 * 3600
