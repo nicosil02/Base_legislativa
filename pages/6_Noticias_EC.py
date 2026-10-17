@@ -9,6 +9,7 @@ por el modulo noticias/ y el workflow refrescar-pe.yml.
 """
 from __future__ import annotations
 
+import html
 import datetime as dt
 import sqlite3
 from pathlib import Path
@@ -24,7 +25,7 @@ from noticias.fuentes import (
     INSTITUCIONES_AMPLIAS, TEMAS_CLIENTE, PERFIL_ESTRICTO, matchea_perfil,
     FUENTES_GENERALISTAS_FILTRAR_RUIDO,
 )
-from alerts.borradores_store import marcar_pendiente
+from alerts import armar
 from clientes.matrices import pls_trackeados_ec, coincide_con_noticia
 from noticias.feedback_store import deshacer_descarte, list_descartadas, registrar_descarte
 from ui_kit import inject_theme
@@ -568,6 +569,19 @@ if not df.empty:
                               "(su notas.md) y esconde lo que no le toca a ninguno. Apágalo para ver todo."):
                 df = df[_relevante]
 
+# Veredicto de Gemini por cliente (alerts/filtro.py): ¿merece alerta y por que?
+_interesa: dict[int, list[tuple[str, str]]] = {}
+if not df.empty:
+    from cerebro.ui import le_interesa
+    _interesa = le_interesa(tuple(int(i) for i in df["ID"]))
+    if sel_cliente != TODOS:
+        _interesa = {k: [x for x in v if x[0] == sel_cliente] for k, v in _interesa.items()}
+        _interesa = {k: v for k, v in _interesa.items() if v}
+    if _interesa and st.toggle(f"✍️ Solo las que merecen alerta ({len(_interesa)})", value=False,
+                               help="Gemini leyó cada noticia con el bluebook y las alertas anteriores "
+                                    "de cada cliente y marcó las que merecen alerta."):
+        df = df[df["ID"].map(lambda i: int(i) in _interesa)]
+
 _orden_afinidad = False
 if sel_cliente != TODOS and not df.empty:
     from cerebro.ui import afinidad_noticias
@@ -681,6 +695,8 @@ def _render_card(n, key_suffix: str = "") -> None:
         + (f'<div class="noticia-resumen">{resumen}</div>' if resumen else '')
         + _chips(temas_list, es_norma)
         + _chip_afinidad(n)
+        + "".join(f'<div class="noticia-resumen" style="margin-top:6px;">💡 <b>{html.escape(c)}</b>: '
+                  f'{html.escape(p)}</div>' for c, p in _interesa.get(nid, []))
         + pl_html
         + '</div>',
         unsafe_allow_html=True,
@@ -690,17 +706,11 @@ def _render_card(n, key_suffix: str = "") -> None:
         full_id = f"noticia_{PAIS}_{nid}"
         resumen_completo = _s(n["Resumen"]).strip()
         cols = st.columns([5, 2, 2, 2])
-        with cols[1].popover("📌 Marcar", help="Marcar para que se redacte una alerta de esto"):
-            sel = st.multiselect("¿Para qué cliente(s)?", clientes,
-                             placeholder="Elige uno o más clientes", key=f"marcar_cli{sfx}")
-            if st.button("Marcar", key=f"marcar_btn{sfx}", disabled=not sel):
-                marcar_pendiente(
-                    clientes=sel, item_id=full_id, item_tipo="noticia",
-                    pais=PAIS, item_titulo=titulo, item_url=n["Enlace"],
-                    item_resumen=resumen_completo or None,
-                    creado_por=st.user.get("email"),
-                )
-                st.success(f"Marcado para: {', '.join(sel)}. El agente lo redacta en la próxima hora.")
+        _por = dict(_interesa.get(nid, []))
+        _cli = sel_cliente if sel_cliente != TODOS else next(iter(_por), None)
+        armar.boton([armar.item(titulo, n["Enlace"], resumen_completo or None, PAIS,
+                                n["Fuente"], fecha)],
+                    clientes, key=f"n{sfx}", contenedor=cols[1], cliente=_cli, por_que=_por.get(_cli))
         if cols[2].button("✕ Descartar", key=f"desc{sfx}", type="primary",
                           help="No aparecerá más — se puede deshacer arriba de la lista"):
             _feedback_descartar(nid)
@@ -723,7 +733,7 @@ def _render_card(n, key_suffix: str = "") -> None:
             if marcado:
                 combinar_items[full_id] = {
                     "item_titulo": titulo, "item_url": n["Enlace"],
-                    "item_resumen": resumen_completo or None, "fuente": n["Fuente"],
+                    "item_resumen": resumen_completo or None, "fuente": n["Fuente"], "fecha": fecha,
                 }
             else:
                 combinar_items.pop(full_id, None)
@@ -788,26 +798,19 @@ if _combinar_items:
         list(_opciones.keys()), key="combinar_principal",
     )
     _principal_id = _opciones[_principal_label]
-    _sel_cli = st.multiselect("¿Para qué cliente(s)?", clientes,
-                             placeholder="Elige uno o más clientes", key="combinar_clientes")
-    if st.button("Combinar en una alerta", disabled=not _sel_cli, key="combinar_confirmar"):
-        _principal = _combinar_items[_principal_id]
-        _adicionales = [
-            {"item_titulo": v["item_titulo"], "item_url": v["item_url"]}
-            for k, v in _combinar_items.items() if k != _principal_id
-        ]
-        marcar_pendiente(
-            clientes=_sel_cli, item_id=_principal_id, item_tipo="noticia",
-            pais=PAIS, item_titulo=_principal["item_titulo"], item_url=_principal["item_url"],
-            item_resumen=_principal["item_resumen"], fuentes_adicionales=_adicionales or None,
-            creado_por=st.user.get("email"),
-        )
+    _cli = st.selectbox("¿Para qué cliente?", clientes, index=None,
+                        placeholder="Elige el cliente", key="combinar_cliente")
+    if st.button("✍️ Armar una alerta con estas", disabled=not _cli, key="combinar_confirmar",
+                 type="primary"):
+        _orden = [_principal_id] + [k for k in _ids if k != _principal_id]
+        _items = [armar.item(_combinar_items[k]["item_titulo"], _combinar_items[k]["item_url"],
+                             _combinar_items[k]["item_resumen"], PAIS, _combinar_items[k]["fuente"],
+                             _combinar_items[k].get("fecha")) for k in _orden]
         st.session_state["combinar_items"] = {}
         for _k in list(st.session_state.keys()):
             if _k.startswith("combinar_chk"):
                 del st.session_state[_k]
-        st.success(f"Combinadas {len(_ids)} noticias en una alerta para: {', '.join(_sel_cli)}.")
-        st.rerun()
+        armar.ir_al_chat(_items, _cli)
 
 
 # ---------- PL de interés (matriz de cliente) - colapsado, no es para todos ----------

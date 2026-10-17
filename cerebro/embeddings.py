@@ -96,7 +96,7 @@ def conectar(path: Path | None = None) -> sqlite3.Connection:
         CREATE TABLE IF NOT EXISTS items (
             id INTEGER PRIMARY KEY,
             clave TEXT UNIQUE NOT NULL,   -- ej. pl_PE_00438-2026-2031-CD, noticia_123, sesion_fb_111
-            tipo TEXT NOT NULL,           -- pl | noticia | sesion
+            tipo TEXT NOT NULL,           -- pl | noticia | sesion | alerta
             pais TEXT NOT NULL,           -- PE | EC
             titulo TEXT, fecha TEXT, url TEXT, extra TEXT,
             hash TEXT NOT NULL            -- del texto embebido: si cambia, se re-embebe
@@ -254,6 +254,25 @@ def corpus() -> list[dict]:
                                               ensure_ascii=False),
                           "texto": f"{r[1] or ''}. Comision: {r[3] or '-'}"})
         c.close()
+    items += alertas()
+    return items
+
+
+def alertas() -> list[dict]:
+    """Alertas ya enviadas (clientes/*/historial_alertas.md), tipo "alerta"."""
+    from alerts import historial
+    items = []
+    for slug in historial.clientes():
+        for i, e in enumerate(historial.entradas(slug)):
+            titulo = re.search(r"\*\*(.+?)\*\*", e["cuerpo"])
+            url = re.search(r"Fuente:\s*(\S+)", e["cuerpo"])
+            items.append({"clave": f"alerta_{slug}_{i}", "tipo": "alerta",
+                          "pais": "EC" if "Ecuador" in e["encabezado"] else "PE",
+                          "titulo": f"{slug}: {titulo.group(1) if titulo else e['encabezado']}",
+                          "fecha": e["fecha"], "url": url.group(1) if url else None,
+                          "extra": json.dumps({"cliente": slug, "encabezado": e["encabezado"]},
+                                              ensure_ascii=False),
+                          "texto": f"Alerta para {slug}. {e['cuerpo']}"})
     return items
 
 

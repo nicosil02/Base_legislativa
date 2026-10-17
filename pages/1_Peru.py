@@ -19,7 +19,7 @@ import streamlit as st
 
 from scraper.sync import FECHA_INICIO_BICAMERAL, PER_PAR_ID_ACTUAL
 from scraper.categorias import CATEGORIA_CLIENTES_PL
-from alerts.borradores_store import marcar_pendiente
+from alerts import armar
 from clientes.matrices import matriz_bayer_crop
 from ui_kit import inject_theme, render_evolucion_mensual
 
@@ -1206,10 +1206,8 @@ tabla_pls = st.dataframe(
     selection_mode="single-row",
 )
 
-# ---------- Marcar PL para alerta ----------
-# Mismo mecanismo que Noticias PE/EC (alerts/borradores_store.marcar_pendiente)
-# pero para PLs - deja marcar un PL nuevo o que avanzo (ver columna "Último
-# cambio") para que el agente programado redacte una alerta. item_tipo="pl".
+# ---------- Armar alerta de un PL ----------
+# Lleva el PL elegido al chat de Alertas (alerts/armar.py), igual que Noticias.
 #
 # Auditoria de UX 2026-09-13: este panel estaba totalmente desacoplado de la
 # tabla de arriba - un dropdown aparte que obligaba a re-buscar por texto el
@@ -1225,7 +1223,7 @@ except AttributeError:
     pass
 
 if clientes and not df.empty:
-    st.markdown("##### 📌 Marcar PL para alerta")
+    st.markdown("##### ✍️ Armar alerta de un PL")
     opciones_pl = {
         f"{row['PL']} · {row['Título'][:70]}": idx
         for idx, row in df.iterrows()
@@ -1252,22 +1250,12 @@ if clientes and not df.empty:
         st.caption("Click en una fila de la tabla para elegirla acá, o buscala manualmente:")
     mc = st.columns([3, 2, 1])
     sel_pl_label = mc[0].selectbox("¿Qué PL?", _opciones_labels, key="marcar_pl_sel")
-    sel_pl_clientes = mc[1].multiselect("¿Para qué cliente(s)?", clientes,
-                                         placeholder="Elige uno o más clientes", key="marcar_pl_cli")
-    if mc[2].button("Marcar", key="marcar_pl_btn", disabled=not sel_pl_clientes):
+    sel_pl_cliente = mc[1].selectbox("¿Para qué cliente?", clientes, index=None,
+                                     placeholder="Elige el cliente", key="marcar_pl_cli")
+    if mc[2].button("✍️ Armar alerta", key="marcar_pl_btn", disabled=not sel_pl_cliente, type="primary"):
         row = df.loc[opciones_pl[sel_pl_label]]
-        # item_id = "pl_PE_<proyecto_ley>" (ej. "pl_PE_00011-2026-2031-CD") -
-        # mismo esquema que pages/3_Agenda_PE.py, para que marcar el mismo PL
-        # desde cualquiera de las dos paginas caiga en la MISMA entrada
-        # (marcar_pendiente hace upsert por cliente+item_id).
-        item_id = f"pl_PE_{row['PL']}"
-        marcar_pendiente(
-            clientes=sel_pl_clientes, item_id=item_id, item_tipo="pl",
-            pais="PE", item_titulo=f"{row['PL']}: {row['Título']}",
-            item_url=row["Portal"], item_resumen=row.get("Estado"),
-            creado_por=st.user.get("email"),
-        )
-        st.success(f"Marcado para: {', '.join(sel_pl_clientes)}. El agente lo redacta en la próxima hora.")
+        armar.ir_al_chat([armar.item(f"PL {row['PL']}: {row['Título']}", row["Portal"],
+                                     f"Estado: {row.get('Estado')}", "PE", tipo="pl")], sel_pl_cliente)
 
 
 # ---------- Footer ----------

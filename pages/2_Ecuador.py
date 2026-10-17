@@ -17,7 +17,7 @@ import pandas as pd
 import streamlit as st
 
 from scraper.categorias import CATEGORIA_CLIENTES_PL
-from alerts.borradores_store import marcar_pendiente
+from alerts import armar
 from ui_kit import inject_theme, render_evolucion_mensual
 from clientes.matrices import matriz_bayer_crop, matriz_incode_ec
 from noticias.avances_ec import noticias_tramite_recientes
@@ -838,14 +838,12 @@ _fila_seleccionada = None
 if selected_rows and selected_rows[0] < len(df):
     _fila_seleccionada = df.iloc[selected_rows[0]]
 
-# ---------- Marcar PL para alerta ----------
-# Mismo mecanismo que Noticias PE/EC (alerts/borradores_store.marcar_pendiente)
-# pero para PLs - deja marcar un PL nuevo o que avanzo (ver columna "Presentado"/
-# "Estado") para que el agente programado redacte una alerta. item_tipo="pl".
+# ---------- Armar alerta de un PL ----------
+# Lleva el PL elegido al chat de Alertas (alerts/armar.py), igual que Noticias.
 # Auditoria de UX 2026-09-13: este panel estaba desacoplado de la tabla -
 # ahora clickear una fila (selection_mode="single-row" arriba) la preselecciona.
 if clientes and not df.empty:
-    st.markdown("##### 📌 Marcar PL para alerta")
+    st.markdown("##### ✍️ Armar alerta de un PL")
     opciones_pl = {
         f"{row['_n_tramite_label']} · {row['Título'][:70]}": idx
         for idx, row in df.iterrows()
@@ -872,18 +870,13 @@ if clientes and not df.empty:
         st.caption("Click en una fila de la tabla para elegirla acá, o buscala manualmente:")
     mc = st.columns([3, 2, 1])
     sel_pl_label = mc[0].selectbox("¿Qué PL?", _opciones_labels, key="marcar_pl_sel")
-    sel_pl_clientes = mc[1].multiselect("¿Para qué cliente(s)?", clientes,
-                                         placeholder="Elige uno o más clientes", key="marcar_pl_cli")
-    if mc[2].button("Marcar", key="marcar_pl_btn", disabled=not sel_pl_clientes):
+    sel_pl_cliente = mc[1].selectbox("¿Para qué cliente?", clientes, index=None,
+                                     placeholder="Elige el cliente", key="marcar_pl_cli")
+    if mc[2].button("✍️ Armar alerta", key="marcar_pl_btn", disabled=not sel_pl_cliente, type="primary"):
         row = df.loc[opciones_pl[sel_pl_label]]
-        item_id = f"pl_EC_{row['_n_tramite_label']}"
-        marcar_pendiente(
-            clientes=sel_pl_clientes, item_id=item_id, item_tipo="pl",
-            pais="EC", item_titulo=f"{row['_n_tramite_label']}: {row['Título']}",
-            item_url=str(row["N. Trámite"]).split("#")[0], item_resumen=row.get("Estado"),
-            creado_por=st.user.get("email"),
-        )
-        st.success(f"Marcado para: {', '.join(sel_pl_clientes)}. El agente lo redacta en la próxima hora.")
+        armar.ir_al_chat([armar.item(f"PL {row['_n_tramite_label']}: {row['Título']}",
+                                     str(row["N. Trámite"]).split("#")[0],
+                                     f"Estado: {row.get('Estado')}", "EC", tipo="pl")], sel_pl_cliente)
 
 
 # ---------- Panel de documentos del proyecto seleccionado ----------
