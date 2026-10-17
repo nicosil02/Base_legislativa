@@ -1,7 +1,6 @@
 """Videos de YouTube donde aparecen las autoridades que seguimos
-(entrevistas en TV, declaraciones, conferencias). Pedido de Nicolas
-2026-09-28: "vinelli tuvo entrevista este finde.. quiero poder descargar
-ese video y hacer la transcripcion y resumen".
+(entrevistas en TV, declaraciones, conferencias), para transcribirlos y
+resumirlos.
 
 Flujo:
 1. `buscar()` (backfill-auto.yml, con WARP) busca en YouTube lo subido
@@ -28,13 +27,14 @@ import sys
 import urllib.error
 import urllib.parse
 import urllib.request
-from datetime import datetime, timezone
 from pathlib import Path
+
+from core.db import now_iso
+from core.text import norm as _norm  # videos_ui lo importa con este nombre
 
 log = logging.getLogger(__name__)
 
-# (nombre para buscar, cargo). Nombres sacados de las noticias reales de la
-# base (2026-09-28). Editar aca cuando cambie el gabinete.
+# (nombre para buscar, cargo). Editar aca cuando cambie el gabinete.
 AUTORIDADES: dict[str, list[tuple[str, str]]] = {
     "PE": [
         ("Keiko Fujimori", "Presidenta"),
@@ -60,10 +60,9 @@ AUTORIDADES: dict[str, list[tuple[str, str]]] = {
 # titulos no vengan auto-traducidos al ingles.
 _SP_ESTA_SEMANA = "EgIIAw%253D%253D"
 POR_AUTORIDAD = 20
-# Solo medios formales (TV, radio, diarios) y cuentas oficiales del Estado -
-# pedido de Nicolas 2026-09-28 ("en todos los medios tipo Epicentro, RPP,
-# canal 4"); antes se colaban canales de chismes y opinion. Substrings del
-# nombre del canal, sin tildes y en minusculas.
+# Solo medios formales (TV, radio, diarios) y cuentas oficiales del Estado:
+# sin esto se colaban canales de chismes y opinion. Substrings del nombre
+# del canal, sin tildes y en minusculas.
 MEDIOS = (
     "rpp", "epicentro", "willax", "america", "latina", "panamericana", "panorama",
     "buenos dias peru", "exitosa", "tvperu", "tv peru", "atv", "canal n", "cuarto poder",
@@ -91,11 +90,6 @@ CREATE TABLE IF NOT EXISTS videos_autoridades (
   duracion_seg INTEGER,
   first_seen_at TEXT NOT NULL
 )"""
-
-
-def _norm(s: str | None) -> str:
-    from congreso_live.detector import _norm as n
-    return n(s)
 
 
 def es_relevante(entry: dict, nombre: str) -> bool:
@@ -128,7 +122,7 @@ def buscar(db_path: str | Path) -> int:
     agrego. Si falla una autoridad (bloqueo de YouTube) sigue con las demas."""
     conn = sqlite3.connect(str(db_path))
     conn.execute(SCHEMA)
-    ahora = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    ahora = now_iso()
     nuevos = 0
     for pais, lista in AUTORIDADES.items():
         for nombre, cargo in lista:
@@ -162,7 +156,7 @@ def pedir_transcripcion(video_id: str, autoridad: str, pais: str, titulo: str) -
     """Crea data/videos_pedidos/<video_id>.json en GitHub. Ese push dispara
     backfill-auto.yml. Un archivo por pedido: no hay que leer ni mezclar
     nada, y pedir dos veces el mismo video da 422 (ya existe), que se
-    toma como exito."""
+    toma como exito. Por eso no usa core.store (que lee y reescribe)."""
     token, repo = os.environ.get("GH_TOKEN"), os.environ.get("GH_REPO")
     if not token or not repo:
         raise RuntimeError("Faltan GH_TOKEN/GH_REPO para pedir la transcripción")
@@ -196,33 +190,9 @@ def pedidos(raiz: str | Path = ".") -> list[dict]:
     return salida
 
 
-def _demo():
-    import tempfile
-    assert es_relevante({"title": "#Entrevista | Marco Vinelli - Ministro", "duration": 990,
-                         "channel": "Catequil Televisión | Cuarto Poder"}, "Marco Vinelli")  # re-sube Cuarto Poder
-    assert es_relevante({"title": "MINISTRO VINELLI EN CUARTO PODER", "duration": 900,
-                         "channel": "América Noticias"}, "Marco Vinelli")
-    assert not es_relevante({"title": "¿CARLOS ESPÁ PROTAGONIZA...?", "duration": 900,
-                             "channel": "Pitucos Marrones"}, "Carlos Espá")
-    assert not es_relevante({"title": "Marco Vinelli: El Niño", "duration": 35}, "Marco Vinelli")
-    assert not es_relevante({"title": "KEIKO'S PLAN B", "duration": 118}, "Marco Vinelli")
-    assert not es_relevante({"title": "César Astudillo en vivo", "duration": 900, "live_status": "is_live"},
-                            "César Astudillo")
-    assert not es_relevante({"title": "Marco Vinelli (PE) - Casa Lunario", "duration": 3492,
-                             "channel": "Marco Vinelli"}, "Marco Vinelli")
-    assert tipo_de("Daniel Noboa", "EC") == "Entrevista: Daniel Noboa (EC)"
-    with tempfile.TemporaryDirectory() as td:
-        d = Path(td, PEDIDOS_DIR)
-        d.mkdir(parents=True)
-        (d / "abc.json").write_text(json.dumps(
-            {"video_id": "abc", "autoridad": "Marco Vinelli", "pais": "PE", "titulo": "t"}), encoding="utf-8")
-        assert pedidos(td) == [{"id": "abc", "titulo": "t", "tipo": "Entrevista: Marco Vinelli"}]
-    print("OK videos: filtro por apellido/duracion, tipo y lectura de pedidos")
-
-
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
     if len(sys.argv) == 3 and sys.argv[1] == "buscar":
         print(f"videos: {buscar(sys.argv[2])} nuevo(s)")
     else:
-        _demo()
+        sys.exit("Uso: python -m noticias.videos buscar DB_PATH")

@@ -6,5 +6,5 @@ Permanente y Consejo Directivo. Fuente: SPA visor-sesiones del Congreso
 (`https://wb2server.congreso.gob.pe/visor-sesiones/`), backend
 `service-portal-publico-ext`.
 
-El Pleno (adlp-visor) se trata en otro modulo (TBD).
+El Pleno esta en pleno/.
 """

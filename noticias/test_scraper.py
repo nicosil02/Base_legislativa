@@ -1,4 +1,3 @@
-"""Checks minimos de la logica nueva (gob.pe + RSS). Correr: python -m noticias.test_scraper"""
 from noticias import scraper as S
 
 
@@ -14,9 +13,7 @@ def test_fecha():
     assert S._parse_gobpe_date("15 de enero de 2026") == "2026-01-15T00:00:00Z"
     assert S._parse_gobpe_date("sin fecha") is None
     assert S._parse_gobpe_date(None) is None
-    # Bug real (2026-09-13): gob.pe usa "setiembre" (variante peruana sin la
-    # "p") en su API real - sin este alias, TODA fecha de setiembre fallaba
-    # el parseo en silencio.
+    # gob.pe escribe "setiembre".
     assert S._parse_gobpe_date("13 de setiembre de 2026 -  7:03 a. m.") == "2026-09-13T00:00:00Z"
 
 
@@ -93,10 +90,8 @@ def test_normas_titulo_legible():
 
 
 def test_html_listing_extrae_fecha_del_time_tag():
-    """Bug real reportado por Nicolas (2026-09-13): las fuentes sin RSS
-    (tipo 'html') siempre guardaban fecha_pub=None, y la app mostraba
-    first_seen_at (fecha del scrape) en vez de la fecha real de la noticia.
-    parse_html_listing ahora busca un <time datetime> cerca del titular."""
+    """parse_html_listing toma el <time datetime> cercano al titular; si no
+    hay, fecha_pub queda None."""
     relleno = "<p>" + ("lorem ipsum texto de relleno para separar items " * 6) + "</p>"
     html = f"""
     <div class="post">
@@ -116,12 +111,8 @@ def test_html_listing_extrae_fecha_del_time_tag():
 
 
 def test_backfill_extrae_fecha_de_pagina_real():
-    """Bug real reportado por Nicolas (2026-09-13): el sync normal solo
-    re-toca los items MAS RECIENTES por fuente, asi que filas historicas
-    con fecha_pub NULL (de antes del fix de "setiembre", o de fuentes sin
-    <time> en el listado) nunca se corrigen solas. backfill_fechas visita
-    el articulo real - via <time>, meta tags, o texto de fecha en español
-    (soporta "setiembre" via _parse_gobpe_date compartido)."""
+    """backfill_fechas saca la fecha del articulo: <time>, meta tags o texto
+    de fecha en español (con "setiembre")."""
     html_time = '<html><head></head><body><time datetime="2026-09-05T10:00:00-05:00">x</time></body></html>'
     assert S._extraer_fecha_de_pagina(html_time) == "2026-09-05T15:00:00Z"
 
@@ -133,10 +124,3 @@ def test_backfill_extrae_fecha_de_pagina_real():
 
     assert S._extraer_fecha_de_pagina("<html><body>sin fecha aca</body></html>") is None
 
-
-if __name__ == "__main__":
-    for name, fn in sorted(globals().items()):
-        if name.startswith("test_") and callable(fn):
-            fn()
-            print(f"OK {name}")
-    print("todos los checks pasaron")

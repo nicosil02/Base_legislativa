@@ -38,12 +38,8 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 GRAFO_DIR = REPO_ROOT / "data" / "grafo"
 RELEASE_URL = "https://github.com/nicosil02/Base_legislativa/releases/download/cerebro/grafo.tar.gz"
 
-# NO gemini-3.6-flash (el del chat de alertas/transcripciones): su tier
-# gratuito es 20 pedidos/dia y una corrida del grafo lo agoto entero
-# (2026-09-27). Cada modelo tiene su propio cupo gratuito, asi que el grafo
-# usa modelos livianos aparte - probados extrayendo entidades de un texto
-# real (SENASA/TC/PL/congresista/partido): flash-lite 1.4 s, gemma 30 s,
-# los dos sin errores. Gemma solo si flash-lite se queda sin cupo.
+# No gemini-3.6-flash: su cupo gratuito (20/día) es el de los chats y una
+# corrida del grafo lo agotó. Gemma solo si flash-lite se queda sin cupo.
 LLM = "gemini-3.5-flash-lite"
 LLM_RESPALDO = "gemma-4-26b-a4b-it"
 DIAS_PL = 60
@@ -51,9 +47,8 @@ DIAS_NOTICIAS = 30
 AFINIDAD_NOTICIA = 0.62  # ponytail: a ojo sobre la prueba de Bayer (0.68-0.72 lo relevante, <0.55 lo ajeno); calibrar
 MAX_DOCS_POR_CORRIDA = 40  # techo de llamadas al LLM por corrida (tier gratuito)
 
-# Formato que espera LightRAG 1.5 (addon_params["entity_types_guidance"]; la
-# lista "entity_types" vieja la ignora en silencio - verificado 2026-09-27:
-# el grafo salio con los tipos genericos Organization/Location).
+# LightRAG 1.5 lee addon_params["entity_types_guidance"]; la lista vieja
+# "entity_types" la ignora en silencio.
 TIPOS_ENTIDAD = """Clasifica cada entidad con uno de estos tipos. Si ninguno aplica, usa `Otro`.
 
 - ProyectoDeLey: proyectos de ley con su numero (ej. PL 00438-2026-2031-CD)
@@ -92,10 +87,8 @@ async def _rag():
     key = _clave_gemini()
 
     async def llm(prompt, system_prompt=None, history_messages=[], **kwargs):
-        # gemini_complete_if_cache directo (no gemini_model_complete): esa
-        # funcion IGNORA el model_name que se le pasa y usa siempre el
-        # llm_model_name configurado - bug real 2026-09-27, el "respaldo" a
-        # Gemma volvia a pegarle al mismo modelo saturado.
+        # gemini_model_complete ignora model_name y el respaldo a Gemma no
+        # cambiaba de modelo: por eso gemini_complete_if_cache directo.
         #   - 429 por MINUTO (flash-lite gratis = 15/min): esperar y reintentar.
         #   - 429 por DIA: pasar a Gemma (cupo propio).
         #   - 503 (saturacion de Google): esperar y reintentar.
@@ -121,11 +114,8 @@ async def _rag():
     # redactar respuestas.
     from cerebro.embeddings import DIM, MODELO, embeber
 
-    # max_token_size alto a proposito: con 128 (el limite real del modelo)
-    # LightRAG parte cada documento en pedazos de 128 tokens ANTES de extraer
-    # entidades - bug real 2026-09-27: 915 pedazos para 40 docs = ~20x mas
-    # llamadas a Gemini. El modelo local igual lee solo el comienzo de cada
-    # pedazo para su vector; la extraccion (Gemini) ve el texto completo.
+    # max_token_size alto a propósito: con 128 LightRAG parte cada documento
+    # antes de extraer entidades (~20x más llamadas a Gemini).
     @wrap_embedding_func_with_attrs(embedding_dim=DIM, max_token_size=8192, model_name=MODELO)
     async def emb(texts: list[str]) -> np.ndarray:
         return np.array(await asyncio.to_thread(embeber, texts), dtype=np.float32)
@@ -266,9 +256,7 @@ async def _construir(max_docs: int) -> dict:
         nuevos = [d for d in nuevos if d[0].startswith("cliente_")] + \
                  [d for d in nuevos if not d[0].startswith("cliente_")]
         lote = nuevos[:max_docs]
-        # LightRAG no deja volver a insertar un id que quedo FAILED ("File name
-        # already exists... Status: failed" - bug real 2026-09-27, los 38 docs
-        # de una corrida se trabaron asi): se borra primero y se reinserta.
+        # LightRAG no reinserta un id FAILED: se borra primero.
         for doc_id, _ in lote:
             if doc_id in fallidos:
                 await rag.adelete_by_doc_id(doc_id)
@@ -291,10 +279,7 @@ async def _preguntar(pregunta: str, modo: str) -> str:
         return await rag.aquery(pregunta, param=QueryParam(
             mode=modo,
             enable_rerank=False,  # no hay modelo de rerank configurado (evita el aviso)
-            # Sin saludo ni tono de IA: probado 2026-09-27, sin esto abria con
-            # "Estimado equipo y aliados de Vali Consultores". Mismas reglas de
-            # escritura que las alertas (feedback de Nicolas: español simple,
-            # sin dos puntos como conector, sin jerga).
+            # Mismas reglas de escritura que las alertas; sin esto abría con un saludo.
             user_prompt=("Responde en español simple y directo, sin saludo ni introducción. "
                          "Empieza por la respuesta. No uses los dos puntos como conector ni "
                          "frases de relleno. Cita los PL, sesiones y noticias concretos en que "
@@ -335,27 +320,8 @@ def descargar_si_falta(max_edad_seg: int = 3 * 3600) -> bool:
         return (GRAFO_DIR / "graph_chunk_entity_relation.graphml").exists()
 
 
-# ------------------------------------------------------------------ self-check
-
-def _demo():
-    """Sin red ni LLM: ids estables y solo dias cerrados."""
-    docs = documentos()
-    ids = [i for i, _ in docs]
-    assert len(ids) == len(set(ids)), "ids duplicados"
-    hoy = date.today().isoformat()
-    assert not any(i.endswith(hoy) for i in ids), "no debe incluir el dia en curso"
-    assert any(i.startswith("cliente_bayer_") for i in ids)
-    assert documentos() == docs, "debe ser determinista (mismos ids y textos)"
-    tipos = {}
-    for i, t in docs:
-        k = i.split("_")[0]
-        tipos[k] = tipos.get(k, 0) + 1
-    print(f"OK cerebro.grafo: {len(docs)} documentos con ids estables {tipos}, "
-          f"{sum(len(t) for _, t in docs):,} caracteres")
-
-
 if __name__ == "__main__":
-    cmd = sys.argv[1] if len(sys.argv) > 1 else "demo"
+    cmd = sys.argv[1] if len(sys.argv) > 1 else ""
     if cmd == "construir":
         print(construir(int(sys.argv[2]) if len(sys.argv) > 2 else MAX_DOCS_POR_CORRIDA))
     elif cmd == "preguntar":
@@ -363,4 +329,4 @@ if __name__ == "__main__":
     elif cmd == "empaquetar":
         print(empaquetar())
     else:
-        _demo()
+        sys.exit("Uso: python -m cerebro.grafo construir [max] | preguntar TEXTO | empaquetar")

@@ -322,7 +322,7 @@ def get_conn() -> sqlite3.Connection:
     if db is None:
         st.error(
             "No encontré `proyectos.db`. Corre desde la carpeta raíz del repo:\n\n"
-            "```\npython -m scraper.cli restaurar\n```"
+            "```\nbash scripts/bajar_db.sh proyectos.db.gz proyectos.db\n```"
         )
         st.stop()
     conn = sqlite3.connect(f"file:{db}?mode=ro&immutable=1", uri=True, check_same_thread=False)

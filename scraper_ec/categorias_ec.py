@@ -11,20 +11,18 @@ keywords adicionales del léxico legislativo ecuatoriano:
   - Códigos orgánicos: COIP, COFJ, LOSEP, LOES, COGEP, COMYPES, COESCC
   - Registro Oficial (vs Diario Oficial El Peruano)
 
-Mantiene la lógica de override Tecnología/Farma y PRIORIDAD.
+Desempata con PRIORIDAD de Perú más "Justicia".
 """
 from __future__ import annotations
 
 import re
 
-# Import infra del módulo Perú
 from scraper.categorias import (
     PRIORIDAD,
-    OVERRIDE_DESDE,
-    TECH_MIN_KEYWORDS,
     CATEGORIAS as _CATEGORIAS_PE,
-    _normalize,
     _build_pattern,
+    _clasificar,
+    _normalize,
 )
 
 # Keywords adicionales por categoría, específicas del contexto ecuatoriano.
@@ -235,51 +233,5 @@ _KW_RE: dict[str, list[re.Pattern]] = {
 
 
 def classify(titulo: str | None, sumilla: str | None = None) -> str:
-    """Devuelve UN tema (string). Si nada matchea, 'Otros'.
-
-    Usa PRIORIDAD_EC (que es PRIORIDAD de Perú con "Justicia" insertado en
-    posición alta) para resolver empates.
-    """
-    text = _normalize(f"{titulo or ''} {sumilla or ''}")
-    scores: dict[str, int] = {}
-    for cat, patterns in _KW_RE.items():
-        s = sum(1 for p in patterns if p.search(text))
-        if s:
-            scores[cat] = s
-    if not scores:
-        return "Otros"
-    max_s = max(scores.values())
-    best = [c for c, v in scores.items() if v == max_s]
-    if len(best) == 1:
-        return best[0]
-    for cat in PRIORIDAD_EC:
-        if cat in best:
-            return cat
-    return best[0]
-
-
-def count_matches(titulo: str | None, sumilla: str | None, categoria: str) -> int:
-    patterns = _KW_RE.get(categoria)
-    if not patterns:
-        return 0
-    text = _normalize(f"{titulo or ''} {sumilla or ''}")
-    return sum(1 for p in patterns if p.search(text))
-
-
-def all_categorias() -> list[str]:
-    return list(CATEGORIAS.keys()) + ["Otros"]
-
-
-# Exporta constantes y helpers para uso externo.
-__all__ = [
-    "CATEGORIAS",
-    "PRIORIDAD_EC",
-    "EXCLUDE_PE",
-    "EXTRA_EC",
-    "EXTRA_CATEGORIAS_EC",
-    "OVERRIDE_DESDE",
-    "TECH_MIN_KEYWORDS",
-    "classify",
-    "count_matches",
-    "all_categorias",
-]
+    """Devuelve UN tema (string). Si nada matchea, 'Otros'."""
+    return _clasificar(_normalize(f"{titulo or ''} {sumilla or ''}"), _KW_RE, PRIORIDAD_EC)

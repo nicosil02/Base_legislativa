@@ -4,10 +4,9 @@ name: Cerebro (embeddings del corpus)
 # cerebro/embeddings.py) al dia: corre despues de cada workflow que trae
 # datos nuevos y embebe SOLO lo nuevo o cambiado.
 #
-# cerebro.db NO va a git: son vectores (casi no comprimen) y el repo ya se
-# inflo a 14 GB por las versiones de proyectos.db.gz. Se publica como adjunto
-# del release "cerebro", pisando el anterior (--clobber) - sin historial. La
-# app lo baja de ahi (cerebro.embeddings.descargar_si_falta).
+# cerebro.db no va a git (vectores, casi no comprimen): se publica como
+# adjunto del release "cerebro" (--clobber, sin historial) y la app lo baja
+# de ahi (cerebro.embeddings.descargar_si_falta).
 #
 # Disparo por workflow_run (no por schedule: el cron nativo de GitHub no es
 # confiable en este repo, ver backfill-auto.yml).
@@ -63,11 +62,9 @@ jobs:
         run: python -X utf8 -u -m cerebro.embeddings sincronizar
 
       - name: Grafo de conocimiento (LightRAG) - agregar lo nuevo
-        # Usa gemini-3.5-flash-lite / gemma (cupos gratuitos PROPIOS), nunca
-        # gemini-3.6-flash: ese tiene 20 pedidos/dia compartidos con el chat
-        # de alertas y una corrida del grafo lo agoto entero (2026-09-27).
-        # continue-on-error: si se corta por cupo, lo ya procesado queda
-        # guardado y la proxima corrida sigue.
+        # gemini-3.5-flash-lite / gemma (cupos propios), nunca 3.6-flash: ese
+        # tiene 20 pedidos/dia compartidos con el chat de alertas.
+        # continue-on-error: si se corta por cupo, la proxima corrida sigue.
         continue-on-error: true
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
@@ -75,9 +72,8 @@ jobs:
         run: timeout 2400 python -X utf8 -u -m cerebro.grafo construir 40
 
       - name: Publicar
-        # always(): si el paso anterior se corta a mitad (limite del tier
-        # gratuito de Gemini), lo ya embebido quedo guardado tanda por tanda
-        # y se publica igual - la proxima corrida sigue desde ahi.
+        # always(): lo ya embebido se guarda por tandas y se publica aunque
+        # el paso anterior se corte por cupo.
         if: always()
         env:
           GH_TOKEN: ${{ github.token }}

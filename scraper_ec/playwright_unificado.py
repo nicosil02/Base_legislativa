@@ -1,60 +1,31 @@
-"""Scrapeo de grupos de unificacion del portal Ppless v2.
+"""Grupos de unificacion del portal Ppless v2 (toggle "Unificados" del tab
+2.0). La columna "Proyectos que dan origen al unificado" trae los miembros
+como "Tramite:472651/PROYECTO DE LEY .../ ...".
 
-El portal expone los grupos de unificacion de forma estructurada cuando
-se activa el toggle "Unificados" en los filtros del tab 2.0. La tabla
-filtrada muestra 7 columnas:
-
-  Fecha de unificacion | Proyecto de Ley Unificado | N. Tramite |
-  Proyectos que dan origen al unificado | Comision | Estado | Docs
-
-Donde "Proyectos que dan origen al unificado" lista los N. Tramite de
-todos los PLs miembros, con formato:
-  "Tramite:472651/PROYECTO DE LEY .../ APELLIDO NOMBRE(ASAMBLEISTA)
-   Tramite:476644/PROYECTO DE LEY .../ APELLIDO NOMBRE(ASAMBLEISTA)"
-
-Este script automatiza el mismo flow que Claude in Chrome MCP hacia
-manualmente:
-  1. Goto portal Ppless v2
-  2. Click tab "CONSULTA DE PROYECTOS DE LEY 2.0"
-  3. Click toggle "Unificados"
-  4. Click "Buscar"
-  5. Iterar todas las paginas, extraer grupos y miembros
-  6. Upsert en unificacion_grupos + unificacion_pl con source='portal'
-
-Uso:
-  python -m scraper_ec.cli scrapear-unificados [--no-headless] [--max-pages N]
+    python -m scraper_ec.cli scrapear-unificados [--no-headless] [--max-pages N]
 """
 from __future__ import annotations
 
 import logging
 import re
-from datetime import datetime, timezone
 
 from playwright.sync_api import sync_playwright, TimeoutError as PWTimeout
 
-from scraper_ec.db import Database
+from scraper_ec.db import Database, now_iso as _now_iso
+from scraper_ec.playwright_detail import SEL_BTN_BUSCAR, SEL_BTN_LIMPIAR, abrir_portal, esperar_red
 
 log = logging.getLogger(__name__)
 
-PORTAL_URL = "https://proyectosdeley.asambleanacional.gob.ec/report"
-
-# Selectores
-SEL_TAB_20 = "text=CONSULTA DE PROYECTOS DE LEY 2.0"
-# Toggle "Unificados" — mat-slide-toggle de Angular Material
-SEL_TOGGLE_UNIFICADOS = 'mat-slide-toggle:has-text("Unificados"), label:has-text("Unificados")'
-SEL_BTN_BUSCAR = 'button:has-text("Buscar"):not(:has-text("Limpiar"))'
-SEL_BTN_LIMPIAR = 'button:has-text("Limpiar"):not(:has-text("Buscar"))'
 SEL_PAGINATOR_NEXT = (
     'mat-paginator button.mat-paginator-navigation-next:not([disabled]), '
     'mat-paginator button.mat-mdc-paginator-navigation-next:not([disabled])'
 )
 
-# Regex para extraer n_tramite de "Tramite:472651/..."
 TRAMITE_PAT = re.compile(r"Tr[áa]mite:\s*(\d+)", re.IGNORECASE)
 
 
 def _click_y_esperar(page, selector: str, timeout: int = 15000) -> bool:
-    """Click + wait for stable. Devuelve True si fue exitoso."""
+    """True si el selector aparecio y se pudo clickear."""
     try:
         page.wait_for_selector(selector, timeout=timeout)
         page.click(selector)
@@ -66,26 +37,10 @@ def _click_y_esperar(page, selector: str, timeout: int = 15000) -> bool:
 
 def _navegar_a_unificados(page) -> bool:
     """Carga el portal, entra al tab 2.0 y activa el filtro Unificados."""
-    # 1. Goto con retry
-    for attempt in (1, 2, 3):
-        try:
-            page.goto(PORTAL_URL, timeout=60000, wait_until="domcontentloaded")
-            break
-        except PWTimeout as e:
-            log.warning("[goto retry %d/3] %s", attempt, e)
-    else:
-        log.error("no pude cargar el portal")
+    if not abrir_portal(page):
         return False
+    esperar_red(page)
 
-    # 2. Click tab 2.0
-    if not _click_y_esperar(page, SEL_TAB_20, timeout=20000):
-        return False
-    try:
-        page.wait_for_load_state("networkidle", timeout=15000)
-    except PWTimeout:
-        page.wait_for_timeout(3000)
-
-    # 3. Limpiar filtros previos
     try:
         if page.locator(SEL_BTN_LIMPIAR).count() > 0:
             page.click(SEL_BTN_LIMPIAR)
@@ -93,7 +48,7 @@ def _navegar_a_unificados(page) -> bool:
     except Exception:
         pass
 
-    # 4. Click toggle Unificados (puede estar en varios formatos)
+    # El toggle aparece con distintas marcas segun la version del portal.
     toggle_selectors = [
         'mat-slide-toggle:has-text("Unificados")',
         'label:has-text("Unificados")',
@@ -114,11 +69,9 @@ def _navegar_a_unificados(page) -> bool:
 
     page.wait_for_timeout(500)
 
-    # 5. Click Buscar
     if not _click_y_esperar(page, SEL_BTN_BUSCAR, timeout=10000):
         return False
 
-    # 6. Esperar a que la tabla unificados cargue
     try:
         page.wait_for_load_state("networkidle", timeout=10000)
     except PWTimeout:
@@ -128,13 +81,7 @@ def _navegar_a_unificados(page) -> bool:
 
 
 def _extraer_pagina_actual(page) -> list[dict]:
-    """Extrae los grupos visibles en la pagina actual de la tabla unificados.
-
-    La tabla tiene 7 td por fila:
-      [0] fecha_unif, [1] titulo, [2] n_tramite_principal,
-      [3] miembros (texto multiline), [4] comision, [5] estado, [6] docs
-    """
-    # Usar evaluate para extraer todo via JS — mas robusto que iterar locators
+    """Grupos visibles en la pagina actual (filas de 7 celdas)."""
     js = """
     (() => {
       const rows = document.querySelectorAll('table tbody tr');
@@ -156,10 +103,9 @@ def _extraer_pagina_actual(page) -> list[dict]:
     })()
     """
     grupos = page.evaluate(js)
-    # Parsear miembros via regex
     for g in grupos:
         g["miembros"] = TRAMITE_PAT.findall(g.get("miembros_raw") or "")
-        g.pop("miembros_raw", None)  # ya no la necesitamos
+        g.pop("miembros_raw", None)
     return grupos
 
 
@@ -179,15 +125,9 @@ def _ir_a_siguiente_pagina(page) -> bool:
 
 def _upsert_grupo(db: Database, grupo: dict, existentes: set[str],
                    now_iso: str) -> tuple[bool, int, int]:
-    """Crea o re-crea un grupo source='portal'.
-
-    Para miembros que no existen en proyectos (PLs externos pre-2025),
-    crea stub rows con titulo='(PL externo - no en DB local)' para no
-    perder el grupo completo. La FK se respeta y la UI muestra los
-    PLs externos como '(no en DB)' via COALESCE.
-
-    Returns: (creado_bool, n_miembros, n_stubs_creados)
-    """
+    """Crea un grupo source='portal'. Los miembros que no estan en la DB
+    (PLs pre-2025) entran como filas stub para respetar la FK.
+    Devuelve (creado, n_miembros, n_stubs)."""
     principal = (grupo.get("n_tramite_principal") or "").strip()
     miembros = [str(m).strip() for m in (grupo.get("miembros") or []) if str(m).strip()]
     if not principal or not miembros:
@@ -196,7 +136,6 @@ def _upsert_grupo(db: Database, grupo: dict, existentes: set[str],
     n_tramites = list(dict.fromkeys([principal] + miembros))
     faltantes = [n for n in n_tramites if n not in existentes]
 
-    # Crear stubs para los faltantes
     stubs_creados = 0
     if faltantes:
         with db.tx() as c:
@@ -238,19 +177,14 @@ def scrapear_unificados(
     headless: bool = True,
     max_pages: int = 100,
 ) -> dict:
-    """Itera el portal con el toggle Unificados activo y guarda los grupos.
-
-    Antes de insertar nuevos grupos, BORRA todos los source='portal'
-    anteriores. Asi el resultado refleja siempre el estado actual del portal.
-    """
+    """Borra los grupos source='portal' y los vuelve a crear con lo que
+    muestra hoy el portal."""
     db = Database(db_path)
     db.init_schema()
 
-    # PLs existentes para validar FK
     existentes = {r[0] for r in db.conn.execute("SELECT n_tramite FROM proyectos")}
     log.info("PLs en DB: %d", len(existentes))
 
-    # Borrar grupos source='portal' previos (re-import limpio)
     with db.tx() as c:
         old_ids = [r[0] for r in c.execute(
             "SELECT id FROM unificacion_grupos WHERE source = 'portal'"
@@ -268,7 +202,7 @@ def scrapear_unificados(
 
     stats = {"paginas": 0, "grupos_creados": 0, "memberships": 0,
              "stubs_creados": 0, "errores": 0}
-    now_iso = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    now_iso = _now_iso()
 
     with sync_playwright() as pw:
         browser = pw.chromium.launch(headless=headless)

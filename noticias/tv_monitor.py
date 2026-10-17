@@ -1,18 +1,20 @@
 """Monitor de TV: lee los subtitulos automaticos de YouTube de los programas
 (transmisiones ya terminadas y videos subidos) de los canales de noticias
 PE/EC y guarda los fragmentos donde se menciona a una autoridad o un tema
-que seguimos. Pedido de Nicolas 2026-09-28: "que sea como un tracker de TV,
-cuando escucha algo de valor, lo transcribe".
+que seguimos.
 
 Por que subtitulos y no Whisper: YouTube genera subtitulos en español de
-cada transmision minutos despues de que termina (verificado con "Al Dia con
-Willax" del mismo dia, 3 h). Leerlos es un request de texto por video; pasar
-Whisper por 17 canales todo el dia no entra en GitHub Actions.
-ponytail: no es en vivo - un programa aparece recien cuando termina y YouTube
-publica sus subtitulos. En vivo de verdad = Whisper continuo sobre 1-2
-canales clave (mismo camino que vigilar-congreso.yml), si hace falta.
+cada transmision minutos despues de que termina. Leerlos es un request de
+texto por video; pasar Whisper por 17 canales todo el dia no entra en
+GitHub Actions. ponytail: `escanear` no es en vivo, un programa aparece
+recien cuando termina; el directo lo cubre `en-vivo` (Whisper sobre los
+canales de PRIORIDAD).
 
-Uso: python -m noticias.tv_monitor escanear DB_PATH
+Uso:
+  python -m noticias.tv_monitor escanear DB_PATH
+  python -m noticias.tv_monitor en-vivo DB_PATH MINUTOS [GRUPO]
+  python -m noticias.tv_monitor hay-vivo-interes
+  python -m noticias.tv_monitor probar-aviso
 """
 from __future__ import annotations
 
@@ -22,16 +24,17 @@ import os
 import re
 import sqlite3
 import sys
-import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
 
+from core.db import now_iso
+from core.text import norm as _norm
+from core.tiempo import ahora_lima
 from noticias.videos import AUTORIDADES
 
 log = logging.getLogger(__name__)
 
-# (nombre, url del canal). Resueltos por busqueda de canales de YouTube
-# 2026-09-28. Canal N no aparece como canal propio en YouTube.
+# (nombre, url del canal). Canal N no tiene canal propio en YouTube.
 CANALES: dict[str, list[tuple[str, str]]] = {
     "PE": [
         ("RPP Noticias", "https://www.youtube.com/@RPPNoticias"),
@@ -92,13 +95,7 @@ SCHEMA = [
 ]
 
 
-def _norm(s: str | None) -> str:
-    from congreso_live.detector import _norm as n
-    return n(s)
-
-
-# Se nombran en casi todos los programas (451 menciones de Keiko en 37
-# programas, primera corrida 2026-09-28): solas no dicen nada, solo cuentan
+# Se nombran en casi todos los programas: solas no dicen nada, solo cuentan
 # junto a un tema de clientes o un ministro.
 CONTEXTO = {"Keiko Fujimori", "Luis Galarreta", "Daniel Noboa"}
 # Apellidos que tambien son palabras o nombres comunes ("Cuba" el pais,
@@ -221,10 +218,10 @@ def escanear(db_path: str | Path, max_n: int = NUEVOS_MAX) -> dict:
     for s in SCHEMA:
         conn.execute(s)
     ya = {r[0] for r in conn.execute("SELECT video_id FROM tv_vistos")}
-    ahora = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    ahora = now_iso()
     pend = [c for c in _candidatos() if c["id"] not in ya]
     # Intercalar paises: con el tope por corrida, Peru (primero en CANALES)
-    # se comia todo y Ecuador no entraba (primera corrida 2026-09-28).
+    # se comia todo y Ecuador no entraba.
     por_pais = [[c for c in pend if c["pais"] == p] for p in CANALES]
     nuevos = [c for tanda in __import__("itertools").zip_longest(*por_pais) for c in tanda if c][:max_n]
     res = {"leidos": 0, "sin_subtitulos": 0, "menciones": 0}
@@ -239,9 +236,8 @@ def escanear(db_path: str | Path, max_n: int = NUEVOS_MAX) -> dict:
             # como visto, la proxima corrida lo reintenta.
             res["sin_subtitulos"] += 1
             continue
-        # Los canales dejan transmisiones viejas en /streams (ej. la
-        # juramentacion del gabinete de julio entro el 2026-09-28): lo subido
-        # hace mas de DIAS_MAX se marca visto sin menciones.
+        # Los canales dejan transmisiones viejas en /streams: lo subido hace
+        # mas de DIAS_MAX se marca visto sin menciones.
         subido = _info.get("timestamp") or _info.get("release_timestamp")
         viejo = bool(subido) and (datetime.now(timezone.utc).timestamp() - subido) > DIAS_MAX * 86400
         menciones = [] if viejo else buscar_menciones(lineas)
@@ -261,15 +257,11 @@ def escanear(db_path: str | Path, max_n: int = NUEVOS_MAX) -> dict:
 
 
 # ---------- En vivo: escuchar el directo mientras sale al aire ----------
-# Pedido de Nicolas 2026-09-28: "RPP, Canal 4, Canal N". Canal N no se puede:
-# es de cable (exclusivo Movistar), sin señal publica en su web ni en YouTube.
 # Mismo camino que el Congreso en vivo (congreso_live.live_transcribe):
-# tramos de audio via yt-dlp + Whisper. Cada canal = un hilo.
-# Canales candidatos en orden de prioridad (Nicolas: RPP, Canal 4, Willax,
-# Exitosa primero). Se escuchan los MAX_VIVOS que esten transmitiendo
-# noticias en ese momento (ver vivos_noticias): a las 3 pm RPP/Exitosa
-# estaban en deportes y Willax en novela, mientras America, TVPeru y
-# Latina tenian noticiero (2026-09-28).
+# tramos de audio via ffmpeg + Whisper. Cada canal = un hilo. Canal N no se
+# puede: es de cable, sin señal publica. Se escuchan los MAX_VIVOS de mayor
+# prioridad que esten con noticias en ese momento (a ciertas horas RPP esta
+# en deportes y Willax en novela).
 PRIORIDAD = ["RPP Noticias", "América Noticias", "Willax", "Exitosa Noticias",
              "Latina Noticias", "TVPerú Noticias", "ATV Noticias", "Panamericana Noticias",
              "Epicentro TV", "Ecuavisa", "Teleamazonas", "TC Televisión", "Radio Pichincha",
@@ -278,16 +270,14 @@ EN_VIVO: list[tuple[str, list[str], str]] = sorted(
     [(c, [u], p) for p, lista in CANALES.items() for c, u in lista],
     key=lambda x: PRIORIDAD.index(x[0]) if x[0] in PRIORIDAD else 99)
 MAX_VIVOS = 4  # de la lista de prioridad
-# Ecuador con lugar propio (pedido de Nicolas 2026-09-28): sus noticieros de
-# la mañana se escuchan siempre que esten al aire, aparte de los MAX_VIVOS
-# (si no, los 4 de Peru los dejaban siempre afuera). 4 + 2 = 6 canales,
-# repartidos en las 3 maquinas del workflow.
+# Ecuador con lugar propio, aparte de los MAX_VIVOS (si no, los de Peru lo
+# dejaban siempre afuera). 4 + 2 = 6 canales en las 3 maquinas del workflow.
 EC_SIEMPRE = ["Ecuavisa", "Teleamazonas"]
 N_GRUPOS = 3
 # Titulos de directos que no son noticias.
 NO_NOTICIAS = re.compile(r"deporte|futbol|seleccion|mundial|amor y fuego|novela|podcast|happy hour|"
                          r"after office|musica|reality|esto es guerra|cocina|farandula|magaly|"
-                         r"beto a saber")  # opinion pura (primer aviso inutil, 28/09)
+                         r"beto a saber")  # opinion pura
 # Titulos que justifican escuchar fuera de las franjas (hay-vivo-interes).
 TITULO_INTERES = re.compile(r"entrevista|ministr|president|premier|congreso|facultades|"
                             r"conferencia de prensa|mensaje a la nacion|asamblea")
@@ -333,19 +323,16 @@ def hay_vivo_interes() -> bool:
     return False
 
 
-# WhatsApp de menciones en vivo (Nicolas 2026-09-28: "y tambien me envia
-# alertas? eso tmb habria que incluir"). Solo lo especifico: una autoridad
-# que no sea contexto o un tema de cliente; lo general (El Niño, IA...)
-# queda en la app. Maximo un aviso cada AVISO_CADA_SEG por programa.
+# WhatsApp de menciones en vivo. Solo lo especifico (un tema de cliente); lo
+# general (El Niño, IA...) queda en la app. Maximo un aviso cada
+# AVISO_CADA_SEG por programa.
 NO_AVISAR = {"fenomeno del nino", "fenomeno el nino", "inteligencia artificial", "vacuna", "minsa"}
 AVISO_CADA_SEG = 1200
 
 
 def vale_aviso(terminos: list[str]) -> bool:
     """Solo un TEMA de cliente dispara el aviso. Un ministro nombrado solo no
-    alcanza: primer aviso real (2026-09-28) fue Beto Ortiz opinando sobre
-    Astudillo, que con la censura en curso sale en todos los programas.
-    Nicolas: 'esa alerta es horrible, no me dice nada'."""
+    alcanza: sale en todos los programas en boca de opinologos."""
     nombres = {n for lista in AUTORIDADES.values() for n, _ in lista}
     return any(t not in CONTEXTO and t not in NO_AVISAR and t not in nombres for t in terminos)
 
@@ -368,22 +355,14 @@ SYSTEM_AVISO = (
 def resumir_aviso(canal: str, vivo: dict, m: dict) -> dict | None:
     """Gemini (flash-lite, gratis) decide si vale avisar y arma el texto.
     None = no avisar (irrelevante o sin respuesta usable). Sin GEMINI_API_KEY
-    no se avisa: un fragmento crudo es justo lo que Nicolas no quiere."""
-    import json
-    import os
-    if not os.environ.get("GEMINI_API_KEY"):
+    no se avisa: un fragmento crudo no le sirve a nadie."""
+    from core import llm
+    if not llm.disponible():
         return None
     try:
-        from google import genai
-        from google.genai import types
-        client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
         prompt = (f"Canal: {canal}\nPrograma: {vivo['titulo']}\nTemas detectados: "
                   f"{', '.join(m['terminos'])}\nFragmento: {m['fragmento']}")
-        resp = client.models.generate_content(
-            model="gemini-3.5-flash-lite", contents=prompt,
-            config=types.GenerateContentConfig(system_instruction=SYSTEM_AVISO,
-                                               response_mime_type="application/json"))
-        d = json.loads(resp.text or "{}")
+        d = json.loads(llm.generar(prompt, SYSTEM_AVISO, modelo=llm.LITE, json=True) or "{}")
         if os.environ.get("TV_AVISO_DEBUG"):
             print(f"[tv-en-vivo] Gemini: {d}", flush=True)
     except Exception as e:
@@ -393,7 +372,7 @@ def resumir_aviso(canal: str, vivo: dict, m: dict) -> dict | None:
 
 
 def mensaje_aviso(canal: str, vivo: dict, m: dict, r: dict) -> str:
-    hora = datetime.now(timezone.utc).astimezone(__import__("zoneinfo").ZoneInfo("America/Lima")).strftime("%H:%M")
+    hora = ahora_lima().strftime("%H:%M")
     quien = f"{r['quien']}. " if r.get("quien") else ""
     return (f"📺 {canal} en vivo, {hora}\n{quien}{r['que']}\n{r.get('por_que', '')}\n"
             f"https://www.youtube.com/watch?v={vivo['id']}")
@@ -403,7 +382,7 @@ def guardar_tramo(conn: sqlite3.Connection, pais: str, canal: str, vivo: dict,
                   lineas: list[tuple[float, str]]) -> list[dict]:
     """Suma un tramo transcrito al video en vivo: texto acumulado en
     tv_vistos y menciones nuevas en tv_menciones. Devuelve las menciones."""
-    ahora = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    ahora = now_iso()
     menciones = buscar_menciones(lineas)
     tramo = " ".join(t for _, t in lineas)
     if conn.execute("SELECT 1 FROM tv_vistos WHERE video_id=?", (vivo["id"],)).fetchone():
@@ -467,10 +446,9 @@ def _url_hls(video_id: str) -> str | None:
             break
         except Exception as e:
             print(f"[tv-en-vivo] no pude resolver el HLS de {video_id}: {str(e)[:120]}", flush=True)
-            # "Sign in to confirm you're not a bot": depende de la IP de salida
-            # de WARP (prueba del 28/09, 1 de 3 maquinas bloqueada). IP nueva y
-            # un reintento, como en el monitor del Congreso. Un solo hilo rota a
-            # la vez: rotar corta la conexion de los demas por unos segundos.
+            # "Sign in to confirm you're not a bot" depende de la IP de salida
+            # de WARP: IP nueva y un reintento. Un solo hilo rota a la vez:
+            # rotar corta la conexion de los demas por unos segundos.
             if intento == 1 and es_bloqueo_bot(str(e)):
                 with _LOCK_WARP:
                     rotar_warp()
@@ -516,9 +494,8 @@ def escuchar_canal(canal: str, urls: list[str], db_path: str | Path, hasta: floa
                    pais: str = "PE") -> dict:
     """Loop bloqueante hasta `hasta` (epoch). Captura continua: ffmpeg graba
     el directo sin parar en tramos de TRAMO_SEG y este loop transcribe los
-    tramos ya cerrados en paralelo. Antes (captura y transcripcion en serie)
-    se perdian ~15-20 s por minuto mientras corria Whisper (punto 2 de la
-    revision de repos de monitoreo de medios, 2026-09-28)."""
+    tramos ya cerrados en paralelo (en serie se perdian ~15-20 s por minuto
+    mientras corria Whisper)."""
     import shutil
     import tempfile
     import time
@@ -624,59 +601,13 @@ def en_vivo(db_path: str | Path, minutos: float, publicar_cada_min: float = 15,
     return resultados
 
 
-def _demo():
-    import tempfile
-    with tempfile.TemporaryDirectory() as td:
-        c = sqlite3.connect(str(Path(td) / "t.db"))
-        for s in SCHEMA:
-            c.execute(s)
-        vivo = {"id": "LIVE1", "titulo": "RPP en vivo", "inicio": 0}
-        assert guardar_tramo(c, "PE", "RPP Noticias", vivo, [(10, "hola")]) == []
-        ms = guardar_tramo(c, "PE", "RPP Noticias", vivo, [(70, "el ministro Vinelli y el Senasa")])
-        assert len(ms) == 1 and vale_aviso(ms[0]["terminos"])  # Senasa = tema de cliente
-        r = {"relevante": True, "quien": "Marco Vinelli, ministro de Agricultura",
-             "que": "Anunció cambios en el Senasa.", "por_que": "Toca a Bayer y Syngenta."}
-        txt = mensaje_aviso("RPP Noticias", vivo, ms[0], r)
-        assert txt.startswith("📺 RPP Noticias en vivo") and "Marco Vinelli" in txt
-        assert not vale_aviso(["fenomeno del nino", "Keiko Fujimori"])  # general: queda en la app
-        assert not vale_aviso(["César Astudillo"])  # ministro solo: queda en la app (aviso de Beto Ortiz)
-        assert c.execute("SELECT texto, n_menciones FROM tv_vistos").fetchone() == (
-            "hola el ministro Vinelli y el Senasa", 1)
-        c.close()
-    assert buscar_menciones([(0, "el ministro Vineli dijo")])[0]["terminos"] == ["Marco Vinelli"]
-    assert terminos_de("el presidente Novoa") == ["Daniel Noboa"]
-    assert NO_NOTICIAS.search(_norm("EXITOSA DEPORTES ⚽ con ÓSCAR PAZ"))
-    assert NO_NOTICIAS.search(_norm("Willax en vivo - AMOR Y FUEGO - 28/09/2026"))
-    assert not NO_NOTICIAS.search(_norm("🔴 América Noticias - EN VIVO | 28/09/26"))
-    assert EN_VIVO[0][0] == "RPP Noticias" and EN_VIVO[1][0] == "América Noticias"
-    promo = "no vea el acto si quiere ver candidatos abusar de la inteligencia artificial de una manera ridicula"
-    assert len(buscar_menciones([(0, promo), (300, promo), (600, promo)])) == 1
-    assert not buscar_menciones([(0, "maquillaje hecho con semillas y flores")])
-    lineas = [(0, "buenas noches"), (10, "hoy nos acompaña el ministro Vinelli"),
-              (20, "hablamos de las facultades legislativas"), (200, "pasamos a deportes"),
-              (400, "el fenómeno El Niño y el Senasa")]
-    ms = buscar_menciones(lineas)
-    assert len(ms) == 2, ms
-    assert ms[0]["terminos"] == ["Marco Vinelli", "facultades legislativas"], ms[0]
-    assert "deportes" not in ms[0]["fragmento"]
-    assert ms[1]["terminos"] == ["fenomeno el nino", "senasa"], ms[1]
-    assert not buscar_menciones([(0, "gol de Cueva en el minuto 90")])
-    assert not buscar_menciones([(0, "la presidenta Keiko Fujimori viajo")])  # solo contexto
-    assert buscar_menciones([(0, "Keiko Fujimori y el fenomeno El Niño")])
-    assert not buscar_menciones([(0, "viajo a Cuba y a Valencia, mas esta diciendo")])
-    assert buscar_menciones([(0, "el canciller Espa dijo")])[0]["terminos"] == ["Carlos Espá"]
-    assert parse_json3({"events": [{"tStartMs": 1500, "segs": [{"utf8": "hola "}, {"utf8": "mundo"}]},
-                                   {"tStartMs": 2000}]}) == [(1.5, "hola mundo")]
-    print("OK tv_monitor: menciones agrupadas por cercania, sin falsos positivos, json3")
-
-
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
     if len(sys.argv) == 3 and sys.argv[1] == "escanear":
         print(f"tv_monitor: {escanear(sys.argv[2])}")
     elif len(sys.argv) in (4, 5) and sys.argv[1] == "en-vivo":
-        # 5to argumento opcional: grupo 1 o 2 (el workflow reparte los canales
-        # en dos maquinas; 4 Whisper en una sola se atrasaban)
+        # 5to argumento opcional: grupo (el workflow reparte los canales en
+        # varias maquinas; 4 Whisper en una sola se atrasaban)
         grupo = int(sys.argv[4]) if len(sys.argv) == 5 else None
         print(f"tv_monitor en vivo: {en_vivo(sys.argv[2], float(sys.argv[3]), grupo=grupo)}")
     elif len(sys.argv) == 2 and sys.argv[1] == "probar-aviso":
@@ -713,4 +644,4 @@ if __name__ == "__main__":
     elif len(sys.argv) == 2 and sys.argv[1] == "hay-vivo-interes":
         sys.exit(0 if hay_vivo_interes() else 1)
     else:
-        _demo()
+        sys.exit(__doc__)

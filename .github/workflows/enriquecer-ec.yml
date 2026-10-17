@@ -175,10 +175,6 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          # Ya no se commitea data/proyectos_ec.db.gz en main (el repo llego a
-          # 15 GB por las versiones de las bases, 2026-09-27). Va a la rama
-          # `datos` como un solo commit sin historial (scripts/publicar_db.sh).
-          # `unico`: este es el unico workflow que escribe la base de Ecuador,
-          # no hay nada que mezclar. Reemplaza el viejo "rebase -X theirs" (el
-          # mismo patron que borro transcripciones en Peru el 2026-09-15).
+          # La base va a la rama `datos` (un commit sin historial), no a main.
+          # `unico`: este es el unico workflow que escribe la base de Ecuador.
           bash scripts/publicar_db.sh unico proyectos_ec.db

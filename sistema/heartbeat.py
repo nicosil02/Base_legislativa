@@ -1,25 +1,14 @@
-"""Heartbeats de workflows.
-
-Cada workflow llama `python -m sistema.heartbeat --db DB --source NAME`
-al final de una corrida exitosa. Esto deja huella en la tabla
-`system_heartbeats` aunque los datos del Congreso/Asamblea no hayan
-cambiado (importante para el "actualizado hace X min" en la UI: el
-usuario quiere saber si el workflow corre, no si los datos cambian).
-
-Schema:
-  system_heartbeats (
-    source TEXT PRIMARY KEY,    -- 'pe_proyectos', 'pe_sesiones', 'ec_proyectos', 'ec_agenda'
-    last_run TEXT NOT NULL,     -- timestamp ISO UTC de la ultima corrida exitosa
-    last_status TEXT            -- 'ok' | 'partial' | 'failed'
-  )
+"""Heartbeats de workflows: `python -m sistema.heartbeat --db DB --source NAME`
+deja la hora de la corrida en `system_heartbeats` aunque los datos no hayan
+cambiado (la UI muestra si el workflow corre, no si hubo novedades).
 """
 from __future__ import annotations
 
 import argparse
 import sqlite3
 import sys
-from datetime import datetime, timezone
 
+from core.db import now_iso
 
 SCHEMA = """
 CREATE TABLE IF NOT EXISTS system_heartbeats (
@@ -28,10 +17,6 @@ CREATE TABLE IF NOT EXISTS system_heartbeats (
   last_status  TEXT NOT NULL DEFAULT 'ok'
 );
 """
-
-
-def now_iso() -> str:
-    return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
 def record(db_path: str, source: str, status: str = "ok") -> None:

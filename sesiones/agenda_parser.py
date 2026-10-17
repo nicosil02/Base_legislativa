@@ -50,7 +50,7 @@ def to_text(html_str: str | None) -> str:
     try:
         p.feed(html_str)
     except Exception:
-        # En caso de HTML mal formado, fallback a regex
+        # HTMLParser lanza AssertionError con secciones "<![" raras: fallback a regex.
         return _strip_tags_fallback(html_str)
     txt = p.get_text()
     # Decode entities por si quedo alguna sin procesar
@@ -157,9 +157,3 @@ def extract_pls(text: str, *, ctx_chars: int = 80) -> list[dict]:
         }
     return list(seen.values())
 
-
-def parse_agenda_punto(html_str: str | None) -> tuple[str, list[dict]]:
-    """Atajo: convierte el HTML del punto del orden del dia a (texto_plano, lista_de_PLs)."""
-    text = to_text(html_str)
-    pls = extract_pls(text)
-    return text, pls

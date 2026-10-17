@@ -23,6 +23,7 @@ from __future__ import annotations
 import logging
 import re
 from datetime import datetime, timezone
+from html import unescape
 from typing import Iterator
 
 import requests
@@ -85,12 +86,7 @@ def _fecha_aprox_de_pub_date(pub_date: str) -> str | None:
 def _strip_html(html: str) -> str:
     txt = re.sub(r"<script.*?</script>", " ", html, flags=re.DOTALL)
     txt = re.sub(r"<style.*?</style>", " ", txt, flags=re.DOTALL)
-    txt = re.sub(r"<[^>]+>", " ", txt)
-    # Limpiar entities comunes
-    for ent, ch in (("&nbsp;", " "), ("&amp;", "&"), ("&quot;", '"'),
-                     ("&#8220;", '"'), ("&#8221;", '"'), ("&#8217;", "'"),
-                     ("&laquo;", "«"), ("&raquo;", "»"), ("&#039;", "'")):
-        txt = txt.replace(ent, ch)
+    txt = unescape(re.sub(r"<[^>]+>", " ", txt))
     return re.sub(r"\s+", " ", txt).strip()
 
 
@@ -158,15 +154,8 @@ def _extract_lista_p(html: str) -> list[str]:
 _CATEGORIAS = {"mesa de trabajo", "ceremonia", "evento",
                 "sesión descentralizada", "sesion descentralizada"}
 
-# Sesiones del Pleno bicameral (Senado/Diputados/Congreso en general) -
-# hallazgo real 2026-09-22: pleno/api.py (adp-portal-service, la API vieja
-# del Pleno unicameral) dejo de recibir datos nuevos post-transicion
-# bicameral (ultimo registro real: 23 de junio, con periodo "2021-2026").
-# Las sesiones reales del Pleno bicameral SI se publican, pero como posts
-# normales en comunicaciones.congreso.gob.pe/agenda/ (el mismo feed que
-# este scraper ya lee para mesas de trabajo) - solo que con una estructura
-# de <p> distinta (sin categoria/tema, solo titulo+legislatura+presidente+
-# lugar) que antes caia en el fallback generico "Otro" sin distinguirse.
+# Las sesiones del Pleno bicameral tambien salen en este feed, con otra
+# estructura de <p> (titulo, legislatura, presidente, lugar; sin categoria).
 _RE_PLENO = re.compile(r"^sesi[oó]n del pleno", re.IGNORECASE)
 _CAMARA_EN_TITULO = (
     (re.compile(r"c[aá]mara de diputados", re.IGNORECASE), "D"),
@@ -176,11 +165,8 @@ _CAMARA_EN_TITULO = (
 
 
 def _parse_pleno_post(paras: list[str], fallback_titulo: str) -> dict:
-    """Posts de 'Sesion del Pleno...' no tienen fecha/hora en el HTML del
-    post (solo el listado /agenda/ la tendria, y estos posts no aparecen
-    ahi en formato HORA/TEMA/ORGANIZA que run_sync_dias() sabe leer) - la
-    fecha real se aproxima con pub_date del RSS en run_sync() (se anuncian
-    0-2 dias antes de la sesion, es lo mejor disponible en esta fuente)."""
+    """Post de 'Sesion del Pleno...'. No trae fecha/hora: run_sync() la
+    aproxima con el pub_date del RSS (se anuncian 0-2 dias antes)."""
     titulo = fallback_titulo or (paras[0] if paras else None)
     out = {
         "titulo": titulo,
@@ -291,18 +277,10 @@ def parse_post(html: str, fallback_titulo: str = "") -> dict:
             out["congresista"], out["bancada"] = _parse_organiza(p)
             break
 
-    # Lugar: concatenar todos los paragraphs que mencionen "Edificio" o "Sala"
-    lugar_parts = [p for p in paras
-                   if re.search(r"\b(edificio|sala|auditorio)\b", p, re.IGNORECASE)
-                   and "palacio legislativo" not in p.lower()]
-    if lugar_parts:
-        # Limitar a los primeros 2 (Edificio + Sala)
-        out["lugar"] = " · ".join(lugar_parts[:2])
-    # Buscar lugar: cualquier p que mencione 'Edificio' o 'Sala'
-    lugar_parts = []
-    for p in paras:
-        if re.search(r"\bedificio\b|\bsala\b", p, re.IGNORECASE):
-            lugar_parts.append(p)
+    # Lugar: todos los <p> con "Edificio"/"Sala"; si no hay, hasta 2 con
+    # "Auditorio" ("palacio legislativo" ya lo saco la blacklist).
+    lugar_parts = ([p for p in paras if re.search(r"\b(edificio|sala)\b", p, re.IGNORECASE)]
+                   or [p for p in paras if re.search(r"\bauditorio\b", p, re.IGNORECASE)][:2])
     if lugar_parts:
         out["lugar"] = " · ".join(lugar_parts)
     return out
@@ -365,10 +343,7 @@ def _fetch_listing_url(url: str,
             mes = MES_NUM.get(m_f.group(3).lower(), 0)
             if mes:
                 year = datetime.now(timezone.utc).year
-                try:
-                    fecha_iso = f"{year:04d}-{mes:02d}-{dia:02d}"
-                except Exception:
-                    pass
+                fecha_iso = f"{year:04d}-{mes:02d}-{dia:02d}"
     eventos = []
     for m in _LISTING_EVENT.finditer(txt):
         eventos.append({
@@ -391,6 +366,12 @@ def _normalize_for_match(s: str) -> str:
     s = s.replace('"', "").replace("'", "")
     s = re.sub(r"\s+", " ", s).strip().lower()
     return s
+
+
+def _coincide(aguja: str, pajar: str) -> bool:
+    """El tema normalizado `aguja` aparece en `pajar` (o sus primeros 40
+    caracteres, si es largo)."""
+    return aguja in pajar or (len(aguja) >= 40 and aguja[:40] in pajar)
 
 
 def run_sync_dias(db, *, days_back: int = 7, days_fwd: int = 14) -> dict:
@@ -442,15 +423,8 @@ def run_sync_dias(db, *, days_back: int = 7, days_fwd: int = 14) -> dict:
             norm_ev = _normalize_for_match(ev.get("tema") or "")
             if not norm_ev:
                 continue
-            # Buscar match en index existente
-            matched_url = None
-            for norm_mesa, url in mesa_index.items():
-                if norm_mesa in norm_ev or norm_ev.endswith(norm_mesa):
-                    matched_url = url
-                    break
-                if len(norm_mesa) >= 40 and norm_mesa[:40] in norm_ev:
-                    matched_url = url
-                    break
+            matched_url = next((url for norm_mesa, url in mesa_index.items()
+                                if _coincide(norm_mesa, norm_ev)), None)
 
             # Parsear organiza para extraer congresista/bancada
             organiza_txt = ev.get("organiza") or ""
@@ -527,15 +501,12 @@ def run_sync_dias(db, *, days_back: int = 7, days_fwd: int = 14) -> dict:
 
 # ---------- Sync principal ----------
 
-def run_sync(db, *, max_pages_rss: int = 5, fetch_details: bool = True,
-             include_listing_hoy: bool = True) -> dict:
+def run_sync(db, *, max_pages_rss: int = 5) -> dict:
     """Pipeline completo de scraping.
 
     1. Itera RSS feed (max_pages_rss paginas) → URLs nuevas
     2. Fetch HTML de cada URL → extrae detalles
-    3. Tambien lee listado /agenda/ del dia para enriquecer con hora real
-       (los datos del listado se mergean con los del post por matching de
-       titulo / organiza).
+    3. Enriquece con la hora real del listado /agenda/ del dia (match por tema)
     4. Upsert en mesas_tecnicas.
     """
     stats = {"vistos": 0, "nuevos": 0, "actualizados": 0,
@@ -548,40 +519,20 @@ def run_sync(db, *, max_pages_rss: int = 5, fetch_details: bool = True,
     # No es dict porque el matching no es exacto — buscamos texto entre comillas
     # del post dentro del texto del listado.
     eventos_hoy: list[dict] = []
-    if include_listing_hoy:
-        try:
-            eventos_hoy = fetch_listing_hoy(session=session)
-            log.info("listado /agenda/ del dia: %d eventos", len(eventos_hoy))
-        except Exception as e:
-            log.warning("no pude leer /agenda/ del dia: %s", e)
-            stats["errores"] += 1
-
-    def _normalize_for_match(s: str) -> str:
-        """Normaliza un texto para matching: lowercase, sin comillas
-        curvas, sin doble espacio. Mantiene solo lo esencial."""
-        if not s:
-            return ""
-        # Reemplazar comillas curvas/rectas por nada
-        s = s.replace("“", "").replace("”", "")  # " "
-        s = s.replace("‘", "").replace("’", "")  # ' '
-        s = s.replace('"', "").replace("'", "")
-        s = re.sub(r"\s+", " ", s).strip().lower()
-        return s
+    try:
+        eventos_hoy = fetch_listing_hoy(session=session)
+        log.info("listado /agenda/ del dia: %d eventos", len(eventos_hoy))
+    except Exception as e:
+        log.warning("no pude leer /agenda/ del dia: %s", e)
+        stats["errores"] += 1
 
     def _find_match(tema_post: str) -> dict | None:
-        """Busca un evento del listado_hoy cuyo tema contenga el del post.
-        Retorna el evento si hay match, None si no."""
+        """Evento del listado de hoy cuyo tema contiene el del post."""
         norm_post = _normalize_for_match(tema_post)
         if not norm_post or len(norm_post) < 20:  # texto muy corto = match poco confiable
             return None
-        for ev in eventos_hoy:
-            norm_ev = _normalize_for_match(ev.get("tema") or "")
-            if norm_post in norm_ev or norm_ev.endswith(norm_post):
-                return ev
-            # Fallback: si la primera mitad del post esta en el listado, match
-            if len(norm_post) >= 40 and norm_post[:40] in norm_ev:
-                return ev
-        return None
+        return next((ev for ev in eventos_hoy
+                     if _coincide(norm_post, _normalize_for_match(ev.get("tema") or ""))), None)
 
     # Iterar RSS
     for paged in range(1, max_pages_rss + 1):
@@ -599,24 +550,22 @@ def run_sync(db, *, max_pages_rss: int = 5, fetch_details: bool = True,
         for item in items:
             stats["vistos"] += 1
             row = dict(item)  # url, titulo, pub_date
-            # Detalle del post
-            if fetch_details:
-                try:
-                    det = fetch_post_detail(item["url"], session=session)
-                    row.update({
-                        "tipo": det.get("tipo"),
-                        "tema": det.get("tema"),
-                        "comision": det.get("comision"),
-                        "organiza": det.get("organiza"),
-                        "congresista": det.get("congresista"),
-                        "bancada": det.get("bancada"),
-                        "lugar": det.get("lugar"),
-                        "camara": det.get("camara"),
-                    })
-                except Exception as e:
-                    log.warning("error detail %s: %s", item["url"], e)
-                    stats["errores"] += 1
-                    continue
+            try:
+                det = fetch_post_detail(item["url"], session=session)
+                row.update({
+                    "tipo": det.get("tipo"),
+                    "tema": det.get("tema"),
+                    "comision": det.get("comision"),
+                    "organiza": det.get("organiza"),
+                    "congresista": det.get("congresista"),
+                    "bancada": det.get("bancada"),
+                    "lugar": det.get("lugar"),
+                    "camara": det.get("camara"),
+                })
+            except Exception as e:
+                log.warning("error detail %s: %s", item["url"], e)
+                stats["errores"] += 1
+                continue
 
             # Mergear con listado de hoy: substring match (el listado tiene
             # "Mesa de trabajo 'X'" y el post solo "'X'"). Buscamos el post
@@ -633,11 +582,7 @@ def run_sync(db, *, max_pages_rss: int = 5, fetch_details: bool = True,
             # Dejamos titulo generico (tipo) y tema separados — la UI usa
             # tema como el contenido principal cuando esta presente.
 
-            # Sesiones del Pleno no aparecen en el listado /agenda/ en el
-            # formato HORA/TEMA que _find_match() sabe leer, asi que nunca
-            # matchean arriba y fecha queda None. pub_date del RSS (cuando
-            # se publico el anuncio) es la mejor aproximacion disponible
-            # en esta fuente - se anuncian 0-2 dias antes de la sesion.
+            # Los Plenos no salen en el listado: fecha aproximada por pub_date.
             if row.get("tipo") == "Pleno" and not row.get("fecha") and row.get("pub_date"):
                 row["fecha"] = _fecha_aprox_de_pub_date(row["pub_date"])
 

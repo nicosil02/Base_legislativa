@@ -1,10 +1,6 @@
-"""Transcripciones de sesiones del Congreso (Pleno + comisiones ordinarias)
-a partir de los captions automaticos de YouTube - sin STT propio.
-
-YouTube genera captions automaticos en español para el canal del Congreso,
-pero con demora real (un video de 4 dias ya los tenia, uno del mismo dia
-todavia no) - esto da transcripciones "al dia siguiente", no en tiempo real.
-Verificado en vivo 2026-09-14 contra sesiones reales.
+"""Transcripciones de sesiones (Pleno + comisiones) desde los captions
+automaticos de YouTube. YouTube los publica con horas o dias de demora, asi
+que esto da transcripciones "al dia siguiente", no en vivo.
 
 Uso:
   python -m congreso_live.cli sync-transcripciones
@@ -15,12 +11,11 @@ import logging
 import re
 import sqlite3
 import urllib.request
-from datetime import datetime, timezone
 from pathlib import Path
 
-import yt_dlp
-
-from congreso_live.detector import _ydl, es_bloqueo_bot, listar_streams, rotar_warp
+from congreso_live.detector import _ydl, con_rotacion_warp, listar_streams
+from core.db import db_path as _db_path
+from core.db import now_iso
 from noticias.temas import clasificar as _clasificar_temas
 
 log = logging.getLogger(__name__)
@@ -29,12 +24,8 @@ HEADERS = {"User-Agent": "Mozilla/5.0"}
 
 
 def _find_db_path() -> Path:
-    here = Path(__file__).resolve().parent
-    candidates = [here.parent / "proyectos.db", Path.cwd() / "proyectos.db"]
-    for p in candidates:
-        if p.exists():
-            return p.resolve()
-    return candidates[0]
+    """proyectos.db (lo importan pages/ y otros paquetes con este nombre)."""
+    return _db_path("proyectos.db")
 
 
 def init_schema(conn: sqlite3.Connection) -> None:
@@ -53,6 +44,19 @@ def init_schema(conn: sqlite3.Connection) -> None:
     conn.commit()
 
 
+def guardar_transcripcion(conn: sqlite3.Connection, video_id: str, tipo: str,
+                          titulo: str, fecha: str | None, duracion_seg: int | None,
+                          texto: str, temas: list[str]) -> None:
+    """Upsert de una fila de sesiones_transcripciones (y commit)."""
+    conn.execute(
+        """INSERT OR REPLACE INTO sesiones_transcripciones
+           (video_id, tipo, titulo, fecha, duracion_seg, texto, temas, fetched_at)
+           VALUES (?,?,?,?,?,?,?,?)""",
+        (video_id, tipo, titulo, fecha, duracion_seg, texto, ",".join(temas), now_iso()),
+    )
+    conn.commit()
+
+
 def sesiones_terminadas_recientes(n: int = 20) -> list[dict]:
     """Streams YA TERMINADOS (was_live) de los canales PE y EC que son de
     interes - candidatos a tener transcripcion disponible."""
@@ -68,13 +72,9 @@ def sesiones_terminadas_recientes(n: int = 20) -> list[dict]:
 
 
 def _limpiar_vtt(vtt_text: str) -> str:
-    """Los captions automaticos de YouTube vienen en VTT 'roll-up': cada
-    bloque repite la(s) linea(s) ya asentada(s) y agrega la nueva linea que
-    se esta 'tipeando'. Nos quedamos solo con la ULTIMA linea no vacia de
-    cada bloque (la parte nueva) para no duplicar el resto - probado en
-    vivo 2026-09-14: un VTT de 792 KB con esta logica da 87 KB de texto
-    limpio y coherente, sin la version ingenua (que dejaba cada frase
-    repetida 2-3 veces)."""
+    """Los captions automaticos vienen en VTT 'roll-up': cada bloque repite
+    lo ya asentado y agrega una linea nueva. Se toma solo la ultima linea de
+    cada bloque para no duplicar texto."""
     bloques = re.split(r"\n\n+", vtt_text)
     salida: list[str] = []
     ultima = None
@@ -96,20 +96,17 @@ def _limpiar_vtt(vtt_text: str) -> str:
 
 
 def obtener_transcripcion(video_id: str) -> dict | None:
-    """Si el video ya tiene captions automaticos en español, los baja y
-    limpia. Devuelve None si todavia no estan disponibles (normal para
-    sesiones muy recientes - YouTube tarda dias en procesarlos)."""
-    info = None
-    while info is None:
-        try:
-            with _ydl({}) as ydl:
-                info = ydl.extract_info(f"https://www.youtube.com/watch?v={video_id}",
-                                        download=False)
-        except Exception as e:
-            log.warning("no pude extraer info de %s: %s", video_id, e)
-            # IP de WARP quemada: pedir otra y reintentar (ver detector.rotar_warp).
-            if not (es_bloqueo_bot(str(e)) and rotar_warp()):
-                return None
+    """Baja y limpia los captions automaticos en español del video. None si
+    todavia no estan (normal en sesiones recientes)."""
+    def extraer():
+        with _ydl({}) as ydl:
+            return ydl.extract_info(f"https://www.youtube.com/watch?v={video_id}",
+                                    download=False)
+    try:
+        info = con_rotacion_warp(extraer)
+    except Exception as e:
+        log.warning("no pude extraer info de %s: %s", video_id, e)
+        return None
 
     auto = info.get("automatic_captions") or {}
     if "es" not in auto:
@@ -143,9 +140,8 @@ def obtener_transcripcion(video_id: str) -> dict | None:
 
 
 def run_sync(db_path: Path | None = None, max_candidatos: int = 20) -> dict:
-    """Chequea sesiones recientes ya terminadas; para las que todavia no
-    tienen transcripcion guardada, intenta bajarla. Idempotente: una
-    sesion ya guardada no se vuelve a pedir."""
+    """Baja la transcripcion de las sesiones terminadas recientes que todavia
+    no estan guardadas. Idempotente."""
     db_path = db_path or _find_db_path()
     conn = sqlite3.connect(str(db_path))
     init_schema(conn)
@@ -162,15 +158,9 @@ def run_sync(db_path: Path | None = None, max_candidatos: int = 20) -> dict:
         if not resultado:
             continue
         temas = _clasificar_temas(resultado["titulo"], resultado["texto"][:5000])
-        conn.execute(
-            """INSERT OR REPLACE INTO sesiones_transcripciones
-               (video_id, tipo, titulo, fecha, duracion_seg, texto, temas, fetched_at)
-               VALUES (?,?,?,?,?,?,?,?)""",
-            (c["id"], c["tipo"], resultado["titulo"] or c["titulo"],
-             resultado["fecha"], resultado["duracion_seg"], resultado["texto"],
-             ",".join(temas), datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")),
-        )
-        conn.commit()
+        guardar_transcripcion(conn, c["id"], c["tipo"], resultado["titulo"] or c["titulo"],
+                              resultado["fecha"], resultado["duracion_seg"],
+                              resultado["texto"], temas)
         nuevas += 1
 
     conn.close()

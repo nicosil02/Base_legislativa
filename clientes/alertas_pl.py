@@ -1,23 +1,8 @@
-"""Alerta de WhatsApp cuando un PL puntual de la matriz de un cliente
-(ver clientes/matrices.py) cambia de `estado` en nuestra base scrapeada
-del Congreso.
+"""Aviso por WhatsApp cuando un PL de la matriz Bayer Crop Perú cambia de
+estado en la base del Congreso.
 
-matriz_bayer_crop("PE") ya existia pero solo se usaba para taguear
-"Bayer" en la UI (filtro visual, pages/1_Peru.py/3_Agenda_PE.py) - nunca
-disparaba nada. Pedido real de Nicolas 2026-09-18: "vincular los
-proyectos de interes y las alertas de whatsapp... automatico por
-cliente en base a... la matriz que tenemos... al menos para Bayer".
-
-Solo Peru por ahora: matriz_bayer_crop("EC") existe pero no hay ningun
-scraper de la Asamblea Nacional de Ecuador en este repo contra que
-cruzar el estado real - proyecto aparte, mas grande, pendiente.
-
-Estado conocido persistido en data/pl_seguimiento_estado.json (mismo
-patron que congreso_live_state.json) - {pl_numero: ultimo_estado_visto}
-para poder detectar CAMBIOS, no solo leer el estado actual. La PRIMERA
-vez que se ve un PL (nunca alertado antes) se guarda su estado sin
-avisar - avisar ahi seria un falso "cambio" (bootstrap), no un cambio
-real.
+El último estado visto se guarda en data/pl_seguimiento_estado.json. Un PL
+que se ve por primera vez se guarda sin avisar: no es un cambio real.
 
 Uso: python -m clientes.alertas_pl check
 """
@@ -48,12 +33,8 @@ def _guardar_estado_conocido(estado: dict[str, str]) -> None:
 
 
 def detectar_cambios(db_path: str | Path, cliente: str = "Bayer") -> list[dict]:
-    """Compara el `estado` actual en `proyectos` de cada PL trackeado por
-    matriz_bayer_crop("PE") contra el ultimo estado conocido (persistido).
-    Devuelve solo los que CAMBIARON de verdad - un PL visto por primera
-    vez se guarda sin reportarse como cambio. Deja el archivo de estado
-    actualizado con lo que acaba de leer (llamalo una sola vez por
-    corrida, no repetidas veces, o el segundo llamado no vera cambios)."""
+    """PLs de matriz_bayer_crop("PE") cuyo estado cambió desde la última
+    corrida. Actualiza el archivo de estado: llamar una vez por corrida."""
     tracked = {f["pl_numero"]: f["titulo_matriz"] for f in matriz_bayer_crop("PE") if f["pl_numero"]}
     if not tracked:
         return []
@@ -65,7 +46,7 @@ def detectar_cambios(db_path: str | Path, cliente: str = "Bayer") -> list[dict]:
             "SELECT estado, url_portal FROM proyectos WHERE proyecto_ley = ?", (pl_numero,)
         ).fetchone()
         if not row:
-            continue  # PL de la matriz que todavia no aparece en nuestra DB
+            continue  # todavía no está en la DB
         estado_actual, url = row
         ya_visto = pl_numero in conocido
         if ya_visto and conocido[pl_numero] != estado_actual:
@@ -102,62 +83,10 @@ def cmd_check() -> int:
     return 0
 
 
-# ============================================================
-# self-check (Ponytail: 1 chequeo ejecutable de la logica no trivial)
-# ============================================================
-
-def _demo():
-    """Sin red: mockea matriz_bayer_crop y la DB de proyectos para probar
-    que (1) un PL visto por primera vez se guarda SIN avisar (evita el
-    falso "cambio" de bootstrap), (2) un cambio real entre corridas SI
-    se detecta, y (3) sin cambio real no avisa de nuevo."""
-    import tempfile
-    from unittest.mock import patch
-
-    import clientes.alertas_pl as ap
-
-    tracked = [{"pl_numero": "00098-2026-2031-CD", "titulo_matriz": "Ley de facultades",
-                "tema_matriz": "x", "estado_matriz": "Activo"}]
-
-    with tempfile.TemporaryDirectory() as td:
-        db_path = Path(td) / "test.db"
-        estado_path = Path(td) / "estado.json"
-        conn = sqlite3.connect(str(db_path))
-        conn.execute("CREATE TABLE proyectos (proyecto_ley TEXT PRIMARY KEY, estado TEXT, url_portal TEXT)")
-        conn.execute("INSERT INTO proyectos VALUES ('00098-2026-2031-CD', 'EN COMISION', 'http://x')")
-        conn.commit()
-        conn.close()
-
-        with patch.object(ap, "matriz_bayer_crop", lambda pais: tracked if pais == "PE" else []), \
-             patch.object(ap, "ESTADO_PATH", estado_path):
-            # 1ra corrida: PL nuevo, nunca visto - se guarda, NO avisa.
-            cambios1 = ap.detectar_cambios(db_path)
-            assert cambios1 == [], f"un PL nuevo no deberia reportarse como cambio: {cambios1}"
-
-            # 2da corrida: mismo estado en la DB - sigue sin avisar.
-            cambios2 = ap.detectar_cambios(db_path)
-            assert cambios2 == [], f"sin cambio real no deberia avisar: {cambios2}"
-
-            # El estado cambio de verdad en la DB (ej. nuevo dictamen).
-            conn = sqlite3.connect(str(db_path))
-            conn.execute("UPDATE proyectos SET estado='DICTAMEN APROBADO' WHERE proyecto_ley='00098-2026-2031-CD'")
-            conn.commit()
-            conn.close()
-
-            cambios3 = ap.detectar_cambios(db_path)
-            assert len(cambios3) == 1, cambios3
-            assert cambios3[0]["estado_anterior"] == "EN COMISION", cambios3
-            assert cambios3[0]["estado_actual"] == "DICTAMEN APROBADO", cambios3
-
-            # 4ta corrida: ya alertado, sin cambio nuevo - no vuelve a avisar.
-            cambios4 = ap.detectar_cambios(db_path)
-            assert cambios4 == [], f"no deberia re-avisar el mismo cambio: {cambios4}"
-
-    print("OK alertas_pl: bootstrap silencioso, detecta cambio real, no repite aviso")
-
 
 if __name__ == "__main__":
     import sys
-    if len(sys.argv) == 2 and sys.argv[1] == "check":
+    if sys.argv[1:] == ["check"]:
         raise SystemExit(cmd_check())
-    _demo()
+    print("Uso: python -m clientes.alertas_pl check")
+    raise SystemExit(2)

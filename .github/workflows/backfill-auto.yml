@@ -1,29 +1,12 @@
 name: Backfill automatico (sesiones perdidas)
 
-# Cierra el hueco de backfill-vod.yml (100% manual, alguien tiene que
-# notar la sesion faltante y tipear el video_id a mano) - escanea SOLO
-# el canal de YouTube del Congreso, encuentra sesiones reales (Pleno/
-# comision) que sesiones_transcripciones todavia no tiene, y las
-# recupera de a pocas por corrida: captions si ya estan listos (rapido),
-# VOD completo + Whisper si no (lento, mismo camino que backfill-vod.yml
-# manual). Ver congreso_live/backfill_auto.py para el por que completo -
-# bug real 2026-09-18: 16 sesiones reales se encontraron y recuperaron
-# a mano en una sola sesion de trabajo, varias de la semana en curso.
+# Version automatica de backfill-vod.yml: busca en el canal de YouTube del
+# Congreso sesiones que sesiones_transcripciones no tiene y las recupera de a
+# pocas (captions si estan listos, si no VOD + Whisper). Ver
+# congreso_live/backfill_auto.py. Mismo esquema WARP que vigilar-congreso.yml.
 #
-# Mismo esquema WARP que vigilar-congreso.yml/backfill-vod.yml (YouTube
-# bloquea IPs de datacenter, WARP lo esquiva).
-#
-# El `schedule:` nativo de GitHub NO disparo confiable (bug real
-# 2026-09-19: 25+ min de atraso sobre el primer horario esperado, mismo
-# problema ya documentado en vigilar-congreso.yml a 10 min de frecuencia -
-# ahi se arreglo con un pinger externo, pero acá Nicolas ya no tiene el
-# token a mano). Se agrega el trigger `push` sobre data/.backfill_trigger
-# como disparador real: una rutina programada en la nube (no este repo,
-# ver Claude routines) solo actualiza ese archivo y hace push cada 6h -
-# mismo mecanismo (git push) que ya usan de forma confiable las rutinas
-# de "Resumir transcripciones"/"Redactar alertas", sin necesitar ningun
-# token de GitHub nuevo. `schedule:` queda igual, por si algun dia se
-# pone confiable solo.
+# El cron nativo no dispara confiable: el disparador real es el push de
+# data/.backfill_trigger que hace una rutina en la nube cada 6 h.
 
 on:
   push:
@@ -41,9 +24,7 @@ on:
 permissions:
   contents: write
 
-# Grupo propio - no comparte cola con vigilar-congreso (dispara cada 10
-# min, le ganaria la cola siempre) ni con backfill-vod (dispatch manual
-# puntual, distinto uso).
+# Grupo propio: el de vigilar-congreso (cada 10 min) le ganaria la cola.
 concurrency:
   group: backfill-auto
   cancel-in-progress: false
@@ -73,9 +54,7 @@ jobs:
           # Chromium para listar las paginas de Facebook de las comisiones EC
           # (congreso_live/facebook_ec.py - yt-dlp no sabe listar paginas).
           python -m playwright install --with-deps chromium > /dev/null
-          # Ver vigilar-congreso.yml: el binario portable de imageio-ffmpeg
-          # crasheaba (SIGSEGV) en runners de GitHub Actions - el de apt
-          # (probado para este mismo Ubuntu) no.
+          # ffmpeg de apt: el portable de imageio-ffmpeg crasheaba (SIGSEGV).
           sudo apt-get install -y -qq ffmpeg
 
       - name: Instalar Cloudflare WARP en modo proxy (SOCKS5 :40000)
@@ -102,9 +81,7 @@ jobs:
           YT_DLP_PROXY: socks5://127.0.0.1:40000
           FFMPEG_BIN: /usr/bin/ffmpeg
         run: |
-          # github.event.inputs.MAX (no el contexto `inputs` mas nuevo) -
-          # evalua vacio de forma segura en triggers que no son
-          # workflow_dispatch (ej. schedule), en vez de fallar la expresion.
+          # github.event.inputs (no `inputs`): evalua vacio sin fallar fuera de dispatch.
           MAX="${{ github.event.inputs.max }}"
           if [ -z "$MAX" ]; then MAX=4; fi
           python -X utf8 -u -m congreso_live.cli backfill-auto \
@@ -115,9 +92,8 @@ jobs:
           PYTHONIOENCODING: utf-8
           FFMPEG_BIN: /usr/bin/ffmpeg
         run: |
-          # Sin YT_DLP_PROXY a proposito: Facebook no bloquea las IPs de
-          # GitHub (verificado 2026-09-27, listado + audio directo OK), y asi
-          # WARP queda solo para YouTube.
+          # Sin YT_DLP_PROXY: Facebook no bloquea las IPs de GitHub; WARP queda
+          # solo para YouTube.
           timeout 9000 python -X utf8 -u -m congreso_live.cli comisiones-ec --max 3 \
               || echo "[warn] comisiones-ec termino con error, sigo al commit igual"
 
@@ -125,9 +101,6 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          # base_remota: la version publicada en `datos` es la base y se le
-          # suman las transcripciones recuperadas aca (este workflow no es
-          # dueño de PLs/agenda/noticias). Mismo merge que antes contra
-          # origin/main, ahora sin versionar la base en main (ver
-          # scripts/publicar_db.sh).
+          # base_remota: la base publicada en `datos` + las transcripciones
+          # recuperadas aca (ver scripts/publicar_db.sh).
           bash scripts/publicar_db.sh base_remota proyectos.db

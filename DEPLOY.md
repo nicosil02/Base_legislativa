@@ -64,9 +64,8 @@ entrar con su email + magic link. Cada nuevo registro commitea automaticamente
 
 ## 5. Alertas diarias (ya funcionando)
 
-GitHub Actions ya tiene el workflow `daily-alerts.yml` corriendo:
-- 9 AM Lima (14:00 UTC) — alerta si hay novedades
-- 10 AM Lima (15:00 UTC) — retry si 9 AM no envio
+El paso "Envio de alerta diaria" de `refrescar-pe.yml` las manda:
+- 9 AM Lima (slot am) y 2 PM Lima (slot pm), solo si hay novedades
 
 Tras este cambio, las alertas se envian a TODOS los usuarios registrados en
 `data/users.json`, no solo al hardcoded ALERT_RECIPIENT.

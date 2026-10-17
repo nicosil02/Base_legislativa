@@ -40,36 +40,6 @@ def cmd_seed(args) -> int:
     return 0
 
 
-def cmd_list_fuentes(args) -> int:
-    with Database(args.db) as db:
-        fuentes = db.list_fuentes(
-            pais=args.pais, categoria=args.categoria,
-            solo_activas=not args.todas,
-        )
-        if args.scrapeables:
-            fuentes = [f for f in fuentes if f["tipo"] in ("rss", "html", "api", "gobpe")]
-        if not fuentes:
-            print("Sin fuentes con esos filtros.")
-            return 0
-        print(f"{len(fuentes)} fuente(s):\n")
-        # Agrupar por categoria
-        cat_actual = None
-        for f in fuentes:
-            if f["categoria"] != cat_actual:
-                cat_actual = f["categoria"]
-                print(f"\n=== {cat_actual} ===")
-            tipo_marker = {
-                "rss": "📡", "html": "🌐", "api": "⚙️", "gobpe": "⚙️",
-                "twitter": "🐦", "manual": "✋",
-            }.get(f["tipo"], "?")
-            print(f"  {tipo_marker} [{f['pais']}] {f['nombre']}")
-            if f["url"]:
-                print(f"        url: {f['url']}")
-            if f["rss_url"]:
-                print(f"        rss: {f['rss_url']}")
-    return 0
-
-
 def cmd_sync(args) -> int:
     """Scrapea todas las fuentes activas (filtrables por pais/categoria)."""
     with Database(args.db) as db:
@@ -213,25 +183,6 @@ def cmd_avisar(args) -> int:
     return 0
 
 
-def cmd_set_url(args) -> int:
-    """Actualiza url y/o rss_url de una fuente por nombre+pais."""
-    with Database(args.db) as db:
-        with db.tx() as c:
-            cur = c.execute(
-                """UPDATE noticias_fuentes SET
-                   url=COALESCE(?, url),
-                   rss_url=COALESCE(?, rss_url),
-                   tipo=COALESCE(?, tipo)
-                   WHERE pais=? AND nombre=?""",
-                (args.url, args.rss, args.tipo, args.pais, args.nombre),
-            )
-            if cur.rowcount == 0:
-                print(f"No encontre fuente con pais={args.pais!r} nombre={args.nombre!r}")
-                return 1
-        print(f"Actualizada fuente {args.nombre} [{args.pais}]")
-    return 0
-
-
 def build_parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(prog="noticias",
         description="Mapeo de noticias PE + EC")
@@ -243,14 +194,6 @@ def build_parser() -> argparse.ArgumentParser:
 
     sub.add_parser("seed",
         help="importa catalogo desde noticias.fuentes").set_defaults(func=cmd_seed)
-
-    lf = sub.add_parser("list-fuentes", help="lista las fuentes catalogadas")
-    lf.add_argument("--pais", choices=["PE", "EC"])
-    lf.add_argument("--categoria")
-    lf.add_argument("--todas", action="store_true", help="incluir inactivas")
-    lf.add_argument("--scrapeables", action="store_true",
-                    help="solo rss/html/api")
-    lf.set_defaults(func=cmd_list_fuentes)
 
     sy = sub.add_parser("sync", help="scrapea fuentes y captura noticias")
     sy.add_argument("--pais", choices=["PE", "EC"])
@@ -279,14 +222,6 @@ def build_parser() -> argparse.ArgumentParser:
     av.add_argument("--dry-run", action="store_true",
                     help="solo muestra el mensaje, no manda ni guarda estado")
     av.set_defaults(func=cmd_avisar)
-
-    su = sub.add_parser("set-url", help="actualiza url/rss de una fuente")
-    su.add_argument("--pais", required=True, choices=["PE", "EC"])
-    su.add_argument("--nombre", required=True)
-    su.add_argument("--url")
-    su.add_argument("--rss")
-    su.add_argument("--tipo", choices=["rss", "html", "api", "gobpe", "twitter", "manual"])
-    su.set_defaults(func=cmd_set_url)
 
     return p
 
