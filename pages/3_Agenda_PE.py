@@ -18,7 +18,7 @@ import streamlit as st
 from scraper.sync import FECHA_INICIO_BICAMERAL
 from scraper.categorias import CATEGORIA_CLIENTES_PL
 from alerts import armar, historial
-from ui_kit import inject_theme
+from ui_kit import AGENDA_CSS, inject_theme
 from consultas.agenda_pe import (
     has_mesas_table,
     load_mesas,
@@ -41,125 +41,7 @@ from consultas import hora_a_minutos, matriz_pls
 
 # ====================== CSS (estetica Vali, identica a Peru) ======================
 inject_theme()
-st.markdown(
-    """<style>
-/* Date input en sidebar: caja blanca con texto navy (override del * blanco
-   de arriba). Mismo patron que pages/1_Peru.py para consistencia visual. */
-section[data-testid="stSidebar"] [data-testid="stDateInput"] input {
-  background-color:#FFFFFF !important;
-  color:var(--ink) !important;
-}
-section[data-testid="stSidebar"] [data-testid="stDateInputField"],
-section[data-testid="stSidebar"] [data-testid="stDateInput"] [role="presentation"],
-section[data-testid="stSidebar"] [data-testid="stDateInput"] svg {
-  color:var(--ink) !important;
-  fill:var(--ink) !important;
-}
-.block-container { padding-top:2rem; padding-bottom:4rem; max-width:1400px; }
-
-.country-eyebrow {
-  font-size:11px; font-weight:800; letter-spacing:0.25em;
-  text-transform:uppercase; color:var(--accent); margin-bottom:12px;
-}
-.country-title {
-  font-family: Georgia, 'Times New Roman', serif;
-  font-size:clamp(2.5rem,5vw,3.75rem); font-weight:400;
-  letter-spacing:-0.01em; line-height:0.98; color:var(--ink); margin:0 0 10px 0;
-}
-.country-title .accent { color:var(--accent); }
-.country-title .period {
-  font-weight:500; color:var(--ink-soft); font-size:0.7em; letter-spacing:-0.01em;
-}
-.country-subtitle {
-  font-size:1.15rem; color:var(--ink-soft); line-height:1.6; margin-bottom:36px;
-}
-div[data-testid="stMetric"] {
-  background-color:var(--bg); border:1px solid var(--line); border-radius:12px;
-  padding:16px 18px; box-shadow:none; transition:border-color .2s;
-}
-div[data-testid="stMetric"]:hover { border-color:var(--ink-mute); }
-div[data-testid="stMetricLabel"] {
-  color:var(--ink-soft) !important; font-size:10px !important;
-  text-transform:uppercase; letter-spacing:0.18em; font-weight:700 !important;
-}
-div[data-testid="stMetricValue"] {
-  color:var(--ink) !important; font-weight:900 !important;
-  font-size:2rem !important; letter-spacing:-0.02em;
-}
-h2,h3 { font-weight:800; color:var(--ink); letter-spacing:-0.01em; }
-label[data-testid="stWidgetLabel"] p {
-  font-size:10px !important; text-transform:uppercase; letter-spacing:0.18em;
-  font-weight:700; color:var(--ink-soft); text-align:center;
-}
-div[data-testid="stDataFrame"] { border:1px solid var(--line); border-radius:12px; overflow:hidden; }
-div[data-testid="stDataFrame"] thead th,
-div[data-testid="stDataFrame"] [role="columnheader"] {
-  background-color:var(--ink) !important; text-transform:uppercase;
-  letter-spacing:0.06em; font-size:11px !important; font-weight:700 !important;
-  color:#FFFFFF !important; border-bottom:2px solid var(--ink) !important;
-}
-div[data-testid="stDataFrame"] thead th *,
-div[data-testid="stDataFrame"] [role="columnheader"] * { color:#FFFFFF !important; }
-div[data-testid="stDataFrame"] tbody td { font-size:13px; line-height:1.4; border-bottom:1px solid var(--line-soft) !important; }
-div[data-testid="stDataFrame"] [role="gridcell"] {
-  white-space:pre-wrap !important; overflow-wrap:break-word !important;
-  line-height:1.45 !important; padding-top:10px !important; padding-bottom:10px !important;
-}
-.footer-rule { width:32px; height:2px; background:var(--ink); margin:60px 0 14px 0; }
-.footer-text {
-  font-size:11px; font-weight:700; letter-spacing:0.18em;
-  text-transform:uppercase; color:var(--ink-soft);
-}
-@keyframes cardEnterList {
-  from { opacity: 0; transform: translateY(8px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-.session-card {
-  background:var(--bg); border:1px solid var(--line); border-radius:14px;
-  padding:24px 28px; margin-top:20px;
-  animation: cardEnterList 320ms cubic-bezier(.16,1,.3,1) both;
-  transition: border-color .15s ease, box-shadow .15s ease,
-              transform .15s cubic-bezier(.16,1,.3,1);
-}
-.session-card:hover {
-  border-color: var(--accent);
-  box-shadow: 0 2px 8px rgba(10,41,77,0.08);
-  transform: translateY(-1px);
-}
-.session-card .eyebrow {
-  font-size:11px; font-weight:800; letter-spacing:0.22em;
-  text-transform:uppercase; color:var(--accent); margin-bottom:10px;
-}
-.session-card .title { font-size:1.4rem; font-weight:800; line-height:1.25; color:var(--ink); margin-bottom:6px; }
-.session-card .meta { font-size:13px; color:var(--ink-soft); margin-bottom:14px; }
-.pl-chip {
-  display:inline-block; padding:3px 9px; border-radius:6px;
-  background:#EBF2FA; color:#0A294D; font-size:11px; font-weight:700;
-  font-family:'Inter',monospace; letter-spacing:0.02em; margin-right:6px;
-}
-/* Banner "EN VIVO ahora" - Pleno/comisiones transmitiendo en YouTube */
-.live-banner {
-  border:1px solid #F2C4C4; background:#FDF2F2; border-radius:12px;
-  padding:16px 20px; margin-bottom:24px;
-}
-.live-banner-title {
-  font-size:11px; font-weight:800; letter-spacing:0.16em; text-transform:uppercase;
-  color:var(--accent-red); margin-bottom:10px;
-}
-.live-item { font-size:14px; color:var(--ink); padding:4px 0; }
-.live-item a { color:var(--accent-red); font-weight:700; text-decoration:none; }
-.live-item a:hover { text-decoration:underline; }
-.live-dot {
-  display:inline-block; width:8px; height:8px; border-radius:50%;
-  background:var(--accent-red); margin-right:8px; vertical-align:middle;
-  animation: livePulse 1.6s ease-in-out infinite;
-}
-@keyframes livePulse { 0%,100% { opacity:1; } 50% { opacity:.35; } }
-.live-titulo { color:var(--ink-soft); }
-footer { visibility:hidden; }
-</style>""",
-    unsafe_allow_html=True,
-)
+st.markdown(AGENDA_CSS, unsafe_allow_html=True)
 
 
 # La columna "Nº PL" funciona como LinkColumn donde la celda contiene la URL
