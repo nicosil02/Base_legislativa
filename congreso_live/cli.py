@@ -167,7 +167,7 @@ def main(argv: list[str] | None = None) -> int:
     lw = sub.add_parser("live-watch",
                         help="corre por detras: detecta y transcribe SOLA cualquier sesion en vivo, sin intervencion manual")
     lw.add_argument("--intervalo", type=int, default=40,
-                    help="segundos de audio real por chunk (default 40)")
+                    help="segundos de espera antes de reintentar abrir el audio en vivo (default 40); el audio se transcribe frase por frase")
     lw.add_argument("--poll", type=int, default=60,
                     help="cada cuantos segundos revisa si hay sesiones nuevas en vivo (default 60)")
     lw.add_argument("--max-total-minutos", type=float, default=None,
