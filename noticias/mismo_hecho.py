@@ -21,6 +21,7 @@ import json
 import random
 import re
 import sqlite3
+import time
 from datetime import date, datetime, timedelta, timezone
 
 from core import llm
@@ -30,6 +31,7 @@ from core.text import norm
 UMBRAL_CANDIDATO = 0.72
 MAX_DIAS_ENTRE = 3
 LOTE_GEMINI = 30
+PAUSA_GEMINI = 4.5    # flash-lite gratis: 15 pedidos por minuto
 MAX_PARES_GEMINI = 300   # por corrida diaria sin modelo propio (10 llamadas)
 MAX_PARES_MODELO = 3000  # ~5 min en CPU
 MODELO_DIR = ROOT / "data" / "mismo_hecho_modelo"
@@ -104,9 +106,19 @@ def juzgar_gemini(pares: list[dict], generar=llm.generar) -> list[bool | None]:
     for k in range(0, len(pares), LOTE_GEMINI):
         lote = pares[k:k + LOTE_GEMINI]
         lista = "\n\n".join(f"[{i}]\nA: {p['ta']}\nB: {p['tb']}" for i, p in enumerate(lote, 1))
+        if k and generar is llm.generar:
+            time.sleep(PAUSA_GEMINI)
+        for intento in range(4):
+            try:
+                resp = generar(f"Para cada par responde {{indice, mismo}}.\n\n{lista}",
+                               system=SYSTEM, modelo=llm.LITE, schema=SCHEMA)
+                break
+            except Exception as e:  # 429 por minuto: esperar y reintentar; el diario corta
+                if "429" not in str(e) or "PerDay" in str(e) or intento == 3:
+                    raise
+                time.sleep(30)
         v = {}
-        for x in json.loads(generar(f"Para cada par responde {{indice, mismo}}.\n\n{lista}",
-                                    system=SYSTEM, modelo=llm.LITE, schema=SCHEMA) or "[]"):
+        for x in json.loads(resp or "[]"):
             if isinstance(x, dict) and isinstance(x.get("indice"), int):
                 v[x["indice"]] = bool(x.get("mismo"))
         out += [v.get(i) for i in range(1, len(lote) + 1)]
@@ -202,6 +214,9 @@ def entrenar(cerebro: sqlite3.Connection, noticias: sqlite3.Connection, epocas: 
     MODELO_DIR.mkdir(parents=True, exist_ok=True)
     modelo.to(torch.float16).save_pretrained(MODELO_DIR)   # la mitad de peso; se lee en float32
     tok.save_pretrained(MODELO_DIR)
+    # lo que juzgo el modelo anterior se vuelve a juzgar con este
+    cerebro.execute("DELETE FROM mismo_hecho WHERE juez = 'modelo'")
+    cerebro.commit()
     (MODELO_DIR / "metricas.json").write_text(json.dumps(res, indent=2, ensure_ascii=False), encoding="utf-8")
     print(json.dumps(res, indent=2, ensure_ascii=False))
     return res
@@ -255,6 +270,7 @@ def etiquetar(dias: int, maximo: int) -> int:
     altos = [p for p in pares if p["sim"] >= 0.82][:maximo // 2]
     medios = [p for p in pares if p["sim"] < 0.82][:maximo - len(altos)]
     pares = altos + medios
+    random.Random(8).shuffle(pares)   # si el cupo corta a mitad, igual quedan de las dos franjas
     print(f"[mismo_hecho] {len(pares)} pares a etiquetar ({len(altos)} >= 0.82)")
     hechos = 0
     for k in range(0, len(pares), LOTE_GEMINI * 5):
