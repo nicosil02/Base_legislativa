@@ -1,6 +1,8 @@
 """Acceso al cerebro desde las paginas de Streamlit (conexion cacheada)."""
 from __future__ import annotations
 
+import sqlite3
+
 import streamlit as st
 
 
@@ -97,18 +99,21 @@ def historias_noticias(ids: tuple[int, ...], titulos: tuple[str, ...],
     conn = conexion()
     if conn is None or not ids:
         return list(range(len(ids)))
-    import numpy as np
+    from cerebro.embeddings import vectores_noticias
     from noticias.historias import UMBRAL_NOTICIAS, agrupar, similitudes_noticias
-    vec: dict[int, np.ndarray] = {}
+    pos = {n: k for k, n in enumerate(ids)}
     try:
-        for k in range(0, len(ids), 900):
-            lote = [f"noticia_{i}" for i in ids[k:k + 900]]
-            for clave, blob in conn.execute(
-                    f"SELECT i.clave, v.embedding FROM items i JOIN vec_items v ON v.rowid = i.id "
-                    f"WHERE i.clave IN ({','.join('?' * len(lote))})", lote):
-                vec[int(clave.split("_", 1)[1])] = np.frombuffer(blob, dtype=np.float32)
+        vec = vectores_noticias(ids, conn)
     except Exception as e:
         print(f"[cerebro] vectores fallo: {e}")
         return list(range(len(ids)))
-    sims = similitudes_noticias([vec.get(i) for i in ids], list(titulos), list(fuentes))
+    juicios = {}
+    lista = ",".join(str(int(i)) for i in ids)
+    try:
+        for a, b, igual in conn.execute(
+                f"SELECT a, b, igual FROM mismo_hecho WHERE a IN ({lista}) AND b IN ({lista})"):
+            juicios[(pos[a], pos[b])] = bool(igual)
+    except sqlite3.OperationalError:  # cerebro.db sin la tabla mismo_hecho todavia
+        pass
+    sims = similitudes_noticias([vec.get(i) for i in ids], list(titulos), list(fuentes), juicios)
     return agrupar(list(titulos), sims=sims, umbral=UMBRAL_NOTICIAS)

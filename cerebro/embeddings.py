@@ -487,6 +487,20 @@ def vector_tema(tema: str, conn: sqlite3.Connection) -> list[float] | None:
     return json.loads(fila[0])["v"] if fila else None
 
 
+def vectores_noticias(ids, conn: sqlite3.Connection) -> dict:
+    """{id de noticia: vector numpy normalizado} de las que ya estan en el cerebro."""
+    import numpy as np
+    ids = list(ids)
+    out = {}
+    for k in range(0, len(ids), 900):
+        lote = [f"noticia_{i}" for i in ids[k:k + 900]]
+        for clave, blob in conn.execute(
+                f"SELECT i.clave, v.embedding FROM items i JOIN vec_items v ON v.rowid = i.id "
+                f"WHERE i.clave IN ({','.join('?' * len(lote))})", lote):
+            out[int(clave.split("_", 1)[1])] = np.frombuffer(blob, dtype=np.float32)
+    return out
+
+
 def afinidad_vector(claves: list[str], vector: list[float],
                     conn: sqlite3.Connection | None = None) -> dict[str, float]:
     """{clave: similitud} de cada clave contra un vector cualquiera."""

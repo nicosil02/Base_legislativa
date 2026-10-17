@@ -37,3 +37,12 @@ def test_similitudes_noticias_separa_normas_distintas():
     # Mismo portal: no se junta (plantillas como el clima por ciudad).
     fuentes = ["Gestion", "Gestion", "X", "El Peruano", "MEF"]
     assert agrupar(titulos, sims=similitudes_noticias(vecs, titulos, fuentes), umbral=UMBRAL_NOTICIAS)[:2] == [0, 1]
+
+
+def test_juicios_mandan_sobre_vectores():
+    import numpy as np
+    from noticias.historias import UMBRAL_NOTICIAS, similitudes_noticias
+    v = [np.array([1, 0], "float32"), np.array([0, 1], "float32"), np.array([1, 0], "float32")]
+    t = ["Gálvez pide crédito", "Fiscalía pide crédito suplementario", "Otra cosa igual de vector"]
+    sims = similitudes_noticias(v, t, ["A", "B", "C"], {(0, 1): True, (0, 2): False})
+    assert agrupar(t, sims=sims, umbral=UMBRAL_NOTICIAS) == [0, 0, 1]
