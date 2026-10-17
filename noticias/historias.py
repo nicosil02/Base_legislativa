@@ -55,6 +55,35 @@ def agrupar(textos: list[str], sims=None, umbral: float | None = None,
     return grupo
 
 
+# Noticias escritas, con los vectores ya guardados en cerebro.db (la app web no
+# carga el modelo). Calibrado 2026-10-17 con noticias PE/EC reales de dos dias:
+# entre portales distintos, desde 0.82 es el mismo hecho (Senado y facultades en
+# El Comercio e Infobae, crudo colombiano en Vistazo y Primicias). Dentro de un
+# mismo portal no se junta: ahi lo parecido son plantillas (clima de Piura vs
+# Iquitos, dos sesiones de la Agenda). Normas con el mismo formato y numero
+# distinto (DS 200-2026-EF vs 201-2026-EF) tampoco.
+UMBRAL_NOTICIAS = 0.82
+_NUM_NORMA = re.compile(r"\b\d{1,6}-\d{4}(?:-[A-Z]+)?\b")
+
+
+def similitudes_noticias(vectores: list, titulos: list[str], fuentes: list[str] | None = None):
+    """Matriz para agrupar(): coseno entre vectores (None = sin vector, queda
+    sola), 0 entre noticias del mismo portal y entre normas con numeros distintos."""
+    import numpy as np
+    n = len(titulos)
+    dim = next((len(v) for v in vectores if v is not None), 1)
+    m = np.stack([np.asarray(v, dtype="float32") if v is not None else np.zeros(dim, "float32")
+                  for v in vectores]) if n else np.zeros((0, dim), "float32")
+    sims = m @ m.T
+    np.fill_diagonal(sims, 1.0)
+    normas = [set(_NUM_NORMA.findall(t or "")) for t in titulos]
+    for i in range(n):
+        for j in range(i + 1, n):
+            if (fuentes and fuentes[i] == fuentes[j]) or (normas[i] and normas[j] and not normas[i] & normas[j]):
+                sims[i, j] = sims[j, i] = 0.0
+    return sims
+
+
 def _tokens(s: str) -> set[str]:
     return {t for t in re.findall(r"\w{4,}", s.lower())}
 
