@@ -4,17 +4,14 @@ Ejemplos de uso:
 
     python -m scraper_ec.cli init
     python -m scraper_ec.cli importar-csv data/ppless_listado_2025-2029_snapshot.csv
-    python -m scraper_ec.cli stats
-    python -m scraper_ec.cli query --estado "PROYECTO PRESENTADO"
-    python -m scraper_ec.cli query --tema "Tecnología"
-    python -m scraper_ec.cli show 480824
+    python -m scraper_ec.cli actualizar-csv
+    python -m scraper_ec.cli enriquecer-documentos --limit 20
+    python -m scraper_ec.cli scrapear-unificados
     python -m scraper_ec.cli recategorizar
-    python -m scraper_ec.cli export --out proyectos_ec.json
 """
 from __future__ import annotations
 
 import argparse
-import json
 import sys
 from pathlib import Path
 
@@ -61,118 +58,14 @@ def cmd_importar_csv(args) -> int:
     return 0
 
 
-def cmd_stats(args) -> int:
-    db = _db(args)
-    try:
-        total = db.count_proyectos()
-        print(f"Total proyectos: {total}")
-        # Por estado
-        print("\nPor estado:")
-        for r in db.conn.execute(
-            "SELECT estado, COUNT(*) c FROM proyectos GROUP BY estado ORDER BY c DESC"
-        ):
-            print(f"  {r['c']:>4}  {r['estado']}")
-        # Por tema
-        print("\nPor tema:")
-        for r in db.conn.execute(
-            "SELECT tema, COUNT(*) c FROM proyectos GROUP BY tema ORDER BY c DESC"
-        ):
-            tema = r["tema"] or "(sin clasificar)"
-            print(f"  {r['c']:>4}  {tema}")
-        # Último sync
-        last = db.conn.execute(
-            "SELECT * FROM sync_runs WHERE finished_at IS NOT NULL "
-            "ORDER BY id DESC LIMIT 1"
-        ).fetchone()
-        if last:
-            print(f"\nÚltimo sync: {last['finished_at']}")
-            print(f"  vistos={last['proyectos_vistos']}  "
-                  f"nuevos={last['proyectos_nuevos']}  "
-                  f"actualizados={last['proyectos_actualizados']}  "
-                  f"errores={last['errores']}")
-    finally:
-        db.close()
-    return 0
-
-
-def cmd_query(args) -> int:
-    db = _db(args)
-    try:
-        sql = "SELECT n_tramite, fec_presentacion, estado, comision_asignada, tema, titulo FROM proyectos WHERE 1=1"
-        params: list = []
-        if args.estado:
-            sql += " AND estado = ?"; params.append(args.estado)
-        if args.tema:
-            sql += " AND tema = ?"; params.append(args.tema)
-        if args.comision:
-            sql += " AND comision_asignada LIKE ?"; params.append(f"%{args.comision}%")
-        sql += " ORDER BY fec_presentacion DESC"
-        if args.limit:
-            sql += f" LIMIT {int(args.limit)}"
-        for r in db.conn.execute(sql, params):
-            titulo = (r["titulo"] or "")[:80]
-            print(f"  {r['n_tramite']:<22} {r['fec_presentacion']}  [{r['tema'] or '-'}]  {titulo}")
-    finally:
-        db.close()
-    return 0
-
-
-def cmd_show(args) -> int:
-    db = _db(args)
-    try:
-        p = db.conn.execute(
-            "SELECT * FROM proyectos WHERE n_tramite = ?", (args.n_tramite,)
-        ).fetchone()
-        if not p:
-            print(f"No encontré el proyecto con N. Trámite = {args.n_tramite}")
-            return 1
-        print(f"\n=== {p['n_tramite']} ===")
-        for k in p.keys():
-            print(f"  {k:<22} {p[k]}")
-        propon = db.conn.execute(
-            "SELECT nombre, tipo FROM proponentes WHERE n_tramite = ? ORDER BY orden",
-            (args.n_tramite,),
-        ).fetchall()
-        if propon:
-            print(f"\n  Proponentes ({len(propon)}):")
-            for pr in propon:
-                print(f"    - {pr['nombre']}  ({pr['tipo']})")
-        hist = db.conn.execute(
-            "SELECT changed_at, campo, valor_antes, valor_despues "
-            "FROM historial_cambios WHERE n_tramite = ? ORDER BY id DESC LIMIT 20",
-            (args.n_tramite,),
-        ).fetchall()
-        if hist:
-            print(f"\n  Historial ({len(hist)} cambios):")
-            for h in hist:
-                print(f"    {h['changed_at']} | {h['campo']}: "
-                      f"{(h['valor_antes'] or '')[:40]!r} → {(h['valor_despues'] or '')[:40]!r}")
-    finally:
-        db.close()
-    return 0
-
-
 def cmd_actualizar_csv(args) -> int:
-    """Descarga CSV fresco del portal Ppless v2 (Playwright) y re-importa.
-
-    Asi se sincroniza la lista de proyectos con el portal: aparecen nuevos
-    PLs y se actualizan los existentes. Equivalente a hacer en local:
-       1) Abrir Ppless v2, clickear tab 2.0, clickear boton CSV
-       2) python -m scraper_ec.cli importar-csv <archivo>
-    """
-    from pathlib import Path
+    """Descarga el CSV fresco del portal Ppless v2 (Playwright) y lo importa."""
     from scraper_ec.playwright_detail import download_csv
     from scraper_ec.csv_importer import import_csv
 
     repo_root = Path(__file__).resolve().parent.parent
-    # NO reusar ppless_listado_2025-2029_snapshot.csv (ese es el seed fijo
-    # versionado en git para el bootstrap inicial cuando no existe
-    # proyectos_ec.db.gz) - bug real encontrado en vivo 2026-09-17: una vez
-    # arreglada la descarga (commit 9b9070a), cada corrida sobreescribia ese
-    # archivo TRACKEADO sin comitearlo, dejando el working tree sucio y
-    # rompiendo el "git rebase" del paso de auto-commit ("cannot rebase: you
-    # have unstaged changes"). Este archivo es efimero (gitignored), separado
-    # del seed.
+    # Archivo aparte (gitignored): pisar el seed versionado ensuciaba el
+    # working tree y rompía el rebase del auto-commit.
     csv_path = repo_root / "data" / "ppless_actual.csv"
 
     print(f"[actualizar-csv] descargando CSV fresco a {csv_path.name}...")
@@ -198,97 +91,8 @@ def cmd_actualizar_csv(args) -> int:
     return 0
 
 
-def cmd_snapshot(args) -> int:
-    """Comprime proyectos_ec.db a data/proyectos_ec.db.gz.
-
-    El snapshot es lo que Streamlit Cloud usa al arrancar (el filesystem
-    es efimero, no puede persistir la DB enriquecida). Despues de
-    enriquecer documentos localmente, corre este comando + commit + push.
-    """
-    import gzip
-    import shutil
-    from pathlib import Path
-
-    repo_root = Path(args.db).resolve().parent if args.db else Path.cwd()
-    db_path = Path(args.db).resolve()
-    if not db_path.exists():
-        print(f"ERROR: no encontre {db_path}")
-        return 1
-
-    # data/ esta a nivel del repo root. Buscamos el directorio data/ subiendo.
-    here = db_path.parent
-    data_dir = here / "data"
-    if not data_dir.exists():
-        # Subir hasta encontrarlo
-        for _ in range(5):
-            here = here.parent
-            if (here / "data").exists():
-                data_dir = here / "data"
-                break
-    if not data_dir.exists():
-        data_dir = db_path.parent / "data"
-        data_dir.mkdir(parents=True, exist_ok=True)
-
-    out_path = data_dir / "proyectos_ec.db.gz"
-    print(f"Comprimiendo {db_path.name} ({db_path.stat().st_size:,} bytes) → {out_path.name}...")
-    with db_path.open("rb") as f_in, gzip.open(out_path, "wb", compresslevel=9) as f_out:
-        shutil.copyfileobj(f_in, f_out)
-    print(f"Snapshot listo: {out_path} ({out_path.stat().st_size:,} bytes)")
-    print()
-    print("Para sincronizar con Streamlit Cloud:")
-    print(f"  git add {out_path.relative_to(here.parent if data_dir.parent != here else here)}")
-    print('  git commit -m "Snapshot EC con documentos enriquecidos"')
-    print("  git push")
-    return 0
-
-
-def cmd_fix_typos(args) -> int:
-    """Aplica COMISION_TYPOS a la data ya en la DB. Útil tras agregar nuevos
-    typos al diccionario, o tras una primera importación con typos viejos."""
-    from scraper_ec.csv_importer import COMISION_TYPOS
-    from scraper_ec.db import now_iso
-
-    db = _db(args)
-    try:
-        now = now_iso()
-        total_fixed = 0
-        for raw, fixed in COMISION_TYPOS.items():
-            cur = db.conn.execute(
-                "SELECT COUNT(*) FROM proyectos WHERE comision_asignada = ?",
-                (raw,),
-            ).fetchone()
-            n = cur[0]
-            if n == 0:
-                continue
-            print(f"  '{raw}' → '{fixed}' ({n} proyectos)")
-            # Update + registrar en historial_cambios
-            for r in db.conn.execute(
-                "SELECT n_tramite FROM proyectos WHERE comision_asignada = ?",
-                (raw,),
-            ).fetchall():
-                with db.tx() as c:
-                    c.execute(
-                        "UPDATE proyectos SET comision_asignada=?, last_changed_at=? WHERE n_tramite=?",
-                        (fixed, now, r["n_tramite"]),
-                    )
-                    c.execute(
-                        "INSERT INTO historial_cambios (n_tramite, changed_at, campo, valor_antes, valor_despues) "
-                        "VALUES (?,?,?,?,?)",
-                        (r["n_tramite"], now, "comision_asignada", raw, fixed),
-                    )
-            total_fixed += n
-        if total_fixed == 0:
-            print("No hay typos pendientes — DB ya limpia.")
-        else:
-            print(f"\nTotal corregido: {total_fixed} proyectos.")
-    finally:
-        db.close()
-    return 0
-
-
 def cmd_enriquecer_documentos(args) -> int:
-    """Itera proyectos abriendo el modal de detalle vía Playwright para
-    capturar los URLs de PDFs."""
+    """Abre el detalle de cada proyecto con Playwright y guarda los PDFs."""
     try:
         from scraper_ec.playwright_detail import enrich_documentos
     except ImportError:
@@ -297,11 +101,8 @@ def cmd_enriquecer_documentos(args) -> int:
 
     db = _db(args)
     try:
-        # Lista de N. Trámite a enriquecer. Por default elegimos proyectos
-        # que NO tienen documentos en la DB (los que faltan procesar),
-        # ordenados por fec_presentacion DESC (mas recientes primero — son
-        # los que mas interesan). Con --force, ignora el filtro y procesa
-        # todos los que matcheen --estado / --limit.
+        # Default: sin documentos o con cambio de estado en 14 días (cada fase
+        # sube PDFs nuevos). --force ignora el filtro.
         params: list = []
         sql = "SELECT n_tramite FROM proyectos"
         where = []
@@ -309,19 +110,11 @@ def cmd_enriquecer_documentos(args) -> int:
             where.append("estado = ?")
             params.append(args.estado)
         if getattr(args, "solo_sin_fase", False):
-            # Modo quirurgico: solo proyectos con al menos 1 doc cuya fase
-            # quedo nula (bug viejo del fallback fase_per_index). Re-procesa
-            # esos para que el fix nuevo asigne la fase correctamente.
             where.append(
                 "n_tramite IN (SELECT DISTINCT n_tramite FROM documentos "
                 "WHERE fase IS NULL OR fase = '')"
             )
         elif not args.force:
-            # Default: proyectos sin documentos + los que cambiaron de estado
-            # en los ultimos 14 dias (cada fase nueva sube PDFs nuevos:
-            # informes de debate, texto aprobado). Antes solo se miraban los
-            # sin docs y un PL nunca volvia a revisarse (Aviacion Civil tenia
-            # 2 docs de mayo con el segundo debate ya votado, 2026-09-30).
             where.append(
                 "(n_tramite NOT IN (SELECT DISTINCT n_tramite FROM documentos) "
                 "OR n_tramite IN (SELECT n_tramite FROM historial_cambios "
@@ -340,15 +133,10 @@ def cmd_enriquecer_documentos(args) -> int:
         def progress(ntr, idx, total):
             print(f"[{idx}/{total}] {ntr}")
 
-        # El filtro ya lo hace el SQL de arriba (que incluye PLs con docs
-        # que cambiaron de estado), asi que aca nunca se salta nada.
-        skip_with_docs = False
-
         stats = enrich_documentos(
             db,
             n_tramites=n_tramites,
             headless=not args.no_headless,
-            skip_with_docs=skip_with_docs,
             on_progress=progress,
             sleep_between_ms=args.sleep_ms,
         )
@@ -376,119 +164,8 @@ def cmd_recategorizar(args) -> int:
     return 0
 
 
-def cmd_importar_unificaciones(args) -> int:
-    """Importa grupos de unificacion desde un JSON (formato del scraping
-    del portal Ppless via Claude in Chrome).
-
-    Para miembros que NO existen en la tabla proyectos (porque son de
-    periodos pre-2025 que no estan en nuestro sync de CSV), crea stub
-    rows con n_tramite + titulo='(PL externo - no en DB local)' para
-    preservar la integridad referencial y mostrar el grupo completo.
-    """
-    import json
-    from datetime import datetime, timezone
-    from pathlib import Path
-    db = _db(args)
-    try:
-        path = Path(args.json_file).resolve()
-        if not path.exists():
-            print(f"Error: archivo no encontrado: {path}")
-            return 1
-        data = json.loads(path.read_text(encoding="utf-8"))
-        if not isinstance(data, list):
-            print(f"Error: JSON debe ser array. Got: {type(data).__name__}")
-            return 1
-
-        # Borrar grupos source='portal' anteriores (re-import limpio)
-        if args.replace:
-            with db.tx() as c:
-                old_ids = [r[0] for r in c.execute(
-                    "SELECT id FROM unificacion_grupos WHERE source = 'portal'"
-                )]
-                if old_ids:
-                    c.execute(
-                        f"DELETE FROM unificacion_grupos WHERE id IN ({','.join('?'*len(old_ids))})",
-                        old_ids,
-                    )
-                    c.execute(
-                        f"DELETE FROM unificacion_pl WHERE grupo_id IN ({','.join('?'*len(old_ids))})",
-                        old_ids,
-                    )
-                    print(f"[replace] borrados {len(old_ids)} grupos source='portal' previos")
-
-        # Mapeo de n_tramites existentes (refrescamos despues de cada stub creado)
-        existentes = {
-            r[0] for r in db.conn.execute("SELECT n_tramite FROM proyectos")
-        }
-        now = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
-
-        creados = 0
-        skipped = 0
-        miembros_total = 0
-        stubs_creados = 0
-
-        for item in data:
-            principal = (item.get("n_tramite_principal") or "").strip()
-            miembros = [str(m).strip() for m in (item.get("miembros") or []) if str(m).strip()]
-            if not principal or not miembros:
-                skipped += 1
-                continue
-
-            # Lista completa: principal + miembros (deduplicado)
-            n_tramites = list(dict.fromkeys([principal] + miembros))
-
-            # Para los que no existan: crear stub row en proyectos.
-            # Asi el grupo se ve completo y la FK no falla.
-            faltantes = [n for n in n_tramites if n not in existentes]
-            if faltantes:
-                with db.tx() as c:
-                    for n in faltantes:
-                        c.execute(
-                            """INSERT OR IGNORE INTO proyectos
-                               (n_tramite, titulo, estado, fec_presentacion,
-                                periodo, first_seen_at, last_seen_at, last_changed_at,
-                                tema, tema_manual)
-                               VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'Otros', 0)""",
-                            (n,
-                             "(PL externo unificado - no en DB local)",
-                             "EXTERNO",
-                             "1900-01-01",  # fecha placeholder
-                             "pre-2025",
-                             now, now, now),
-                        )
-                        existentes.add(n)
-                        stubs_creados += 1
-
-            try:
-                db.crear_grupo_unificacion(
-                    n_tramites=n_tramites,
-                    nombre=(item.get("titulo") or "")[:200],
-                    descripcion=f"Estado: {item.get('estado', '?')} | "
-                                f"Comision: {item.get('comision', '?')} | "
-                                f"Fecha unif: {item.get('fecha_unif', '?')}",
-                    n_tramite_principal=principal,
-                    source="portal",
-                )
-                creados += 1
-                miembros_total += len(n_tramites)
-            except Exception as e:
-                print(f"[error] grupo {principal}: {e}")
-                skipped += 1
-
-        print(f"\n[importar] {creados} grupos creados, "
-              f"{miembros_total} memberships, "
-              f"{stubs_creados} stubs creados (PLs externos pre-2025), "
-              f"{skipped} grupos skipeados")
-    finally:
-        db.close()
-    return 0
-
-
 def cmd_scrapear_unificados(args) -> int:
-    """Abre el portal Ppless v2 con Playwright, activa el toggle 'Unificados',
-    y extrae todos los grupos visibles (con sus miembros). Los inserta como
-    grupos source='portal' (borrando los anteriores para mantener el
-    estado del portal como verdad)."""
+    """Reemplaza los grupos source='portal' por los que muestra el portal."""
     import logging
     logging.basicConfig(level=logging.INFO,
                         format="%(asctime)s %(levelname)s %(message)s")
@@ -502,64 +179,8 @@ def cmd_scrapear_unificados(args) -> int:
     return 0
 
 
-def cmd_detectar_unificaciones(args) -> int:
-    """Detecta candidatos a unificacion por similitud de titulos +
-    misma comision asignada. NO los inserta automaticamente — los reporta
-    para revision manual. Con --apply marca los de mayor confianza
-    (jaccard >= threshold_high) directamente.
-    """
-    from scraper_ec.detectar_unificaciones import detectar
-    db = _db(args)
-    try:
-        candidatos = detectar(
-            db.conn,
-            min_jaccard=args.min_jaccard,
-            min_rare_idf=args.min_rare_idf,
-        )
-        if not candidatos:
-            print("Sin candidatos detectados con los parametros actuales.")
-            print("Probar bajar --min-jaccard (default 0.5) o --min-rare-idf (default 2.0).")
-            return 0
-        print(f"\n{len(candidatos)} grupo(s) candidato(s):\n")
-        for i, c in enumerate(candidatos, 1):
-            score = c.jaccard * c.rare_idf
-            print(f"[{i}] {len(c.pls)} PLs · jaccard={c.jaccard:.2f} · "
-                  f"token_raro='{c.rare_token}' (idf={c.rare_idf:.2f}) · "
-                  f"score={score:.2f}")
-            print(f"    comision: {c.comision}")
-            for n in c.pls:
-                titulo = c.titulos.get(n, "")
-                print(f"    - {n}  {titulo}")
-            print()
-        if args.apply:
-            # Aplicar solo los de alta confianza
-            aplicados = 0
-            for c in candidatos:
-                if c.jaccard >= args.threshold_high:
-                    nombre = f"Auto: {c.rare_token} (jaccard={c.jaccard:.2f})"
-                    db.crear_grupo_unificacion(
-                        n_tramites=list(c.pls),
-                        nombre=nombre,
-                        source="inferido",
-                    )
-                    aplicados += 1
-            print(f"\n[apply] {aplicados} grupos aplicados (jaccard >= {args.threshold_high}).")
-            if aplicados < len(candidatos):
-                print(f"  {len(candidatos) - aplicados} candidatos quedaron sin aplicar (debajo del threshold).")
-                print("  Revisalos y aplica manualmente con `marcar-unificacion`.")
-    finally:
-        db.close()
-    return 0
-
-
 def cmd_marcar_unificacion(args) -> int:
-    """Crea un grupo de unificacion con los PLs dados.
-
-    Uso:
-      python -m scraper_ec.cli marcar-unificacion --pls 480824,480825,480826
-          --nombre "Reformas a Inquilinato"
-          --principal 480824   (opcional, default primero)
-    """
+    """Crea un grupo de unificación con los PLs dados (--pls 480824,480825)."""
     db = _db(args)
     try:
         n_tramites = [s.strip() for s in args.pls.split(",") if s.strip()]
@@ -626,29 +247,6 @@ def cmd_borrar_unificacion(args) -> int:
     return 0
 
 
-def cmd_export(args) -> int:
-    db = _db(args)
-    out_path = Path(args.out).resolve()
-    try:
-        rows = db.conn.execute(
-            "SELECT * FROM proyectos ORDER BY fec_presentacion DESC"
-        ).fetchall()
-        data = []
-        for r in rows:
-            d = dict(r)
-            propon = db.conn.execute(
-                "SELECT nombre, tipo, orden FROM proponentes WHERE n_tramite = ? ORDER BY orden",
-                (r["n_tramite"],),
-            ).fetchall()
-            d["proponentes"] = [dict(p) for p in propon]
-            data.append(d)
-        out_path.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
-        print(f"Exportado: {len(data)} proyectos → {out_path}")
-    finally:
-        db.close()
-    return 0
-
-
 def main(argv: list[str] | None = None) -> int:
     p = argparse.ArgumentParser(prog="scraper_ec", description="Scraper Ecuador (Asamblea Nacional)")
     p.add_argument("--db", default=DEFAULT_DB, help=f"Path al SQLite (default: {DEFAULT_DB})")
@@ -660,21 +258,6 @@ def main(argv: list[str] | None = None) -> int:
     s.add_argument("csv", help="Path al CSV descargado de proyectosdeley.asambleanacional.gob.ec")
     s.set_defaults(func=cmd_importar_csv)
 
-    sub.add_parser("stats", help="Estadísticas de la DB").set_defaults(func=cmd_stats)
-
-    s = sub.add_parser("query", help="Lista proyectos con filtros")
-    s.add_argument("--estado")
-    s.add_argument("--tema")
-    s.add_argument("--comision")
-    s.add_argument("--limit", type=int, default=50)
-    s.set_defaults(func=cmd_query)
-
-    s = sub.add_parser("show", help="Muestra detalle de un proyecto por N. Trámite")
-    s.add_argument("n_tramite")
-    s.set_defaults(func=cmd_show)
-
-    sub.add_parser("fix-typos", help="Corrige typos conocidos en comisiones (ej: 'Bodiversidad')").set_defaults(func=cmd_fix_typos)
-
     s = sub.add_parser(
         "actualizar-csv",
         help="Descarga CSV fresco del portal Ppless v2 (Playwright) y re-importa la lista de proyectos."
@@ -682,11 +265,6 @@ def main(argv: list[str] | None = None) -> int:
     s.add_argument("--no-headless", action="store_true",
                    help="Mostrar el browser (debug). Default: headless")
     s.set_defaults(func=cmd_actualizar_csv)
-
-    sub.add_parser(
-        "snapshot",
-        help="Comprime proyectos_ec.db a data/proyectos_ec.db.gz para sync con Streamlit Cloud."
-    ).set_defaults(func=cmd_snapshot)
 
     s = sub.add_parser(
         "enriquecer-documentos",
@@ -707,17 +285,6 @@ def main(argv: list[str] | None = None) -> int:
 
     sub.add_parser("recategorizar", help="Re-clasifica temas no marcados como manuales").set_defaults(func=cmd_recategorizar)
 
-    # ---------- unificaciones ----------
-    s = sub.add_parser(
-        "importar-unificaciones",
-        help="Importa grupos de unificacion desde un JSON (scrapeado del portal "
-             "via Chrome MCP o navegacion manual).",
-    )
-    s.add_argument("json_file", help="Path al JSON con array de grupos")
-    s.add_argument("--replace", action="store_true",
-                   help="Borra grupos source='portal' previos antes de importar")
-    s.set_defaults(func=cmd_importar_unificaciones)
-
     s = sub.add_parser(
         "scrapear-unificados",
         help="Scrapea con Playwright los grupos de unificacion del portal "
@@ -729,20 +296,6 @@ def main(argv: list[str] | None = None) -> int:
     s.add_argument("--max-pages", type=int, default=100,
                    help="Limite de seguridad en paginas (default 100, real ~25)")
     s.set_defaults(func=cmd_scrapear_unificados)
-
-    s = sub.add_parser(
-        "detectar-unificaciones",
-        help="Detecta candidatos a unificacion por similitud de titulos + comision.",
-    )
-    s.add_argument("--min-jaccard", type=float, default=0.5,
-                   help="Jaccard minimo de tokens (default 0.5). Bajar para mas candidatos.")
-    s.add_argument("--min-rare-idf", type=float, default=2.0,
-                   help="IDF minimo del token mas raro compartido (default 2.0).")
-    s.add_argument("--apply", action="store_true",
-                   help="Aplica los de alta confianza (jaccard >= threshold-high).")
-    s.add_argument("--threshold-high", type=float, default=0.75,
-                   help="Threshold para aplicar automaticamente con --apply (default 0.75).")
-    s.set_defaults(func=cmd_detectar_unificaciones)
 
     s = sub.add_parser(
         "marcar-unificacion",
@@ -766,10 +319,6 @@ def main(argv: list[str] | None = None) -> int:
     )
     s.add_argument("grupo_id", type=int)
     s.set_defaults(func=cmd_borrar_unificacion)
-
-    s = sub.add_parser("export", help="Exporta a JSON")
-    s.add_argument("--out", default="proyectos_ec.json")
-    s.set_defaults(func=cmd_export)
 
     args = p.parse_args(argv)
     return args.func(args)

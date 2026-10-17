@@ -11,14 +11,8 @@ repo publico (a diferencia de clientes/, que esta gitignoreado) - confirmado
 que por ahora no es un problema. No es un mecanismo de envio: nada se manda
 a ningun cliente desde aca, es solo para redactar/guardar el borrador.
 
-NOTA (2026-09-13): esta pagina tenia ademas una seccion de "candidatos"
-rankeados automaticamente por similitud de texto (alerts/relevancia.py) -
-se saco porque Nicolas confirmo que no quiere que el sistema decida solo
-que es relevante (TF-IDF matchea vocabulario, no tema real - ej. "MEF"
-tageado para Google por el angulo de IVA digital hacia que CUALQUIER
-noticia de MEF apareciera como candidata para Google, sin distinguir cual
-es la relevante de verdad). El modulo relevancia.py sigue en el repo
-(rankear/contexto_historial), pero ya no se muestra en la UI.
+Sin ranking automatico de candidatos: TF-IDF matcheaba vocabulario y no
+tema real (alerts/relevancia.py, borrado 2026-10-17).
 
 UPDATE 2026-09-21 - Nicolas: "la parte de generacion de alertas no me sirve
 mucho... normalmente voy a un agente de IA que conozco mi proyecto y ahi

@@ -1,32 +1,17 @@
-"""Catálogo canónico de comisiones del Congreso del Perú, por cámara.
+"""Catálogo de comisiones del Congreso del Perú, por cámara.
 
-Cubre las 24 Comisiones Ordinarias del período unicameral 2021-2026 (por
-nombre) y las comisiones propias del período bicameral 2026-2031 (Senado,
-Cámara de Diputados, Bicameral) — estas últimas por comisionId, NO por
-nombre: verificado contra el catálogo real del API (2026-09-11) que Senado
-y Diputados tienen comisiones con el MISMO nombre exacto (ej. "Justicia y
-Derechos Humanos" existe en ambas cámaras, y también en la lista vieja
-unicameral) — matchear solo por nombre las hace indistinguibles.
-
-Todo lo que no esté en ninguna de estas listas se considera "Comisión
-Especial" (comisiones especiales, subcomisiones, investigadoras, registros
-con typos del catálogo del API, etc.) y se agrupa bajo el rótulo
-"Comisiones Especiales" en el frontend.
-
-Match de nombres insensible a tildes, mayúsculas y espacios extra para
-tolerar variantes ortográficas que pueda traer el API.
+Las 24 ordinarias del período 2021-2026 van por nombre; las del período
+bicameral van por comisionId, porque Senado y Diputados repiten nombres.
+Todo lo demás es "Especial".
 """
 from __future__ import annotations
 
-import unicodedata
+from core.text import norm
 
-# IDs reales del catálogo del Senado (verificado 2026-09-11 contra
-# GET /comisiones — no hay endpoint que separe por cámara, así que esto es
-# un mapeo manual de IDs. Si el Congreso agrega/renumera comisiones,
-# actualizar acá (mismo mantenimiento que COMISIONES_ORDINARIAS de abajo).
+# IDs del Senado a mano: el API no separa por cámara. Actualizar si el
+# Congreso agrega o renumera comisiones.
 COMISIONES_SENADO_IDS: set[int] = set(range(61, 72))  # 61-71 (11 comisiones)
 
-# IDs reales del catálogo de la Cámara de Diputados (idem, 2026-09-11).
 COMISIONES_DIPUTADOS_IDS: set[int] = set(range(72, 91))  # 72-90 (19 comisiones)
 
 # Comisión bicameral (ambas cámaras en conjunto) — hoy solo existe esta.
@@ -60,23 +45,11 @@ COMISIONES_ORDINARIAS: set[str] = {
 }
 
 
-def normalize(text: str | None) -> str:
-    if not text:
-        return ""
-    s = text.strip().lower()
-    s = unicodedata.normalize("NFD", s)
-    s = "".join(c for c in s if unicodedata.category(c) != "Mn")
-    s = " ".join(s.split())
-    return s
+normalize = norm  # minúsculas, sin tildes, espacios simples
 
 
-_normalize = normalize  # alias interno, mantiene el nombre usado más abajo
-
-
-# tipos de `comisiones.tipo` que corresponden a cada cod_tipo_parl de PL —
-# usado para resolver nombres de comisión SOLO contra el catálogo de la
-# misma cámara del PL (evita la ambigüedad de nombres duplicados entre
-# Senado/Diputados — ver upsert_detalle en scraper/db.py).
+# Tipos de comisión de cada cámara: los nombres se resuelven solo contra el
+# catálogo de la cámara del PL (Senado y Diputados repiten nombres).
 TIPOS_POR_CAMARA: dict[str, tuple[str, ...]] = {
     "C": ("Ordinaria", "Bicameral"),
     "D": ("Diputados",),
@@ -84,19 +57,15 @@ TIPOS_POR_CAMARA: dict[str, tuple[str, ...]] = {
 }
 
 
-_ORDINARIAS_NORM: set[str] = {_normalize(n) for n in COMISIONES_ORDINARIAS}
+_ORDINARIAS_NORM: set[str] = {normalize(n) for n in COMISIONES_ORDINARIAS}
 
 
 def es_ordinaria(nombre: str | None) -> bool:
-    return _normalize(nombre) in _ORDINARIAS_NORM
+    return normalize(nombre) in _ORDINARIAS_NORM
 
 
 def tipo_de(comision_id: int | None, nombre: str | None = None) -> str:
-    """Clasifica una comisión: 'Ordinaria' (24 del período unicameral,
-    por nombre), 'Senado'/'Diputados'/'Bicameral' (período bicameral, por
-    comisionId — el nombre NO alcanza, ver docstring del módulo), o
-    'Especial' (todo lo demás: especiales, subcomisiones, investigadoras,
-    basura del catálogo)."""
+    """'Senado'/'Diputados'/'Bicameral' por id, 'Ordinaria' por nombre, o 'Especial'."""
     if comision_id in COMISIONES_SENADO_IDS:
         return "Senado"
     if comision_id in COMISIONES_DIPUTADOS_IDS:

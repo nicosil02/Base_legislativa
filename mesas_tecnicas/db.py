@@ -1,10 +1,8 @@
 """Schema y wrapper para mesas_tecnicas en proyectos.db."""
 from __future__ import annotations
 
-import sqlite3
-from contextlib import contextmanager
-from datetime import datetime, timezone
-from pathlib import Path
+from core.db import Database as _Base
+from core.db import now_iso
 
 SCHEMA = """
 CREATE TABLE IF NOT EXISTS mesas_tecnicas (
@@ -44,48 +42,10 @@ CREATE TABLE IF NOT EXISTS mesas_tecnicas_sync_runs (
 """
 
 
-def now_iso() -> str:
-    return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
-
-
-class Database:
-    def __init__(self, path: str | Path):
-        self.path = str(Path(path).resolve())
-        self.conn = sqlite3.connect(self.path)
-        self.conn.row_factory = sqlite3.Row
-        self.conn.execute("PRAGMA foreign_keys = ON")
-        self.conn.execute("PRAGMA journal_mode = WAL")
-
-    def close(self) -> None:
-        self.conn.close()
-
-    def __enter__(self):
-        return self
-
-    def __exit__(self, *a):
-        self.close()
-
-    @contextmanager
-    def tx(self):
-        try:
-            yield self.conn
-            self.conn.commit()
-        except Exception:
-            self.conn.rollback()
-            raise
-
+class Database(_Base):
     def init_schema(self) -> None:
         with self.tx() as c:
             c.executescript(SCHEMA)
-            # Migracion idempotente: agregar tema si no existe (para DBs viejas)
-            try:
-                cols = [r[1] for r in c.execute("PRAGMA table_info(mesas_tecnicas)")]
-                if "tema" not in cols:
-                    c.execute("ALTER TABLE mesas_tecnicas ADD COLUMN tema TEXT")
-                if "camara" not in cols:
-                    c.execute("ALTER TABLE mesas_tecnicas ADD COLUMN camara TEXT")
-            except Exception:
-                pass
 
     def upsert(self, row: dict) -> tuple[bool, bool]:
         """Insert si no existe, update si cambio. Devuelve (is_new, changed)."""
@@ -142,9 +102,6 @@ class Database:
                     (now, url),
                 )
         return False, changed
-
-    def count(self) -> int:
-        return self.conn.execute("SELECT COUNT(*) FROM mesas_tecnicas").fetchone()[0]
 
     def start_sync_run(self) -> int:
         with self.tx() as c:

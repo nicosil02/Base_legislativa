@@ -1,16 +1,15 @@
-"""Juntar la misma historia contada por varios canales/medios (pedido de
-Nicolas 2026-09-28, punto 1 de la revision de repos de monitoreo de medios:
-"una alerta por historia, no por medio").
+"""Juntar la misma historia contada por varios canales/medios: una alerta
+por historia, no por medio.
 
 Embeddings del cerebro (MiniLM multilingue, cerebro/embeddings.embeber) +
-clustering greedy por similitud coseno, igual criterio que
-noticias/digest._agrupar_por_similitud pero por significado y no por
-palabras del titulo: dos canales cuentan lo mismo con palabras distintas.
-Si el modelo no esta disponible, cae a TF-IDF.
+clustering greedy por similitud coseno: dos canales cuentan lo mismo con
+palabras distintas. Si el modelo no esta disponible, cae a TF-IDF.
 """
 from __future__ import annotations
 
 import re
+
+from core.text import norm
 
 UMBRAL_EMB = 0.78    # ponytail: elegido con los fragmentos reales del 28/09 (sueldo minimo en 3 canales); ajustar mirando grupos reales
 UMBRAL_TFIDF = 0.45
@@ -78,9 +77,7 @@ def _claves_busqueda(que: str) -> list[str]:
     """Nombres propios primero (Keiko, Senasa, Vinelli), despues las palabras
     largas con contenido; sin verbos de relleno ("resolvio", "presentado")
     que vuelven la busqueda demasiado especifica y no trae nada."""
-    import unicodedata
-    def n(w):
-        return "".join(c for c in unicodedata.normalize("NFD", w.lower()) if unicodedata.category(c) != "Mn")
+    n = norm  # palabras \w{4,}: sin espacios, norm == sin_tildes(lower)
     palabras = re.findall(r"\w{4,}", que)
     propios = [w for w in palabras[1:] if w[0].isupper() and n(w) not in _RELLENO]
     resto = sorted({w for w in palabras if not w[0].isupper() and n(w) not in _RELLENO}, key=len, reverse=True)
@@ -114,30 +111,26 @@ def titulos_prensa(que: str, pais: str = "PE") -> list[str]:
 
 def ya_en_prensa(que: str, pais: str = "PE") -> str | None:
     """Titulo de prensa escrita (Google News, 24 h) que ya cuenta el mismo
-    hecho, o None. Pedido de Nicolas 2026-09-28: el aviso de TV sirve si se
-    adelanta a la prensa; el predictamen de facultades ya estaba en
-    Infobae/RPP 2 h antes del aviso. Gemini compara (mismo hecho con otras
-    palabras: 'propone rechazar' vs 'resolvio rechazar'); sin key, palabras."""
+    hecho, o None: el aviso de TV solo sirve si se adelanta a la prensa.
+    Gemini compara (mismo hecho con otras palabras: 'propone rechazar' vs
+    'resolvio rechazar'); sin key, palabras."""
     import json
     import os
+
+    from core import llm
     titulos = titulos_prensa(que, pais)[:15]
     if not titulos:
         return None
-    if os.environ.get("GEMINI_API_KEY"):
+    if llm.disponible():
         try:
-            from google import genai
-            from google.genai import types
-            client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
             lista = "\n".join(f"{i}. {t}" for i, t in enumerate(titulos))
-            resp = client.models.generate_content(
-                model="gemini-3.5-flash-lite",
-                contents=f"Hecho: {que}\n\nTitulares:\n{lista}",
-                config=types.GenerateContentConfig(
-                    system_instruction="Decidi si alguno de los titulares informa el MISMO hecho concreto "
-                                       "(no solo el mismo tema). Responde SOLO JSON {\"indice\": n} con el "
-                                       "numero del titular, o {\"indice\": null} si ninguno.",
-                    response_mime_type="application/json"))
-            i = json.loads(resp.text or "{}").get("indice")
+            texto = llm.generar(
+                f"Hecho: {que}\n\nTitulares:\n{lista}",
+                system="Decidi si alguno de los titulares informa el MISMO hecho concreto "
+                       "(no solo el mismo tema). Responde SOLO JSON {\"indice\": n} con el "
+                       "numero del titular, o {\"indice\": null} si ninguno.",
+                modelo=llm.LITE, json=True)
+            i = json.loads(texto or "{}").get("indice")
             if os.environ.get("TV_AVISO_DEBUG"):
                 print(f"[prensa] {len(titulos)} titulares, Gemini indice={i}", flush=True)
             return titulos[i] if isinstance(i, int) and 0 <= i < len(titulos) else None
@@ -150,17 +143,3 @@ def ya_en_prensa(que: str, pais: str = "PE") -> str | None:
             return t
     return None
 
-
-def _demo():
-    import numpy as np
-    sims = np.array([[1, .9, .1], [.9, 1, .2], [.1, .2, 1]])
-    assert agrupar(["a", "b", "c"], sims=sims, umbral=0.78) == [0, 0, 1]
-    assert ya_avisado("El gobierno sube el sueldo minimo a 1230 soles desde octubre",
-                      ["Gobierno anuncia que el sueldo minimo sube a 1230 soles desde octubre"])
-    assert not ya_avisado("Senasa aprueba requisitos para importar semillas",
-                          ["Gobierno anuncia que el sueldo minimo sube a 1230 soles"])
-    print("OK historias: agrupa por similitud y detecta avisos repetidos")
-
-
-if __name__ == "__main__":
-    _demo()

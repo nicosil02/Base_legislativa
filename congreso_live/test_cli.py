@@ -1,4 +1,4 @@
-"""Checks del filtro de alertas por comision seguida. Correr: python -m congreso_live.test_cli"""
+"""Tests del filtro de avisos por comision seguida."""
 from congreso_live.cli import _comision_seguida as F
 from congreso_live.detector import _norm
 
@@ -16,9 +16,7 @@ def test_pleno_siempre_pasa():
 
 
 def test_sin_nada_marcado_pasa_todo():
-    # Nicolas todavia no configuro nada en la pestana Seguimiento -
-    # comportamiento actual (avisa de cualquier comision), no lo dejamos
-    # mudo por no haber tocado la config.
+    # Sin nada configurado en Seguimiento se avisa de todo.
     assert F("Comision: Salud", set()) is True
 
 
@@ -36,11 +34,3 @@ def test_comision_marcada_nombre_largo_senado() -> None:
 
 def test_comision_no_marcada_no_pasa():
     assert F("Comision: Transportes", _seguidas("Salud", "Economía")) is False
-
-
-if __name__ == "__main__":
-    for name, fn in sorted(globals().items()):
-        if name.startswith("test_") and callable(fn):
-            fn()
-            print(f"OK {name}")
-    print("todos los checks pasaron")

@@ -4,7 +4,7 @@ from __future__ import annotations
 import logging
 from dataclasses import dataclass
 
-from sesiones.agenda_parser import parse_agenda_punto
+from sesiones.agenda_parser import extract_pls, to_text
 from sesiones.api import ApiClient
 from sesiones.db import Database, now_iso
 
@@ -24,23 +24,10 @@ CAMARA_LABEL = {"C": "Congreso", "D": "Diputados", "S": "Senado"}
 
 
 def _comisiones_del_periodo(criterios: dict, per_par_id: int) -> list[tuple[int, str | None]]:
-    """(comisionId, camara) de cada comision del periodo pedido, del catalogo
-    /criterios.
-
-    Bug real 2026-09-16: la version anterior mapeaba nombreComision ->
-    camara, pero el MISMO nombre se repite en Senado y Diputados para casi
-    todas las comisiones ordinarias (es como funciona un Congreso bicameral -
-    "verificado 2026-09-11: 4 de 30 colisionan" resulto estar mal medido,
-    en la practica eran 2209 de 2274 sesiones con camara=NULL). Un nombre
-    NUNCA alcanza para distinguir camara.
-
-    El fix real: /sesiones/busqueda acepta el parametro `comision` con el
-    comisionId EXACTO (no el nombre) y devuelve solo las sesiones de ESA
-    comision especifica - verificado en vivo que pedir sesion por sesion
-    por comisionId (31 comisiones en perParId=2026) cubre el 100% de lo que
-    devuelve un pedido sin filtro (91 de 91 sesiones), sin ambiguedad
-    posible: la camara la sabemos porque nosotros elegimos con que
-    comisionId pedimos, no porque la reconstruyamos despues del nombre."""
+    """(comisionId, camara) de cada comision del periodo, del catalogo
+    /criterios. El nombre de comision se repite entre Senado y Diputados,
+    asi que las sesiones se piden por comisionId y la camara sale de aca
+    (cubre el 100% de lo que da un pedido sin filtro)."""
     return [
         (c["comisionId"], CAMARA_LABEL.get(c.get("codTipoParl")))
         for c in criterios.get("comisiones", [])
@@ -58,10 +45,8 @@ def run_sync(
     max_sesiones: int | None = None,
 ) -> SyncStats:
     """Sync incremental:
-    - Lista las sesiones del periodo legislativo, UNA COMISION A LA VEZ (ver
-      _comisiones_del_periodo - es lo que permite saber la camara sin
-      ambiguedad, en vez de un pedido masivo que despues no se puede
-      desambiguar por nombre)
+    - Lista las sesiones del periodo legislativo, una comision a la vez
+      (asi se sabe la camara, ver _comisiones_del_periodo)
     - Por cada una: upsert con datos de la lista
     - Si es nueva, cambio de estado, o `full=True`: llama al detalle y persiste
       agenda + PLs cruzados.
@@ -149,7 +134,7 @@ def _extract_pls_from_detalle(data: dict) -> dict[int, list[dict]]:
         id_orden = p.get("idAgendaOrdenDia")
         if id_orden is None:
             continue
-        texto, pls = parse_agenda_punto(p.get("descripcion"))
+        texto = to_text(p.get("descripcion"))
         p["_texto_plano"] = texto  # se persiste despues
-        result[id_orden] = pls
+        result[id_orden] = extract_pls(texto)
     return result

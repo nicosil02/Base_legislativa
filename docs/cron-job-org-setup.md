@@ -1,5 +1,9 @@
 # Setup cron-job.org — alertas a las 9 AM exacto
 
+> **Obsoleto para las alertas (2026-10-17):** `daily-alerts.yml` se borró; el
+> correo lo manda `refrescar-pe.yml`. cron-job.org se sigue usando para
+> disparar `vigilar-congreso.yml` cada 10 min, con el mismo tipo de token.
+
 GitHub Actions cron tiene latencias variables (0-3+ horas). Para que el
 correo llegue **puntual a las 9 AM Lima**, usamos cron-job.org (gratis,
 HTTP a horarios precisos) para llamar al `workflow_dispatch` API de
@@ -61,8 +65,7 @@ total estimado de email entregado: **9:00 - 9:03 AM** Lima.
 ## Backup actual
 
 Aunque cron-job.org falle (downtime del servicio), seguimos teniendo:
-- `daily-alerts.yml` con cron nativo de GH (atraso 0-3h)
-- `refrescar-pe.yml` envía la alerta como step backup cuando corre
+- `refrescar-pe.yml` envía la alerta en su paso "Envio de alerta diaria"
 
 `already_sent_today` previene duplicados — solo el primero que llega envía.
 

@@ -1,26 +1,16 @@
-"""Estado compartido de sesiones EN VIVO detectadas + dedupe de alertas
-WhatsApp.
+"""Estado de sesiones EN VIVO ya vistas + dedupe de avisos.
 
-Usado por `cli.py::cmd_check` (chequeo rapido, corre UNA vez al arrancar
-el job de vigilar-congreso.yml) y por `live_transcribe.py::watch_and_transcribe`
-(el job largo de transcripcion, que tambien puede descubrir una sesion
-NUEVA a mitad de camino, cuando cmd_check ya paso).
-
-Bug real 2026-09-17: el Pleno de Diputados arranco mientras el job ya
-venia transcribiendo OTRA sesion (hasta 170 min) - como cmd_check solo
-corre al arranque del job, y el siguiente disparo (cron-job.org, cada 10
-min) queda encolado y cancelado mientras el job actual sigue corriendo
-(mismo concurrency group), el aviso de WhatsApp del Pleno de Diputados
-tardo ~1h30 en salir. Fix: watch_and_transcribe tambien avisa cuando
-descubre una sesion nueva en su propio poll interno, reusando este mismo
-dedupe (data/congreso_live_state.json) para no avisar dos veces la misma
-sesion si cmd_check ya la habia alertado.
+Lo usan cmd_check (corre una vez al arrancar el job) y watch_and_transcribe
+(descubre sesiones nuevas a mitad del job): ambos comparten este dedupe para
+no avisar dos veces la misma sesion.
 """
 from __future__ import annotations
 
 import json
 import logging
 from pathlib import Path
+
+from core.text import norm
 
 log = logging.getLogger(__name__)
 
@@ -46,30 +36,21 @@ def save_state(state: dict) -> None:
 
 
 def comision_seguida(tipo: str, seguidas_norm: set[str]) -> bool:
-    """True si `tipo` (ej. 'Comision: Energia Y Minas', armado por
-    detector.clasificar_titulo() con una palabra clave corta) matchea
-    alguna comision que Nicolas marco como de interes en la pestana
-    Seguimiento (nombres completos) - mismo criterio de substring que ya
-    usa clasificar_titulo() para reconocer la comision en el titulo real.
-
-    Los Plenos (tipo empieza con "Pleno:") siempre pasan - son pocos y
-    relevantes en general, no per-comision. Sin nada marcado todavia,
-    tambien pasa todo (comportamiento actual: avisa de cualquier sesion)
-    para no dejar a Nicolas sin alertas antes de configurar nada."""
-    from congreso_live.detector import _norm
+    """True si `tipo` ('Comision: Energia Y Minas') matchea por substring
+    alguna comision marcada en Seguimiento. Los Plenos siempre pasan, y sin
+    nada marcado pasa todo (para no dejar a nadie sin avisos)."""
     if tipo.startswith("Pleno:") or not seguidas_norm:
         return True
-    kw = _norm(tipo.split(":", 1)[-1].strip())
+    kw = norm(tipo.split(":", 1)[-1].strip())
     return any(kw in nombre or nombre in kw for nombre in seguidas_norm)
 
 
 def seguidas_activas() -> set[str]:
-    """Comisiones que Nicolas marco de interes, normalizadas - set() (=
-    avisar de todo) si no se puede leer por lo que sea."""
-    from congreso_live.detector import _norm
+    """Comisiones marcadas de interes, normalizadas; set() (= avisar de
+    todo) si no se pueden leer."""
     try:
         from alerts.seguimiento_store import list_seguidas
-        return {_norm(n) for n in list_seguidas()}
+        return {norm(n) for n in list_seguidas()}
     except Exception as e:
         log.warning("no se pudo leer comisiones seguidas, aviso de todo: %s", e)
         return set()

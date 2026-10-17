@@ -45,11 +45,8 @@ PREFIJO_CAMARA = {"C": "congreso", "D": "diputados", "S": "senado"}
 
 
 def portal_url(per_par_id: int, pley_num: int, cod_tipo_parl: str = "C") -> str:
-    """URL del portal. Desde el período bicameral (2026-2031) el SPA usa rutas
-    con prefijo de cámara (/congreso|diputados|senado/expediente/...) — sin el
-    prefijo correcto, un PL de Diputados o Senado no resuelve. El período
-    legacy (2021-2026, todo 'C') sigue usando la ruta plana sin prefijo, igual
-    que siempre, para no romper links ya compartidos."""
+    """URL del portal. Desde 2026 la ruta lleva prefijo de cámara; el período
+    legacy sigue con la ruta plana para no romper links ya compartidos."""
     if per_par_id < 2026:
         return f"{PORTAL_BASE}/#/expediente/{per_par_id}/{pley_num}"
     prefijo = PREFIJO_CAMARA.get(cod_tipo_parl, "congreso")
@@ -97,16 +94,8 @@ class ApiClient:
         comision_id: int | None = None,
         cod_tipo_parl: str | None = None,
     ) -> list[dict]:
-        """El API ignora `rows`/`first` y devuelve todos los proyectos del período
-        en una sola respuesta. Hacemos una sola llamada.
-
-        `cod_tipo_parl` filtra por cámara: 'C' (Congreso/general — Ejecutivo,
-        Comisión Permanente), 'D' (Cámara de Diputados), 'S' (Senado). Período
-        bicameral (perParId>=2026): SIN este filtro el API devuelve SOLO 'C'
-        (verificado 2026-09-11: con {perParId:2026} pelado salían 4 PLs; con
-        codTipoParl='D' salen 195, con 'S' salen 7 — se pierden casi todos los
-        proyectos si no se pasa). Período legacy (2021-2026): todo es 'C',
-        pasar cod_tipo_parl=None u omitirlo trae todo igual que antes."""
+        """Todo el período en una sola respuesta (el API ignora `rows`/`first`).
+        `cod_tipo_parl` 'C'/'D'/'S': desde 2026, sin él el API devuelve solo 'C'."""
         payload: dict[str, Any] = {"perParId": per_par_id, "first": 0, "rows": 99999}
         if comision_id is not None:
             payload["comisionId"] = comision_id
@@ -125,10 +114,8 @@ class ApiClient:
         yield from self.list_all_proyectos(per_par_id, comision_id=comision_id, cod_tipo_parl=cod_tipo_parl)
 
     def get_expediente(self, per_par_id: int, pley_num: int, cod_tipo_parl: str = "C") -> dict:
-        """`cod_tipo_parl` es requerido por el API para expedientes del período
-        bicameral (el SPA lo manda como query param, default 'C' si se omite —
-        pedir el detalle de un PL de Diputados/Senado sin esto devuelve el
-        expediente equivocado o vacío)."""
+        """Sin `cod_tipo_parl` el API devuelve el expediente de 'C' (equivocado
+        para Diputados/Senado)."""
         a = _aes_encrypt(per_par_id)
         b = _aes_encrypt(pley_num)
         body = self._request(

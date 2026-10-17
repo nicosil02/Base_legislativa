@@ -3,6 +3,8 @@
 Uso:
   python -m scraper.cli init                       # crea DB y baja comisiones
   python -m scraper.cli update [--full] [--limit N]
+  python -m scraper.cli refresh-comisiones [--dry-run]
+  python -m scraper.cli recategorizar
   python -m scraper.cli export [--out proyectos.json]
   python -m scraper.cli query --comision 4
   python -m scraper.cli query --estado "EN COMISIÓN"
@@ -12,13 +14,13 @@ from __future__ import annotations
 
 import argparse
 import logging
+import re
 import sys
-from pathlib import Path
 
 from scraper.api import ApiClient
 from scraper.db import Database
 from scraper.export import export_json
-from scraper.sync import PER_PAR_ID_ACTUAL, PERIODO_UNICAMERAL_2021, env_max_proyectos, run_sync_periodos
+from scraper.sync import PER_PAR_ID_ACTUAL, run_sync_periodos
 
 DEFAULT_DB = "proyectos.db"
 DEFAULT_JSON = "proyectos.json"
@@ -37,27 +39,18 @@ def cmd_init(args) -> int:
     return 0
 
 
-# IDs basura conocidos en la API oficial del Congreso (alguien creo estos
-# como tests). Los descartamos en cada refresh.
+# Comisiones de prueba que alguien creó en la API oficial.
 COMISIONES_BLACKLIST = {
     57,   # "cremas al tetra"
     58,   # "poiuy9h0ipohjui0pj"
 }
 
-# Heuristica conservadora: en castellano nunca hay 5+ consonantes
-# consecutivas. Si vemos eso, es keyboard-mashing. NO marcamos por
-# longitud corta (Agraria, Pesca, Mype son validas).
-import re as _re
-_BASURA_RE = _re.compile(r"[bcdfghjklmnpqrstvwxyz]{5,}", _re.IGNORECASE)
+# En castellano no hay 5+ consonantes seguidas: eso es teclado aporreado.
+_BASURA_RE = re.compile(r"[bcdfghjklmnpqrstvwxyz]{5,}", re.IGNORECASE)
 
 
 def _es_basura_comision(nombre: str | None, cid: int) -> bool:
-    """Detecta basura: blacklist explicito + keyboard-mashing.
-
-    Solo marcamos como basura lo OBVIO. Falsos positivos son peores
-    que falsos negativos — si una basura nueva aparece, se agrega
-    manualmente a COMISIONES_BLACKLIST.
-    """
+    """Solo lo obvio; una basura nueva se agrega a COMISIONES_BLACKLIST."""
     if cid in COMISIONES_BLACKLIST:
         return True
     if not nombre or not nombre.strip():
@@ -66,12 +59,8 @@ def _es_basura_comision(nombre: str | None, cid: int) -> bool:
 
 
 def cmd_refresh_comisiones(args) -> int:
-    """Refresca el catalogo de comisiones desde la API del Congreso.
-
-    Filtra entradas basura (creadas como tests en el sistema oficial) y
-    limpia las que ya esten en la DB local. Las Ordinarias (1-24) nunca
-    se borran — son las del catalogo permanente del Congreso.
-    """
+    """Refresca el catálogo de comisiones y borra la basura. Las Ordinarias
+    nunca se borran."""
     with Database(args.db) as db:
         db.init_schema()
         print("[refresh-comisiones] consultando API Congreso...")
@@ -123,8 +112,7 @@ def cmd_refresh_comisiones(args) -> int:
 def cmd_update(args) -> int:
     with Database(args.db) as db:
         db.init_schema()
-        max_p = args.limit if args.limit is not None else env_max_proyectos()
-        por_periodo = run_sync_periodos(db, full=args.full, max_proyectos=max_p)
+        por_periodo = run_sync_periodos(db, full=args.full, max_proyectos=args.limit)
         for (per_par_id, cam), stats in por_periodo.items():
             print(
                 f"[{per_par_id}/{cam}] vistos={stats.vistos} nuevos={stats.nuevos} "
@@ -193,35 +181,8 @@ def cmd_query(args) -> int:
     return 0
 
 
-def cmd_restaurar(args) -> int:
-    """Descomprime data/proyectos.db.gz a proyectos.db (snapshot del repo).
-
-    Útil al clonar el repo en una PC nueva: en lugar de correr el full load
-    de 30-40 min, restauras la DB ya cargada y de ahí solo corres `update`
-    incrementales.
-    """
-    import gzip
-    import shutil
-    src = Path(__file__).parent.parent / "data" / "proyectos.db.gz"
-    dst = Path(args.db).resolve()
-    if not src.exists():
-        print(f"ERROR: no encontré {src}", file=sys.stderr)
-        return 2
-    if dst.exists() and not args.force:
-        print(f"ERROR: {dst} ya existe. Usa --force para sobrescribir.", file=sys.stderr)
-        return 2
-    print(f"Descomprimiendo {src} -> {dst} ...")
-    with gzip.open(src, "rb") as fin, open(dst, "wb") as fout:
-        shutil.copyfileobj(fin, fout)
-    size_mb = dst.stat().st_size / (1024 * 1024)
-    print(f"Listo. DB restaurada ({size_mb:.1f} MB).")
-    return 0
-
-
 def cmd_recategorizar(args) -> int:
-    """Re-clasifica con el clasificador automático SOLO los proyectos sin
-    etiqueta manual. Los marcados como tema_manual=1 (importados del Excel)
-    no se tocan."""
+    """Re-clasifica los proyectos sin etiqueta manual (tema_manual=0)."""
     with Database(args.db) as db:
         db.init_schema()
         if args.force:
@@ -246,114 +207,6 @@ def cmd_recategorizar(args) -> int:
         ):
             print(f"  {(r['tema'] or '(sin tema)'):36s} total={r['total']:5d}  manuales={r['manuales']}")
     return 0
-
-
-def cmd_importar_temas(args) -> int:
-    """Importa los temas etiquetados a mano desde un Excel.
-
-    Se esperan columnas 'PL' (número entero) y 'Tema'. Cada match se guarda
-    con tema_manual=1 para que el clasificador no lo sobrescriba.
-    """
-    try:
-        import openpyxl
-    except ImportError:
-        print("ERROR: openpyxl no instalado. Corre: pip install openpyxl", file=sys.stderr)
-        return 2
-    print(f"Leyendo {args.excel}...")
-    wb = openpyxl.load_workbook(args.excel, read_only=True, data_only=True)
-    ws = wb[args.sheet] if args.sheet else wb[wb.sheetnames[0]]
-    headers = [c.value for c in next(ws.rows)]
-    if "PL" not in headers or "Tema" not in headers:
-        print(f"ERROR: el Excel necesita columnas 'PL' y 'Tema'. Encontré: {headers}", file=sys.stderr)
-        return 2
-    i_pl = headers.index("PL")
-    i_tema = headers.index("Tema")
-
-    with Database(args.db) as db:
-        db.init_schema()
-        n_match, n_unknown, n_skip = 0, 0, 0
-        skipped_temas: set[str] = set()
-        valid = {
-            r[0] for r in db.conn.execute(
-                "SELECT pley_num FROM proyectos WHERE per_par_id=? AND cod_tipo_parl=?",
-                (args.per_par_id, args.cod_tipo_parl),
-            ).fetchall()
-        }
-        for row in ws.iter_rows(min_row=2, values_only=True):
-            pl, tema = row[i_pl], row[i_tema]
-            if pl is None or tema is None:
-                n_skip += 1
-                continue
-            try:
-                pl = int(pl)
-            except (ValueError, TypeError):
-                n_skip += 1
-                continue
-            if pl not in valid:
-                n_unknown += 1
-                continue
-            db.set_tema(args.per_par_id, args.cod_tipo_parl, pl, str(tema).strip(), manual=True)
-            n_match += 1
-            if tema not in (
-                "Educación","Trabajo","Salud","Tributos","Banca","Pensiones",
-                "Ambiente","Agricultura","Horeca","Transporte","Construcción",
-                "Transporte y telecomunicaciones","Energía y minas","Pesca","Energía",
-                "Minería","Telecomunicaciones","Comercio","Saneamiento",
-                "Control de la actividad privada","Infraestructura","Mype",
-                "Inmobiliario","Informalidad","Consumo masivo","Seguros","Deporte","Otros",
-            ):
-                skipped_temas.add(str(tema))
-        print(f"Importados: {n_match}  |  PLs no encontrados en DB: {n_unknown}  |  Filas vacías: {n_skip}")
-        if skipped_temas:
-            print(f"  Temas no estándar encontrados: {sorted(skipped_temas)}")
-
-        # Override post-import: rescatar PLs cliente-relevantes.
-        # - Farma: sólo desde Otros/Salud, basta 1 keyword (dominio acotado).
-        # - Tecnología: desde cualquier categoría del Excel, exige ≥2 keywords
-        #   distintos para no robarle PLs legítimos a Educación, Telecom, etc.
-        from scraper.categorias import (
-            OVERRIDE_DESDE, TECH_MIN_KEYWORDS, classify, count_matches,
-        )
-        moves_farma = 0
-        moves_tech = 0
-
-        # Pase 1: Farma — sólo en Otros/Salud, umbral 1 keyword.
-        for tema_origen, especificas in OVERRIDE_DESDE.items():
-            if tema_origen == "*" or "Farma" not in especificas:
-                continue
-            for r in db.conn.execute(
-                "SELECT per_par_id, cod_tipo_parl, pley_num, titulo, sumilla FROM proyectos WHERE tema=?",
-                (tema_origen,),
-            ).fetchall():
-                if count_matches(r["titulo"], r["sumilla"], "Farma") >= 1:
-                    db.set_tema(r["per_par_id"], r["cod_tipo_parl"], r["pley_num"], "Farma", manual=True)
-                    moves_farma += 1
-
-        # Pase 2: Tecnología — sobre todos los PLs (excepto los que ya quedaron
-        # como Farma o Tecnología), umbral ≥ TECH_MIN_KEYWORDS keywords.
-        if "*" in OVERRIDE_DESDE and "Tecnología" in OVERRIDE_DESDE["*"]:
-            for r in db.conn.execute(
-                "SELECT per_par_id, cod_tipo_parl, pley_num, titulo, sumilla, tema FROM proyectos "
-                "WHERE tema NOT IN ('Tecnología', 'Farma') OR tema IS NULL"
-            ).fetchall():
-                if count_matches(r["titulo"], r["sumilla"], "Tecnología") >= TECH_MIN_KEYWORDS:
-                    db.set_tema(r["per_par_id"], r["cod_tipo_parl"], r["pley_num"], "Tecnología", manual=True)
-                    moves_tech += 1
-
-        if moves_farma or moves_tech:
-            print(f"\nOverride aplicado:")
-            print(f"  -> Tecnologia: {moves_tech} PLs (umbral >= {TECH_MIN_KEYWORDS} keywords, desde cualquier categoria)")
-            print(f"  -> Farma:      {moves_farma} PLs (desde Otros/Salud)")
-
-        print("\nDistribución por tema (post-import):")
-        for r in db.conn.execute(
-            "SELECT tema, SUM(tema_manual) AS manuales, COUNT(*) AS total "
-            "FROM proyectos GROUP BY tema ORDER BY total DESC"
-        ):
-            print(f"  {(r['tema'] or '(sin tema)'):36s} total={r['total']:5d}  manuales={r['manuales']}")
-    return 0
-
-
 
 
 def cmd_show(args) -> int:
@@ -414,10 +267,6 @@ def build_parser() -> argparse.ArgumentParser:
         help="no modifica la DB, solo muestra que cambiaria")
     rc.set_defaults(func=cmd_refresh_comisiones)
 
-    rs = sub.add_parser("restaurar", help="restaura proyectos.db desde el snapshot data/proyectos.db.gz")
-    rs.add_argument("--force", action="store_true", help="sobrescribe proyectos.db si ya existe")
-    rs.set_defaults(func=cmd_restaurar)
-
     up = sub.add_parser("update", help="corre sync incremental")
     up.add_argument("--full", action="store_true", help="re-enriquece todos los proyectos (no solo los cambiados)")
     up.add_argument("--limit", type=int, default=None, help="máximo de proyectos a procesar")
@@ -440,17 +289,6 @@ def build_parser() -> argparse.ArgumentParser:
     rc.add_argument("--force", action="store_true",
                     help="limpia TODAS las etiquetas (incluyendo manuales) y vuelve a correr el clasificador")
     rc.set_defaults(func=cmd_recategorizar)
-
-    it = sub.add_parser("importar-temas", help="carga temas etiquetados a mano desde un Excel (tema_manual=1)")
-    it.add_argument("excel", help="ruta al archivo .xlsx con columnas 'PL' y 'Tema'")
-    it.add_argument("--sheet", help="nombre de la hoja (por defecto la primera)")
-    # Default = 2021 (no PER_PAR_ID_ACTUAL): el Excel histórico de Nicolas
-    # (data/ProyectosDeLey.xlsx) siempre fue etiquetado sobre el período
-    # unicameral 2021-2026, sin distinción de cámara.
-    it.add_argument("--per-par-id", dest="per_par_id", type=int, default=PERIODO_UNICAMERAL_2021)
-    it.add_argument("--cod-tipo-parl", dest="cod_tipo_parl", default="C",
-                     help="cámara del PL a etiquetar (default 'C' — el período legacy no distingue)")
-    it.set_defaults(func=cmd_importar_temas)
 
     sh = sub.add_parser("show", help="muestra un proyecto e historial")
     sh.add_argument("pley_num", type=int)

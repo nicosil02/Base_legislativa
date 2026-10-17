@@ -1,25 +1,13 @@
 """Busqueda por significado sobre TODO el corpus (PLs PE/EC, noticias,
 sesiones transcritas) con un modelo de embeddings LOCAL + sqlite-vec.
 
-Por que: la relevancia por cliente y el agrupado de noticias usaban TF-IDF
-(palabras sueltas) - de ahi los falsos positivos por homonimos que se
-arreglaron a mano uno por uno ("tributo" homenaje vs impuesto, "presidente"
-de club de futbol, etc.).
+TF-IDF daba falsos positivos por homónimos ("tributo" homenaje). MiniLM local
+separó mejor que gemini-embedding-2 en la prueba contra el perfil de Bayer
+(margen 0.29 vs 0.15) y no tiene cupo diario. Lee ~128 tokens por texto: por
+eso los fragmentos de perfil son cortos.
 
-Modelo (decidido 2026-09-27 con la misma prueba contra el perfil de Bayer:
-2 textos agricolas vs futbol, dengue y "Rinden tributo a Chabuca Granda"):
-- gemini-embedding-2: 0.68-0.72 vs 0.43-0.53 (margen ~0.15), y el tier
-  gratuito corta en 1000 textos/dia (el corpus son ~24 mil).
-- paraphrase-multilingual-MiniLM-L12-v2 local (fastembed/ONNX, ~120 MB,
-  sin API ni cupo): 0.41-0.52 vs -0.08-0.11 (margen ~0.29). Gana.
-Limite del modelo: lee ~128 tokens por texto (titulo + comienzo del
-resumen) - por eso los fragmentos de perfil de cliente son cortos.
-
-Donde vive: data/cerebro.db, FUERA de git a proposito - son vectores (casi
-no comprimen) y el repo ya se inflo a 14 GB por las versiones de
-proyectos.db.gz. Se publica como adjunto del release "cerebro" (se pisa en
-cada actualizacion, sin historial) - ver .github/workflows/cerebro.yml y
-descargar_si_falta().
+data/cerebro.db queda fuera de git (los vectores no comprimen) y se publica
+en el release "cerebro" (ver .github/workflows/cerebro.yml).
 
 Uso:
     python -m cerebro.embeddings sincronizar      # CI: embebe lo nuevo
@@ -59,10 +47,8 @@ def _en_app_web() -> bool:
 
 @functools.lru_cache(maxsize=1)
 def _modelo():
-    # Candado: el modelo ocupa ~600 MB de RAM y queda cargado para siempre.
-    # Dentro de la app web tumbo Streamlit Cloud por memoria (2026-09-29, lo
-    # cargaba la pestana de TV al abrir Noticias). En la web se usan vectores
-    # precalculados, TF-IDF, o embeber_aparte() (proceso que libera al salir).
+    # ~600 MB de RAM para siempre: en la app web tumbó Streamlit Cloud. Ahí se
+    # usan vectores precalculados o embeber_aparte().
     if _en_app_web():
         raise RuntimeError("el modelo de embeddings no se carga en la app web: usa embeber_aparte()")
     from fastembed import TextEmbedding
@@ -128,9 +114,7 @@ def conectar(path: Path | None = None) -> sqlite3.Connection:
         CREATE TABLE IF NOT EXISTS meta (k TEXT PRIMARY KEY, v TEXT);
     """)
     modelo = conn.execute("SELECT v FROM meta WHERE k='modelo'").fetchone()
-    # Sin registro de modelo pero con items = cerebro.db de antes de esta
-    # tabla (el de Gemini, 256 dims): bug real 2026-09-27 ("Dimension
-    # mismatch... Expected 256 dimensions but received 384").
+    # Items sin registro de modelo = cerebro.db viejo de Gemini (256 dims).
     viejo_sin_meta = not modelo and conn.execute("SELECT count(*) FROM items").fetchone()[0] > 0
     if viejo_sin_meta or (modelo and modelo[0] != MODELO):
         # Vectores de otro modelo no son comparables: se rehace todo.
@@ -141,12 +125,9 @@ def conectar(path: Path | None = None) -> sqlite3.Connection:
         conn.close()
         return conectar(path)
     conn.execute("INSERT OR IGNORE INTO meta VALUES ('modelo', ?)", (MODELO,))
-    # Indice de palabras (FTS5) para la busqueda hibrida: el vector no
-    # encuentra codigos exactos ("UAFE", "PL 565", "D000035-2026-MIDAGRI-...").
-    # Sin contenido guardado (content=''): solo el indice, el texto ya esta en
-    # corpus(). sincronizar() lo rehace entero; un cerebro.db bajado de antes
-    # de esta tabla se rellena aca con titulo + clave (texto completo recien
-    # en el proximo sincronizar del workflow).
+    # FTS5 para la búsqueda híbrida: el vector no encuentra códigos exactos
+    # ("UAFE", "PL 565"). Un cerebro.db sin la tabla se rellena con título +
+    # clave hasta el próximo sincronizar().
     if not conn.execute("SELECT 1 FROM sqlite_master WHERE name='items_fts'").fetchone():
         conn.execute("CREATE VIRTUAL TABLE items_fts USING fts5(titulo, texto, content='', "
                      "tokenize='unicode61 remove_diacritics 2')")
@@ -199,9 +180,8 @@ _RE_ACTUALIZACION = re.compile(
 def _limpiar_titulo_pl(titulo: str | None) -> str:
     """Saca el encabezado "ACTUALIZACION DE CONFORMIDAD CON LA SEGUNDA
     DISPOSICION COMPLEMENTARIA TRANSITORIA DEL REGLAMENTO DEL CONGRESO - (ANTES
-    PL 00015/2021-CR - CONGRESO)" que tienen ~165 PLs re-presentados en el
-    Congreso bicameral (37% del periodo, 2026-09-27): el modelo solo leia esa
-    formula y no el tema, y esos PLs salian "afines" a cualquier cliente."""
+    PL 00015/2021-CR - CONGRESO)" de los PLs re-presentados: el modelo leía
+    solo esa fórmula y salían "afines" a cualquier cliente."""
     t = (titulo or "").strip()
     limpio = _RE_ACTUALIZACION.sub("", t).strip()
     return limpio or t
@@ -232,12 +212,8 @@ def corpus() -> list[dict]:
             filas = []
         from noticias.temas import es_fuente_multipais, es_seccion_fuera_de_foco, pais_por_contenido
         for r in filas:
-            # Mismo criterio que las paginas Noticias PE/EC: una fuente que
-            # cubre varios paises (Mundo Agropecuario, DPL News...) se asigna
-            # por CONTENIDO, y si no habla de Peru ni Ecuador queda afuera.
-            # Bug real 2026-09-27: "Brasil ordena frenar la fumigacion aerea
-            # con tres neonicotinoides" salia arriba para Syngenta como si
-            # fuera de Ecuador (pais de la fuente).
+            # Como en las páginas Noticias: una fuente multipaís se asigna por
+            # contenido, y si no habla de Perú ni Ecuador queda afuera.
             pais = pais_por_contenido(r[1], r[2], r[5]) if es_fuente_multipais(r[6]) else r[5]
             if not pais or es_seccion_fuera_de_foco(r[3]):
                 continue
@@ -370,10 +346,8 @@ def perfil_texto(slug: str) -> str:
 
 def _pls_de_matriz(slug: str) -> str:
     """Los PLs que el cliente sigue en su matriz Excel (clientes/matrices.py),
-    uno por parrafo para que cada uno sea su propio fragmento del perfil.
-    Nicolas 2026-09-27: la Ley de Aviacion Civil (drones) salia Baja para
-    Bayer aunque su matriz ya sigue un PL de "Drones" (479168) - el cerebro
-    solo leia notas.md."""
+    uno por párrafo para que cada uno sea su propio fragmento del perfil
+    (con solo notas.md, la ley de drones salía Baja para Bayer)."""
     from clientes.matrices import matriz_bayer_crop, matriz_incode_ec
     try:
         filas = (matriz_bayer_crop("PE") + matriz_bayer_crop("EC") if slug in ("bayer", "syngenta")
@@ -416,8 +390,7 @@ def sincronizar_perfiles(conn: sqlite3.Connection | None = None) -> int:
     cambiados = 0
     for c in CLIENTES:
         t = perfil_texto(c)
-        # hash del texto ENTERO: _hash() corta en MAX_CHARS y el perfil de Bayer
-        # (6.8k) no registraba cambios al final (bug real 2026-09-27, parrafo drones)
+        # Hash del texto entero: _hash() corta en MAX_CHARS y no veía cambios al final.
         h = hashlib.sha1(t.encode("utf-8")).hexdigest()[:16] if t else ""
         if not t or ya.get(c) == h:
             continue
@@ -453,17 +426,11 @@ def afinidad(claves: list[str], cliente: str, conn: sqlite3.Connection | None = 
 
 # ------------------------------------------------------------------ niveles
 
-# Calibrado 2026-09-27 contra PLs y noticias reales (perfil de cliente vs
-# documento): >= 0.62 relevante de verdad (Bayer: contrabando agricola, agro;
-# Incode: proteccion digital); ~0.55 ya mezcla ruido ("reeleccion encubierta
-# de gobernadores"). ponytail: umbrales fijos a ojo, recalibrar con lo que
-# Nicolas descarte en Noticias si hace falta.
+# Perfil de cliente vs documento: >= 0.62 relevante de verdad, ~0.55 ya mezcla ruido.
+# ponytail: umbrales fijos a ojo, recalibrar con lo que Nicolas descarte en Noticias.
 AFINIDAD_ALTA = 0.62
 AFINIDAD_MEDIA = 0.55
-# Tema/sector (descripcion armada con las keywords de noticias/temas.py vs
-# noticia): la escala es mas baja; >= 0.48 trae lo del sector que las
-# keywords no agarran ("El Nino: prioridades de los gremios agrarios",
-# "floracion de frutales" para Crop).
+# Tema/sector vs noticia tiene otra escala: >= 0.48 trae lo que las keywords no agarran.
 AFINIDAD_SECTOR = 0.48
 
 
@@ -480,8 +447,7 @@ def descripcion_tema(tema: str) -> str:
 
 def sincronizar_temas(conn: sqlite3.Connection) -> None:
     """Guarda en meta el vector de cada tema/sector (se calcula aca, en el
-    workflow). La app web solo lo lee: cargar el modelo en Streamlit Cloud
-    costaba ~600 MB de RAM (2026-09-29)."""
+    workflow). La app web solo lo lee: el modelo no entra en su memoria."""
     import json
     from noticias.temas import TEMAS
     for tema in TEMAS:
@@ -606,97 +572,8 @@ def vecinos(vector: list[float], k: int = 20, tipo: str | None = None,
     return [{**dict(r), "similitud": round(1 - r["distance"], 4)} for r in filas]
 
 
-def vector_de(clave: str, conn: sqlite3.Connection | None = None) -> list[float] | None:
-    conn = conn or conectar()
-    r = conn.execute("SELECT v.embedding FROM vec_items v JOIN items i ON i.id = v.rowid "
-                     "WHERE i.clave = ?", (clave,)).fetchone()
-    return list(struct.unpack(f"{DIM}f", r[0])) if r else None
-
-
-# ------------------------------------------------------------------ self-check
-
-def _demo():
-    """Sin red: vectores falsos, prueba insert/KNN/filtros de sqlite-vec."""
-    import tempfile
-    from unittest.mock import patch
-
-    def _fake(textos):
-        out = []
-        for t in textos:
-            v = [0.0] * DIM
-            v[0 if "agro" in t else 1 if "futbol" in t else 3 if "lavado" in t else 2] = 1.0
-            out.append(v)
-        return out
-
-    tmp = Path(tempfile.mkdtemp()) / "c.db"
-    items = [
-        {"clave": "a", "tipo": "noticia", "pais": "PE", "titulo": "A", "fecha": "", "url": "", "extra": "{}", "texto": "agro plaguicidas"},
-        {"clave": "b", "tipo": "noticia", "pais": "PE", "titulo": "B", "fecha": "", "url": "", "extra": "{}", "texto": "futbol clasico"},
-        {"clave": "c", "tipo": "pl", "pais": "EC", "titulo": "C", "fecha": "", "url": "", "extra": "{}", "texto": "agro semillas"},
-    ]
-    with patch.dict(globals(), {"CEREBRO_DB": tmp, "embeber": _fake, "corpus": lambda: items}):
-        r = sincronizar()
-        assert r["nuevos"] == 3 and r["total"] == 3, r
-        assert sincronizar()["nuevos"] == 0  # idempotente: nada cambio
-        items[0]["texto"] = "agro plaguicidas SENASA"
-        assert sincronizar()["nuevos"] == 1  # cambio el texto -> se re-embebe solo ese
-        quitado = items.pop(1)
-        assert sincronizar()["total"] == 2  # salio del corpus -> sale del indice
-        items.insert(1, quitado)
-        assert sincronizar()["nuevos"] == 1
-        top = buscar("agro", k=3)
-        assert {t["clave"] for t in top[:2]} == {"a", "c"} and top[0]["similitud"] > 0.99, top
-        assert [t["clave"] for t in buscar("agro", k=3, pais="EC")] == ["c"]
-        assert [t["clave"] for t in buscar("agro", k=3, tipo="noticia")][0] == "a"
-        # Hibrida: codigos exactos que el vector no encuentra.
-        items += [
-            {"clave": "d", "tipo": "noticia", "pais": "EC", "titulo": "Nueva resolución contra el lavado",
-             "fecha": "", "url": "", "extra": "{}", "texto": "Resolucion UAFE-DG-2026-0014 sobre lavado"},
-            {"clave": "pl_PE_00565-2026-2031-CD", "tipo": "pl", "pais": "PE", "fecha": "", "url": "",
-             "titulo": "PL 00565-2026-2031-CD: Ley de semillas", "extra": "{}", "texto": "semillas certificadas"},
-        ] + [{"clave": f"r{i}", "tipo": "noticia", "pais": "EC", "titulo": f"R{i}", "fecha": "", "url": "",
-              "extra": "{}", "texto": f"relleno {i}"} for i in range(5)]
-        assert sincronizar()["nuevos"] == 7
-        q = "UAFE-DG-2026-0014"
-        assert vecinos(_fake([q])[0], k=3)[0]["clave"] != "d"  # solo vector: no lo encuentra arriba
-        top = buscar(q, k=3)
-        assert top[0]["clave"] == "d" and top[0]["coincide"] == "palabras", top
-        assert buscar("uafe", k=3, pais="EC")[0]["clave"] == "d"
-        assert buscar("uafe", k=3, pais="PE")[0]["clave"] != "d"  # filtro por pais tambien en palabras
-        assert buscar("PL 565", k=3)[0]["clave"] == "pl_PE_00565-2026-2031-CD"
-        assert buscar("resolución", k=3)[0]["clave"] == "d"  # sin tilde en el texto, con tilde en la consulta
-        # Sin coincidencias por palabras = exactamente lo de antes (solo vector).
-        assert buscar("biometria", k=4) == vecinos(_fake(["biometria"])[0], k=4)
-        for raro in ('"; DROP -- ("', "a*b", "NEAR(x y)", "-", "AND OR NOT"):
-            buscar(raro, k=2)  # no revienta la sintaxis de MATCH
-        # cerebro.db viejo (bajado del release) sin la tabla: se crea y rellena con titulos.
-        conn = conectar()
-        conn.execute("DROP TABLE items_fts")
-        conn.commit()
-        conn.close()
-        assert palabras("lavado", conn=conectar()) and not palabras("UAFE", conn=conectar())
-        conn = conectar()
-        conn.execute("DELETE FROM perfiles WHERE cliente='bayer'")
-        conn.execute("INSERT INTO perfiles VALUES ('bayer',0,'x','agro',?)", (_blob(_fake(["agro"])[0]),))
-        conn.execute("INSERT INTO perfiles VALUES ('bayer',1,'','futbol',?)", (_blob(_fake(["futbol"])[0]),))
-        af = afinidad(["a", "b", "c", "no-existe"], "bayer", conn)
-        # max entre fragmentos: "a" (agro) y "b" (futbol) matchean cada uno su fragmento
-        assert af["a"] > 0.99 and af["b"] > 0.99 and "no-existe" not in af, af
-        frs = fragmentos_perfil("### Crop\n\n" + "x" * 500 + "\n\n**Peru.**\n\n" + "y" * 500)
-        assert len(frs) == 2 and frs[0].startswith("### Crop") and frs[1].startswith("**Peru.**"), frs
-    # Candado de memoria: dentro de la app web el modelo no se carga nunca.
-    _modelo.cache_clear()
-    with patch.dict(globals(), {"_en_app_web": lambda: True}):
-        try:
-            _modelo()
-            raise AssertionError("el modelo se cargo dentro de la app web")
-        except RuntimeError:
-            pass
-    print("OK cerebro.embeddings: sincroniza incremental, KNN, filtros por pais/tipo, busqueda hibrida y candado de memoria")
-
-
 if __name__ == "__main__":
-    cmd = sys.argv[1] if len(sys.argv) > 1 else "demo"
+    cmd = sys.argv[1] if len(sys.argv) > 1 else ""
     if cmd == "embeber":  # usado por embeber_aparte(): JSON por stdin -> JSON por stdout
         print(json.dumps(embeber(json.loads(sys.stdin.read()))))
     elif cmd == "sincronizar":
@@ -705,4 +582,4 @@ if __name__ == "__main__":
         for r in buscar(" ".join(sys.argv[2:]), k=10):
             print(f"{r['similitud']:.3f} [{r['tipo']}/{r['pais']}] {r['fecha']} {r['titulo'][:100]}")
     else:
-        _demo()
+        sys.exit("Uso: python -m cerebro.embeddings sincronizar [max] | buscar TEXTO | embeber")

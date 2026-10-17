@@ -23,7 +23,8 @@ aceptar/rechazar via UI o CLI.
 from __future__ import annotations
 
 import sqlite3
-from datetime import datetime, timezone
+
+from core.db import now_iso
 
 from .predict import predict_tema_batch
 
@@ -98,7 +99,7 @@ def reclassify_otros(
     aplicados = 0
     sugerencias = 0
     sin_cambio = 0
-    now = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    now = now_iso()
     batch_size = 1000
 
     for batch_start in range(0, n, batch_size):
@@ -155,22 +156,11 @@ def reclassify_otros(
 
 
 def aplicar_decisiones(conn: sqlite3.Connection, decisiones: list[dict]) -> dict:
-    """Aplica decisiones humanas (aceptar/rechazar) sobre sugerencias
-    pendientes, registradas desde pages/1_Peru.py via
-    clasificador/decisiones_store.py (ver ese modulo para el por que del
-    round-trip: la UI no puede escribir proyectos.db directo).
-
-    "aceptar" pone tema_manual=1 (no 0, a diferencia del auto-apply de
-    reclassify_otros de arriba) - un humano revisando y confirmando ES
-    una clasificacion manual real, y de paso queda disponible como dato
-    de entrenamiento futuro (cmd_train usa tema_manual=1).
-
-    Devuelve las `sugerencia_id` efectivamente procesadas (aplicadas,
-    rechazadas, o simplemente ya no encontradas/ya resueltas) para que
-    el caller (clasificador.cli aplicar-decisiones) las saque del JSON
-    de pendientes - una decision nunca debe quedar reintentandose para
-    siempre."""
-    now = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    """Aplica las decisiones de la UI (ver clasificador/decisiones_store.py).
+    "aceptar" pone tema_manual=1: lo confirmó un humano y sirve para entrenar.
+    `procesadas` incluye las ya resueltas o no encontradas, para que no se
+    reintenten para siempre."""
+    now = now_iso()
     aceptadas = rechazadas = ya_resueltas = no_encontradas = 0
     procesadas: list[int] = []
 
