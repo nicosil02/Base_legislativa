@@ -141,7 +141,7 @@ def cmd_comisiones_ec(args) -> int:
         return 1
     from congreso_live.transcripciones import _find_db_path
 
-    r = procesar_pendientes(_find_db_path(), max_n=args.max, solo_pedidos=args.solo_pedidos)
+    r = procesar_pendientes(_find_db_path(), max_n=args.max)
     print(f"Comisiones EC: {r['vistas']} sesion(es) terminadas vistas en Facebook, "
           f"{r['pendientes_totales']} sin transcribir. Procesados: {len(r['procesados'])}, "
           f"fallidos: {len(r['fallidos'])}.")
