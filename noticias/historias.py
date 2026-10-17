@@ -66,9 +66,12 @@ UMBRAL_NOTICIAS = 0.82
 _NUM_NORMA = re.compile(r"\b\d{1,6}-\d{4}(?:-[A-Z]+)?\b")
 
 
-def similitudes_noticias(vectores: list, titulos: list[str], fuentes: list[str] | None = None):
+def similitudes_noticias(vectores: list, titulos: list[str], fuentes: list[str] | None = None,
+                         juicios: dict[tuple[int, int], bool] | None = None):
     """Matriz para agrupar(): coseno entre vectores (None = sin vector, queda
-    sola), 0 entre noticias del mismo portal y entre normas con numeros distintos."""
+    sola), 0 entre noticias del mismo portal y entre normas con numeros
+    distintos. `juicios` {(i, j): mismo hecho?} (noticias/mismo_hecho.py, por
+    posicion) manda sobre todo lo anterior."""
     import numpy as np
     n = len(titulos)
     dim = next((len(v) for v in vectores if v is not None), 1)
@@ -81,6 +84,8 @@ def similitudes_noticias(vectores: list, titulos: list[str], fuentes: list[str] 
         for j in range(i + 1, n):
             if (fuentes and fuentes[i] == fuentes[j]) or (normas[i] and normas[j] and not normas[i] & normas[j]):
                 sims[i, j] = sims[j, i] = 0.0
+    for (i, j), igual in (juicios or {}).items():
+        sims[i, j] = sims[j, i] = 1.0 if igual else 0.0
     return sims
 
 
