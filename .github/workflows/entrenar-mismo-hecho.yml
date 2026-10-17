@@ -55,12 +55,6 @@ jobs:
           PYTHONIOENCODING: utf-8
         run: python -X utf8 -u -m noticias.mismo_hecho etiquetar --dias ${{ inputs.dias }} --max ${{ inputs.max }}
 
-      - name: Publicar etiquetas
-        if: inputs.etiquetar
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: gh release upload cerebro data/cerebro.db --clobber
-
       - name: Afinar y evaluar
         env:
           PYTHONIOENCODING: utf-8
@@ -70,6 +64,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
+          gh release upload cerebro data/cerebro.db --clobber   # etiquetas nuevas, sin veredictos del modelo viejo
           tar -czf data/mismo_hecho_modelo.tar.gz -C data mismo_hecho_modelo
           gh release upload cerebro data/mismo_hecho_modelo.tar.gz --clobber
           {
