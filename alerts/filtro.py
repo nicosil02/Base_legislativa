@@ -25,8 +25,11 @@ VENTANA_HORAS = 48
 
 SYSTEM = ("Sos analista de asuntos publicos en Vali Consultores (Peru y Ecuador). Decidis si "
           "una noticia merece una alerta para un cliente puntual, segun su perfil real. Se "
-          "estricto: interesa solo si toca sus temas, entidades, actores o una regulacion "
-          "que lo afecte. Coyuntura general o algo que solo comparte palabras con su sector, no.")
+          "estricto: interesa solo si hay una decision o propuesta publica concreta (norma, "
+          "proyecto de ley, accion de un regulador o ministerio, compra publica, cambio de "
+          "autoridad) sobre sus temas, o un actor de su perfil. Encuestas, tendencias de "
+          "mercado, columnas de opinion, coyuntura general o algo que solo comparte palabras "
+          "con su sector, no.")
 
 SCHEMA = {"type": "array", "items": {"type": "object", "properties": {
     "indice": {"type": "integer"}, "interesa": {"type": "boolean"},
