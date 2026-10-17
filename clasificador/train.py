@@ -19,7 +19,6 @@ Notas de diseno:
 from __future__ import annotations
 
 import sqlite3
-import unicodedata
 from pathlib import Path
 from typing import Sequence
 
@@ -30,6 +29,8 @@ from sklearn.metrics import classification_report, f1_score
 from sklearn.model_selection import StratifiedKFold, cross_val_predict
 from sklearn.pipeline import FeatureUnion, Pipeline
 
+from core.text import sin_tildes
+
 
 # Path por defecto donde se persiste el modelo entrenado.
 MODEL_DIR = Path(__file__).resolve().parent.parent / "models"
@@ -37,13 +38,9 @@ MODEL_PATH = MODEL_DIR / "clasificador_pe.joblib"
 
 
 def normalize_text(s: str | None) -> str:
-    """Lowercase + sin acentos. Mismo criterio que scraper/categorias.py."""
-    if not s:
-        return ""
-    s = s.lower()
-    s = unicodedata.normalize("NFD", s)
-    s = "".join(c for c in s if unicodedata.category(c) != "Mn")
-    return s
+    """Minúsculas y sin tildes, como scraper/categorias.py. Si cambia, hay
+    que reentrenar el modelo."""
+    return sin_tildes((s or "").lower())
 
 
 def load_training_data(db_path: str = "proyectos.db") -> tuple[list[str], list[str]]:
@@ -117,9 +114,7 @@ def build_pipeline() -> Pipeline:
         C=4.0,
         max_iter=3000,
         class_weight="balanced",
-        # sklearn 1.8 removio el soporte multiclass de liblinear → lbfgs
-        # es el default moderno y maneja 30 clases sin problema en este
-        # tamano de dataset (~14k ejemplos, ~50k features).
+        # sklearn 1.8 sacó el multiclass de liblinear.
         solver="lbfgs",
     )
     return Pipeline([("features", features), ("clf", clf)])
@@ -157,7 +152,3 @@ def save(model: Pipeline, path: Path = MODEL_PATH) -> None:
     joblib.dump(model, path, compress=3)
     size_mb = path.stat().st_size / (1024 * 1024)
     print(f"[save] modelo guardado en {path} ({size_mb:.1f} MB)")
-
-
-def load(path: Path = MODEL_PATH) -> Pipeline:
-    return joblib.load(path)

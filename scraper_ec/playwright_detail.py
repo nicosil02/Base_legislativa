@@ -1,28 +1,9 @@
-"""Enriquecedor de documentos (PDFs) via Playwright.
+"""PDFs de cada proyecto EC via Playwright.
 
-Phase 0 mostró que la SPA Ppless v2 expone los PDFs vía:
+Los PDFs se bajan sin auth del fileservice publico, pero la lista de archivos
+(pplessservice2/) pide sesion: se abre el modal de cada proyecto en la SPA y
+se capturan las respuestas JSON del catalogo para armar las URLs.
 
-  https://proyectosdeley.asambleanacional.gob.ec/fileservice/file/download
-      ?fileName=<NOMBRE>.pdf&system=ppless&subDirectory=<NNNN>_task
-
-Ese endpoint es PÚBLICO (HTTP 200 sin cookies/auth/CORS issues). Verificado
-con `curl -I`. Una vez construido, el URL se puede linkear directamente
-desde el dashboard y bajar el PDF en un click.
-
-El catálogo `pplessservice2/` que la SPA usa para listar los archivos sí
-requiere autenticación (zone.js + cookie de sesión). Por eso necesitamos
-Playwright: abrimos el modal, capturamos los responses JSON del catálogo,
-extraemos (filename, subDirectory) por archivo y construimos las URLs
-del fileservice.
-
-Uso:
-    from scraper_ec.db import Database
-    from scraper_ec.playwright_detail import enrich_documentos
-
-    db = Database("proyectos_ec.db"); db.init_schema()
-    enrich_documentos(db, n_tramites=["480824"], headless=True)
-
-CLI:
     python -m scraper_ec.cli enriquecer-documentos --limit 20
 """
 from __future__ import annotations
@@ -36,8 +17,7 @@ PORTAL_URL = "https://proyectosdeley.asambleanacional.gob.ec/report"
 FILESERVICE = "https://proyectosdeley.asambleanacional.gob.ec/fileservice/file/download"
 SEL_BTN_CSV = 'button:has-text("CSV")'
 
-# Selectores reales del DOM de Ppless v2 (Streamlit 1.57 / Angular ~10)
-# verificados con `playwright eval_on_selector_all`.
+# Selectores del DOM de Ppless v2 (Angular Material).
 SEL_TAB_20 = "text=CONSULTA DE PROYECTOS DE LEY 2.0"
 SEL_FILTER_TRAMITE = "input#procedure"
 SEL_BTN_BUSCAR = 'button:has-text("Buscar"):not(:has-text("Limpiar"))'
@@ -47,12 +27,41 @@ SEL_MODAL = "mat-dialog-container"
 SEL_MODAL_ATTACH = 'mat-dialog-container mat-icon:has-text("attach_file")'
 SEL_MODAL_CLOSE = 'mat-dialog-container mat-icon:has-text("cancel")'
 
-# URL pattern del API que retorna los archives (PDF metadata)
 ARCHIVE_API_RE = re.compile(r"/archive/search/findAllByAttachment_Id\?id=\d+")
 
 
+def abrir_portal(page) -> bool:
+    """Carga Ppless v2 (3 intentos: la red del runner a veces da timeout) y
+    entra al tab 2.0. False si no pudo."""
+    from playwright.sync_api import TimeoutError as PWTimeout
+    for intento in (1, 2, 3):
+        try:
+            page.goto(PORTAL_URL, timeout=60000, wait_until="domcontentloaded")
+            break
+        except PWTimeout as e:
+            print(f"[portal] goto intento {intento}/3: timeout: {e}")
+    else:
+        print("[portal] no cargo tras 3 intentos")
+        return False
+    try:
+        page.wait_for_selector(SEL_TAB_20, timeout=20000)
+        page.click(SEL_TAB_20)
+    except PWTimeout:
+        print("[portal] timeout esperando el tab 2.0")
+        return False
+    return True
+
+
+def esperar_red(page, timeout: int = 15000, respaldo_ms: int = 3000) -> None:
+    """networkidle con tope; si no llega, una pausa fija."""
+    from playwright.sync_api import TimeoutError as PWTimeout
+    try:
+        page.wait_for_load_state("networkidle", timeout=timeout)
+    except PWTimeout:
+        page.wait_for_timeout(respaldo_ms)
+
+
 def _build_download_url(filename: str, subdir: str) -> str:
-    """Construye la URL pública directa al PDF."""
     return (
         f"{FILESERVICE}"
         f"?fileName={quote(filename)}"
@@ -62,15 +71,7 @@ def _build_download_url(filename: str, subdir: str) -> str:
 
 
 def download_csv(output_path, *, headless: bool = True, timeout_ms: int = 60000) -> bool:
-    """Descarga el CSV fresco del portal Ppless v2.
-
-    Navega a /report, switchea al tab 2.0, busca y clickea el boton CSV.
-    El archivo se arma como un Blob en el navegador (no hay descarga real
-    de red) - se intercepta su contenido directo por JS en vez de esperar
-    el evento nativo de download, que en Chromium headless no es confiable.
-
-    Devuelve True si se descargo OK, False si fallo.
-    """
+    """Descarga el CSV del portal Ppless v2. True si quedo un archivo no vacio."""
     from playwright.sync_api import sync_playwright, TimeoutError as PWTimeout
     from pathlib import Path
 
@@ -82,16 +83,8 @@ def download_csv(output_path, *, headless: bool = True, timeout_ms: int = 60000)
         ctx = browser.new_context(accept_downloads=True)
         page = ctx.new_page()
         page.set_default_timeout(timeout_ms)
-        # El boton CSV arma el archivo 100% en el navegador (URL.createObjectURL
-        # + <a download> + click), sin ningun request de red - confirmado en
-        # vivo 2026-09-17 inspeccionando el portal a mano. En Chromium headless
-        # (el que usa este runner) ese evento nativo de "download" a veces
-        # nunca dispara aunque el blob se haya generado bien (funciona en un
-        # browser con cabeza, no siempre en headless) - de ahi el timeout de
-        # 30s viendo NADA, ni siquiera con Buscar clickeado antes (intentado y
-        # confirmado que no alcanza). Fix real: interceptar el Blob apenas se
-        # crea via este init script y leer su contenido directo por JS, sin
-        # depender para nada del evento de descarga del SO/navegador.
+        # El CSV se arma como Blob en el navegador y en headless el evento de
+        # descarga a veces no llega: se lee el Blob directo por JS.
         page.add_init_script(
             """
             window.__csvBlobText = null;
@@ -103,39 +96,14 @@ def download_csv(output_path, *, headless: bool = True, timeout_ms: int = 60000)
             """
         )
         try:
-            # Retry de page.goto: la red del CI runner puede dar timeouts transient.
-            loaded = False
-            for attempt in (1, 2, 3):
-                try:
-                    page.goto(PORTAL_URL, timeout=60000, wait_until="domcontentloaded")
-                    loaded = True
-                    break
-                except PWTimeout as e:
-                    print(f"[csv][goto retry {attempt}/3] timeout: {e}")
-            if not loaded:
-                print("[csv] no pude cargar el portal tras 3 intentos.")
+            if not abrir_portal(page):
                 return False
-
-            page.wait_for_selector(SEL_TAB_20, timeout=20000)
-            page.click(SEL_TAB_20)
             page.wait_for_timeout(1500)
-            # El boton CSV exporta el array de resultados que arma el ultimo
-            # "Buscar" — sin este click, en CI (mas lento que en local) ese
-            # array puede seguir vacio cuando se llega al boton CSV, y la
-            # exportacion no genera ningun archivo (0 filas => sin evento de
-            # download => timeout de 30s esperandolo). Confirmado en vivo
-            # 2026-09-17: con Buscar explicito el boton exporta un blob CSV
-            # real (~266KB); sin el, a veces exporta un array vacio. Mismo
-            # patron ya usado en playwright_unificado.py.
+            # CSV exporta lo del ultimo "Buscar"; sin el, en CI sale vacio.
             page.wait_for_selector(SEL_BTN_BUSCAR, timeout=10000)
             page.click(SEL_BTN_BUSCAR)
-            try:
-                page.wait_for_load_state("networkidle", timeout=15000)
-            except PWTimeout:
-                page.wait_for_timeout(3000)
+            esperar_red(page)
             page.wait_for_timeout(1000)
-            # Click CSV y leer el blob interceptado (ver init script arriba)
-            # en vez de esperar el evento nativo de download.
             page.click(SEL_BTN_CSV, force=True)
             page.wait_for_function("window.__csvBlobText !== null", timeout=15000)
             texto = page.evaluate("async () => await window.__csvBlobText")
@@ -155,8 +123,8 @@ def download_csv(output_path, *, headless: bool = True, timeout_ms: int = 60000)
 
 
 def _parse_archives_response(body: str) -> list[dict]:
-    """Parsea la respuesta del API `archive/search/findAllByAttachment_Id`
-    y devuelve una lista de dicts con {filename, subDirectory, attachment_id, fase_desc}."""
+    """Respuesta de `archive/search/findAllByAttachment_Id` ->
+    [{filename, subdirectory, url, descripcion}]."""
     try:
         data = json.loads(body)
     except Exception:
@@ -168,10 +136,9 @@ def _parse_archives_response(body: str) -> list[dict]:
         url_path = (it.get("url") or "").strip("/")
         if not filename or not url_path:
             continue
-        # url_path es típicamente "ppless/2343_task". Extraemos sólo subDirectory.
+        # "ppless/2343_task" -> "2343_task"
         parts = url_path.split("/", 1)
         subdir = parts[1] if len(parts) == 2 else url_path
-        # La descripción / tipo de documento vive en attachment.description
         attachment = it.get("attachment") or {}
         descripcion = attachment.get("description") or it.get("description") or None
         out.append({
@@ -188,36 +155,15 @@ def enrich_documentos(
     n_tramites: Iterable[str],
     *,
     headless: bool = True,
-    skip_with_docs: bool = True,
     on_progress: Callable[[str, int, int], None] | None = None,
     timeout_ms: int = 30000,
     sleep_between_ms: int = 800,
 ) -> dict:
-    """Itera sobre `n_tramites` y captura los PDFs de cada proyecto.
-
-    Args:
-        db: scraper_ec.db.Database (ya inicializada con init_schema)
-        n_tramites: iterable de N. Trámite a enriquecer
-        headless: True para producción, False para debug visual
-        skip_with_docs: salta proyectos que ya tienen >=1 doc en la DB
-        on_progress: callback(n_tramite, idx, total) por cada item
-        timeout_ms: timeout por operación
-        sleep_between_ms: pausa entre proyectos (rate limit)
-
-    Returns:
-        {"procesados", "con_docs", "sin_docs", "errores"}
-    """
-    from playwright.sync_api import sync_playwright, TimeoutError as PWTimeout
+    """Captura los PDFs de cada proyecto de `n_tramites`.
+    Devuelve {"procesados", "con_docs", "sin_docs", "errores"}."""
+    from playwright.sync_api import sync_playwright
 
     targets = list(n_tramites)
-    if skip_with_docs:
-        existing = {
-            r[0]
-            for r in db.conn.execute(
-                "SELECT DISTINCT n_tramite FROM documentos"
-            ).fetchall()
-        }
-        targets = [t for t in targets if t not in existing]
 
     stats = {"procesados": 0, "con_docs": 0, "sin_docs": 0, "errores": 0}
     if not targets:
@@ -232,9 +178,7 @@ def enrich_documentos(
         page = context.new_page()
         page.set_default_timeout(timeout_ms)
 
-        # Buffer compartido de archives capturados desde el API. Cada response
-        # del endpoint `archive/search/...` se agrega acá. Lo limpiamos entre
-        # proyectos para que cada uno tenga su propio conjunto de docs.
+        # Lo que devuelve el catalogo; se vacia entre proyectos.
         archives_buffer: list[dict] = []
 
         def on_response(resp):
@@ -247,41 +191,13 @@ def enrich_documentos(
 
         context.on("response", on_response)
 
-        # 1. Cargar portal con retry — page.goto puede timeout-ear si la red
-        # del runner CI esta lenta o el portal responde tarde. Reintentamos
-        # hasta 3 veces con wait_until=domcontentloaded (mas rapido que el
-        # default 'load' que espera todos los assets).
-        loaded = False
-        for attempt in (1, 2, 3):
-            try:
-                page.goto(PORTAL_URL, timeout=60000, wait_until="domcontentloaded")
-                loaded = True
-                break
-            except PWTimeout as e:
-                print(f"[goto retry {attempt}/3] timeout: {e}")
-        if not loaded:
-            print("Timeout cargando portal Ppless v2 tras 3 intentos — abortando.")
+        if not abrir_portal(page):
             context.close()
             browser.close()
             stats["errores"] = len(targets)
             return stats
+        esperar_red(page)
 
-        try:
-            page.wait_for_selector(SEL_TAB_20, timeout=20000)
-            page.click(SEL_TAB_20)
-            # networkidle puede tardar mucho; un timeout chico + tolerar el fallo
-            try:
-                page.wait_for_load_state("networkidle", timeout=15000)
-            except PWTimeout:
-                page.wait_for_timeout(3000)  # fallback: sleep absoluto
-        except PWTimeout:
-            print("Timeout esperando tab 2.0 — abortando.")
-            context.close()
-            browser.close()
-            stats["errores"] = len(targets)
-            return stats
-
-        # 2. Loop por proyecto
         for idx, ntr in enumerate(targets):
             if on_progress:
                 on_progress(ntr, idx + 1, len(targets))
@@ -313,17 +229,8 @@ def enrich_documentos(
 
 def _enrich_single(page, n_tramite: str, archives_buffer: list[dict],
                    titulo: str | None = None) -> list[dict]:
-    """Captura los documentos de UN proyecto.
-
-    Pasos:
-    1. Limpiar filtros previos.
-    2. Filtrar por N. Trámite, buscar.
-    3. Click find_in_page del único resultado → abre modal de fases.
-    4. Click cada attach_file (uno por fase con docs) → dispara llamadas al
-       API que pueblan `archives_buffer` (a través del response listener).
-    5. Cerrar modal, devolver los docs acumulados.
-    """
-    # 1. Limpiar filtros
+    """Documentos de UN proyecto: filtra por tramite, abre el modal de fases
+    y hace click en cada attach_file; el listener llena `archives_buffer`."""
     try:
         if page.locator(SEL_BTN_LIMPIAR).count() > 0:
             page.click(SEL_BTN_LIMPIAR)
@@ -331,7 +238,6 @@ def _enrich_single(page, n_tramite: str, archives_buffer: list[dict],
     except Exception:
         pass
 
-    # 2. Filtrar
     # "460570~a1b2c3" = segundo proyecto con el mismo tramite en el portal
     # (ver csv_importer.iter_rows): se busca por el numero real.
     page.locator(SEL_FILTER_TRAMITE).first.fill(str(n_tramite).split("~")[0])
@@ -342,8 +248,7 @@ def _enrich_single(page, n_tramite: str, archives_buffer: list[dict],
     if icons.count() == 0:
         return []
 
-    # 3. Abrir modal de detalle. Con tramite repetido hay >1 resultado:
-    # se abre el de la fila cuyo titulo coincide.
+    # Con tramite repetido hay >1 resultado: se abre la fila con el mismo titulo.
     icon = icons.first
     if icons.count() > 1 and titulo:
         for i in range(icons.count()):
@@ -356,11 +261,8 @@ def _enrich_single(page, n_tramite: str, archives_buffer: list[dict],
     page.wait_for_selector(SEL_MODAL, timeout=10000)
     page.wait_for_timeout(700)
 
-    # 4. Por cada attach_file en el modal: click + esperar respuesta API.
-    #    En cada click, captura las fases y archivos asociados.
-    # El modal pagina las fases de a 5 ("1 – 5 of 8"): las fases de debate
-    # quedan en la pagina 2+. Se recorren todas las paginas.
-    # Tope de paginas por si el paginador no avanza (8 fases hoy = 2 paginas).
+    # El modal pagina las fases de a 5 y las de debate quedan en la pagina 2+.
+    # Tope de 10 por si el paginador no avanza.
     for _pagina in range(10):
         attaches = page.locator(SEL_MODAL_ATTACH)
         n_attach = attaches.count()
@@ -368,7 +270,7 @@ def _enrich_single(page, n_tramite: str, archives_buffer: list[dict],
             _close_modal(page)
             return []
 
-        # Recolectar el texto de cada fila de fase para asociar attach → fase
+        # Fase de cada fila: respaldo si no se puede leer la fila del attach.
         fase_per_index: list[str] = []
         rows = page.locator(f"{SEL_MODAL} mat-row, {SEL_MODAL} tr.mat-row")
         for i in range(rows.count()):
@@ -379,18 +281,8 @@ def _enrich_single(page, n_tramite: str, archives_buffer: list[dict],
             except Exception:
                 fase_per_index.append("")
 
-        # Click cada attach_file via dispatch_event('click'), que envia el evento
-        # directamente al elemento sin chequear visibilidad/oclusion. Es el unico
-        # approach que funciona cuando el primer click abre un sub-panel que cubre
-        # a los siguientes attach_files de la lista. El response listener corre
-        # async y captura las archives sin importar si el click "visual" funciona.
-        #
-        # Para asociar correctamente cada archivo capturado a su fase: antes de
-        # cada click, leemos el texto del row padre del attach (que contiene el
-        # nombre de la fase). Marcamos el size del buffer pre-click; los archives
-        # que aparezcan después pertenecen a este click. Asi evitamos el bug del
-        # fallback `fase_per_index[i]`, que fallaba cuando una fase generaba >1
-        # archivo y los indices del buffer dejaban de calzar con los rows.
+        # dispatch_event: el primer click abre un sub-panel que tapa a los
+        # demas. Lo que entra al buffer tras cada click es de la fase de esa fila.
         for i in range(n_attach):
             try:
                 current = page.locator(SEL_MODAL_ATTACH)
@@ -399,9 +291,7 @@ def _enrich_single(page, n_tramite: str, archives_buffer: list[dict],
 
                 attach = current.nth(i)
 
-                # Leer fase del row padre ANTES del click (despues del click el
-                # DOM puede cambiar). xpath: el primer mat-row o tr.mat-row hacia
-                # arriba en el arbol.
+                # Antes del click: despues el DOM cambia.
                 fase_i: str | None = None
                 try:
                     row = attach.locator(
@@ -410,33 +300,24 @@ def _enrich_single(page, n_tramite: str, archives_buffer: list[dict],
                     if row.count() > 0:
                         txt = row.inner_text(timeout=1500)
                         raw = txt.split("\t")[0].split("\n")[0].strip()
-                        # El inner_text incluye el texto del icono Material
-                        # ("attach_file") cuando la fuente no carga. Lo removemos
-                        # para no contaminar el nombre de la fase.
+                        # Sin la fuente de iconos el texto trae "attach_file".
                         if raw.endswith("attach_file"):
                             raw = raw[: -len("attach_file")].rstrip()
                         fase_i = raw or None
                 except Exception:
                     pass
-                # Fallback: si no se pudo leer el row, usar el indice por fila
-                # del modal recolectado al principio (sirve cuando hay 1:1).
                 if not fase_i and i < len(fase_per_index):
                     fase_i = fase_per_index[i] or None
 
-                # Marcar el buffer antes del click; los archives que aparezcan
-                # despues son los de este click.
                 start = len(archives_buffer)
-                # dispatch_event('click') bypassa actionability + overlays.
                 attach.dispatch_event("click", timeout=4000)
                 page.wait_for_timeout(1500)
 
-                # Etiquetar los archives recien capturados con la fase del click.
                 for a in archives_buffer[start:]:
                     a["_fase_click"] = fase_i
             except Exception as e:
                 print(f"    [warn] attach {i+1}/{n_attach}: {type(e).__name__}: {str(e)[:80]}")
                 continue
-
 
         nxt = page.locator(
             # El paginador de las fases; hay otro dentro de la fila expandida
@@ -450,17 +331,14 @@ def _enrich_single(page, n_tramite: str, archives_buffer: list[dict],
         page.wait_for_timeout(1000)
 
     _close_modal(page)
-    # ESC adicional por si quedó un overlay flotante
+    # ESC por si quedo un overlay
     try:
         page.keyboard.press("Escape")
         page.wait_for_timeout(200)
     except Exception:
         pass
 
-    # 5. Devolver los archives acumulados. Si hay duplicados por (filename, subdirectory),
-    # quedarse solo con uno.
-    # Prioridad para la fase: fase del click (asociada en el loop) > descripcion
-    # del API (a veces tiene la fase) > None.
+    # Sin duplicados; fase = la del click, si no la descripcion del API.
     seen: set[tuple[str, str]] = set()
     docs: list[dict] = []
     for a in archives_buffer:

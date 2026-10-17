@@ -85,5 +85,5 @@ python -m alerts.cli send --force
 - `alerts/template.py` - render HTML del correo
 - `alerts/send.py` - cliente HTTP de Resend
 - `alerts/cli.py` - entry point + logica 9 AM / 10 AM retry
-- `.github/workflows/daily-alerts.yml` - cron 14:00 y 15:00 UTC
+- `.github/workflows/refrescar-pe.yml` - paso "Envio de alerta diaria" (slots am/pm)
 - `data/alert_sent_log.json` - estado del scheduler (commiteado por CI)

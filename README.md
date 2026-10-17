@@ -9,53 +9,30 @@ scraping del API oficial.
 
 ## Setup inicial
 
-### Camino rápido (PC nueva, usando el snapshot del repo)
+### Camino rápido (PC nueva, usando la base publicada)
 
-El repo trae un snapshot ya cargado (`data/proyectos.db.gz` con ~14,600 PLs +
-etiquetas del Excel ya aplicadas). En 2 comandos arrancas con todo:
+Los workflows publican la base comprimida en la rama `datos`
+(`data/proyectos.db.gz`, ver `scripts/publicar_db.sh`). Para arrancar con ella:
 
 ```powershell
 pip install -r requirements.txt
-python -m scraper.cli restaurar           # descomprime data/proyectos.db.gz -> proyectos.db
+git fetch origin datos
+git restore --source=origin/datos --worktree data/proyectos.db.gz
+python -c "import gzip,shutil; shutil.copyfileobj(gzip.open('data/proyectos.db.gz'), open('proyectos.db','wb'))"
 python -m streamlit run app.py            # abre el dashboard
 ```
 
-Luego corres `python -m scraper.cli update` para traer los PLs nuevos que
-hayan aparecido entre el snapshot y hoy (segundos).
+Luego corres `python -m scraper.cli update` para traer los PLs nuevos.
 
-### Camino desde cero (sin snapshot)
-
-Si querés (re)construir desde el API:
+### Camino desde cero
 
 ```powershell
 pip install -r requirements.txt
 python -m scraper.cli init                       # crea proyectos.db + comisiones
-python -m scraper.cli update                     # carga completa (~30-40 min, ~14,600 PLs)
-python -m scraper.cli importar-temas data\ProyectosDeLey.xlsx
+python -m scraper.cli update                     # carga completa (~30-40 min)
 ```
 
-El `importar-temas` aplica las etiquetas manuales del Excel (`tema_manual=1`) y luego
-corre dos pases de override:
-
-- **Farma** sobrescribe Otros / Salud cuando matchea ≥1 keyword (medicamentos, oncología, VIH, vacunación, etc.).
-- **Tecnología** sobrescribe **cualquier categoría** cuando matchea ≥1 keyword distintivo (IA, datos personales, biometría, ciberseguridad, plataforma digital, etc.).
-
-### Refrescar el snapshot del repo
-
-Cuando quieras actualizar el `data/proyectos.db.gz` para que tus compañeros
-arranquen con una DB más fresca, después de un `update`:
-
-```powershell
-# PowerShell
-$ErrorActionPreference = "Stop"
-& "$env:WINDIR\System32\WindowsPowerShell\v1.0\powershell.exe" -Command `
-  "Compress-Archive -Force -Path proyectos.db -DestinationPath data\proyectos.db.zip"
-# o más simple si tienes git bash / Python:
-python -c "import gzip,shutil; shutil.copyfileobj(open('proyectos.db','rb'), gzip.open('data/proyectos.db.gz','wb',9))"
-git add data/proyectos.db.gz
-git commit -m "snapshot DB $(Get-Date -Format yyyy-MM-dd)"
-git push
-```
+No commitear `data/*.db.gz` en `main`: la base va solo en la rama `datos`.
 
 ## Dashboard (frontend)
 
@@ -117,7 +94,7 @@ El portal oficial (`https://wb2server.congreso.gob.pe/spley-portal/`) es una SPA
 que consume un API REST en `https://api.congreso.gob.pe/spley-portal-service`.
 
 - **Listado**: `POST /proyecto-ley/lista-con-filtro` con `{perParId, first, rows}` — el
-  sync corre esto para **cada período** en `scraper.sync.PERIODOS_SYNC` (hoy: `2021` y
+  sync corre esto para **cada período** en `scraper.sync.PERIODOS_SYNC` (hoy solo
   `2026`, ver abajo). Devuelve todos los PLs del período en una sola respuesta.
 - **Detalle**: `GET /expediente/{enc(perParId)}/{enc(pleyNum)}`. Los parámetros se cifran
   con AES-128-ECB + PKCS7 (clave extraída del bundle Angular). Trae comisiones, firmantes,
@@ -130,7 +107,7 @@ incremental son pocas docenas de calls.
 ### Períodos parlamentarios (`perParId`)
 
 El Congreso peruano pasó de unicameral a **bicameral** (Senado + Cámara de Diputados) el
-2026-07-27, tras la reforma constitucional de 2024. `scraper/sync.py` sincroniza ambos:
+2026-07-27, tras la reforma constitucional de 2024. `scraper/sync.py` solo sincroniza el vigente:
 
 | `perParId` | Período | Congreso | Estado |
 |---|---|---|---|

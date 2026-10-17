@@ -2,10 +2,9 @@
 from __future__ import annotations
 
 import sqlite3
-from contextlib import contextmanager
-from datetime import datetime, timezone
-from pathlib import Path
-from typing import Any, Iterable
+from typing import Iterable
+
+from core.db import Database as _Base, now_iso
 
 SCHEMA = """
 CREATE TABLE IF NOT EXISTS comisiones (
@@ -14,12 +13,8 @@ CREATE TABLE IF NOT EXISTS comisiones (
   abreviatura   TEXT
 );
 
--- cod_tipo_parl: 'C' (Congreso/general — Ejecutivo, Comisión Permanente),
--- 'D' (Cámara de Diputados), 'S' (Senado). Es parte de la identidad del PL
--- porque cada cámara reinicia su propia numeración desde 1 dentro del mismo
--- per_par_id (el PL D-1 y el PL S-1 del período 2026-2031 son proyectos
--- DISTINTOS que casualmente comparten número). Período legacy 2021-2026:
--- todo es 'C' (Congreso unicameral, sin esta distinción).
+-- cod_tipo_parl: 'C' Congreso/general, 'D' Diputados, 'S' Senado. Va en la PK
+-- porque cada cámara numera desde 1 (D-1 y S-1 son PLs distintos).
 CREATE TABLE IF NOT EXISTS proyectos (
   per_par_id        INTEGER NOT NULL,
   cod_tipo_parl     TEXT NOT NULL DEFAULT 'C',
@@ -86,9 +81,6 @@ CREATE TABLE IF NOT EXISTS archivos (
 );
 CREATE INDEX IF NOT EXISTS idx_arch_proyecto ON archivos(per_par_id, cod_tipo_parl, pley_num);
 
--- Tablas legacy del primer diseño multi-tag (se eliminan en init_schema).
--- proyectos ahora tiene `tema` y `tema_manual` directos (un tema por PL).
-
 CREATE TABLE IF NOT EXISTS sync_runs (
   id           INTEGER PRIMARY KEY AUTOINCREMENT,
   started_at   TEXT NOT NULL,
@@ -103,135 +95,10 @@ CREATE TABLE IF NOT EXISTS sync_runs (
 """
 
 
-def now_iso() -> str:
-    return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
-
-
-class Database:
-    def __init__(self, path: str | Path):
-        self.path = str(Path(path).resolve())
-        self.conn = sqlite3.connect(self.path)
-        self.conn.row_factory = sqlite3.Row
-        self.conn.execute("PRAGMA foreign_keys = ON")
-        self.conn.execute("PRAGMA journal_mode = WAL")
-
-    def close(self) -> None:
-        self.conn.close()
-
-    def __enter__(self):
-        return self
-
-    def __exit__(self, *a):
-        self.close()
-
-    @contextmanager
-    def tx(self):
-        try:
-            yield self.conn
-            self.conn.commit()
-        except Exception:
-            self.conn.rollback()
-            raise
-
-    def _migrar_cod_tipo_parl(self, c: sqlite3.Connection) -> None:
-        """Migración one-shot: agrega `cod_tipo_parl` a la PK de proyectos/
-        proyecto_comision/seguimientos/archivos (necesario para el Congreso
-        bicameral — ver scraper/api.py). SQLite no permite ALTER de PRIMARY
-        KEY, así que reconstruye las 4 tablas si detecta el esquema viejo.
-        Todo lo existente (período 2021-2026, y cualquier PL 'C' del 2026 ya
-        sincronizado antes de este fix) se preserva con cod_tipo_parl='C',
-        que es correcto: ese período no tenía distinción de cámara.
-
-        Resumible ante un corte a mitad de camino: los statements DDL
-        (ALTER/CREATE/DROP TABLE) hacen auto-commit en sqlite3 de Python pese
-        a estar dentro de `self.tx()` — si el proceso muere entre el RENAME y
-        el DROP final (OOM, timeout de GH Actions, etc.), las tablas `_old`
-        (nunca tocadas hasta el final) quedan como fuente de verdad. Por eso
-        el chequeo de "ya migrado" exige TANTO que `cod_tipo_parl` exista
-        COMO que no haya `_old` colgadas de un intento previo — si las hay,
-        se descarta cualquier tabla nueva a medio construir y se repite la
-        copia desde `_old`, así la corrida siguiente termina el trabajo en
-        vez de asumir que ya terminó y perder los datos reales."""
-        tablas = ["proyectos", "proyecto_comision", "seguimientos", "archivos"]
-        existe = c.execute(
-            "SELECT name FROM sqlite_master WHERE type='table' AND name='proyectos'"
-        ).fetchone()
-        old_existe = c.execute(
-            "SELECT name FROM sqlite_master WHERE type='table' AND name='proyectos_old'"
-        ).fetchone()
-        if not existe and not old_existe:
-            return  # DB nueva, executescript(SCHEMA) crea todo con el esquema correcto
-        if existe:
-            cols = {r[1] for r in c.execute("PRAGMA table_info(proyectos)").fetchall()}
-            if "cod_tipo_parl" in cols and not old_existe:
-                return  # ya migrado y limpio — caso normal en cada corrida
-
-        if old_existe:
-            # Intento previo interrumpido: lo que haya en `proyectos` (con o
-            # sin `cod_tipo_parl`) puede estar vacío/incompleto — descartarlo
-            # y repetir la copia desde `_old`, que es la fuente real.
-            for t in tablas:
-                c.execute(f"DROP TABLE IF EXISTS {t}")
-        else:
-            for t in tablas:
-                c.execute(f"ALTER TABLE {t} RENAME TO {t}_old")
-
-        c.executescript(SCHEMA)  # crea las 4 tablas con el esquema nuevo (nombres libres ahora)
-
-        c.execute(
-            """INSERT INTO proyectos
-               (per_par_id, cod_tipo_parl, pley_num, pley_id, proyecto_ley, titulo,
-                sumilla, estado, estado_id, proponente, grupo_parlamentario, legislatura,
-                autores_raw, fec_presentacion, url_portal, url_pdf, observaciones,
-                first_seen_at, last_seen_at, last_changed_at, detail_fetched_at)
-               SELECT per_par_id, 'C', pley_num, pley_id, proyecto_ley, titulo,
-                      sumilla, estado, estado_id, proponente, grupo_parlamentario, legislatura,
-                      autores_raw, fec_presentacion, url_portal, url_pdf, observaciones,
-                      first_seen_at, last_seen_at, last_changed_at, detail_fetched_at
-               FROM proyectos_old"""
-        )
-        c.execute(
-            """INSERT INTO proyecto_comision (per_par_id, cod_tipo_parl, pley_num, comision_id, nombre)
-               SELECT per_par_id, 'C', pley_num, comision_id, nombre FROM proyecto_comision_old"""
-        )
-        c.execute(
-            """INSERT INTO seguimientos
-               (seguimiento_pley_id, per_par_id, cod_tipo_parl, pley_num, fecha, estado,
-                comisiones, detalle, observacion, flag_inicial)
-               SELECT seguimiento_pley_id, per_par_id, 'C', pley_num, fecha, estado,
-                      comisiones, detalle, observacion, flag_inicial
-               FROM seguimientos_old"""
-        )
-        c.execute(
-            """INSERT INTO archivos
-               (proyecto_archivo_id, seguimiento_pley_id, per_par_id, cod_tipo_parl, pley_num,
-                fecha, nombre_archivo, descripcion, url)
-               SELECT proyecto_archivo_id, seguimiento_pley_id, per_par_id, 'C', pley_num,
-                      fecha, nombre_archivo, descripcion, url
-               FROM archivos_old"""
-        )
-
-        # tema/tema_manual vivían en proyectos_old (agregadas por la migración
-        # de abajo en corridas previas) — copiarlas si existen antes de dropear.
-        cols_old = {r[1] for r in c.execute("PRAGMA table_info(proyectos_old)").fetchall()}
-        if "tema" in cols_old:
-            c.execute("ALTER TABLE proyectos ADD COLUMN tema TEXT")
-            c.execute("ALTER TABLE proyectos ADD COLUMN tema_manual INTEGER NOT NULL DEFAULT 0")
-            c.execute(
-                """UPDATE proyectos SET
-                     tema = (SELECT tema FROM proyectos_old o
-                             WHERE o.per_par_id=proyectos.per_par_id AND o.pley_num=proyectos.pley_num),
-                     tema_manual = (SELECT tema_manual FROM proyectos_old o
-                             WHERE o.per_par_id=proyectos.per_par_id AND o.pley_num=proyectos.pley_num)"""
-            )
-
-        for t in tablas:
-            c.execute(f"DROP TABLE {t}_old")
-
+class Database(_Base):
     def init_schema(self) -> None:
         from scraper.comisiones_ordinarias import tipo_de
         with self.tx() as c:
-            self._migrar_cod_tipo_parl(c)
             c.executescript(SCHEMA)
             # Migración: proyectos.tema y proyectos.tema_manual.
             cols = {r[1] for r in c.execute("PRAGMA table_info(proyectos)").fetchall()}
@@ -243,8 +110,7 @@ class Database:
             c.execute("DROP TABLE IF EXISTS proyecto_tema")
             c.execute("DROP TABLE IF EXISTS temas")
             c.execute("CREATE INDEX IF NOT EXISTS idx_proyectos_tema ON proyectos(tema)")
-            # Migración: comisiones.tipo ('Ordinaria'/'Senado'/'Diputados'/
-            # 'Bicameral'/'Especial' — ver scraper/comisiones_ordinarias.py).
+            # comisiones.tipo: ver scraper/comisiones_ordinarias.py.
             cols_com = {r[1] for r in c.execute("PRAGMA table_info(comisiones)").fetchall()}
             if "tipo" not in cols_com:
                 c.execute("ALTER TABLE comisiones ADD COLUMN tipo TEXT NOT NULL DEFAULT 'Especial'")
@@ -268,16 +134,9 @@ class Database:
 
     def classify_and_save(self, per_par_id: int, cod_tipo_parl: str, pley_num: int,
                           titulo: str | None, sumilla: str | None) -> str | None:
-        """Clasifica el PL. Respeta tema_manual=1 (no toca etiquetas manuales).
-
-        Prioridad de clasificador:
-          1. ML (clasificador.predict.predict_tema): entrenado con 14,589
-             labels manuales. Solo aplicamos si confidence >= 0.5 para
-             evitar asignaciones cuestionables que llenarian de noise el
-             dataset (es preferible "Otros" sobre una etiqueta dudosa).
-          2. Fallback keywords (scraper/categorias.py): si el modelo no
-             esta disponible o confidence < 0.5.
-        """
+        """Clasifica el PL sin tocar los tema_manual=1. Primero el modelo ML
+        (solo si confianza >= 0.5: mejor "Otros" que una etiqueta dudosa);
+        si no hay modelo o no alcanza, las keywords de scraper/categorias."""
         row = self.conn.execute(
             "SELECT tema_manual FROM proyectos WHERE per_par_id=? AND cod_tipo_parl=? AND pley_num=?",
             (per_par_id, cod_tipo_parl, pley_num),
@@ -338,8 +197,7 @@ class Database:
 
         per_par_id = row["perParId"]
         pley_num = row["pleyNum"]
-        # codTipoParl solo viene poblado desde el período bicameral en
-        # adelante (ver scraper/api.py); el período legacy no lo trae -> 'C'.
+        # El período legacy no trae codTipoParl -> 'C'.
         cod_tipo_parl = row.get("codTipoParl") or "C"
         existing = self.get_known(per_par_id, cod_tipo_parl, pley_num)
         portal = portal_url(per_par_id, pley_num, cod_tipo_parl)
@@ -397,23 +255,10 @@ class Database:
         return False, estado_changed
 
     def _comisiones_desde_seguimientos(self, cod_tipo_parl: str, seguimientos: list[dict]) -> list[dict]:
-        """Resuelve comisiones desde el texto libre `desComisiones` de los
-        seguimientos, contra el catálogo de LA MISMA CÁMARA del PL.
-
-        Descubierto 2026-09-11: los expedientes del período bicameral ya NO
-        traen el campo estructurado `comisiones` (siempre None/vacío) — la
-        única señal es este texto libre dentro del historial. Acotar al
-        catálogo de la propia cámara del PL evita la ambigüedad de nombres
-        duplicados entre Senado/Diputados (mismo problema que en
-        sesiones/sync.py, pero acá SÍ sabemos la cámara de antemano — el PL
-        ya la trae — así que no hace falta dejar nada sin resolver).
-
-        NO se separa el texto por coma/"y": muchos nombres de comisión ya
-        traen coma y "y" adentro (ej. "Constitución, Reglamento y Relaciones
-        Exteriores") — partir el texto los hacía pedazos irreconocibles. En
-        vez de eso, se busca cada nombre del catálogo como substring del
-        texto (más largo primero, para no matchear un nombre corto que sea
-        prefijo de otro más específico)."""
+        """Comisiones sacadas del texto libre `desComisiones` (el período
+        bicameral ya no trae el campo `comisiones`), contra el catálogo de la
+        cámara del PL. Se busca cada nombre como substring, el más largo
+        primero: partir por coma o "y" rompía nombres que los llevan dentro."""
         from scraper.comisiones_ordinarias import TIPOS_POR_CAMARA, normalize
 
         tipos = TIPOS_POR_CAMARA.get(cod_tipo_parl, ("Ordinaria", "Bicameral"))
@@ -543,8 +388,7 @@ class Database:
                         (max(fechas), per_par_id, cod_tipo_parl, pley_num),
                     )
 
-        # Clasificar por temas usando título + sumilla (fuera de la transacción anterior,
-        # save_temas abre la suya propia).
+        # Fuera de la transacción: set_tema abre la suya.
         self.classify_and_save(
             per_par_id, cod_tipo_parl, pley_num,
             gen.get("titulo"),

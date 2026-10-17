@@ -1,25 +1,20 @@
-"""Agendas del Pleno bicameral (Senado + Diputados) - via PDF, no la API JSON.
-
-pleno/api.py + pleno/sync.py cubren agendas del Pleno via la API JSON de
-adp-portal-service, pero esa API sigue sin tener NINGUNA agenda del periodo
-bicameral 2026-2031 (verificado en vivo 2026-09-15, igual que el 09-11
-documentado en pleno/api.py) - el Congreso bicameral las publica como PDF
-en el sitio propio de cada camara, no por esa API. Este modulo scrapea esas
-paginas (tabla HTML simple, sin JS) y baja/extrae texto de cada PDF nuevo.
+"""Agendas del Pleno bicameral (Senado + Diputados) desde los PDF que publica
+cada camara en su sitio (la API JSON de pleno/api.py no tiene el periodo
+bicameral). Scrapea la tabla HTML y extrae el texto de cada PDF nuevo.
 
 Uso:
     python -m pleno.agenda_pdf sync
-    python -m pleno.agenda_pdf test
 """
 from __future__ import annotations
 
 import logging
 import re
 import sqlite3
-from datetime import datetime, timezone
 from pathlib import Path
 
 import requests
+
+from core.db import now_iso
 
 log = logging.getLogger(__name__)
 
@@ -30,9 +25,8 @@ FUENTES = [
     ("diputados", "https://diputados.congreso.gob.pe/sesiones-del-pleno/"),
 ]
 
-# Cada fila de la tabla: <tr data-periodo="..."><td data-search="DD/MM/AAAA">
-# fecha</td> ... <td data-search="archivo.pdf"><a class="fsm-pub-doc"
-# href="URL">... - verificado en vivo 2026-09-15 contra ambos sitios
+# Cada fila: <tr data-periodo="..."><td data-search="DD/MM/AAAA">fecha</td>
+# ... <td data-search="archivo.pdf"><a class="fsm-pub-doc" href="URL">
 # (mismo layout WordPress en las dos camaras).
 _RE_FILA = re.compile(
     r'<tr[^>]*data-periodo="([^"]*)"[^>]*>\s*'
@@ -49,9 +43,8 @@ def _fecha_a_iso(fecha_ddmmyyyy: str) -> str:
 
 
 def fetch_agendas(session, camara: str, url: str) -> list[dict]:
-    """[{camara, periodo, fecha, pdf_url}] - SOLO las filas que tienen PDF
-    de Agenda (muchas sesiones solo tienen Acta/Diario de Debates, sin
-    agenda previa publicada todavia - se saltean, no hay nada que bajar)."""
+    """[{camara, periodo, fecha, pdf_url}] de las filas con PDF de Agenda
+    (las que solo tienen Acta/Diario de Debates se saltean)."""
     r = session.get(url, timeout=25)
     r.raise_for_status()
     out = []
@@ -66,8 +59,7 @@ def fetch_agendas(session, camara: str, url: str) -> list[dict]:
 
 
 def extract_pdf_text(pdf_bytes: bytes, max_chars: int = 20000) -> str:
-    """Texto de la agenda - son PDFs de texto real (no escaneados), sin
-    necesidad de OCR (a diferencia de noticias/registro_oficial_ec.py)."""
+    """Texto de la agenda (PDFs de texto, no escaneados: sin OCR)."""
     import pymupdf as fitz
     doc = fitz.open(stream=pdf_bytes, filetype="pdf")
     try:
@@ -78,6 +70,8 @@ def extract_pdf_text(pdf_bytes: bytes, max_chars: int = 20000) -> str:
 
 
 def init_schema(conn: sqlite3.Connection) -> None:
+    # PK de 3 columnas: una fecha puede tener varios PDF y un PDF puede
+    # cubrir varios dias.
     conn.execute("""
         CREATE TABLE IF NOT EXISTS pleno_agenda_pdf (
             camara TEXT NOT NULL,
@@ -88,42 +82,12 @@ def init_schema(conn: sqlite3.Connection) -> None:
             PRIMARY KEY (camara, fecha, pdf_url)
         )
     """)
-    # Migracion in-place si la tabla ya existe con un PK viejo mas chico -
-    # bugs reales 2026-09-15, verificados en vivo contra produccion, dos
-    # casos distintos que cada uno por separado no alcanza a cubrir:
-    #   1. Una misma fecha puede tener MAS DE UN PDF (Diputados 10/09 y
-    #      26/07 tienen 2 cada una) - (camara, fecha) solo no alcanza.
-    #   2. Un mismo PDF puede cubrir VARIOS dias (sesion Senado 24-26 jul,
-    #      un solo archivo linkeado desde las 2 filas de fecha) -
-    #      (camara, pdf_url) solo tampoco alcanza (fallo con
-    #      UNIQUE constraint al migrar produccion real).
-    # La combinacion completa (camara, fecha, pdf_url) es la unica que
-    # cubre ambos casos sin perder ninguna agenda real.
-    pk_cols = sorted(r[1] for r in conn.execute("PRAGMA table_info(pleno_agenda_pdf)") if r[5] > 0)
-    if pk_cols in (["camara", "fecha"], ["camara", "pdf_url"]):
-        conn.executescript("""
-            ALTER TABLE pleno_agenda_pdf RENAME TO pleno_agenda_pdf_old;
-            CREATE TABLE pleno_agenda_pdf (
-                camara TEXT NOT NULL,
-                fecha TEXT NOT NULL,
-                pdf_url TEXT NOT NULL,
-                texto TEXT NOT NULL,
-                fetched_at TEXT NOT NULL,
-                PRIMARY KEY (camara, fecha, pdf_url)
-            );
-            INSERT OR IGNORE INTO pleno_agenda_pdf SELECT * FROM pleno_agenda_pdf_old;
-            DROP TABLE pleno_agenda_pdf_old;
-        """)
     conn.commit()
 
 
 def run_sync(db_path: str | Path, max_nuevos: int = 50) -> dict:
-    """Baja las agendas del Pleno (Senado + Diputados) que todavia no
-    tenemos guardadas. `max_nuevos` acota cuantos PDFs nuevos bajar por
-    corrida - de mas, solo como freno de seguridad (el volumen real es
-    ~10-20 por camara por año legislativo, verificado en vivo 2026-09-15:
-    7 Senado + 10 Diputados en total); pedido de Nicolas de tener
-    SIEMPRE todas las agendas disponibles, no una ventana parcial."""
+    """Baja las agendas del Pleno que todavia no estan guardadas (todas, no
+    una ventana). `max_nuevos` es solo un freno: son ~10-20 por camara al anio."""
     stats = {"filas_vistas": 0, "nuevas": 0, "errores": 0}
     conn = sqlite3.connect(str(db_path))
     init_schema(conn)
@@ -158,8 +122,7 @@ def run_sync(db_path: str | Path, max_nuevos: int = 50) -> dict:
                     """INSERT OR REPLACE INTO pleno_agenda_pdf
                        (camara, fecha, pdf_url, texto, fetched_at)
                        VALUES (?,?,?,?,?)""",
-                    (fila["camara"], fila["fecha"], fila["pdf_url"], texto,
-                     datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")),
+                    (fila["camara"], fila["fecha"], fila["pdf_url"], texto, now_iso()),
                 )
                 conn.commit()
                 stats["nuevas"] += 1
@@ -174,115 +137,13 @@ def run_sync(db_path: str | Path, max_nuevos: int = 50) -> dict:
     return stats
 
 
-def _demo():
-    """Self-check parseo con las paginas reales (test lento - hace 2
-    requests, una por camara, sin bajar ningun PDF)."""
-    session = requests.Session()
-    session.headers.update(HEADERS)
-    total = 0
-    for camara, url in FUENTES:
-        filas = fetch_agendas(session, camara, url)
-        assert len(filas) > 0, f"{camara}: esperaba >=1 fila con PDF, hay 0"
-        f = filas[0]
-        for k in ("camara", "fecha", "pdf_url"):
-            assert f.get(k), f"{camara}: fila sin {k!r}: {f}"
-        assert f["pdf_url"].startswith("https://") and f["pdf_url"].endswith(".pdf")
-        print(f"OK {camara}: {len(filas)} fila(s) con Agenda PDF, "
-              f"mas reciente {f['fecha']} -> {f['pdf_url']}")
-        total += len(filas)
-    assert total > 0
-
-
-def _test_parse_fila_sin_red():
-    """Parseo del regex contra HTML fijo, sin red - valida el patron
-    exacto encontrado en vivo 2026-09-15 en ambos sitios."""
-    html = '''
-    <tr data-periodo="2026-2027">
-        <td data-search="10/09/2026">10/09/2026</td>
-        <td data-search="AGENDA-PLENO-DIPUTADOS-10-09-2026.pdf">
-            <a class="fsm-pub-doc" href="https://diputados.congreso.gob.pe/wp-content/uploads/2026/09/AGENDA-PLENO-DIPUTADOS-10-09-2026.pdf">ver</a>
-        </td>
-        <td data-search="">&mdash;</td>
-    </tr>
-    <tr data-periodo="2026-2027">
-        <td data-search="10/09/2026">10/09/2026</td>
-        <td data-search="">&mdash;</td>
-    </tr>
-    '''
-    filas = list(_RE_FILA.findall(html))
-    assert len(filas) == 1, f"esperaba 1 fila con PDF (la 2da no tiene), hay {len(filas)}"
-    periodo, fecha, pdf_url = filas[0]
-    assert fecha == "10/09/2026"
-    assert pdf_url.endswith("AGENDA-PLENO-DIPUTADOS-10-09-2026.pdf")
-    assert _fecha_a_iso(fecha) == "2026-09-10"
-    print("OK agenda_pdf: regex de fila distingue filas con/sin PDF de agenda")
-
-
-def _test_duplicados_y_migracion():
-    """Dos bugs reales 2026-09-15, verificados en vivo contra produccion:
-      1. Una misma fecha puede tener MAS DE UN PDF (Diputados 10/09 y
-         26/07 tenian 2 cada una) - el PK viejo (camara, fecha) pisaba
-         uno con el otro en silencio.
-      2. Un mismo PDF puede cubrir VARIOS dias (Senado 24-26 jul, un
-         solo archivo linkeado desde las 2 filas de fecha) - un PK
-         (camara, pdf_url) tampoco alcanza (fallo real al migrar
-         produccion: UNIQUE constraint failed).
-    Prueba la migracion desde CUALQUIERA de los 2 PK viejos, y que el PK
-    nuevo (camara, fecha, pdf_url) cubra ambos casos sin perder nada."""
-    import tempfile
-
-    for pk_viejo in ("camara, fecha", "camara, pdf_url"):
-        with tempfile.TemporaryDirectory() as td:
-            db_path = str(Path(td) / "test.db")
-            conn = sqlite3.connect(db_path)
-            conn.execute(f"""CREATE TABLE pleno_agenda_pdf (
-                camara TEXT NOT NULL, fecha TEXT NOT NULL, pdf_url TEXT NOT NULL,
-                texto TEXT NOT NULL, fetched_at TEXT NOT NULL,
-                PRIMARY KEY ({pk_viejo}))""")
-            conn.execute(
-                "INSERT INTO pleno_agenda_pdf VALUES (?,?,?,?,?)",
-                ("diputados", "2026-07-26", "https://x/viejo.pdf", "texto viejo", "2026-01-01T00:00:00Z"),
-            )
-            conn.commit()
-            conn.close()
-
-            conn = sqlite3.connect(db_path)
-            init_schema(conn)
-            filas = conn.execute("SELECT camara, fecha, pdf_url FROM pleno_agenda_pdf").fetchall()
-            assert filas == [("diputados", "2026-07-26", "https://x/viejo.pdf")], (pk_viejo, filas)
-
-            # Misma fecha, PDF distinto (caso 1).
-            conn.execute(
-                "INSERT INTO pleno_agenda_pdf VALUES (?,?,?,?,?)",
-                ("diputados", "2026-07-26", "https://x/nuevo.pdf", "texto nuevo", "2026-01-02T00:00:00Z"),
-            )
-            # Mismo PDF, fecha distinta (caso 2, sesion multi-dia).
-            conn.execute(
-                "INSERT INTO pleno_agenda_pdf VALUES (?,?,?,?,?)",
-                ("diputados", "2026-07-27", "https://x/viejo.pdf", "texto viejo", "2026-01-01T00:00:00Z"),
-            )
-            conn.commit()
-            n = conn.execute("SELECT COUNT(*) FROM pleno_agenda_pdf").fetchone()[0]
-            conn.close()
-            assert n == 3, f"({pk_viejo}) esperaba 3 filas (1 original + 2 variantes), hay {n}"
-    print("OK agenda_pdf: migra desde cualquiera de los 2 PK viejos sin "
-          "perder datos, y el PK nuevo cubre PDF-duplicado-por-fecha y "
-          "fecha-duplicada-por-PDF")
-
-
 if __name__ == "__main__":
     import argparse
     p = argparse.ArgumentParser()
-    p.add_argument("cmd", choices=["sync", "demo", "test"])
+    p.add_argument("cmd", choices=["sync"])
     p.add_argument("--db", default="proyectos.db")
     p.add_argument("--max-nuevos", type=int, default=50)
     args = p.parse_args()
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
-    if args.cmd == "demo":
-        _demo()
-    elif args.cmd == "test":
-        _test_parse_fila_sin_red()
-        _test_duplicados_y_migracion()
-    else:
-        stats = run_sync(args.db, max_nuevos=args.max_nuevos)
-        print(f"Agendas del Pleno (PDF): {stats}")
+    stats = run_sync(args.db, max_nuevos=args.max_nuevos)
+    print(f"Agendas del Pleno (PDF): {stats}")

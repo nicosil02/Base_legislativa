@@ -74,8 +74,7 @@ jobs:
       - name: Puente SOCKS5->HTTP para ffmpeg (privoxy :8118)
         run: |
           # Igual que vigilar-congreso.yml: para un directo yt-dlp delega en
-          # ffmpeg, que no entiende socks5:// (sin esto cada tramo fallaba al
-          # instante, primera prueba 2026-09-28).
+          # ffmpeg, que no entiende socks5://.
           sudo apt-get install -y -qq privoxy
           echo "forward-socks5 / 127.0.0.1:40000 ." | sudo tee -a /etc/privoxy/config
           sudo systemctl restart privoxy

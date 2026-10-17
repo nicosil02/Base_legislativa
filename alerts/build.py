@@ -13,8 +13,8 @@ from __future__ import annotations
 
 import sqlite3
 from datetime import datetime, timedelta, timezone
-from pathlib import Path
 
+from core.db import connect_ro, db_path
 from scraper.api import portal_url
 
 EC_PORTAL_URL = "https://proyectosdeley.asambleanacional.gob.ec/report"
@@ -28,32 +28,20 @@ EC_DICTAMEN_STATES = (
 )
 
 
-def _find_db_file(filename, search_root=None):
-    here = (search_root or Path(__file__).resolve().parent).resolve()
-    candidates = [here / filename, Path.cwd() / filename]
-    cur = here
-    for _ in range(6):
-        candidates.append(cur / filename)
-        cur = cur.parent
-    for p in candidates:
-        if p.exists() and p.is_file() and p.stat().st_size > 0:
-            return p.resolve()
-    return None
+def _find_db_file(filename):
+    """La base no vacia (raiz del repo o directorio actual), o None."""
+    p = db_path(filename)
+    return p if p.is_file() and p.stat().st_size > 0 else None
 
 
-def _open_ro(path):
-    conn = sqlite3.connect(f"file:{path}?mode=ro&immutable=1", uri=True)
-    conn.row_factory = sqlite3.Row
-    return conn
+_open_ro = connect_ro
 
 
 def _normativa_interes(conn, since_iso):
     """Normas de El Peruano / Registro Oficial EC nuevas que tocan el foco
-    de un cliente, por pais. Mismo filtro que el digest de WhatsApp
-    (noticias.temas.es_normativa_de_interes). Pedido de Nicolas 2026-09-24
-    tras perderse la norma SPDP de datos biometricos: el correo nunca
-    incluia normativa. Las noticias viven en proyectos.db (PE) para ambos
-    paises; se separan por noticias_fuentes.pais."""
+    de un cliente, por pais (mismo filtro que el digest de WhatsApp). Las
+    noticias de ambos paises viven en proyectos.db; se separan por
+    noticias_fuentes.pais."""
     from noticias.temas import es_normativa_de_interes
 
     try:
@@ -74,11 +62,8 @@ def _normativa_interes(conn, since_iso):
 
 
 def _peru_new_pls(conn, since_iso):
-    # Filtramos por first_seen_at (cuando ENTRO a nuestra DB) en lugar
-    # de fec_presentacion. Asi cada PL sale 1 sola vez en la primera
-    # alerta despues de detectarlo — si fec_presentacion era ayer pero
-    # nuestro scraper recien lo vio hoy, sigue siendo "nuevo" para el
-    # usuario. La comparacion es precisa a nivel timestamp.
+    # first_seen_at (cuando entro a la DB), no fec_presentacion: cada PL
+    # sale una sola vez, en la primera alerta despues de detectarlo.
     rows = conn.execute(
         """SELECT per_par_id, cod_tipo_parl, pley_num, proyecto_ley, titulo, tema, estado,
                   fec_presentacion, url_portal
@@ -101,12 +86,8 @@ def _peru_new_pls(conn, since_iso):
 
 
 def _peru_new_dictamenes(conn, since_iso):
-    # seguimientos.fecha tiene hora precisa, comparamos a nivel timestamp
-    # para que cada dictamen salga 1 vez (no se repita por cambio de dia).
-    # JOIN incluye cod_tipo_parl: sin esto, un seguimiento de un PL de
-    # Diputados podía juntarse con el título/tema de un PL de Senado o
-    # Congreso que casualmente comparte pley_num (cada cámara numera desde
-    # 1) — bug real encontrado al migrar al Congreso bicameral.
+    # Comparacion a nivel timestamp para que cada dictamen salga 1 vez. El
+    # JOIN incluye cod_tipo_parl porque cada camara numera desde 1.
     rows = conn.execute(
         """SELECT p.per_par_id, p.cod_tipo_parl, p.pley_num, p.proyecto_ley, p.titulo, p.tema,
                   s.estado AS estado, p.fec_presentacion, p.url_portal,
@@ -210,14 +191,8 @@ def _peru_sesiones_proximas(conn, days_ahead=2):
     ).fetchall()
     out = []
     for r in rows:
-        # NOTA: sesion_pl_referenciado no guarda cod_tipo_parl (el parser de
-        # agenda_parser.py extrae el numero de PL de texto libre y no siempre
-        # puede saber de qué cámara es) — sin desempate, un pley_num que
-        # existe en 2+ cámaras (común en el período bicameral: D/S/C
-        # reinician numeración desde 1) hacía fan-out el JOIN y duplicaba/
-        # mezclaba títulos. Desempate determinístico: 'C' > 'D' > 'S'
-        # (alfabético), nunca más de 1 fila — la cámara elegida puede ser la
-        # incorrecta (limitación conocida), pero al menos no se duplica.
+        # sesion_pl_referenciado no guarda la camara: se elige la menor
+        # cod_tipo_parl para no duplicar filas (puede ser la camara errada).
         pls = conn.execute(
             """SELECT pr.pley_num, p.proyecto_ley, p.titulo, p.tema, p.estado
                FROM sesion_pl_referenciado pr
@@ -408,23 +383,6 @@ def build_alert(now=None, window_hours=24, db_pe_path=None, db_ec_path=None,
             print(f"[alerts] error leyendo Ecuador DB ({db_ec}): {e}")
 
     return payload
-
-
-def has_content(payload):
-    if any(
-        len(payload[country].get(section, [])) > 0
-        for country in ("peru", "ecuador")
-        for section in ("dictamenes", "proyectos", "normativa")
-    ):
-        return True
-    # Sesiones proximas con al menos 1 PL en agenda (en cualquier pais) cuentan
-    for country in ("peru", "ecuador"):
-        if any(
-            len(s.get("pls") or []) > 0
-            for s in payload.get(country, {}).get("sesiones_proximas", []) or []
-        ):
-            return True
-    return False
 
 
 def count_items(payload):

@@ -1,17 +1,11 @@
-"""Capa de almacenamiento SQLite para Ecuador (Asamblea Nacional).
-
-Schema separado de Perú: identificador es n_tramite (TEXT — puede ser
-numérico tipo "480824" o alfanumérico tipo "AN-BCDP-2026-0065-M").
-
-Fuente de datos: CSV export del portal Ppless v2 (proyectosdeley.asambleanacional.gob.ec)
-con 9 columnas. No usamos API directo porque devuelve 403 desde fetch externo.
-"""
+"""SQLite de Ecuador (Asamblea Nacional). La clave es n_tramite (TEXT:
+"480824" o "AN-BCDP-2026-0065-M"). Se llena con el CSV del portal Ppless v2
+porque su API responde 403 desde afuera."""
 from __future__ import annotations
 
 import sqlite3
-from contextlib import contextmanager
-from datetime import datetime, timezone
-from pathlib import Path
+
+from core.db import Database as _Base, now_iso
 
 SCHEMA = """
 CREATE TABLE IF NOT EXISTS proyectos (
@@ -31,7 +25,9 @@ CREATE TABLE IF NOT EXISTS proyectos (
   tema_manual            INTEGER NOT NULL DEFAULT 0,
   first_seen_at          TEXT NOT NULL,
   last_seen_at           TEXT NOT NULL,
-  last_changed_at        TEXT NOT NULL
+  last_changed_at        TEXT NOT NULL,
+  es_unificado           INTEGER NOT NULL DEFAULT 0,
+  unificado_at           TEXT
 );
 
 CREATE INDEX IF NOT EXISTS idx_proy_ec_estado    ON proyectos(estado);
@@ -73,9 +69,7 @@ CREATE TABLE IF NOT EXISTS sync_runs (
   mensaje                 TEXT
 );
 
--- Documentos / PDFs por proyecto. Se llena via Playwright (scraper_ec.playwright_detail)
--- abriendo el modal "find_in_page" de cada proyecto en la SPA Ppless v2 y capturando
--- las URLs de los blobs PDF que el frontend muestra como "attach_file".
+-- PDFs por proyecto, capturados con Playwright (scraper_ec.playwright_detail).
 CREATE TABLE IF NOT EXISTS documentos (
   id            INTEGER PRIMARY KEY AUTOINCREMENT,
   n_tramite     TEXT NOT NULL,
@@ -89,14 +83,8 @@ CREATE TABLE IF NOT EXISTS documentos (
 CREATE INDEX IF NOT EXISTS idx_docs_tramite ON documentos(n_tramite);
 CREATE UNIQUE INDEX IF NOT EXISTS uq_docs_tramite_url ON documentos(n_tramite, url);
 
--- Unificaciones de proyectos de ley (Asamblea Nacional EC).
--- Cuando varios PLs sobre la misma materia se unifican para tratamiento
--- conjunto, los marcamos como miembros de un mismo "grupo". Un PL puede
--- estar en 0 o 1 grupo (FK NULL = no unificado).
---
--- Fuente:
---   - Manual via CLI (marcar-unificacion) mientras no scrapeamos el portal
---   - Futuro: Playwright en el detalle del PL en Ppless v2
+-- PLs unificados para tratamiento conjunto. Un PL está en 0 o 1 grupo.
+-- Fuente: el portal (scrapear-unificados) o a mano (marcar-unificacion).
 CREATE TABLE IF NOT EXISTS unificacion_grupos (
   id              INTEGER PRIMARY KEY AUTOINCREMENT,
   nombre          TEXT,                          -- "Reformas a Inquilinato", etc.
@@ -119,59 +107,15 @@ CREATE INDEX IF NOT EXISTS idx_unif_pl_tramite ON unificacion_pl(n_tramite);
 """
 
 
-def now_iso() -> str:
-    return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
-
-
 # Campos del proyecto que se trackean en historial_cambios cuando cambian
 # entre snapshots sucesivos.
 TRACKED_FIELDS = ("estado", "comision_asignada", "titulo", "fec_calificacion_cal")
 
 
-class Database:
-    """Wrapper fino sobre sqlite3 para proyectos_ec.db."""
-
-    def __init__(self, path: str | Path):
-        self.path = str(Path(path).resolve())
-        self.conn = sqlite3.connect(self.path)
-        self.conn.row_factory = sqlite3.Row
-        self.conn.execute("PRAGMA foreign_keys = ON")
-        self.conn.execute("PRAGMA journal_mode = WAL")
-
-    def close(self) -> None:
-        self.conn.close()
-
-    def __enter__(self):
-        return self
-
-    def __exit__(self, *a):
-        self.close()
-
-    @contextmanager
-    def tx(self):
-        try:
-            yield self.conn
-            self.conn.commit()
-        except Exception:
-            self.conn.rollback()
-            raise
-
+class Database(_Base):
     def init_schema(self) -> None:
         with self.tx() as c:
             c.executescript(SCHEMA)
-            # Migracion idempotente: agregar columna es_unificado si no existe
-            try:
-                cols = [r[1] for r in c.execute("PRAGMA table_info(proyectos)")]
-                if "es_unificado" not in cols:
-                    c.execute(
-                        "ALTER TABLE proyectos ADD COLUMN es_unificado INTEGER NOT NULL DEFAULT 0"
-                    )
-                if "unificado_at" not in cols:
-                    c.execute(
-                        "ALTER TABLE proyectos ADD COLUMN unificado_at TEXT"
-                    )
-            except Exception:
-                pass
 
     # ---------- unificaciones ----------
     def crear_grupo_unificacion(
@@ -232,20 +176,6 @@ class Database:
             c.execute("DELETE FROM unificacion_grupos WHERE id = ?", (grupo_id,))
             # CASCADE deberia borrar unificacion_pl, pero por si acaso:
             c.execute("DELETE FROM unificacion_pl WHERE grupo_id = ?", (grupo_id,))
-
-    def get_unificacion_de(self, n_tramite: str) -> dict | None:
-        """Devuelve el grupo (con miembros) al que pertenece un PL, o None."""
-        r = self.conn.execute(
-            """SELECT g.id, g.nombre, g.descripcion, g.n_tramite_principal,
-                      GROUP_CONCAT(up2.n_tramite, ',') AS miembros
-               FROM unificacion_pl up
-               JOIN unificacion_grupos g ON g.id = up.grupo_id
-               JOIN unificacion_pl up2 ON up2.grupo_id = up.grupo_id
-               WHERE up.n_tramite = ?
-               GROUP BY g.id""",
-            (n_tramite,),
-        ).fetchone()
-        return dict(r) if r else None
 
     # ---------- proyectos ----------
     def get_known(self, n_tramite: str) -> sqlite3.Row | None:
@@ -409,10 +339,3 @@ class Database:
                 )
         return len(docs)
 
-    def get_url_principal(self, n_tramite: str) -> str | None:
-        """Devuelve la URL del PDF principal (primer documento por orden)."""
-        r = self.conn.execute(
-            "SELECT url FROM documentos WHERE n_tramite = ? ORDER BY orden ASC LIMIT 1",
-            (n_tramite,),
-        ).fetchone()
-        return r["url"] if r else None

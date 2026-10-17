@@ -1,7 +1,7 @@
 name: Votaciones Pleno PE (OCR 2021-2026)
 
-# Pedido de Nicolas 2026-10-06: votaciones nominales del periodo anterior
-# para perfilar a los congresistas reelectos (disciplina de bancada, temas).
+# Votaciones nominales del periodo anterior para perfilar a los congresistas
+# reelectos (disciplina de bancada, temas).
 # Openpolitica ya extrajo hasta el 2024-03-07; esto hace el resto por OCR
 # (PDFs escaneados, ~20 s/pagina en CPU) repartido en N maquinas y junta
 # todo en un solo votaciones_pe.db publicado en el release "votaciones".

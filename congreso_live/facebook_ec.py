@@ -1,16 +1,9 @@
-"""Comisiones de la Asamblea Nacional del Ecuador: transcripcion de sus
-sesiones, que transmiten por Facebook (una pagina por comision), no por
-YouTube como el Pleno.
+"""Comisiones de la Asamblea Nacional del Ecuador: transcripcion de las
+sesiones que transmiten por Facebook (una pagina por comision).
 
-Verificado 2026-09-27, desde GitHub Actions (IP de datacenter, sin login,
-sin WARP): Playwright ve el listado /live_videos de cada pagina y yt-dlp
-baja el audio de cada video. yt-dlp NO sabe listar paginas de Facebook
-("Unsupported URL") y el HTML crudo sin navegador no trae ningun video -
-por eso el listado va con Playwright.
-
-Sin subtitulos en español en Facebook: se transcribe siempre con Whisper
-(mismo camino que el backfill de VOD de Peru). Solo sesiones YA
-TERMINADAS - la captura en vivo por Facebook queda para despues.
+El listado va con Playwright (yt-dlp no sabe listar paginas de Facebook y el
+HTML sin navegador no trae videos); yt-dlp baja el audio y Whisper
+transcribe (Facebook no tiene subtitulos). Solo sesiones ya terminadas.
 
 Uso: python -m congreso_live.cli comisiones-ec
 """
@@ -23,10 +16,8 @@ from pathlib import Path
 
 log = logging.getLogger(__name__)
 
-# Nombre corto (el de sesiones_ec.nombre_comision de la agenda EC) -> pagina
-# de Facebook. Cada una verificada a mano 2026-09-27: titulo oficial de la
-# pagina + videos en vivo de sesiones recientes. Falta Garantias
-# Constitucionales (no aparece pagina propia en la busqueda de Facebook).
+# Nombre corto (sesiones_ec.nombre_comision) -> pagina de Facebook.
+# Falta Garantias Constitucionales (no tiene pagina propia).
 PAGINAS: dict[str, str] = {
     "Seguridad Integral": "ComisionSoberaniaAN",
     "Transparencia y Participación Ciudadana": "profile.php?id=100069440615418",
@@ -116,12 +107,13 @@ def listar_terminadas(paginas: dict[str, str] = PAGINAS) -> list[dict]:
 
 
 def _fecha_real(url: str) -> str | None:
-    """Fecha (Lima/Quito, UTC-5) en que se transmitio el video. None si
-    falla - transcribir_vod cae a la fecha de hoy, que en una sesion
-    procesada el mismo dia es la correcta igual."""
-    from datetime import datetime, timedelta, timezone
+    """Fecha (Lima/Quito) en que se transmitio el video. None si falla
+    (transcribir_vod usa entonces la fecha de hoy)."""
+    from datetime import datetime
 
     import yt_dlp
+
+    from core.tiempo import LIMA
     try:
         with yt_dlp.YoutubeDL({"quiet": True, "no_warnings": True, "skip_download": True}) as y:
             ts = y.extract_info(url, download=False).get("timestamp")
@@ -130,7 +122,7 @@ def _fecha_real(url: str) -> str | None:
         return None
     if not ts:
         return None
-    return datetime.fromtimestamp(ts, timezone(timedelta(hours=-5))).date().isoformat()
+    return datetime.fromtimestamp(ts, LIMA).date().isoformat()
 
 
 def procesar_pendientes(db_path: str | Path, max_n: int = 3) -> dict:
@@ -155,29 +147,3 @@ def procesar_pendientes(db_path: str | Path, max_n: int = 3) -> dict:
         (resultado["procesados"] if r["ok"] else resultado["fallidos"]).append(
             {"video_id": vid, "comision": s["comision"], **r})
     return resultado
-
-
-# ============================================================
-# self-check (Ponytail: 1 chequeo ejecutable de la logica no trivial)
-# ============================================================
-
-def _demo():
-    """Sin red: tarjetas con el texto real de la pagina (2026-09-27)."""
-    tarjetas = [
-        ["111", "EN DIRECTO\nSesión No. 193-2025-2027 Comisión de Desarrollo Económico\n12 espectadores"],
-        ["222", "23:20\nSesión Nro. 192-2025-2027 Comisión de Desarrollo Económico\n528 visualizaciones\n · hace 2 días"],
-        ["333", "1:09:24\nSESIÓN No. 191-2025-2027 Comisión de Desarrollo Económico\n504 visualizaciones"],
-        ["444", "1:46:23\nSesión No. 190-2025-2027 Comisión de Desarrollo Económico\n1,1 mil visualizaciones"],
-        ["555", "42:47\nSesión Nro. 189-2025-2027\n678 visualizaciones"],
-    ]
-    s = parsear_tarjetas(tarjetas, max_n=3)
-    assert [x["fb_id"] for x in s] == ["222", "333", "444"], s  # salta la EN DIRECTO, respeta el tope
-    assert s[0]["titulo"].startswith("Sesión Nro. 192"), s
-    assert url_video("fb_222") == "https://www.facebook.com/watch/?v=222"
-    assert url_video("ZEUaL91M6D4").startswith("https://www.youtube.com/")
-    assert tipo_de("Justicia") == "Comision: Justicia (EC)"
-    print("OK facebook_ec: salta sesiones en vivo, respeta el tope y arma URLs/tipos")
-
-
-if __name__ == "__main__":
-    _demo()

@@ -64,6 +64,7 @@ clientes/*/*
 !clientes/_plantillas/ejemplos_alertas.md
 !clientes/_plantillas/matriz_monitoreo/
 !clientes/_plantillas/matriz_monitoreo/*
+!clientes/test_*.py
 
 # Matrices puntuales de PLs (Bayer Crop/Syngenta, Incode) - decision
 # explicita de Nicolas 2026-09-13: se versionan para que la app en

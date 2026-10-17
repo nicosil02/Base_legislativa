@@ -17,12 +17,12 @@ import collections
 import difflib
 import re
 import sqlite3
-import unicodedata
+
+from core.text import sin_tildes
 
 
 def clave(s: str | None) -> str:
-    s = "".join(c for c in unicodedata.normalize("NFD", (s or "").upper()) if unicodedata.category(c) != "Mn")
-    return re.sub(r"[^A-Z]", "", s)
+    return re.sub(r"[^A-Z]", "", sin_tildes((s or "").upper()))
 
 
 def canonizador(canonicos: list[str]):

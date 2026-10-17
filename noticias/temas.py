@@ -16,7 +16,8 @@ Tech/Digital con el badge Normativa.
 from __future__ import annotations
 
 import re
-import unicodedata
+
+from core.text import norm as _norm
 
 
 TEMAS: dict[str, list[str]] = {
@@ -24,12 +25,7 @@ TEMAS: dict[str, list[str]] = {
         # Instituciones y roles del poder (relevantes cuando el foco es
         # política; asumimos que el usuario prefiere cobertura amplia).
         "presidente", "presidenta", "vicepresidente", "vicepresidenta",
-        # ponytail (2026-09-14): "premier" solo (sin "peruano"/nombre) se
-        # sacó - matcheaba "Premier League" en cualquier nota deportiva
-        # (Manchester City, Chelsea, Liverpool...), coyuntura de futbol
-        # ingles pasando como coyuntura politica. El cargo ya se detecta
-        # via "gabinete"/"consejo de ministros"/el apellido del premier
-        # (ver "Galarreta" mas abajo).
+        # "premier" solo matcheaba "Premier League".
         "premier peruano", "premier del peru", "gabinete", "consejo de ministros",
         "ministro", "ministra", "congreso", "asamblea nacional",
         "fiscal", "fiscalía", "fiscalia", "fiscal de la nación",
@@ -46,10 +42,7 @@ TEMAS: dict[str, list[str]] = {
         "partido político", "partido politico",
         # Gobierno actual PE (Keiko Fujimori 2026-2031, gabinete Galarreta).
         # Cuando cambie, actualizar acá.
-        # ponytail (2026-09-14): "Keiko" sola (sin "Fujimori") se saco -
-        # matcheaba notas de entretenimiento sobre la orca de "Free Willy"
-        # (documental Netflix). "Fujimori" solo ya cubre la cobertura
-        # politica real sin ese choque.
+        # "Keiko" sola matcheaba a la orca de "Free Willy".
         "Keiko Fujimori", "Fujimori",
         "Fuerza Popular",
         "Galarreta",   # premier
@@ -82,10 +75,7 @@ TEMAS: dict[str, list[str]] = {
         "covid", "salud mental",
         # Farma (consolidado dentro de Salud)
         "medicamento", "medicamentos", "vacuna", "vacunación",
-        # "medicinas"/"fármacos": miss real 2026-10-12 (compra de medicinas a
-        # la India, EC). Solo plural para "medicina": en la DB el plural es
-        # casi siempre abastecimiento/compra; el singular trae carrera/
-        # facultad de Medicina, medicina legal/regenerativa (~1/3 ruido).
+        # "medicina" solo en plural: el singular trae la carrera de Medicina.
         "medicinas", "fármaco", "fármacos",
         "vacunacion", "antibiótico", "antibiotico", "laboratorio",
         "farmaceutica", "farmacéutica", "industria farma",
@@ -98,10 +88,7 @@ TEMAS: dict[str, list[str]] = {
         "enfermedades raras", "FEPPER",
         # Ministro de Salud actual (gabinete Galarreta)
         "Luis Dyer", "Dyer Fernández", "Dyer Fernandez",
-        # Eval 2026-10-12 (clasificador/eval): "salud" a secas no estaba y
-        # era la mayor causa de misses (campañas, Comité de Salud, MSP).
-        # Va aparte, solo en el titulo (_SALUD_EN_TITULO). Resto: misses
-        # reales del set de oro sin sentido alternativo comun.
+        # "salud" a secas va aparte, solo en el titulo (_SALUD_EN_TITULO).
         "telemedicina", "hepatitis", "infeccion", "farmacia",
         "botica", "brigada medica", "brigadas medicas", "vigilancia sanitaria",
     ],
@@ -115,13 +102,9 @@ TEMAS: dict[str, list[str]] = {
         "fraude digital", "ecommerce", "comercio electrónico",
         "comercio electronico", "neutralidad de red",
         "transformación digital", "transformacion digital",
-        # "INDECOPI" se saco 2026-10-12 (eval, 14 de 14 menciones del set de
-        # oro sin nada digital: antidumping de inodoros, tubulares en Nasca,
-        # BTS, combustibles). Si la nota es de Indecopi sobre algo digital,
-        # otra palabra de esta lista ya la marca.
+        # Sin "INDECOPI": casi nunca es digital (antidumping, multas).
         "Niubox", "Hiperderecho", "ALAI",
-        # Misses reales del eval 2026-10-12 (los plurales "digitales" ya los
-        # cubre _compile). "IA" exacta, en mayuscula no choca con "dia".
+        # "IA" en mayuscula queda exacta y no choca con "dia".
         "telemedicina", "cibernetico", "cibernetica",
         "digitalizacion", "dinero electronico", "firma electronica",
         "fibra optica", "banda ancha", "IA",
@@ -140,16 +123,9 @@ TEMAS: dict[str, list[str]] = {
         "Secretaria de Gobierno Digital",
         "Secretaría de Gobierno y Transformación Digital",
         "Secretaria de Gobierno y Transformacion Digital",
-        # "Rogers Valencia" (ministro MINCETUR) se saco 2026-09-21 - mismo
-        # criterio que "ANA"/"premier"/"fiscal" mas abajo: verificado
-        # contra produccion (30 dias), 8 de 8 menciones eran turismo/
-        # comercio exterior sin ninguna señal digital real (ferias de
-        # turismo, vuelos, terminal portuario, Machu Picchu) - el nombre
-        # del ministro no es proxy de que la nota sea sobre digital, es
-        # proxy de "MINCETUR publico algo", que es casi cualquier cosa.
-        # "Álvarez Miranda" (Justicia, dueño de ANPD) se deja por ahora -
-        # mismo riesgo estructural pero sin evidencia real todavia (0
-        # menciones en 30 dias) - revisar si empieza a aparecer.
+        # El nombre de un ministro no es proxy del tema ("Rogers Valencia"
+        # era todo turismo). ponytail: "Álvarez Miranda" (Justicia, ANPD)
+        # tiene el mismo riesgo; sacarlo si empieza a traer ruido.
         "Álvarez Miranda", "Alvarez Miranda",
     ],
     "Crop": [
@@ -157,31 +133,18 @@ TEMAS: dict[str, list[str]] = {
         "agropecuaria", "ganaderia", "ganadería", "semilla",
         "semillas", "riego", "siembra", "cosecha", "agroexport",
         "agroexportación", "agroexportacion", "MIDAGRI", "SENASA",
-        # ponytail (2026-09-15): "ANA" (Autoridad Nacional del Agua) sola
-        # se saco - matcheaba el nombre propio "Ana" (comun en español)
-        # en cualquier texto que mencionara a alguien con ese nombre,
-        # verificado en vivo con el resumen real de una sesion de la
-        # Comision de Salud que citaba a la diputada "Ana Luisa Yufra
-        # Lugo" y quedaba mal clasificada como "Crop". Mismo criterio que
-        # "premier"/"Keiko" mas abajo.
+        # Sin "ANA" (Autoridad Nacional del Agua): matchea el nombre "Ana".
         "AGROCALIDAD", "agrario", "conveagro", "CONVEAGRO",
         "AGAP", "CEPES", "agraria.pe", "transgénicos", "transgenicos",
         "OGM", "fertilizantes", "campesino", "campesina", "agro",
         "INIAP", "MAG", "MAGAP", "produccion agropecuaria",
         "producción agropecuaria",
-        # Agroquimicos - bug real 2026-09-16 (Nicolas: "tema prioritario
-        # hoy es lo del TC respecto a plaguicidas"): la categoria Crop no
-        # tenia NINGUNA palabra de plaguicidas/pesticidas, el corazon del
-        # negocio de proteccion de cultivos de Bayer/Syngenta - se
-        # confirmo que un titulo real sobre "control de pesticidas" no
-        # clasificaba en nada.
+        # Agroquimicos
         "plaguicida", "plaguicidas", "pesticida", "pesticidas",
         "agroquímico", "agroquimico", "agroquímicos", "agroquimicos",
         "glifosato", "herbicida", "herbicidas", "insecticida", "insecticidas",
         "fungicida", "fungicidas",
-        # Misses reales del eval 2026-10-12: notas de campo sin ninguna de
-        # las palabras de arriba ("hectáreas de cultivos", "ganaderos",
-        # "maíz nacional"). Plurales via _compile.
+        # Notas de campo ("hectáreas de cultivos", "ganaderos"); plurales via _compile.
         "cultivo", "ganadero", "ganadera", "maiz", "agroecologia",
         "fitosanitario", "fitosanitaria", "agroindustria", "agroindustrial",
         # Ministros actuales de sector (gabinete Galarreta)
@@ -195,30 +158,14 @@ TEMAS: dict[str, list[str]] = {
         "SBS", "UAF", "due diligence", "GAFI", "GAFILAT",
         "FinCEN", "compliance financiero", "compliance",
         "AFP", "ONP", "SUNAT", "SRI",
-        # "tributo" (singular) se saco 2026-09-21 (auditoria en vivo,
-        # Nicolas: "sigue revisando el resto de temas") - es ambiguo en
-        # español ("tributo" = impuesto, pero tambien = homenaje/tribute),
-        # verificado en vivo con una nota real de una banda de heavy metal
-        # haciendo "un tributo a" una cancion, sin nada de fiscal. "tributos"
-        # (plural) se queda - en la practica siempre aparece en sentido
-        # fiscal (SUNAT, regimen tributario), nunca como "tributos" plural
-        # de homenaje.
+        # "tributo" singular tambien es homenaje; el plural es siempre fiscal.
         "tributos", "impuesto",
-        # ponytail (2026-09-15): "fiscal" sola se saco - es ambigua en
-        # español ("fiscal" = tributario, pero tambien = del Ministerio
-        # Publico/Fiscalia, sentido totalmente distinto), verificado en
-        # vivo con una "carpeta fiscal" (denuncias, sentido judicial) que
-        # quedaba mal clasificada como KYC/AML/Financiero. Las frases
-        # compuestas de abajo ya cubren el sentido tributario sin
-        # ambiguedad.
+        # "fiscal" sola tambien es la Fiscalia ("carpeta fiscal"): solo frases.
         "evasión fiscal", "evasion fiscal", "régimen tributario",
         "regimen tributario",
         "superintendencia de banca", "banca y seguros",
         "lavado", "activos ilícitos", "activos ilicitos",
-        # Misses reales del eval 2026-10-12 (pagos digitales del BCRP,
-        # finanzas abiertas SBS, inclusion financiera). "pagos" a secas no:
-        # "pago a prestadores de salud", "pagos a docentes". "bancos" va en
-        # _EXTRA_REGEX.
+        # "pagos" a secas no ("pagos a docentes"). "bancos" va en _EXTRA_REGEX.
         "financiero", "financiera",
         "dinero electronico", "billetera digital", "billeteras digitales",
         "pagos digitales", "pago digital", "medios de pago", "sistema de pagos",
@@ -234,8 +181,7 @@ _EXTRA_REGEX: dict[str, list[str]] = {
     "Tech / Digital": [
         r"(?:menores|regula\w*|prohib\w*|ley|plataformas?)\W+(?:\w+\W+){0,4}redes sociales"
         r"|redes sociales\W+(?:\w+\W+){0,4}(?:menores|regula\w*|prohib\w*|ley)\b"],
-    # Solo "bancos" (el sector): el singular era Banco Mundial/BID/Banco
-    # Central/"retiro del banco" (ruido en la semana real 2026-10-12).
+    # Solo "bancos" (el sector): el singular es Banco Mundial/BID/Central.
     "KYC / AML / Financiero": [
         r"\bbancos\b(?! de (?:sangre|alimentos|leche|germoplasma|semillas|"
         r"datos|ojos|tejidos|preguntas|proyectos|arena|niebla|peces|habitat)|"
@@ -270,24 +216,12 @@ KEYWORDS_NORMATIVA = [
 ]
 
 
-def _norm(s: str | None) -> str:
-    if not s:
-        return ""
-    s = s.lower()
-    s = "".join(
-        c for c in unicodedata.normalize("NFD", s)
-        if unicodedata.category(c) != "Mn"
-    )
-    return re.sub(r"\s+", " ", s)
-
-
 def _compile(kws: list[str], plural: bool = False,
              extra: list[str] | None = None) -> re.Pattern:
     """plural=True: una palabra suelta en minuscula de 4+ letras acepta
-    tambien su plural ("digital" -> "digitales", "agroexportacion" ->
-    "agroexportaciones"; eval 2026-10-12, era la causa #1 de misses). Siglas
-    y nombres propios (con mayuscula en la lista: SIS, MAG, Noboa) quedan
-    exactos. Las frases ya matchean como substring, su plural final pasa."""
+    tambien su plural ("digital" -> "digitales"). Siglas y nombres propios
+    (con mayuscula en la lista: SIS, MAG, Noboa) quedan exactos. Las frases
+    ya matchean como substring."""
     alts = []
     for kw in kws:
         n = _norm(kw)
@@ -304,14 +238,10 @@ _PATTERNS = {tema: _compile(kws, plural=True, extra=_EXTRA_REGEX.get(tema))
              for tema, kws in TEMAS.items()}
 _PATTERN_NORMATIVA = _compile(KEYWORDS_NORMATIVA)
 
-# Bug real 2026-09-24 (Nicolas: "por que no lo mapeaste en nuestro sistema
-# de alertas"): la Norma General de Datos Biometricos de la SPDP (RO 376)
-# se capturo pero ningun canal la mando - el digest descarta TODA la
-# normativa (ver noticias/digest.py). Esta lista rescata solo las normas
-# que tocan el foco de los clientes (clientes/*/notas.md). Se matchea
-# contra la DESCRIPCION de la norma, nunca el nombre de la entidad:
-# "Direccion General de Medicamentos" o "Sanidad Agraria" como emisor
-# hacian pasar viajes/designaciones (9/9 falsos en la semana real).
+# El digest descarta la normativa; esta lista rescata las normas que tocan
+# el foco de los clientes. Se mira la DESCRIPCION de la norma, nunca la
+# entidad: "Direccion General de Medicamentos" como emisor hacia pasar
+# viajes y designaciones.
 KEYWORDS_NORMA_INTERES = [
     # Incode / Google
     "datos personales", "proteccion de datos", "biometria", "biometrico",
@@ -328,12 +258,10 @@ KEYWORDS_NORMA_INTERES = [
     "registro sanitario",
 ]
 _PATTERN_NORMA_INTERES = _compile(KEYWORDS_NORMA_INTERES)
-# Tramite interno que menciona el tema de pasada (verificado en la semana
-# real 2026-09-17/24: todos los falsos positivos empezaban asi).
+# Tramite interno que menciona el tema de pasada.
 _PATTERN_NORMA_TRAMITE = re.compile(
     r"^(designan|autorizan viaje|aceptan renuncia|encargan|dan por conclu|"
     r"se designa|se autoriza el viaje|se acepta la renuncia|"
-    # eval 2026-10-12: mismos tramites de MIDAGRI/SENASA con otra redaccion
     r"se encarga|conformar la comision|conforman la comision|"
     r"se autoriza una modificacion presupuestaria|otorgan licencia|"
     r"se otorga licencia)", re.IGNORECASE)
@@ -342,7 +270,7 @@ _PATTERN_NORMA_TRAMITE = re.compile(
 def es_norma_de_interes(descripcion: str | None) -> bool:
     """True si la descripcion de UNA norma (sin la entidad emisora) toca el
     foco de algun cliente y no es tramite administrativo."""
-    d = _norm(descripcion).strip()
+    d = _norm(descripcion)
     return bool(d) and not _PATTERN_NORMA_TRAMITE.match(d) \
         and bool(_PATTERN_NORMA_INTERES.search(d))
 
@@ -357,49 +285,22 @@ def es_normativa_de_interes(tags: str | None, resumen: str | None) -> bool:
         return "interes-cliente" in t
     return es_norma_de_interes(resumen)
 
-# Bug real 2026-09-21 (Nicolas, primero en las alertas de WhatsApp - "0
-# relevantes" - y confirmado despues tambien en las paginas Noticias
-# PE/EC via auditoria en vivo contra produccion, 2026-09-21 mas tarde el
-# mismo dia): "presidente"/"presidenta" (palabras de Coyuntura política)
-# matchea IGUAL al presidente de un club de futbol que al de la
-# Republica. El primer intento de arreglar esto solo aplicaba el veto
-# dentro del digest de WhatsApp (noticias/digest.py) razonando que
-# clasificar() "tambien lo usan las paginas Noticias PE/EC" como motivo
-# para NO tocarlo - exactamente al reves: como TODOS los consumidores
-# (WhatsApp y las paginas) comparten clasificar(), el veto tiene que
-# vivir aca para que todos lo hereden. Verificado en vivo: Miguel
-# Montalvo (presidente de Barcelona SC) y Jose David Jimenez (presidente
-# de Emelec) seguian apareciendo como "Coyuntura política" en la pagina
-# Noticias EC pese al fix del digest.
+
+# "presidente" matchea igual al de un club de futbol: clasificar() saca
+# Coyuntura política y Salud si el texto es de futbol.
 KEYWORDS_DEPORTES = [
     "liga ecuabet", "liga pro", "copa sudamericana", "copa libertadores",
     "cuadrangular", "hexagonal", "hinchas", "hinchada", "estadio",
     "futbolista", "futbolistas", "delantero", "defensor", "arquero",
     "director tecnico", "director técnico", "barcelona sc", "emelec",
-    # eval 2026-10-12: "IESS le certificó a FEF que Santa Fe ... Ascenso
-    # Nacional no afilió a los jugadores" salia como Salud.
+    # "IESS le certificó a FEF..." salia como Salud.
     "FEF", "ascenso nacional",
 ]
 _PATTERN_DEPORTES = _compile(KEYWORDS_DEPORTES)
 
 
-def es_deportivo(titulo: str | None, resumen: str | None = None) -> bool:
-    """True si el contenido es sobre futbol/deportes - independiente de
-    que tema le haya asignado clasificar() (un "presidente de club" cuela
-    como Coyuntura política sin esto)."""
-    texto = _norm(f"{titulo or ''} {resumen or ''}")
-    if not texto.strip():
-        return False
-    return bool(_PATTERN_DEPORTES.search(texto))
-
-
-# Secciones del medio que nunca son foco de Vali (bug real 2026-09-27, Nicolas:
-# "veo cosas en noticias que no les importan a mis clientes y ni son de los
-# paises"): El Universo/El Comercio son fuentes catalogadas EC, asi que el
-# filtro de pais por contenido (solo para fuentes multipais) no las tocaba y
-# pasaban su seccion /internacional/ (Iran, Reino Unido, FARC) y /deportes/
-# (Liga de Quito) - 171 y 242 notas en la base. La seccion de la URL es la
-# señal confiable, igual que KEYWORDS_ESPECTACULOS_URL.
+# Secciones del medio que nunca son foco (internacional, deportes): El
+# Universo/El Comercio no son multipais y el filtro de pais no las toca.
 KEYWORDS_SECCION_FUERA_URL = ["/internacional/", "/mundo/", "/deportes/", "/futbol/"]
 
 
@@ -410,26 +311,14 @@ def es_seccion_fuera_de_foco(url: str | None) -> bool:
 
 def es_normativa_tag(tags: str | None) -> bool:
     """El Peruano / Registro Oficial taggean pipe-joined ("...|normativa"),
-    los feeds gobpe usan "normas" - mismo bug que noticias/digest.py arreglo
-    el 2026-09-20 pero que las paginas Noticias PE/EC seguian teniendo (el
-    filtro "Sin normativa" dejaba pasar todas las resoluciones de El Peruano)."""
+    los feeds gobpe usan "normas"."""
     t = tags.split("|") if isinstance(tags, str) else []
     return "normas" in t or "normativa" in t
 
 
-# Bug real 2026-09-21 (auditoria en vivo pedida por Nicolas: "revisa lo
-# del cancer/farandula tambien"): "cancer"/"cáncer" (Salud) matchea IGUAL
-# una nota de farandula que menciona el diagnostico de alguien de pasada
-# que una noticia real de salud publica - verificado contra produccion:
-# "Kim Kardashian recordo su hospitalizacion... antecedentes de cancer en
-# su familia" (elcomercio.com/afull/... - "afull" es la vertical de
-# entretenimiento de El Comercio) y una nota sobre una pelicula
-# ecuatoriana ganando un festival de cine (eluniverso.com/entretenimiento/
-# cine/...) clasificaban como Salud. A diferencia del veto de deportes
-# (por palabras en el texto), aca la señal confiable es la SECCION del
-# medio en la URL, no el texto - no hay forma robusta de distinguir "nota
-# de salud real" de "nota de farandula que menciona una enfermedad de
-# pasada" solo con keywords del titulo/resumen.
+# Farandula que nombra una enfermedad de pasada no es Salud. La señal es la
+# seccion en la URL ("/afull/" es la de entretenimiento de El Comercio), no
+# el texto.
 KEYWORDS_ESPECTACULOS_URL = [
     "/entretenimiento/", "/farandula/", "/espectaculos/", "/afull/",
     "/gente/", "/cine/",
@@ -437,10 +326,7 @@ KEYWORDS_ESPECTACULOS_URL = [
 
 
 def es_espectaculos(url: str | None) -> bool:
-    """True si la URL es de una seccion de entretenimiento/farandula del
-    medio - independiente de que palabras de otro tema mencione de
-    pasada (una nota de farandula puede mencionar "cancer" o
-    "hospitalizacion" sin ser noticia de salud real)."""
+    """True si la URL es de una seccion de entretenimiento/farandula."""
     if not url:
         return False
     return any(marca in url.lower() for marca in KEYWORDS_ESPECTACULOS_URL)
@@ -469,11 +355,8 @@ def clasificar(titulo: str | None, resumen: str | None = None,
     return temas
 
 
-# --- Eval 2026-10-12 (clasificador/eval/gold_noticias.csv) ---
-# "salud" a secas era la mayor causa de misses de Salud (campañas, Comité de
-# Salud, crisis hospitalaria del MSP). Solo en el TITULO: en el resumen la
-# semana real traia mitad enumeraciones ("educación, salud y agua", Obras por
-# Impuestos, "trasladado a una casa de salud").
+# "salud" a secas solo en el TITULO: en el resumen suele ser una enumeracion
+# ("educación, salud y agua").
 _SALUD_EN_TITULO = re.compile(r"\bsalud\b(?! (?:financiera|economica|fiscal|"
                               r"democratica|de la democracia|de la economia))")
 # Sufijo de medio de Google News con "Digital" en el nombre ("... - Maraco
@@ -516,7 +399,7 @@ def _es_norma_tramite(titulo: str | None, resumen: str | None) -> bool:
         return False
     cola = (titulo or "").split(" — ", 1)[1]
     cola = cola.split(": ", 1)[1] if ": " in cola[:90] else cola
-    return any(_PATTERN_NORMA_TRAMITE.match(_norm(x).strip())
+    return any(_PATTERN_NORMA_TRAMITE.match(_norm(x))
                for x in (cola, resumen) if x)
 
 
@@ -536,23 +419,10 @@ def todos_los_temas() -> list[str]:
 # ============================================================
 # Deteccion de pais por contenido (funcionarios/instituciones/gentilicio)
 # ============================================================
-#
-# Bug real 2026-09-20: Nicolas reporto que una noticia 100% peruana (la
-# renuncia de Rafael Rey como Ministro de Transportes) nunca le llego -
-# la agarro "DPL News Ecuador" (dplnews.com, cubre TODO LATAM, no solo
-# Ecuador) y quedo archivada bajo pais="EC" porque noticias_fuentes.pais
-# es un dato de LA FUENTE, no del articulo. Peor: DPL esta cargado 3
-# veces en el catalogo (DPL News Peru->PE, DPL News Ecuador->EC, DPL Tech
-# Ecuador->EC), las 3 apuntando al MISMO feed (dplnews.com/feed/) - como
-# noticias.url es UNIQUE, cada articulo se lo queda la primera de las 3
-# filas que lo sincronice primero, asi que el pais que le toca es
-# esencialmente al azar, no por contenido real.
-#
-# Estas listas son señales ESTABLES a proposito (gentilicio + nombre del
-# presidente actual + siglas de instituciones que no cambian de nombre
-# cada reorganizacion de gabinete) en vez de listar ministros - un
-# ministro puede renunciar el mismo dia que sale la noticia (literalmente
-# el caso que motivo esto).
+# noticias_fuentes.pais es de la fuente, no del articulo: los medios
+# regionales (DPL cubre todo LATAM) necesitan el pais por contenido. Señales
+# estables a proposito (gentilicio, presidente, siglas de instituciones), no
+# ministros, que pueden renunciar el dia de la noticia.
 _SEÑALES_PAIS: dict[str, list[str]] = {
     "PE": [
         "peru", "peruano", "peruana", "peruanos", "peruanas",
@@ -560,13 +430,8 @@ _SEÑALES_PAIS: dict[str, list[str]] = {
         "congreso de la republica", "congreso peruano",
         "camara de diputados del peru", "senado de la republica del peru",
         "senado del peru",
-        # ponytail (2026-09-20): "PRODUCE" (Ministerio de la Produccion) se
-        # saco - choca con el verbo comun "produce" (ej. "Solana produce
-        # nuevos bloques", nota de cripto sin nada que ver con Peru,
-        # verificado en vivo). "camara de diputados"/"senado de la
-        # republica" a secas tambien se sacaron - son nombres genericos
-        # que usan MUCHOS paises de LATAM (Paraguay, Argentina, Chile...),
-        # no exclusivos de Peru; solo cuentan calificados con "del peru".
+        # Sin "PRODUCE" (choca con el verbo) ni "camara de diputados" a
+        # secas (la usan muchos paises).
         "MEF", "MTC", "MINSA", "MIDAGRI", "MINCETUR", "MINEDU",
         "RENIEC", "ONPE", "JNE", "SUNAT", "BCRP", "PCM", "essalud", "digemid",
     ],
@@ -579,14 +444,8 @@ _SEÑALES_PAIS: dict[str, list[str]] = {
 }
 _PATTERNS_PAIS = {p: _compile(kws) for p, kws in _SEÑALES_PAIS.items()}
 
-# Veto: nombres de OTROS paises de LATAM que las fuentes multi-pais
-# (Criptonoticias, DPL) tambien cubren. Bug real 2026-09-20: "MINSA"
-# tambien es el nombre del Ministerio de Salud de NICARAGUA, y "Camara de
-# Diputados" es generico - sin este veto, una nota 100% sobre Nicaragua o
-# Paraguay que de pasada nombra su propio ministerio/camara se colaba
-# como si fuera de Peru. Si el texto nombra a otro pais y NO nombra a
-# Peru/Ecuador por su nombre, no hay señal confiable - se descarta el
-# puntaje de PE/EC entero y se usa `pais_fuente` (fallback de siempre).
+# Otros paises de LATAM: "MINSA" tambien es el ministerio de Nicaragua. Si
+# se nombra otro pais, una sola señal de PE/EC no alcanza.
 _OTROS_PAISES = _compile([
     "nicaragua", "paraguay", "bolivia", "colombia", "mexico", "chile",
     "argentina", "venezuela", "brasil", "espana", "panama", "costa rica",
@@ -594,44 +453,22 @@ _OTROS_PAISES = _compile([
     "republica dominicana",
 ])
 
-# Señales FUERTES de otro pais - a diferencia de _OTROS_PAISES (que solo
-# actua cuando el puntaje PE/EC tambien es debil, pensado para "nuestro
-# pais menciona a un vecino de pasada"), estas excluyen SIEMPRE, sin
-# importar el puntaje. Bug real 2026-09-21 (auditoria en vivo): "Asamblea
-# Nacional" lo usan tanto Ecuador como Venezuela, y una nota 100%
-# venezolana ("Asamblea Nacional del regimen... TSJ... dialogo entre el
-# chavismo y la AN 2015 - NTN24", via "Google News EC — Ley Orgánica")
-# nunca nombra "Venezuela" pero si "chavismo" y "TSJ" (Tribunal Supremo de
-# Justicia - asi se llama SOLO en Venezuela, el de Ecuador es "Corte
-# Nacional de Justicia") - señales tan especificas que ninguna nota real
-# de Peru/Ecuador las usa, a diferencia de un nombre de pais generico que
-# si puede aparecer en una nota real nuestra sobre relaciones bilaterales.
+# Señales de otro pais que excluyen siempre: "Asamblea Nacional" tambien es
+# de Venezuela, y "chavismo"/"TSJ" solo aparecen en notas venezolanas.
 _OTRO_PAIS_FUERTE = _compile(["chavismo", "tsj"])
 
-# Fuentes cuyo `noticias_fuentes.pais` catalogado NO es confiable como
-# pais del articulo - medios/feeds regionales LATAM, verificados en vivo
-# 2026-09-20 (dominio no especifico a un pais, o el mismo feed cargado
-# bajo mas de un pais en el catalogo).
+# Fuentes cuyo pais catalogado no es el del articulo (medios regionales, o
+# el mismo feed cargado bajo mas de un pais).
 FUENTES_MULTIPAIS: set[str] = {
     "DPL News Ecuador", "DPL News Peru", "DPL Tech Ecuador",
     "Bloomberg en Linea", "Criptonoticias",
     "Asociacion Latinoamericana de Internet", "Ebiz Latam",
-    # "Portal agrario regional" (ver su propia nota en noticias/fuentes.py,
-    # ya excluida del bluebook de bayer/syngenta por el mismo motivo) -
-    # catalogada EC pero es periodismo agrario global generico. Bug real
-    # 2026-09-21 (auditoria en vivo): 46 de 60 articulos en 30 dias (77%)
-    # no tenian NINGUNA señal de Ecuador (Argentina, España/Galicia,
-    # Etiopia, Africa Occidental, Inglaterra...) y se mostraban igual bajo
-    # la pestaña Ecuador.
+    # catalogada EC pero es periodismo agrario global
     "Mundo Agropecuario",
 }
 
-# Prefijos de fuentes "Google News PE/EC — <busqueda guardada>" - bug real
-# 2026-09-21 (auditoria en vivo): son resultados de BUSQUEDA por keyword
-# (ej. "Ley Orgánica"), no feeds geograficamente exclusivos pese al
-# "PE"/"EC" del nombre - una busqueda generica trae resultados de
-# cualquier pais que use ese termino. Verificado en vivo: "Google News EC
-# — Ley Orgánica" trajo una nota 100% venezolana etiquetada como Ecuador.
+# Las busquedas guardadas de Google News traen cualquier pais que use el
+# termino, pese al "PE"/"EC" del nombre.
 _PREFIJOS_MULTIPAIS = ("Google News PE — ", "Google News EC — ")
 
 
@@ -644,16 +481,9 @@ def es_fuente_multipais(nombre: str) -> bool:
 def pais_por_contenido(titulo: str | None, resumen: str | None,
                         pais_fuente: str) -> str | None:
     """Pais real de la noticia por menciones a funcionarios/instituciones
-    estables de cada pais. Empate CON señal (ambos paises mencionados por
-    igual) -> se queda con `pais_fuente`. Devuelve None si no hay NINGUNA
-    señal de PE ni de EC - bug real 2026-09-21 (Nicolas: "las noticias...
-    no son de Peru... son 0 relevantes"): una nota de Argentina (Javier
-    Milei, economia, elecciones 2027) via "Bloomberg en Linea" (fuente
-    multi-pais, catalogada PE) no menciona nada de Peru NI de Ecuador -
-    quedarse con pais_fuente en ese caso asume que toda nota sin señal
-    conocida es del pais registrado de la fuente, que para una fuente
-    multi-pais es un dato arbitrario, no una inferencia real. El caller
-    (`_noticias_desde`) ya excluye None de ambos paises."""
+    estables de cada pais. Empate CON señal -> `pais_fuente`. Sin ninguna
+    señal de PE ni de EC -> None (el pais de una fuente multipais es
+    arbitrario); los callers excluyen None de ambos paises."""
     texto = _norm(f"{titulo or ''} {resumen or ''}")
     if not texto.strip():
         return pais_fuente
@@ -661,19 +491,8 @@ def pais_por_contenido(titulo: str | None, resumen: str | None,
         return None
     puntos = {p: len(pat.findall(texto)) for p, pat in _PATTERNS_PAIS.items()}
     pe, ec = puntos.get("PE", 0), puntos.get("EC", 0)
-    # Veto: si se nombra a OTRO pais de LATAM y la señal ganadora es una
-    # sola sigla ambigua (ej. "MINSA" tambien es de Nicaragua), no alcanza -
-    # se necesitan 2+ señales, o ninguna mencion de otro pais, para confiar.
-    # Bug real 2026-09-21 (auditoria en vivo, fuente "Mundo Agropecuario",
-    # catalogada EC pero es periodismo agrario global): `max(pe, ec) <= 1`
-    # tambien es verdadero cuando AMBOS son 0 (sin señal real de ningun
-    # lado), asi que un articulo 100% de Argentina ("Argentina ajusta
-    # cultivos de verano al agua disponible", pe=0 ec=0) caia en esta
-    # rama por nombrar "argentina" y se quedaba como EC (pais_fuente) en
-    # vez de excluirse - la regla de "sin señal -> None" de mas abajo
-    # nunca se alcanzaba. Exigir `0 <` deja pasar a esa regla cuando
-    # simplemente no hay señal de ningun pais, sin importar si se nombra
-    # a otro (eso ya lo cubre el chequeo pe==0 and ec==0 de abajo).
+    # Se nombra otro pais y la señal es una sola sigla ambigua: no alcanza
+    # para cambiar de pais. `0 <` deja los casos sin señal a la regla de abajo.
     if _OTROS_PAISES.search(texto) and 0 < max(pe, ec) <= 1:
         return pais_fuente
     if pe == 0 and ec == 0:
@@ -684,279 +503,3 @@ def pais_por_contenido(titulo: str | None, resumen: str | None,
         return "EC"
     return pais_fuente
 
-
-def _demo():
-    # Caso real 2026-09-20 que motivo esto: DPL News Ecuador (catalogada
-    # pais='EC') traia esta noticia 100% peruana.
-    assert pais_por_contenido(
-        "Rafael Rey deja el Ministerio de Transportes y Comunicaciones de Perú",
-        None, "EC") == "PE"
-    assert pais_por_contenido(
-        "Noboa llega a Estados Unidos para participar en la Asamblea General de la ONU",
-        None, "PE") == "EC"
-    # Sin NINGUNA señal de PE ni EC -> None (no asumir el pais de la
-    # fuente, es arbitrario para una fuente multi-pais) - bug real
-    # 2026-09-21, verificado en produccion: nota 100% de Argentina
-    # (Javier Milei) via "Bloomberg en Linea" (catalogada PE) se mandaba
-    # como si fuera noticia peruana.
-    assert pais_por_contenido(
-        "Cómo llegaría la economía de Milei a las elecciones de 2027, según analistas",
-        None, "PE") is None
-    assert pais_por_contenido("El chavismo y la oposición continúan el diálogo",
-                               None, "EC") is None
-    assert pais_por_contenido(None, None, "PE") == "PE", \
-        "texto vacio (titulo/resumen None) es un caso distinto - no hay nada que analizar, se queda con pais_fuente"
-    # Falsos positivos reales 2026-09-20 (verificados contra 30 dias de
-    # produccion, fuentes multi-pais tipo Criptonoticias/DPL que cubren
-    # TODO LATAM, no solo Peru/Ecuador):
-    assert pais_por_contenido(
-        "Solana gana velocidad gracias a su nueva actualización",
-        "La activación de SIMD-0525 redujo a 250 ms el tiempo de slot, el "
-        "intervalo en que Solana produce nuevos bloques.", "EC") is None, \
-        '"produce" (verbo) no debe matchear el Ministerio de la Produccion (PE), y sin otra señal es None'
-    assert pais_por_contenido(
-        "Nicaragua fortalece su preparación para la IA en salud",
-        "el Ministerio de Salud de Nicaragua (MINSA) y la OPS...", "EC") == "EC", \
-        "MINSA tambien es de Nicaragua - una sola sigla ambigua no alcanza si se nombra otro pais"
-    # Bug real 2026-09-21 (auditoria en vivo, fuente "Mundo Agropecuario"):
-    # esto devolvia "EC" (pais_fuente) hasta el fix de mas abajo - "camara
-    # de diputados" a secas no matchea NADA (se saco del listado por
-    # generico), asi que pe=ec=0 - un articulo 100% de Paraguay sin
-    # ninguna señal real de Peru/Ecuador debe excluirse (None), no
-    # quedarse con pais_fuente solo porque se nombra a Paraguay.
-    assert pais_por_contenido(
-        "Desmantelan 2 granjas clandestinas de minería de Bitcoin en Paraguay",
-        "La Cámara de Diputados solicitó a la ANDE informes...", "EC") is None, \
-        "sin señal real de PE/EC, nombrar a otro pais no alcanza para quedarse con pais_fuente"
-    print("OK temas: pais_por_contenido detecta por funcionarios/instituciones estables")
-
-
-def _test_sin_senal_no_es_pais_fuente_aunque_nombre_otro_pais():
-    """Bug real 2026-09-21 (auditoria en vivo, fuente "Mundo Agropecuario",
-    catalogada EC pero periodismo agrario global): un articulo 100% de
-    Argentina, sin NINGUNA señal de PE/EC, se quedaba como "EC"
-    (pais_fuente) solo por nombrar "argentina" - `max(pe, ec) <= 1` era
-    cierto tambien cuando ambos eran 0, asi que la regla de "sin señal ->
-    None" nunca se alcanzaba."""
-    assert es_fuente_multipais("Mundo Agropecuario")
-    assert pais_por_contenido(
-        "Argentina ajusta cultivos de verano al agua disponible",
-        "Ensayos del INTA San Luis compararon maíz, sorgo, soja y maní "
-        "para identificar estrategias capaces de estabilizar la "
-        "producción en secano.", "EC") is None
-    assert pais_por_contenido(
-        "Del bosque a la colmena: así se obtiene la miel gallega",
-        "Marcos Atrio y César trabajan entre robles y castaños para "
-        "cosechar la miel oscura de Mel da Ziralla en un entorno rural "
-        "de Galicia, España.", "EC") is None
-    print("OK temas: sin señal real de PE/EC, nombrar otro pais tambien excluye (no se queda con pais_fuente)")
-
-
-def _test_venezuela_no_es_ecuador():
-    """Bug real 2026-09-21 (auditoria en vivo): "Asamblea Nacional" lo usan
-    tanto Ecuador como Venezuela - una nota 100% venezolana via una fuente
-    "Google News EC — X" (busqueda por keyword, no exclusiva de Ecuador)
-    quedaba etiquetada EC solo por el nombre del feed, sin nombrar
-    "Venezuela" en ningun lado (solo "chavismo"/"TSJ", especificos de
-    Venezuela)."""
-    assert es_fuente_multipais("Google News EC — Ley Orgánica")
-    assert es_fuente_multipais("Google News PE — Decreto de Urgencia")
-    assert not es_fuente_multipais("El Universo")
-    assert pais_por_contenido(
-        "Asamblea Nacional del régimen aprobó reforma parcial de Ley "
-        "Orgánica del TSJ acordada en el diálogo entre el chavismo y la "
-        "AN 2015 - NTN24", None, "EC") is None
-    assert pais_por_contenido(
-        "Asamblea Nacional aprueba por unanimidad reforma de la Ley "
-        "Orgánica del TSJ - El Aragueño", None, "EC") is None
-    # Una nota real de Ecuador (misma keyword "Asamblea Nacional", sin
-    # TSJ/chavismo) sigue clasificando EC normal.
-    assert pais_por_contenido(
-        "Ley de Aviación Civil pasa a votación del pleno de la Asamblea "
-        "Nacional", None, "EC") == "EC"
-    print("OK temas: contenido venezolano (TSJ/chavismo) no se cuela como Ecuador")
-
-
-def _test_tributo_no_es_homenaje():
-    """Bug real 2026-09-21 (auditoria en vivo): "tributo" (KYC/AML/
-    Financiero) es ambiguo en español - impuesto vs. homenaje/tribute.
-    Caso real: nota de una banda de heavy metal haciendo "un tributo a"
-    una cancion clasificaba como KYC/AML/Financiero."""
-    assert clasificar(
-        "Black Sun une su heavy metal con la voz de Ñusta Picuasi en un "
-        "tributo a 'La Pinta, la Niña'") == []
-    # "tributos" (plural) se queda - sentido fiscal real.
-    assert clasificar(
-        "Tributos que no aparecen: 7 de cada 10 empresas en Perú sienten "
-        "que pagan a Sunat de más") == ["KYC / AML / Financiero"]
-    print("OK temas: 'tributo' (homenaje) ya no clasifica como KYC/AML/Financiero")
-
-
-def _test_es_espectaculos():
-    """Casos reales 2026-09-21 (auditoria en vivo, Nicolas: "revisa lo del
-    cancer/farandula tambien"): notas de farandula que mencionan una
-    enfermedad de pasada no deben clasificar como Salud."""
-    url_kardashian = "https://www.elcomercio.com/afull/kim-kardashian-esofagitis-salud-estados-unidos/"
-    titulo_kardashian = ("Kim Kardashian recordó su hospitalización y encendió las "
-                          "alarmas por antecedentes de cáncer en su familia")
-    assert es_espectaculos(url_kardashian)
-    assert clasificar(titulo_kardashian, None, url_kardashian) == []
-    # Sin la URL (o con una que no es de farandula), sigue clasificando -
-    # el veto es especificamente por seccion del medio, no por palabra.
-    assert clasificar(titulo_kardashian, None, None) == ["Salud"]
-    assert clasificar(titulo_kardashian, None, "https://www.elcomercio.com/politica/nota") == ["Salud"]
-
-    url_pelicula = ("https://eluniverso.com/entretenimiento/cine/pelicula-ecuatoriana-mama-"
-                     "de-ana-cristina-benitez-gana-el-festival-internacional-de-cine-nota/")
-    assert es_espectaculos(url_pelicula)
-    assert clasificar(
-        "Película ecuatoriana 'Mama' gana el Festival Internacional de Cine",
-        "El documental presenta el diagnóstico de cáncer de mama en etapa avanzada de la directora.",
-        url_pelicula,
-    ) == []
-
-    # Una nota de salud real (MINSA, gob.pe) no se ve afectada.
-    assert not es_espectaculos("https://www.gob.pe/institucion/minsa/noticias/1444776-nota")
-    assert clasificar(
-        "Minsa: La hinchazón o pesadez en el brazo tras el cáncer de mama requiere atención médica",
-        None, "https://www.gob.pe/institucion/minsa/noticias/1444776-nota",
-    ) == ["Salud"]
-    print("OK temas: notas de farandula (URL de entretenimiento) no clasifican como Salud")
-
-
-def _test_ministro_no_es_proxy_de_tema():
-    """Bug real 2026-09-21 (auditoria en vivo pedida por Nicolas: "quiero
-    que aprendas mejor... las noticias que realmente nos interesan"):
-    "Rogers Valencia" (ministro MINCETUR) estaba en Tech/Digital - 8 de 8
-    menciones reales en 30 dias eran turismo/comercio exterior sin
-    ninguna señal digital. El nombre de un ministro NO es proxy de que la
-    nota sea del tema por el que se agrego - es proxy de "su ministerio
-    publico algo", que cubre todo lo que hace ese ministerio."""
-    assert "Tech / Digital" not in clasificar(
-        "Ministro Rogers Valencia visita terminal multipropósito de "
-        "DP World en el Callao")
-    assert clasificar(
-        "Mincetur destaca nueva conexión aérea directa entre São Paulo y "
-        "Cusco como impulso histórico para el turismo") == []
-    print("OK temas: un ministro de turismo/comercio no marca Tech/Digital "
-          "solo por su nombre")
-
-
-def _test_es_deportivo():
-    # Casos reales 2026-09-21 (verificados en produccion, 2 veces: primero
-    # en las alertas de WhatsApp, despues via auditoria en vivo se
-    # confirmo que TAMBIEN seguian apareciendo en las paginas Noticias
-    # PE/EC, porque el primer intento solo veteaba dentro del digest y no
-    # en clasificar() mismo) - presidentes de club NO deben clasificar
-    # como Coyuntura política en ningun consumidor.
-    assert clasificar("Miguel Montalvo, presidente de Barcelona SC, y el "
-                       "cambio del club a sociedad anónima", None) == []
-    assert es_deportivo("Miguel Montalvo, presidente de Barcelona SC, y el "
-                         "cambio del club a sociedad anónima", None)
-    assert es_deportivo(
-        "José David Jiménez, presidente de Emelec, plantea revisar el "
-        "formato de Liga Ecuabet para recuperar a los hinchas en los estadios")
-    # Un presidente real de pais NO debe marcarse como deportivo, y SI
-    # debe seguir clasificando como Coyuntura política.
-    assert not es_deportivo("Presidenta Keiko Fujimori lidera sesión de "
-                             "Consejo de Ministros en Palacio de Gobierno")
-    assert clasificar("Presidenta Keiko Fujimori lidera sesión de "
-                       "Consejo de Ministros en Palacio de Gobierno") == ["Coyuntura política"]
-    print("OK temas: clasificar() ya no marca presidentes de club (Barcelona SC, "
-          "Emelec) como Coyuntura política, pero si a presidentes reales")
-
-
-def _test_medicinas_es_salud():
-    """Miss real 2026-10-12: "medicinas" (EC/PE coloquial por medicamentos)
-    no clasificaba como Salud y la compra a la India no alerto."""
-    assert clasificar("Compra de medicinas a la India se concretaría en las "
-                       "próximas semanas") == ["Salud"]
-    assert clasificar("Pacientes protestan por falta de fármacos oncológicos") == ["Salud"]
-    # Singular fuera a proposito: la carrera no es tema Salud.
-    assert clasificar("Estudiar Medicina: carrera de alta demanda, largo "
-                       "camino y alto costo") == []
-    print("OK temas: 'medicinas'/'fármacos' clasifican como Salud, la carrera de Medicina no")
-
-
-def _test_plurales_y_keywords_eval():
-    """Eval 2026-10-12 (clasificador/eval): plurales y keywords nuevas, con
-    su contraejemplo. Titulos reales del set de oro / la semana real."""
-    S, C_, T_, K = "Salud", "Crop", "Tech / Digital", "KYC / AML / Financiero"
-    assert _compile(["digital"], plural=True).search("plataformas digitales")
-    assert not _compile(["SIS"], plural=True).search("sises"), "siglas exactas"
-    assert T_ in clasificar("Pagos digitales tendrán nuevas reglas desde 2027")
-    assert C_ in clasificar("Negro amanecer para las agroexportaciones peruanas")
-    # salud: solo en el titulo y no figurada
-    assert S in clasificar("Campaña de salud gratis para este domingo 11 de octubre")
-    assert S not in clasificar("Cinco claves para cuidar la salud financiera del hogar")
-    assert S not in clasificar("Crédito suplementario contempla S/8 228 millones",
-                               "financiar intervenciones en educación, salud, agua")
-    assert S not in clasificar("Senasa capacitó a veterinarios para enfrentar la influenza aviar")
-    # Crop: cultivos/ganado sustantivo, no "haber ganado"
-    assert C_ in clasificar("Lluvias afectan 5.600 hectáreas de cultivos en Los Ríos")
-    assert C_ in clasificar("Ganaderos de Ecuador, golpeados por caída de cabezas de ganado")
-    assert C_ not in clasificar("Djokovic cae en Shanghái",
-                                "Tres días después de haber ganado en Pekín el título 102")
-    # Tech: redes sociales como objeto de regulacion, no "lo compartio en redes"
-    assert T_ in clasificar("Marino Lavado plantea prohibir redes sociales a menores de 16 años")
-    assert T_ not in clasificar("Gianella Marquina dio a luz",
-                                "La hija compartió en sus redes sociales una fotografía")
-    # KYC: pagos/finanzas, "bancos" (no banco de sangre)
-    assert K in clasificar("BCRP prepara nuevas reglas para impulsar un ecosistema de pagos")
-    assert K in clasificar("Bancos de América Latina multiplican sus ventas con IA")
-    assert K not in clasificar("Hospital pide donantes: bancos de sangre en mínimos")
-    print("OK temas: plurales + keywords del eval (con sus contraejemplos)")
-
-
-def _test_vetos_eval():
-    """Eval 2026-10-12: homonimos y tramites que marcaban un tema de cliente."""
-    S, C_, T_, K = "Salud", "Crop", "Tech / Digital", "KYC / AML / Financiero"
-    # "Lavado" apellido vs lavado de activos
-    assert K not in clasificar("Marino Lavado: “El peligro está ahí” ante posible "
-                               "modificación de facultades en el Senado - Canal N")
-    assert K in clasificar("Dos procesados reciben 10 años de cárcel por lavado")
-    assert K in clasificar("Detienen a tres por Lavado de Activos en Guayaquil")
-    # Nota del precio del dolar / Obras por Impuestos
-    assert K not in clasificar("El dólar Sunat cotiza en S/ 3.442 para la venta este lunes")
-    assert K not in clasificar("Adjudicaciones de Obras por Impuestos suman S/ 9409 millones")
-    assert K in clasificar("Sunat fiscalizará impuestos a plataformas extranjeras")
-    assert K not in clasificar("Aprueban transferencia financiera a favor de la Contraloría")
-    assert K not in clasificar("Bancos comunitarios para el salvamento de las semillas nativas")
-    assert K in clasificar("Primera entidad financiera 100% digital en Perú recibe luz verde")
-    # INDECOPI ya no es Tech por si solo
-    assert T_ not in clasificar("Indecopi multa con 455 UIT a empresa de tubulares")
-    # Medio con "Digital" en el nombre (sufijo de Google News)
-    assert T_ not in clasificar("Reunión de la COPROSA con el SENASA - Maraco Digital")
-    assert T_ in clasificar("Gobierno lanza agenda digital 2030")
-    # siembra figurada
-    assert C_ not in clasificar("José Cabrera siembra incertidumbre sobre la fecha de las elecciones")
-    assert C_ in clasificar("Inicia la siembra de arroz en Piura")
-    # SeNaSa dominicano (seguro de salud) no es sanidad agraria
-    assert C_ not in clasificar("Exfiscal enfrentará en libertad el juicio por el caso SeNaSa")
-    assert C_ in clasificar("Senasa declara emergencia fitosanitaria por Fusarium R4T")
-    # Tramite de norma (El Peruano / gob.pe) vs noticia de designacion
-    assert clasificar("D000429-2026-MIDAGRI-DM — Se encarga a la señora MIRIAM BUSTAMANTE, "
-                      "las funciones de Secretaria General") == []
-    assert clasificar("DESARROLLO AGRARIO Y RIEGO — RESOLUCIÓN MINISTERIAL N° D000414-2026-"
-                      "MIDAGRI-DM: Designan Jefa de Programación Multianual") == []
-    assert C_ in clasificar("DESARROLLO AGRARIO Y RIEGO — DECRETO SUPREMO N° 012-2026-MIDAGRI: "
-                            "Aprueban el Reglamento de plaguicidas de uso agrícola")
-    assert S in clasificar("Designan a nuevo ministro de Salud tras renuncia")
-    # Futbol: IESS/FEF no es Salud
-    assert S not in clasificar("IESS le certificó a FEF que Santa Fe de Imbabura, en el "
-                               "Ascenso Nacional, no afilió a los jugadores")
-    print("OK temas: vetos del eval (Lavado apellido, dolar, Indecopi, medio Digital, "
-          "siembra figurada, SeNaSa RD, tramites, futbol)")
-
-
-if __name__ == "__main__":
-    _demo()
-    _test_plurales_y_keywords_eval()
-    _test_vetos_eval()
-    _test_medicinas_es_salud()
-    _test_sin_senal_no_es_pais_fuente_aunque_nombre_otro_pais()
-    _test_venezuela_no_es_ecuador()
-    _test_tributo_no_es_homenaje()
-    _test_es_espectaculos()
-    _test_ministro_no_es_proxy_de_tema()
-    _test_es_deportivo()

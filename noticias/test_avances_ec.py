@@ -1,7 +1,11 @@
-"""Checks de noticias.avances_ec. Correr: python -m noticias.test_avances_ec"""
 import sqlite3
+from datetime import datetime, timedelta, timezone
 
 from noticias.avances_ec import noticias_tramite_recientes
+
+
+def _hace(dias: int) -> str:
+    return (datetime.now(timezone.utc) - timedelta(days=dias)).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
 def _db(rows):
@@ -29,7 +33,7 @@ def test_incluye_noticia_de_tramite_de_la_asamblea():
     db = _db([(
         "Portal de la Asamblea Nacional", "EC",
         "Pleno tramitó en primer debate la normativa para modernizar el INIAP",
-        None, "2026-09-09T17:22:28Z",
+        None, _hace(8),
     )])
     out = noticias_tramite_recientes(db, dias=30)
     assert len(out) == 1
@@ -41,7 +45,7 @@ def test_excluye_noticia_ceremonial_de_la_misma_fuente():
     db = _db([(
         "Portal de la Asamblea Nacional", "EC",
         "Asamblea Nacional conmemora en Riobamba el Día de la Fundación del Ecuador",
-        None, "2026-09-11T02:15:04Z",
+        None, _hace(6),
     )])
     assert noticias_tramite_recientes(db, dias=30) == []
 
@@ -53,20 +57,18 @@ def test_excluye_fuentes_de_coyuntura_general():
     db = _db([(
         "Diario Random EC", "EC",
         "Comisión de fiscales avanza en investigación por caso de corrupción",
-        None, "2026-09-16T12:00:00Z",
+        None, _hace(1),
     )])
     assert noticias_tramite_recientes(db, dias=30) == []
 
 
 def test_medio_independiente_sin_ancla_asamblea_no_cuela():
-    # Caso real 2026-09-17: "Regulación de scooters... segundo debate en el
-    # Concejo" matchea el keyword de tramite pero es el Concejo MUNICIPAL de
-    # Quito, no la Asamblea Nacional - sin la palabra ancla no debe colar.
+    # "segundo debate en el Concejo" es el Concejo municipal de Quito.
     db = _db([(
         "El Universo", "EC",
         "Regulación de scooters en Quito avanza: falta el veto a la Ley de "
         "Tránsito y el segundo debate en el Concejo",
-        None, "2026-09-14T21:07:06Z",
+        None, _hace(3),
     )])
     assert noticias_tramite_recientes(db, dias=30) == []
     # También real: "informe PISA" matchea "informe" pero no tiene nada que
@@ -74,19 +76,17 @@ def test_medio_independiente_sin_ancla_asamblea_no_cuela():
     db2 = _db([(
         "El Comercio", "EC",
         "La brecha real de la educación ecuatoriana tras el informe PISA",
-        None, "2026-09-14T16:11:30Z",
+        None, _hace(3),
     )])
     assert noticias_tramite_recientes(db2, dias=30) == []
 
 
 def test_incluye_medios_independientes_no_solo_la_asamblea():
-    # Nicolas 2026-09-17: "las noticias de la asamblea vienen de un solo
-    # lugar" - El Comercio y El Universo son medios independientes reales,
-    # no el RSS propio de la Asamblea, y deben contar como fuente valida.
+    # El Comercio y El Universo cuentan como fuente, no solo el RSS de la Asamblea.
     db = _db([(
         "El Universo", "EC",
         "Regulación de scooters en Quito avanza: falta el segundo debate en el pleno",
-        None, "2026-09-14T21:07:06Z",
+        None, _hace(3),
     )])
     out = noticias_tramite_recientes(db, dias=30)
     assert len(out) == 1
@@ -100,10 +100,3 @@ def test_respeta_ventana_de_dias():
     )])
     assert noticias_tramite_recientes(db, dias=7) == []
 
-
-if __name__ == "__main__":
-    for name, fn in sorted(globals().items()):
-        if name.startswith("test_") and callable(fn):
-            fn()
-            print(f"OK {name}")
-    print("todos los checks pasaron")

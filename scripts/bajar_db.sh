@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 # Baja una base de la rama `datos` (ver scripts/publicar_db.sh) y la deja
-# descomprimida en DESTINO. Si `datos` todavia no la tiene (transicion),
-# usa la copia vieja de data/ en el checkout.
+# descomprimida en DESTINO.
 #
 # Uso: scripts/bajar_db.sh NOMBRE_GZ DESTINO_DB
 #   ej. scripts/bajar_db.sh proyectos.db.gz proyectos.db
@@ -13,10 +12,7 @@ if git fetch -q origin "+refs/heads/datos:refs/remotes/origin/datos" 2>/dev/null
   gunzip -c "/tmp/bajar_$GZ" > "$DESTINO"
   rm -f "/tmp/bajar_$GZ"
   echo "[bajar_db] $GZ desde la rama datos -> $DESTINO"
-elif [ -f "data/$GZ" ]; then
-  gunzip -kc "data/$GZ" > "$DESTINO"
-  echo "[bajar_db] $GZ desde data/ del checkout (datos todavia no la tiene) -> $DESTINO"
 else
-  echo "[bajar_db] no encontre $GZ ni en datos ni en data/" >&2
+  echo "[bajar_db] no encontre $GZ en la rama datos" >&2
   exit 1
 fi

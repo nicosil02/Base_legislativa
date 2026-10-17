@@ -13,6 +13,8 @@ import time
 import urllib.request
 from datetime import datetime, timedelta, timezone
 
+from core.db import now_iso
+
 from .ics_parser import IcsEvent, parse_events
 from .matching import build_idf, extract_comision, extract_modalidad, find_matches
 from .schema import SCHEMA_AGENDA_EC
@@ -87,7 +89,7 @@ def upsert_events(conn: sqlite3.Connection, events: list[IcsEvent]) -> tuple[int
     Returns:
         (nuevos, actualizados)
     """
-    captured_at = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    captured_at = now_iso()
     nuevos = 0
     actualizados = 0
     with conn:

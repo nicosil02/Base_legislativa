@@ -7,24 +7,12 @@ Uso:
     python -m alerts.cli send --dry-run       # imprime HTML, no envia
     python -m alerts.cli send --force         # envia aunque ya se haya enviado ese slot hoy
 
-Logica del scheduling diario (redisenada 2026-09-20 - Nicolas: "a veces
-no me dice nada, o sea me llega sin ningun update... debería llegar 2
-veces al día, 1 a las 8-9am y otra a las 2pm... que reporte la del am
-todo lo que paso post 2pm del dia anterior que no se reporto"):
-  - 2 horarios fijos por dia (ver refrescar-pe.yml, gateado por
-    github.event.schedule): "am" (9am Lima) y "pm" (2pm Lima).
-  - Cada uno SIEMPRE envia, tenga contenido o no ("sin novedades" es una
-    respuesta valida, visible - antes el retry de 10am se quedaba
-    callado si a las 9am no habia contenido, eso generaba la sensacion
-    de "a veces no dice nada"). Solo se salta si ESE slot especifico ya
-    se mando hoy (evita duplicar en un rerun/retry del workflow).
-  - La ventana de contenido es "desde el ultimo envio real" (cualquier
-    slot, cualquier dia) - asi el envio de las 9am cubre automaticamente
-    todo lo que paso desde las 2pm del dia anterior, sin necesidad de
-    logica de fecha especial.
+Scheduling: 2 horarios fijos por dia (9am y 2pm Lima, ver refrescar-pe.yml).
+Cada uno envia solo si hay novedades y ese slot no se envio ya hoy. La ventana
+de contenido es "desde el ultimo envio real", asi el de las 9am cubre lo que
+paso desde las 2pm del dia anterior.
 
-Estado persistido en data/alert_sent_log.json (commiteado), ahora
-por-slot-por-dia: {"2026-09-20": {"am": {...}, "pm": {...}}}.
+Estado por slot y dia: {"2026-09-20": {"am": {...}, "pm": {...}}}.
 """
 from __future__ import annotations
 
@@ -43,11 +31,8 @@ def _today_str():
     return datetime.utcnow().date().isoformat()
 
 
-# El estado vive en proyectos.db (tabla app_state), no en el JSON: el JSON
-# dejo de commitearse el 2026-09-19 y cada corrida arrancaba sin saber que
-# ya habia enviado - correo del slot pm duplicado (27 y 28/09) y ventana
-# "desde el ultimo envio" siempre en 24 h. proyectos.db la publica
-# refrescar-pe.yml en `datos` (modo base_local), asi que persiste.
+# El estado vive en proyectos.db (tabla app_state), que refrescar-pe.yml
+# publica; el JSON ya no se commitea y sin esto se duplicaban envios.
 def _state_db():
     import sqlite3
     from alerts.build import _find_db_file
@@ -92,10 +77,8 @@ def _save_state(state):
 
 
 def count_novedades(payload):
-    """Solo lo que cambia: dictamenes, proyectos nuevos/con cambios y
-    normativa. La agenda de proximas sesiones y mesas existe todos los dias
-    y no justifica un correo por si sola (Nicolas 2026-09-28: 'me sigue
-    enviando todos los dias asi no haya nada')."""
+    """Solo lo que cambia: dictamenes, proyectos y normativa. La agenda
+    existe todos los dias y no justifica un correo por si sola."""
     return sum(len(payload[p].get(s, []) or []) for p in ("peru", "ecuador")
                for s in ("dictamenes", "proyectos", "normativa"))
 
@@ -112,16 +95,9 @@ def cmd_send(args):
         and dia.get(args.slot, {}).get("sent", False)
     )
 
-    # Filtro "desde la ultima alerta real": recorre TODO el historial
-    # (dias x slots) buscando la entrada sent=True mas reciente. Asi cada
-    # cambio sale 1 vez en la primera alerta despues de su fecha - sin
-    # solapar entre el envio de las 9am y el de las 2pm, y sin perder
-    # cambios si fallo algun envio (se acumulan hasta el siguiente).
-    # Fallback: si no hay entradas previas, build_alert usa 24h default.
-    # Nota: entradas viejas (formato plano pre-2026-09-20, un solo envio
-    # por dia) no matchean `isinstance(entry, dict)` dentro del loop de
-    # abajo y se ignoran sin romper nada - la ventana simplemente se
-    # resetea una vez al pasar al nuevo formato por-slot.
+    # Ventana desde el envio real mas reciente (cualquier dia y slot): cada
+    # cambio sale una vez y nada se pierde si fallo un envio. Sin envios
+    # previos, build_alert usa 24 h. Entradas de formato viejo se ignoran.
     since_iso = None
     sent_entries = []
     for slots in state.values():
@@ -143,24 +119,13 @@ def cmd_send(args):
     print("[alerts] fecha=" + today + " slot=" + args.slot +
           " contenido=" + str(n) + " items ya_enviado_este_slot=" + str(ya_enviado_este_slot))
 
-    # 2 horarios fijos (9am y 2pm Lima, ver refrescar-pe.yml) en vez del
-    # viejo "9am solo si hay contenido, retry a las 10am" - Nicolas
-    # 2026-09-20: "a veces no me dice nada, o sea me llega sin ningun
-    # update" (el viejo esquema se quedaba callado en el retry de 10am si
-    # a las 9am ya no habia contenido). Ahora SIEMPRE se manda en cada
-    # horario fijo, contenido o no ("sin novedades" es una respuesta
-    # valida y visible, no silencio ambiguo) - el unico skip real es no
-    # duplicar el mismo slot dos veces el mismo dia (reintento/rerun).
     if args.force:
         should_send, reason = True, "forced"
     elif args.slot in ("am", "pm"):
         if ya_enviado_este_slot:
             should_send, reason = False, f"ya se envio el slot {args.slot} hoy"
-        # Cambio de criterio de Nicolas 2026-09-27: "si no hay actualizaciones,
-        # no me envies nada... solo cuando salgan cosas nuevas o avances en
-        # PLs" - revierte el "siempre enviar" del 2026-09-20. Sin marcar el
-        # slot: la ventana sigue siendo "desde el ultimo envio real", asi el
-        # proximo correo con contenido cubre todo lo acumulado.
+        # Sin novedades no se envia ni se marca el slot: el proximo correo
+        # con contenido cubre todo lo acumulado.
         elif count_novedades(payload) == 0:
             should_send, reason = False, "sin novedades (solo agenda)" if n else "sin novedades"
         else:
@@ -240,8 +205,8 @@ def main(argv=None):
     s = sub.add_parser("send", help="Construye y manda el email")
     s.add_argument("--slot", choices=["am", "pm", "manual"], default="manual",
                    help="Slot horario. 'am'/'pm' son los 2 horarios fijos "
-                        "(9am/2pm Lima, ver refrescar-pe.yml) - siempre envian, "
-                        "salvo que ese slot ya se haya mandado hoy. 'manual' "
+                        "(9am/2pm Lima, ver refrescar-pe.yml) - envian solo con "
+                        "novedades y si ese slot no se mando hoy. 'manual' "
                         "(default) es para pruebas: siempre envia, no marca estado.")
     s.add_argument("--dry-run", action="store_true", help="No envia, imprime HTML")
     s.add_argument("--force", action="store_true",

@@ -1,66 +1,40 @@
-"""Catalogo de fuentes de noticias (Peru + Ecuador) con URLs y RSS feeds.
+"""Catalogo de fuentes de noticias (Peru + Ecuador).
 
-Estructura: lista de dicts con campos:
-  categoria, pais, nombre, url, rss_url, tipo, notas
+Cada fuente es un dict: categoria, pais, nombre, url, rss_url, tipo, notas
+(y opcionalmente activa, clientes). Tipos: rss, html, gobpe (API de gob.pe),
+twitter y manual (estos dos no se scrapean). `cli seed` las copia a la DB;
+las que se sacan de aca quedan desactivadas por deactivate_fuentes_huerfanas.
 
-Tipos:
-  - rss:    tiene feed RSS estandar (mas comun en medios y WP)
-  - html:   solo HTML, requiere scraping con selectores
-  - twitter: cuenta X/Twitter, requiere API o scraping (no auto)
-  - manual: marcado en el catalogo pero sin scraping automatico
-
-Para agregar/corregir URLs:
-  python -m noticias.cli set-rss --pais PE --nombre "Gestion" --rss "https://..."
-
-Cruce fuente x cliente (ver clientes/_plantillas/matriz_monitoreo/): cada fuente
-termina con una lista `clientes` (slugs de clientes/<slug>/, o "todos" para el
-backbone legislativo/politico general) resuelta por `_clientes_de()` abajo, sin
-tener que anotar cada uno de los ~90 dicts a mano:
-  1. INSTITUCION_CLIENTES: lookup exacto por `nombre`, para las ~30 entidades
-     de gobierno donde la categoria ("Institucion", o la tematica en la que
-     viven MINSA/MEF/etc.) no alcanza para saber a quien le importa. Tags
-     copiados de la matriz de monitoreo (ya verificados ahi leyendo cada
-     clientes/<cliente>/notas.md real).
-  2. CATEGORIA_CLIENTES: fallback por categoria para el resto (medios, gremios,
-     cuentas X) - Google/Incode = tech/digital/KYC/AML + coyuntura general;
-     Bayer = Salud + Agro + coyuntura; Syngenta = Agro + coyuntura (NO Salud -
-     Syngenta es agroquimicos/semillas, no farmaceutica, confirmado en su
-     notas.md).
+Cada fuente termina con una lista `clientes` (slugs de clientes/<slug>/, o
+"todos") resuelta por `_clientes_de()`: tag explicito del dict, si no
+INSTITUCION_CLIENTES por nombre, si no CATEGORIA_CLIENTES por categoria.
 """
 from urllib.parse import quote_plus
 
+from core.text import sin_tildes
+
 INSTITUCION_CLIENTES: dict[str, list[str]] = {
     # --- PE: backbone legislativo/politico general ---
-    "Congreso - Proyectos de Ley": ["todos"],
-    "El Peruano": ["todos"],
     "Google News PE — Decreto Supremo": ["todos"],
     "Google News PE — Decreto de Urgencia": ["todos"],
     "Google News PE — Ley promulgada": ["todos"],
     "Google News PE — El Peruano publica": ["todos"],
-    "Canal Congreso": ["todos"],
     "Agenda del Congreso": ["todos"],
     "PCM": ["todos"],
     "Presidencia": ["todos"],
-    # --- PE: ministerios/agencias con relevancia especifica (matriz 2026-09-12) ---
+    # --- PE: ministerios/agencias con relevancia especifica ---
     "MINSA": ["bayer"],
     "DIGEMID": ["bayer"],
     "Ministerio de Salud (estadisticas)": ["bayer"],
     "MIDAGRI": ["bayer", "syngenta"],
     "SENASA": ["bayer", "syngenta"],
     "MINAM": ["bayer", "syngenta"],
-    # MEF: Syngenta (macro/agro) + Google (IVA a plataformas digitales via
-    # decreto MEF, explicito en su notas.md). ponytail: MEF publica de todo
-    # (presupuesto, transferencias de partidas, macro) - este tag es real
-    # pero de alcance angosto (una sola linea de politica digital dentro
-    # de todo lo que emite MEF), va a seguir trayendo ruido no-digital para
-    # Google hasta que haya un filtro por contenido del articulo, no solo
-    # por institucion (auditoria 2026-09-13, confirmado con Nicolas que
-    # el ranking por TF-IDF no alcanza para esto).
-    "MEF": ["syngenta", "google"],  # ver INSTITUCIONES_AMPLIAS abajo
+    # MEF: Syngenta (macro/agro) + Google (IVA a plataformas digitales).
+    # ponytail: MEF publica de todo; INSTITUCIONES_AMPLIAS filtra por
+    # contenido para no traerle ruido a Google.
+    "MEF": ["syngenta", "google"],
     "ANPD": ["google", "incode"],
-    # RREE: Google Y Incode comparten el mismo eje "relacion EEUU" segun sus
-    # notas.md (ambas empresas norteamericanas) - antes solo tenia a Google
-    # (auditoria 2026-09-13).
+    # Google e Incode siguen la relacion con EEUU.
     "RREE": ["google", "incode"],
     "MTC": ["google"],
     "OSIPTEL": ["google"],
@@ -71,64 +45,23 @@ INSTITUCION_CLIENTES: dict[str, list[str]] = {
     "Direccion de Casinos (Apuestas Deportivas)": [],
     # --- EC: backbone legislativo/politico general ---
     "Asamblea Nacional - Proyectos de Ley": ["todos"],
-    "Registro Oficial": ["todos"],
-    "Decretos Presidenciales": ["todos"],
     "Google News EC — Decreto Ejecutivo": ["todos"],
     "Google News EC — Registro Oficial": ["todos"],
     "Google News EC — Ley Orgánica": ["todos"],
     "Portal de la Asamblea Nacional": ["todos"],
     "Agenda de la Asamblea Nacional": ["todos"],
     # --- EC: ministerios/agencias con relevancia especifica ---
-    # Ministerio de Economia y Finanzas EC se fusiono en MDEP (Desarrollo
-    # Economico y Productivo, junto con Agricultura y Produccion) - la matriz
-    # ya tagea MDEP como bayer+syngenta, aplicado aca a las 3 filas viejas
-    # que fuentes.py todavia mantiene por separado (mismo dominio nuevo).
-    "Ministerio de Economia y Finanzas": ["bayer", "syngenta"],
-    "Ministerio de Agricultura y Ganaderia": ["bayer", "syngenta"],
-    "Resoluciones Ministerio de Agricultura": ["bayer", "syngenta"],
-    "Ministerio de Produccion Comercio Exterior": ["bayer", "syngenta"],
-    "Ministerio del Ambiente": ["bayer", "syngenta"],
-    "Ministerio del Ambiente - Normativa": ["bayer", "syngenta"],
     "Agencia de Regulacion y Control Fito y Zoosanitario": ["bayer", "syngenta"],
     "Agrocalidad - Normativa": ["bayer", "syngenta"],
     "ARCSA (Regulacion Sanitaria)": ["bayer"],
-    "ARCSA - Normativa": ["bayer"],
-    "Proyectos normativos ARCSA": ["bayer"],
     "Ministerio de Salud Publica": ["bayer"],
-    "Ministerio de Salud Publica - Normativa": ["bayer"],
     "IESS (Seg. Social)": ["bayer"],
-    # Auditoria 2026-09-13: sacado "google" de estas 3 - el notas.md de
-    # Google no tiene ninguna seccion de Ecuador (a diferencia de Incode,
-    # que si distingue foco PE/EC explicitamente), asi que no hay base real
-    # para asumir que la cuenta de Google cubre EC. Quedan sin cliente
-    # hasta que Nicolas confirme si Google si tiene alcance EC.
+    # El notas.md de Google no cubre Ecuador: sin cliente hasta confirmarlo.
     "Ministerio de Telecomunicaciones": [],
-    "Ministerio de Telecomunicaciones - Normativa": [],
-    "Superintendencia de Proteccion de Datos Personales": [],
-    # Incode sigue el eje "relacion EEUU" en PE Y Ecuador (notas.md: "le
-    # interesa el eje de relacion Peru/Ecuador-EEUU en general").
+    # Incode sigue la relacion Peru/Ecuador-EEUU.
     "Ministerio de Relaciones Exteriores y Movilidad Humana": ["incode"],
     "Registro Civil (DIGERCIC)": ["incode"],
     "Google News EC — Cédula digital": ["incode"],
-
-    # --- PE: cuentas X/Twitter institucionales (mismo tag que su fuente
-    # gob.pe hermana cuando existe, en vez de caer al default generico
-    # Institucion->todos que era impreciso para varias de estas) ---
-    "X - PCM Peru (X)": ["todos"],
-    "X - JNE Peru": [],
-    "X - RENIEC Peru": ["incode"],  # foco explicito #1 de Incode (DNI digital/Confronte)
-    "X - MIDAGRI Peru (X)": ["bayer", "syngenta"],
-    "X - MINCETUR (X)": ["google", "bayer", "syngenta"],
-    "X - Ositran": [],
-    "X - Presidencia Peru (X)": ["todos"],
-    "X - Defensoria del Pueblo": [],
-    "X - MININTER Peru": [],
-    "X - Cancilleria Peru": ["google"],
-    "X - Congreso Peru (X)": ["todos"],
-    "X - MINJUSDH Peru (X)": [],
-    "X - PRODUCE Peru (X)": [],
-    "X - MINEM Peru": [],
-    "X - SGTD Peru Digital": ["google", "incode"],  # SGTD/PCM: gobierno digital, en ambos notas.md
 }
 
 CATEGORIA_CLIENTES: dict[str, list[str]] = {
@@ -140,58 +73,30 @@ CATEGORIA_CLIENTES: dict[str, list[str]] = {
     "Agro": ["bayer", "syngenta"],
     "Temas Tech": ["google", "incode"],
     "Digital": ["google", "incode"],
-    # Auditoria 2026-09-13: sacado "google" - su notas.md no menciona KYC/AML,
-    # lavado de activos ni fintech en ningun lado (eso es foco explicito de
-    # Incode, no de Google). Antes ambos entraban por error.
+    # KYC/AML/fintech es foco de Incode, no de Google (segun sus notas.md).
     "Temas KYC/AML": ["incode"],
     "Financiero": ["incode"],
 }
 
 
-# Instituciones que publican de TODO (presupuesto, RRHH, transferencias,
-# macro...) y solo tienen UN angulo real relevante para el cliente con el
-# que estan tageadas en INSTITUCION_CLIENTES (ej. MEF <-> Google es solo su
-# decreto de IVA a plataformas digitales, no el resto de lo que emite MEF).
-# Tagear la institucion entera trae ruido real (auditoria 2026-09-13). Para
-# estas, ademas de aparecer en INSTITUCION_CLIENTES, el filtro Cliente exige
-# que el TITULO+RESUMEN de la noticia matchee el tema real del cliente
-# (noticias/temas.py::clasificar) - no es un ranking difuso tipo TF-IDF, es
-# un mismo chequeo de keywords determinista/auditable que ya se usa para los
-# badges "Temas" de la UI, aplicado tambien al filtro. Ver TEMAS_CLIENTE.
+# Instituciones que publican de todo y tienen un solo angulo real para su
+# cliente (MEF <-> Google = IVA digital): el filtro Cliente exige ademas que
+# el titulo+resumen matchee TEMAS_CLIENTE via temas.clasificar.
 INSTITUCIONES_AMPLIAS: set[str] = {"MEF", "Salud con Lupa"}
 
-# Fuentes "Coyuntura Politica" que en realidad traen el feed COMPLETO del
-# sitio (deportes, espectaculos, policiales) por un feed especifico roto que
-# cae a uno generico - ver noticias/scraper.py::_discover_rss ("auto-sana
-# feeds rotos"). Auditoria 2026-09-13 (Nicolas: "siguen habiendo noticias que
-# no tienen nada que ver"): verificado en vivo -
-#   - El Universo EC: su rss_url declarado (.../rss/politica/) devuelve 404
-#     ("Pagina no encontrada"), asi que cae al autodiscovery, que encuentra
-#     el feed general del sitio (arc/outboundfeeds/rss, sin filtro de
-#     seccion) - trae partidos de futbol, estrenos musicales, sucesos.
-#   - El Comercio EC: su feed declarado (elcomercio.com/feed/) SI funciona,
-#     pero es "Noticias del Ecuador y del mundo" (sitewide real, nunca fue
-#     solo politica) - mismo problema, no un feed roto sino mal etiquetado.
-# No hay un feed de solo-politica que funcione para ninguno de los dos (se
-# probaron varias URLs candidatas). Filtro: exigir que el contenido matchee
-# algun tema real (noticias/temas.py::clasificar) - independiente del
-# cliente seleccionado, aplica incluso viendo "Todos", porque un partido de
-# futbol no es "Coyuntura Politica" para nadie.
-#
-# 2026-09-14 (Nicolas: "chequea si sigue apareciendo ruido"): se encontro un
-# 3er caso - "Bloomberg Linea Ecuador" (ya desactivada arriba, ver notas) -
-# igual se agrega aca para limpiar las filas viejas ya scrapeadas (mercados
-# LATAM/Fed/Argentina/Mexico, nada de Ecuador).
+# Medios cuyo feed trae el sitio completo (deportes, espectaculos,
+# policiales), no solo politica: El Universo cae a su feed general porque el
+# de politica da 404, El Comercio EC nunca tuvo uno solo de politica. Se
+# exige que el contenido matchee algun tema. Incluye fuentes ya desactivadas
+# para filtrar sus filas viejas en la DB.
 FUENTES_GENERALISTAS_FILTRAR_RUIDO: set[str] = {
     "El Universo", "El Comercio", "Bloomberg Linea Ecuador",
-    # Medios generales agregados 2026-09-27 (traen deportes/espectaculos tambien)
     "Gestion", "La Republica", "RPP", "Infobae Peru", "Andina", "Expreso", "Canal N",
     "PRIMICIAS", "Expreso EC", "La Hora", "Vistazo", "Ecuavisa", "Teleamazonas", "El Telegrafo",
 }
 
-# Que tema(s) de noticias/temas.py::TEMAS le importan de verdad a cada
-# cliente (de sus notas.md) - usado solo para las INSTITUCIONES_AMPLIAS de
-# arriba, no reemplaza el tag por institucion/categoria de todos los demas.
+# Tema(s) de temas.TEMAS que le importan a cada cliente. Solo para
+# INSTITUCIONES_AMPLIAS.
 TEMAS_CLIENTE: dict[str, list[str]] = {
     "google": ["Tech / Digital", "KYC / AML / Financiero"],
     "incode": ["Tech / Digital", "KYC / AML / Financiero"],
@@ -199,44 +104,23 @@ TEMAS_CLIENTE: dict[str, list[str]] = {
     "syngenta": ["Crop"],
 }
 
-# Instituciones/categorias donde ni siquiera el tema generico de arriba
-# alcanza - MINSA publica de todo (vacunacion infantil, campanas de anemia,
-# traslados aeromedicos...) y esas notas SI matchean el tema "Salud" de
-# temas.py porque "MINSA" es una de sus propias keywords (cualquier nota de
-# MINSA "es sobre Salud" por definicion). Bayer se quejo (2026-09-13) de
-# recibir justo ese tipo de salud publica general, que no tiene nada que ver
-# con su bluebook real (registro sanitario/DIGEMID, abastecimiento,
-# genericos, oncologia, hemofilia). Para estas, se exige ademas un match
-# contra PERFIL_KEYWORDS (mas angosto y especifico que TEMAS_CLIENTE, sacado
-# palabra por palabra del notas.md real del cliente) - DIGEMID NO esta acá:
-# todo lo que publica DIGEMID ya es on-topic para Bayer (registro sanitario
-# es su funcion misma), no necesita este filtro extra.
+# Fuentes/categorias donde el tema generico no alcanza (todo lo de MINSA es
+# "Salud" por definicion, pero a Bayer solo le sirve su bluebook): se exige
+# ademas un match con PERFIL_KEYWORDS. Incluye fuentes ya desactivadas
+# (Andina agro/salud) para filtrar sus filas viejas.
 PERFIL_ESTRICTO: dict[str, set[str]] = {
     "bayer": {"MINSA", "Ministerio de Salud (estadisticas)",
               "Ministerio de Salud Publica", "Temas Salud", "Salud",
               "AgroPeru",
-              # Auditoria 2026-09-13 (Nicolas: "siguen habiendo noticias que
-              # no tienen nada que ver"): Andina agro/salud quedaron
-              # desactivadas (codseccion roto, ver mas abajo) pero sus filas
-              # viejas siguen en la DB y no tenian este filtro - traian
-              # coyuntura politica generica ("Presidenta: este gobierno...")
-              # tageada como salud/agro por error de clasificacion.
               "Andina (agencia oficial - agro)",
               "Andina (agencia oficial - salud)",
-              # Mismo problema: Mundo Agropecuario (EC) es periodismo agrario
-              # global generico (jardineria, clima, mercados de otros paises)
-              # - las keywords Crop compartidas con syngenta ya filtran bien.
+              # periodismo agrario global generico
               "Mundo Agropecuario"},
     "syngenta": {"AgroPeru", "Andina (agencia oficial - agro)",
                  "Mundo Agropecuario"},
-    # Auditoria 2026-09-13: 2 fuentes de Google News PE traen ruido real -
-    # "Menores digitales" (verificacion de edad) matchea leyes de CUALQUIER
-    # pais (Australia, Francia, Reino Unido) sin relacion con Peru/la region;
-    # "KYC LAFT" trae guias de "como comprar cripto"/apuestas deportivas, no
-    # regulacion. Mismo problema en EC: "DPL News Ecuador" (tageada KYC/AML)
-    # es noticias de negocio tech/telecom generico, no identidad/AML; y
-    # "Criptonoticias" (tageada Tech) es trading/mercado de cripto, no
-    # regulacion. Exigir alguna senal regulatoria/institucional real.
+    # "Menores digitales" trae leyes de cualquier pais, "KYC LAFT" guias de
+    # cripto/apuestas, DPL News Ecuador negocio telecom, Criptonoticias
+    # trading: se exige una senal regulatoria real.
     "google": {"Google News PE — Menores digitales", "Google News PE — KYC LAFT",
                "Criptonoticias"},
     "incode": {"Google News PE — Menores digitales", "Google News PE — KYC LAFT",
@@ -250,8 +134,8 @@ PERFIL_KEYWORDS: dict[str, list[str]] = {
         "abastecimiento", "desabastecimiento", "essalud",
         "colegio de quimicos farmaceuticos", "hemofilia", "medicamento",
         "autoridad reguladora", "arcsa",
-        # substring: "medicinas" (no "medicina", que trae la carrera/facultad)
-        # y "farmaco" cubre fármaco/fármacos. Ver temas.py, miss 2026-10-12.
+        # substring: "medicinas" (no "medicina", que trae la carrera) y
+        # "farmaco" cubre farmaco/farmacos.
         "medicinas", "farmaco",
         # Crop (compartido con syngenta, ver abajo)
         "senasa", "plaguicida", "fitosanit", "semilla", "transgenic",
@@ -259,23 +143,13 @@ PERFIL_KEYWORDS: dict[str, list[str]] = {
         "agroexportacion", "autoridad nacional del agua", "biotecnolog",
     ],
     "syngenta": [
-        # AgroPeru trae desarrollo rural general (riego, alpacas, cafe de
-        # pequenos productores) - nada que ver con el interes real de
-        # Syngenta (agroquimicos/semillas a escala comercial, no fomento
-        # rural). Mismas keywords Crop que Bayer.
+        # AgroPeru trae desarrollo rural general (riego, alpacas): fuera.
         "senasa", "plaguicida", "fitosanit", "semilla", "transgenic",
         "organismo vivo modificado", "agroecolog", "agricultura regenerativa",
         "agroexportacion", "autoridad nacional del agua", "biotecnolog",
     ],
-    # Google/Incode: exige alguna senal regulatoria/institucional real (no
-    # cualquier nota de "menores + redes sociales" o "cripto" de cualquier
-    # pais - ver comentario en PERFIL_ESTRICTO arriba).
-    #
-    # ponytail (2026-09-14, Nicolas: "chequea si sigue apareciendo ruido"):
-    # "peru"/"ecuador" sueltos se sacaron - dejaban pasar guias de apuestas
-    # ("Betano verificar cuenta Peru: guia paso a paso") solo por mencionar
-    # el pais, sin ninguna senal regulatoria real. Exigir un termino
-    # institucional/legal es mas angosto pero evita ese falso positivo.
+    # Google/Incode: un termino institucional/legal. "peru"/"ecuador" sueltos
+    # no: dejaban pasar guias de apuestas que solo nombraban el pais.
     "google": [
         "congreso", "asamblea nacional",
         "ley ", "proyecto de ley", "reglamento", "decreto", "regulacion",
@@ -295,16 +169,13 @@ PERFIL_KEYWORDS: dict[str, list[str]] = {
 
 
 def _norm_kw(s: str | None) -> str:
-    import unicodedata as _ud
-    s = (s or "").lower()
-    return "".join(c for c in _ud.normalize("NFD", s) if _ud.category(c) != "Mn")
+    # Sin colapsar espacios: "ley " busca la palabra suelta.
+    return sin_tildes((s or "").lower())
 
 
 def matchea_perfil(cliente: str, titulo: str | None, resumen: str | None) -> bool:
-    """True si el texto matchea alguna keyword del bluebook real de `cliente`
-    (PERFIL_KEYWORDS) - mas angosto que TEMAS_CLIENTE. Usado solo para
-    instituciones/categorias en PERFIL_ESTRICTO; si el cliente no tiene
-    perfil definido, no restringe (deja pasar, comportamiento previo)."""
+    """True si el texto matchea alguna keyword de PERFIL_KEYWORDS[cliente].
+    Cliente sin perfil: no restringe."""
     kws = PERFIL_KEYWORDS.get(cliente)
     if not kws:
         return True
@@ -313,14 +184,20 @@ def matchea_perfil(cliente: str, titulo: str | None, resumen: str | None) -> boo
 
 
 def _clientes_de(fuente: dict) -> list[str]:
-    """Resuelve la lista de clientes de una fuente: tag explicito del dict
-    (si algun dia se agrega uno) > lookup por nombre > fallback por categoria."""
+    """Tag explicito del dict > lookup por nombre > fallback por categoria."""
     if "clientes" in fuente:
         return fuente["clientes"]
     explicito = INSTITUCION_CLIENTES.get(fuente["nombre"])
     if explicito is not None:
         return explicito
     return CATEGORIA_CLIENTES.get(fuente["categoria"], [])
+
+
+# Google News expone sus busquedas como RSS, sin API key.
+def _gn(pais: str, categoria: str, nombre: str, query: str) -> dict:
+    url = f"https://news.google.com/rss/search?q={query}&hl=es-419&gl={pais}&ceid={pais}:es"
+    return {"categoria": categoria, "pais": pais, "nombre": f"Google News {pais} — {nombre}",
+            "url": url, "rss_url": url, "tipo": "rss", "notas": f"Query: {query}"}
 
 
 # ============================================================
@@ -348,8 +225,7 @@ FUENTES_PE: list[dict] = [
      "rss_url": "https://congrezoo.pe/feed/", "tipo": "rss",
      "notas": "Alerta parlamentaria que sube los documentos oficiales en PDF (pedido de facultades, "
               "exposicion de motivos, dictamenes). Agregado por Nicolas 2026-09-29; feed probado en vivo."},
-    # Medios que faltaban (Nicolas 2026-09-27: "algunas paginas no las tiene mapeadas").
-    # Los que no tienen RSS propio entran por Google News filtrado al dominio.
+    # Los medios sin RSS propio entran por Google News filtrado al dominio.
     {"categoria": "Coyuntura Politica", "pais": "PE", "nombre": "Infobae Peru",
      "url": "https://www.infobae.com/peru/",
      "rss_url": "https://www.infobae.com/arc/outboundfeeds/rss/category/peru/", "tipo": "rss"},
@@ -368,48 +244,16 @@ FUENTES_PE: list[dict] = [
     {"categoria": "Coyuntura Politica", "pais": "PE", "nombre": "Ojo Publico",
      "url": "https://ojo-publico.com/",
      "rss_url": "https://news.google.com/rss/search?q=site:ojo-publico.com+when:3d&hl=es-419&gl=PE&ceid=PE:es", "tipo": "rss"},
-    # Epicentro TV (pedido de Nicolas 2026-09-28): epicentro.tv no tiene RSS
-    # (DASTcms, /feed da 404) y X no se puede leer sin cuenta; Google News
-    # si indexa sus notas y programas (verificado: 100 items, del dia).
+    # epicentro.tv no tiene RSS (/feed da 404); Google News si lo indexa.
     {"categoria": "Coyuntura Politica", "pais": "PE", "nombre": "Epicentro TV",
      "url": "https://epicentro.tv/",
      "rss_url": "https://news.google.com/rss/search?q=site:epicentro.tv+when:3d&hl=es-419&gl=PE&ceid=PE:es", "tipo": "rss"},
 
-    # --- INSTITUCION: Congreso, ministerios, agencias ---
-    {"categoria": "Institucion", "pais": "PE",
-     "nombre": "Congreso - Proyectos de Ley",
-     "url": "https://wb2server.congreso.gob.pe/spley-portal/",
-     "tipo": "html", "activa": 0,
-     "notas": "Desactivada 2026-09-16: duplicada con el modulo scraper/ (API formal) que ya "
-              "cubre esto - ademas el HTML de esta pagina (SPA) no trae items parseables por "
-              "el scraper generico, 0 verificado en vivo."},
-    {"categoria": "Institucion", "pais": "PE", "nombre": "El Peruano",
-     "url": "https://elperuano.pe/", "tipo": "manual", "activa": 0,
-     "notas": "Sin RSS ni HTML parseable; cubierto por Google News (queries de decretos abajo)"},
     # --- NORMATIVA PE (Google News: decretos, leyes, resoluciones) ---
-    {"categoria": "Institucion", "pais": "PE",
-     "nombre": "Google News PE — Decreto Supremo",
-     "url": "https://news.google.com/rss/search?q=%22Decreto+Supremo%22+Peru&hl=es-419&gl=PE&ceid=PE:es",
-     "rss_url": "https://news.google.com/rss/search?q=%22Decreto+Supremo%22+Peru&hl=es-419&gl=PE&ceid=PE:es",
-     "tipo": "rss", "notas": "Query: 'Decreto Supremo' Peru"},
-    {"categoria": "Institucion", "pais": "PE",
-     "nombre": "Google News PE — Decreto de Urgencia",
-     "url": "https://news.google.com/rss/search?q=%22Decreto+de+Urgencia%22+Peru&hl=es-419&gl=PE&ceid=PE:es",
-     "rss_url": "https://news.google.com/rss/search?q=%22Decreto+de+Urgencia%22+Peru&hl=es-419&gl=PE&ceid=PE:es",
-     "tipo": "rss", "notas": "Query: 'Decreto de Urgencia' Peru"},
-    {"categoria": "Institucion", "pais": "PE",
-     "nombre": "Google News PE — Ley promulgada",
-     "url": "https://news.google.com/rss/search?q=Ley+promulgada+Peru&hl=es-419&gl=PE&ceid=PE:es",
-     "rss_url": "https://news.google.com/rss/search?q=Ley+promulgada+Peru&hl=es-419&gl=PE&ceid=PE:es",
-     "tipo": "rss", "notas": "Query: Ley promulgada Peru"},
-    {"categoria": "Institucion", "pais": "PE",
-     "nombre": "Google News PE — El Peruano publica",
-     "url": "https://news.google.com/rss/search?q=%22El+Peruano%22+publica+norma&hl=es-419&gl=PE&ceid=PE:es",
-     "rss_url": "https://news.google.com/rss/search?q=%22El+Peruano%22+publica+norma&hl=es-419&gl=PE&ceid=PE:es",
-     "tipo": "rss", "notas": "Query: 'El Peruano' publica norma - reemplaza feed de El Peruano"},
-    {"categoria": "Institucion", "pais": "PE", "nombre": "Canal Congreso",
-     "url": "https://canalncongreso.gob.pe/", "tipo": "html", "activa": 0,
-     "notas": "Desactivada 2026-09-16: dominio no resuelve (DNS NXDOMAIN), verificado en vivo."},
+    _gn("PE", "Institucion", "Decreto Supremo", "%22Decreto+Supremo%22+Peru"),
+    _gn("PE", "Institucion", "Decreto de Urgencia", "%22Decreto+de+Urgencia%22+Peru"),
+    _gn("PE", "Institucion", "Ley promulgada", "Ley+promulgada+Peru"),
+    _gn("PE", "Institucion", "El Peruano publica", "%22El+Peruano%22+publica+norma"),
     {"categoria": "Institucion", "pais": "PE", "nombre": "Agenda del Congreso",
      "url": "https://comunicaciones.congreso.gob.pe/agenda/",
      "rss_url": "https://comunicaciones.congreso.gob.pe/agenda/feed/",
@@ -422,11 +266,8 @@ FUENTES_PE: list[dict] = [
      "notas": "Resoluciones de la Direccion General de Juegos de Casino y Maquinas Tragamonedas"},
 
     # --- INSTITUCION PE: ministerios via gob.pe/busquedas.json ---
-    # fetch_gobpe() (scraper.py) ya cubre noticias+normas de CUALQUIER
-    # institucion gob.pe por slug - solo faltaba dar de alta cada ministerio
-    # aca. categoria = vertical tematica (no "Institucion") cuando fetch_gobpe
-    # debe traer tambien normas (ver regla en fetch_gobpe: activa normas si
-    # la categoria contiene salud/agrari/kyc/aml), igual que ya hacia DIGEMID.
+    # fetch_gobpe trae normas solo si la categoria contiene salud/agrari/
+    # kyc/aml: por eso algunas van con categoria tematica y no "Institucion".
     {"categoria": "Temas Salud", "pais": "PE", "nombre": "MINSA",
      "url": "https://www.gob.pe/institucion/minsa/noticias", "tipo": "gobpe"},
     {"categoria": "Temas Agrarios", "pais": "PE", "nombre": "MIDAGRI",
@@ -461,18 +302,9 @@ FUENTES_PE: list[dict] = [
      "url": "https://www.gob.pe/institucion/indecopi/noticias", "tipo": "gobpe"},
 
     # --- TEMAS AGRARIOS ---
-                    {"categoria": "Temas Agrarios", "pais": "PE",
-     "nombre": "CAP (Convencion Agropecuaria)",
-     "url": "https://convencionagropecuaria.com.pe/", "tipo": "html", "activa": 0,
-     "notas": "Desactivada 2026-09-16: dominio no resuelve (DNS NXDOMAIN), verificado en vivo."},
     {"categoria": "Temas Agrarios", "pais": "PE", "nombre": "CONVEAGRO",
      "url": "https://www.conveagro.org.pe/",
      "rss_url": "https://www.conveagro.org.pe/feed/", "tipo": "rss"},
-    {"categoria": "Temas Agrarios", "pais": "PE", "nombre": "Agraria.pe",
-     "url": "https://agraria.pe/",
-     "rss_url": "https://agraria.pe/rss", "tipo": "rss", "activa": 0,
-     "notas": "Desactivada 2026-09-16: rss_url da 404, autodiscovery contra la home tampoco "
-              "encontro un feed valido, verificado en vivo."},
     {"categoria": "Temas Agrarios", "pais": "PE", "nombre": "AGAP",
      "url": "https://agapperu.org/", "tipo": "html",
      "notas": "Asociacion de Gremios Productores Agrarios del Peru"},
@@ -481,8 +313,7 @@ FUENTES_PE: list[dict] = [
      "rss_url": "https://www.cepes.org.pe/feed/", "tipo": "rss"},
     {"categoria": "Temas Salud", "pais": "PE", "nombre": "Salud con Lupa",
      "url": "https://saludconlupa.com/noticias/",
-     # 2026-09-27: RSS propio (20 notas) en vez del html (11); era "Temas Agrarios"
-     # y eso le ponia el tema Crop a notas de salud (ollas comunes, adultos mayores).
+     # Categoria "Temas Agrarios" le ponia Crop a sus notas de salud y sociales.
      "rss_url": "https://saludconlupa.com/feed/", "tipo": "rss",
      "notas": "Periodismo de investigacion (salud + regulacion agraria, ej. "
               "control de plaguicidas) - pedido explicito de Nicolas "
@@ -490,10 +321,6 @@ FUENTES_PE: list[dict] = [
               "(salud, social, etc.), el filtro de cliente exige que el "
               "titulo/resumen matcheen agro/salud de verdad, no toda la "
               "seccion 'noticias' del sitio."},
-    {"categoria": "Temas Agrarios", "pais": "PE",
-     "nombre": "Sociedad Peruana de Derecho Ambiental",
-     "url": "https://spda.org.pe/",
-     "rss_url": "https://spda.org.pe/feed/", "tipo": "rss", "activa": 0, "notas": "Feed roto - cubierto por Google News"},
 
     # --- TEMAS AGRARIOS: portales especializados nuevos ---
     {"categoria": "Temas Agrarios", "pais": "PE", "nombre": "Redagricola",
@@ -508,12 +335,6 @@ FUENTES_PE: list[dict] = [
      "url": "https://www.servindi.org/",
      "rss_url": "https://www.servindi.org/rss.xml", "tipo": "rss",
      "notas": "Servicios en comunicacion intercultural - foco comunidades y agro rural"},
-    {"categoria": "Temas Agrarios", "pais": "PE", "nombre": "Andina (agencia oficial - agro)",
-     "url": "https://andina.pe/agencia/seccion.aspx?codseccion=6",
-     "rss_url": "https://andina.pe/agencia/rss.aspx?codseccion=6", "tipo": "rss", "activa": 0,
-     "notas": "Desactivada 2026-09-13: el parametro codseccion ya no filtra nada - probado en "
-              "vivo del 1 al 10, TODOS devuelven el mismo feed generico (futbol, cine, policia,"
-              " turismo). Estaba tageada bayer+syngenta y metia ruido real de todo tipo."},
     {"categoria": "Temas Agrarios", "pais": "PE", "nombre": "AgroNoticias Peru",
      "url": "https://agronoticias.pe/",
      "rss_url": "https://agronoticias.pe/feed/", "tipo": "rss",
@@ -523,26 +344,9 @@ FUENTES_PE: list[dict] = [
     {"categoria": "Temas KYC/AML", "pais": "PE", "nombre": "SBS - Resoluciones",
      "url": "https://www.sbs.gob.pe/", "tipo": "html",
      "notas": "Superintendencia de Banca, Seguros y AFP - normativa"},
-    {"categoria": "Temas KYC/AML", "pais": "PE", "nombre": "Fintech Peru",
-     "url": "https://fintechperu.com/",
-     "rss_url": "https://fintechperu.com/feed/", "tipo": "rss", "activa": 0,
-     "notas": "Desactivada 2026-09-16: HTTP 500 consistente en el feed, verificado en vivo "
-              "(sitio con error, no problema de nuestro parser)."},
-    {"categoria": "Temas KYC/AML", "pais": "PE",
-     "nombre": "Google News PE — SUNAT",
-     "url": "https://news.google.com/rss/search?q=SUNAT+Peru&hl=es-419&gl=PE&ceid=PE:es",
-     "rss_url": "https://news.google.com/rss/search?q=SUNAT+Peru&hl=es-419&gl=PE&ceid=PE:es",
-     "tipo": "rss", "notas": "Query: SUNAT Peru"},
-    {"categoria": "Temas KYC/AML", "pais": "PE",
-     "nombre": "Google News PE — BCRP",
-     "url": "https://news.google.com/rss/search?q=BCRP+Peru&hl=es-419&gl=PE&ceid=PE:es",
-     "rss_url": "https://news.google.com/rss/search?q=BCRP+Peru&hl=es-419&gl=PE&ceid=PE:es",
-     "tipo": "rss", "notas": "Query: BCRP Peru"},
-    {"categoria": "Temas KYC/AML", "pais": "PE",
-     "nombre": "Google News PE — UIF lavado",
-     "url": "https://news.google.com/rss/search?q=UIF+lavado+activos+Peru&hl=es-419&gl=PE&ceid=PE:es",
-     "rss_url": "https://news.google.com/rss/search?q=UIF+lavado+activos+Peru&hl=es-419&gl=PE&ceid=PE:es",
-     "tipo": "rss", "notas": "Query: UIF lavado activos Peru"},
+    _gn("PE", "Temas KYC/AML", "SUNAT", "SUNAT+Peru"),
+    _gn("PE", "Temas KYC/AML", "BCRP", "BCRP+Peru"),
+    _gn("PE", "Temas KYC/AML", "UIF lavado", "UIF+lavado+activos+Peru"),
 
     # --- TEMAS SALUD ---
         {"categoria": "Temas Salud", "pais": "PE",
@@ -558,33 +362,14 @@ FUENTES_PE: list[dict] = [
      "nombre": "Colegio de Quimicos Farmaceuticos del Peru",
      "url": "https://cqfp.pe/",
      "rss_url": "https://cqfp.pe/feed/", "tipo": "rss"},
-    {"categoria": "Temas Salud", "pais": "PE", "nombre": "Voces Ciudadanas",
-     "url": "https://vocesciudadanas.org.pe/", "tipo": "html", "activa": 0,
-     "notas": "Desactivada 2026-09-16: dominio no resuelve (DNS NXDOMAIN), verificado en vivo."},
-    {"categoria": "Temas Salud", "pais": "PE", "nombre": "Esperantra",
-     "url": "https://esperantra.org/",
-     "rss_url": "https://esperantra.org/feed/", "tipo": "rss", "activa": 0,
-     "notas": "Desactivada 2026-09-16: HTTP 503 consistente en el feed, verificado en vivo "
-              "(sitio caido, no problema de nuestro parser)."},
     {"categoria": "Temas Salud", "pais": "PE", "nombre": "Lazo Rosado",
      "url": "https://lazorosado.org/",
      "rss_url": "https://lazorosado.org/feed/", "tipo": "rss"},
-    {"categoria": "Temas Salud", "pais": "PE",
-     "nombre": "Federacion Peruana de Enfermedades Raras",
-     "url": "https://fepper.org.pe/", "tipo": "html", "activa": 0,
-     "notas": "Desactivada 2026-09-16: dominio no resuelve (DNS NXDOMAIN), verificado en vivo."},
     # --- Salud PE: portales nuevos ---
     {"categoria": "Temas Salud", "pais": "PE", "nombre": "Diario Medico Peru",
      "url": "https://diariomedico.pe/",
      "rss_url": "https://diariomedico.pe/feed/", "tipo": "rss",
      "notas": "Medio especializado salud/farma"},
-    {"categoria": "Temas Salud", "pais": "PE",
-     "nombre": "Andina (agencia oficial - salud)",
-     "url": "https://andina.pe/agencia/seccion.aspx?codseccion=1",
-     "rss_url": "https://andina.pe/agencia/rss.aspx?codseccion=1",
-     "tipo": "rss", "activa": 0,
-     "notas": "Desactivada 2026-09-13: mismo bug que la fuente agro hermana - codseccion ya "
-              "no filtra, devuelve el feed generico de Andina completo."},
 
     # --- TEMAS TECH ---
     {"categoria": "Temas Tech", "pais": "PE", "nombre": "Niubox Legal",
@@ -595,12 +380,6 @@ FUENTES_PE: list[dict] = [
               "habia encontrado la URL real - es la categoria 'nius' "
               "(consultora legal, seccion de noticias/blog), no el home. RSS "
               "real verificado en vivo 2026-09-16 (10 items)."},
-    {"categoria": "Temas Tech", "pais": "PE", "nombre": "Comex Peru",
-     "url": "https://www.comexperu.org.pe/",
-     "rss_url": "https://www.comexperu.org.pe/feed/", "tipo": "rss", "activa": 0,
-     "notas": "Desactivada 2026-09-16: rss_url da 404, autodiscovery contra la home "
-              "tampoco encontro un feed valido, verificado en vivo. La home no tiene "
-              "un listado de noticias parseable (solo paginas institucionales)."},
     {"categoria": "Temas Tech", "pais": "PE", "nombre": "DPL News Peru",
      "url": "https://dplnews.com/",
      "rss_url": "https://dplnews.com/feed/", "tipo": "rss",
@@ -657,19 +436,6 @@ FUENTES_EC: list[dict] = [
      "rss_url": "https://news.google.com/rss/search?q=site:eltelegrafo.com.ec+when:1d&hl=es-419&gl=EC&ceid=EC:es", "tipo": "rss"},
     {"categoria": "Coyuntura Politica", "pais": "EC", "nombre": "Gestion",
      "url": "https://www.revistagestion.ec/", "tipo": "html"},
-    {"categoria": "Coyuntura Politica", "pais": "EC",
-     "nombre": "Bloomberg Linea Ecuador",
-     "url": "https://www.bloomberglinea.com/ecuador/",
-     "rss_url": "https://www.bloomberglinea.com/arc/outboundfeeds/rss/?outputType=xml",
-     "tipo": "rss", "activa": 0,
-     "notas": "Auditoria 2026-09-14: el rss_url declarado NUNCA fue especifico "
-              "de Ecuador - es el feed global del sitio (mercados LATAM, Fed, "
-              "Argentina/Mexico/Colombia), verificado en vivo con 0 de 25 "
-              "titulos recientes sobre Ecuador. No se encontro una URL de "
-              "categoria Ecuador que funcione (probadas varias, todas 404). "
-              "Se muestra a TODOS los clientes via categoria->todos, asi que "
-              "traia ruido financiero global constante. Mismo patron que "
-              "Andina codseccion (ver arriba)."},
 
     # --- INSTITUCION ---
     {"categoria": "Institucion", "pais": "EC",
@@ -677,53 +443,19 @@ FUENTES_EC: list[dict] = [
      "url": "https://proyectosdeley.asambleanacional.gob.ec/",
      "tipo": "html",
      "notas": "Cubierto por modulo scraper_ec/"},
-    {"categoria": "Institucion", "pais": "EC", "nombre": "Registro Oficial",
-     "url": "https://www.registroficial.gob.ec/", "tipo": "html", "activa": 0,
-     "notas": "Desactivada 2026-09-16: duplicada/redundante con "
-              "'Registro Oficial EC (indice)' (ver noticias/registro_oficial_ec.py, "
-              "que SI cubre ediciones principales y suplementos via PDF+OCR) - "
-              "esta entrada usaba el scraper HTML generico contra una pagina "
-              "de WordPress con indice-en-texto-plano que ese scraper no puede "
-              "parsear, 0 noticias jamas (verificado contra la DB real)."},
-    {"categoria": "Institucion", "pais": "EC", "nombre": "Decretos Presidenciales",
-     "url": "https://www.presidencia.gob.ec/decretos/", "tipo": "html", "activa": 0,
-     "notas": "Desactivada 2026-09-16: pagina abandonada, un solo decreto listado "
-              "(2021) - verificado en vivo. Los decretos reales se publican en el "
-              "portal Minka (minka.presidencia.gob.ec), una app JSF sin listado "
-              "HTML parseable."},
     {"categoria": "Institucion", "pais": "EC", "nombre": "Registro Civil (DIGERCIC)",
      "url": "https://www.registrocivil.gob.ec/noticias/",
      "rss_url": "https://www.registrocivil.gob.ec/feed/", "tipo": "rss",
      "notas": "Cedula digital - foco explicito de Incode en Ecuador (verificado en vivo 2026-09-12)"},
-    {"categoria": "Institucion", "pais": "EC",
-     "nombre": "Google News EC — Cédula digital",
-     "url": "https://news.google.com/rss/search?q=%22c%C3%A9dula+digital%22+Ecuador&hl=es-419&gl=EC&ceid=EC:es",
-     "rss_url": "https://news.google.com/rss/search?q=%22c%C3%A9dula+digital%22+Ecuador&hl=es-419&gl=EC&ceid=EC:es",
-     "tipo": "rss", "notas": "Query: 'cedula digital' Ecuador - complementa Registro Civil con cobertura de medios"},
+    _gn("EC", "Institucion", "Cédula digital", "%22c%C3%A9dula+digital%22+Ecuador"),
     # Cobertura de normativa EC vía Google News
-    {"categoria": "Institucion", "pais": "EC",
-     "nombre": "Google News EC — Decreto Ejecutivo",
-     "url": "https://news.google.com/rss/search?q=%22Decreto+Ejecutivo%22+Ecuador&hl=es-419&gl=EC&ceid=EC:es",
-     "rss_url": "https://news.google.com/rss/search?q=%22Decreto+Ejecutivo%22+Ecuador&hl=es-419&gl=EC&ceid=EC:es",
-     "tipo": "rss", "notas": "Query: 'Decreto Ejecutivo' Ecuador"},
-    {"categoria": "Institucion", "pais": "EC",
-     "nombre": "Google News EC — Registro Oficial",
-     "url": "https://news.google.com/rss/search?q=%22Registro+Oficial%22+Ecuador&hl=es-419&gl=EC&ceid=EC:es",
-     "rss_url": "https://news.google.com/rss/search?q=%22Registro+Oficial%22+Ecuador&hl=es-419&gl=EC&ceid=EC:es",
-     "tipo": "rss", "notas": "Query: 'Registro Oficial' Ecuador"},
-    {"categoria": "Institucion", "pais": "EC",
-     "nombre": "Google News EC — Ley Orgánica",
-     "url": "https://news.google.com/rss/search?q=%22Ley+Org%C3%A1nica%22+Ecuador+Asamblea&hl=es-419&gl=EC&ceid=EC:es",
-     "rss_url": "https://news.google.com/rss/search?q=%22Ley+Org%C3%A1nica%22+Ecuador+Asamblea&hl=es-419&gl=EC&ceid=EC:es",
-     "tipo": "rss", "notas": "Query: 'Ley Orgánica' Ecuador Asamblea"},
+    _gn("EC", "Institucion", "Decreto Ejecutivo", "%22Decreto+Ejecutivo%22+Ecuador"),
+    _gn("EC", "Institucion", "Registro Oficial", "%22Registro+Oficial%22+Ecuador"),
+    _gn("EC", "Institucion", "Ley Orgánica", "%22Ley+Org%C3%A1nica%22+Ecuador+Asamblea"),
     {"categoria": "Institucion", "pais": "EC",
      "nombre": "Portal de la Asamblea Nacional",
      "url": "https://www.asambleanacional.gob.ec/",
-     # Auditoria 2026-09-14 (Nicolas: "lo de noticias de la Asamblea no lo
-     # has capturado, mi companera envio alertas de hoy que no sacaste"):
-     # la URL vieja (.../es/noticias/feed) devuelve 404 en vivo - el sitio
-     # se reestructuro. Verificado en vivo: la real es /es/rss.xml
-     # (declarada como <link rel="alternate"> en la home del sitio).
+     # El feed viejo (/es/noticias/feed) da 404; el real es /es/rss.xml.
      "rss_url": "https://www.asambleanacional.gob.ec/es/rss.xml",
      "tipo": "rss"},
     {"categoria": "Institucion", "pais": "EC",
@@ -732,16 +464,6 @@ FUENTES_EC: list[dict] = [
      "tipo": "html",
      "notas": "Cubierto por modulo agenda_ec/"},
     {"categoria": "Institucion", "pais": "EC",
-     "nombre": "Ministerio de Economia y Finanzas",
-     "url": "https://www.finanzas.gob.ec/category/comunicamos/noticias/",
-     "rss_url": "https://www.finanzas.gob.ec/feed/", "tipo": "rss", "activa": 0,
-     "notas": "Desactivada 2026-09-16: confirmado con la matriz de monitoreo "
-              "(clientes/_plantillas/matriz_monitoreo/, investigado 2026-09-12) - "
-              "Decreto Ejecutivo 425 (~19/06/2026) fusiono Agricultura+Finanzas+"
-              "Produccion en el 'Ministerio de Desarrollo Economico y Productivo' "
-              "(economicoproductivo.gob.ec). Reemplazada por esa fuente unica, "
-              "ver mas abajo en Temas Agrarios."},
-    {"categoria": "Institucion", "pais": "EC",
      "nombre": "Ministerio de Relaciones Exteriores y Movilidad Humana",
      "url": "https://www.cancilleria.gob.ec/noticias-cancilleria/",
      "rss_url": "https://www.cancilleria.gob.ec/feed/", "tipo": "rss"},
@@ -749,33 +471,8 @@ FUENTES_EC: list[dict] = [
      "nombre": "ARCSA (Regulacion Sanitaria)",
      "url": "https://www.controlsanitario.gob.ec/noticias/",
      "rss_url": "https://www.controlsanitario.gob.ec/feed/", "tipo": "rss"},
-    {"categoria": "Institucion", "pais": "EC",
-     "nombre": "ARCSA - Normativa",
-     "url": "https://www.controlsanitario.gob.ec/documentos-vigentes/", "tipo": "html",
-     "activa": 0,
-     "notas": "Desactivada 2026-09-16: solo 4 PDFs listados en total, ninguno de "
-              "los ultimos 3 anios - pagina practicamente abandonada, verificado "
-              "en vivo."},
 
     # --- TEMAS AGRARIOS ---
-    {"categoria": "Temas Agrarios", "pais": "EC",
-     "nombre": "Resoluciones Ministerio de Agricultura",
-     "url": "https://www.agricultura.gob.ec/normativa/", "tipo": "html", "activa": 0,
-     "notas": "Desactivada 2026-09-16: la URL en realidad muestra 'Normativa "
-              "Consejo Nacional de la Leche y sus Derivados' (nicho lacteo, no "
-              "normativa agraria general), solo 2 PDFs - verificado en vivo. "
-              "Ademas el dominio agricultura.gob.ec quedo obsoleto por la fusion "
-              "ministerial (ver 'Ministerio de Desarrollo Economico y Productivo' "
-              "mas abajo)."},
-    {"categoria": "Temas Agrarios", "pais": "EC",
-     "nombre": "Ministerio de Agricultura y Ganaderia",
-     "url": "https://www.agricultura.gob.ec/noticias/",
-     "rss_url": "https://www.agricultura.gob.ec/feed/", "tipo": "rss", "activa": 0,
-     "notas": "Desactivada 2026-09-16: confirmado con la matriz de monitoreo "
-              "(investigado 2026-09-12) - Decreto Ejecutivo 425 (~19/06/2026) "
-              "fusiono Agricultura+Finanzas+Produccion en el 'Ministerio de "
-              "Desarrollo Economico y Productivo'. Reemplazada por esa fuente "
-              "unica, ver mas abajo."},
     {"categoria": "Temas Agrarios", "pais": "EC",
      "nombre": "Ministerio de Ambiente y Energia (MAE)",
      "url": "https://www.ambienteyenergia.gob.ec/noticias/",
@@ -800,28 +497,6 @@ FUENTES_EC: list[dict] = [
               "produccion.gob.ec) quedan obsoletos. Confirmado con la matriz de "
               "monitoreo (investigado 2026-09-12), RSS real verificado en vivo "
               "2026-09-16 (10 items)."},
-    {"categoria": "Temas Agrarios", "pais": "EC",
-     "nombre": "Ministerio del Ambiente",
-     "url": "https://www.ambiente.gob.ec/noticias/", "tipo": "html", "activa": 0,
-     "notas": "Desactivada 2026-09-16: dominio viejo descontinuado, fusionado en "
-              "'Ministerio de Ambiente y Energia (MAE)' - ver esa entrada, mismo "
-              "dominio nuevo ambienteyenergia.gob.ec. SSLError consistente en "
-              "pruebas en vivo (2026-09-12 y 2026-09-16)."},
-    {"categoria": "Temas Agrarios", "pais": "EC",
-     "nombre": "Ministerio del Ambiente - Normativa",
-     "url": "https://www.ambiente.gob.ec/normativa-1/", "tipo": "html", "activa": 0,
-     "notas": "Desactivada 2026-09-16: mismo dominio viejo que 'Ministerio del "
-              "Ambiente' - ver esa entrada y 'Ministerio de Ambiente y Energia "
-              "(MAE)'."},
-    {"categoria": "Temas Agrarios", "pais": "EC",
-     "nombre": "Ministerio de Produccion Comercio Exterior",
-     "url": "https://www.produccion.gob.ec/noticias/",
-     "rss_url": "https://www.produccion.gob.ec/feed/", "tipo": "rss", "activa": 0,
-     "notas": "Desactivada 2026-09-16: confirmado con la matriz de monitoreo "
-              "(investigado 2026-09-12) - Decreto Ejecutivo 425 (~19/06/2026) "
-              "fusiono Agricultura+Finanzas+Produccion en el 'Ministerio de "
-              "Desarrollo Economico y Productivo'. Reemplazada por esa fuente "
-              "unica, ver mas arriba."},
     {"categoria": "Temas Agrarios", "pais": "EC",
      "nombre": "Agencia de Regulacion y Control Fito y Zoosanitario",
      "url": "https://www.agrocalidad.gob.ec/category/noticias/",
@@ -861,65 +536,24 @@ FUENTES_EC: list[dict] = [
      "nombre": "Ministerio de Telecomunicaciones",
      "url": "https://www.telecomunicaciones.gob.ec/category/catactualidad/",
      "rss_url": "https://www.telecomunicaciones.gob.ec/feed/", "tipo": "rss"},
-    {"categoria": "Temas KYC/AML", "pais": "EC",
-     "nombre": "Ministerio de Telecomunicaciones - Normativa",
-     "url": "https://www.telecomunicaciones.gob.ec/normativa/", "tipo": "html",
-     "activa": 0,
-     "notas": "Desactivada 2026-09-16: los PDFs listados son todos de 2017 - "
-              "pagina abandonada, verificado en vivo."},
-    {"categoria": "Temas KYC/AML", "pais": "EC",
-     "nombre": "Superintendencia de Proteccion de Datos Personales",
-     "url": "https://www.proteccionderechos.gob.ec/", "tipo": "html", "activa": 0,
-     "notas": "Desactivada 2026-09-16: dominio no resuelve (DNS NXDOMAIN), verificado en vivo. "
-              "OJO 2026-09-24: ese dominio era el EQUIVOCADO - el real es spdp.gob.ec, pero "
-              "su /feed/ esta vacio y /wp-json/wp/v2/posts devuelve [] (las resoluciones "
-              "son paginas sueltas, ej. spdp.gob.ec/r39/). Sus normas llegan via "
-              "Registro Oficial EC (indice) con tag interes-cliente."},
     {"categoria": "Temas KYC/AML", "pais": "EC", "nombre": "DPL News Ecuador",
      "url": "https://dplnews.com/",
      "rss_url": "https://dplnews.com/feed/", "tipo": "rss"},
 
     # --- TEMAS SALUD ---
-    {"categoria": "Temas Salud", "pais": "EC", "nombre": "Proyectos normativos ARCSA",
-     "url": "https://www.controlsanitario.gob.ec/proyectos-normativos/",
-     "tipo": "html", "activa": 0,
-     "notas": "Desactivada 2026-09-16: la pagina da HTTP 404, verificado en vivo (la URL real "
-              "del sitio cambio o ya no existe esa seccion)."},
     {"categoria": "Temas Salud", "pais": "EC",
      "nombre": "Ministerio de Salud Publica",
      "url": "https://www.salud.gob.ec/noticias/",
      "rss_url": "https://www.salud.gob.ec/feed/", "tipo": "rss"},
-    {"categoria": "Temas Salud", "pais": "EC",
-     "nombre": "Ministerio de Salud Publica - Normativa",
-     "url": "https://www.salud.gob.ec/marco-normativo/", "tipo": "html", "activa": 0,
-     "notas": "Desactivada 2026-09-16: la pagina no tiene ni un solo link a "
-              "documento real (pdf/doc), verificado en vivo."},
     {"categoria": "Temas Salud", "pais": "EC", "nombre": "IESS (Seg. Social)",
      "url": "https://www.iess.gob.ec/es/web/guest/sala-de-prensa", "tipo": "html",
      "notas": "Timeout consistente en pruebas en vivo (2026-09-12), no se pudo confirmar RSS"},
-    {"categoria": "Temas Salud", "pais": "EC", "nombre": "ALAFAR Ecuador",
-     "url": "https://www.alafar.org/", "tipo": "html", "activa": 0,
-     "notas": "Desactivada 2026-09-16: alafar.org es la Asociacion Latinoamericana "
-              "de Fabricantes de Refractarios (materiales industriales), NO la "
-              "asociacion farmaceutica - colision de sigla, verificado en vivo "
-              "(pagina real sobre refractarios, nada de salud/farma). Si existe "
-              "una ALAFAR farmaceutica real, falta confirmar la URL correcta."},
     {"categoria": "Temas Salud", "pais": "EC", "nombre": "SOLCA Ecuador",
      "url": "https://www.solca.med.ec/", "tipo": "html",
      "notas": "OJO (2026-09-16): HTTP 403 consistente desde IPs de GH Actions "
               "(pero funciona bien, 17 items reales, probado desde otra IP) - "
               "mismo patron de bloqueo por IP de datacenter que CONAIE/Ambiente "
               "EC. Se deja activa por si alguna corrida logra pasar."},
-    {"categoria": "Temas Salud", "pais": "EC",
-     "nombre": "Jovenes Contra el Cancer Ecuador",
-     "url": "https://jovenescontraelcancerec.org/", "tipo": "html", "activa": 0,
-     "notas": "Desactivada 2026-09-16: dominio no resuelve (DNS NXDOMAIN), verificado en vivo."},
-    {"categoria": "Temas Salud", "pais": "EC", "nombre": "Pacientes Ecuador",
-     "url": "https://pacientesecuador.org/", "tipo": "html", "activa": 0,
-     "notas": "Desactivada 2026-09-16: HTTP 403 consistente incluso con el bypass "
-              "de cloudscraper, verificado tanto desde GH Actions como desde otra "
-              "IP - bot-block real del sitio, no problema de IP de datacenter "
-              "como CONAIE/SOLCA."},
     {"categoria": "Temas Salud", "pais": "EC", "nombre": "Edicion Medica",
      "url": "https://www.edicionmedica.ec/",
      "tipo": "html",
@@ -931,64 +565,12 @@ FUENTES_EC: list[dict] = [
     {"categoria": "Temas Tech", "pais": "EC", "nombre": "Criptonoticias",
      "url": "https://www.criptonoticias.com/",
      "rss_url": "https://www.criptonoticias.com/feed/", "tipo": "rss"},
-    {"categoria": "Temas Tech", "pais": "EC",
-     "nombre": "Camara Ecuatoriana de Comercio Exterior",
-     "url": "https://www.cce.org.ec/", "tipo": "html", "activa": 0,
-     "notas": "Desactivada 2026-09-16: dominio no resuelve (DNS NXDOMAIN), verificado en vivo."},
-    {"categoria": "Temas Tech", "pais": "EC", "nombre": "Forbes Digital Ecuador",
-     "url": "https://www.forbes.com.ec/",
-     "rss_url": "https://www.forbes.com.ec/feed/", "tipo": "rss", "activa": 0,
-     "notas": "Desactivada 2026-09-16: el feed responde HTTP 200 con XML valido "
-              "pero <channel> sin ningun <item> adentro - feed vacio del lado del "
-              "sitio, verificado en vivo (no es bug de nuestro parser)."},
-    {"categoria": "Temas Tech", "pais": "EC", "nombre": "DPL Tech Ecuador",
-     "url": "https://dplnews.com/", "tipo": "rss",
-     "rss_url": "https://dplnews.com/feed/", "activa": 0,
-     "notas": "Desactivada 2026-09-20: mismo feed EXACTO que 'DPL News Peru' "
-              "(pais=PE) y 'DPL News Ecuador' (pais=EC, categoria KYC/AML) - "
-              "3 filas de catalogo apuntando a dplnews.com/feed/. Como "
-              "noticias.url es UNIQUE, cada articulo se lo queda la primera "
-              "fila que sincroniza - esta siempre llega ultima (verificado en "
-              "vivo: '[DPL Tech Ecuador] 10 items' cada corrida, 0 nuevas "
-              "reales siempre). Fetch desperdiciado sin beneficio real -"
-              " el pais real de cada articulo ya se corrige por contenido "
-              "en noticias/temas.py:pais_por_contenido() via las otras 2."},
-    {"categoria": "Temas Tech", "pais": "EC",
-     "nombre": "Camara de Innovacion y Tecnologia Ecuatoriana",
-     "url": "https://www.cite.org.ec/", "tipo": "html", "activa": 0,
-     "notas": "Desactivada 2026-09-16: dominio no resuelve (DNS NXDOMAIN), verificado en vivo."},
 ]
 
 
 # ============================================================
-# GOOGLE NEWS RSS por keyword (cobertura mediatica automatica)
+# GOOGLE NEWS (busquedas por tema)
 # ============================================================
-# Google News expone busquedas como RSS: cero API key, ~100 items/query,
-# ordenado por relevancia+fecha, incluye todos los medios que indexa.
-# Reemplaza el 80% de la agenda mediatica sin depender de feeds propios rotos.
-#
-# Doc: https://news.google.com/rss/search?q=<query>&hl=<lang>&gl=<pais>&ceid=<pais>:<lang>
-# Cada entrada aca genera una "fuente" que se scrapea como RSS normal.
-
-_GN_LANG = "es-419"
-
-def _gn(pais: str, categoria: str, nombre: str, query: str) -> dict:
-    """Genera un dict fuente para Google News RSS."""
-    gl = pais  # PE, EC, CO, AR, CL, UY
-    ceid = f"{pais}:es"
-    url = (f"https://news.google.com/rss/search?q={query}"
-           f"&hl={_GN_LANG}&gl={gl}&ceid={ceid}")
-    return {
-        "categoria": categoria,
-        "pais": pais,
-        "nombre": f"Google News {pais} — {nombre}",
-        "url": url,
-        "rss_url": url,
-        "tipo": "rss",
-        "notas": f"Query: {query}",
-    }
-
-
 FUENTES_GOOGLE_NEWS: list[dict] = [
     # --- SALUD / FARMA (Bayer Farma, Gilead) ---
     _gn("PE", "Salud", "DIGEMID", "DIGEMID+medicamentos"),
@@ -999,7 +581,6 @@ FUENTES_GOOGLE_NEWS: list[dict] = [
     _gn("EC", "Salud", "ARCSA", "ARCSA+medicamentos"),
     _gn("EC", "Salud", "MSP", "Ministerio+Salud+Publica+Ecuador+reforma"),
     _gn("EC", "Salud", "IESS medicamentos", "IESS+medicamentos+desabastecimiento"),
-    # Cono Sur (Gilead)
 
     # --- AGRO (Bayer Crop, Syngenta) ---
     _gn("PE", "Agro", "SENASA", "SENASA+plaguicidas"),
@@ -1011,14 +592,8 @@ FUENTES_GOOGLE_NEWS: list[dict] = [
     _gn("EC", "Agro", "Agrocalidad", "Agrocalidad+plaguicidas"),
     _gn("EC", "Agro", "MAG plaguicidas", "MAG+Ecuador+plaguicidas"),
     _gn("EC", "Agro", "Bioinsumos", "bioinsumos+Ecuador+agroecologia"),
-    # Fase 3 (2026-09-13): Ecuador - las noticias se actualizan mas rapido
-    # que el portal Ppless v2 (sync cada 4-6h via workflow, sin Playwright
-    # en Streamlit Cloud). Estas queries cubren temas puntuales que las
-    # matrices de Bayer Crop/Syngenta ya trackean a mano via comentarios de
-    # actualizacion (confirmado: 0 de 2145 noticias EC citan el numero de
-    # tramite exacto - no se puede cruzar por ID, solo por tema/keyword,
-    # igual que ya hacia "Facultades legislativas" para PE). "clientes"
-    # explicito (no categoria) para no depender del fallback "Agro".
+    # PL de Ecuador que siguen las matrices de Bayer/Syngenta: la prensa los
+    # cuenta antes que el portal de la Asamblea, y solo se cruzan por tema.
     {**_gn("EC", "Agro", "Semillas transgenicos", "semillas+transgenicos+Ecuador+OVM"),
      "clientes": ["bayer", "syngenta"]},
     {**_gn("EC", "Agro", "Paramos OVM", "Ley+Paramos+Ecuador+organismos+geneticamente+modificados"),
@@ -1038,11 +613,8 @@ FUENTES_GOOGLE_NEWS: list[dict] = [
     _gn("PE", "Digital", "OCDE Peru", "adhesion+OCDE+Peru+digital"),
     _gn("EC", "Digital", "MINTEL datos", "MINTEL+Ecuador+proteccion+datos"),
     _gn("EC", "Digital", "IA Ecuador", "inteligencia+artificial+Ecuador+ley"),
-    # Fase 3 (2026-09-13): igual que en Agro arriba, temas puntuales que la
-    # matriz Incode EC ya trackea a mano. "clientes" explicito = ["incode"]
-    # (NO uso la categoria "Digital", que via CATEGORIA_CLIENTES tambien
-    # tagea a google - confirmado 2026-09-12 que Google no tiene alcance
-    # EC en su notas.md, no hay base para asumirlo aca tampoco).
+    # Igual, matriz Incode EC. Solo incode: la categoria "Digital" sumaria a
+    # Google, que no cubre Ecuador.
     {**_gn("EC", "Digital", "Ciberseguridad ley", "Ley+Organica+Ciberseguridad+Ecuador"),
      "clientes": ["incode"]},
     {**_gn("EC", "Digital", "Lavado activos COIP", "COIP+lavado+activos+Ecuador+personas+juridicas"),
@@ -1059,236 +631,6 @@ FUENTES_GOOGLE_NEWS: list[dict] = [
     _gn("PE", "Financiero", "SBS fintech", "SBS+fintech+Peru"),
     _gn("PE", "Financiero", "Finanzas abiertas", "finanzas+abiertas+Peru+open+finance"),
 
-    {"categoria": 'Temas Salud', "pais": 'PE',
-     "nombre": 'X - Federacion Medica Peruana',
-     "url": 'https://x.com/FMedicaPeruana',
-     "rss_url": 'https://nitter.net/FMedicaPeruana/rss', "tipo": "rss",
-     "notas": "X/Twitter via nitter.net (rate-limited)"},
-    {"categoria": 'Temas Salud', "pais": 'PE',
-     "nombre": 'X - Colegio Medico Peru',
-     "url": 'https://x.com/CMP_PERU',
-     "rss_url": 'https://nitter.net/CMP_PERU/rss', "tipo": "rss",
-     "notas": "X/Twitter via nitter.net (rate-limited)"},
-    {"categoria": 'Temas Salud', "pais": 'PE',
-     "nombre": 'X - CMP Lima',
-     "url": 'https://x.com/CMPLIMAIII',
-     "rss_url": 'https://nitter.net/CMPLIMAIII/rss', "tipo": "rss",
-     "notas": "X/Twitter via nitter.net (rate-limited)"},
-    {"categoria": 'Temas Salud', "pais": 'PE',
-     "nombre": 'X - Edson Aguilar',
-     "url": 'https://x.com/EdsonAguilar20',
-     "rss_url": 'https://nitter.net/EdsonAguilar20/rss', "tipo": "rss",
-     "notas": "X/Twitter via nitter.net (rate-limited)"},
-    {"categoria": 'Temas Salud', "pais": 'PE',
-     "nombre": 'X - Instituto Nacional de Salud',
-     "url": 'https://x.com/INS_Peru',
-     "rss_url": 'https://nitter.net/INS_Peru/rss', "tipo": "rss",
-     "notas": "X/Twitter via nitter.net (rate-limited)"},
-    {"categoria": 'Temas Salud', "pais": 'PE',
-     "nombre": 'X - Voces Ciudadanas',
-     "url": 'https://x.com/VocesCiudadana2',
-     "rss_url": 'https://nitter.net/VocesCiudadana2/rss', "tipo": "rss",
-     "notas": "X/Twitter via nitter.net (rate-limited)"},
-    {"categoria": 'Temas Salud', "pais": 'PE',
-     "nombre": 'X - SuSalud Peru',
-     "url": 'https://x.com/SuSaludPeru',
-     "rss_url": 'https://nitter.net/SuSaludPeru/rss', "tipo": "rss",
-     "notas": "X/Twitter via nitter.net (rate-limited)"},
-    {"categoria": 'Temas Salud', "pais": 'PE',
-     "nombre": 'X - EsSalud Peru',
-     "url": 'https://x.com/EsSaludPeru',
-     "rss_url": 'https://nitter.net/EsSaludPeru/rss', "tipo": "rss",
-     "notas": "X/Twitter via nitter.net (rate-limited)"},
-    {"categoria": 'Temas Salud', "pais": 'PE',
-     "nombre": 'X - SIS Peru',
-     "url": 'https://x.com/SISPeruOficial',
-     "rss_url": 'https://nitter.net/SISPeruOficial/rss', "tipo": "rss",
-     "notas": "X/Twitter via nitter.net (rate-limited)"},
-    {"categoria": 'Temas Salud', "pais": 'PE',
-     "nombre": 'X - ONG Esperantra',
-     "url": 'https://x.com/OngEsperantra',
-     "rss_url": 'https://nitter.net/OngEsperantra/rss', "tipo": "rss",
-     "notas": "X/Twitter via nitter.net (rate-limited)"},
-    {"categoria": 'Temas Salud', "pais": 'PE',
-     "nombre": 'X - Ernesto Bustamante',
-     "url": 'https://x.com/ErnesBustamante',
-     "rss_url": 'https://nitter.net/ErnesBustamante/rss', "tipo": "rss",
-     "notas": "X/Twitter via nitter.net (rate-limited)"},
-    {"categoria": 'Temas Salud', "pais": 'PE',
-     "nombre": 'X - CQFDL',
-     "url": 'https://x.com/CQFDL',
-     "rss_url": 'https://nitter.net/CQFDL/rss', "tipo": "rss",
-     "notas": "X/Twitter via nitter.net (rate-limited)"},
-    {"categoria": 'Temas Salud', "pais": 'PE',
-     "nombre": 'X - ESPERANTRA',
-     "url": 'https://x.com/ESPERANTRA',
-     "rss_url": 'https://nitter.net/ESPERANTRA/rss', "tipo": "rss",
-     "notas": "X/Twitter via nitter.net (rate-limited)"},
-    {"categoria": 'Temas Salud', "pais": 'PE',
-     "nombre": 'X - OPS/OMS Peru',
-     "url": 'https://x.com/OPSOMSPeru',
-     "rss_url": 'https://nitter.net/OPSOMSPeru/rss', "tipo": "rss",
-     "notas": "X/Twitter via nitter.net (rate-limited)"},
-    {"categoria": 'Temas Salud', "pais": 'PE',
-     "nombre": 'X - MINSA Peru',
-     "url": 'https://x.com/Minsa_Peru',
-     "rss_url": 'https://nitter.net/Minsa_Peru/rss', "tipo": "rss",
-     "notas": "X/Twitter via nitter.net (rate-limited)"},
-    {"categoria": 'Temas Salud', "pais": 'PE',
-     "nombre": 'X - Cayetano Heredia',
-     "url": 'https://x.com/CayetanoHeredia',
-     "rss_url": 'https://nitter.net/CayetanoHeredia/rss', "tipo": "rss",
-     "notas": "X/Twitter via nitter.net (rate-limited)"},
-    {"categoria": 'Temas Agrarios', "pais": 'EC',
-     "nombre": 'X - FEDEXPOR',
-     "url": 'https://x.com/Fedexpor',
-     "rss_url": 'https://nitter.net/Fedexpor/rss', "tipo": "rss",
-     "notas": "X/Twitter via nitter.net (rate-limited)"},
-    {"categoria": 'Temas Agrarios', "pais": 'EC',
-     "nombre": 'X - AGROBAN',
-     "url": 'https://x.com/AgrobanEC',
-     "rss_url": 'https://nitter.net/AgrobanEC/rss', "tipo": "rss",
-     "notas": "X/Twitter via nitter.net (rate-limited)"},
-    {"categoria": 'Temas Agrarios', "pais": 'EC',
-     "nombre": 'X - Agronegocios EC',
-     "url": 'https://x.com/redagronegocios',
-     "rss_url": 'https://nitter.net/redagronegocios/rss', "tipo": "rss",
-     "notas": "X/Twitter via nitter.net (rate-limited)"},
-    {"categoria": 'Temas Agrarios', "pais": 'EC',
-     "nombre": 'X - SENAE Aduana',
-     "url": 'https://x.com/SENAE_Aduana',
-     "rss_url": 'https://nitter.net/SENAE_Aduana/rss', "tipo": "rss",
-     "notas": "X/Twitter via nitter.net (rate-limited)"},
-    {"categoria": 'Temas Agrarios', "pais": 'EC',
-     "nombre": 'X - El Productor EC (X)',
-     "url": 'https://x.com/ElproductorEC',
-     "rss_url": 'https://nitter.net/ElproductorEC/rss', "tipo": "rss",
-     "notas": "X/Twitter via nitter.net (rate-limited)"},
-    {"categoria": 'Temas Agrarios', "pais": 'EC',
-     "nombre": 'X - Ambiente y Energia EC',
-     "url": 'https://x.com/EcuadorMAE',
-     "rss_url": 'https://nitter.net/EcuadorMAE/rss', "tipo": "rss",
-     "notas": "X/Twitter via nitter.net (rate-limited)"},
-    {"categoria": 'Temas Agrarios', "pais": 'EC',
-     "nombre": 'X - CORPEI',
-     "url": 'https://x.com/Corpei',
-     "rss_url": 'https://nitter.net/Corpei/rss', "tipo": "rss",
-     "notas": "X/Twitter via nitter.net (rate-limited)"},
-    {"categoria": 'Temas Agrarios', "pais": 'EC',
-     "nombre": 'X - Agrocalidad EC (X)',
-     "url": 'https://x.com/AgrocalidadEC',
-     "rss_url": 'https://nitter.net/AgrocalidadEC/rss', "tipo": "rss",
-     "notas": "X/Twitter via nitter.net (rate-limited)"},
-    {"categoria": 'Temas Agrarios', "pais": 'EC',
-     "nombre": 'X - Finanzas EC / Desarrollo',
-     "url": 'https://x.com/FinanzasEc',
-     "rss_url": 'https://nitter.net/FinanzasEc/rss', "tipo": "rss",
-     "notas": "X/Twitter via nitter.net (rate-limited)"},
-    {"categoria": 'Temas Agrarios', "pais": 'EC',
-     "nombre": 'X - INIAP EC',
-     "url": 'https://x.com/INIAPECUADOR',
-     "rss_url": 'https://nitter.net/INIAPECUADOR/rss', "tipo": "rss",
-     "notas": "X/Twitter via nitter.net (rate-limited)"},
-    {"categoria": 'Temas Agrarios', "pais": 'EC',
-     "nombre": 'X - ANECACAO EC',
-     "url": 'https://x.com/Anecacao_Ecu',
-     "rss_url": 'https://nitter.net/Anecacao_Ecu/rss', "tipo": "rss",
-     "notas": "X/Twitter via nitter.net (rate-limited)"},
-    {"categoria": 'Temas Agrarios', "pais": 'EC',
-     "nombre": 'X - Tanlly Vera',
-     "url": 'https://x.com/TanllyVera',
-     "rss_url": 'https://nitter.net/TanllyVera/rss', "tipo": "rss",
-     "notas": "X/Twitter via nitter.net (rate-limited)"},
-    {"categoria": 'Temas Agrarios', "pais": 'EC',
-     "nombre": 'X - Antonio Hidalgo',
-     "url": 'https://x.com/antoniohidalgom',
-     "rss_url": 'https://nitter.net/antoniohidalgom/rss', "tipo": "rss",
-     "notas": "X/Twitter via nitter.net (rate-limited)"},
-    {"categoria": 'Temas Agrarios', "pais": 'EC',
-     "nombre": 'X - Agricultura EC (MAG)',
-     "url": 'https://x.com/AgriculturaEc',
-     "rss_url": 'https://nitter.net/AgriculturaEc/rss', "tipo": "rss",
-     "notas": "X/Twitter via nitter.net (rate-limited)"},
-    {"categoria": 'Temas Agrarios', "pais": 'EC',
-     "nombre": 'X - Produccion EC',
-     "url": 'https://x.com/Produccion_Ecu',
-     "rss_url": 'https://nitter.net/Produccion_Ecu/rss', "tipo": "rss",
-     "notas": "X/Twitter via nitter.net (rate-limited)"},
-    {"categoria": 'Temas Agrarios', "pais": 'EC',
-     "nombre": 'X - Ines Manzano',
-     "url": 'https://x.com/inesmanzano',
-     "rss_url": 'https://nitter.net/inesmanzano/rss', "tipo": "rss",
-     "notas": "X/Twitter via nitter.net (rate-limited)"},
-    {"categoria": 'Coyuntura Politica', "pais": 'PE',
-     "nombre": 'X - ATV Noticias',
-     "url": 'https://x.com/atv_noticias',
-     "rss_url": 'https://nitter.net/atv_noticias/rss', "tipo": "rss",
-     "notas": "X/Twitter via nitter.net (rate-limited)"},
-    {"categoria": 'Coyuntura Politica', "pais": 'PE',
-     "nombre": 'X - Diario Trome',
-     "url": 'https://x.com/tromepe',
-     "rss_url": 'https://nitter.net/tromepe/rss', "tipo": "rss",
-     "notas": "X/Twitter via nitter.net (rate-limited)"},
-    {"categoria": 'Coyuntura Politica', "pais": 'PE',
-     "nombre": 'X - Hildebrandt en sus 13',
-     "url": 'https://x.com/ensustrece',
-     "rss_url": 'https://nitter.net/ensustrece/rss', "tipo": "rss",
-     "notas": "X/Twitter via nitter.net (rate-limited)"},
-    {"categoria": 'Coyuntura Politica', "pais": 'PE',
-     "nombre": 'X - Rosa Maria Palacios',
-     "url": 'https://x.com/rmapalacios',
-     "rss_url": 'https://nitter.net/rmapalacios/rss', "tipo": "rss",
-     "notas": "X/Twitter via nitter.net (rate-limited)"},
-    {"categoria": 'Coyuntura Politica', "pais": 'PE',
-     "nombre": 'X - IDL Reporteros',
-     "url": 'https://x.com/IDL_R',
-     "rss_url": 'https://nitter.net/IDL_R/rss', "tipo": "rss",
-     "notas": "X/Twitter via nitter.net (rate-limited)"},
-    {"categoria": 'Coyuntura Politica', "pais": 'PE',
-     "nombre": 'X - Diario Gestion (X)',
-     "url": 'https://x.com/Gestionpe',
-     "rss_url": 'https://nitter.net/Gestionpe/rss', "tipo": "rss",
-     "notas": "X/Twitter via nitter.net (rate-limited)"},
-    {"categoria": 'Coyuntura Politica', "pais": 'PE',
-     "nombre": 'X - Diario Correo',
-     "url": 'https://x.com/diariocorreo',
-     "rss_url": 'https://nitter.net/diariocorreo/rss', "tipo": "rss",
-     "notas": "X/Twitter via nitter.net (rate-limited)"},
-    {"categoria": 'Coyuntura Politica', "pais": 'PE',
-     "nombre": 'X - Latina Noticias',
-     "url": 'https://x.com/Latina_Noticias',
-     "rss_url": 'https://nitter.net/Latina_Noticias/rss', "tipo": "rss",
-     "notas": "X/Twitter via nitter.net (rate-limited)"},
-    {"categoria": 'Coyuntura Politica', "pais": 'PE',
-     "nombre": 'X - La Republica (X)',
-     "url": 'https://x.com/larepublica_pe',
-     "rss_url": 'https://nitter.net/larepublica_pe/rss', "tipo": "rss",
-     "notas": "X/Twitter via nitter.net (rate-limited)"},
-    {"categoria": 'Coyuntura Politica', "pais": 'PE',
-     "nombre": 'X - America Noticias',
-     "url": 'https://x.com/noticiAmerica',
-     "rss_url": 'https://nitter.net/noticiAmerica/rss', "tipo": "rss",
-     "notas": "X/Twitter via nitter.net (rate-limited)"},
-    {"categoria": 'Coyuntura Politica', "pais": 'PE',
-     "nombre": 'X - TV Peru Noticias',
-     "url": 'https://x.com/noticias_tvperu',
-     "rss_url": 'https://nitter.net/noticias_tvperu/rss', "tipo": "rss",
-     "notas": "X/Twitter via nitter.net (rate-limited)"},
-    {"categoria": 'Coyuntura Politica', "pais": 'PE',
-     "nombre": 'X - Cuarto Poder',
-     "url": 'https://x.com/Cuarto_Poder',
-     "rss_url": 'https://nitter.net/Cuarto_Poder/rss', "tipo": "rss",
-     "notas": "X/Twitter via nitter.net (rate-limited)"},
-    {"categoria": 'Coyuntura Politica', "pais": 'PE',
-     "nombre": 'X - Agencia Andina (X)',
-     "url": 'https://x.com/Agencia_Andina',
-     "rss_url": 'https://nitter.net/Agencia_Andina/rss', "tipo": "rss",
-     "notas": "X/Twitter via nitter.net (rate-limited)"},
-    {"categoria": 'Coyuntura Politica', "pais": 'PE',
-     "nombre": 'X - CNN en Espanol',
-     "url": 'https://x.com/CNNEE',
-     "rss_url": 'https://nitter.net/CNNEE/rss', "tipo": "rss",
-     "notas": "X/Twitter via nitter.net (rate-limited)"},
     {"categoria": 'Coyuntura Politica', "pais": 'PE',
      "nombre": 'Martin Hidalgo (periodista, via Google News)',
      "url": 'https://x.com/martinhidalgo',
@@ -1325,111 +667,87 @@ FUENTES_GOOGLE_NEWS: list[dict] = [
               "nombre no trae articulos reales todavia (a diferencia de Erik Rivera) - ver la "
               "fuente 'Facultades legislativas - oposicion' de abajo, que SI engancha esta misma "
               "cobertura por tema en vez de por firma."},
-    {"categoria": 'Coyuntura Politica', "pais": 'PE',
-     "nombre": 'Google News PE — Facultades legislativas (oposicion)',
-     "url": 'https://news.google.com/rss/search?q=bancadas+oposicion+facultades+legislativas&hl=es-419&gl=PE&ceid=PE:es',
-     "rss_url": 'https://news.google.com/rss/search?q=bancadas+oposicion+facultades+legislativas&hl=es-419&gl=PE&ceid=PE:es',
-     "tipo": "rss",
-     "notas": "Query por tema, no por periodista puntual - la busqueda por nombre de Erika Vasquez "
-              "Salazar (arriba) no trae nada en vivo, pero esta si trae la cobertura real del angulo "
-              "de la oposicion (ej. 'Oposicion pide al Gobierno presentar nuevo proyecto de "
-              "facultades legislativas centrado en seguridad y El Nino' - Infobae, verificado en "
-              "vivo 2026-09-13). Mas robusto que depender de que un medio cite a un periodista por "
-              "nombre."},
-    {"categoria": 'Coyuntura Politica', "pais": 'PE',
-     "nombre": 'X - RPP Noticias (X)',
-     "url": 'https://x.com/RPPNoticias',
-     "rss_url": 'https://nitter.net/RPPNoticias/rss', "tipo": "rss",
-     "notas": "X/Twitter via nitter.net (rate-limited)"},
-    {"categoria": 'Institucion', "pais": 'PE',
-     "nombre": 'X - PCM Peru (X)',
-     "url": 'https://x.com/pcmperu',
-     "rss_url": 'https://nitter.net/pcmperu/rss', "tipo": "rss",
-     "notas": "X/Twitter via nitter.net (rate-limited)"},
-    {"categoria": 'Institucion', "pais": 'PE',
-     "nombre": 'X - JNE Peru',
-     "url": 'https://x.com/JNE_Peru',
-     "rss_url": 'https://nitter.net/JNE_Peru/rss', "tipo": "rss",
-     "notas": "X/Twitter via nitter.net (rate-limited)"},
-    {"categoria": 'Institucion', "pais": 'PE',
-     "nombre": 'X - RENIEC Peru',
-     "url": 'https://x.com/ReniecPeru',
-     "rss_url": 'https://nitter.net/ReniecPeru/rss', "tipo": "rss",
-     "notas": "X/Twitter via nitter.net (rate-limited)"},
-    {"categoria": 'Institucion', "pais": 'PE',
-     "nombre": 'X - MIDAGRI Peru (X)',
-     "url": 'https://x.com/midagriperu',
-     "rss_url": 'https://nitter.net/midagriperu/rss', "tipo": "rss",
-     "notas": "X/Twitter via nitter.net (rate-limited)"},
-    {"categoria": 'Institucion', "pais": 'PE',
-     "nombre": 'X - MINCETUR (X)',
-     "url": 'https://x.com/MINCETUR',
-     "rss_url": 'https://nitter.net/MINCETUR/rss', "tipo": "rss",
-     "notas": "X/Twitter via nitter.net (rate-limited)"},
-    {"categoria": 'Institucion', "pais": 'PE',
-     "nombre": 'X - Ositran',
-     "url": 'https://x.com/ositranperu',
-     "rss_url": 'https://nitter.net/ositranperu/rss', "tipo": "rss",
-     "notas": "X/Twitter via nitter.net (rate-limited)"},
-    {"categoria": 'Institucion', "pais": 'PE',
-     "nombre": 'X - Presidencia Peru (X)',
-     "url": 'https://x.com/presidenciaperu',
-     "rss_url": 'https://nitter.net/presidenciaperu/rss', "tipo": "rss",
-     "notas": "X/Twitter via nitter.net (rate-limited)"},
-    {"categoria": 'Institucion', "pais": 'PE',
-     "nombre": 'X - Defensoria del Pueblo',
-     "url": 'https://x.com/Defensoria_Peru',
-     "rss_url": 'https://nitter.net/Defensoria_Peru/rss', "tipo": "rss",
-     "notas": "X/Twitter via nitter.net (rate-limited)"},
-    {"categoria": 'Institucion', "pais": 'PE',
-     "nombre": 'X - MININTER Peru',
-     "url": 'https://x.com/MininterPeru',
-     "rss_url": 'https://nitter.net/MininterPeru/rss', "tipo": "rss",
-     "notas": "X/Twitter via nitter.net (rate-limited)"},
-    {"categoria": 'Institucion', "pais": 'PE',
-     "nombre": 'X - Cancilleria Peru',
-     "url": 'https://x.com/CancilleriaPeru',
-     "rss_url": 'https://nitter.net/CancilleriaPeru/rss', "tipo": "rss",
-     "notas": "X/Twitter via nitter.net (rate-limited)"},
-    {"categoria": 'Institucion', "pais": 'PE',
-     "nombre": 'X - Congreso Peru (X)',
-     "url": 'https://x.com/congresoperu',
-     "rss_url": 'https://nitter.net/congresoperu/rss', "tipo": "rss",
-     "notas": "X/Twitter via nitter.net (rate-limited)"},
-    {"categoria": 'Institucion', "pais": 'PE',
-     "nombre": 'X - MINJUSDH Peru (X)',
-     "url": 'https://x.com/MinjusDH_Peru',
-     "rss_url": 'https://nitter.net/MinjusDH_Peru/rss', "tipo": "rss",
-     "notas": "X/Twitter via nitter.net (rate-limited)"},
-    {"categoria": 'Institucion', "pais": 'PE',
-     "nombre": 'X - PRODUCE Peru (X)',
-     "url": 'https://x.com/MINPRODUCCION',
-     "rss_url": 'https://nitter.net/MINPRODUCCION/rss', "tipo": "rss",
-     "notas": "X/Twitter via nitter.net (rate-limited)"},
-    {"categoria": 'Institucion', "pais": 'PE',
-     "nombre": 'X - MINEM Peru',
-     "url": 'https://x.com/MinemPeru',
-     "rss_url": 'https://nitter.net/MinemPeru/rss', "tipo": "rss",
-     "notas": "X/Twitter via nitter.net (rate-limited)"},
-    {"categoria": 'Institucion', "pais": 'PE',
-     "nombre": 'X - SGTD Peru Digital',
-     "url": 'https://x.com/PeruPaisDigital',
-     "rss_url": 'https://nitter.net/PeruPaisDigital/rss', "tipo": "rss",
-     "notas": "X/Twitter via nitter.net (rate-limited)"},
+    _gn("PE", "Coyuntura Politica", "Facultades legislativas (oposicion)", "bancadas+oposicion+facultades+legislativas"),
 ]
 
 
 # ============================================================
-# CUENTAS X VERIFICADAS (2026-09-29)
+# CUENTAS X
 # ============================================================
-# Busqueda con fuente por cada handle (web oficial que enlaza a X, nota de
-# prensa o tuit de 2026). Quedan activa=0 con tipo "twitter" (scraper.py lo
-# salta): no hay lector de X todavia - nitter murio y twscrape necesita una
-# cuenta aparte que Nicolas no ha decidido crear. Prioridad A/B/C va en notas.
+# Cuentas de X. No hay lector de X (nitter murio, twscrape pide una cuenta
+# aparte): las que tienen query se siguen por Google News (lo que la prensa
+# publica sobre la persona o institucion); el resto queda activa=0, tipo
+# "twitter". Prioridad A/B/C va en notas.
+# Medios y agregadores no se buscan por nombre (trae ruido); nombres comunes
+# llevan contexto en _GN_QUERY ("Fabiola Torres" sola traia Chile/Grecia).
+_GN_QUERY = {
+    "Fabiola Torres": '"Fabiola Torres" "Salud con Lupa"',
+    "Camila Leon (Comision Biodiversidad)": '"Camila León" asambleísta',
+    "Sara Ortiz": '"Sara Ortiz" Expreso',
+    "Arturo Torres": '"Arturo Torres" "Código Vidrio"',
+    "Carlos Vera": '"Carlos Vera" periodista Ecuador',
+    "Monica Velasquez": '"Mónica Velásquez" periodista Ecuador',
+    "Carlos Rojas Araujo": '"Carlos Rojas" "Políticamente Correcto"',
+    "Alvaro Espinosa": '"Álvaro Espinosa" "El Balance"',
+    "Cesar Romero": '"César Romero" "La República"',
+    "Alfredo Torres (Ipsos)": '"Alfredo Torres" Ipsos',
+    "Lima Gris": '"Lima Gris" revista',
+    "Andrea Orbe": '"Andrea Orbe" periodista',
+    "Fabricio Vela": '"Fabricio Vela" Ecuador',
+    "Janet Hinostroza": '"Janet Hinostroza"',
+    "MEF": '"MEF" Perú',
+    "MTC (incluye DGAC, drones)": '"MTC" Perú drones OR aeronáutica OR telecomunicaciones',
+    "DGAC Ecuador": '"Aviación Civil" Ecuador',
+    "Tribunal Constitucional": '"Tribunal Constitucional" Perú',
+    "Corte Constitucional": '"Corte Constitucional" Ecuador',
+    "Contraloria": '"Contraloría" Perú',
+    "Asamblea Nacional": '"Asamblea Nacional" Ecuador',
+    "Ministerio de Salud Publica": '"Ministerio de Salud Pública" Ecuador',
+    "IPE": '"Instituto Peruano de Economía"',
+    "IEP": '"IEP" encuesta',
+    "Transparencia": '"Asociación Civil Transparencia"',
+    "Participacion Ciudadana": '"Participación Ciudadana" Ecuador',
+    "Consorcio Agroecologico Peruano": '"Consorcio Agroecológico Peruano"',
+    "Keiko Fujimori (Presidenta)": '"Keiko Fujimori"',
+    "Luis Galarreta (PCM)": '"Luis Galarreta"',
+    "Juan Sheput (Trabajo)": '"Juan Sheput"',
+    "Vladimiro Huaroc (MINAM)": '"Vladimiro Huaroc" OR "ministro Huaroc"',
+    "Susana Matute (Comision Salud Senado)": '"Susana Matute"',
+    "Oscar Reto (Pdte. Diputados)": '"Óscar Reto" OR "Oscar Reto"',
+    "Daniel Noboa (Presidente)": '"Daniel Noboa"',
+    "Mishel Mancheno (Pdta. Asamblea)": '"Mishel Mancheno"',
+    "Valentina Centeno (Comision Desarrollo Economico)": '"Valentina Centeno"',
+    "Diego Macera (IPE)": '"Diego Macera"',
+    "Milagros Leiva (programa)": '"Milagros Leiva"',
+    "Erick Iriarte (IALaw)": '"Erick Iriarte"',
+    "Agraria.pe": "site:agraria.pe",
+    "Convoca": "site:convoca.pe",
+    "GK": "site:gk.city",
+}
+_SIN_GN = {  # medios/agregadores ya cubiertos por su web, o sin query util
+    "DiarioElPeruano", "saludconlupa", "Ojo_Publico", "Politica_LR", "canalN_",
+    "infobaeperu", "exitosape", "peru21noticias", "willaxtv", "N60Noticias",
+    "SudacaPeru", "MLEntrevista", "ipsosperu", "Presidencia_Ec", "ComunicacionEc",
+    "TvlEcuador", "RegistrOficial", "Munagropecuario", "edicionmedEC", "primicias",
+    "expresoec", "eluniversocom", "elcomerciocom", "revistavistazo", "ecuavisa",
+    "EcuavisaInforma", "teleamazonasec", "ElBalance_EC", "politikcorrecta",
+    "revistaPlanV", "RtpEcuador", "ecuainm_oficial", "lahoraecuador", "ElDatoEcua",
+    "ladataec", "TiempoRealEC", "WRadioEc", "elmercuriomanta", "kchradio",
+    "LaRadioAsamblea", "analisissemanal", "LupaMediaEC", "CodigoVidrioEc",
+    "ECUADORCHEQUEA",
+}
+
+
 def _x(pais, categoria, nombre, handle, prio, clientes, nota):
-    return {"categoria": categoria, "pais": pais, "nombre": f"X - {nombre}",
-            "url": f"https://x.com/{handle}", "tipo": "twitter", "activa": 0,
-            "clientes": clientes, "notas": f"Prioridad {prio}. {nota}"}
+    f = {"categoria": categoria, "pais": pais, "nombre": f"X - {nombre}",
+         "url": f"https://x.com/{handle}", "tipo": "twitter", "activa": 0,
+         "clientes": clientes, "notas": f"Prioridad {prio}. {nota}"}
+    if handle not in _SIN_GN:
+        q = quote_plus(_GN_QUERY.get(nombre) or f'"{nombre.split(" (")[0]}"')
+        f.update(tipo="rss", activa=1,
+                 rss_url=f"https://news.google.com/rss/search?q={q}&hl=es-419&gl={pais}&ceid={pais}:es",
+                 notas=f["notas"] + " | Seguido via Google News (lo que la prensa publica sobre la cuenta, no el tuit).")
+    return f
 
 
 _T, _B, _S, _G, _I = ["todos"], ["bayer"], ["syngenta"], ["google"], ["incode"]
@@ -1462,7 +780,7 @@ FUENTES_X_2026: list[dict] = [
        "derechos digitales, datos, IA; activo 2026"),
     _x("PE", "Temas Tech", "Erick Iriarte (IALaw)", "coyotegris", "A", _TECH,
        "abogado datos personales / regulacion digital; activo 2026"),
-    # --- PE: autoridades (cargo confirmado 2026-09-29) ---
+    # --- PE: autoridades ---
     _x("PE", "Institucion", "Keiko Fujimori (Presidenta)", "KeikoFujimori", "A", _T,
        "Presidenta desde 28/07/2026"),
     _x("PE", "Institucion", "Luis Galarreta (PCM)", "luchogalarreta", "A", _T,
@@ -1567,7 +885,7 @@ FUENTES_X_2026: list[dict] = [
     _x("EC", "Coyuntura Politica", "Fundamedios", "FUNDAMEDIOS", "B", _G, "libertad de prensa"),
     _x("EC", "Coyuntura Politica", "Ecuador Chequea", "ECUADORCHEQUEA", "B", _T, "verificador"),
     _x("EC", "Coyuntura Politica", "Lupa Media", "LupaMediaEC", "C", _T, "verificador"),
-    # --- EC: autoridades (cargo confirmado 2026-09-29) ---
+    # --- EC: autoridades ---
     _x("EC", "Institucion", "Daniel Noboa (Presidente)", "DanielNoboaOk", "A", _T, "Presidente"),
     _x("EC", "Institucion", "Mishel Mancheno (Pdta. Asamblea)", "mishelmanchenok", "A", _T,
        "Presidenta de la Asamblea desde 08/06/2026"),
@@ -1602,97 +920,8 @@ FUENTES_X_2026: list[dict] = [
 ]
 
 
-# Activacion via Google News (Nicolas 2026-09-29): sin cuenta de X, se sigue
-# lo que la prensa publica SOBRE cada persona/institucion, no el tuit. Probado
-# en vivo: autoridades y analistas traen notas reales por nombre; nombres
-# comunes necesitan contexto ("Fabiola Torres" solo traia Chile/Grecia).
-# Medios/agregadores no se buscan por nombre (ruido): la mayoria ya tiene su
-# web/RSS propia en el catalogo; los 3 que no, van por site:.
-_GN_QUERY = {
-    "Fabiola Torres": '"Fabiola Torres" "Salud con Lupa"',
-    "Camila Leon (Comision Biodiversidad)": '"Camila León" asambleísta',
-    "Sara Ortiz": '"Sara Ortiz" Expreso',
-    "Arturo Torres": '"Arturo Torres" "Código Vidrio"',
-    "Carlos Vera": '"Carlos Vera" periodista Ecuador',
-    "Monica Velasquez": '"Mónica Velásquez" periodista Ecuador',
-    "Carlos Rojas Araujo": '"Carlos Rojas" "Políticamente Correcto"',
-    "Alvaro Espinosa": '"Álvaro Espinosa" "El Balance"',
-    "Cesar Romero": '"César Romero" "La República"',
-    "Alfredo Torres (Ipsos)": '"Alfredo Torres" Ipsos',
-    "Lima Gris": '"Lima Gris" revista',
-    "Andrea Orbe": '"Andrea Orbe" periodista',
-    "Fabricio Vela": '"Fabricio Vela" Ecuador',
-    "Janet Hinostroza": '"Janet Hinostroza"',
-    "MEF": '"MEF" Perú',
-    "MTC (incluye DGAC, drones)": '"MTC" Perú drones OR aeronáutica OR telecomunicaciones',
-    "DGAC Ecuador": '"Aviación Civil" Ecuador',
-    "Tribunal Constitucional": '"Tribunal Constitucional" Perú',
-    "Corte Constitucional": '"Corte Constitucional" Ecuador',
-    "Contraloria": '"Contraloría" Perú',
-    "Asamblea Nacional": '"Asamblea Nacional" Ecuador',
-    "Ministerio de Salud Publica": '"Ministerio de Salud Pública" Ecuador',
-    "IPE": '"Instituto Peruano de Economía"',
-    "IEP": '"IEP" encuesta',
-    "Transparencia": '"Asociación Civil Transparencia"',
-    "Participacion Ciudadana": '"Participación Ciudadana" Ecuador',
-    "Consorcio Agroecologico Peruano": '"Consorcio Agroecológico Peruano"',
-    "Keiko Fujimori (Presidenta)": '"Keiko Fujimori"',
-    "Luis Galarreta (PCM)": '"Luis Galarreta"',
-    "Juan Sheput (Trabajo)": '"Juan Sheput"',
-    "Vladimiro Huaroc (MINAM)": '"Vladimiro Huaroc" OR "ministro Huaroc"',
-    "Susana Matute (Comision Salud Senado)": '"Susana Matute"',
-    "Oscar Reto (Pdte. Diputados)": '"Óscar Reto" OR "Oscar Reto"',
-    "Daniel Noboa (Presidente)": '"Daniel Noboa"',
-    "Mishel Mancheno (Pdta. Asamblea)": '"Mishel Mancheno"',
-    "Valentina Centeno (Comision Desarrollo Economico)": '"Valentina Centeno"',
-    "Diego Macera (IPE)": '"Diego Macera"',
-    "Milagros Leiva (programa)": '"Milagros Leiva"',
-    "Erick Iriarte (IALaw)": '"Erick Iriarte"',
-    "Agraria.pe": "site:agraria.pe",
-    "Convoca": "site:convoca.pe",
-    "GK": "site:gk.city",
-}
-_SIN_GN = {  # medios/agregadores ya cubiertos por su web, o sin query util
-    "DiarioElPeruano", "saludconlupa", "Ojo_Publico", "Politica_LR", "canalN_",
-    "infobaeperu", "exitosape", "peru21noticias", "willaxtv", "N60Noticias",
-    "SudacaPeru", "MLEntrevista", "ipsosperu", "Presidencia_Ec", "ComunicacionEc",
-    "TvlEcuador", "RegistrOficial", "Munagropecuario", "edicionmedEC", "primicias",
-    "expresoec", "eluniversocom", "elcomerciocom", "revistavistazo", "ecuavisa",
-    "EcuavisaInforma", "teleamazonasec", "ElBalance_EC", "politikcorrecta",
-    "revistaPlanV", "RtpEcuador", "ecuainm_oficial", "lahoraecuador", "ElDatoEcua",
-    "ladataec", "TiempoRealEC", "WRadioEc", "elmercuriomanta", "kchradio",
-    "LaRadioAsamblea", "analisissemanal", "LupaMediaEC", "CodigoVidrioEc",
-    "ECUADORCHEQUEA", "politikcorrecta",
-}
-for _f in FUENTES_X_2026:
-    _handle = _f["url"].rsplit("/", 1)[1]
-    _base = _f["nombre"].removeprefix("X - ")
-    if _handle in _SIN_GN:
-        continue
-    _q = _GN_QUERY.get(_base) or f'"{_base.split(" (")[0]}"'
-    _p = _f["pais"]
-    _f.update(tipo="rss", activa=1,
-              rss_url=f"https://news.google.com/rss/search?q={quote_plus(_q)}"
-                      f"&hl=es-419&gl={_p}&ceid={_p}:es")
-    _f["notas"] += " | Seguido via Google News (lo que la prensa publica sobre la cuenta, no el tuit)."
-
-
 def all_fuentes() -> list[dict]:
     fuentes = FUENTES_PE + FUENTES_EC + FUENTES_GOOGLE_NEWS + FUENTES_X_2026
     for f in fuentes:
         f.setdefault("clientes", _clientes_de(f))
-        # Bug real 2026-09-16: las ~125 fuentes "X - ..." (cuentas de
-        # X/Twitter) dependen todas de nitter.net (frontend publico de X sin
-        # API oficial) para tener RSS - verificado en vivo que nitter.net ya
-        # no responde (curl: connection failed, HTTP 000). Nunca trajeron
-        # una sola noticia real (confirmado contra la DB de produccion: 63
-        # fuentes activas, 0 noticias en cualquiera). Se desactivan aca, en
-        # un solo lugar, en vez de tocar cada uno de los ~125 dict literals -
-        # upsert_fuente() vuelve a escribir "activa" en cada corrida de
-        # seed, asi que esto se aplica solo, sin tocar la DB a mano.
-        if "nitter.net" in (f.get("rss_url") or ""):
-            f["activa"] = 0
-            f["notas"] = ((f.get("notas") or "") + " | DESACTIVADA 2026-09-16: "
-                          "nitter.net no responde (HTTP 000), nunca trajo "
-                          "nada real.").strip(" |")
     return fuentes

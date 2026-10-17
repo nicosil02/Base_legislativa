@@ -6,11 +6,8 @@ sesiones <-> PLs sean SQL nativo. Las tablas viven con prefijo `sesion_` /
 """
 from __future__ import annotations
 
-import sqlite3
-from contextlib import contextmanager
-from datetime import datetime, timezone
-from pathlib import Path
-
+from core.db import Database as _Base
+from core.db import now_iso  # noqa: F401 (sesiones.sync lo importa de aca)
 from scraper.sync import PER_PAR_ID_ACTUAL
 
 SCHEMA = """
@@ -88,10 +85,6 @@ CREATE TABLE IF NOT EXISTS sesiones_sync_runs (
 """
 
 
-def now_iso() -> str:
-    return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
-
-
 def _parse_fecha_ddmmyyyy(s: str | None) -> str | None:
     """Convierte 'DD/MM/YYYY' o 'YYYY-MM-DD' a ISO 'YYYY-MM-DD'. None si no se puede."""
     if not s:
@@ -105,54 +98,20 @@ def _parse_fecha_ddmmyyyy(s: str | None) -> str | None:
     return None
 
 
-class Database:
-    """Wrapper fino sobre sqlite3 enfocado a las tablas `sesion_*` y `sesiones`.
-    Comparte archivo con scraper/db.py pero opera sobre tablas independientes."""
-
-    def __init__(self, path: str | Path):
-        self.path = str(Path(path).resolve())
-        self.conn = sqlite3.connect(self.path)
-        self.conn.row_factory = sqlite3.Row
-        self.conn.execute("PRAGMA foreign_keys = ON")
-        self.conn.execute("PRAGMA journal_mode = WAL")
-
-    def close(self) -> None:
-        self.conn.close()
-
-    def __enter__(self):
-        return self
-
-    def __exit__(self, *a):
-        self.close()
-
-    @contextmanager
-    def tx(self):
-        try:
-            yield self.conn
-            self.conn.commit()
-        except Exception:
-            self.conn.rollback()
-            raise
+class Database(_Base):
+    """Tablas `sesion_*` y `sesiones` (comparte archivo con scraper/db.py)."""
 
     def init_schema(self) -> None:
         with self.tx() as c:
             c.executescript(SCHEMA)
-            cols = {r[1] for r in c.execute("PRAGMA table_info(sesiones)").fetchall()}
-            if "camara" not in cols:
-                c.execute("ALTER TABLE sesiones ADD COLUMN camara TEXT")
 
     # ---------- upsert: lista de sesiones ----------
     def upsert_from_lista(self, row: dict, comision_id: int | None, camara: str | None,
                           now: str) -> tuple[bool, bool]:
         """Inserta o actualiza desde la fila del listado /sesiones/busqueda.
 
-        `comision_id`/`camara` vienen de la comision especifica con la que se
-        pidio esta sesion (ver sesiones/sync.py: el listado se pide UNA VEZ
-        POR comisionId, no en un solo pedido con todas mezcladas) - por eso
-        son inequivocos, a diferencia de intentar reconstruirlos despues a
-        partir de nombreComision (texto identico en Senado y Diputados para
-        la enorme mayoria de comisiones ordinarias - bug real 2026-09-16,
-        2209 de 2274 sesiones con camara=NULL).
+        `comision_id`/`camara` vienen del comisionId con que se pidio la
+        sesion (el nombre de comision se repite entre camaras).
 
         Returns (is_new, estado_changed). estado_changed indica si vale la pena
         llamar al detalle (porque cambio el estado o es nueva).

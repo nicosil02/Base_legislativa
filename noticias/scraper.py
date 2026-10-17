@@ -263,12 +263,8 @@ def _add_item(out: list, seen: set, url: str, titulo: str, base_url: str,
     seen.add(url)
     out.append({
         "url": url, "titulo": titulo[:500], "resumen": None,
-        # ponytail: si no hay <time> cerca en la pagina de listado, queda en
-        # None y el caller (noticias/db.py) cae a first_seen_at - eso es lo
-        # que reportaba Nicolas como "fecha del scrape, no de la noticia
-        # real" para las fuentes sin RSS. No todas las paginas de listado
-        # muestran fecha por item; para esas no hay forma barata de saber la
-        # fecha real sin visitar cada articulo (no lo hacemos hoy).
+        # ponytail: sin <time> cerca en el listado queda None y se muestra
+        # first_seen_at (fecha del scrape); backfill_fechas la repara despues.
         "fecha_pub": fecha_pub, "autor": None, "tags": None,
     })
 
@@ -313,11 +309,7 @@ GOBPE_API = "https://www.gob.pe/busquedas.json"
 _MESES = {m: i for i, m in enumerate(
     ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto",
      "septiembre", "octubre", "noviembre", "diciembre"], 1)}
-# gob.pe usa "setiembre" (variante peruana sin la "p", RAE la acepta igual
-# que "septiembre") en el campo `publication` de su API - confirmado en vivo
-# 2026-09-13 contra MINSA real. Sin este alias, TODA fecha de setiembre
-# fallaba el parseo silenciosamente (_parse_gobpe_date devolvia None), lo
-# que explicaba el 100% de fecha_pub vacio en las 474 filas tipo 'gobpe'.
+# gob.pe escribe "setiembre" (variante peruana).
 _MESES["setiembre"] = _MESES["septiembre"]
 
 
@@ -380,13 +372,8 @@ def fetch_gobpe(fuente: dict, session: requests.Session,
                 titulo = nombre
             if not href or not titulo:
                 continue
-            # El buscador de gob.pe mezcla, dentro de contenido[]=noticias,
-            # paginas institucionales estaticas (Mesa de Partes, Registro de
-            # visitas, Visita virtual...) que nunca traen fecha real - se
-            # distinguen porque su URL vive bajo /pages/ en vez de /noticias/
-            # (confirmado en vivo 2026-09-13: 3 de 6 items de "Presidencia"
-            # eran paginas asi, sin fecha_pub, coladas como ruido para todos
-            # los clientes via el tag "todos").
+            # gob.pe mezcla paginas institucionales estaticas (Mesa de Partes,
+            # Registro de visitas...) sin fecha: viven bajo /pages/.
             if "/pages/" in href.group(1):
                 continue
             out.append({
@@ -403,10 +390,8 @@ def fetch_gobpe(fuente: dict, session: requests.Session,
 def _get(session: requests.Session, url: str, timeout: int) -> requests.Response:
     """GET con fallback SSL: cloudscraper (la session normal de este modulo)
     impersona un fingerprint TLS de navegador para saltar Cloudflare, pero ese
-    mismo fingerprint rompe el handshake TLS con algunos sitios .gob.ec
-    (confirmado en vivo 2026-09-12: SSLError consistente via cloudscraper,
-    200 normal con requests plano en los mismos hosts/URLs). Reintenta una vez
-    con una sesion sin cloudscraper antes de dar la fuente por muerta.
+    mismo fingerprint rompe el handshake TLS con algunos sitios .gob.ec.
+    Reintenta una vez con una sesion sin cloudscraper.
     ponytail: una sesion plana nueva por reintento (sin pool ni reuso) porque
     esto es la excepcion, no el camino comun - si se vuelve frecuente, cachear
     una sesion "plana" de fallback por dominio."""
@@ -450,7 +435,7 @@ def fetch_fuente(fuente: dict, session: requests.Session | None = None,
     tipo = (fuente.get("tipo") or "manual").lower()
     if tipo == "manual":
         return []
-    if tipo in ("gobpe", "api"):
+    if tipo == "gobpe":
         return fetch_gobpe(fuente, s, timeout=timeout)
     if tipo == "rss":
         url = fuente.get("rss_url") or fuente.get("url")
@@ -488,7 +473,7 @@ def fetch_fuente(fuente: dict, session: requests.Session | None = None,
         except Exception as e:
             log.warning("HTML fail %s (%s): %s", fuente["nombre"], url, e)
             return []
-    # 'twitter' / 'api' / otros no implementados
+    # 'twitter' / 'custom' / 'manual': sin captura generica
     return []
 
 
@@ -534,15 +519,9 @@ def run_sync(db, pais: str | None = None,
 # ============================================================
 # Backfill de fechas: repara noticias con fecha_pub NULL
 # ============================================================
-# `run_sync()` solo re-toca los items MAS RECIENTES por fuente (gobpe: top
-# 25) - una fila ya insertada con fecha_pub NULL (por un bug ya corregido,
-# o por una fuente sin <time> en su pagina de listado) sale de esa ventana
-# y el sync normal nunca la vuelve a ver. Confirmado en vivo 2026-09-13:
-# el fix de "setiembre" arreglaba fetches nuevos, pero cientos de filas
-# historicas seguian NULL. Esta funcion visita cada articulo real (no el
-# listado) y extrae la fecha via <time>/meta tags/regex de fecha en
-# español - mismo mecanismo que el backfill puntual original, ahora parte
-# del pipeline en vez de un script suelto para que se auto-repare solo.
+# run_sync() solo re-toca los items mas recientes por fuente: una fila con
+# fecha_pub NULL sale de esa ventana y nunca se repara. Esto visita cada
+# articulo y saca la fecha de <time>/meta tags/texto en español.
 
 _RE_META_FECHA = re.compile(
     r'<meta[^>]*?(?:property|name)=["\'](?:article:published_time|og:published_time|'

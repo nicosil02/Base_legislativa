@@ -1,10 +1,9 @@
 """Schema + wrapper SQLite para noticias en proyectos.db."""
 from __future__ import annotations
 
-import sqlite3
-from contextlib import contextmanager
-from datetime import datetime, timezone
-from pathlib import Path
+import re
+
+from core.db import Database as _Base, now_iso
 
 SCHEMA = """
 CREATE TABLE IF NOT EXISTS noticias_fuentes (
@@ -14,7 +13,7 @@ CREATE TABLE IF NOT EXISTS noticias_fuentes (
   nombre          TEXT NOT NULL,
   url             TEXT,                  -- URL principal del sitio (para link)
   rss_url         TEXT,                  -- URL del feed RSS si esta disponible
-  tipo            TEXT NOT NULL DEFAULT 'manual', -- rss | html | api | twitter | manual
+  tipo            TEXT NOT NULL DEFAULT 'manual', -- rss | html | gobpe | custom | twitter | manual
   activa          INTEGER NOT NULL DEFAULT 1,
   notas           TEXT,
   clientes        TEXT,                  -- pipe-separated slugs (ver noticias/fuentes.py); "" = ninguno, "todos" = todos
@@ -48,31 +47,11 @@ CREATE TABLE IF NOT EXISTS noticias_sync_runs (
   errores         INTEGER DEFAULT 0,
   mensaje         TEXT
 );
-
--- Feedback humano sobre relevancia/clasificación de una noticia.
--- Base para retraining futuro del clasificador.
-CREATE TABLE IF NOT EXISTS noticias_feedback (
-  id              INTEGER PRIMARY KEY AUTOINCREMENT,
-  noticia_id      INTEGER NOT NULL,
-  action          TEXT NOT NULL,           -- 'descartar' | 'confirmar' | 'reclasificar'
-  tema_correcto   TEXT,                    -- solo si action='reclasificar'
-  created_at      TEXT NOT NULL,
-  FOREIGN KEY (noticia_id) REFERENCES noticias(id)
-);
-CREATE INDEX IF NOT EXISTS idx_feedback_noticia ON noticias_feedback(noticia_id);
 """
 
-
-def now_iso() -> str:
-    return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
-
-
-import re as _re
-
-# Frases de RRSS sin contenido informativo. Match case-insensitive contra
-# el titulo entero (no substring): filtra saludos, agradecimientos, RT
-# huecos, "hola amigos", etc.
-_BASURA_PATRONES = _re.compile(
+# Frases de RRSS sin contenido informativo. Match contra el inicio del
+# titulo: saludos, agradecimientos, RT huecos, "hola amigos", etc.
+_BASURA_PATRONES = re.compile(
     r"^\s*(?:"
     r"buen(?:os|as)\s+(?:d[ií]as|tardes|noches)"
     r"|feliz\s+(?:lunes|martes|mi[eé]rcoles|jueves|viernes|s[aá]bado|domingo|d[ií]a)"
@@ -83,13 +62,12 @@ _BASURA_PATRONES = _re.compile(
     r"|hola\s+(?:amigos|a\s+todos)"
     r"|entrevista\s+en\s+vivo"
     r")\b",
-    _re.IGNORECASE,
+    re.IGNORECASE,
 )
 
-
-_KW_NORMA_CORTA = _re.compile(
+_KW_NORMA_CORTA = re.compile(
     r"\b(?:DS|DU|DL|RM|RS|RD|Ley|Decreto|Resoluci[oó]n|Ordenanza)\b",
-    _re.I,
+    re.I,
 )
 
 
@@ -100,57 +78,26 @@ def _es_basura(titulo: str | None, resumen: str | None = None) -> bool:
     # Titulos muy cortos son casi siempre basura, EXCEPTO si mencionan una norma.
     if len(t) < 20 and not tiene_kw_norma:
         return True
-    # Sin letras alfabéticas suficientes (solo emojis / hashtags / URLs),
-    # y sin ser referencia a una norma.
-    if not tiene_kw_norma and not _re.search(r"[a-záéíóúñ]{4,}", t, _re.I):
+    # Sin letras suficientes (solo emojis / hashtags / URLs).
+    if not tiene_kw_norma and not re.search(r"[a-záéíóúñ]{4,}", t, re.I):
         return True
-    # Frases genericas de RRSS
-    if _BASURA_PATRONES.match(t):
-        return True
-    return False
+    return bool(_BASURA_PATRONES.match(t))
 
 
-class Database:
-    def __init__(self, path: str | Path):
-        self.path = str(Path(path).resolve())
-        self.conn = sqlite3.connect(self.path)
-        self.conn.row_factory = sqlite3.Row
-        self.conn.execute("PRAGMA foreign_keys = ON")
-        self.conn.execute("PRAGMA journal_mode = WAL")
-
-    def close(self) -> None:
-        self.conn.close()
-
-    def __enter__(self):
-        return self
-
-    def __exit__(self, *a):
-        self.close()
-
-    @contextmanager
-    def tx(self):
-        try:
-            yield self.conn
-            self.conn.commit()
-        except Exception:
-            self.conn.rollback()
-            raise
-
+class Database(_Base):
     def init_schema(self) -> None:
         with self.tx() as c:
             c.executescript(SCHEMA)
-            # Migracion: noticias_fuentes.clientes (cruce fuente x cliente,
-            # ver noticias/fuentes.py). Tablas creadas antes de este cambio
-            # no la tienen.
+            # Migracion: tablas creadas antes de la columna clientes.
             cols_f = {r[1] for r in c.execute("PRAGMA table_info(noticias_fuentes)").fetchall()}
             if "clientes" not in cols_f:
                 c.execute("ALTER TABLE noticias_fuentes ADD COLUMN clientes TEXT")
 
     # ---------- fuentes ----------
     def upsert_fuente(self, row: dict) -> int:
-        """Insert si no existe (key: pais + nombre), update si cambio.
-        Devuelve fuente_id."""
-        now = now_iso()
+        """Insert si no existe (key: pais + nombre), update si ya esta.
+        Devuelve fuente_id. No usa ON CONFLICT: en una tabla AUTOINCREMENT
+        cada upsert gastaria un id y las fuentes nuevas saltarian numeros."""
         clientes_str = "|".join(row.get("clientes") or [])
         existing = self.conn.execute(
             "SELECT id FROM noticias_fuentes WHERE pais=? AND nombre=?",
@@ -167,15 +114,14 @@ class Database:
                      row.get("notas"), clientes_str, existing["id"]),
                 )
                 return existing["id"]
-            cur = c.execute(
+            return c.execute(
                 """INSERT INTO noticias_fuentes
                    (categoria, pais, nombre, url, rss_url, tipo, activa, notas, clientes, created_at)
                    VALUES (?,?,?,?,?,?,?,?,?,?)""",
                 (row["categoria"], row["pais"], row["nombre"], row.get("url"),
                  row.get("rss_url"), row.get("tipo", "manual"),
-                 row.get("activa", 1), row.get("notas"), clientes_str, now),
-            )
-            return cur.lastrowid
+                 row.get("activa", 1), row.get("notas"), clientes_str, now_iso()),
+            ).lastrowid
 
     def list_fuentes(self, pais: str | None = None,
                       categoria: str | None = None,
@@ -190,17 +136,14 @@ class Database:
         if solo_activas:
             sql += " AND activa=1"
         if solo_scrapeables:
-            sql += " AND tipo IN ('rss','html','api','gobpe')"
+            sql += " AND tipo IN ('rss','html','gobpe')"
         sql += " ORDER BY categoria, nombre"
         return [dict(r) for r in self.conn.execute(sql, params)]
 
     # ---------- noticias ----------
     def upsert_noticia(self, fuente_id: int, row: dict) -> tuple[bool, bool]:
         """Insert nueva (key: url), update si cambio. Devuelve (is_new, changed).
-
-        Aplica filtros de basura antes de persistir: descarta items con
-        titulos cortos, solo emojis/hashtags, o frases genericas de RRSS.
-        """
+        Descarta antes la basura de RRSS (ver _es_basura)."""
         if _es_basura(row.get("titulo"), row.get("resumen")):
             return False, False
         url = row["url"]
@@ -221,7 +164,6 @@ class Database:
                      row.get("tags"), now, now),
                 )
             return True, True
-        # Detectar cambios
         changed = (
             (row.get("titulo") or "") != (existing["titulo"] or "")
             or (row.get("resumen") or "") != (existing["resumen"] or "")
@@ -229,9 +171,8 @@ class Database:
         )
         with self.tx() as c:
             if changed:
-                # tags tambien (2026-09-24): sin esto, una fila re-clasificada
-                # por un fix del scraper (ej. RO EC tag interes-cliente) se
-                # quedaba con los tags viejos para siempre.
+                # tags tambien: un fix del scraper que re-clasifica la fila
+                # no debe dejarle los tags viejos.
                 c.execute(
                     """UPDATE noticias SET titulo=?, resumen=?, fecha_pub=?,
                        tags=COALESCE(?, tags), last_seen_at=? WHERE url=?""",
@@ -247,18 +188,9 @@ class Database:
         return self.conn.execute("SELECT COUNT(*) FROM noticias").fetchone()[0]
 
     def purge_noticias_antiguas(self, dias: int) -> int:
-        """Borra noticias descubiertas hace mas de 'dias' dias (por
-        first_seen_at). Devuelve cantidad eliminada.
-
-        Bug real 2026-09-16: purgaba por fecha_pub (fecha del articulo, no
-        cuando lo vimos) - fuentes de publicacion lenta (CONVEAGRO, CEPES,
-        Lazo Rosado, La Revista Agraria y otras: verificado en vivo en el
-        log de produccion, "[CONVEAGRO] 10 items" en el mismo sync que
-        termino con 0 filas en la DB) traen articulos ya publicados hace
-        semanas - se insertaban y se purgaban en la MISMA corrida, nunca
-        llegaban a mostrarse. first_seen_at es lo unico que garantiza que
-        una noticia recien descubierta sobreviva al menos 'dias' dias antes
-        de purgarse, sin importar que tan vieja diga ser."""
+        """Borra noticias descubiertas hace mas de `dias` dias. Devuelve
+        cuantas borro. Por first_seen_at, no fecha_pub: las fuentes lentas
+        traen articulos de hace semanas que se purgaban en la misma corrida."""
         with self.tx() as c:
             cur = c.execute(
                 "DELETE FROM noticias WHERE date(first_seen_at) < date('now', ?)",
@@ -267,17 +199,10 @@ class Database:
             return cur.rowcount or 0
 
     def deactivate_fuentes_huerfanas(self, mantener: set[tuple[str, str]]) -> int:
-        """Desactiva fuentes activas cuyo (pais, nombre) ya NO esta en
-        `mantener` (el catalogo actual de noticias/fuentes.py).
-
-        Bug real 2026-09-16: seed() solo hace upsert de lo que SI esta en
-        fuentes.py - nunca desactiva lo que se RENOMBRO o se saco del
-        archivo (ej. "Ministerio de Salud" -> "MINSA"). Esas filas viejas
-        se quedaban activa=1 para siempre, sync tras sync, sin que ningun
-        cambio en fuentes.py pudiera alcanzarlas (36 filas huerfanas asi,
-        verificado contra la DB real - casi la mitad de las fuentes que
-        parecian "no traer nada" en realidad eran duplicados viejos
-        invisibles desde el archivo)."""
+        """Desactiva fuentes activas cuyo (pais, nombre) ya no esta en
+        `mantener` (el catalogo de noticias/fuentes.py): seed solo hace
+        upsert, asi que lo renombrado o sacado del catalogo quedaba activo.
+        No borra filas (las noticias las referencian)."""
         rows = self.conn.execute(
             "SELECT id, pais, nombre FROM noticias_fuentes WHERE activa=1"
         ).fetchall()

@@ -3,9 +3,9 @@
 Fuente: la vista Lotus "new_asistenciavotacion" del Congreso, que lista un
 PDF escaneado por sesion ("Asistencias y votaciones de la sesion del ...").
 Cada pagina de votacion trae el asunto arriba y luego 3 columnas de
-"BANCADA  APELLIDOS, NOMBRES  VOTO" (130 congresistas), ver pag2.png de la
-prueba del 2026-10-06. Openpolitica ya extrajo hasta el 2024-03-07; este
-modulo cubre el resto (y sirve para validar contra lo de ellos).
+"BANCADA  APELLIDOS, NOMBRES  VOTO" (130 congresistas). Openpolitica ya
+extrajo hasta el 2024-03-07; este modulo cubre el resto (y sirve para
+validar contra lo de ellos).
 
 Uso:
   python -m votaciones.ocr_pleno indice                  # lista sesiones -> CSV

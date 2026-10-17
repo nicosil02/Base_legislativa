@@ -20,7 +20,8 @@ usuario) NO se sobrescriben por el clasificador; sólo afecta a PLs nuevos.
 from __future__ import annotations
 
 import re
-import unicodedata
+
+from core.text import sin_tildes
 
 # Orden de prioridad de desempate (más específica → más general).
 PRIORIDAD: list[str] = [
@@ -59,30 +60,6 @@ PRIORIDAD: list[str] = [
 ]
 
 
-# Override: cuando un PL del Excel está etiquetado en alguna categoría origen
-# (key) y el clasificador automático detecta fuertemente una categoría
-# específica (value), la categoría específica reemplaza al label del Excel.
-# Se usa la wildcard "*" para indicar "cualquier categoría del Excel".
-#
-# Tecnología sobrescribe cualquier categoría — porque hay PLs tech etiquetados
-# en Educación, Telecomunicaciones, Comercio, Trabajo, etc. Se exige umbral
-# alto (TECH_MIN_KEYWORDS, ver abajo) para evitar robar PLs legítimos.
-#
-# Farma sobrescribe sólo Otros y Salud (dominio acotado, basta 1 keyword).
-OVERRIDE_DESDE: dict[str, list[str]] = {
-    "*": ["Tecnología"],
-    "Otros": ["Farma"],
-    "Salud": ["Farma"],
-}
-
-# Umbral mínimo de keywords distintos para que Tecnología sobrescriba una
-# categoría legítima del Excel. Como las keywords de Tecnología son muy
-# específicas ("inteligencia artificial", "datos personales", "biometr",
-# "ciberseg"), basta 1 match para considerar el PL como tech-relevante.
-# Subir a 2 si aparecen falsos positivos.
-TECH_MIN_KEYWORDS: int = 1
-
-
 CATEGORIAS: dict[str, list[str]] = {
     "Educación": [
         "educacion", "universidad", "universidades", "universitari",
@@ -107,9 +84,7 @@ CATEGORIAS: dict[str, list[str]] = {
         "negociacion colectiva", "sunafil", "gratificacion",
     ],
     "Salud": [
-        # Salud genérico (atención, sistema sanitario, EsSalud, hospitales).
-        # Los temas farmacéuticos específicos viven en "Farma" y sobrescriben
-        # esta categoría (ver OVERRIDE_DESDE).
+        # Salud genérico; lo farmacéutico va en "Farma", que gana el desempate.
         "salud", "essalud", "hospital", "asistencial",
         "personal medico", "personal de salud", "minsa",
         "medico", "medicos", "enfermera", "enfermeria",
@@ -304,18 +279,10 @@ CATEGORIAS: dict[str, list[str]] = {
 }
 
 
-# Que categorias de PL le importan de verdad a cada cliente de Vali (mismo
-# patron que noticias/fuentes.py::CATEGORIA_CLIENTES, sacado de los notas.md
-# reales). Se usa para filtrar "PLs relevantes por cliente" en las paginas
-# Radar Legislativo (PE/EC, que reusa este mismo modulo - ver
-# scraper_ec/categorias_ec.py) y Agenda.
-#
-# ponytail: arranca angosto a proposito - NO se incluye "Salud" para Bayer
-# (solo "Farma"), porque la leccion de esta sesion con noticias/MINSA fue
-# que una categoria generica de salud publica mete PLs sin relacion con el
-# interes real (DIGEMID/registro sanitario/oncologia, no salud publica en
-# general). Sumar "Salud" despues si Nicolas confirma que se estan perdiendo
-# PLs reales de su interes.
+# Categorías de PL que le importan a cada cliente (filtro de las páginas
+# Radar Legislativo PE/EC y Agenda).
+# ponytail: Bayer solo "Farma", no "Salud" (salud pública genérica metía PLs
+# sin relación); sumar "Salud" si Nicolas ve que se pierden PLs reales.
 CATEGORIA_CLIENTES_PL: dict[str, list[str]] = {
     "google": ["Tecnología", "Telecomunicaciones"],
     "incode": ["Tecnología"],
@@ -325,12 +292,7 @@ CATEGORIA_CLIENTES_PL: dict[str, list[str]] = {
 
 
 def _normalize(text: str | None) -> str:
-    if not text:
-        return ""
-    text = text.lower()
-    text = unicodedata.normalize("NFD", text)
-    text = "".join(c for c in text if unicodedata.category(c) != "Mn")
-    return text
+    return sin_tildes((text or "").lower())
 
 
 def _build_pattern(kw: str) -> re.Pattern:
@@ -345,11 +307,10 @@ _KW_RE: dict[str, list[re.Pattern]] = {
 }
 
 
-def classify(titulo: str | None, sumilla: str | None = None) -> str:
-    """Devuelve UN tema (string). Si nada matchea, 'Otros'."""
-    text = _normalize(f"{titulo or ''} {sumilla or ''}")
+def _clasificar(text: str, kw_re: dict[str, list[re.Pattern]], prioridad: list[str]) -> str:
+    """Categoría con más keywords; empate -> la primera en `prioridad`."""
     scores: dict[str, int] = {}
-    for cat, patterns in _KW_RE.items():
+    for cat, patterns in kw_re.items():
         s = sum(1 for p in patterns if p.search(text))
         if s:
             scores[cat] = s
@@ -359,23 +320,12 @@ def classify(titulo: str | None, sumilla: str | None = None) -> str:
     best = [c for c, v in scores.items() if v == max_s]
     if len(best) == 1:
         return best[0]
-    for cat in PRIORIDAD:
+    for cat in prioridad:
         if cat in best:
             return cat
     return best[0]
 
 
-def count_matches(titulo: str | None, sumilla: str | None, categoria: str) -> int:
-    """Cuenta cuántos keywords de `categoria` matchean en titulo+sumilla.
-
-    Útil para los pases de override que exigen un umbral mínimo (ej. para
-    Tecnología sobre categorías legítimas del Excel)."""
-    patterns = _KW_RE.get(categoria)
-    if not patterns:
-        return 0
-    text = _normalize(f"{titulo or ''} {sumilla or ''}")
-    return sum(1 for p in patterns if p.search(text))
-
-
-def all_categorias() -> list[str]:
-    return list(CATEGORIAS.keys()) + ["Otros"]
+def classify(titulo: str | None, sumilla: str | None = None) -> str:
+    """Devuelve UN tema (string). Si nada matchea, 'Otros'."""
+    return _clasificar(_normalize(f"{titulo or ''} {sumilla or ''}"), _KW_RE, PRIORIDAD)

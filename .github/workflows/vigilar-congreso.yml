@@ -4,17 +4,9 @@ name: Vigilar Congreso en vivo (Fase 0)
 # avisa por WhatsApp, Y transcribe el audio real en vivo (yt-dlp +
 # faster-whisper) acumulando en sesiones_transcripciones. Repo publico =>
 # minutos de Actions gratis.
-# NOTA: el cron de GitHub se atrasa 0-15 min en horas pico; como las sesiones
-# duran horas, igual se capturan. Para pruebas usar "Run workflow" (dispatch).
-#
-# YouTube bloquea las IPs de datacenter de GitHub Actions ("Sign in to
-# confirm you're not a bot") - verificado que NI el cliente android
-# (--extractor-args) ni PO tokens lo esquivan, el bloqueo es por
-# reputacion de IP. Lo que SI funciona: tunelizar yt-dlp por Cloudflare
-# WARP (VPN gratis de Cloudflare) - verificado en vivo 2026-09-15
-# (_test_warp.yml: mismo request, sin proxy = bot-check, con proxy WARP =
-# titulo real, sin login ni cuenta). Por eso instalamos WARP en modo
-# proxy antes de tocar YouTube.
+# El cron se atrasa 0-15 min en horas pico; las sesiones duran horas, igual
+# se capturan. YouTube bloquea las IPs de datacenter de Actions ("not a bot")
+# por reputacion de IP: yt-dlp sale por Cloudflare WARP en modo proxy.
 
 on:
   schedule:
@@ -53,10 +45,7 @@ jobs:
       - name: Instalar deps
         run: |
           pip install -q yt-dlp requests faster-whisper "av<19" imageio-ffmpeg
-          # El binario portable de imageio-ffmpeg crasheaba con SIGSEGV en
-          # este runner incluso para una conversion LOCAL sin red de por
-          # medio (bug real encontrado en vivo 2026-09-15, corrida #795) -
-          # el de apt, compilado y probado para este mismo Ubuntu, no.
+          # El ffmpeg portable de imageio-ffmpeg crasheaba (SIGSEGV) en este runner.
           sudo apt-get install -y -qq ffmpeg
 
       - name: Instalar Cloudflare WARP en modo proxy (SOCKS5 :40000)
@@ -76,15 +65,8 @@ jobs:
 
       - name: Puente SOCKS5->HTTP para ffmpeg (privoxy :8118)
         run: |
-          # Causa raiz real encontrada en vivo 2026-09-15 (corrida #788,
-          # con el stderr de yt-dlp ya visible): "ffmpeg does not support
-          # SOCKS proxies. Downloading is likely to fail" + "ffmpeg
-          # exited with code -11" (segfault) - para un stream EN VIVO,
-          # yt-dlp SIEMPRE delega la descarga a ffmpeg (--hls-prefer-native
-          # no lo evita), y ffmpeg no entiende socks5://. privoxy hace de
-          # puente: recibe HTTP en :8118 y lo reenvia por el SOCKS5 de
-          # WARP - eso SI lo puede usar ffmpeg via las variables de
-          # entorno http_proxy/https_proxy estandar.
+          # Para un stream en vivo yt-dlp delega en ffmpeg, que no entiende
+          # socks5://: privoxy recibe HTTP en :8118 y lo reenvia por WARP.
           sudo apt-get install -y -qq privoxy
           echo "forward-socks5 / 127.0.0.1:40000 ." | sudo tee -a /etc/privoxy/config
           sudo systemctl restart privoxy
@@ -103,11 +85,7 @@ jobs:
           PYTHONIOENCODING: utf-8
           YT_DLP_PROXY: socks5://127.0.0.1:40000
         run: |
-          # El bootstrap de arriba (antes iba despues de este paso) tiene
-          # que ir primero para que el aviso pueda buscar los puntos de
-          # agenda de HOY en proyectos.db (ver congreso_live/agenda_preview.py)
-          # - es best-effort: si la DB no esta, el aviso sale igual, solo
-          # sin el bloque de agenda.
+          # Despues del bootstrap para sumar la agenda de hoy al aviso (best-effort).
           python -X utf8 -u -m congreso_live.cli check || echo "[warn] check fallo, sigo"
 
       - name: Transcribir sesiones en vivo (continuo, hasta 170 min, con commits periodicos)
@@ -121,23 +99,9 @@ jobs:
           FFMPEG_HTTP_PROXY: http://127.0.0.1:8118
           FFMPEG_BIN: /usr/bin/ffmpeg
         run: |
-          # live-watch (no live-watch-once): queda transcribiendo SIN
-          # cortar mientras la sesion siga en vivo, en vez de un tick de
-          # pocos minutos cada 10 min. El disparador externo (cron-job.org,
-          # cada 10 min) llama de nuevo mientras este job sigue corriendo,
-          # pero concurrency (cancel-in-progress: false, abajo) hace que
-          # esos llamados se encolen en vez de duplicar o cortar el job -
-          # el siguiente arranca apenas este termine, asi que la cobertura
-          # es practicamente continua (~1 min de hueco entre relevos de
-          # hasta 170 min - cubre casi cualquier sesion de comision en un
-          # solo tramo, sin cortes en el medio). 170 min dentro del job de
-          # 180 deja margen para el setup inicial y el commit del final.
-          #
-          # --idle-exit-minutos 8: si NO hay nada en vivo, sale a los 8
-          # min en vez de quedarse ocupando el job (y bloqueando la cola
-          # de concurrency) hasta 170 min sin hacer nada - bug real
-          # encontrado en vivo 2026-09-15, la corrida #696 se quedo
-          # colgada ~170 min sin nada que transcribir.
+          # live-watch transcribe sin cortar mientras siga en vivo (hasta 170 min);
+          # concurrency encola los siguientes disparos, asi la cobertura es casi
+          # continua. --idle-exit-minutos 8 libera la cola si no hay nada en vivo.
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
@@ -145,31 +109,9 @@ jobs:
               --max-total-minutos 170 --idle-exit-minutos 8 &
           watch_pid=$!
 
-          # Commitea el snapshot de la DB cada 5 min MIENTRAS live-watch sigue
-          # vivo, en vez de solo al final del tramo (hasta 170 min despues) -
-          # sin esto Streamlit (que lee del snapshot commiteado) queda ciego
-          # toda la sesion. sqlite hace commit por chunk (~40s) con journal
-          # por defecto, asi que el archivo en disco esta consistente fuera
-          # de una transaccion - agarrarlo aca cada 5 min es seguro.
-          # set +e alrededor del cuerpo del loop: bug real encontrado en vivo
-          # 2026-09-15 (corrida #798) - con -e heredado del shell de Actions,
-          # CUALQUIER comando del cuerpo que devolviera !=0 (gzip, mv, git
-          # add) mataba este script entero en silencio, SIN imprimir nada
-          # (el "&&"/"||" de las lineas de push si estan exceptuados de -e,
-          # pero el resto del cuerpo no) - el proceso de python en segundo
-          # plano seguia mandando output al mismo log, por eso parecia que
-          # "todo seguia corriendo" mientras el commit periodico nunca se
-          # disparaba ni una sola vez en 3+ ventanas de 5 min, con transcripcion
-          # real acumulando (verificado: 11214+ caracteres de una sesion,
-          # 8700+ de otra) que se hubiera perdido si el job se cortaba antes
-          # del commit final. Con set +e + echo de cada paso, un fallo real
-          # queda visible en vez de abortar mudo.
-          # data/congreso_live_state.json SI esta trackeado por git y
-          # live-watch lo reescribe todo el tiempo (dedupe + log de
-          # sesiones) - agregarlo tambien al commit (bug real 2026-09-15,
-          # corrida #798: antes solo se agregaba proyectos.db.gz, dejando
-          # ese otro archivo modificado y sin stagear, lo que rompia
-          # cualquier "git rebase" posterior).
+          # Publica cada 5 min mientras live-watch sigue vivo (si no, Streamlit
+          # queda ciego toda la sesion). set +e: con -e cualquier fallo del cuerpo
+          # mataba el loop en silencio. congreso_live_state.json tambien se commitea.
           set +e
           tick=0
           while kill -0 "$watch_pid" 2>/dev/null; do
@@ -177,11 +119,8 @@ jobs:
             tick=$((tick + 1))
             echo "[commit-loop] tick $tick: watch_pid=$watch_pid vivo, chequeando proyectos.db"
             if [ -f proyectos.db ]; then
-              # La base va a la rama `datos` (un solo commit sin historial, ver
-              # scripts/publicar_db.sh): base_remota = lo publicado es la base y
-              # se le suman las transcripciones de este job, con reintento si
-              # otro workflow publico en el medio (mismo merge por filas que
-              # evito la perdida de transcripciones del 2026-09-15/16).
+              # base_remota: lo publicado es la base y se le suman las
+              # transcripciones de este job (ver scripts/publicar_db.sh).
               bash scripts/publicar_db.sh base_remota proyectos.db                 || echo "[commit-loop] tick $tick: [warn] no se pudo publicar la base, sigo"
               # congreso_live_state.json (dedupe de avisos) sigue en main.
               git add data/congreso_live_state.json
@@ -190,8 +129,7 @@ jobs:
               else
                 git commit -m "Congreso live: estado $(date -u +%Y-%m-%d-%H%M) [skip ci]"
                 if ! git push; then
-                  # --hard, no --soft: bug real 2026-09-16 (un --soft revirtio
-                  # otros archivos que habian cambiado en origin).
+                # --hard, no --soft: --soft revertia archivos cambiados en origin.
                   git fetch origin main
                   cp data/congreso_live_state.json /tmp/merged_state.json
                   git reset --hard origin/main
@@ -236,7 +174,7 @@ jobs:
             echo "Push fallo (intento $i), reintentando sobre origin/main..."
             git fetch origin main
             cp data/congreso_live_state.json /tmp/merged_state.json
-            # --hard, no --soft: bug real 2026-09-16 (backfill-vod.yml #7).
+            # --hard, no --soft: --soft revertia archivos cambiados en origin.
             git reset --hard origin/main
             mv -f /tmp/merged_state.json data/congreso_live_state.json
             git add data/congreso_live_state.json

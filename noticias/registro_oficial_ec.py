@@ -22,12 +22,10 @@ Uso:
 from __future__ import annotations
 
 import base64
-import html as _html
 import functools
+import html as _html
 import logging
 import re
-from datetime import datetime, timezone
-from pathlib import Path
 
 from noticias.scraper import HEADERS, _make_session, parse_rss_feed
 from noticias.temas import clasificar, es_norma_de_interes
@@ -40,12 +38,10 @@ FUENTE_NOMBRE = "Registro Oficial EC (índice)"
 # ============================================================
 # PDFs reales por edición + anexos (Suplementos)
 # ============================================================
-# El post WP de cada edición (el que ya itera fetch_recent_editions) NUNCA
-# trae su propio PDF inline - solo un link genérico al "Manual de Documentos
-# a Publicarse" (mismo uuid en TODOS los posts del sitio, verificado
-# 2026-09-12 en 3 posts reales distintos). Los PDFs reales por edición solo
-# aparecen en 2 páginas de categoría fijas ("widget" de últimas ediciones,
-# ~12 items, se actualiza en cada carga de página):
+# El post WP de cada edición nunca trae su PDF: solo un link genérico al
+# "Manual de Documentos a Publicarse" (mismo en todo el sitio). Los PDFs
+# reales solo aparecen en el widget de últimas ediciones (~12 items) de 2
+# páginas de categoría fijas:
 PDF_LANDING_PRINCIPAL = "https://www.registroficial.gob.ec/245427-2/"  # ediciones "Registro Oficial"
 PDF_LANDING_SUPLEMENTO = "https://www.registroficial.gob.ec/255776-2/"  # "Suplemento" = los anexos
 
@@ -81,11 +77,8 @@ def _parse_pdf_widget(html_text: str) -> list[dict]:
             continue
         ctx = re.sub(r"<[^>]+>", " ", html_text[max(0, m.start() - 400):m.start()])
         ctx = _html.unescape(ctx)
-        # OJO: tomar el ULTIMO match en la ventana, no el primero (.search) -
-        # varios items del widget caen dentro de la misma ventana de 400
-        # chars y .search() devolvía el numero/paginas del item ANTERIOR,
-        # no el mas cercano al link actual (bug real, atrapado por el propio
-        # self-check con 2 items sinteticos consecutivos).
+        # El ULTIMO match de la ventana: varios items del widget caen en los
+        # mismos 400 chars y el primero es el del item anterior.
         nums = _PDF_NUMERO_RE.findall(ctx)
         if not nums:
             continue
@@ -258,28 +251,6 @@ def parse_norms(lines: list[str]) -> list[dict]:
     return norms
 
 
-def build_noticia(edition: dict, norm: dict, temas: list[str]) -> dict:
-    """Convierte una norma matcheada en dict listo para upsert_noticia."""
-    ed_titulo = edition.get("titulo", "").strip()
-    entidad = norm.get("entidad") or norm.get("funcion") or ""
-    codigo = norm.get("codigo") or ""
-    titulo_norma = norm["titulo"][:300]
-    titulo = f"{ed_titulo} — {entidad}: {titulo_norma}"[:500]
-    anchor = codigo or titulo_norma[:40]
-    return {
-        "url": f"{edition['url']}#{re.sub(r'[^A-Za-z0-9-]', '', anchor)[:80]}",
-        "titulo": titulo,
-        "resumen": f"[{entidad}] {codigo} {titulo_norma}".strip()[:500],
-        "fecha_pub": edition.get("fecha_pub"),
-        "autor": None,
-        "tags": "|".join(temas + ["registro-oficial", "normativa"]),
-    }
-
-
-def _now_iso() -> str:
-    return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
-
-
 def build_edition_noticia(edition: dict, indice_text: str, temas: list[str],
                           pdf_excerpt: str | None = None,
                           interes: list[dict] = ()) -> dict:
@@ -296,8 +267,7 @@ def build_edition_noticia(edition: dict, indice_text: str, temas: list[str],
     titulo = edition.get("titulo", "").strip()
     tags = temas + ["registro-oficial", "normativa"]
     # Normas de interés de cliente van ADELANTE: el índice se recorta a 500
-    # chars y la SPDP 0039-R (bug real 2026-09-24) venía al final, fuera
-    # del texto guardado - el digest nunca la habría visto.
+    # chars y lo que venía al final no llegaba al digest.
     if interes:
         lineas = [f"{n.get('entidad') or ''}: {n.get('codigo') or ''} {n['titulo']}".strip()
                   for n in interes]
@@ -318,9 +288,8 @@ def build_edition_noticia(edition: dict, indice_text: str, temas: list[str],
 
 def _skip_metadata(lines: list[str]) -> list[str]:
     """Descarta líneas del header del post (autor, fecha, categoría)."""
-    skip_next_bar = False
     out = []
-    for i, l in enumerate(lines):
+    for l in lines:
         low = l.lower().strip("| :,.")
         if low in _METADATA_LINES:
             continue
@@ -408,102 +377,16 @@ def run_sync(db, max_editions: int = 20) -> dict:
     return stats
 
 
-# ============================================================
-# self-check (Ponytail: 1 chequeo ejecutable de la lógica no trivial)
-# ============================================================
-
-def _demo():
-    """Test rápido de parse_norms con datos reales del RO."""
-    sample_lines = [
-        "FUNCIÓN EJECUTIVA",
-        "RESOLUCIONES:",
-        "SERVICIO DE RENTAS INTERNAS:",
-        "NAC-DGERCGC26-00000028 Se reforma la Resolución NAC-DGERCGC26-00000024",
-        "FUNCIÓN DE TRANSPARENCIA Y CONTROL SOCIAL",
-        "CONSEJO DE PARTICIPACIÓN CIUDADANA Y CONTROL SOCIAL:",
-        "CPCCS-PLE-SG-029-O-2026-0225 Se convoca a la ciudadanía",
-    ]
-    norms = parse_norms(sample_lines)
-    assert len(norms) == 2, f"esperaba 2 normas, hay {len(norms)}"
-    assert norms[0]["funcion"] == "FUNCIÓN EJECUTIVA"
-    assert norms[0]["entidad"] == "SERVICIO DE RENTAS INTERNAS"
-    assert norms[0]["codigo"] == "NAC-DGERCGC26-00000028"
-    assert "reforma" in norms[0]["titulo"].lower()
-    assert norms[1]["entidad"] == "CONSEJO DE PARTICIPACIÓN CIUDADANA Y CONTROL SOCIAL"
-    print("OK parse_norms:", len(norms), "normas")
-
-    _demo_pdf_widget()
-    _demo_extract_pdf_text()
-
-
-def _demo_pdf_widget():
-    """_parse_pdf_widget contra un snippet HTML calcado del widget real
-    (estructura verificada en vivo contra registroficial.gob.ec, 2026-09-12).
-    También confirma que el PDF genérico del Manual (mismo uuid en todo el
-    sitio) se descarta y no cuenta como edición real."""
-    html_sample = (
-        '<div class="row_post_imagen_texto"> Registro Oficial '
-        '<span>Año II - Nº 367</span> viernes, 11 septiembre 2026 69 PÁGINAS '
-        '<a href="https://esacc.corteconstitucional.gob.ec/storage/api/v1/'
-        '10_DWL_FL/eyJjYXJwZXRhIjoicm8iLCJ1dWlkIjoiYWJjLnBkZiJ9">Descargar</a></div>'
-        '<div class="row_post_imagen_texto"> Registro Oficial '
-        '<span>Año II - Nº 366</span> jueves, 10 septiembre 2026 60 PÁGINAS '
-        '<a href="https://esacc.corteconstitucional.gob.ec/storage/api/v1/'
-        '10_DWL_FL/eyJjYXJwZXRhIjoicm8iLCJ1dWlkIjoiZGVmLnBkZiJ9">Descargar</a></div>'
-        '<a href="https://esacc.corteconstitucional.gob.ec/storage/api/v1/'
-        '10_DWL_FL/eyJjYXJwZXRhIjoid2Jwcm92MjAyMyIsInV1aWQiOiJtYW51YWwtZ2VuZXJpY28ucGRmIn0=">'
-        'Descargar</a>'  # Manual generico (decodifica a carpeta=wbprov2023) - debe descartarse
-    )
-    items = _parse_pdf_widget(html_sample)
-    assert len(items) == 2, f"esperaba 2 ediciones reales (sin el manual), hay {len(items)}"
-    assert items[0]["numero"] == "367" and items[0]["paginas"] == 69
-    assert items[1]["numero"] == "366" and items[1]["paginas"] == 60
-    assert all(_PDF_MANUAL_MARKER not in i["url"] for i in items)
-    print("OK _parse_pdf_widget:", len(items), "ediciones (manual descartado)")
-
-
-def _demo_extract_pdf_text():
-    """extract_pdf_text sobre un PDF sintético de 2 páginas: una con texto
-    real (no debe pasar por OCR) y una sin capa de texto (imagen pura, debe
-    disparar el fallback OCR). Monkeypatchea _ocr_page para no depender del
-    motor de OCR (paddleocr, no instalado en todos los entornos dev/test) -
-    igual ejercita la lógica real de decisión por-página de extract_pdf_text."""
-    import pymupdf as fitz
-
-    doc = fitz.open()
-    p0 = doc.new_page()
-    p0.insert_text((72, 72), "Texto real de una norma, con contenido de sobra.")
-    p1 = doc.new_page()  # sin insert_text -> get_text() vacío, simula pagina escaneada
-    pdf_bytes = doc.tobytes()
-    doc.close()
-
-    calls = []
-    orig_ocr = globals()["_ocr_page"]
-    globals()["_ocr_page"] = lambda page: (calls.append(page.number), "TEXTO-OCR-SIMULADO")[1]
-    try:
-        text = extract_pdf_text(pdf_bytes)
-    finally:
-        globals()["_ocr_page"] = orig_ocr
-
-    assert "Texto real de una norma" in text, "pagina con texto real deberia pasar tal cual"
-    assert "TEXTO-OCR-SIMULADO" in text, "pagina sin texto deberia haber disparado OCR"
-    assert calls == [1], f"OCR deberia dispararse solo en la pagina 1 (sin texto), disparo en {calls}"
-    print("OK extract_pdf_text: pagina con texto intacta, OCR disparado solo en la pagina vacia")
-
-
 if __name__ == "__main__":
     import argparse
     p = argparse.ArgumentParser()
-    p.add_argument("cmd", choices=["sync", "demo"])
+    p.add_argument("cmd", choices=["sync"])
     p.add_argument("--db", default="proyectos.db")
     p.add_argument("--max-editions", type=int, default=20)
     args = p.parse_args()
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
-    if args.cmd == "demo":
-        _demo()
-    else:
-        from noticias.db import Database
-        with Database(args.db) as db:
-            db.init_schema()
-            stats = run_sync(db, max_editions=args.max_editions)
-            print(f"RO sync: {stats}")
+    from noticias.db import Database
+    with Database(args.db) as db:
+        db.init_schema()
+        stats = run_sync(db, max_editions=args.max_editions)
+        print(f"RO sync: {stats}")

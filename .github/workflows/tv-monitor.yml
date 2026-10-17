@@ -7,8 +7,7 @@ name: Monitor de TV y entrevistas (YouTube)
 #
 # Se encadena solo: cada corrida hace VUELTAS pasadas, una cada 30 min, y al
 # final se relanza (workflow_dispatch con GITHUB_TOKEN si dispara runs). El
-# schedule de GitHub no disparo nunca las primeras horas (2026-09-28), igual
-# que con backfill-auto.yml; queda solo como respaldo si la cadena se corta.
+# schedule nativo no es confiable; queda como respaldo si la cadena se corta.
 
 on:
   schedule:

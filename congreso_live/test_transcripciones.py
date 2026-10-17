@@ -1,4 +1,4 @@
-"""Checks de la limpieza de VTT. Correr: python -m congreso_live.test_transcripciones"""
+"""Tests de la limpieza de VTT."""
 from congreso_live.transcripciones import _limpiar_vtt as L
 
 
@@ -27,11 +27,3 @@ observamos<00:00:04.400><c> tambien</c>
 def test_vacio():
     assert L("WEBVTT\n") == ""
     assert L("") == ""
-
-
-if __name__ == "__main__":
-    for name, fn in sorted(globals().items()):
-        if name.startswith("test_") and callable(fn):
-            fn()
-            print(f"OK {name}")
-    print("todos los checks pasaron")

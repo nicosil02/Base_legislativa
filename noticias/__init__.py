@@ -11,8 +11,9 @@ Cobertura Peru + Ecuador en categorias:
 Cada fuente tiene un metodo de captura:
   - rss: la mayoria de medios y muchos sitios WordPress
   - html: scraping de pagina de noticias (cuando no hay RSS)
-  - api: endpoint estructurado (raros)
-  - manual: solo en el catalogo, captura manual (Twitter, sitios sin feed)
+  - gobpe: API de busqueda de gob.pe
+  - custom: scrapers propios (el_peruano.py, registro_oficial_ec.py)
+  - twitter / manual: solo en el catalogo, sin captura automatica
 
 Schema:
   noticias_fuentes (catalogo: id, categoria, pais, nombre, url, rss_url, tipo)
@@ -23,6 +24,5 @@ CLI:
   python -m noticias.cli init           # crea tablas
   python -m noticias.cli seed           # importa catalogo desde fuentes.py
   python -m noticias.cli sync [--pais PE/EC] [--categoria X]
-  python -m noticias.cli list-fuentes [--pais X]
   python -m noticias.cli stats
 """

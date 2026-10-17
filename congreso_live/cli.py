@@ -1,16 +1,13 @@
-"""CLI Fase 0: detecta Pleno/comisiones ordinarias EN VIVO y avisa por WhatsApp.
+"""CLI de congreso_live: deteccion en vivo, transcripciones y backfills.
 
-  python -m congreso_live.cli check            # detecta + notifica lo nuevo
-  python -m congreso_live.cli check --dry-run  # solo muestra, no envia ni guarda
+  python -m congreso_live.cli check [--dry-run]   # detecta en vivo y avisa lo nuevo
 
-Estado en data/congreso_live_state.json (dedupe + log de sesiones), commiteado
-por el workflow igual que data/alert_sent_log.json.
+Estado (dedupe de avisos) en data/congreso_live_state.json, lo commitea el workflow.
 """
 from __future__ import annotations
 
 import argparse
 import logging
-from datetime import datetime, timezone
 
 from congreso_live.agenda_preview import agenda_extra_para
 from congreso_live.detector import vivos_de_interes
@@ -22,6 +19,7 @@ from congreso_live.state import (
     seguidas_activas,
 )
 from congreso_live.transcripciones import run_sync as sync_transcripciones
+from core.db import now_iso
 
 log = logging.getLogger(__name__)
 
@@ -43,7 +41,7 @@ def cmd_check(args) -> int:
 
     seguidas_norm = seguidas_activas()
 
-    now = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    now = now_iso()
     enviados = 0
     for v in nuevos:
         if _comision_seguida(v["tipo"], seguidas_norm):
@@ -70,12 +68,8 @@ def cmd_sync_transcripciones(args) -> int:
 
 
 def cmd_live_watch(args) -> int:
-    """Corre por detras, sin intervencion manual: detecta sola cualquier
-    sesion en vivo (Pleno de cualquier camara, o comision ordinaria) y la
-    va transcribiendo, soportando varias en simultaneo. Sin --max-total-minutos
-    corre para siempre (Ctrl+C para parar) - pensado para dejar corriendo
-    en una terminal aparte. Con --max-total-minutos sale solo al llegar
-    al limite (para un workflow con tiempo maximo, ver vigilar-congreso.yml)."""
+    """Detecta y transcribe sola cualquier sesion en vivo (varias a la vez).
+    Sin --max-total-minutos corre hasta Ctrl+C."""
     try:
         from congreso_live.live_transcribe import watch_and_transcribe
     except ImportError:
@@ -92,9 +86,8 @@ def cmd_live_watch(args) -> int:
 
 
 def cmd_backfill_vod(args) -> int:
-    """Sesion ya terminada que la captura en vivo se perdio: baja el
-    audio COMPLETO del VOD y lo transcribe de una, sin esperar los
-    captions de YouTube (tardan de horas a dias)."""
+    """Sesion terminada que la captura en vivo se perdio: transcribe el VOD
+    completo sin esperar los captions de YouTube (tardan horas o dias)."""
     try:
         from congreso_live.live_transcribe import transcribir_vod
     except ImportError:
@@ -110,9 +103,7 @@ def cmd_backfill_vod(args) -> int:
 
 
 def cmd_backfill_auto(args) -> int:
-    """Escanea el canal solo, encuentra sesiones reales sin transcribir
-    y recupera hasta --max de a poco (captions si estan listos, VOD
-    completo + Whisper si no) - ver congreso_live/backfill_auto.py."""
+    """Recupera hasta --max sesiones del canal que no estan transcritas."""
     try:
         from congreso_live.backfill_auto import procesar_pendientes
     except ImportError:
@@ -132,8 +123,7 @@ def cmd_backfill_auto(args) -> int:
 
 
 def cmd_comisiones_ec(args) -> int:
-    """Comisiones de la Asamblea EC (Facebook): transcribe con Whisper las
-    sesiones ya terminadas que falten - ver congreso_live/facebook_ec.py."""
+    """Transcribe las sesiones terminadas de comisiones EC (Facebook) que falten."""
     try:
         from congreso_live.facebook_ec import procesar_pendientes
     except ImportError:

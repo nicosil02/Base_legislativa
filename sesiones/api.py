@@ -12,13 +12,11 @@ Endpoints expuestos:
 """
 from __future__ import annotations
 
-import logging
 import time
-from typing import Any
 
 import requests
 
-log = logging.getLogger(__name__)
+from core import http
 
 API_BASE = "https://wb2server.congreso.gob.pe/service-portal-publico-ext"
 # Basic auth literal del bundle JS de la SPA visor-sesiones. Decodea a
@@ -38,7 +36,8 @@ DEFAULT_HEADERS = {
 class ApiClient:
     def __init__(self, timeout: float = 30.0, request_delay: float = 0.15,
                  max_retries: int = 3):
-        self.session = requests.Session()
+        # max_retries cuenta intentos totales; la sesion reintenta red y 429/5xx.
+        self.session = http.session(reintentos=max_retries - 1)
         self.session.headers.update(DEFAULT_HEADERS)
         self.timeout = timeout
         self.request_delay = request_delay
@@ -46,21 +45,15 @@ class ApiClient:
 
     def _request(self, method: str, path: str, **kwargs) -> dict:
         url = f"{API_BASE}{path}"
-        last_err: Exception | None = None
-        for attempt in range(self.max_retries):
-            try:
-                resp = self.session.request(method, url, timeout=self.timeout, **kwargs)
-                resp.raise_for_status()
-                if self.request_delay:
-                    time.sleep(self.request_delay)
-                return resp.json()
-            except (requests.RequestException, ValueError) as e:
-                last_err = e
-                wait = 2 ** attempt
-                log.warning("Request %s %s fallo (intento %d/%d): %s — retry en %ss",
-                            method, url, attempt + 1, self.max_retries, e, wait)
-                time.sleep(wait)
-        raise RuntimeError(f"Fallo {method} {url} tras {self.max_retries} intentos: {last_err}")
+        try:
+            resp = self.session.request(method, url, timeout=self.timeout, **kwargs)
+            resp.raise_for_status()
+            data = resp.json()
+        except (requests.RequestException, ValueError) as e:
+            raise RuntimeError(f"Fallo {method} {url} tras {self.max_retries} intentos: {e}") from e
+        if self.request_delay:
+            time.sleep(self.request_delay)
+        return data
 
     def get_criterios(self) -> dict:
         """Devuelve el catalogo: periodos parlamentarios, comisiones (24 ordinarias

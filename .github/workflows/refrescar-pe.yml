@@ -1,38 +1,13 @@
 name: Actualizar Peru (PLs + snapshot)
 
 on:
-  # Bug real 2026-09-21 (Nicolas: "no me ha llegado nada [de whatsapp] y
-  # los 9am"): el cron nativo de GitHub dejo de disparar durante ~6 horas
-  # seguidas (ultimo disparo real antes del hueco: la corrida de las 22:00
-  # Lima del dia anterior, ejecutada mas de 5 horas TARDE) - se perdieron
-  # completas las corridas de 8am Y 9am Lima, exactamente cuando debian
-  # mandarse las alertas. Mismo patron ya documentado y resuelto para
-  # backfill-auto.yml (ver ese workflow) - push es confiable, schedule no.
-  # Fix: una rutina en la nube de Claude toca data/.refrescar_trigger cada
-  # hora y lo pushea - ese push dispara esta corrida aunque el cron nativo
-  # vuelva a fallar. No reemplaza al schedule de abajo, es un respaldo.
+  # Respaldo del cron nativo (a veces no dispara): una rutina en la nube
+  # toca data/.refrescar_trigger cada hora y ese push dispara esta corrida.
   push:
     paths: ['data/.refrescar_trigger']
   schedule:
-    # Cada hora durante horas habiles 8 AM - 22 PM Lima (13-03 UTC),
-    # mas corrida nocturna a las 6 AM Lima (11 UTC) para catch-up.
-    # 15 runs/dia x ~2 min = 30 min/dia = 900 min/mes (45% del free tier).
-    # Da actualizacion casi real-time durante horas de actividad legislativa.
-    - cron: '0 13 * * *'  # 8 AM Lima
-    - cron: '0 14 * * *'  # 9 AM
-    - cron: '0 15 * * *'  # 10 AM
-    - cron: '0 16 * * *'  # 11 AM
-    - cron: '0 17 * * *'  # 12 PM
-    - cron: '0 18 * * *'  # 1 PM
-    - cron: '0 19 * * *'  # 2 PM
-    - cron: '0 20 * * *'  # 3 PM
-    - cron: '0 21 * * *'  # 4 PM
-    - cron: '0 22 * * *'  # 5 PM
-    - cron: '0 23 * * *'  # 6 PM
-    - cron: '0 0 * * *'   # 7 PM
-    - cron: '0 1 * * *'   # 8 PM
-    - cron: '0 2 * * *'   # 9 PM
-    - cron: '0 3 * * *'   # 10 PM (corrida principal nocturna)
+    # Cada hora de 8 AM a 10 PM Lima (13-03 UTC).
+    - cron: '0 0-3,13-23 * * *'
   workflow_dispatch:
     inputs:
       force_full_sync:
@@ -60,18 +35,8 @@ jobs:
       - name: Determinar hora UTC real
         id: hora
         run: |
-          # Bug real 2026-09-21: los pasos de abajo gateaban por
-          # `github.event.schedule` (la expresion cron EXACTA que
-          # supuestamente disparo la corrida) - pero eso queda vacio en
-          # una corrida disparada por push (el respaldo de arriba) y no
-          # sirve si el cron nativo disparo TARDE (ej. el slot de 9am
-          # ejecutandose a las 10:30, todavia con SCHEDULE="0 14 * * *"
-          # pero fuera de esa hora real). Usar la hora UTC real del
-          # momento en que corre esto es mas robusto: funciona igual sin
-          # importar como se disparo la corrida.
-          # 10#... fuerza base-10: date -u +%H da "08"/"09" con cero a la
-          # izquierda, que bash interpreta como octal invalido en
-          # comparaciones -eq/-ge mas abajo si no se fuerza la base.
+          # Hora UTC real (no github.event.schedule): vale tambien para corridas
+          # por push o con cron atrasado. 10# evita que "08"/"09" se lean como octal.
           echo "hour=$((10#$(date -u +%H)))" >> "$GITHUB_OUTPUT"
 
       - name: Setup Python
@@ -97,55 +62,19 @@ jobs:
       - name: Instalar dependencias
         run: |
           python -m pip install --upgrade pip
-          # scikit-learn: bug real 2026-09-19 - noticias/digest.py lo
-          # importa a nivel de modulo (TfidfVectorizer/cosine_similarity),
-          # pero solo se instalaba mas abajo en el paso "Reclasificar PLs"
-          # (que corre DESPUES de noticias.cli avisar). Cada corrida desde
-          # que se armo el digest (2026-09-17) crasheaba en silencio con
-          # "ModuleNotFoundError: No module named 'sklearn'" - el digest de
-          # WhatsApp de noticias PE/EC (y el match de PL de interes de
-          # Ecuador) nunca llego a mandar nada.
-          # yt-dlp: mismo patron que scikit-learn arriba - bug real
-          # 2026-09-19. clientes/alertas_pl.py solo necesita
-          # _find_db_path() (un simple resolvedor de ruta), pero esa
-          # funcion vive en congreso_live/transcripciones.py, que tiene
-          # `import yt_dlp` a nivel de modulo (lo usa OTRA funcion del
-          # mismo archivo, no _find_db_path) - yt-dlp recien se instalaba
-          # mas abajo, para el paso de transcripciones con WARP, demasiado
-          # tarde para el paso de alertas_pl que corre antes. La alerta de
-          # PL de Bayer nunca llego a chequear nada desde que se armo.
-          #
-          # certifi: bug real 2026-09-20 encontrado auditando fuentes activas
-          # sin ninguna noticia jamas - Cancilleria EC (cancilleria.gob.ec,
-          # fuente real y activa, verificado con curl y con nuestro propio
-          # fetch_fuente() desde otra red: 200 OK, feed real con items
-          # recientes) fallaba SIEMPRE en este runner con
-          # "SSLCertVerificationError: unable to get local issuer
-          # certificate" - tanto la sesion con cloudscraper como el fallback
-          # plano de _get() (pensado para OTRO problema, el fingerprint TLS
-          # de cloudscraper) fallaban igual, porque el certificado real
-          # (CA real Sectigo, no autofirmado) usa una CA intermedia mas
-          # nueva que el certifi ya cacheado en la imagen del runner no
-          # reconoce. Actualizar certifi es inofensivo (solo agrega
-          # confianza a CAs reales, nunca la reduce) y deberia resolver esto
-          # para cualquier sitio con el mismo patron, no solo Cancilleria.
+          # sklearn y yt-dlp se importan a nivel de modulo en pasos que corren antes
+          # (digest de noticias, alertas_pl). certifi al dia: el de la imagen del
+          # runner no reconocia CAs intermedias nuevas (Cancilleria EC).
           pip install requests pycryptodome openpyxl pandas scikit-learn yt-dlp
           pip install --upgrade certifi
 
       - name: Instalar dependencias de noticias (PDF/OCR Registro Oficial EC)
-        # Ventana 8-9am Lima (13-14 UTC), no solo el minuto exacto - bug
-        # real 2026-09-21: el cron nativo puede disparar tarde (o no
-        # disparar), y github.event.schedule exige el string EXACTO -
-        # steps.hora (hora UTC real de esta corrida) tolera el margen.
+        # Ventana por hora real (steps.hora), no el string exacto del cron:
+        # el cron nativo puede disparar tarde.
         if: steps.hora.outputs.hour == '13' || steps.hora.outputs.hour == '14' || github.event_name == 'workflow_dispatch'
         run: |
-          # Solo se instala en la corrida de las 8 AM Lima (ver "Actualizar
-          # noticias" mas abajo) - no hace falta pagar este costo 15x/dia
-          # cuando las ediciones del Registro Oficial EC salen 1x/dia.
-          # OCR de paginas escaneadas con PaddleOCR (antes tesseract).
-          # paddlepaddle fijo en 3.2.2: 3.3.x rompe en CPU con oneDNN
-          # ("ConvertPirAttribute2RuntimeAttribute not support", probado
-          # 2026-09-26) y apagar oneDNN lo deja en ~40 s/pagina.
+          # Solo 8-9am Lima: el Registro Oficial EC sale 1x/dia.
+          # paddlepaddle 3.2.2: 3.3.x rompe en CPU con oneDNN.
           pip install pymupdf pillow "paddlepaddle==3.2.2" paddleocr
 
       - name: Bootstrap DB Peru desde la rama datos (solo si no hay cache)
@@ -171,11 +100,8 @@ jobs:
         env:
           FORCE_FULL: ${{ inputs.force_full_sync }}
         run: |
-          # Timeout 40 min (margen para sync completo si por algun motivo
-          # se quedo desfasado). Normalmente termina en <2 min.
-          # FORCE_FULL=true (dispatch manual) agrega --full: re-fetchea el
-          # detalle de TODOS los PLs, no solo los nuevos/cambiados. Antes
-          # este input existia pero no se usaba en ningun lado (bug).
+          # Normalmente <2 min. FORCE_FULL=true (dispatch) re-fetchea el detalle
+          # de todos los PLs.
           FLAG=""
           if [ "$FORCE_FULL" = "true" ]; then FLAG="--full"; fi
           timeout 2400 python -m scraper.cli update $FLAG || echo "[warn] sync PE timeout — sigo con DB actual"
@@ -188,51 +114,28 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           PYTHONIOENCODING: utf-8
         run: |
-          # Justo despues del sync de PLs (arriba) para leer el estado
-          # mas fresco posible. Solo Bayer/Peru por ahora - ver
-          # clientes/alertas_pl.py. data/pl_seguimiento_estado.json se
-          # commitea igual que el resto del estado compartido (paso
-          # final "Auto-commit snapshot").
+          # Justo despues del sync para leer el estado mas fresco
+          # (ver clientes/alertas_pl.py).
           python -X utf8 -m clientes.alertas_pl check || echo "[warn] alertas_pl fallo, sigo"
 
       - name: Refrescar catalogo de comisiones (limpia basura)
         run: |
           # Re-baja el catalogo desde la API del Congreso PE. Filtra entradas
-          # basura (tests tipo "cremas al tetra") usando blacklist + heuristica.
-          # Rapido (~3 seg), idempotente. Solo agrega/actualiza, no borra
-          # comisiones legitimas.
+          # Re-baja el catalogo y filtra entradas basura; idempotente.
           python -X utf8 -m scraper.cli refresh-comisiones || echo "[warn] refresh-comisiones fallo, sigo"
 
       - name: Actualizar agenda de sesiones (PE)
         run: |
-          # --periodo-par 2026 = periodo parlamentario 2026-2031 (Congreso
-          # bicameral vigente desde 2026-07-27). --periodo-leg all itera los
-          # 5 periodos legislativos de ese parlamento (2026..2030) — sin
-          # `all`, por default solo se sincroniza UN periodo legislativo y
-          # se pierden los demas (ya nos paso una vez con el periodo 2021,
-          # perdiendo ~1500 sesiones historicas de 2023-2024).
-          # Hasta 2026-09-10 este workflow sincronizaba el periodo 2021-2026
-          # (unicameral, ya cerrado) — corregido para seguir al Congreso real.
-          # Sync incremental: solo re-pega detalles si el estado cambio.
+          # Periodo 2026-2031 (bicameral). --periodo-leg all: sin el solo se
+          # sincroniza un periodo legislativo y se pierden los demas.
           timeout 1200 python -X utf8 -m sesiones.cli update --periodo-par 2026 --periodo-leg all || echo "[warn] sesiones sync fallo, sigo"
 
       - name: Actualizar agendas del Pleno (PE)
         run: |
-          # Sync de agendas del Pleno via API adp-portal-service. Cobertura de
-          # AMBOS periodos: 2021-2026 (historico, unicameral, ~180 agendas) y
-          # 2026-2031 (vigente, bicameral — al 2026-09-11 todavia sin agendas
-          # publicadas por esta API, pero se recogen solas apenas aparezcan).
-          # Sync incremental: solo re-pega detalles si cambio el titulo/url.
-          # Primera corrida ~5 min (fetchea detalle de cada agenda); las
-          # siguientes son rapidas (~30 seg) porque solo procesa la del
-          # jueves nuevo + cualquier actualizacion.
-          timeout 900 python -X utf8 -m pleno.cli update --periodo 2021-2026,2026-2031 || echo "[warn] pleno sync fallo, sigo"
-          # La API de arriba SIGUE sin agendas del periodo bicameral
-          # (verificado en vivo 2026-09-15, igual que el 09-11) - el
-          # Congreso bicameral las publica como PDF en el sitio propio de
-          # cada camara, no por esa API. pleno.agenda_pdf cubre ese
-          # backfill scrapeando senado.congreso.gob.pe y
-          # diputados.congreso.gob.pe directamente.
+          # API adp-portal-service, ambos periodos, incremental.
+          timeout 900 python -X utf8 -m pleno.cli update || echo "[warn] pleno sync fallo, sigo"
+          # Esa API no tiene agendas del periodo bicameral: las camaras las
+          # publican como PDF en su sitio, y eso lo cubre pleno.agenda_pdf.
           timeout 300 python -X utf8 -m pleno.agenda_pdf sync || echo "[warn] pleno agenda_pdf fallo, sigo"
 
       - name: Actualizar mesas de trabajo + eventos del Congreso PE
@@ -241,10 +144,7 @@ jobs:
           #    (para tener el enlace al post individual completo)
           timeout 300 python -X utf8 -m mesas_tecnicas.cli sync --pages 5 \
               || echo "[warn] mesas_tecnicas sync RSS fallo, sigo"
-          # 2) Listado por dia: itera /agenda/YYYY/M/D/ para los ultimos
-          #    14 dias y 21 dias futuros, capturando HORA real de cada
-          #    evento. Reemplaza el approach con date input JS que no
-          #    funcionaba. ~30 seg.
+          # 2) Listado por dia (14 atras, 21 adelante) con la hora real.
           timeout 300 python -X utf8 -m mesas_tecnicas.cli sync-dias \
               --days-back 14 --days-fwd 21 \
               || echo "[warn] mesas_tecnicas sync-dias fallo, sigo"
@@ -258,18 +158,8 @@ jobs:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: |
-          # Seed idempotente del catalogo de fuentes + sync RSS de los
-          # ~84 medios/instituciones/gremios mapeados. Captura noticias
-          # de Coyuntura Politica, Instituciones, Salud, Tech, Agrarios,
-          # KYC/AML - esto SIGUE corriendo cada corrida (15x/dia), como
-          # antes.
-          #
-          # Registro Oficial EC (indice + PDF/OCR de ediciones y
-          # suplementos) es distinto: publica 1x/dia, asi que --con-ro-ec
-          # solo se agrega en la ventana 8-9am Lima o en dispatch manual -
-          # no tiene sentido re-bajar/re-OCRear los mismos PDFs 15 veces
-          # al dia. Ventana (no minuto exacto) por el mismo motivo que
-          # steps.hora de arriba: el cron nativo puede disparar tarde.
+          # Fuentes de noticias en cada corrida. Registro Oficial EC (PDF/OCR)
+          # solo en la ventana 8-9am Lima o dispatch: sale 1x/dia.
           RO_FLAG=""
           if [ "$HOUR" = "13" ] || [ "$HOUR" = "14" ] || [ "$IS_DISPATCH" = "true" ]; then
             RO_FLAG="--con-ro-ec"
@@ -278,22 +168,8 @@ jobs:
               || echo "[warn] noticias seed fallo, sigo"
           timeout 600 python -X utf8 -m noticias.cli sync $RO_FLAG \
               || echo "[warn] noticias sync fallo, sigo"
-          # Digest por WhatsApp de lo nuevo y relevante (PE+EC), agrupando
-          # cobertura duplicada del mismo evento - ver noticias/digest.py.
-          # Redisenado 2026-09-20 (Nicolas: "las alertas... me llegan muy
-          # seguido... a veces no me dice nada" + "debería llegar 2 veces
-          # al día, 1 a las 8-9am y otra a las 2pm"): antes disparaba en
-          # cada corrida (15x/dia) y solo mandaba algo si habia contenido -
-          # silencio ambiguo el resto de las veces.
-          #
-          # Bug real 2026-09-21 (Nicolas: "no me ha llegado nada y los
-          # 9am"): con el minuto EXACTO (SCHEDULE == "0 14 * * *"), un
-          # cron nativo que dispara tarde o que directamente no dispara
-          # (paso ese mismo dia - 6 horas sin ninguna corrida) significaba
-          # SIN alerta ese dia, sin reintento. Ventana de 2 horas (9-10am,
-          # 2-3pm Lima) en vez del minuto exacto - tolera atrasos del cron
-          # nativo y corridas de respaldo por push (ver `on:` arriba)
-          # aunque no caigan justo en el minuto :00.
+          # Digest de WhatsApp en 2 horarios fijos (9-10am y 2-3pm Lima). Ventana
+          # de 2 h, no minuto exacto: tolera cron atrasado y corridas por push.
           if [ "$HOUR" -ge 14 ] && [ "$HOUR" -le 15 ]; then
             timeout 120 python -X utf8 -m noticias.cli avisar \
                 || echo "[warn] noticias avisar fallo, sigo"
@@ -306,49 +182,28 @@ jobs:
           else
             echo "[avisar] fuera de los horarios fijos (9-10am/2-3pm Lima) - skip"
           fi
-          # Backfill de fechas: sync solo re-toca los items MAS RECIENTES
-          # por fuente, asi que una fila que quedo con fecha_pub NULL (fix
-          # de codigo posterior a su insercion, o fuente sin <time> en su
-          # listado) nunca se corrige sola - esto la repara visitando el
-          # articulo real. --limit 300 acota el tiempo por corrida (se
-          # pusieron al dia 676 filas reales en ~90s en pruebas locales,
-          # 2026-09-13); si quedan mas de 300 nuevas de una sola vez, las
-          # sig. corridas (15x/dia) van completando el resto.
+          # sync solo re-toca lo mas reciente; esto repara fecha_pub NULL
+          # visitando el articulo (--limit acota el tiempo por corrida).
           timeout 300 python -X utf8 -m noticias.cli backfill-fechas --limit 300 \
               || echo "[warn] noticias backfill-fechas fallo, sigo"
           # Purge: la UI muestra por defecto solo "hoy"; conservamos 7d
           # como buffer historico para evitar que la DB crezca infinito.
           timeout 120 python -X utf8 -m noticias.cli purge --dias 7 \
               || echo "[warn] noticias purge fallo, sigo"
-          # Pedido de Nicolas 2026-10-05: avisar por Telegram cuando
-          # Agrocalidad publique el Anexo 1 (zonas de cuarentena Foc R4T)
-          # de la Res. 0085-R. Se apaga solo el 2026-12-31.
+          # Aviso del Anexo 1 Foc R4T (Agrocalidad); se apaga el 2026-12-31.
           timeout 120 python -X utf8 scripts/vigilar_anexo_foc.py \
               || echo "[warn] vigilar_anexo_foc fallo, sigo"
-          # Pedido de Nicolas 2026-10-12: avisar por Telegram cuando haya
-          # noticias de la firma/llegada de la compra de medicinas a India
-          # (AIL EP). Se apaga solo el 2026-12-31.
+          # Aviso de la compra de medicinas a India (AIL EP); se apaga el 2026-12-31.
           timeout 120 python -X utf8 scripts/vigilar_medicinas_india.py \
               || echo "[warn] vigilar_medicinas_india fallo, sigo"
 
       - name: Instalar Cloudflare WARP en modo proxy (SOCKS5 :40000)
-        # Ventana 8-9am Lima (13-14 UTC), no solo el minuto exacto - bug
-        # real 2026-09-21: el cron nativo puede disparar tarde (o no
-        # disparar), y github.event.schedule exige el string EXACTO -
-        # steps.hora (hora UTC real de esta corrida) tolera el margen.
+        # Ventana por hora real (steps.hora), no el string exacto del cron:
+        # el cron nativo puede disparar tarde.
         if: steps.hora.outputs.hour == '13' || steps.hora.outputs.hour == '14' || github.event_name == 'workflow_dispatch'
         run: |
-          # Mismo fix que vigilar-congreso.yml, verificado en vivo
-          # 2026-09-15: YouTube bloquea las IPs de datacenter de GitHub
-          # Actions ("Sign in to confirm you're not a bot") por reputacion
-          # de IP, no por falta de token - bgutil-ytdlp-pot-provider (PO
-          # Token) NO lo esquiva (verificado 2026-09-14, run #1775, mismo
-          # error con el token activo). Tunelizar por Cloudflare WARP SI
-          # funciona. Antes este paso no tenia WARP, asi que
-          # sync-transcripciones fallaba SIEMPRE en silencio (el
-          # "|| echo [warn]... sigo" se comia el error) - por eso ninguna
-          # sesion ya terminada tenia transcripcion via captions, pese a
-          # correr "exitosamente" 1x/dia.
+          # YouTube bloquea las IPs de datacenter de Actions ("not a bot"); el
+          # PO Token no alcanza y WARP si. Igual que vigilar-congreso.yml.
           curl -fsSL --retry 3 --retry-delay 2 --retry-all-errors https://pkg.cloudflareclient.com/pubkey.gpg | sudo gpg --yes --dearmor --output /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg
           echo "deb [signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] https://pkg.cloudflareclient.com/ $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/cloudflare-client.list
           sudo apt-get update -qq
@@ -363,17 +218,12 @@ jobs:
           warp-cli --accept-tos status
 
       - name: Puente SOCKS5->HTTP para descargas de captions (privoxy :8118)
-        # Ventana 8-9am Lima (13-14 UTC), no solo el minuto exacto - bug
-        # real 2026-09-21: el cron nativo puede disparar tarde (o no
-        # disparar), y github.event.schedule exige el string EXACTO -
-        # steps.hora (hora UTC real de esta corrida) tolera el margen.
+        # Ventana por hora real (steps.hora), no el string exacto del cron:
+        # el cron nativo puede disparar tarde.
         if: steps.hora.outputs.hour == '13' || steps.hora.outputs.hour == '14' || github.event_name == 'workflow_dispatch'
         run: |
-          # obtener_transcripcion() baja el VTT de los captions con
-          # urllib.request directo (no yt-dlp) - urllib SI respeta
-          # http_proxy/https_proxy del entorno automaticamente (sin
-          # tocar codigo), pero necesita HTTP, no SOCKS5. privoxy hace
-          # de puente igual que en vigilar-congreso.yml.
+          # Los captions se bajan con urllib, que respeta http_proxy pero no
+          # habla SOCKS5: privoxy hace de puente.
           sudo apt-get install -y -qq privoxy
           echo "forward-socks5 / 127.0.0.1:40000 ." | sudo tee -a /etc/privoxy/config
           sudo systemctl restart privoxy
@@ -381,28 +231,17 @@ jobs:
           curl -s -x http://127.0.0.1:8118 -o /dev/null -w "privoxy->WARP HTTP %{http_code}\n" https://www.youtube.com/
 
       - name: Transcripciones de sesiones (captions YouTube, Pleno/comisiones)
-        # Ventana 8-9am Lima (13-14 UTC), no solo el minuto exacto - bug
-        # real 2026-09-21: el cron nativo puede disparar tarde (o no
-        # disparar), y github.event.schedule exige el string EXACTO -
-        # steps.hora (hora UTC real de esta corrida) tolera el margen.
+        # Ventana por hora real (steps.hora), no el string exacto del cron:
+        # el cron nativo puede disparar tarde.
         if: steps.hora.outputs.hour == '13' || steps.hora.outputs.hour == '14' || github.event_name == 'workflow_dispatch'
         env:
           YT_DLP_PROXY: socks5://127.0.0.1:40000
           http_proxy: http://127.0.0.1:8118
           https_proxy: http://127.0.0.1:8118
         run: |
-          # Igual que Registro Oficial EC arriba: los captions de YouTube
-          # tardan dias en procesarse (verificado en vivo 2026-09-14), asi
-          # que no tiene sentido chequear 15x/dia - alcanza con la corrida
-          # de las 8 AM Lima o dispatch manual.
+          # Los captions tardan dias en procesarse: alcanza 1x/dia.
           pip install -q yt-dlp
-          # --max 60 (antes 20): con el fix de clasificacion de hoy
-          # (congreso_live/detector.py, 25 comisiones reales en vez de
-          # 17) aparecieron muchas sesiones que antes ni se reconocian -
-          # verificado en vivo 2026-09-16, 20 se clasifican dentro de los
-          # ultimos 40 streams del canal, 20 no alcanzaba (--max 20 =
-          # n=20 crudos = solo 11 clasificados). 60 da margen para el
-          # catch-up de hoy y para el uso normal de ahi en mas.
+          # --max 60: con 25 comisiones reconocidas, 20 streams no alcanzaban.
           timeout 300 python -X utf8 -m congreso_live.cli sync-transcripciones --max 60 \
               || echo "[warn] sync-transcripciones fallo, sigo"
 
@@ -417,40 +256,19 @@ jobs:
 
       - name: Aplicar decisiones de reclasificacion (aceptar/rechazar desde la app)
         run: |
-          # Gap real encontrado 2026-09-21: 246 sugerencias de
-          # clasificacion_sugerencias llevaban meses acumulandose sin
-          # forma de revisarlas. pages/1_Peru.py ahora las muestra y dejar
-          # que Nicolas decida, pero esa pagina abre proyectos.db en modo
-          # READ-ONLY (y ese archivo local en Streamlit Cloud es efimero
-          # de todas formas) - no puede escribir la decision ahi. Solo
-          # REGISTRA la decision en data/clasificador_decisiones.json (via
-          # la API de GitHub, mismo patron que alerts/borradores_store.py)
-          # y este paso, que SI tiene el proyectos.db real, es quien
-          # aplica de verdad tema/estado y limpia el JSON de pendientes.
+          # La app no puede escribir proyectos.db: registra las decisiones en
+          # data/clasificador_decisiones.json y este paso las aplica.
           python -X utf8 -m clasificador.cli aplicar-decisiones || echo "[warn] aplicar-decisiones fallo, sigo"
 
       - name: Reclasificar temas de transcripciones con el resumen limpio
         run: |
-          # Bug real 2026-09-15 (feedback de Nicolas: "estas clasificando
-          # mal por temas las sesiones de comisiones"): sesiones_transcripciones.
-          # temas se calculaba con noticias.temas.clasificar() sobre la
-          # TRANSCRIPCION CRUDA, que tiene cortesias protocolares
-          # ("senor diputado", en TODA sesion) y nombres de parlamentarios
-          # que a veces coinciden con keywords cortos - verificado con una
-          # sesion de Salud que citaba a la diputada "Ana Luisa Yufra
-          # Lugo" y quedaba mal clasificada como "Crop" (ANA = Autoridad
-          # Nacional del Agua). Ya se saco esa keyword ambigua de
-          # noticias/temas.py, pero ademas: la rutina horaria de resumenes
-          # (NO puede tocar proyectos.db, es de solo lectura para ella)
-          # ya deja un resumen limpio y sintetizado en
-          # data/transcripciones_resumenes.json - este paso SI puede
-          # reclasificar usando ESE texto en vez de la transcripcion
-          # cruda, mucho menos propenso a este tipo de falso positivo.
+          # Usa el resumen limpio (data/transcripciones_resumenes.json), no la
+          # transcripcion cruda, que da falsos positivos por nombres y cortesias.
           if [ -f proyectos.db ]; then
             python -X utf8 -m congreso_live.reclasificar_temas run || echo "[warn] reclasificar_temas fallo, sigo"
           fi
 
-      - name: Envio de alerta diaria (backup del daily-alerts.yml)
+      - name: Envio de alerta diaria (am/pm)
         env:
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
           RESEND_FROM: ${{ secrets.RESEND_FROM }}
@@ -459,18 +277,8 @@ jobs:
           HOUR: ${{ steps.hora.outputs.hour }}
           IS_DISPATCH: ${{ github.event_name == 'workflow_dispatch' }}
         run: |
-          # Redisenado 2026-09-20 (mismo pedido que el digest de WhatsApp
-          # arriba: 2 horarios fijos por dia, 9am y 2pm Lima, en vez de
-          # 1x/dia con retry). Ver alerts/cli.py para la logica completa -
-          # cada slot SIEMPRE envia (con o sin contenido) salvo que ya se
-          # haya mandado ese slot especifico hoy.
-          #
-          # Bug real 2026-09-21 (Nicolas: "no me ha llegado nada y los
-          # 9am"): igual que en el digest de WhatsApp de arriba, el minuto
-          # EXACTO no tolera un cron nativo que dispara tarde o que no
-          # dispara. Ventana de 2 horas en vez del minuto exacto -
-          # alerts/cli.py ya dedupe por dia+slot, asi que no hay riesgo de
-          # duplicar aunque 2 corridas caigan en la misma ventana.
+          # 2 horarios fijos (ver alerts/cli.py), con ventana de 2 h por cron
+          # atrasado; alerts/cli.py deduplica por dia y slot.
           if [ -z "$RESEND_API_KEY" ]; then
             echo "[alert-backup] sin RESEND_API_KEY, skip"
           elif [ "$HOUR" -ge 14 ] && [ "$HOUR" -le 15 ]; then
@@ -485,10 +293,7 @@ jobs:
 
       - name: Heartbeats (registra corrida exitosa)
         run: |
-          # Registra que el workflow corrio (independiente de si hubo
-          # cambios en los datos). La UI lee de esta tabla para mostrar
-          # "actualizado hace X min" — refleja salud del workflow, no
-          # actividad del Congreso.
+          # La UI muestra "actualizado hace X min" desde esta tabla.
           python -X utf8 -m sistema.heartbeat --db proyectos.db --source pe_proyectos
           python -X utf8 -m sistema.heartbeat --db proyectos.db --source pe_sesiones
           python -X utf8 -m sistema.heartbeat --db proyectos.db --source pe_pleno || echo "[warn] heartbeat pleno fallo"
@@ -521,26 +326,16 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          # Ya no se commitea data/proyectos.db.gz en main: sus versiones
-          # llevaron el repo a 15 GB (2026-09-27). publicar_db.sh la sube a la
-          # rama `datos` como UN solo commit sin historial, mezclando antes las
-          # transcripciones que otros workflows hayan publicado - el mismo
-          # merge que antes hacia este paso contra origin/main (bug real
-          # 2026-09-15: el cache de actions traia una copia vieja y se pisaban
-          # transcripciones). base_local: esta copia es la duena de PLs/agenda/
-          # noticias. --force-with-lease: si otro publico en el medio, reintenta.
+          # La base va a la rama `datos` (un commit sin historial), no a main.
+          # Mezcla transcripciones de otros workflows y reintenta si otro publico.
           bash scripts/publicar_db.sh base_local proyectos.db
 
       - name: Auto-commit snapshot si cambio
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          # Bug real 2026-09-21: `git add <ruta literal que no existe>` da
-          # error FATAL (exit 128), a diferencia de un glob sin matches -
-          # data/clasificador_decisiones.json recien se crea la primera vez
-          # que alguien usa el boton Aceptar/Rechazar en pages/1_Peru.py,
-          # asi que no existe todavia en un checkout nuevo. Rompio la
-          # corrida entera (nada de PLs/noticias/etc se comiteo esa vez).
+          # `git add` de una ruta inexistente es fatal; el JSON de decisiones
+          # solo existe despues del primer uso.
           git add data/pl_seguimiento_estado.json
           [ -f data/clasificador_decisiones.json ] && git add data/clasificador_decisiones.json
           if git diff --staged --quiet; then
@@ -548,19 +343,8 @@ jobs:
             exit 0
           fi
           git commit -m "PE: auto-refresh PLs $(date -u +%Y-%m-%d-%H%M) [skip ci]"
-          # La base ya NO va en este commit (va a la rama datos, paso anterior):
-          # aca solo quedan los JSON chicos de estado.
-          # Retry-on-conflict: otros workflows (vigilar-congreso.yml,
-          # backfill-vod.yml, y el de Ecuador) pueden pushear en paralelo y
-          # dejar nuestro push outdated. Bug real 2026-09-15: "rebase -X
-          # theirs" descarta el archivo binario COMPLETO de un lado -
-          # asi se borraron transcripciones en vivo reales (Presupuesto/
-          # Transportes) que vigilar-congreso.yml habia guardado segundos
-          # antes. Fix: si el conflicto es en data/proyectos.db.gz,
-          # mergear sesiones_transcripciones a nivel de filas SQL
-          # (merge_db.py) antes de reintentar - proyectos.db (local) SI
-          # tiene siempre la ultima version real de las tablas que este
-          # workflow es dueño (PLs/agenda/etc), asi que se usa como base.
+          # Aca solo van los JSON chicos de estado (la base va a `datos`).
+          # Reintento por pushes concurrentes de otros workflows.
           for i in 1 2 3; do
             if git push; then
               echo "Push OK (intento $i)"
@@ -568,20 +352,10 @@ jobs:
             fi
             echo "Push fallo (intento $i), reintentando sobre origin/main..."
             git fetch origin main
-            # data/pl_seguimiento_estado.json (clientes/alertas_pl.py) y
-            # data/clasificador_decisiones.json (clasificador/decisiones_store.py)
-            # son OTROS archivos aparte de proyectos.db.gz - el --hard de
-            # abajo los pisaria con la version vieja de origin igual que el
-            # bug real 2026-09-16 de mas abajo, asi que se salvan aparte
-            # antes del reset.
+            # Salvar los JSON de estado: el reset --hard los pisaria.
             [ -f data/pl_seguimiento_estado.json ] && cp data/pl_seguimiento_estado.json /tmp/estado_pl.json
             [ -f data/clasificador_decisiones.json ] && cp data/clasificador_decisiones.json /tmp/clasificador_decisiones.json
-            # --hard, no --soft: bug real 2026-09-16 (backfill-vod.yml #7) -
-            # con --soft el index se queda con la base vieja del checkout y
-            # el commit revierte sin querer cualquier OTRO archivo que haya
-            # cambiado en origin mientras corria el job (en #7 reverti 3
-            # workflows .yml; solo lo freno el permiso "workflows" de GH).
-            # --hard sincroniza todo con origin primero.
+            # --hard, no --soft: --soft revertia archivos cambiados en origin.
             git reset --hard origin/main
             [ -f /tmp/estado_pl.json ] && mv -f /tmp/estado_pl.json data/pl_seguimiento_estado.json
             [ -f /tmp/clasificador_decisiones.json ] && mv -f /tmp/clasificador_decisiones.json data/clasificador_decisiones.json

@@ -1,15 +1,9 @@
 name: Backfill transcripcion (VOD ya terminado)
 
-# Recupera una sesion del Congreso que YA TERMINO y que la captura en
-# vivo se perdio (bug de deteccion, corte de luz, lo que sea) - baja el
-# audio COMPLETO del video ya grabado y lo transcribe con Whisper, sin
-# esperar los captions automaticos de YouTube (tardan de horas a dias,
-# ver transcripciones.py). Se dispara a mano, con el video_id/tipo/titulo
-# de la sesion perdida.
-#
-# Mismo esquema WARP que vigilar-congreso.yml (YouTube bloquea IPs de
-# datacenter, WARP lo esquiva) - grupo de concurrency propio para no
-# esperar en la cola del monitoreo continuo, que puede tardar horas.
+# Recupera a mano (dispatch con video_id/tipo/titulo) una sesion ya terminada
+# cuya captura en vivo se perdio: baja el audio completo y lo transcribe con
+# Whisper, sin esperar los captions de YouTube. Mismo esquema WARP que
+# vigilar-congreso.yml.
 
 on:
   workflow_dispatch:
@@ -27,22 +21,10 @@ on:
 permissions:
   contents: write
 
-# Grupo propio (ya NO el de vigilar-congreso.yml). Antes compartia ese
-# grupo porque un push concurrente a data/proyectos.db.gz hacia que
-# "git rebase -X theirs" descartara el commit ENTERO de un lado (bug
-# real 2026-09-15, la transcripcion de Salud se perdio asi la primera
-# vez) - pero eso ya esta arreglado de raiz (congreso_live/merge_db.py
-# mergea sesiones_transcripciones por fila antes de recommitear, ver
-# vigilar-congreso.yml), asi que ya no hace falta serializar. Compartir
-# el grupo con vigilar-congreso tenia un costo real: el cron de ese
-# workflow dispara cada 10 min y le ganaba la cola a cualquier dispatch
-# manual de este (verificado en vivo 2026-09-15: 2 intentos de backfill
-# de Salud cancelados antes de arrancar, nunca llegaron a correr).
-#
-# Grupo por video (2026-09-30): con un solo grupo GitHub deja UNA corrida
-# en espera y cancela las demas, y 6 sesiones perdidas tardaban ~3 h en
-# fila. publicar_db.sh ya mezcla por fila con reintentos, asi que videos
-# distintos pueden correr a la vez; el mismo video no se duplica.
+# Grupo propio y por video: compartir el de vigilar-congreso hacia que su
+# cron le ganara la cola a estos dispatch, y un solo grupo cancela las
+# corridas en espera. publicar_db.sh mezcla por fila, asi que videos
+# distintos pueden correr a la vez.
 concurrency:
   group: backfill-vod-${{ inputs.video_id }}
   cancel-in-progress: false
@@ -70,9 +52,7 @@ jobs:
       - name: Instalar deps
         run: |
           pip install -q yt-dlp requests faster-whisper "av<19" imageio-ffmpeg
-          # Ver vigilar-congreso.yml: el binario portable de imageio-ffmpeg
-          # crasheaba (SIGSEGV) en runners de GitHub Actions - el de apt
-          # (probado para este mismo Ubuntu) no.
+          # ffmpeg de apt: el portable de imageio-ffmpeg crasheaba (SIGSEGV).
           sudo apt-get install -y -qq ffmpeg
 
       - name: Instalar Cloudflare WARP en modo proxy (SOCKS5 :40000)

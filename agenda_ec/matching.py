@@ -19,8 +19,9 @@ from __future__ import annotations
 
 import re
 import sqlite3
-import unicodedata
 from dataclasses import dataclass
+
+from core.text import sin_tildes
 
 
 @dataclass
@@ -35,13 +36,8 @@ def normalize(s: str) -> str:
     """Lowercase + strip acentos + colapsa whitespace + remueve puntuacion comun."""
     if not s:
         return ""
-    s = s.lower()
-    # Quitar acentos (NFD -> remover combining)
-    s = unicodedata.normalize("NFD", s)
-    s = "".join(c for c in s if unicodedata.category(c) != "Mn")
-    # Reemplazar puntuacion comun por espacio
+    s = sin_tildes(s.lower())
     s = re.sub(r"[\"\'\.,;:!\?\(\)\[\]\{\}\-_/]", " ", s)
-    # Colapsar whitespace
     s = re.sub(r"\s+", " ", s).strip()
     return s
 

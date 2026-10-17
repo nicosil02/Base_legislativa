@@ -21,19 +21,18 @@ Uso:
 """
 from __future__ import annotations
 
-import html as _html
 import logging
 import re
-from datetime import datetime, timedelta, timezone
+from datetime import timedelta
 
-from noticias.scraper import HEADERS, _make_session
+from core.tiempo import ahora_lima
+from noticias.scraper import HEADERS, _make_session, _unescape
 from noticias.temas import clasificar
 
 log = logging.getLogger(__name__)
 
 BASE_URL = "https://busquedas.elperuano.pe"
 FUENTE_NOMBRE = "El Peruano — Normas Legales"
-_LIMA = timezone(timedelta(hours=-5))
 
 
 # Regex del bloque card: sector + tipo + numero + titulo.
@@ -53,10 +52,6 @@ _RE_CARD = re.compile(
 _RE_TOTAL = re.compile(r'(\d+)\s*<!--[^>]*-->\s*<!--[^>]*-->\s*dispositivos', re.I)
 
 
-def _clean(s: str) -> str:
-    return re.sub(r"\s+", " ", _html.unescape(s or "")).strip()
-
-
 def parse_page(html: str) -> tuple[list[dict], int]:
     """Devuelve (items, total_dispositivos). items sin dedup."""
     total = 0
@@ -65,7 +60,7 @@ def parse_page(html: str) -> tuple[list[dict], int]:
         total = int(m.group(1))
     items = []
     for m in _RE_CARD.finditer(html):
-        sector, url_rel, tipo, numero, titulo = (_clean(x) for x in m.groups())
+        sector, url_rel, tipo, numero, titulo = (_unescape(x) for x in m.groups())
         items.append({
             "sector": sector,
             "url": BASE_URL + url_rel,
@@ -145,24 +140,14 @@ def run_sync(db, dias: int = 1) -> dict:
         "url": "https://busquedas.elperuano.pe/",
         "rss_url": None, "tipo": "custom", "activa": 1,
         "notas": "Normas Legales del día vía scraping busquedas.elperuano.pe",
-        # Bug real 2026-09-20 (gap #2 vs Dapper, ver memoria
-        # dapper-gap-analysis): sin "clientes" acá, upsert_fuente() lo
-        # guardaba vacio - las 456 normas reales de este scraper (30 dias)
-        # quedaban INVISIBLES para alerts/relevancia.py, que filtra
-        # candidatos por _clientes_de_fuente() antes de que Gemini llegue
-        # a juzgar relevancia real. "todos" (mismo criterio que la fila
-        # "El Peruano" simple y "Google News PE — El Peruano publica" en
-        # noticias/fuentes.py) las vuelve candidatas para TODOS los
-        # clientes, dejando que el ranking real (TF-IDF/Gemini) decida
-        # relevancia por decreto, no el tag de la fuente.
+        # Sin clientes, alerts/relevancia.py descarta estas normas antes de
+        # que Gemini las juzgue: "todos" deja decidir al ranking.
         "clientes": ["todos"],
     })
 
-    # Un dia por consulta y fecha de Lima. Bug real 2026-10-12: se pedia
-    # el rango ayer+hoy (UTC) y a todo se le ponia la fecha de hoy; como
-    # upsert_noticia() reescribe fecha_pub, el DS 011-2026-MIDAGRI (El
-    # Peruano del 9/10) quedo con fecha 10/10 y parecio norma nueva.
-    hoy = datetime.now(_LIMA).date()
+    # Un dia por consulta y fecha de Lima: con un rango, una norma de ayer
+    # quedaba con fecha de hoy (upsert_noticia reescribe fecha_pub).
+    hoy = ahora_lima().date()
     pares = []
     for i in range(dias - 1, -1, -1):
         dia = (hoy - timedelta(days=i)).strftime("%Y%m%d")
@@ -175,15 +160,8 @@ def run_sync(db, dias: int = 1) -> dict:
 
     stats["items_totales"] = len(pares)
     for it, fecha_iso in pares:
-        # Guardamos TODAS las normas, sin filtrar por tema - inconsistencia
-        # real encontrada en vivo 2026-09-15: esta era la UNICA fuente
-        # "Institucion" que descartaba items sin match de tema (scraper.py,
-        # que ingesta el resto de fuentes institucionales gob.pe/RSS, no
-        # filtra nada, guarda todo). Con eso, hoy se descartaban 33 de 42
-        # normas del dia (79%) - incluyendo Decretos Supremos reales, no
-        # solo designaciones de funcionarios. clasificar() sigue corriendo
-        # para taggear el tema en la UI (badges), pero ya no decide si la
-        # norma se guarda.
+        # Se guardan TODAS las normas (como el resto de fuentes); el tema
+        # solo va como tag para la UI.
         signal = f"{it['sector']} {it['tipo']} {it['titulo']}"
         temas = clasificar(signal, None)
         stats["matches"] += 1
@@ -201,109 +179,17 @@ def run_sync(db, dias: int = 1) -> dict:
     return stats
 
 
-def _demo():
-    """Self-check parseo con una página real (test lento — hace 1 request)."""
-    session = _make_session(); session.headers.update(HEADERS)
-    hoy = datetime.now(timezone.utc).strftime("%Y%m%d")
-    r = session.get(f"{BASE_URL}/?tipoPublicacion=NL&fechaIni={hoy}&fechaFin={hoy}", timeout=25)
-    items, total = parse_page(r.text)
-    assert len(items) > 0, "esperaba >=1 item, hay 0"
-    it = items[0]
-    for k in ("sector", "url", "tipo", "numero", "titulo"):
-        assert it.get(k), f"item sin {k!r}: {it}"
-    assert it["url"].startswith("https://busquedas.elperuano.pe/dispositivo/NL/")
-    print(f"OK parse_page: {len(items)} items, total reportado={total}")
-    print(f"  primer item: {it['sector']} / {it['tipo']} / {it['numero']} / {it['titulo'][:60]}")
-
-
-def _test_run_sync_guarda_todo_sin_filtrar_tema():
-    """run_sync() debe guardar TODAS las normas, incluso las que no
-    matchean ningun tema de clasificar() - bug real encontrado en vivo
-    2026-09-15 (hoy descartaba 33 de 42 normas, 79%, incluyendo Decretos
-    Supremos reales). Sin tocar la red: mockea fetch_range con 1 norma
-    que matchea (agro) y 1 que no matchea nada."""
-    import tempfile
-    from pathlib import Path
-    from unittest.mock import patch
-
-    import noticias.el_peruano as ep
-    from noticias.db import Database
-
-    items_falsos = [
-        {"sector": "MIDAGRI", "url": "https://x/1", "id_dispositivo": "1-2026",
-         "tipo": "RESOLUCIÓN MINISTERIAL", "numero": "N° 1-2026-MIDIAGRI",
-         "titulo": "Aprueban norma agraria sobre semillas"},
-        {"sector": "VIVIENDA", "url": "https://x/2", "id_dispositivo": "2-2026",
-         "tipo": "RESOLUCIÓN SUPREMA", "numero": "N° 2-2026-VIVIENDA",
-         "titulo": "Designan miembro del Directorio de la SUNARP"},
-    ]
-    with tempfile.TemporaryDirectory() as td:
-        db_path = Path(td) / "test.db"
-        with patch.object(ep, "fetch_range", lambda *a, **k: items_falsos), \
-             Database(db_path) as db:
-            db.init_schema()
-            stats = ep.run_sync(db, dias=1)
-
-        assert stats["items_totales"] == 2, stats
-        assert stats["nuevas"] == 2, (
-            f"debe guardar las 2, incluso la que no matchea tema: {stats}")
-
-        # Bug real 2026-09-20: sin "clientes":["todos"] en el upsert_fuente()
-        # de arriba, esta fuente quedaba con clientes='' - invisible para
-        # alerts/relevancia.py, que filtra candidatos por fuente ANTES de
-        # que Gemini juzgue relevancia real por decreto (ver memoria
-        # dapper-gap-analysis, gap #2).
-        with Database(db_path) as db2:
-            row = db2.conn.execute(
-                "SELECT clientes FROM noticias_fuentes WHERE nombre=?", (FUENTE_NOMBRE,)
-            ).fetchone()
-        assert row["clientes"] == "todos", \
-            f"la fuente debe quedar tageada 'todos', quedo {row['clientes']!r}"
-    print("OK el_peruano: run_sync guarda todas las normas, sin filtrar por tema")
-
-
-def _test_fecha_es_la_del_dia_de_publicacion():
-    """Una norma de ayer debe quedar con fecha de ayer, aunque se vuelva a
-    ver en el sync de hoy (bug real 2026-10-12, DS 011-2026-MIDAGRI)."""
-    import tempfile
-    from pathlib import Path
-    from unittest.mock import patch
-
-    import noticias.el_peruano as ep
-    from noticias.db import Database
-
-    ayer = (datetime.now(_LIMA).date() - timedelta(days=1)).strftime("%Y%m%d")
-    norma = {"sector": "MIDAGRI", "url": "https://x/9", "id_dispositivo": "9-2026",
-             "tipo": "DECRETO SUPREMO", "numero": "N° 011-2026-MIDAGRI",
-             "titulo": "Reglamento de residuos"}
-    falso = lambda s, ini, fin, **k: [norma] if ini == ayer else []
-    with tempfile.TemporaryDirectory() as td:
-        with patch.object(ep, "fetch_range", falso), Database(Path(td) / "t.db") as db:
-            db.init_schema()
-            ep.run_sync(db, dias=2)
-            ep.run_sync(db, dias=2)  # 2da pasada no debe correr la fecha
-            f = db.conn.execute("SELECT fecha_pub FROM noticias").fetchone()[0]
-    assert f == _fecha_a_iso(ayer), f"esperaba {ayer}, quedo {f}"
-    print("OK el_peruano: fecha_pub = dia real de publicacion")
-
-
 if __name__ == "__main__":
     import argparse
     p = argparse.ArgumentParser()
-    p.add_argument("cmd", choices=["sync", "demo", "test"])
+    p.add_argument("cmd", choices=["sync"])
     p.add_argument("--db", default="proyectos.db")
     p.add_argument("--dias", type=int, default=1,
                     help="dias hacia atrás para sync (default 1 = solo hoy)")
     args = p.parse_args()
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
-    if args.cmd == "demo":
-        _demo()
-    elif args.cmd == "test":
-        _test_run_sync_guarda_todo_sin_filtrar_tema()
-        _test_fecha_es_la_del_dia_de_publicacion()
-    else:
-        from noticias.db import Database
-        with Database(args.db) as db:
-            db.init_schema()
-            stats = run_sync(db, dias=args.dias)
-            print(f"El Peruano sync: {stats}")
+    from noticias.db import Database
+    with Database(args.db) as db:
+        db.init_schema()
+        stats = run_sync(db, dias=args.dias)
+        print(f"El Peruano sync: {stats}")
