@@ -86,3 +86,29 @@ def le_interesa(ids: tuple[int, ...]) -> dict[int, list[tuple[str, str]]]:
     except Exception as e:  # tabla todavia no creada en el cerebro.db publicado
         print(f"[cerebro] relevancia no disponible: {e}")
     return out
+
+
+@st.cache_data(ttl=1800, show_spinner=False)
+def historias_noticias(ids: tuple[int, ...], titulos: tuple[str, ...],
+                       fuentes: tuple[str, ...]) -> list[int]:
+    """Grupo por noticia (noticias/historias.agrupar): las de distintos
+    portales que cuentan el mismo hecho comparten numero. Sin cerebro, cada
+    una sola."""
+    conn = conexion()
+    if conn is None or not ids:
+        return list(range(len(ids)))
+    import numpy as np
+    from noticias.historias import UMBRAL_NOTICIAS, agrupar, similitudes_noticias
+    vec: dict[int, np.ndarray] = {}
+    try:
+        for k in range(0, len(ids), 900):
+            lote = [f"noticia_{i}" for i in ids[k:k + 900]]
+            for clave, blob in conn.execute(
+                    f"SELECT i.clave, v.embedding FROM items i JOIN vec_items v ON v.rowid = i.id "
+                    f"WHERE i.clave IN ({','.join('?' * len(lote))})", lote):
+                vec[int(clave.split("_", 1)[1])] = np.frombuffer(blob, dtype=np.float32)
+    except Exception as e:
+        print(f"[cerebro] vectores fallo: {e}")
+        return list(range(len(ids)))
+    sims = similitudes_noticias([vec.get(i) for i in ids], list(titulos), list(fuentes))
+    return agrupar(list(titulos), sims=sims, umbral=UMBRAL_NOTICIAS)
