@@ -437,8 +437,7 @@ def capturar_y_acumular_en_vivo(
     import numpy as np
 
     # Whisper escribe mejor lo que ya "espera" oir. El padron completo no
-    # entra: initial_prompt se corta a ~220 tokens. Los nombres se
-    # normalizan despues contra el padron en oradores.py.
+    # entra: initial_prompt se corta a ~220 tokens.
     contexto = (f"{titulo}. Señor presidente, señores congresistas, dictamen, "
                 "proyecto de ley, texto sustitutorio, cuarto intermedio, votación.")
     chunks_ok = 0
