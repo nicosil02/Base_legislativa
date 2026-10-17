@@ -19,20 +19,10 @@ import pandas as pd
 import streamlit as st
 
 from scraper.categorias import CATEGORIA_CLIENTES_PL
-from alerts import armar
+from alerts import armar, historial
 from clientes.matrices import matriz_bayer_crop, matriz_incode_ec
 from ui_kit import inject_theme
 
-CLIENTES_DIR = Path(__file__).resolve().parent.parent / "clientes"
-
-
-def load_clientes() -> list[str]:
-    if not CLIENTES_DIR.is_dir():
-        return []
-    return sorted(
-        p.name for p in CLIENTES_DIR.iterdir()
-        if p.is_dir() and not p.name.startswith("_")
-    )
 
 
 @st.cache_data(ttl=60)
@@ -767,7 +757,7 @@ with tab_comision:
     if df_agenda_cli.empty:
         st.info("No hay PLs en agenda en el rango seleccionado.")
     else:
-        clientes = load_clientes()
+        clientes = historial.clientes("EC")
         TODOS_CLIENTES = "Todos"
         sel_cliente_agenda = st.selectbox("Cliente", [TODOS_CLIENTES] + clientes, key="agenda_ec_cliente")
         df_agenda_show = df_agenda_cli
