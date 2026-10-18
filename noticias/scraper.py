@@ -15,6 +15,7 @@ from __future__ import annotations
 import html
 import json
 import logging
+import os
 import re
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timedelta, timezone
@@ -456,6 +457,9 @@ def fetch_oece(fuente: dict, session: requests.Session, timeout: int,
     ponytail: ~3 paginas de 100 por termino; con muchos terminos, pedirle a
     OECE un filtro por fecha si lo agregan."""
     desde = (datetime.now(timezone.utc) - timedelta(days=dias)).isoformat()
+    # OECE da 403 a IPs de datacenter (GitHub): en CI sale por WARP.
+    proxy = os.environ.get("PROXY_BLOQUEADOS")
+    proxies = {"http": proxy, "https": proxy} if proxy else None
     out, vistos = [], set()
     for termino in fuente["terminos"]:
         pagina = 1
@@ -463,7 +467,7 @@ def fetch_oece(fuente: dict, session: requests.Session, timeout: int,
             try:
                 r = session.get(OECE_API, params={"search": termino, "year": datetime.now().year,
                                                   "format": "json", "paginateBy": 100, "page": pagina},
-                                timeout=timeout)
+                                timeout=timeout, proxies=proxies)
                 r.raise_for_status()
                 d = r.json()
             except Exception as e:
