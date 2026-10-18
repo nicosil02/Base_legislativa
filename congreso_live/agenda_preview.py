@@ -213,13 +213,27 @@ def agenda_texto(tipo: str, titulo: str, fecha: str | None = None) -> str:
         finally:
             conn.close()
         return _limpio(" ".join(filas)) if filas and (nombre == "pleno" or len(filas) == 1) else ""
-    if not tipo.startswith("Comision:"):
-        return ""
     p = db_path("proyectos.db")
-    if not p.exists():
+    if not p.exists() or not tipo.startswith(("Comision:", "Pleno: Senado", "Pleno: Diputados")):
         return ""
     conn = sqlite3.connect(f"file:{p}?mode=ro", uri=True)
     try:
+        if tipo.startswith("Pleno:"):
+            # solo el PDF de AGENDA (en la tabla tambien hay asistencias y diarios)
+            row = conn.execute(
+                "SELECT texto FROM pleno_agenda_pdf WHERE camara = ? AND fecha = ? "
+                "AND upper(pdf_url) LIKE '%AGENDA%' ORDER BY length(texto) DESC LIMIT 1",
+                ("senado" if "Senado" in tipo else "diputados", dia)).fetchone()
+            if not row:
+                return ""
+            # despues del indice; sin el encabezado que se repite en cada pagina
+            # [portada+indice, pagina 2, ...]: el encabezado abre cada pagina
+            paginas = re.split(r"AGENDA DE LA SESI[OÓ]N DEL PLENO", row[0], flags=re.IGNORECASE)
+            cuerpo = " ".join(paginas[2:] if len(paginas) > 2 else paginas[-1:])
+            cuerpo = re.sub(r"AGENDA DE LA SESI[OÓ]N DEL PLENO|\d{1,2} de \w+ de \d{4}|"
+                            r"C[AÁ]MARA DE DIPUTADOS[^\n]*|SENADO DE LA REP[UÚ]BLICA[^\n]*|"
+                            r"^\s*(\d+|[IVX]+\.)\s*$", " ", cuerpo, flags=re.IGNORECASE | re.MULTILINE)
+            return _limpio(cuerpo)
         kw = _norm(tipo.split(":", 1)[-1].strip())
         camara = _camara_de_titulo(titulo)
         ids = [i for i, n, c in conn.execute(
