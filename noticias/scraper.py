@@ -13,10 +13,11 @@ El scraping HTML usa heuristica generica:
 from __future__ import annotations
 
 import html
+import json
 import logging
 import re
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from email.utils import parsedate_to_datetime
 from urllib.parse import urljoin, urlparse
 
@@ -337,6 +338,8 @@ def _parse_gobpe_date(s: str | None) -> str | None:
 
 def fetch_gobpe(fuente: dict, session: requests.Session,
                 timeout: int = 20) -> list[dict]:
+    if fuente.get("busqueda"):
+        return _gobpe_busqueda(fuente, session, timeout)
     slug = _gobpe_slug(fuente.get("url"))
     if not slug:
         return []
@@ -384,6 +387,109 @@ def fetch_gobpe(fuente: dict, session: requests.Session,
                 "autor": None,
                 "tags": tipo,  # 'noticias' | 'normas' (para badge/filtro en UI)
             })
+    return out
+
+
+def _gobpe_busqueda(fuente: dict, session: requests.Session, timeout: int) -> list[dict]:
+    """Normas de CUALQUIER institucion que contengan `busqueda` (texto completo).
+    Sirve para las prepublicaciones ("disponen la publicacion del proyecto"):
+    la norma antes de que salga. `exige` descarta el ruido de municipios cuyo
+    texto no tiene la frase de verdad (la busqueda de gob.pe es difusa)."""
+    params = [("contenido[]", "normas"), ("term", fuente["busqueda"]), ("sort_by", "recent")]
+    try:
+        r = session.get(GOBPE_API, params=params, timeout=timeout)
+        r.raise_for_status()
+        results = r.json()["data"]["attributes"]["results"]
+    except Exception as e:
+        log.warning("gobpe busqueda %r: %s", fuente["busqueda"], e)
+        return []
+    exige = re.compile(fuente.get("exige") or re.escape(fuente["busqueda"]), re.IGNORECASE)
+    out = []
+    for it in results:
+        href = re.search(r'href=[\'"]([^\'"]+)', it.get("url", "") or "")
+        content = _strip_html(it.get("content") or "")
+        fecha = _parse_gobpe_date(it.get("publication"))
+        if not href or not fecha or not exige.search(content):
+            continue
+        entidad = _strip_html(it.get("content_sub_title_card") or "")
+        nombre = _strip_html(it.get("url") or "")
+        out.append({"url": urljoin("https://www.gob.pe", href.group(1)),
+                    "titulo": f"{entidad} — {nombre}: {content}"[:500],
+                    "resumen": content[:500], "fecha_pub": fecha, "autor": None,
+                    "tags": "normas|prepublicacion"})
+    return out
+
+
+def fetch_wpmedia(fuente: dict, session: requests.Session, timeout: int) -> list[dict]:
+    """PDFs que sube una institucion con WordPress (wp-json/wp/v2/media): las
+    resoluciones y los borradores en consulta aparecen aca antes que en el
+    Registro Oficial (SPDP, Agrocalidad, SERCOP...)."""
+    base = fuente["url"].rstrip("/")
+    try:
+        r = _get(session, f"{base}/wp-json/wp/v2/media?per_page=30&mime_type=application/pdf", timeout)
+        r.raise_for_status()
+        items = json.loads(r.content.decode("utf-8-sig"))  # algunos .gob.ec mandan BOM
+    except Exception as e:
+        log.warning("wpmedia %s: %s", fuente["nombre"], e)
+        return []
+    out = []
+    for it in items:
+        titulo = _strip_html((it.get("title") or {}).get("rendered") or "")
+        # "23092026_062842_Borrador-Resolucion-Portabilidad-version-0" -> legible
+        titulo = re.sub(r"^\d{8}_\d{6}_", "", titulo).replace("_", " ").replace("-", " ").strip()
+        if not it.get("source_url") or not titulo:
+            continue
+        out.append({"url": it["source_url"], "titulo": f"{fuente['nombre']}: {titulo}"[:500],
+                    "resumen": None, "fecha_pub": it.get("date"), "autor": None,
+                    "tags": "normas|documento"})
+    return out
+
+
+OECE_API = "https://contratacionesabiertas.oece.gob.pe/api/v1/search"
+
+
+def fetch_oece(fuente: dict, session: requests.Session, timeout: int,
+               dias: int = 4) -> list[dict]:
+    """Compras publicas de Peru (SEACE en formato OCDS, datos del mismo dia)
+    por cada termino de `terminos`. La API ordena por relevancia, no por fecha:
+    se recorren todas las paginas del año y se quedan las de los ultimos dias.
+    ponytail: ~3 paginas de 100 por termino; con muchos terminos, pedirle a
+    OECE un filtro por fecha si lo agregan."""
+    desde = (datetime.now(timezone.utc) - timedelta(days=dias)).isoformat()
+    out, vistos = [], set()
+    for termino in fuente["terminos"]:
+        pagina = 1
+        while pagina:
+            try:
+                r = session.get(OECE_API, params={"search": termino, "year": datetime.now().year,
+                                                  "format": "json", "paginateBy": 100, "page": pagina},
+                                timeout=timeout)
+                r.raise_for_status()
+                d = r.json()
+            except Exception as e:
+                log.warning("oece %r p%s: %s", termino, pagina, e)
+                break
+            for res in d.get("results", []):
+                c = res.get("compiledRelease") or {}
+                t = c.get("tender") or {}
+                fecha = c.get("date") or ""
+                if c.get("ocid") in vistos or not fecha:
+                    continue
+                try:
+                    if datetime.fromisoformat(fecha) < datetime.fromisoformat(desde):
+                        continue
+                except ValueError:
+                    continue
+                vistos.add(c["ocid"])
+                monto = (t.get("value") or {}).get("amount")
+                comprador = (c.get("buyer") or {}).get("name") or ""
+                out.append({
+                    "url": f"https://contratacionesabiertas.oece.gob.pe/proceso/{c['ocid']}",
+                    "titulo": f"Compra pública: {comprador} — {t.get('description') or t.get('title') or ''}"[:500],
+                    "resumen": (f"{t.get('procurementMethodDetails') or ''} {t.get('title') or ''}"
+                                + (f", S/ {monto:,.0f}" if monto else "")).strip()[:500],
+                    "fecha_pub": fecha, "autor": comprador or None, "tags": "compra-publica"})
+            pagina = (d.get("pagination") or {}).get("next_page_number")
     return out
 
 
@@ -437,6 +543,10 @@ def fetch_fuente(fuente: dict, session: requests.Session | None = None,
         return []
     if tipo == "gobpe":
         return fetch_gobpe(fuente, s, timeout=timeout)
+    if tipo == "wpmedia":
+        return fetch_wpmedia(fuente, s, timeout)
+    if tipo == "oece":
+        return fetch_oece(fuente, s, timeout)
     if tipo == "rss":
         url = fuente.get("rss_url") or fuente.get("url")
         if not url:
@@ -491,7 +601,12 @@ def run_sync(db, pais: str | None = None,
     )
     session = _make_session()
     session.headers.update(HEADERS)
+    # La tabla guarda lo comun; los parametros propios de un tipo (busqueda,
+    # terminos de compras...) viven solo en fuentes.py.
+    from noticias.fuentes import all_fuentes
+    extra = {(f["pais"], f["nombre"]): f for f in all_fuentes()}
     for fuente in fuentes:
+        fuente = {**extra.get((fuente["pais"], fuente["nombre"]), {}), **fuente}
         stats["fuentes"] += 1
         try:
             items = fetch_fuente(fuente, session=session)

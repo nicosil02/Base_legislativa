@@ -270,6 +270,32 @@ FUENTES_PE: list[dict] = [
     {"categoria": "Temas Salud", "pais": "PE", "nombre": "Lazo Rosado",
      "url": "https://lazorosado.org/",
      "rss_url": "https://lazorosado.org/feed/", "tipo": "rss"},
+    # --- Normas antes de que salgan y compras publicas (investigado 2026-10-18) ---
+    {"categoria": "Institucion", "pais": "PE", "nombre": "Prepublicaciones de normas (gob.pe)",
+     "url": "https://www.gob.pe/busquedas?contenido[]=normas", "tipo": "gobpe",
+     "busqueda": "disponen la publicacion del proyecto", "exige": r"publicaci[oó]n del proyecto",
+     "notas": "Proyectos de norma de cualquier ministerio/regulador en consulta, antes de que "
+              "salgan (ej. RM 00360-2026-PRODUCE, 17/10). Busqueda de texto completo de gob.pe."},
+    {"categoria": "Institucion", "pais": "PE", "nombre": "Prepublicaciones (fichas y reglamentos)",
+     "url": "https://www.gob.pe/busquedas?contenido[]=normas", "tipo": "gobpe",
+     "busqueda": "prepublicacion", "exige": r"pre-?publicaci[oó]n"},
+    {"categoria": "Temas Salud", "pais": "PE", "nombre": "Compras publicas de medicamentos y salud (OECE)",
+     "url": "https://contratacionesabiertas.oece.gob.pe/", "tipo": "oece",
+     "terminos": ["medicamentos", "vacuna", "oncologico", "dispositivos medicos"],
+     "notas": "API OCDS del SEACE, datos del mismo dia. Bayer farma."},
+    {"categoria": "Temas Agrarios", "pais": "PE", "nombre": "Compras publicas agro (OECE)",
+     "url": "https://contratacionesabiertas.oece.gob.pe/", "tipo": "oece",
+     "terminos": ["plaguicida", "fertilizante", "semillas certificadas"]},
+    {"categoria": "Temas Tech", "pais": "PE", "nombre": "Compras publicas identidad y tecnologia (OECE)",
+     "url": "https://contratacionesabiertas.oece.gob.pe/", "tipo": "oece",
+     "terminos": ["biometrico", "biometrica", "identidad digital", "inteligencia artificial"]},
+    {"categoria": "Temas Salud", "pais": "PE", "nombre": "CENARES", "url": "https://www.gob.pe/cenares",
+     "tipo": "gobpe", "notas": "Compras centralizadas de medicamentos del MINSA (sus normas)."},
+    {"categoria": "Temas Salud", "pais": "PE", "nombre": "EsSalud", "url": "https://www.gob.pe/essalud",
+     "tipo": "gobpe"},
+    {"categoria": "Temas Salud", "pais": "PE", "nombre": "DIGEMID - Alertas sanitarias",
+     "url": "https://www.digemid.minsa.gob.pe/webDigemid/", "rss_url": "https://www.digemid.minsa.gob.pe/webDigemid/feed/",
+     "tipo": "rss", "notas": "Alertas DIGEMID y acciones de seguridad en campo (Bayer farma)."},
     # --- Salud PE: portales nuevos ---
     {"categoria": "Temas Salud", "pais": "PE", "nombre": "Diario Medico Peru",
      "url": "https://diariomedico.pe/",
@@ -436,6 +462,20 @@ FUENTES_EC: list[dict] = [
     {"categoria": "Temas Agrarios", "pais": "EC", "nombre": "INIAP",
      "url": "https://www.iniap.gob.ec/", "tipo": "html"},
 
+    # --- PDFs que suben las instituciones (wp-json): resoluciones y borradores en
+    # consulta antes del Registro Oficial (investigado 2026-10-18) ---
+    {"categoria": "Temas KYC/AML", "pais": "EC", "nombre": "SPDP - Documentos publicados",
+     "url": "https://spdp.gob.ec", "tipo": "wpmedia",
+     "notas": "Borradores de normas de datos personales en consulta (Incode). 15/10: datos de salud, "
+              "portabilidad, datos crediticios."},
+    {"categoria": "Temas Agrarios", "pais": "EC", "nombre": "Agrocalidad - Documentos publicados",
+     "url": "https://www.agrocalidad.gob.ec", "tipo": "wpmedia",
+     "notas": "Resoluciones y propuestas en consulta (RFI semillas, granos), Bayer/Syngenta crop."},
+    {"categoria": "Institucion", "pais": "EC", "nombre": "SERCOP - Documentos publicados",
+     "url": "https://portal.compraspublicas.gob.ec/sercop", "tipo": "wpmedia",
+     "notas": "Resoluciones SERCOP sobre compras publicas."},
+    {"categoria": "Temas Agrarios", "pais": "EC", "nombre": "MPCEIP - Documentos publicados",
+     "url": "https://www.produccion.gob.ec", "tipo": "wpmedia"},
     # --- KYC / AML ---
     {"categoria": "Temas KYC/AML", "pais": "EC",
      "nombre": "Ministerio de Telecomunicaciones",
@@ -486,6 +526,11 @@ FUENTES_GOOGLE_NEWS: list[dict] = [
     _gn("EC", "Salud", "ARCSA", "ARCSA+medicamentos"),
     _gn("EC", "Salud", "MSP", "Ministerio+Salud+Publica+Ecuador+reforma"),
     _gn("EC", "Salud", "IESS medicamentos", "IESS+medicamentos+desabastecimiento"),
+    # Respaldo del portal de la Asamblea: desde el 24/09/2026 no publica los
+    # proyectos nuevos (el ultimo presentado sigue siendo el 486423), y los
+    # que salen en prensa no aparecen ahi (ej. ADN, licencias de migrantes, 09/10).
+    _gn("EC", "Institucion", "Proyectos de ley presentados",
+        "%22proyecto+de+ley%22+Ecuador+asamble%C3%ADsta+when:7d"),
 
     # --- AGRO (Bayer Crop, Syngenta) ---
     _gn("PE", "Agro", "SENASA", "SENASA+plaguicidas"),
