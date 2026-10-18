@@ -24,3 +24,17 @@ def test_juzgar_gemini_por_lotes():
 
 def test_metricas():
     assert mh._metricas([1, 1, 0, 0], [1, 0, 1, 0]) == {"precision": 0.5, "recall": 0.5, "f1": 0.5, "exactitud": 0.5}
+
+
+def test_importar_humanos_le_gana_al_modelo(tmp_path, monkeypatch):
+    import json
+    import sqlite3
+    from noticias import mismo_hecho as mh
+    (tmp_path / "data").mkdir()
+    (tmp_path / "data" / "noticias_combinadas.json").write_text(json.dumps([{"ids": [9, 3, 5]}]))
+    monkeypatch.setattr(mh, "ROOT", tmp_path)
+    c = sqlite3.connect(":memory:")
+    mh.asegurar_tabla(c)
+    c.execute("INSERT INTO mismo_hecho VALUES (3, 5, 0, 'modelo', 0.1, 0.8, 'x')")
+    assert mh.importar_humanos(c) == 3
+    assert c.execute("SELECT igual, juez FROM mismo_hecho WHERE a=3 AND b=5").fetchone() == (1, "humano")

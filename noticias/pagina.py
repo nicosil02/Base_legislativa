@@ -23,7 +23,8 @@ from noticias.fuentes import (
 )
 from alerts import armar, historial
 from clientes.matrices import pls_trackeados_ec, coincide_con_noticia
-from noticias.feedback_store import deshacer_descarte, list_descartadas, registrar_descarte
+from noticias.feedback_store import (deshacer_descarte, list_descartadas, registrar_combinadas,
+                                     registrar_descarte)
 from core.db import db_path
 from core.text import norm
 from ui_kit import inject_theme
@@ -799,6 +800,11 @@ footer { visibility:hidden; }
             _items = [armar.item(_combinar_items[k]["item_titulo"], _combinar_items[k]["item_url"],
                                  _combinar_items[k]["item_resumen"], PAIS, _combinar_items[k]["fuente"],
                                  _combinar_items[k].get("fecha")) for k in _orden]
+            try:  # etiqueta humana para el juez "mismo hecho"; nunca frena la alerta
+                registrar_combinadas([int(k.rsplit("_", 1)[1]) for k in _orden],
+                                     st.user.get("email"))
+            except Exception as e:
+                print(f"[combinar] no se guardo la etiqueta: {e}")
             st.session_state["combinar_items"] = {}
             for _k in list(st.session_state.keys()):
                 if _k.startswith("combinar_chk"):

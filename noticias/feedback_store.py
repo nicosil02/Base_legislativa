@@ -11,6 +11,9 @@ from core import store
 from core.db import now_iso
 
 FEEDBACK_PATH = "data/noticias_feedback.json"
+# Noticias juntadas con "Combinar": etiquetas humanas de "mismo hecho"
+# (noticias/mismo_hecho.py las usa para entrenar y le ganan al modelo).
+COMBINADAS_PATH = "data/noticias_combinadas.json"
 CACHE_TTL_SECONDS = 30
 
 
@@ -38,3 +41,11 @@ def deshacer_descarte(noticia_id: int) -> bool:
         return nuevos if len(nuevos) != len(descartes) else None
     store.actualizar(FEEDBACK_PATH, cambio, f"noticias: deshacer descarte {noticia_id}", [])
     return True
+
+
+def registrar_combinadas(ids: list[int], por: str | None = None) -> None:
+    ids = sorted({int(i) for i in ids})
+    if len(ids) < 2:
+        return
+    store.actualizar(COMBINADAS_PATH, lambda grupos: grupos + [
+        {"ids": ids, "created_at": now_iso(), "por": por}], f"noticias: combinadas {ids}", [])
