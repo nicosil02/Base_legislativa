@@ -26,10 +26,17 @@ def test_entradas_del_historial_real():
 
 
 def test_clientes_por_pais(tmp_path, monkeypatch):
-    monkeypatch.setattr(historial, "ROOT", tmp_path)
-    for slug, linea in [("google", "Países: PE\n"), ("bayer", "Países: PE, EC\n"), ("nuevo", "")]:
-        (tmp_path / "clientes" / slug).mkdir(parents=True)
-        (tmp_path / "clientes" / slug / "notas.md").write_text(f"# {slug}\n\n{linea}", encoding="utf-8")
-    (tmp_path / "clientes" / "reportes").mkdir()
-    assert historial.clientes() == ["bayer", "google", "nuevo"]
-    assert historial.clientes("EC") == ["bayer", "nuevo"]
+    import json
+    from clientes import config
+    monkeypatch.setattr(config, "CARPETA", tmp_path)
+    config.todos.cache_clear()
+    for slug, paises in [("google", ["PE"]), ("bayer", ["PE", "EC"])]:
+        (tmp_path / slug).mkdir()
+        (tmp_path / slug / "cliente.json").write_text(json.dumps({"nombre": slug, "paises": paises}))
+    (tmp_path / "reportes").mkdir()
+    try:
+        assert historial.clientes() == ["bayer", "google"]
+        assert historial.clientes("EC") == ["bayer"]
+        assert historial.paises("google") == {"PE"}
+    finally:
+        config.todos.cache_clear()

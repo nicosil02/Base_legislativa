@@ -24,3 +24,12 @@ def test_pls_trackeados_ec_suma_ambas_matrices():
     trackeados = m.pls_trackeados_ec()
     assert len(trackeados) == len(m.matriz_bayer_crop("EC")) + len(m.matriz_incode_ec())
     assert all("clientes" in f for f in trackeados)
+
+
+def test_config_clientes():
+    from clientes import config
+    assert config.slugs("PE") == ["bayer", "google", "incode", "syngenta"]
+    assert "google" not in config.slugs("EC")
+    assert config.por_campo("categorias_pl")["Agricultura"] == ["bayer", "syngenta"]
+    for c in config.todos().values():
+        assert c["nombre"] and set(c["paises"]) <= {"PE", "EC"}

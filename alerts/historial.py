@@ -5,6 +5,7 @@ from __future__ import annotations
 import re
 from datetime import date
 
+from clientes import config
 from core import store
 from core.db import ROOT
 
@@ -52,20 +53,11 @@ def entradas(slug: str, texto: str | None = None) -> list[dict]:
     return out
 
 
-_PAISES = re.compile(r"^Pa[ií]ses:\s*(.+)$", re.MULTILINE)
-
-
 def paises(slug: str) -> set[str]:
-    """Paises que se monitorean para el cliente, de la linea `Países: PE, EC`
-    de su notas.md. Sin esa linea, los dos."""
-    p = ROOT / "clientes" / slug / "notas.md"
-    m = _PAISES.search(p.read_text(encoding="utf-8")) if p.exists() else None
-    return {x.strip().upper() for x in m.group(1).split(",")} if m else {"PE", "EC"}
+    """Paises que se monitorean para el cliente ("paises" de su cliente.json)."""
+    return set(config.todos().get(slug, {}).get("paises", ["PE", "EC"]))
 
 
 def clientes(pais: str | None = None) -> list[str]:
-    """Carpetas de clientes/ con bluebook (notas.md), opcionalmente solo las
-    que cubren `pais`. Deja afuera _plantillas y reportes."""
-    d = ROOT / "clientes"
-    todos = sorted(p.parent.name for p in d.glob("*/notas.md")) if d.is_dir() else []
-    return [c for c in todos if not pais or pais in paises(c)]
+    """Clientes (clientes/<slug>/cliente.json), opcionalmente solo los que cubren `pais`."""
+    return config.slugs(pais)

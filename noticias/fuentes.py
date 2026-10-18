@@ -11,8 +11,11 @@ INSTITUCION_CLIENTES por nombre, si no CATEGORIA_CLIENTES por categoria.
 """
 from urllib.parse import quote_plus
 
+from clientes import config
 from core.text import sin_tildes
 
+# Fuentes de todos los clientes (backbone legislativo/politico) o de ninguno.
+# Las de cada cliente estan en clientes/<slug>/cliente.json ("instituciones").
 INSTITUCION_CLIENTES: dict[str, list[str]] = {
     # --- PE: backbone legislativo/politico general ---
     "Google News PE — Decreto Supremo": ["todos"],
@@ -22,24 +25,6 @@ INSTITUCION_CLIENTES: dict[str, list[str]] = {
     "Agenda del Congreso": ["todos"],
     "PCM": ["todos"],
     "Presidencia": ["todos"],
-    # --- PE: ministerios/agencias con relevancia especifica ---
-    "MINSA": ["bayer"],
-    "DIGEMID": ["bayer"],
-    "Ministerio de Salud (estadisticas)": ["bayer"],
-    "MIDAGRI": ["bayer", "syngenta"],
-    "SENASA": ["bayer", "syngenta"],
-    "MINAM": ["bayer", "syngenta"],
-    # MEF: Syngenta (macro/agro) + Google (IVA a plataformas digitales).
-    # ponytail: MEF publica de todo; INSTITUCIONES_AMPLIAS filtra por
-    # contenido para no traerle ruido a Google.
-    "MEF": ["syngenta", "google"],
-    "ANPD": ["google", "incode"],
-    # Google e Incode siguen la relacion con EEUU.
-    "RREE": ["google", "incode"],
-    "MTC": ["google"],
-    "OSIPTEL": ["google"],
-    "INDECOPI": ["google", "syngenta"],
-    "MINCETUR": ["google", "bayer", "syngenta"],
     "MINEDU": [],
     "PRODUCE": [],
     "Direccion de Casinos (Apuestas Deportivas)": [],
@@ -50,32 +35,16 @@ INSTITUCION_CLIENTES: dict[str, list[str]] = {
     "Google News EC — Ley Orgánica": ["todos"],
     "Portal de la Asamblea Nacional": ["todos"],
     "Agenda de la Asamblea Nacional": ["todos"],
-    # --- EC: ministerios/agencias con relevancia especifica ---
-    "Agencia de Regulacion y Control Fito y Zoosanitario": ["bayer", "syngenta"],
-    "Agrocalidad - Normativa": ["bayer", "syngenta"],
-    "ARCSA (Regulacion Sanitaria)": ["bayer"],
-    "Ministerio de Salud Publica": ["bayer"],
-    "IESS (Seg. Social)": ["bayer"],
-    # El notas.md de Google no cubre Ecuador: sin cliente hasta confirmarlo.
+    # Google no cubre Ecuador (clientes/google/cliente.json): sin cliente.
     "Ministerio de Telecomunicaciones": [],
-    # Incode sigue la relacion Peru/Ecuador-EEUU.
-    "Ministerio de Relaciones Exteriores y Movilidad Humana": ["incode"],
-    "Registro Civil (DIGERCIC)": ["incode"],
-    "Google News EC — Cédula digital": ["incode"],
 }
+for _inst, _slugs in config.por_campo("instituciones").items():
+    INSTITUCION_CLIENTES.setdefault(_inst, []).extend(_slugs)
 
 CATEGORIA_CLIENTES: dict[str, list[str]] = {
     "Coyuntura Politica": ["todos"],
     "Institucion": ["todos"],
-    "Temas Salud": ["bayer"],
-    "Salud": ["bayer"],
-    "Temas Agrarios": ["bayer", "syngenta"],
-    "Agro": ["bayer", "syngenta"],
-    "Temas Tech": ["google", "incode"],
-    "Digital": ["google", "incode"],
-    # KYC/AML/fintech es foco de Incode, no de Google (segun sus notas.md).
-    "Temas KYC/AML": ["incode"],
-    "Financiero": ["incode"],
+    **config.por_campo("categorias_fuente"),
 }
 
 
@@ -95,77 +64,13 @@ FUENTES_GENERALISTAS_FILTRAR_RUIDO: set[str] = {
     "PRIMICIAS", "Expreso EC", "La Hora", "Vistazo", "Ecuavisa", "Teleamazonas", "El Telegrafo",
 }
 
-# Tema(s) de temas.TEMAS que le importan a cada cliente. Solo para
-# INSTITUCIONES_AMPLIAS.
-TEMAS_CLIENTE: dict[str, list[str]] = {
-    "google": ["Tech / Digital", "KYC / AML / Financiero"],
-    "incode": ["Tech / Digital", "KYC / AML / Financiero"],
-    "bayer": ["Salud", "Crop"],
-    "syngenta": ["Crop"],
-}
-
-# Fuentes/categorias donde el tema generico no alcanza (todo lo de MINSA es
-# "Salud" por definicion, pero a Bayer solo le sirve su bluebook): se exige
-# ademas un match con PERFIL_KEYWORDS. Incluye fuentes ya desactivadas
-# (Andina agro/salud) para filtrar sus filas viejas.
-PERFIL_ESTRICTO: dict[str, set[str]] = {
-    "bayer": {"MINSA", "Ministerio de Salud (estadisticas)",
-              "Ministerio de Salud Publica", "Temas Salud", "Salud",
-              "AgroPeru",
-              "Andina (agencia oficial - agro)",
-              "Andina (agencia oficial - salud)",
-              # periodismo agrario global generico
-              "Mundo Agropecuario"},
-    "syngenta": {"AgroPeru", "Andina (agencia oficial - agro)",
-                 "Mundo Agropecuario"},
-    # "Menores digitales" trae leyes de cualquier pais, "KYC LAFT" guias de
-    # cripto/apuestas, DPL News Ecuador negocio telecom, Criptonoticias
-    # trading: se exige una senal regulatoria real.
-    "google": {"Google News PE — Menores digitales", "Google News PE — KYC LAFT",
-               "Criptonoticias"},
-    "incode": {"Google News PE — Menores digitales", "Google News PE — KYC LAFT",
-               "DPL News Ecuador", "Criptonoticias"},
-}
-
-PERFIL_KEYWORDS: dict[str, list[str]] = {
-    "bayer": [
-        "digemid", "registro sanitario", "farmacovigilancia", "venta libre",
-        "generico", "oncolog", "cancer", "petitorio nacional", "pnume",
-        "abastecimiento", "desabastecimiento", "essalud",
-        "colegio de quimicos farmaceuticos", "hemofilia", "medicamento",
-        "autoridad reguladora", "arcsa",
-        # substring: "medicinas" (no "medicina", que trae la carrera) y
-        # "farmaco" cubre farmaco/farmacos.
-        "medicinas", "farmaco",
-        # Crop (compartido con syngenta, ver abajo)
-        "senasa", "plaguicida", "fitosanit", "semilla", "transgenic",
-        "organismo vivo modificado", "agroecolog", "agricultura regenerativa",
-        "agroexportacion", "autoridad nacional del agua", "biotecnolog",
-    ],
-    "syngenta": [
-        # AgroPeru trae desarrollo rural general (riego, alpacas): fuera.
-        "senasa", "plaguicida", "fitosanit", "semilla", "transgenic",
-        "organismo vivo modificado", "agroecolog", "agricultura regenerativa",
-        "agroexportacion", "autoridad nacional del agua", "biotecnolog",
-    ],
-    # Google/Incode: un termino institucional/legal. "peru"/"ecuador" sueltos
-    # no: dejaban pasar guias de apuestas que solo nombraban el pais.
-    "google": [
-        "congreso", "asamblea nacional",
-        "ley ", "proyecto de ley", "reglamento", "decreto", "regulacion",
-        "sbs", "indecopi", "anpd", "mtc", "osiptel", "reniec",
-        "clave unica", "ciberseguridad", "lavado de activos",
-        "proteccion de datos", "banco central", "superintendencia",
-    ],
-    "incode": [
-        "congreso", "asamblea nacional",
-        "ley ", "proyecto de ley", "reglamento", "decreto", "regulacion",
-        "sbs", "indecopi", "anpd", "mtc", "osiptel", "reniec",
-        "clave unica", "ciberseguridad", "lavado de activos",
-        "kyc", "identidad digital", "verificacion de identidad", "biometria",
-        "proteccion de datos", "banco central", "superintendencia",
-    ],
-}
+# Por cliente, de clientes/<slug>/cliente.json (ver clientes/config.py):
+# TEMAS_CLIENTE solo se usa en INSTITUCIONES_AMPLIAS; PERFIL_ESTRICTO son las
+# fuentes donde el tema generico no alcanza (todo MINSA es "Salud", pero a
+# Bayer solo le sirve su bluebook) y se exige ademas una de PERFIL_KEYWORDS.
+TEMAS_CLIENTE: dict[str, list[str]] = config.campo("temas_noticias")
+PERFIL_ESTRICTO: dict[str, set[str]] = {k: set(v) for k, v in config.campo("fuentes_con_perfil_estricto").items()}
+PERFIL_KEYWORDS: dict[str, list[str]] = config.campo("palabras_clave")
 
 
 def _norm_kw(s: str | None) -> str:
