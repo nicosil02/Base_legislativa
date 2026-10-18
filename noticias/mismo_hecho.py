@@ -17,6 +17,7 @@ from __future__ import annotations
 
 import argparse
 import html
+import itertools
 import json
 import random
 import re
@@ -137,6 +138,20 @@ def guardar(cerebro: sqlite3.Connection, pares: list[dict], veredictos: list, ju
 
 # ------------------------------------------------------------------ modelo propio
 
+def importar_humanos(cerebro: sqlite3.Connection) -> int:
+    """Las noticias juntadas con "Combinar" en la pagina (data/noticias_combinadas.json)
+    son el mismo hecho segun una persona: le ganan a Gemini y al modelo."""
+    from noticias.feedback_store import COMBINADAS_PATH
+    p = ROOT / COMBINADAS_PATH
+    grupos = json.loads(p.read_text(encoding="utf-8")) if p.exists() else []
+    ahora = datetime.now(timezone.utc).isoformat(timespec="seconds")
+    filas = [(a, b, 1, "humano", None, None, ahora)
+             for g in grupos for a, b in itertools.combinations(sorted(g["ids"]), 2)]
+    cerebro.executemany("INSERT OR REPLACE INTO mismo_hecho VALUES (?,?,?,?,?,?,?)", filas)
+    cerebro.commit()
+    return len(filas)
+
+
 def _dispositivo():
     import torch
     return torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -173,7 +188,9 @@ def entrenar(cerebro: sqlite3.Connection, noticias: sqlite3.Connection, epocas: 
     from transformers import AutoModelForSequenceClassification, AutoTokenizer
     from noticias.historias import UMBRAL_NOTICIAS
 
-    filas = cerebro.execute("SELECT a, b, igual, sim FROM mismo_hecho WHERE juez = 'gemini'").fetchall()
+    importar_humanos(cerebro)
+    filas = cerebro.execute(
+        "SELECT a, b, igual, sim FROM mismo_hecho WHERE juez IN ('gemini', 'humano')").fetchall()
     ids = {x for r in filas for x in r[:2]}
     txt = {i: texto(t, r) for i, t, r in noticias.execute(
         f"SELECT id, titulo, resumen FROM noticias WHERE id IN ({','.join(map(str, ids))})")} if ids else {}
@@ -286,6 +303,7 @@ def etiquetar(dias: int, maximo: int) -> int:
 
 def run(dias: float = 2) -> int:
     cerebro, noticias = _conexiones()
+    print(f"[mismo_hecho] {importar_humanos(cerebro)} pares humanos (Combinar)")
     pares = candidatos(cerebro, noticias, _iso(dias))
     if not pares:
         print("[mismo_hecho] sin pares nuevos")
