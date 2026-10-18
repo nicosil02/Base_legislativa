@@ -42,9 +42,10 @@ Con el material del dia (ya filtrado por relevancia) escribe:
    publica, un nombramiento, una norma que viene, un PL que se mueve rapido, algo que se
    repite en varias fuentes). Di que buscarias y donde.
 
-Reglas: solo lo que esta en el material, nada inventado. Espanol simple y directo, frases
-cortas, sin metaforas ni jerga. Sin markdown de titulos (#); usa negrita solo para el nombre
-del cliente. Si el dia fue flojo, dilo en una linea y no rellenes."""
+Reglas: solo lo que esta en el material, nada inventado. A un cliente solo le cuentas cosas
+de sus paises. Espanol simple y directo, frases cortas, sin metaforas ni jerga. Formato de
+Telegram: *un asterisco* para negrita (solo el nombre del cliente), links como [link](url), sin
+titulos (#) ni **dobles asteriscos**. Si el dia fue flojo, dilo en una linea y no rellenes."""
 
 
 def _lima_ahora() -> datetime:
@@ -87,6 +88,12 @@ def _grupos(ids: list[int], cerebro: sqlite3.Connection) -> list[list[int]]:
     return list(grupos.values())
 
 
+def _url(url: str) -> str:
+    """Las de Google News pesan 500+ caracteres: se comen el prompt y el mensaje."""
+    from congreso_live.notify import acortar_url
+    return acortar_url(url) if "news.google." in url else url
+
+
 def noticias(pe: sqlite3.Connection, cerebro: sqlite3.Connection, desde: str) -> list[str]:
     por_id: dict[int, list[tuple[str, str]]] = {}
     for clave, cliente, por_que in cerebro.execute(
@@ -119,7 +126,7 @@ def normas(pe: sqlite3.Connection, desde: str) -> list[str]:
                WHERE n.first_seen_at >= ? AND (n.tags LIKE '%normativa%' OR n.tags LIKE '%normas%')""",
             (desde,)):
         if es_normativa_de_interes(r["tags"], r["resumen"]):
-            out.append(f"[{r['pais']}] {r['titulo']}: {(r['resumen'] or '')[:250]} {r['url']}")
+            out.append(f"[{r['pais']}] {r['titulo']}: {(r['resumen'] or '')[:250]} {_url(r['url'])}")
     return out[:MAX["normas"]]
 
 
