@@ -129,3 +129,25 @@ def test_procesar_pendientes_no_repite_directo_completo(monkeypatch, tmp_path):
     r = fb.procesar_pendientes(db, max_n=5)
     assert hechos == [("fb_2", 3600), ("fb_3", 1200)]
     assert r["pendientes_totales"] == 2
+
+
+def test_paginas_en_agenda_solo_las_que_sesionan_ahora(tmp_path):
+    from datetime import datetime
+
+    from congreso_live.facebook_ec import PAGINAS, paginas_en_agenda
+    db = tmp_path / "ec.db"
+    c = sqlite3.connect(db)
+    c.execute("CREATE TABLE sesiones_ec (nombre_comision TEXT, fecha TEXT, hora_inicio TEXT, hora_fin TEXT, status TEXT)")
+    c.executemany("INSERT INTO sesiones_ec VALUES (?,?,?,?,?)", [
+        ("Justicia", "2026-10-14", "11:00", "13:30", "CONFIRMED"),
+        ("Biodiversidad", "2026-10-14", "15:00", "16:30", "CONFIRMED"),
+        ("Educación", "2026-10-14", "10:00", "12:00", "CANCELLED"),
+        ("Pleno", "2026-10-14", "10:30", "13:00", "CONFIRMED"),
+    ])
+    c.commit(); c.close()
+    # 15:40: Justicia ya paso su margen de 2 h (13:30 + 2 h); Biodiversidad
+    # en curso; Educacion cancelada; Pleno no es pagina de Facebook.
+    assert paginas_en_agenda(datetime(2026, 10, 14, 15, 40), db) == {"Biodiversidad": PAGINAS["Biodiversidad"]}
+    assert "Justicia" in paginas_en_agenda(datetime(2026, 10, 14, 10, 50), db)
+    assert paginas_en_agenda(datetime(2026, 10, 15, 12, 0), db) == {}
+    assert paginas_en_agenda(db=tmp_path / "no.db") is None

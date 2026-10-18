@@ -16,7 +16,7 @@ from congreso_live.live_transcribe import SR, corte_de_frase, detectar_votacion 
 @pytest.fixture(autouse=True)
 def sin_facebook(monkeypatch):
     """watch_and_transcribe no abre Playwright en los tests."""
-    monkeypatch.setattr("congreso_live.facebook_ec.listar_en_vivo", lambda: [])
+    monkeypatch.setattr("congreso_live.facebook_ec.listar_en_vivo", lambda paginas=None: [])
 
 
 @pytest.fixture
@@ -164,9 +164,10 @@ def test_watch_and_transcribe_facebook(monkeypatch, sin_avisos):
     monkeypatch.setattr("congreso_live.detector.vivos_de_interes", lambda: [])
     fb = {"id": "fb_123", "tipo": "Comision: Justicia (EC)", "titulo": "Sesion No. 140",
           "pais": "EC", "url": "https://www.facebook.com/watch/?v=123"}
-    monkeypatch.setattr("congreso_live.facebook_ec.listar_en_vivo", lambda: consultas.append(1) or [fb])
+    monkeypatch.setattr("congreso_live.facebook_ec.paginas_en_agenda", lambda: {"Justicia": "JusticiaAN"})
+    monkeypatch.setattr("congreso_live.facebook_ec.listar_en_vivo", lambda paginas: consultas.append(paginas) or [fb])
     lt.watch_and_transcribe(intervalo_seg=1, poll_seg=1, max_total_minutos=2.5 / 60)
-    assert len(consultas) == 1
+    assert consultas == [{"Justicia": "JusticiaAN"}]
     assert vistos == ["fb_123"]
     assert "fb_123" in st.load_state().get("alertados", [])
     assert len(sin_avisos) == 1 and "Asamblea EC EN VIVO" in sin_avisos[0]
