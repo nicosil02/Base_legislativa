@@ -1,7 +1,7 @@
 """Tests de pleno/agenda_pdf.py y pleno/from_agenda_pdf.py (sin red)."""
 import sqlite3
 
-from pleno.agenda_pdf import _RE_FILA, _fecha_a_iso, init_schema
+from pleno.agenda_pdf import _fecha_a_iso, _filas, init_schema
 from pleno.db import Database
 from pleno.from_agenda_pdf import sync_from_agenda_pdf
 
@@ -20,11 +20,24 @@ def test_regex_fila_distingue_filas_con_pdf():
         <td data-search="">&mdash;</td>
     </tr>
     '''
-    filas = _RE_FILA.findall(html)
+    filas = _filas(html)
     assert len(filas) == 1  # la 2da fila no tiene PDF de agenda
     periodo, fecha, pdf_url = filas[0]
     assert pdf_url.endswith("AGENDA-PLENO-DIPUTADOS-10-09-2026.pdf")
     assert _fecha_a_iso(fecha) == "2026-09-10"
+
+
+def test_senado_con_columna_sesion_y_agenda_vacia_no_toma_el_diario():
+    # Fila real del Senado (07/10/2026): columna "Sesion" y Agenda vacia; antes
+    # se guardaba el Diario de los Debates como si fuera la agenda.
+    html = '''<tr data-periodo="2026-2027"> <td data-search="07/10/2026">07/10/2026</td>
+     <td class="snp26-sesion-celda" data-search="Sesion Solemne"><span>Sesion Solemne</span></td>
+     <td data-search=""><span class="fsm-pub-sin">-</span></td> <td data-search=""><span>-</span></td>
+     <td data-search="PLO-2026-8-SENADO.pdf"><a class="fsm-pub-doc" href="https://s/PLO-2026-8-SENADO.pdf">x</a></td></tr>
+    <tr data-periodo="2026-2027"> <td data-search="30/09/2026">30/09/2026</td>
+     <td class="snp26-sesion-celda" data-search="Sesion"><span>Sesion</span></td>
+     <td data-search="AGENDA.pdf"><a class="fsm-pub-doc" href="https://s/AGENDA-PLENO-SENADO-30-09-2026.pdf">x</a></td></tr>'''
+    assert [f[2] for f in _filas(html)] == ["https://s/AGENDA-PLENO-SENADO-30-09-2026.pdf"]
 
 
 def test_pk_admite_varios_pdf_por_fecha_y_varias_fechas_por_pdf(tmp_path):
