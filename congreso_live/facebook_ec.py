@@ -213,6 +213,42 @@ def listar_terminadas(paginas: dict[str, str] = PAGINAS) -> list[dict]:
     return [lista[i] for i in range(MAX_POR_PAGINA) for lista in por_pagina if i < len(lista)]
 
 
+def paginas_en_agenda(ahora=None, db=None) -> dict[str, str] | None:
+    """Paginas de las comisiones que segun la agenda de la Asamblea
+    (sesiones_ec) sesionan AHORA: desde 15 min antes del inicio hasta 2 h
+    despues del fin (suelen empezar y terminar tarde). Quito = Lima.
+    None si no hay agenda (sin base): entonces se revisan todas."""
+    from datetime import datetime, timedelta
+
+    from core.db import db_path
+    from core.tiempo import LIMA
+
+    ahora = ahora or datetime.now(LIMA)
+    p = Path(db or db_path("proyectos_ec.db"))
+    if not p.exists():
+        return None
+    conn = sqlite3.connect(f"file:{p}?mode=ro", uri=True)
+    try:
+        filas = conn.execute(
+            "SELECT nombre_comision, hora_inicio, hora_fin FROM sesiones_ec "
+            "WHERE fecha = ? AND COALESCE(status, '') != 'CANCELLED'",
+            (ahora.date().isoformat(),)).fetchall()
+    except sqlite3.OperationalError:
+        return None
+    finally:
+        conn.close()
+    hoy = ahora.replace(tzinfo=None)
+    out = {}
+    for nombre, ini, fin in filas:
+        if nombre not in PAGINAS or not ini:
+            continue
+        t_ini = datetime.fromisoformat(f"{ahora.date()}T{ini}") - timedelta(minutes=15)
+        t_fin = datetime.fromisoformat(f"{ahora.date()}T{fin or ini}") + timedelta(hours=2)
+        if t_ini <= hoy <= t_fin:
+            out[nombre] = PAGINAS[nombre]
+    return out
+
+
 def listar_en_vivo(paginas: dict[str, str] = PAGINAS) -> list[dict]:
     """Comisiones transmitiendo AHORA, en el formato de
     detector.vivos_de_interes: [{id, titulo, tipo, pais, url}]. Esperas

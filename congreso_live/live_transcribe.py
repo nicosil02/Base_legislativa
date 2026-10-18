@@ -513,14 +513,18 @@ def watch_and_transcribe(intervalo_seg: int = 40, poll_seg: int = 60,
         except Exception as e:
             print(f"[live-watch] error chequeando en vivo: {e}")
             vivos = []
-        # Comisiones EC por Facebook: abrir 14 paginas con Playwright tarda
-        # ~1 min, asi que solo cada FACEBOOK_CADA_SEG (y sin cache: lo que no
-        # se vio en este chequeo no arranca hilo).
+        # Comisiones EC por Facebook: solo las paginas de las comisiones que
+        # la agenda de la Asamblea pone sesionando ahora (sin agenda, todas),
+        # cada FACEBOOK_CADA_SEG (sin cache: lo que no se vio no arranca hilo).
         if ahora - t_facebook >= FACEBOOK_CADA_SEG:
             t_facebook = ahora
             try:
-                from congreso_live.facebook_ec import listar_en_vivo
-                vivos = vivos + listar_en_vivo()
+                from congreso_live.facebook_ec import PAGINAS, listar_en_vivo, paginas_en_agenda
+                paginas = paginas_en_agenda()
+                if paginas is None:
+                    paginas = PAGINAS
+                if paginas:
+                    vivos = vivos + listar_en_vivo(paginas)
             except Exception as e:
                 print(f"[live-watch] error chequeando Facebook EC: {e}")
 

@@ -78,7 +78,10 @@ jobs:
           curl -s -x http://127.0.0.1:8118 -o /dev/null -w "privoxy->WARP HTTP %{http_code}\n" https://www.youtube.com/
 
       - name: Bootstrap DB Peru desde la rama datos
-        run: bash scripts/bajar_db.sh proyectos.db.gz proyectos.db || true
+        run: |
+          bash scripts/bajar_db.sh proyectos.db.gz proyectos.db || true
+          # Agenda de comisiones EC: dice que paginas de Facebook revisar.
+          bash scripts/bajar_db.sh proyectos_ec.db.gz proyectos_ec.db || true
 
       - name: Detectar y notificar
         env:
