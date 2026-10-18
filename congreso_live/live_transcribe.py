@@ -228,7 +228,8 @@ def transcribir_vod(video_id: str, tipo: str, titulo: str, modelo=None, db_path=
         return {"ok": False, "motivo": "no se pudo bajar/convertir el audio"}
     if modelo is None:
         modelo = cargar_whisper()
-    segs = transcribir_audio(wav, modelo)
+    from congreso_live.agenda_preview import contexto_whisper
+    segs = transcribir_audio(wav, modelo, contexto_whisper(tipo, titulo, fecha))
     texto = " ".join(s["text"] for s in segs)
     if not texto:
         return {"ok": False, "motivo": "no se detecto habla en el audio"}
@@ -325,10 +326,9 @@ def capturar_y_acumular_en_vivo(
 
     import numpy as np
 
-    # Whisper escribe mejor lo que ya "espera" oir. El padron completo no
-    # entra: initial_prompt se corta a ~220 tokens.
-    contexto = (f"{titulo}. Señor presidente, señores congresistas, dictamen, "
-                "proyecto de ley, texto sustitutorio, cuarto intermedio, votación.")
+    # Whisper escribe mejor lo que ya "espera" oir: titulo + agenda del dia.
+    from congreso_live.agenda_preview import contexto_whisper
+    contexto = contexto_whisper(tipo, titulo)
     chunks_ok = 0
     misses_seguidos = 0
     t_inicio = time.time()

@@ -114,7 +114,7 @@ def test_tolera_fallo_transitorio(monkeypatch, tmp_path, sin_avisos):
 
 def test_transcribir_vod(monkeypatch, tmp_path):
     monkeypatch.setattr(lt, "descargar_audio_completo", lambda video_id: "fake.wav")
-    monkeypatch.setattr(lt, "transcribir_audio", lambda wav, modelo: [
+    monkeypatch.setattr(lt, "transcribir_audio", lambda wav, modelo, contexto=None: [
         {"start": 0, "end": 10, "text": "Se discutio el proyecto de ley X."}])
     db_path = tmp_path / "test.db"
     r = lt.transcribir_vod("VOD123", "Comision: Salud", "Sesion de prueba",
