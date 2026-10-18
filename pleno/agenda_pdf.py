@@ -26,15 +26,29 @@ FUENTES = [
 ]
 
 # Cada fila: <tr data-periodo="..."><td data-search="DD/MM/AAAA">fecha</td>
-# ... <td data-search="archivo.pdf"><a class="fsm-pub-doc" href="URL">
-# (mismo layout WordPress en las dos camaras).
-_RE_FILA = re.compile(
-    r'<tr[^>]*data-periodo="([^"]*)"[^>]*>\s*'
-    r'<td[^>]*data-search="(\d{2}/\d{2}/\d{4})"[^>]*>.*?</td>\s*'
-    r'<td[^>]*data-search="[^"]*\.pdf"[^>]*>\s*'
-    r'<a[^>]+class="fsm-pub-doc"[^>]+href="([^"]+)"',
-    re.DOTALL | re.IGNORECASE,
-)
+# [<td class="snp26-sesion-celda">Sesion</td> (solo Senado, desde oct 2026)]
+# <td data-search="archivo.pdf ..."><a class="fsm-pub-doc" href="URL"> = Agenda
+# y despues Acta, Diario, etc. Se lee celda por celda: con la Agenda vacia
+# una regex de corrido tomaba el primer PDF de la fila (el Diario).
+_RE_TR = re.compile(r'<tr[^>]*data-periodo="([^"]*)"[^>]*>(.*?)</tr>', re.DOTALL | re.IGNORECASE)
+_RE_TD = re.compile(r'<td([^>]*)>(.*?)</td>', re.DOTALL | re.IGNORECASE)
+_RE_FECHA = re.compile(r'data-search="(\d{2}/\d{2}/\d{4})"')
+_RE_HREF = re.compile(r'class="fsm-pub-doc"[^>]+href="([^"]+\.pdf)"', re.IGNORECASE)
+
+
+def _filas(html_text: str) -> list[tuple[str, str, str]]:
+    """[(periodo, DD/MM/AAAA, url de la Agenda)] de las filas que tienen Agenda."""
+    out = []
+    for periodo, fila in _RE_TR.findall(html_text):
+        celdas = [(attrs, cont) for attrs, cont in _RE_TD.findall(fila)
+                  if "sesion-celda" not in attrs]
+        if len(celdas) < 2:
+            continue
+        fecha = _RE_FECHA.search(celdas[0][0])
+        href = _RE_HREF.search(celdas[1][1])
+        if fecha and href:
+            out.append((periodo, fecha.group(1), href.group(1)))
+    return out
 
 
 def _fecha_a_iso(fecha_ddmmyyyy: str) -> str:
@@ -48,7 +62,7 @@ def fetch_agendas(session, camara: str, url: str) -> list[dict]:
     r = session.get(url, timeout=25)
     r.raise_for_status()
     out = []
-    for periodo, fecha_str, pdf_url in _RE_FILA.findall(r.text):
+    for periodo, fecha_str, pdf_url in _filas(r.text):
         out.append({
             "camara": camara,
             "periodo": periodo,
