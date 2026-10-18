@@ -4330,16 +4330,15 @@
   },
   {
     "video_id": "fb_1115608257501394",
-    "resumen": "Fragmento de la Sesión N.º 072 de la Comisión de Fiscalización y Control Político de la Asamblea Nacional de Ecuador, dentro de un proceso de juicio político. Un asambleísta critica duramente los estándares aplicados al proceso, comparándolo con el precedente de Inés Manzano, y se somete a votación una moción presentada por el asambleísta Luigi García, que es aprobada; luego se vota una reconciliación de ese resultado, que no se aprueba (la transcripción capturada corta abruptamente aca, probablemente por una interrupción técnica en la captura - no hay evidencia de que la sesión siguiera en curso a esta altura).",
+    "resumen": "Sesión de la Comisión de Fiscalización y Control Político de la Asamblea Nacional de Ecuador centrada en el cierre de un proceso de juicio político: un asambleísta defendió al proponente del juicio y cuestionó que la comisión aplicara un estándar distinto al usado en el caso previo de Inés Manzano, mientras otro bloque objetó la falta de pruebas sobre una reunión en disputa. Se votaron dos mociones presentadas por el asambleísta Luigi García (una moción de fondo y luego su reconsideración) y la sesión se clausuró sin más puntos en el orden del día.",
     "ideas_clave": [
-      "Se registró un corte momentáneo de la transmisión que luego fue restablecido, según confirmó el personal técnico (TIC) de la Asamblea.",
-      "Un asambleísta cuestiona que el estándar aplicado a este juicio político es distinto al usado en el proceso contra Inés Manzano, donde se exigía nexo causal, competencia concreta y prueba suficiente para acreditar incumplimiento de funciones.",
-      "El cuestionamiento central del juicio político gira en torno a una presunta reunión cuya realización, hora y fecha no fueron determinadas por la pericia presentada.",
-      "Moción presentada por el asambleísta Luigi García: aprobada con 6 votos afirmativos, 0 negativos, 0 en blanco y 4 abstenciones (10 asambleístas registrados).",
-      "Solicitud de reconciliación de esa votación, pedida por el propio asambleísta Luigi García: rechazada con 0 votos afirmativos, 6 negativos, 0 en blanco y 4 abstenciones.",
-      "Tras la votación de la reconciliación no quedaban más puntos por tratar en el orden del día, según certificó la secretaría."
+      "Se aprobó una moción presentada por el asambleísta Luigi García con 6 votos afirmativos, 0 negativos, 0 en blanco y 4 abstenciones (10 asambleístas registrados).",
+      "A pedido del mismo asambleísta García se votó la reconsideración de lo aprobado: resultó NO aprobada, con 0 afirmativos, 6 negativos, 0 en blanco y 4 abstenciones.",
+      "Un asambleísta defendió al proponente del juicio político, señalando que la comisión no habría probado el nexo causal ni la fecha/hora exacta de la reunión que motivó el proceso.",
+      "Se comparó el caso con el juicio político previo contra Inés Manzano, alegando que en ese caso se exigió nexo causal y prueba suficiente que en este proceso no se habría exigido con el mismo rigor.",
+      "La sesión se clausuró sin más puntos pendientes en el orden del día tras las votaciones."
     ],
-    "generated_at": "2026-10-18T07:50:10Z",
+    "generated_at": "2026-10-18T11:50:34Z",
     "duracion_seg": 1064,
     "agenda_cumplida": null
   },
@@ -4357,6 +4356,56 @@
     ],
     "generated_at": "2026-10-18T07:50:10Z",
     "duracion_seg": 3050,
+    "agenda_cumplida": null
+  },
+  {
+    "video_id": "fb_1188510023847549",
+    "resumen": [
+      "Sesión de la Comisión de Transparencia, Participación Ciudadana y Control Social de la Asamblea Nacional de Ecuador dedicada al tratamiento del proyecto de ley orgánica reformatoria de la Ley Orgánica de Garantías Jurisdiccionales y Control Constitucional (unificado). En comisión general compareció el experto constitucionalista Pablo Andrés Proaño Pazmiño, quien expuso fallas graves en el mecanismo de recusación de jueces de la Corte Constitucional y respondió preguntas de los asambleístas sobre cómo evitar el abuso de ese mecanismo sin debilitar la independencia judicial."
+    ],
+    "ideas_clave": [
+      "El constitucionalista Pablo Andrés Proaño Pazmiño señaló que la Corte Constitucional no ha aceptado ninguna recusación de jueces en 7 años (desde el 13 de septiembre de 2019), a pesar de más de 30 solicitudes presentadas.",
+      "Según su exposición, el promedio de resolución de una recusación es de 242 días, cuando la ley exige que se resuelva en 3 días.",
+      "Identificó 9 recusaciones que nunca fueron resueltas porque la sentencia de fondo se emitió antes de que se decidiera la recusación.",
+      "Denunció que en al menos dos causas (41-22-IN y 71-21-IN) los abogados que presentaron recusaciones fueron acusados de abuso del derecho, y uno de ellos fue sancionado por el Consejo de la Judicatura.",
+      "Propuso reformar la ley para definir explícitamente qué constituye \"interés directo e indirecto\" de un juez, tomando como referencia la legislación de Colombia y España, para reducir la discrecionalidad del presidente de la Corte Constitucional.",
+      "Señaló que el reglamento interno de la Corte restringe de forma más estricta que la propia ley quién puede presentar una recusación (solo partes y terceros con interés subjetivo), sin incluir amicus curiae ni otros intervinientes que la ley sí contempla.",
+      "Un asambleísta mencionó que un día antes la Asamblea aprobó, con el 80% de apoyo, un proyecto de protección a niñas, niños y adolescentes frente a bandas delictivas (comentario tangencial, no fue el tema central de esta sesión)."
+    ],
+    "generated_at": "2026-10-18T11:50:34Z",
+    "duracion_seg": 1970,
+    "agenda_cumplida": null
+  },
+  {
+    "video_id": "fb_936423472588680",
+    "resumen": "Sesión Nro. 150 de la Comisión de Protección Integral de Niñez y Adolescencia de la Asamblea Nacional de Ecuador, en el marco de la fiscalización de la gestión del Ministerio de Inclusión Económica y Social sobre las unidades de acogimiento institucional de niñas, niños y adolescentes. Comparecieron delegados del Consejo de la Judicatura, quienes presentaron cifras sobre causas judiciales de acogimiento; los asambleístas cuestionaron la falta de resultados concretos frente a casos de muertes y suicidios de menores en centros de acogida. El Ministerio de Trabajo, la Fiscalía y el Ministerio de Salud se excusaron de asistir, por lo que la sesión se clausuró para volver a convocarse.",
+    "ideas_clave": [
+      "El Consejo de la Judicatura (delegados María Rosa Cabrera y Darío Albuja) reportó 3.947 actuaciones acumuladas en el sistema SIGET sobre acogimiento institucional: 2.714 causas resueltas y 1.237 en trámite, con un tiempo promedio de resolución de 95,01 días.",
+      "Las provincias con más causas de acogimiento son Pichincha (614) y Guayas (429), además de una tercera provincia con 713 causas (nombre poco claro en la transcripción automática).",
+      "El asambleísta Ricardo Patiño cuestionó que los datos presentados sean solo de gestión (capacitaciones, mesas de trabajo) y no midan resultados reales, citando casos de un niño y una niña fallecidos y varios intentos de suicidio de adolescentes en centros de acogida.",
+      "La asambleísta Paula Cabello preguntó por el estado de las cámaras de Gesell en el marco de la emergencia institucional del Consejo de la Judicatura: 9 operativas frente a 11 dañadas a nivel nacional; el Consejo remitió la respuesta detallada al informe de la resolución RL-2023-2025-120.",
+      "El Consejo de la Judicatura informó una mesa de trabajo interinstitucional programada para el 23 de octubre con el Ministerio de Trabajo y Desarrollo Humano (ex-MIES), UNICEF, juntas cantonales de protección y Dinapen.",
+      "El Ministerio de Trabajo y Desarrollo Humano no asistió ni se excusó; la Fiscalía General y el Ministerio de Educación se excusaron por agenda; el Ministerio de Salud Pública envió su excusa recién al cierre de la sesión.",
+      "Ante la ausencia de los demás convocados, la presidenta clausuró la sesión para volver a convocarla y poder completar el informe trimestral/semestral que la comisión debe remitir al Pleno."
+    ],
+    "generated_at": "2026-10-18T11:50:34Z",
+    "duracion_seg": 2276,
+    "agenda_cumplida": null
+  },
+  {
+    "video_id": "fb_2159320081324367",
+    "resumen": "Sesión Nro. 139 (modalidad virtual) de la Comisión de Justicia y Estructura del Estado de la Asamblea Nacional de Ecuador, en el marco del segundo debate del proyecto de ley orgánica reformatoria de la Ley Orgánica de Gestión de Identidad y Datos Civiles (cédula digital). Comparecieron delegados de la Dirección General de Registro Civil, Identificación y Cedulación (DIGERCIC), quienes presentaron cifras de emisión de cédulas físicas y digitales y plantearon observaciones normativas al proyecto; no hubo votación en esta sesión.",
+    "ideas_clave": [
+      "DIGERCIC reportó la emisión de 2.538.797 cédulas físicas en 2025 (2.219.314 por renovación, 263.958 por primera vez, 55.525 duplicados), con una caída del 2,99% respecto de 2024; en lo que va de 2026 (enero-septiembre) se emitieron 2.024.483 cédulas.",
+      "Las cédulas digitales emitidas fueron 101.550 en 2024, 184.249 en 2025 y 172.000 en lo que va de 2026, acumulando 457.800 (equivalente al 6,47% del total de cédulas físicas emitidas).",
+      "DIGERCIC pidió modificar la redacción de los artículos 85.1 y 85.2 del proyecto para no atribuirle la administración exclusiva de plataformas tecnológicas, señalando que esa competencia corresponde al MINTEL/DINARDAP según el acuerdo ministerial MINTEL-2026-0010.",
+      "Un delegado de DIGERCIC advirtió que establecer la \"obligatoriedad\" del reconocimiento de la cédula digital podría generar problemas, ya que ese formato solo está disponible para mayores de 18 años y los bancos no la aceptan en cajeros automáticos por razones de seguridad.",
+      "Un asambleísta cuestionó la interoperabilidad del sistema, citando el caso de una persona cuya cédula digital seguía mostrando los datos de una cédula física anterior ya denunciada como perdida ante la Fiscalía.",
+      "Por problemas de conexión y audio durante la sesión virtual, varias preguntas de los asambleístas quedaron pendientes de respuesta y se acordó enviarlas por escrito a DIGERCIC.",
+      "La sesión se clausuró sin más puntos en el orden del día, sin que se registrara ninguna votación sobre el proyecto."
+    ],
+    "generated_at": "2026-10-18T11:50:34Z",
+    "duracion_seg": 1999,
     "agenda_cumplida": null
   }
 ]
