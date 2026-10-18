@@ -19,3 +19,9 @@ def test_escribir_cae_a_lite_si_flash_falla():
     m = {"noticias": ["[PE] algo"], "normas": [], "pls": [], "sesiones": [], "tv": []}
     assert q.escribir(m, generar=falso) == "ok" and usados == [q.llm.FLASH, q.llm.LITE]
     assert "NOTICIAS" in q.prompt(m) and "NORMAS" not in q.prompt(m)
+
+
+def test_fresca_descarta_notas_viejas():
+    assert not q._fresca({"fecha_pub": "2016-07-18T10:00:00Z"})
+    from datetime import datetime, timezone
+    assert q._fresca({"fecha_pub": datetime.now(timezone.utc).isoformat()})

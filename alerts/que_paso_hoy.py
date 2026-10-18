@@ -29,6 +29,9 @@ from core.db import db_path
 from core.tiempo import LIMA
 
 HORA_DESDE = 18          # hora Lima desde la que sale el resumen del dia
+# Lo que importa es cuando PASO, no cuando el sistema lo vio: las busquedas
+# de Google News traen notas de hace años y el backfill resume sesiones viejas.
+DIAS_FRESCO = 2
 MAX = {"noticias": 70, "normas": 25, "pls": 40, "sesiones": 12, "tv": 12}
 
 SYSTEM = """Eres analista senior de asuntos publicos en Vali Consultores (Peru y Ecuador).
@@ -88,6 +91,11 @@ def _grupos(ids: list[int], cerebro: sqlite3.Connection) -> list[list[int]]:
     return list(grupos.values())
 
 
+def _fresca(r) -> bool:
+    from noticias.digest import _es_reciente
+    return _es_reciente({"fecha_pub": r["fecha_pub"]}, DIAS_FRESCO)
+
+
 def _url(url: str) -> str:
     """Las de Google News pesan 500+ caracteres: se comen el prompt y el mensaje."""
     from congreso_live.notify import acortar_url
@@ -103,9 +111,9 @@ def noticias(pe: sqlite3.Connection, cerebro: sqlite3.Connection, desde: str) ->
         return []
     lista = ",".join(map(str, por_id))
     filas = {r["id"]: r for r in pe.execute(
-        f"""SELECT n.id, n.titulo, n.url, f.nombre AS fuente, f.pais FROM noticias n
+        f"""SELECT n.id, n.titulo, n.url, n.fecha_pub, f.nombre AS fuente, f.pais FROM noticias n
             JOIN noticias_fuentes f ON f.id = n.fuente_id
-            WHERE n.id IN ({lista}) AND n.first_seen_at >= ? ORDER BY n.first_seen_at DESC""", (desde,))}
+            WHERE n.id IN ({lista}) AND n.first_seen_at >= ? ORDER BY n.first_seen_at DESC""", (desde,)) if _fresca(r)}
     out = []
     for g in _grupos(list(filas), cerebro)[:MAX["noticias"]]:
         r = filas[g[0]]
@@ -121,11 +129,11 @@ def normas(pe: sqlite3.Connection, desde: str) -> list[str]:
     from noticias.temas import es_normativa_de_interes
     out = []
     for r in pe.execute(
-            """SELECT n.titulo, n.resumen, n.url, n.tags, f.pais FROM noticias n
+            """SELECT n.titulo, n.resumen, n.url, n.tags, n.fecha_pub, f.pais FROM noticias n
                JOIN noticias_fuentes f ON f.id = n.fuente_id
                WHERE n.first_seen_at >= ? AND (n.tags LIKE '%normativa%' OR n.tags LIKE '%normas%')""",
             (desde,)):
-        if es_normativa_de_interes(r["tags"], r["resumen"]):
+        if _fresca(r) and es_normativa_de_interes(r["tags"], r["resumen"]):
             out.append(f"[{r['pais']}] {r['titulo']}: {(r['resumen'] or '')[:250]} {_url(r['url'])}")
     return out[:MAX["normas"]]
 
@@ -161,11 +169,13 @@ def pls(pe: sqlite3.Connection | None, ec: sqlite3.Connection | None, desde_loca
     return out[:MAX["pls"]]
 
 
-def sesiones(desde: str) -> list[str]:
+def sesiones(pe: sqlite3.Connection | None, desde: str) -> list[str]:
     from congreso_live.resumenes_store import list_resumenes
+    fechas = dict(pe.execute("SELECT video_id, fecha FROM sesiones_transcripciones")) if pe else {}
+    minimo = (_lima_ahora() - timedelta(days=DIAS_FRESCO)).date().isoformat()
     out = []
     for vid, r in list_resumenes().items():
-        if (r.get("generated_at") or "") >= desde and r["resumen"]:
+        if (r.get("generated_at") or "") >= desde and r["resumen"] and (fechas.get(vid) or "") >= minimo:
             ideas = "; ".join(r["ideas_clave"][:4])
             out.append(f"{r['resumen'][:500]} Ideas: {ideas}")
     return out[:MAX["sesiones"]]
@@ -187,7 +197,7 @@ def material() -> dict[str, list[str]]:
     return {"noticias": noticias(pe, cerebro, desde) if pe else [],
             "normas": normas(pe, desde) if pe else [],
             "pls": pls(pe, ec, desde_local, desde),
-            "sesiones": sesiones(desde),
+            "sesiones": sesiones(pe, desde),
             "tv": tv(pe, desde) if pe else []}
 
 
