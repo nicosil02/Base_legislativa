@@ -25,6 +25,10 @@ on:
         default: normal
         type: choice
         options: [normal, probar, enviar]
+      rejuzgar:
+        description: "Volver a juzgar la relevancia de las ultimas 48 h (tras cambiar el criterio)"
+        default: false
+        type: boolean
 
 permissions:
   contents: write
@@ -73,7 +77,7 @@ jobs:
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           PYTHONIOENCODING: utf-8
-        run: timeout 600 python -X utf8 -u -m alerts.filtro run
+        run: timeout 600 python -X utf8 -u -m alerts.filtro run ${{ inputs.rejuzgar && '--rejuzgar' || '' }}
 
       - name: ¿Mismo hecho? (pares de noticias de portales distintos)
         # Con el modelo afinado (entrenar-mismo-hecho.yml) si existe; si no,
