@@ -111,7 +111,7 @@ def unir(local: Path, remoto: Path, parte: str) -> int:
             conn.execute(f"""
                 INSERT OR REPLACE INTO "{t}" ({cols}) SELECT {cols} FROM r."{t}" AS d
                 WHERE NOT EXISTS (SELECT 1 FROM "{t}" b
-                                  WHERE {misma} AND length(b.texto) >= length(d.texto))""")
+                                  WHERE {misma} AND length(coalesce(b.texto, '')) >= length(coalesce(d.texto, '')))""")
         else:
             conn.execute(f'INSERT OR IGNORE INTO "{t}" SELECT * FROM r."{t}"')
     conn.commit()

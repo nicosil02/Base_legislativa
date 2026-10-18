@@ -47,3 +47,12 @@ def test_unir_no_pisa_y_gana_el_texto_mas_largo(tmp_path):
     tx = dict(sqlite3.connect(tmp_path / "l_transcripciones.db").execute("SELECT * FROM sesiones_transcripciones"))
     assert tv == {"v1": "hola mundo", "v2": "xyz", "v3": "nuevo"}
     assert tx == {"s1": "mucho mas largo", "s2": "otra"}
+
+
+def test_unir_texto_nulo_no_cuenta_como_cambio(tmp_path):
+    local, remoto = tmp_path / "l.db", tmp_path / "r.db"
+    _base(local, [("v1", None)], [])
+    _base(remoto, [("v1", None)], [])
+    P.extraer(local, "tv", tmp_path / "l_tv.db")
+    P.extraer(remoto, "tv", tmp_path / "r_tv.db")
+    assert P.unir(tmp_path / "l_tv.db", tmp_path / "r_tv.db", "tv") == 0
