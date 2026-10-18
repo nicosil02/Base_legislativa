@@ -28,7 +28,7 @@ STATE_FILE = REPO_ROOT / "data" / "alert_sent_log.json"
 
 
 def _today_str():
-    return datetime.utcnow().date().isoformat()
+    return datetime.now(timezone.utc).date().isoformat()
 
 
 # El estado vive en proyectos.db (tabla app_state), que refrescar-pe.yml
