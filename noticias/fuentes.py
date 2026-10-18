@@ -279,16 +279,6 @@ FUENTES_PE: list[dict] = [
     {"categoria": "Institucion", "pais": "PE", "nombre": "Prepublicaciones (fichas y reglamentos)",
      "url": "https://www.gob.pe/busquedas?contenido[]=normas", "tipo": "gobpe",
      "busqueda": "prepublicacion", "exige": r"pre-?publicaci[oó]n"},
-    {"categoria": "Temas Salud", "pais": "PE", "nombre": "Compras publicas de medicamentos y salud (OECE)",
-     "url": "https://contratacionesabiertas.oece.gob.pe/", "tipo": "oece",
-     "terminos": ["medicamentos", "vacuna", "oncologico", "dispositivos medicos"],
-     "notas": "API OCDS del SEACE, datos del mismo dia. Bayer farma."},
-    {"categoria": "Temas Agrarios", "pais": "PE", "nombre": "Compras publicas agro (OECE)",
-     "url": "https://contratacionesabiertas.oece.gob.pe/", "tipo": "oece",
-     "terminos": ["plaguicida", "fertilizante", "semillas certificadas"]},
-    {"categoria": "Temas Tech", "pais": "PE", "nombre": "Compras publicas identidad y tecnologia (OECE)",
-     "url": "https://contratacionesabiertas.oece.gob.pe/", "tipo": "oece",
-     "terminos": ["biometrico", "biometrica", "identidad digital", "inteligencia artificial"]},
     {"categoria": "Temas Salud", "pais": "PE", "nombre": "CENARES", "url": "https://www.gob.pe/cenares",
      "tipo": "gobpe", "notas": "Compras centralizadas de medicamentos del MINSA (sus normas)."},
     {"categoria": "Temas Salud", "pais": "PE", "nombre": "EsSalud", "url": "https://www.gob.pe/essalud",
@@ -464,14 +454,6 @@ FUENTES_EC: list[dict] = [
 
     # --- PDFs que suben las instituciones (wp-json): resoluciones y borradores en
     # consulta antes del Registro Oficial (investigado 2026-10-18) ---
-    {"categoria": "Temas Salud", "pais": "EC", "nombre": "AIL EP - Noticias",
-     "url": "https://ail.msp.gob.ec/noticias/", "rss_url": "https://ail.msp.gob.ec/feed/", "tipo": "rss",
-     "notas": "Empresa publica de compra de medicinas (Decreto 393). De aca salio el listado de la "
-              "ronda de compras 1 (oct 2026). msp.gob.ec no responde desde Peru (18/10): si GitHub "
-              "tampoco llega, es geo-bloqueo y queda Google News."},
-    {"categoria": "Temas Salud", "pais": "EC", "nombre": "AIL EP - Documentos publicados",
-     "url": "https://ail.msp.gob.ec", "tipo": "wpmedia",
-     "notas": "Listados de compras (ej. LISTADO-RONDA-COMPRAS-1.pdf). Ver nota de AIL EP - Noticias."},
     {"categoria": "Temas KYC/AML", "pais": "EC", "nombre": "SPDP - Documentos publicados",
      "url": "https://spdp.gob.ec", "tipo": "wpmedia",
      "notas": "Borradores de normas de datos personales en consulta (Incode). 15/10: datos de salud, "

@@ -15,10 +15,9 @@ from __future__ import annotations
 import html
 import json
 import logging
-import os
 import re
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timezone
 from email.utils import parsedate_to_datetime
 from urllib.parse import urljoin, urlparse
 
@@ -446,57 +445,6 @@ def fetch_wpmedia(fuente: dict, session: requests.Session, timeout: int) -> list
     return out
 
 
-OECE_API = "https://contratacionesabiertas.oece.gob.pe/api/v1/search"
-
-
-def fetch_oece(fuente: dict, session: requests.Session, timeout: int,
-               dias: int = 4) -> list[dict]:
-    """Compras publicas de Peru (SEACE en formato OCDS, datos del mismo dia)
-    por cada termino de `terminos`. La API ordena por relevancia, no por fecha:
-    se recorren todas las paginas del año y se quedan las de los ultimos dias.
-    ponytail: ~3 paginas de 100 por termino; con muchos terminos, pedirle a
-    OECE un filtro por fecha si lo agregan."""
-    desde = (datetime.now(timezone.utc) - timedelta(days=dias)).isoformat()
-    # OECE da 403 a IPs de datacenter (GitHub): en CI sale por WARP.
-    proxy = os.environ.get("PROXY_BLOQUEADOS")
-    proxies = {"http": proxy, "https": proxy} if proxy else None
-    out, vistos = [], set()
-    for termino in fuente["terminos"]:
-        pagina = 1
-        while pagina:
-            try:
-                r = session.get(OECE_API, params={"search": termino, "year": datetime.now().year,
-                                                  "format": "json", "paginateBy": 100, "page": pagina},
-                                timeout=timeout, proxies=proxies)
-                r.raise_for_status()
-                d = r.json()
-            except Exception as e:
-                log.warning("oece %r p%s: %s", termino, pagina, e)
-                break
-            for res in d.get("results", []):
-                c = res.get("compiledRelease") or {}
-                t = c.get("tender") or {}
-                fecha = c.get("date") or ""
-                if c.get("ocid") in vistos or not fecha:
-                    continue
-                try:
-                    if datetime.fromisoformat(fecha) < datetime.fromisoformat(desde):
-                        continue
-                except ValueError:
-                    continue
-                vistos.add(c["ocid"])
-                monto = (t.get("value") or {}).get("amount")
-                comprador = (c.get("buyer") or {}).get("name") or ""
-                out.append({
-                    "url": f"https://contratacionesabiertas.oece.gob.pe/proceso/{c['ocid']}",
-                    "titulo": f"Compra pública: {comprador} — {t.get('description') or t.get('title') or ''}"[:500],
-                    "resumen": (f"{t.get('procurementMethodDetails') or ''} {t.get('title') or ''}"
-                                + (f", S/ {monto:,.0f}" if monto else "")).strip()[:500],
-                    "fecha_pub": fecha, "autor": comprador or None, "tags": "compra-publica"})
-            pagina = (d.get("pagination") or {}).get("next_page_number")
-    return out
-
-
 def _get(session: requests.Session, url: str, timeout: int) -> requests.Response:
     """GET con fallback SSL: cloudscraper (la session normal de este modulo)
     impersona un fingerprint TLS de navegador para saltar Cloudflare, pero ese
@@ -549,8 +497,6 @@ def fetch_fuente(fuente: dict, session: requests.Session | None = None,
         return fetch_gobpe(fuente, s, timeout=timeout)
     if tipo == "wpmedia":
         return fetch_wpmedia(fuente, s, timeout)
-    if tipo == "oece":
-        return fetch_oece(fuente, s, timeout)
     if tipo == "rss":
         url = fuente.get("rss_url") or fuente.get("url")
         if not url:

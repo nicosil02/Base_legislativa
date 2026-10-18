@@ -152,16 +152,3 @@ def test_wpmedia_limpia_titulos():
                   "title": {"rendered": "23092026_062842_Borrador-Resolucion-Portabilidad"}}])
     it = fetch_wpmedia({"nombre": "SPDP", "url": "https://spdp.gob.ec"}, s, 5)
     assert it[0]["titulo"] == "SPDP: Borrador Resolucion Portabilidad" and "normas" in it[0]["tags"]
-
-
-def test_oece_solo_compras_recientes():
-    from datetime import datetime, timedelta, timezone
-    from noticias.scraper import fetch_oece
-    hoy = datetime.now(timezone.utc).isoformat()
-    vieja = (datetime.now(timezone.utc) - timedelta(days=60)).isoformat()
-    d = {"pagination": {"next_page_number": None}, "results": [
-        {"compiledRelease": {"ocid": "o1", "date": hoy, "buyer": {"name": "INSN"},
-                             "tender": {"description": "MEDICAMENTOS", "value": {"amount": 1000}}}},
-        {"compiledRelease": {"ocid": "o2", "date": vieja, "buyer": {"name": "X"}, "tender": {}}}]}
-    it = fetch_oece({"terminos": ["medicamentos"]}, _Sesion(d), 5)
-    assert [x["url"].rsplit("/", 1)[1] for x in it] == ["o1"] and "S/ 1,000" in it[0]["resumen"]
