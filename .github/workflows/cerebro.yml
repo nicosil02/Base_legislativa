@@ -19,6 +19,12 @@ on:
       - "Backfill automatico (sesiones perdidas)"
     types: [completed]
   workflow_dispatch:
+    inputs:
+      resumen:
+        description: "Resumen ¿qué pasó hoy?: normal (desde las 18:00 Lima, una vez), probar (escribe sin enviar) o enviar (ya)"
+        default: normal
+        type: choice
+        options: [normal, probar, enviar]
 
 permissions:
   contents: write
@@ -84,6 +90,23 @@ jobs:
             pip install -q transformers
           fi
           timeout 900 python -X utf8 -u -m noticias.mismo_hecho run
+
+      - name: ¿Qué pasó hoy? (resumen del dia por Telegram)
+        # Una vez por dia desde las 18:00 Lima (alerts/que_paso_hoy.py).
+        # Antes del grafo: usa 1 pedido de flash (o lite si no hay cupo).
+        continue-on-error: true
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          PYTHONIOENCODING: utf-8
+        run: |
+          case "${{ inputs.resumen || 'normal' }}" in
+            probar) FLAGS="--forzar --no-enviar" ;;
+            enviar) FLAGS="--forzar" ;;
+            *) FLAGS="" ;;
+          esac
+          timeout 300 python -X utf8 -u -m alerts.que_paso_hoy run $FLAGS
 
       - name: Grafo de conocimiento (LightRAG) - agregar lo nuevo
         # gemini-3.5-flash-lite / gemma (cupos propios), nunca 3.6-flash: ese
