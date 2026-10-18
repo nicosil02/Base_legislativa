@@ -137,6 +137,10 @@ jobs:
           # Esa API no tiene agendas del periodo bicameral: las camaras las
           # publican como PDF en su sitio, y eso lo cubre pleno.agenda_pdf.
           timeout 300 python -X utf8 -m pleno.agenda_pdf sync || echo "[warn] pleno agenda_pdf fallo, sigo"
+          # Votaciones nominales y asistencias del Pleno (PDF de texto; los
+          # escaneados se cuentan y se saltan). Lee tambien las URL que
+          # agenda_pdf guardo (provisionales que la web despues reemplaza).
+          timeout 300 python -X utf8 -m votaciones.pleno_bicameral sync || echo "[warn] votaciones pleno fallo, sigo"
 
       - name: Actualizar mesas de trabajo + eventos del Congreso PE
         run: |
