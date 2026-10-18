@@ -24,7 +24,6 @@ from __future__ import annotations
 
 import asyncio
 import hashlib
-import json
 import os
 import sqlite3
 import sys
@@ -155,8 +154,8 @@ def documentos() -> list[tuple[str, str]]:
             docs.append((f"cliente_{c}_{h}", f"Cliente de Vali Consultores: {c.upper()}.\n"
                                               f"Lo que le importa y le preocupa:\n{t}"))
 
-    rpath = REPO_ROOT / "data" / "transcripciones_resumenes.json"
-    resumenes = {r["video_id"]: r for r in json.loads(rpath.read_text(encoding="utf-8"))} if rpath.exists() else {}
+    from congreso_live.resumenes_store import list_resumenes
+    resumenes = list_resumenes(REPO_ROOT / 'data' / 'transcripciones_resumenes.json')
     pe = _db("proyectos.db")
     if pe:
         c = sqlite3.connect(f"file:{pe}?mode=ro", uri=True)

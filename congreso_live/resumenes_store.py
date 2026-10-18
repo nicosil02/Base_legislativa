@@ -25,9 +25,17 @@ def list_resumenes(path: str | Path | None = None) -> dict[str, dict]:
         return {}
     try:
         data = json.loads(p.read_text(encoding="utf-8"))
-        return {r["video_id"]: r for r in data}
     except Exception:
         return {}
+    out = {}
+    for r in data:
+        # el agente que resume a veces guarda el resumen como lista de parrafos
+        if isinstance(r.get("resumen"), list):
+            r["resumen"] = "\n\n".join(map(str, r["resumen"]))
+        r["resumen"] = r.get("resumen") or ""
+        r["ideas_clave"] = [str(i) for i in r.get("ideas_clave") or []]
+        out[r["video_id"]] = r
+    return out
 
 
 def guardar_resumen(*, video_id: str, resumen: str, ideas_clave: list[str],

@@ -226,10 +226,8 @@ def corpus() -> list[dict]:
         except sqlite3.OperationalError:
             ses = []
         c.close()
-        resumenes = {}
-        rpath = REPO_ROOT / "data" / "transcripciones_resumenes.json"
-        if rpath.exists():
-            resumenes = {r["video_id"]: r for r in json.loads(rpath.read_text(encoding="utf-8"))}
+        from congreso_live.resumenes_store import list_resumenes
+        resumenes = list_resumenes(REPO_ROOT / 'data' / 'transcripciones_resumenes.json')
         from congreso_live.facebook_ec import url_video
         for vid, tipo_ses, titulo, fecha, texto in ses:
             res = resumenes.get(vid) or {}

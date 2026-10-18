@@ -18,3 +18,12 @@ def test_crea_y_actualiza(tmp_path, monkeypatch):
     # Con path explicito lee ese archivo.
     assert rs.list_resumenes(destino) == r
     assert rs.list_resumenes(tmp_path / "no_existe.json") == {}
+
+
+def test_resumen_como_lista(tmp_path):
+    import json
+    from congreso_live.resumenes_store import list_resumenes
+    p = tmp_path / "r.json"
+    p.write_text(json.dumps([{"video_id": "x", "resumen": ["a", "b"], "ideas_clave": None}]), encoding="utf-8")
+    r = list_resumenes(p)["x"]
+    assert r["resumen"] == "a\n\nb" and r["ideas_clave"] == []
