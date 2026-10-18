@@ -32,9 +32,19 @@ SYSTEM = ("Sos analista de asuntos publicos en Vali Consultores (Peru y Ecuador)
           "nombra). Encuestas, tendencias de mercado, columnas de opinion, coyuntura general "
           "o algo que solo comparte palabras con su sector, no.")
 
+# Primero el tipo, despues el veredicto: el modelo lite se salta el "no" del
+# SYSTEM (encuestas y viajes oficiales salian como "interesa"), asi que los
+# tipos que nunca merecen alerta se descartan en codigo.
+TIPOS = ["decision_publica", "proyecto_o_debate", "cambio_de_autoridad", "compra_publica",
+         "declaracion_de_autoridad", "encuesta_o_estudio", "opinion_o_analisis",
+         "tramite_administrativo", "evento_o_protocolo", "otro"]
+# evento_o_protocolo no: el perfil de Google pide visitas de EE.UU. explicitamente.
+TIPOS_NO = {"encuesta_o_estudio", "opinion_o_analisis", "tramite_administrativo"}
+
 SCHEMA = {"type": "array", "items": {"type": "object", "properties": {
-    "indice": {"type": "integer"}, "interesa": {"type": "boolean"},
-    "por_que": {"type": "string"}}, "required": ["indice", "interesa", "por_que"]}}
+    "indice": {"type": "integer"}, "tipo": {"type": "string", "enum": TIPOS},
+    "interesa": {"type": "boolean"}, "por_que": {"type": "string"}},
+    "required": ["indice", "tipo", "interesa", "por_que"]}}
 
 
 def asegurar_tabla(conn: sqlite3.Connection) -> None:
@@ -54,8 +64,15 @@ def prompt(slug: str, notas: str, alertas: list[str], items: list[dict]) -> str:
 Alertas que ya se le mandaron (si una noticia sigue uno de estos temas, cuenta a favor):
 {previas}
 
-Para CADA noticia de abajo responde {{"indice", "interesa", "por_que"}}. "por_que" es una frase
-corta y concreta (que le toca al cliente y por que), sin repetir el titulo.
+Para CADA noticia de abajo responde {{"indice", "tipo", "interesa", "por_que"}}.
+"tipo": decision_publica (norma, resolucion, medida de un regulador o ministerio), proyecto_o_debate
+(PL, dictamen, debate o consulta publica de una norma), cambio_de_autoridad (designacion, renuncia,
+censura), compra_publica, declaracion_de_autoridad (un ministro, regulador o embajador anuncia o
+fija posicion), encuesta_o_estudio (cifras, rankings, sondeos, reportes de mercado),
+opinion_o_analisis (columna, entrevista a un experto, nota explicativa, consejos),
+tramite_administrativo (viajes oficiales, licencias, encargos internos, modificaciones
+presupuestarias), evento_o_protocolo (visitas, ceremonias, premios, reuniones sin resultado), otro.
+"por_que" es una frase corta y concreta (que le toca al cliente y por que), sin repetir el titulo.
 
 {lista}"""
 
@@ -68,12 +85,14 @@ def juzgar(slug: str, items: list[dict], generar=llm.generar) -> dict[int, tuple
     out = {}
     for v in json.loads(texto or "[]"):
         if isinstance(v, dict) and isinstance(v.get("indice"), int) and 1 <= v["indice"] <= len(items):
-            out[v["indice"]] = (bool(v.get("interesa")), str(v.get("por_que") or "").strip())
+            out[v["indice"]] = (bool(v.get("interesa")) and v.get("tipo") not in TIPOS_NO,
+                                str(v.get("por_que") or "").strip())
     return out
 
 
 def candidatos(cerebro: sqlite3.Connection, noticias: sqlite3.Connection, slug: str) -> list[dict]:
     from cerebro.embeddings import AFINIDAD_MEDIA, afinidad
+    from noticias.digest import _es_reciente
     desde = (datetime.now(timezone.utc) - timedelta(hours=VENTANA_HORAS)).strftime("%Y-%m-%dT%H:%M:%S")
     filas = {r[0]: r for r in noticias.execute(
         """SELECT n.id, n.titulo, n.resumen, COALESCE(n.fecha_pub, n.first_seen_at), f.nombre, f.pais
@@ -86,7 +105,9 @@ def candidatos(cerebro: sqlite3.Connection, noticias: sqlite3.Connection, slug: 
     cubiertos = historial.paises(slug)
     for clave in elegidas:
         _, titulo, resumen, fecha, fuente, pais = filas[int(clave.split("_", 1)[1])]
-        if pais not in cubiertos:
+        # first_seen_at es cuando el sistema la vio: las busquedas de Google
+        # News traen notas de hace años. Lo que cuenta es cuando se publico.
+        if pais not in cubiertos or not _es_reciente({"fecha_pub": fecha}, VENTANA_HORAS // 24):
             continue
         if len(out) == MAX_POR_CLIENTE:
             break
@@ -95,13 +116,17 @@ def candidatos(cerebro: sqlite3.Connection, noticias: sqlite3.Connection, slug: 
     return out
 
 
-def run() -> dict:
+def run(rejuzgar: bool = False) -> dict:
     from cerebro.embeddings import _db, conectar
     pe = _db("proyectos.db")
     if not pe:
         raise SystemExit("[filtro] falta proyectos.db")
     cerebro = conectar()
     asegurar_tabla(cerebro)
+    if rejuzgar:  # tras cambiar el criterio: lo de la ventana se vuelve a juzgar
+        desde = (datetime.now(timezone.utc) - timedelta(hours=VENTANA_HORAS)).isoformat(timespec="seconds")
+        print(f"[filtro] rejuzgo {cerebro.execute('DELETE FROM relevancia WHERE evaluado_at >= ?', (desde,)).rowcount}")
+        cerebro.commit()
     noticias = sqlite3.connect(f"file:{pe}?mode=ro", uri=True)
     resumen = {}
     for slug in historial.clientes():
@@ -128,5 +153,5 @@ def run() -> dict:
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("cmd", choices=["run"])
-    ap.parse_args()
-    run()
+    ap.add_argument("--rejuzgar", action="store_true", help="borra y rejuzga lo de las ultimas 48 h")
+    run(ap.parse_args().rejuzgar)
