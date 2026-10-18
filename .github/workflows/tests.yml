@@ -19,7 +19,7 @@ jobs:
           cache: pip
 
       - name: Instalar dependencias
-        run: pip install -r requirements.txt pytest faster-whisper
+        run: pip install -r requirements.txt pytest pyyaml faster-whisper
 
       - name: pytest
         run: python -m pytest
