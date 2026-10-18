@@ -981,16 +981,21 @@ with tab_transcripciones:
                         "Escuchando los últimos 30 segundos de audio real "
                         "(no se puede ir más rápido que tiempo real)..."
                     ):
+                        # imageio_ffmpeg/faster_whisper se importan recien al
+                        # usarlos (dentro de capturar/transcribir), asi que el
+                        # ImportError tambien puede saltar abajo, no solo aca.
+                        _falta_dep = (
+                            "Este botón solo funciona en una instalación local: en la web "
+                            "no están `faster-whisper`/`imageio-ffmpeg` a propósito (pesan "
+                            "~200 MB). La sesión se transcribe sola desde GitHub Actions, "
+                            "el avance aparece a la izquierda."
+                        )
                         try:
                             from congreso_live.live_transcribe import (
                                 capturar_audio_en_vivo, transcribir_audio,
                             )
                         except ImportError:
-                            st.error(
-                                "Falta `faster-whisper`/`imageio-ffmpeg` (no están en "
-                                "requirements.txt a propósito, pesan ~200 MB). "
-                                "`pip install faster-whisper imageio-ffmpeg` para probar local."
-                            )
+                            st.error(_falta_dep)
                         else:
                             try:
                                 wav = capturar_audio_en_vivo(_v["id"], segundos=30)
@@ -1003,6 +1008,8 @@ with tab_transcripciones:
                                     else:
                                         st.success(f"Transcripto — últimos {segs[-1]['end']:.0f}s de audio real:")
                                         st.markdown(" ".join(s["text"] for s in segs))
+                            except ImportError:
+                                st.error(_falta_dep)
                             except Exception as e:
                                 st.error(f"No se pudo transcribir: {e}")
         st.markdown("")
