@@ -464,6 +464,14 @@ FUENTES_EC: list[dict] = [
 
     # --- PDFs que suben las instituciones (wp-json): resoluciones y borradores en
     # consulta antes del Registro Oficial (investigado 2026-10-18) ---
+    {"categoria": "Temas Salud", "pais": "EC", "nombre": "AIL EP - Noticias",
+     "url": "https://ail.msp.gob.ec/noticias/", "rss_url": "https://ail.msp.gob.ec/feed/", "tipo": "rss",
+     "notas": "Empresa publica de compra de medicinas (Decreto 393). De aca salio el listado de la "
+              "ronda de compras 1 (oct 2026). msp.gob.ec no responde desde Peru (18/10): si GitHub "
+              "tampoco llega, es geo-bloqueo y queda Google News."},
+    {"categoria": "Temas Salud", "pais": "EC", "nombre": "AIL EP - Documentos publicados",
+     "url": "https://ail.msp.gob.ec", "tipo": "wpmedia",
+     "notas": "Listados de compras (ej. LISTADO-RONDA-COMPRAS-1.pdf). Ver nota de AIL EP - Noticias."},
     {"categoria": "Temas KYC/AML", "pais": "EC", "nombre": "SPDP - Documentos publicados",
      "url": "https://spdp.gob.ec", "tipo": "wpmedia",
      "notas": "Borradores de normas de datos personales en consulta (Incode). 15/10: datos de salud, "

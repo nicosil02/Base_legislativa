@@ -81,7 +81,7 @@ def camara_de_agenda(db: sqlite3.Connection, tipo: str, titulo: str | None,
 
 
 def puntos_agenda_comision(db: sqlite3.Connection, tipo: str, titulo: str,
-                           max_puntos: int = MAX_PUNTOS) -> list[str]:
+                           max_puntos: int = MAX_PUNTOS, fecha: str | None = None) -> list[str]:
     """tipo: 'Comision: <kw>'. Busca la sesion de HOY (hora Lima) que matchea
     por keyword y camara del titulo. Si hay 0 o mas de 1 match devuelve []
     antes que mostrar la agenda de otra comision."""
@@ -89,7 +89,7 @@ def puntos_agenda_comision(db: sqlite3.Connection, tipo: str, titulo: str,
         return []
     kw = _norm(tipo.split(":", 1)[-1].strip())
     camara = _camara_de_titulo(titulo)
-    hoy_lima = datetime.now(LIMA).date().isoformat()
+    hoy_lima = fecha or datetime.now(LIMA).date().isoformat()
 
     rows = db.execute(
         "SELECT id_sesion, nombre_comision, camara FROM sesiones WHERE fecha = ?",
@@ -152,13 +152,13 @@ def _extraer_indice(texto: str, max_items: int = MAX_PUNTOS) -> list[str]:
 
 
 def puntos_agenda_pleno(db: sqlite3.Connection, tipo: str,
-                        max_puntos: int = MAX_PUNTOS) -> list[str]:
+                        max_puntos: int = MAX_PUNTOS, fecha: str | None = None) -> list[str]:
     """tipo: 'Pleno: Senado'/'Pleno: Diputados'. [] para 'Pleno: Congreso'
     (no hay camara para elegir el PDF) o si el PDF de hoy aun no esta."""
     camara = {"Pleno: Senado": "senado", "Pleno: Diputados": "diputados"}.get(tipo)
     if not camara:
         return []
-    hoy_lima = datetime.now(LIMA).date().isoformat()
+    hoy_lima = fecha or datetime.now(LIMA).date().isoformat()
     row = db.execute(
         "SELECT texto FROM pleno_agenda_pdf WHERE camara=? AND fecha=? "
         "ORDER BY length(texto) DESC LIMIT 1",
@@ -169,11 +169,86 @@ def puntos_agenda_pleno(db: sqlite3.Connection, tipo: str,
     return _extraer_indice(row[0], max_puntos)
 
 
-def puntos_agenda(db: sqlite3.Connection, tipo: str, titulo: str) -> list[str]:
+def puntos_agenda(db: sqlite3.Connection, tipo: str, titulo: str,
+                  fecha: str | None = None, max_puntos: int = MAX_PUNTOS) -> list[str]:
     """Despacha a comision o Pleno segun el prefijo de `tipo`."""
     if tipo.startswith("Pleno:"):
-        return puntos_agenda_pleno(db, tipo)
-    return puntos_agenda_comision(db, tipo, titulo)
+        return puntos_agenda_pleno(db, tipo, max_puntos, fecha)
+    return puntos_agenda_comision(db, tipo, titulo, max_puntos, fecha)
+
+
+# faster-whisper se queda con los ULTIMOS ~223 tokens del prompt: ~700
+# caracteres en castellano entran enteros.
+MAX_CHARS_CONTEXTO = 700
+_RE_RELLENO = re.compile(r"\b([IVXLC]+\.\s*)?(orden del d[ií]a|despacho|informes|pedidos|"
+                         r"aprobaci[oó]n del acta[^.]*|himno nacional[^.]*)\b[:.]?", re.IGNORECASE)
+
+
+def _limpio(texto: str) -> str:
+    texto = _RE_RELLENO.sub(" ", texto or "")
+    texto = re.sub(r"(^|\s)\d+\.\s+", " ", texto)       # "1. " de las listas
+    return re.sub(r"\s+", " ", texto).strip(" .:-")
+
+
+def agenda_texto(tipo: str, titulo: str, fecha: str | None = None) -> str:
+    """Orden del dia completo (sin encabezados) de la sesion de `tipo` ese dia:
+    comisiones PE (sesion_agenda_punto), Pleno y comisiones EC (sesiones_ec).
+    '' si no hay una sola sesion que calce. Pleno PE: '' (pleno_agenda_pdf
+    trae asistencias y diarios de debates, no la agenda)."""
+    from core.db import db_path
+
+    dia = fecha or datetime.now(LIMA).date().isoformat()
+    if tipo.endswith("(EC)"):
+        p = db_path("proyectos_ec.db")
+        if not p.exists():
+            return ""
+        nombre = "pleno" if tipo.startswith("Pleno:") else \
+            _norm(tipo.split(":", 1)[-1].replace("(EC)", "").strip())
+        conn = sqlite3.connect(f"file:{p}?mode=ro", uri=True)
+        try:
+            # el Pleno puede tener 2 sesiones el mismo dia: van las dos
+            filas = [d for n, d in conn.execute(
+                "SELECT nombre_comision, descripcion FROM sesiones_ec WHERE fecha = ? ORDER BY hora_inicio",
+                (dia,)) if nombre and d and (nombre in _norm(n) or _norm(n) in nombre)]
+        finally:
+            conn.close()
+        return _limpio(" ".join(filas)) if filas and (nombre == "pleno" or len(filas) == 1) else ""
+    if not tipo.startswith("Comision:"):
+        return ""
+    p = db_path("proyectos.db")
+    if not p.exists():
+        return ""
+    conn = sqlite3.connect(f"file:{p}?mode=ro", uri=True)
+    try:
+        kw = _norm(tipo.split(":", 1)[-1].strip())
+        camara = _camara_de_titulo(titulo)
+        ids = [i for i, n, c in conn.execute(
+            "SELECT id_sesion, nombre_comision, camara FROM sesiones WHERE fecha = ?", (dia,))
+            if kw in _norm(n) and (camara is None or not c or _norm(c) == _norm(camara))]
+        if len(ids) != 1:
+            return ""
+        return _limpio(" ".join(t for (t,) in conn.execute(
+            "SELECT descripcion_texto FROM sesion_agenda_punto WHERE id_sesion = ? ORDER BY orden",
+            (ids[0],)) if t))
+    finally:
+        conn.close()
+
+
+def contexto_whisper(tipo: str, titulo: str, fecha: str | None = None) -> str:
+    """Prompt para Whisper: titulo + agenda de esa sesion + vocabulario de
+    sesion. Con la agenda escribe bien nombres de leyes, instituciones,
+    invitados y proponentes que si no inventa. Nunca falla: sin agenda queda
+    el titulo y el vocabulario."""
+    try:
+        agenda = agenda_texto(tipo, titulo, fecha)
+    except Exception:
+        agenda = ""
+    voc = ("Señor presidente, señores asambleístas, informe para primer debate, segundo debate, "
+           "votación." if tipo.endswith("(EC)") else
+           "Señor presidente, señores congresistas, dictamen, proyecto de ley, texto "
+           "sustitutorio, cuarto intermedio, votación.")
+    cabeza = f"{titulo}. {agenda}" if agenda else f"{titulo}."
+    return f"{cabeza[:MAX_CHARS_CONTEXTO - len(voc) - 1]} {voc}"
 
 
 def _una_linea_corta(texto: str, max_chars: int = MAX_CHARS_PUNTO) -> str:

@@ -77,3 +77,20 @@ def test_puntos_agenda_pleno_y_dispatcher(conn):
     assert puntos_agenda_pleno(conn, "Pleno: Congreso") == []
     assert puntos_agenda(conn, "Pleno: Senado", "cualquier titulo") == PUNTOS_PLENO
     assert puntos_agenda(conn, "Comision: Justicia", "Comisión de Justicia y DDHH del Senado") == PUNTOS_JUSTICIA
+
+
+def test_contexto_whisper_usa_la_agenda(tmp_path, monkeypatch):
+    import sqlite3
+    from congreso_live import agenda_preview as ap
+    db = tmp_path / "proyectos.db"
+    c = sqlite3.connect(db)
+    c.execute("CREATE TABLE sesiones (id_sesion, nombre_comision, camara, fecha)")
+    c.execute("CREATE TABLE sesion_agenda_punto (id_sesion, orden, descripcion_texto)")
+    c.execute("INSERT INTO sesiones VALUES (1, 'Comisión de Salud y Población', 'Diputados', '2026-10-19')")
+    c.execute("INSERT INTO sesion_agenda_punto VALUES (1, 0, 'V. ORDEN DEL DÍA\n\n Informe de la ministra Ana Pérez sobre DIGEMID')")
+    c.commit()
+    c.close()
+    monkeypatch.setattr("core.db.db_path", lambda nombre="proyectos.db": tmp_path / nombre)
+    ctx = ap.contexto_whisper("Comision: salud", "Comisión de Salud - Diputados", "2026-10-19")
+    assert "Ana Pérez sobre DIGEMID" in ctx and "ORDEN DEL" not in ctx and ctx.endswith("votación.")
+    assert len(ap.contexto_whisper("Pleno: Senado", "x" * 2000)) <= ap.MAX_CHARS_CONTEXTO
