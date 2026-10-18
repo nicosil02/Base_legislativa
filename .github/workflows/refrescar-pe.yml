@@ -168,8 +168,10 @@ jobs:
           warp-cli --accept-tos connect
           sleep 5
           pip install -q pysocks
-          curl -s -x socks5h://127.0.0.1:40000 -o /dev/null -w "WARP -> OECE HTTP %{http_code}
-"             "https://contratacionesabiertas.oece.gob.pe/api/v1/search?search=medicamentos&year=2026&format=json&paginateBy=1"             && echo "PROXY_BLOQUEADOS=socks5h://127.0.0.1:40000" >> "$GITHUB_ENV"
+          COD=$(curl -s -x socks5h://127.0.0.1:40000 -o /dev/null -w "%{http_code}" \
+            "https://contratacionesabiertas.oece.gob.pe/api/v1/search?search=medicamentos&year=2026&format=json&paginateBy=1")
+          echo "WARP -> OECE HTTP $COD"
+          if [ "$COD" = "200" ]; then echo "PROXY_BLOQUEADOS=socks5h://127.0.0.1:40000" >> "$GITHUB_ENV"; fi
 
       - name: Actualizar noticias y coyuntura (PE + EC)
         env:
