@@ -217,8 +217,29 @@ def _bootstrap_dbs_impl():
     # Perú: decomprimir data/proyectos.db.gz (14 MB) → proyectos.db (78 MB)
     pe_db = repo_root / "proyectos.db"
     pe_gz = repo_root / "data" / "proyectos.db.gz"
-    _bajar_de_datos(pe_gz)
-    reason = _needs_restore(pe_db, pe_gz)
+    # Publicada en partes, una por dueño (core/partes.py): se bajan y se
+    # arma la base completa. Sin partes en `datos`, la base entera de antes.
+    from core import partes
+    partes_gz = {p: repo_root / "data" / partes.archivo(p) for p in partes.NOMBRES}
+    for gz in partes_gz.values():
+        _bajar_de_datos(gz)
+    motivos = [m for gz in partes_gz.values() if (m := _needs_restore(pe_db, gz))]
+    if partes_gz["base"].exists():
+        if motivos:
+            try:
+                sueltas = {}
+                for p, gz in partes_gz.items():
+                    if gz.exists():
+                        sueltas[p] = gz.with_suffix("")
+                        _descomprimir_atomico(gz, sueltas[p])
+                partes.armar(pe_db, sueltas)
+                print(f"[bootstrap] proyectos.db armada desde {list(sueltas)} ({motivos[0]})")
+            except Exception as e:
+                print(f"[bootstrap] error armando PE DB: {e}")
+        reason = None
+    else:
+        _bajar_de_datos(pe_gz)
+        reason = _needs_restore(pe_db, pe_gz)
     if reason:
         try:
             _descomprimir_atomico(pe_gz, pe_db)

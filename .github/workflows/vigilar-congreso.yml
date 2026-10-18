@@ -119,9 +119,9 @@ jobs:
             tick=$((tick + 1))
             echo "[commit-loop] tick $tick: watch_pid=$watch_pid vivo, chequeando proyectos.db"
             if [ -f proyectos.db ]; then
-              # base_remota: lo publicado es la base y se le suman las
-              # transcripciones de este job (ver scripts/publicar_db.sh).
-              bash scripts/publicar_db.sh base_remota proyectos.db                 || echo "[commit-loop] tick $tick: [warn] no se pudo publicar la base, sigo"
+              # Solo la parte transcripciones, unida fila por fila con lo
+              # publicado (ver scripts/publicar_db.sh).
+              bash scripts/publicar_db.sh proyectos.db transcripciones                 || echo "[commit-loop] tick $tick: [warn] no se pudo publicar la base, sigo"
               # congreso_live_state.json (dedupe de avisos) sigue en main.
               git add data/congreso_live_state.json
               if git diff --staged --quiet; then
@@ -153,7 +153,7 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           # Publicacion final del tramo (el loop de arriba publica cada 5 min).
           if [ -f proyectos.db ]; then
-            bash scripts/publicar_db.sh base_remota proyectos.db
+            bash scripts/publicar_db.sh proyectos.db transcripciones
           fi
 
       - name: Commitear estado

@@ -23,7 +23,7 @@ permissions:
 
 # Grupo propio y por video: compartir el de vigilar-congreso hacia que su
 # cron le ganara la cola a estos dispatch, y un solo grupo cancela las
-# corridas en espera. publicar_db.sh mezcla por fila, asi que videos
+# corridas en espera. publicar_db.sh une por fila, asi que videos
 # distintos pueden correr a la vez.
 concurrency:
   group: backfill-vod-${{ inputs.video_id }}
@@ -88,6 +88,5 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          # base_remota: se suma la transcripcion de este VOD a la base
-          # publicada en `datos` (ver scripts/publicar_db.sh).
-          bash scripts/publicar_db.sh base_remota proyectos.db
+          # Solo la parte transcripciones (ver scripts/publicar_db.sh).
+          bash scripts/publicar_db.sh proyectos.db transcripciones
