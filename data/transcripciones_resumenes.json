@@ -4264,5 +4264,53 @@
     "generated_at": "2026-10-18T01:49:57Z",
     "duracion_seg": 4962,
     "agenda_cumplida": null
+  },
+  {
+    "video_id": "fb_1101448635579214",
+    "resumen": "Sesion 139 de la Comision Especializada Permanente de Regimen Economico y Tributario y su Regulacion y Control de la Asamblea Nacional del Ecuador (16 de octubre de 2026), dedicada a un unico punto: el informe no vinculante sobre la objecion parcial por inconveniencia del presidente Daniel Noboa al proyecto de Ley Organica Reformatoria al Codigo Tributario. Tras un debate con fuerte oposicion de varios asambleistas, la comision aprobo el informe que recomienda al Pleno allanarse al veto presidencial.",
+    "ideas_clave": [
+      "La comision aprobo el informe no vinculante que recomienda allanarse a la objecion parcial del Ejecutivo con 6 votos a favor y 4 en contra; una posterior mocion de reconsideracion presentada por el asambleista Zapata fue rechazada (6 votos en contra, 4 a favor)",
+      "El veto presidencial sustituye la multa fija de 1,000 a 2,075 salarios basicos unificados para quien no declara activos en el exterior por un calculo variable del 0.5% del valor de los activos ocultos, igualando la sancion a la de quien declara a medias",
+      "El asambleista Duran (oposicion) objeto con un ejemplo numerico: quien oculta 1 millon de dolares pagaria solo 5,000 dolares de multa (2,500 si regulariza antes de notificacion), y se necesitarian mas de 200 millones de dolares ocultos para alcanzar la multa maxima",
+      "Se cuestiono que el SRI saco a Panama de la lista de paraisos fiscales (Resolucion NAC-DGERCGC25-00000021 del 15 de agosto de 2025) un dia despues de firmar un acuerdo de intercambio de informacion tributaria con ese pais",
+      "Otro asambleista de oposicion (bancada PQP) señalo que el veto no corrige que el SRI tenga 180 dias para resolver recursos de revision (2,359 recursos pendientes a la fecha), que el plazo de prescripcion para dichos recursos baja de 3 a 1 año, y que el plazo para reclamar devoluciones de impuestos se reduce a 20 dias",
+      "Se denuncio que el veto mantiene intacta la derogatoria que extiende indefinidamente el regimen tributario especial para el sector bananero, vinculado segun los opositores a la familia del presidente Noboa",
+      "Los asambleistas de la bancada oficialista (ADN) defendieron el informe, argumentando que el veto corrige inconsistencias tecnicas y de forma en el articulado aprobado originalmente por la Asamblea"
+    ],
+    "generated_at": "2026-10-18T05:50:18Z",
+    "duracion_seg": 2333,
+    "agenda_cumplida": null
+  },
+  {
+    "video_id": "fb_1278063438733508",
+    "resumen": "Sesion ordinaria 091 de la Comision Especializada Permanente de Educacion, Cultura, Ciencia, Tecnologia, Innovacion y Saberes Ancestrales de la Asamblea Nacional del Ecuador (12 de octubre de 2026, modalidad virtual), con dos comparecencias de especialistas: sobre el proyecto de reforma al Codigo Organico de la Economia Social de los Conocimientos (proteccion de obtenciones vegetales y derechos de propiedad intelectual de pequenos y medianos productores) y sobre el proyecto de ley de desarrollo, uso etico y gobernanza de la inteligencia artificial. No hubo votaciones; la sesion se clausuro formalmente tras agotar ambos puntos del orden del dia.",
+    "ideas_clave": [
+      "La abogada Fanny Salgado (estudio FEX Law, especialista en antipirateria) recomendo que el SENADI publique bases de datos publicas y buscables de marcas y obtenciones vegetales, hoy inexistentes en la practica, a diferencia de Colombia y Peru que si cuentan con esas plataformas",
+      "Salgado propuso reemplazar el 'acta de constancia' entre privados (obtentor-licenciatario) por un certificado de vigencia emitido directamente por el SENADI, para dar seguridad juridica a los contratos de licencia de obtenciones vegetales",
+      "Se planteo que la obligacion de usar la denominacion varietal junto con la marca comercial del obtentor no se extienda mas alla de la vigencia del derecho de obtentor (15-25 anos segun la especie), evitando que los productores queden atados de por vida a marcas que se renuevan indefinidamente cada 10 anos",
+      "Se recomendo separar en una reforma distinta los articulos sobre conocimientos tradicionales de pueblos y nacionalidades, por tratarse de materia diferente a las obtenciones vegetales, y someterlos a consulta prelegislativa segun el articulo 57 de la Constitucion",
+      "El ingeniero Paul Guaranga (Universidad Estatal de Bolivar) propuso que la ley de IA regule por nivel de riesgo y escala de uso, no por el mero uso de la tecnologia, y que se cree un consejo consultivo multiactor permanente (articulo 31) con un mecanismo tipo 'sandbox' regulatorio para universidades y startups",
+      "El ingeniero Cristian Benitez (experto en IA) senalo que, segun un analisis de deteccion, aproximadamente el 73% del propio texto del proyecto de ley de inteligencia artificial parece haber sido generado con IA, y entrego un documento de 75 paginas con observaciones detalladas",
+      "Benitez advirtio sobre el riesgo de que la IA elimine empleos (secretariado, manejo de datos) y pidio que el proyecto de ley incorpore mecanismos de transicion laboral y generacion de nuevos empleos tecnologicos"
+    ],
+    "generated_at": "2026-10-18T05:50:18Z",
+    "duracion_seg": 3790,
+    "agenda_cumplida": null
+  },
+  {
+    "video_id": "fb_1659924448836040",
+    "resumen": "Sesion 111 de la Comision Especializada Permanente de Gobiernos Autonomos, Descentralizacion, Competencias y Organizacion del Territorio de la Asamblea Nacional del Ecuador (15 de octubre de 2026, modalidad presencial), dedicada a un unico punto: la comparecencia del viceministro de Desarrollo Urbano Sostenible y Vivienda, William Daniel Elmir Garcia, para presentar observaciones tecnicas al proyecto de reforma a la Ley Organica de Vivienda de Interes Social de cara al informe para segundo debate. No hubo votacion; se cerro el debate y se clausuro la sesion tras agotar el punto unico.",
+    "ideas_clave": [
+      "El viceministro Elmir propuso declarar proyectos nacionales de caracter estrategico para construccion inmobiliaria en terrenos grandes del Estado, con tramite agil para enfrentar la escasez de suelo urbanizable",
+      "Planteo obligar a los GAD a digitalizar e interoperar sus tramites mediante una ventanilla unica digital con declaracion responsable y control posterior (en vez de aprobacion previa), senalando que hoy ningun organismo sabe cuantas de las 40,000 viviendas con permiso anual realmente se construyen",
+      "Propuso que el arrendamiento social deje de regirse por la Ley de Inquilinato y pase al Codigo de Comercio, para atraer fondos de inversion en leasing habitacional (modelo que en Colombia representa el 70% de las transacciones de vivienda, inexistente en Ecuador por la lentitud de los juicios de desalojo)",
+      "Anuncio que se trabaja un incentivo de deduccion del impuesto a la renta para donaciones privadas de vivienda al Estado, articulado con el Decreto 440 (hasta 30% de la renta causada), con control antilavado del SRI y la UAFE",
+      "Informo un deficit habitacional cuantitativo del 10-12% y cualitativo superior al 20% (hacinamiento, precariedad, falta de agua y saneamiento), y propuso habilitar el acceso a credito para 'vivienda usada', hoy prohibido por ley, para reconvertir edificios abandonados como los de la Avenida 10 de Agosto en Quito",
+      "Ante el pedido del asambleista Milton Aguas (Galapagos), el viceministro se comprometio a crear un regimen especial para la provincia con un tope de subsidio mayor (en el orden de 74 salarios basicos unificados frente a los 54 del regimen general) por el mayor costo de construccion en las islas, y propuso un catastro nacional unico (comparando con el sistema ESRI que ya usan Colombia y Peru)",
+      "El asambleista Javier Lazo (oposicion) cuestiono el enfoque 'economicista' del incentivo tributario y pregunto de donde sacarian los GAD, ya sin recursos, los fondos para dotar de servicios basicos a los terrenos que la reforma les exigiria entregar"
+    ],
+    "generated_at": "2026-10-18T05:50:18Z",
+    "duracion_seg": 4049,
+    "agenda_cumplida": null
   }
 ]
