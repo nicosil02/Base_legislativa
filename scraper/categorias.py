@@ -21,6 +21,7 @@ from __future__ import annotations
 
 import re
 
+from clientes import config
 from core.text import sin_tildes
 
 # Orden de prioridad de desempate (más específica → más general).
@@ -280,15 +281,8 @@ CATEGORIAS: dict[str, list[str]] = {
 
 
 # Categorías de PL que le importan a cada cliente (filtro de las páginas
-# Radar Legislativo PE/EC y Agenda).
-# ponytail: Bayer solo "Farma", no "Salud" (salud pública genérica metía PLs
-# sin relación); sumar "Salud" si Nicolas ve que se pierden PLs reales.
-CATEGORIA_CLIENTES_PL: dict[str, list[str]] = {
-    "google": ["Tecnología", "Telecomunicaciones"],
-    "incode": ["Tecnología"],
-    "bayer": ["Farma", "Agricultura"],
-    "syngenta": ["Agricultura"],
-}
+# Radar Legislativo PE/EC y Agenda): "categorias_pl" de clientes/<slug>/cliente.json.
+CATEGORIA_CLIENTES_PL: dict[str, list[str]] = config.campo("categorias_pl")
 
 
 def _normalize(text: str | None) -> str:

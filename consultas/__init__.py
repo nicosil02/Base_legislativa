@@ -27,16 +27,12 @@ def conexion(nombre: str, ayuda: str) -> sqlite3.Connection:
 
 @st.cache_data(ttl=60)
 def matriz_pls(pais: str) -> dict[str, set[str]]:
-    """{cliente: numeros de PL de su matriz puntual} (clientes/matrices.py).
-    PE: Bayer Crop, que comparte angulo con Syngenta; la matriz PE de Incode
-    quedo vieja con el Congreso bicameral. EC: ademas Incode (su estado en la
-    matriz puede estar viejo, solo se usa el numero)."""
-    from clientes.matrices import matriz_bayer_crop, matriz_incode_ec
-    crop = {f["pl_numero"] for f in matriz_bayer_crop(pais)}
-    out = {"bayer": crop, "syngenta": crop}
-    if pais == "EC":
-        out["incode"] = {f["pl_numero"] for f in matriz_incode_ec()}
-    return out
+    """{cliente: numeros de PL de su matriz puntual en pais} ("matriz_pl" de
+    clientes/<slug>/cliente.json). La matriz PE de Incode quedo vieja con el
+    Congreso bicameral; en EC su estado puede estar viejo, solo vale el numero."""
+    from clientes import config
+    out = {s: {f["pl_numero"] for f in config.matriz(s, pais)} for s in config.slugs()}
+    return {s: v for s, v in out.items() if v}
 
 
 def hora_a_minutos(hora: str | None) -> int:

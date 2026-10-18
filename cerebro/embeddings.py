@@ -26,6 +26,8 @@ import time
 import urllib.request
 from pathlib import Path
 
+from clientes import config
+
 REPO_ROOT = Path(__file__).resolve().parent.parent
 CEREBRO_DB = REPO_ROOT / "data" / "cerebro.db"
 RELEASE_URL = "https://github.com/nicosil02/Base_legislativa/releases/download/cerebro/cerebro.db"
@@ -335,7 +337,7 @@ def sincronizar(max_nuevos: int | None = None) -> dict:
 
 # ------------------------------------------------------------------ clientes
 
-CLIENTES = ("bayer", "syngenta", "google", "incode")
+CLIENTES = tuple(config.slugs())   # clientes/<slug>/cliente.json
 
 
 def perfil_texto(slug: str) -> str:
@@ -365,10 +367,8 @@ def _pls_de_matriz(slug: str) -> str:
     """Los PLs que el cliente sigue en su matriz Excel (clientes/matrices.py),
     uno por párrafo para que cada uno sea su propio fragmento del perfil
     (con solo notas.md, la ley de drones salía Baja para Bayer)."""
-    from clientes.matrices import matriz_bayer_crop, matriz_incode_ec
     try:
-        filas = (matriz_bayer_crop("PE") + matriz_bayer_crop("EC") if slug in ("bayer", "syngenta")
-                 else matriz_incode_ec() if slug == "incode" else [])
+        filas = config.matriz(slug, "PE") + config.matriz(slug, "EC")
     except Exception as e:
         print(f"[cerebro] matriz de {slug} no se pudo leer: {e}")
         return ""

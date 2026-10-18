@@ -58,6 +58,7 @@ clientes/*
 !clientes/*/
 clientes/*/*
 !clientes/*/notas.md
+!clientes/*/cliente.json
 !clientes/*/historial_alertas.md
 !clientes/*/formato_alertas.md
 !clientes/_plantillas/whatsapp_alerta.md
@@ -72,6 +73,7 @@ clientes/*/*
 !clientes/MatrizPLAndinos_Bayer CROP.xlsx
 !clientes/140125 - Matriz - Matriz Legislativa y Regulatoria INCODE.xlsx
 !clientes/matrices.py
+!clientes/config.py
 !clientes/alertas_pl.py
 
 # Las bases comprimidas YA NO van en main (2026-09-27): sus versiones llevaron

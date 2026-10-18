@@ -155,6 +155,13 @@ _RE_ACRONIMO = re.compile(r"\b[A-Z]{3,}\b")
 _ACRONIMOS_IGNORAR = {"ECUADOR", "PERU", "LEY", "ASAMBLEA", "COMISION", "PROYECTO"}
 
 
+# Nombre usado en "matriz_pl" de clientes/<slug>/cliente.json -> filas del pais.
+MATRICES = {
+    "bayer_crop": matriz_bayer_crop,
+    "incode_ec": lambda pais: matriz_incode_ec() if pais == "EC" else [],
+}
+
+
 def _normalizar_texto(s: str | None) -> str:
     return sin_tildes((s or "").lower())
 
@@ -232,11 +239,10 @@ def coincide_con_noticia(pl_titulo: str | None, noticia_texto: str | None, minim
 
 
 def pls_trackeados_ec() -> list[dict]:
-    """Todos los PLs EC trackeados (Bayer Crop/Syngenta + Incode) con sus `clientes`."""
+    """Todos los PLs EC que siguen los clientes (matriz_pl de su cliente.json),
+    con sus `clientes`; un PL en varias matrices aparece una vez por matriz."""
+    from clientes import config
     out = []
-    for f in matriz_bayer_crop("EC"):
-        out.append({**f, "clientes": ["bayer", "syngenta"]})
-    for f in matriz_incode_ec():
-        out.append({**f, "clientes": ["incode"]})
+    for clave, slugs in config.por_matriz("EC").items():
+        out += [{**f, "clientes": slugs} for f in MATRICES[clave]("EC")]
     return out
-
