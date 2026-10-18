@@ -149,30 +149,6 @@ jobs:
               --days-back 14 --days-fwd 21 \
               || echo "[warn] mesas_tecnicas sync-dias fallo, sigo"
 
-      - name: Cloudflare WARP en modo proxy (fuentes que bloquean IPs de datacenter)
-        # OECE (compras SEACE) da 403 a las IPs de GitHub; sale por WARP
-        # (SOCKS5 :40000), igual que yt-dlp en vigilar-congreso. Si falla, la
-        # corrida sigue y esas fuentes quedan vacias esta vez.
-        continue-on-error: true
-        timeout-minutes: 4
-        run: |
-          curl -fsSL --retry 3 --retry-delay 2 --retry-all-errors https://pkg.cloudflareclient.com/pubkey.gpg | sudo gpg --yes --dearmor --output /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg
-          echo "deb [signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] https://pkg.cloudflareclient.com/ $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/cloudflare-client.list
-          sudo apt-get update -qq
-          sudo apt-get install -y -qq cloudflare-warp
-          sudo systemctl enable --now warp-svc
-          sleep 3
-          warp-cli --accept-tos registration new
-          warp-cli --accept-tos mode proxy
-          warp-cli --accept-tos proxy port 40000
-          warp-cli --accept-tos connect
-          sleep 5
-          pip install -q pysocks
-          COD=$(curl -s -x socks5h://127.0.0.1:40000 -o /dev/null -w "%{http_code}" \
-            "https://contratacionesabiertas.oece.gob.pe/api/v1/search?search=medicamentos&year=2026&format=json&paginateBy=1")
-          echo "WARP -> OECE HTTP $COD"
-          if [ "$COD" = "200" ]; then echo "PROXY_BLOQUEADOS=socks5h://127.0.0.1:40000" >> "$GITHUB_ENV"; fi
-
       - name: Actualizar noticias y coyuntura (PE + EC)
         env:
           HOUR: ${{ steps.hora.outputs.hour }}
