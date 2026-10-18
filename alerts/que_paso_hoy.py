@@ -112,7 +112,7 @@ def noticias(pe: sqlite3.Connection, cerebro: sqlite3.Connection, desde: str) ->
         clientes = {c: p for i in g for c, p in por_id.get(i, [])}
         otras = sorted({filas[i]["fuente"] for i in g[1:]} - {r["fuente"]})
         out.append(f"[{r['pais']}] {r['titulo']} ({r['fuente']}"
-                   + (f"; tambien en {', '.join(otras)}" if otras else "") + f") {r['url']}\n"
+                   + (f"; tambien en {', '.join(otras)}" if otras else "") + f") {_url(r['url'])}\n"
                    + "".join(f"   - {c}: {p}\n" for c, p in clientes.items()))
     return out
 
