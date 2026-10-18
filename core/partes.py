@@ -7,6 +7,8 @@ escribe y quien necesita la base la arma de nuevo, igual que siempre:
 
   transcripciones  sesiones_transcripciones (vigilante, backfills, refrescar-pe)
   tv               tv_* y videos_autoridades (workflows de TV)
+  votaciones       votaciones nominales del Pleno (refrescar-pe: PDF de texto;
+                   votaciones-ocr-bicameral: los escaneados)
   base             todo lo demas (solo refrescar-pe); una tabla nueva cae aca
 
 Las partes con varios escritores se unen fila por fila al publicar (union):
@@ -26,6 +28,7 @@ from pathlib import Path
 PARTES = {
     "transcripciones": ["sesiones_transcripciones"],
     "tv": ["tv_vistos", "tv_menciones", "tv_avisos", "videos_autoridades"],
+    "votaciones": ["votacion_pleno", "voto_pleno_nominal", "pleno_votacion_pdf", "pleno_votacion_ocr"],
 }
 NOMBRES = ["base", *PARTES]
 

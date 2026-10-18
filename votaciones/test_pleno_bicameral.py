@@ -59,7 +59,8 @@ def test_parse_pagina_senado_ocr():
     assert votos["TORRES MORALES, MIGUEL"] == ("FP", "SINRESP")  # preside: sin voto
     # totales: "o" del OCR = 0; el numero puede caer unos pt mas abajo
     t = b["totales"]
-    assert (t["si"], t["no"], t["abst"], t["sin_resp"], t["aus"], t["lo"]) == (9, 3, 1, 1, 0, 1)
+    assert (t["si"], t["no"], t["abst"], t["sin_resp"], t["lo"]) == (9, 3, 1, 1, 1)
+    assert "aus" not in t  # sin numero: no se sabe (no se toma como 0)
     assert b["cuadra"]  # 9 SI, 3 NO, 1 ABST, 1 SINRESP, 1 LO
 
 

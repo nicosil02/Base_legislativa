@@ -45,7 +45,7 @@ _RE_CABECERA = re.compile(
     r"(VOTACION|ASISTENCIA):?\s*Fecha:\s*(\d{2}/\d{2}/\d{4})\s*Hora:\s*(\d{1,2})\s*:\s*(\d{2})\s*([AP])\.?\s*M",
     re.I)
 _RE_SIGLA = re.compile(r"^[A-Z]{1,5}$")
-_RE_VOTO = re.compile(r"^(SI|NO|ABST\.?|PRE|AUS|LO|LV|LE|LP|LS|SUS)?[+\-]*$", re.I)
+_RE_VOTO = re.compile(r"^(SI|NO|ABST\.?|PRE|AUS|LO|LV|LE|LP|LS|SUS|SINRESP?\.?)?[+\-]*$", re.I)
 _RE_PL = re.compile(
     r"(?:PROYECTO|PROPOSICION)\s+(?:DE\s+)?(?:LEY|RESOLUCION\s+LEGISLATIVA|LEGISLATIVA)\s*(?:N[^\s\d]{0,2}\s*)?(\d+)")
 _MARCA_AGUA = {"COPIA", "INFORMATIVA", "INFORMACION", "PROVISIONAL", "SIN", "REGISTROS", "ORALES"}
@@ -64,11 +64,11 @@ def _limpia(s: str) -> str:
     return sin_tildes(s).upper()
 
 
-def lineas(words) -> list[tuple[float, list[tuple[float, str]]]]:
+def lineas(words, tol: float = 3) -> list[tuple[float, list[tuple[float, str]]]]:
     """words = [(x, y, texto)] -> [(y, [(x, texto)])] agrupando por altura."""
     out: list = []
     for x, y, t in sorted(words, key=lambda w: (round(w[1]), w[0])):
-        if out and abs(out[-1][0] - y) < 3:
+        if out and abs(out[-1][0] - y) < tol:
             out[-1][1].append((x, t))
         else:
             out.append((y, [(x, t)]))
@@ -87,9 +87,10 @@ def _hora24(h: str, m: str, ap: str) -> str:
     return f"{h:02d}:{m}"
 
 
-def parse_pagina(words) -> dict | None:
-    """Una pagina = una asistencia o votacion. None si no tiene cabecera."""
-    ls = lineas(words)
+def parse_pagina(words, tol: float = 3) -> dict | None:
+    """Una pagina = una asistencia o votacion. None si no tiene cabecera.
+    `tol`: diferencia de altura (pt) dentro de una fila; el OCR necesita mas."""
+    ls = lineas(words, tol)
     texto = [(y, " ".join(t for _, t in ws), ws) for y, ws in ls]
     cab = None
     for y, s, _ in texto:
@@ -131,7 +132,8 @@ def parse_pagina(words) -> dict | None:
                     voto = re.sub(r"[+\-.]", "", "".join(t2 for (x2, t2), v in zip(seg[1:], es_voto) if v)).upper()
                     # Fila sin voto = "sin respuesta" (ahi cae tambien el que preside
                     # en el Senado; en Diputados el que preside no sale en la lista).
-                    votos.append((re.sub(r"\s*,\s*", ", ", nombre).strip(" ,"), bancada, voto or "SINRESP"))
+                    nombre = re.sub(r"[^\w.]+$", "", re.sub(r"\s*,\s*", ", ", nombre)).strip(" ,")  # "***" = preside
+                    votos.append((nombre, bancada, "SINRESP" if voto in ("", "SINRES") else voto))
                 seg = [(x, t)]
             elif seg is not None:
                 seg.append((x, t))
@@ -156,12 +158,13 @@ def parse_pagina(words) -> dict | None:
         for etiqueta, clave in _TOTALES:
             if s.startswith(etiqueta) and clave not in totales:
                 cerca = [n for n in nums if abs(n[0] - y) <= 4.5]
-                totales[clave] = min(cerca, key=lambda n: abs(n[0] - y))[2] if cerca else 0
+                if cerca:  # sin numero (OCR que no lo vio): no se sabe, no cuenta para cuadrar
+                    totales[clave] = min(cerca, key=lambda n: abs(n[0] - y))[2]
                 break
 
     conteo = collections.Counter(v for _, _, v in votos)
     claves = [k for k in _CODIGO if k in totales]
-    cuadra = bool(votos) and bool(claves) and all(conteo[_CODIGO[k]] == totales[k] for k in claves)
+    cuadra = bool(votos) and ("si" in totales or "pre" in totales) and all(conteo[_CODIGO[k]] == totales[k] for k in claves)
     return {"tipo": tipo, "fecha": _fecha_a_iso(m.group(2)), "hora": _hora24(m.group(3), m.group(4), m.group(5)),
             "asunto": asunto, "votos": votos, "totales": totales, "cuadra": cuadra}
 
@@ -214,13 +217,20 @@ def init_schema(conn: sqlite3.Connection) -> None:
             pdf_url TEXT PRIMARY KEY, camara TEXT, fecha TEXT,
             paginas_sin_texto INTEGER, bloques INTEGER, fetched_at TEXT
         );
+        -- PDF con paginas escaneadas ya pasados por OCR (pleno_bicameral_ocr.py)
+        CREATE TABLE IF NOT EXISTS pleno_votacion_ocr (
+            pdf_url TEXT PRIMARY KEY, paginas_ocr INTEGER, bloques INTEGER,
+            cuadran INTEGER, fetched_at TEXT
+        );
     """)
     conn.commit()
 
 
-def guardar(conn: sqlite3.Connection, camara: str, pdf_url: str, bloques: list[dict]) -> int:
+def guardar(conn: sqlite3.Connection, camara: str, pdf_url: str, bloques: list[dict],
+            pisar_empate: bool = True) -> int:
     """Upsert idempotente. Si la votacion ya esta (de otro PDF), se pisa solo
-    si la nueva cuadra al menos igual de bien. Devuelve bloques escritos."""
+    si la nueva cuadra al menos igual de bien (con pisar_empate=False, solo si
+    cuadra mejor: el OCR no reemplaza una version de texto). Devuelve bloques escritos."""
     vistos = collections.Counter()
     escritos = 0
     for b in bloques:
@@ -228,7 +238,7 @@ def guardar(conn: sqlite3.Connection, camara: str, pdf_url: str, bloques: list[d
         vistos[base] += 1
         vid = f"{base}{vistos[base]}"
         prev = conn.execute("SELECT cuadra FROM votacion_pleno WHERE id=?", (vid,)).fetchone()
-        if prev and prev[0] > int(b["cuadra"]):
+        if prev and (prev[0] > int(b["cuadra"]) or (not pisar_empate and prev[0] == int(b["cuadra"]))):
             continue
         t = b["totales"]
         pley = pley_de_asunto(b["asunto"])
@@ -279,7 +289,9 @@ def run_sync(db_path: str | Path) -> dict:
         log.warning("votaciones pleno: listado fallo: %s", e)
         urls, stats["errores"] = [], 1
     hechos = {r[0] for r in conn.execute("SELECT pdf_url FROM pleno_votacion_pdf")}
-    for camara, fecha, url in dict.fromkeys(pdfs_de_agenda(conn) + urls):
+    # Las de la web primero: si la provisional (de agenda_pdf) empata, la pisa
+    # y queda su texto limpio en vez de la capa OCR de la firmada.
+    for camara, fecha, url in dict.fromkeys(urls + pdfs_de_agenda(conn)):
         if url in hechos:
             continue
         hechos.add(url)

@@ -17,7 +17,7 @@ if ! git fetch -q origin "+refs/heads/datos:refs/remotes/origin/datos" 2>/dev/nu
 fi
 
 if [ "$GZ" = "proyectos.db.gz" ] && git cat-file -e "origin/datos:data/proyectos.base.db.gz" 2>/dev/null; then
-  for parte in base transcripciones tv; do
+  for parte in base transcripciones tv votaciones; do
     if git show "origin/datos:data/proyectos.$parte.db.gz" > "$TMP/$parte.gz" 2>/dev/null; then
       gunzip -c "$TMP/$parte.gz" > "$TMP/proyectos.$parte.db"
     fi
