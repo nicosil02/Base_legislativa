@@ -129,30 +129,50 @@ def abrir_audio_en_vivo(video_id: str):
     y entregando PCM 16 kHz mono. Devuelve (cola, cerrar) o None. La cola
     recibe trozos float32 de 0,1 s y None cuando el stream se corta.
     Un clip por chunk perdia lo dicho mientras se transcribia el anterior;
-    leer ffmpeg en un hilo aparte evita que Whisper frene la descarga."""
+    leer ffmpeg en un hilo aparte evita que Whisper frene la descarga.
+    Video de Facebook (id "fb_", ver facebook_ec.py): manifiesto DASH en vez
+    de HLS, y sin WARP (Facebook no bloquea las IPs de GitHub)."""
     import queue
     import threading
 
     import numpy as np
 
     from congreso_live.detector import con_rotacion_warp, yt_dlp_cmd
+    from congreso_live.facebook_ec import PREFIJO_ID, es_directo, url_video
 
-    cmd = yt_dlp_cmd("-g", "-f", "233/234/bestaudio/best",
-                     f"https://www.youtube.com/watch?v={video_id}")
+    facebook = video_id.startswith(PREFIJO_ID)
+    if facebook:
+        cmd = [sys.executable, "-m", "yt_dlp", "-g", "-f", "bestaudio/best", url_video(video_id)]
+    else:
+        cmd = yt_dlp_cmd("-g", "-f", "233/234/bestaudio/best",
+                         f"https://www.youtube.com/watch?v={video_id}")
     r = con_rotacion_warp(lambda: subprocess.run(cmd, capture_output=True, text=True, timeout=60),
                           lambda r: r.stderr if r.returncode else None)
     url = r.stdout.strip().splitlines()[0] if r.returncode == 0 and r.stdout.strip() else None
     if not url:
         print(f"[live-transcribe] {video_id}: yt-dlp -g no dio URL: {r.stderr[-500:]}")
         return None
+    if facebook and not es_directo(url):
+        print(f"[live-transcribe] {video_id}: el directo de Facebook ya termino")
+        return None
 
     ff = [str(_ffmpeg_bin()), "-loglevel", "error"]
-    # ffmpeg no entiende socks5:// (ver capturar_audio_en_vivo): va por privoxy
-    if os.environ.get("FFMPEG_HTTP_PROXY"):
-        ff += ["-http_proxy", os.environ["FFMPEG_HTTP_PROXY"]]
-    ff += ["-live_start_index", "-1", "-i", url, "-vn", "-ac", "1", "-ar", str(SR), "-f", "s16le", "-"]
+    if facebook:  # los segmentos los baja alimentar_directo y entran por stdin
+        ff += ["-i", "pipe:0"]
+    else:
+        # ffmpeg no entiende socks5:// (ver capturar_audio_en_vivo): va por privoxy
+        if os.environ.get("FFMPEG_HTTP_PROXY"):
+            ff += ["-http_proxy", os.environ["FFMPEG_HTTP_PROXY"]]
+        ff += ["-live_start_index", "-1", "-i", url]
+    ff += ["-vn", "-ac", "1", "-ar", str(SR), "-f", "s16le", "-"]
     proc = subprocess.Popen(ff, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL,
+                            stdin=subprocess.PIPE if facebook else subprocess.DEVNULL,
                             start_new_session=(os.name != "nt"))
+    parar = threading.Event()
+    if facebook:
+        from congreso_live.facebook_ec import alimentar_directo
+        threading.Thread(target=alimentar_directo, args=(url, proc.stdin, parar),
+                         daemon=True, name=f"dash-{video_id}").start()
     cola: queue.Queue = queue.Queue()
 
     def leer():
@@ -161,7 +181,11 @@ def abrir_audio_en_vivo(video_id: str):
         cola.put(None)
 
     threading.Thread(target=leer, daemon=True, name=f"ffmpeg-{video_id}").start()
-    return cola, lambda: _matar_arbol(proc)
+
+    def cerrar():
+        parar.set()
+        _matar_arbol(proc)
+    return cola, cerrar
 
 
 def corte_de_frase(audio, pausa: float = 0.6, max_frase: float = 15.0) -> int | None:
@@ -215,9 +239,11 @@ def descargar_audio_completo(video_id: str, url: str | None = None) -> Path | No
 
 
 def transcribir_vod(video_id: str, tipo: str, titulo: str, modelo=None, db_path=None,
-                    url: str | None = None, fecha: str | None = None) -> dict:
+                    url: str | None = None, fecha: str | None = None,
+                    duracion: int | None = None) -> dict:
     """Sesion ya terminada: baja el audio completo y lo transcribe con
-    Whisper, sin esperar los captions de YouTube (tardan horas o dias)."""
+    Whisper, sin esperar los captions de YouTube (tardan horas o dias).
+    `duracion`: la del video si se conoce (si no, hasta la ultima frase)."""
     from datetime import datetime, timezone
 
     from congreso_live.transcripciones import _find_db_path, guardar_transcripcion, init_schema
@@ -238,7 +264,7 @@ def transcribir_vod(video_id: str, tipo: str, titulo: str, modelo=None, db_path=
     conn = sqlite3.connect(str(db_path))
     init_schema(conn)
     temas = _clasificar_temas(titulo, texto[:5000])
-    duracion = int(segs[-1]["end"]) if segs else None
+    duracion = duracion or (int(segs[-1]["end"]) if segs else None)
     guardar_transcripcion(conn, video_id, tipo, titulo,
                           fecha or datetime.now(timezone.utc).date().isoformat(),
                           duracion, texto, temas)
@@ -309,6 +335,7 @@ def capturar_y_acumular_en_vivo(
     from datetime import datetime, timezone
 
     from congreso_live.detector import vivos_de_interes
+    from congreso_live.facebook_ec import PREFIJO_ID, info_en_vivo, url_video
     from congreso_live.transcripciones import _find_db_path, guardar_transcripcion, init_schema
     from noticias.temas import clasificar as _clasificar_temas
 
@@ -372,7 +399,7 @@ def capturar_y_acumular_en_vivo(
                         from congreso_live.notify import enviar_whatsapp
                         enviar_whatsapp(f"🗳️ {tipo}: votación o cuarto intermedio\n"
                                         f"{titulo}\n\n{extracto}\n\n"
-                                        f"https://www.youtube.com/watch?v={video_id}")
+                                        f"{url_video(video_id)}")
                         t_ultimo_aviso = time.time()
 
                 texto_acumulado = (texto_acumulado + " " + nuevo_texto).strip()
@@ -389,7 +416,10 @@ def capturar_y_acumular_en_vivo(
             # la sesion sigue en vivo. Un error del chequeo (WARP) no debe
             # matar el hilo; hacen falta 2 misses seguidos para cortar.
             try:
-                vivo = video_id in {v["id"] for v in vivos_de_interes()}
+                if video_id.startswith(PREFIJO_ID):
+                    vivo = info_en_vivo(video_id[len(PREFIJO_ID):]) is not None
+                else:
+                    vivo = video_id in {v["id"] for v in vivos_de_interes()}
             except Exception as e:
                 print(f"[live-transcribe] {video_id}: error chequeando en vivo, sigo: {e}")
                 vivo = True
@@ -435,6 +465,9 @@ def _avisar_si_no_avisado(v: dict) -> None:
     save_state(state)
 
 
+FACEBOOK_CADA_SEG = 300
+
+
 def watch_and_transcribe(intervalo_seg: int = 40, poll_seg: int = 60,
                          max_total_minutos: float | None = None,
                          idle_exit_minutos: float | None = None) -> None:
@@ -455,6 +488,7 @@ def watch_and_transcribe(intervalo_seg: int = 40, poll_seg: int = 60,
     hilos: dict[str, threading.Thread] = {}
     t_inicio = time.time()
     t_ultima_actividad = t_inicio
+    t_facebook = float("-inf")  # el primer poll ya mira Facebook
     print(f"[live-watch] arrancando (poll cada {poll_seg}s, chunks de "
           f"{intervalo_seg}s). Ctrl+C para parar.")
     while True:
@@ -479,6 +513,16 @@ def watch_and_transcribe(intervalo_seg: int = 40, poll_seg: int = 60,
         except Exception as e:
             print(f"[live-watch] error chequeando en vivo: {e}")
             vivos = []
+        # Comisiones EC por Facebook: abrir 14 paginas con Playwright tarda
+        # ~1 min, asi que solo cada FACEBOOK_CADA_SEG (y sin cache: lo que no
+        # se vio en este chequeo no arranca hilo).
+        if ahora - t_facebook >= FACEBOOK_CADA_SEG:
+            t_facebook = ahora
+            try:
+                from congreso_live.facebook_ec import listar_en_vivo
+                vivos = vivos + listar_en_vivo()
+            except Exception as e:
+                print(f"[live-watch] error chequeando Facebook EC: {e}")
 
         if hilos or vivos:
             t_ultima_actividad = ahora
