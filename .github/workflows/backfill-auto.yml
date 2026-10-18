@@ -101,6 +101,5 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          # base_remota: la base publicada en `datos` + las transcripciones
-          # recuperadas aca (ver scripts/publicar_db.sh).
-          bash scripts/publicar_db.sh base_remota proyectos.db
+          # Solo la parte transcripciones (ver scripts/publicar_db.sh).
+          bash scripts/publicar_db.sh proyectos.db transcripciones

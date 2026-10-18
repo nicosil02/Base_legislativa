@@ -83,7 +83,7 @@ jobs:
             fi
             python -X utf8 -u -m noticias.videos buscar proyectos.db || echo "[warn] busqueda de videos fallo"
             python -X utf8 -u -m noticias.tv_monitor escanear proyectos.db || echo "[warn] monitor de TV fallo"
-            bash scripts/publicar_db.sh base_remota proyectos.db || echo "[warn] publicar fallo"
+            bash scripts/publicar_db.sh proyectos.db tv || echo "[warn] publicar fallo"
             if [ "$i" -lt "$VUELTAS" ]; then
               espera=$(( 1800 - ($(date +%s) - t0) ))
               [ "$espera" -gt 0 ] && sleep "$espera"

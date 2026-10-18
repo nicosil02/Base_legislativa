@@ -5,7 +5,7 @@ resumirlos.
 Flujo:
 1. `buscar()` (backfill-auto.yml, con WARP) busca en YouTube lo subido
    ESTA SEMANA con el nombre de cada autoridad y lo guarda en la tabla
-   videos_autoridades. La tabla viaja a `datos` via merge_db.
+   videos_autoridades. La tabla viaja a `datos` en la parte tv (core/partes.py).
 2. La pagina de Noticias lista esos videos. El boton "Transcribir" crea
    data/videos_pedidos/<video_id>.json (Contents API, archivo nuevo, sin
    read-modify-write) y ese push dispara videos-pedidos.yml.

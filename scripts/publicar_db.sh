@@ -1,89 +1,88 @@
 #!/usr/bin/env bash
-# Publica una base SQLite comprimida en la rama `datos` como UN SOLO commit
-# sin padre (sin historial), en vez de commitearla en main.
+# Publica bases SQLite comprimidas en la rama `datos` como UN SOLO commit
+# sin padre (sin historial), en vez de commitearlas en main: en `datos` cada
+# publicacion REEMPLAZA a la anterior (el repo llego a 15 GB con la base en
+# main, ver memoria git_history_bloat).
 #
-# Por que: data/proyectos.db.gz (~27 MB, ya comprimido: git no lo puede
-# delta-comprimir) se commiteaba en main en cada corrida - 226 versiones en
-# 5 dias, el repo volvio a 15 GB (ya se habia limpiado de 43 GB el
-# 2026-09-22). En `datos` cada publicacion REEMPLAZA a la anterior: la rama
-# siempre tiene 1 commit, y lo viejo queda inalcanzable (GitHub lo borra).
+# proyectos.db va en partes, una por dueño (core/partes.py). Cada workflow
+# publica SOLO las partes que escribe; las partes con varios escritores
+# (transcripciones, tv) se unen fila por fila con lo ya publicado. El push va
+# con --force-with-lease atado al commit que se bajo: si otro workflow
+# publico en el medio, se rechaza y se rehace desde el principio.
 #
-# Misma proteccion que antes contra pisarse entre workflows (bug real
-# 2026-09-15/16, transcripciones borradas por un push desde una copia
-# vieja): se baja lo ultimo de `datos`, se mezcla con merge_db, y se sube
-# con --force-with-lease atado al commit que se bajo. Si otro workflow
-# publico en el medio, el push se rechaza y se reintenta desde el principio.
-#
-# Uso: scripts/publicar_db.sh MODO BASE_LOCAL [NOMBRE_GZ]
-#   MODO base_local  : la copia local es la base (dueña de PLs/agenda/noticias)
-#                      y se le suman las transcripciones que tenga `datos`.
-#                      Para refrescar-pe.yml.
-#   MODO base_remota : la version de `datos` es la base y se le suman las
-#                      transcripciones locales. Para vigilar-congreso.yml y
-#                      los backfill (solo escriben sesiones_transcripciones).
-#   MODO unico       : sin merge (proyectos_ec.db: un solo workflow la escribe).
-#   NOMBRE_GZ        : default <basename de BASE_LOCAL>.gz, en data/ de `datos`.
+# Uso: scripts/publicar_db.sh proyectos.db PARTE [PARTE ...]
+#        PARTE: base (solo refrescar-pe), transcripciones, tv
+#      scripts/publicar_db.sh unico proyectos_ec.db
+#        sin partes ni union: un solo workflow la escribe.
 set -euo pipefail
 
-MODO="$1"
-LOCAL="$2"
-GZ="${3:-$(basename "$LOCAL").gz}"
+LOCAL="$1"
+shift
+PARTES=("$@")
 TMP="$(mktemp -d)"
 trap 'rm -rf "$TMP"' EXIT
 
+if [ "$LOCAL" = "unico" ]; then
+  LOCAL="${PARTES[0]}"
+  PARTES=()
+fi
+
 for intento in 1 2 3 4 5 6; do
   REMOTO_SHA="$(git ls-remote origin refs/heads/datos | cut -f1)"
-  HAY_REMOTO=""
-  if [ -n "$REMOTO_SHA" ]; then
-    git fetch -q origin "+refs/heads/datos:refs/remotes/origin/datos"
-    if git show "origin/datos:data/$GZ" > "$TMP/remoto.gz" 2>/dev/null && [ -s "$TMP/remoto.gz" ]; then
-      gunzip -c "$TMP/remoto.gz" > "$TMP/remoto.db"
-      HAY_REMOTO=1
-    fi
-  fi
+  [ -n "$REMOTO_SHA" ] && git fetch -q origin "+refs/heads/datos:refs/remotes/origin/datos"
 
-  case "$MODO" in
-    base_local)
-      [ -n "$HAY_REMOTO" ] && python -X utf8 -m congreso_live.merge_db "$LOCAL" "$TMP/remoto.db"
-      cp "$LOCAL" "$TMP/final.db" ;;
-    base_remota)
-      if [ -n "$HAY_REMOTO" ]; then
-        cp "$TMP/remoto.db" "$TMP/final.db"
-        python -X utf8 -m congreso_live.merge_db "$TMP/final.db" "$LOCAL"
-        # NO se copia el resultado de vuelta a $LOCAL: en vigilar-congreso.yml
-        # live-watch sigue ESCRIBIENDO en esa base mientras esto corre, y
-        # pisarle el archivo por debajo la puede corromper. Cada publicacion
-        # rehace el merge desde `datos`, asi que no hace falta.
-      else
-        cp "$LOCAL" "$TMP/final.db"
-      fi ;;
-    unico)
-      cp "$LOCAL" "$TMP/final.db" ;;
-    *) echo "MODO invalido: $MODO" >&2; exit 2 ;;
-  esac
-  gzip -9nc "$TMP/final.db" > "$TMP/final.gz"
-
-  # Arbol nuevo = arbol actual de `datos` (conserva la OTRA base, ej.
-  # proyectos_ec.db.gz) con data/$GZ reemplazado. Index temporal: no toca
-  # el checkout ni el index del workflow.
+  # Arbol nuevo = arbol actual de `datos` con lo nuestro reemplazado. Index
+  # temporal: no toca el checkout ni el index del workflow.
   export GIT_INDEX_FILE="$TMP/index"
   if [ -n "$REMOTO_SHA" ]; then git read-tree "$REMOTO_SHA"; else git read-tree --empty; fi
-  BLOB="$(git hash-object -w "$TMP/final.gz")"
-  git update-index --add --cacheinfo "100644,$BLOB,data/$GZ"
+
+  if [ ${#PARTES[@]} -eq 0 ]; then
+    gzip -9nc "$LOCAL" > "$TMP/final.gz"
+    git update-index --add --cacheinfo "100644,$(git hash-object -w "$TMP/final.gz"),data/$(basename "$LOCAL").gz"
+  else
+    # Base entera vieja (antes de las partes): si un workflow con el codigo
+    # anterior la volvio a publicar, sus filas se rescatan en la union.
+    VIEJA=""
+    if [ -n "$REMOTO_SHA" ] && git show "origin/datos:data/proyectos.db.gz" > "$TMP/vieja.gz" 2>/dev/null; then
+      gunzip -c "$TMP/vieja.gz" > "$TMP/vieja.db" && VIEJA="$TMP/vieja.db"
+    fi
+    for parte in "${PARTES[@]}"; do
+      ARCH="proyectos.$parte.db"
+      python -X utf8 -m core.partes extraer "$LOCAL" "$parte" "$TMP/$ARCH"
+      if [ "$parte" != "base" ]; then
+        if [ -n "$REMOTO_SHA" ] && git show "origin/datos:data/$ARCH.gz" > "$TMP/r.gz" 2>/dev/null; then
+          gunzip -c "$TMP/r.gz" > "$TMP/r.db"
+          python -X utf8 -m core.partes unir "$TMP/$ARCH" "$TMP/r.db" "$parte"
+        fi
+        if [ -n "$VIEJA" ]; then
+          python -X utf8 -m core.partes extraer "$VIEJA" "$parte" "$TMP/rv.db"
+          python -X utf8 -m core.partes unir "$TMP/$ARCH" "$TMP/rv.db" "$parte"
+        fi
+      fi
+      gzip -9nc "$TMP/$ARCH" > "$TMP/$ARCH.gz"
+      git update-index --add --cacheinfo "100644,$(git hash-object -w "$TMP/$ARCH.gz"),data/$ARCH.gz"
+    done
+    # Con las tres partes publicadas, la base entera vieja solo confunde.
+    if git ls-files --error-unmatch data/proyectos.base.db.gz data/proyectos.transcripciones.db.gz \
+         data/proyectos.tv.db.gz > /dev/null 2>&1; then
+      git update-index --force-remove data/proyectos.db.gz
+    fi
+  fi
   ARBOL="$(git write-tree)"
   unset GIT_INDEX_FILE
 
+  QUE="${PARTES[*]:-$(basename "$LOCAL")}"
   if [ -n "$REMOTO_SHA" ] && [ "$ARBOL" = "$(git rev-parse "$REMOTO_SHA^{tree}")" ]; then
-    echo "[publicar_db] $GZ sin cambios en datos, nada que publicar."
+    echo "[publicar_db] $QUE sin cambios en datos, nada que publicar."
     exit 0
   fi
-  COMMIT="$(git commit-tree "$ARBOL" -m "datos: $GZ $(date -u +%Y-%m-%dT%H:%M:%SZ)")"
+  COMMIT="$(git commit-tree "$ARBOL" -m "datos: $QUE $(date -u +%Y-%m-%dT%H:%M:%SZ)")"
   if git push -q --force-with-lease="refs/heads/datos:$REMOTO_SHA" origin "$COMMIT:refs/heads/datos"; then
-    echo "[publicar_db] $GZ publicado en datos (intento $intento, modo $MODO)."
+    echo "[publicar_db] $QUE publicado en datos (intento $intento)."
     exit 0
   fi
-  echo "[publicar_db] otro workflow publico en el medio (intento $intento), rehago el merge..."
+  echo "[publicar_db] otro workflow publico en el medio (intento $intento), rehago..."
   sleep $(( (RANDOM % 10) + 5 ))
 done
-echo "[publicar_db] no pude publicar $GZ despues de 6 intentos." >&2
+echo "[publicar_db] no pude publicar $QUE despues de 6 intentos." >&2
 exit 1

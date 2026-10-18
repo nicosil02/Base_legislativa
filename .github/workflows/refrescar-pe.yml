@@ -328,7 +328,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           # La base va a la rama `datos` (un commit sin historial), no a main.
           # Mezcla transcripciones de otros workflows y reintenta si otro publico.
-          bash scripts/publicar_db.sh base_local proyectos.db
+          bash scripts/publicar_db.sh proyectos.db base transcripciones
 
       - name: Auto-commit snapshot si cambio
         run: |

@@ -597,7 +597,7 @@ def en_vivo(db_path: str | Path, minutos: float, publicar_cada_min: float = 15,
     while any(h.is_alive() for h in hilos):
         time.sleep(min(publicar_cada_min * 60, max(hasta - time.time(), 1)))
         if os.environ.get("TV_PUBLICAR"):
-            subprocess.run(["bash", "scripts/publicar_db.sh", "base_remota", str(db_path)], check=False)
+            subprocess.run(["bash", "scripts/publicar_db.sh", str(db_path), "tv"], check=False)
     return resultados
 
 
