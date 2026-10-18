@@ -13,6 +13,12 @@ import congreso_live.state as st  # noqa: E402
 from congreso_live.live_transcribe import SR, corte_de_frase, detectar_votacion  # noqa: E402
 
 
+@pytest.fixture(autouse=True)
+def sin_facebook(monkeypatch):
+    """watch_and_transcribe no abre Playwright en los tests."""
+    monkeypatch.setattr("congreso_live.facebook_ec.listar_en_vivo", lambda: [])
+
+
 @pytest.fixture
 def sin_avisos(monkeypatch, tmp_path):
     """Estado de avisos en tmp y sin envios ni lectura de Seguimiento."""
@@ -147,6 +153,46 @@ def test_watch_and_transcribe_idle_exit(monkeypatch):
     t0 = time.time()
     lt.watch_and_transcribe(intervalo_seg=1, poll_seg=1, max_total_minutos=0.1, idle_exit_minutos=1.5 / 60)
     assert time.time() - t0 < 5
+
+
+def test_watch_and_transcribe_facebook(monkeypatch, sin_avisos):
+    # Las comisiones EC de Facebook entran al mismo flujo (aviso + hilo), y
+    # Facebook se consulta una vez por FACEBOOK_CADA_SEG, no en cada poll.
+    vistos, consultas = [], []
+    monkeypatch.setattr(lt, "capturar_y_acumular_en_vivo",
+                        lambda video_id, tipo, titulo, intervalo_seg: vistos.append(video_id))
+    monkeypatch.setattr("congreso_live.detector.vivos_de_interes", lambda: [])
+    fb = {"id": "fb_123", "tipo": "Comision: Justicia (EC)", "titulo": "Sesion No. 140",
+          "pais": "EC", "url": "https://www.facebook.com/watch/?v=123"}
+    monkeypatch.setattr("congreso_live.facebook_ec.listar_en_vivo", lambda: consultas.append(1) or [fb])
+    lt.watch_and_transcribe(intervalo_seg=1, poll_seg=1, max_total_minutos=2.5 / 60)
+    assert len(consultas) == 1
+    assert vistos == ["fb_123"]
+    assert "fb_123" in st.load_state().get("alertados", [])
+    assert len(sin_avisos) == 1 and "Asamblea EC EN VIVO" in sin_avisos[0]
+
+
+def test_acumulacion_facebook_usa_su_chequeo(monkeypatch, tmp_path, sin_avisos):
+    # Un id fb_ no se busca en YouTube: se pregunta a Facebook si sigue en vivo.
+    preguntas = []
+    estados = iter([{"titulo": "x"}, None, None])
+    monkeypatch.setattr("congreso_live.facebook_ec.info_en_vivo",
+                        lambda fb_id: preguntas.append(fb_id) or next(estados))
+    monkeypatch.setattr("congreso_live.detector.vivos_de_interes",
+                        lambda: pytest.fail("no debe consultar YouTube"))
+
+    def fake_abrir(video_id):
+        cola = queue.Queue()
+        cola.put(np.zeros(SR, dtype=np.float32))
+        cola.put(None)
+        return cola, lambda: None
+
+    monkeypatch.setattr(lt, "abrir_audio_en_vivo", fake_abrir)
+    monkeypatch.setattr(lt, "corte_de_frase", lambda audio: len(audio))
+    monkeypatch.setattr(lt, "transcribir_audio", _fake_transcribir(["Buenos dias asambleistas."]))
+    r = lt.capturar_y_acumular_en_vivo("fb_123", "Comision: Justicia (EC)", "Sesion",
+                                       intervalo_seg=0, modelo="modelo-fake", db_path=tmp_path / "t.db")
+    assert r["chunks"] == 1 and preguntas == ["123", "123", "123"]
 
 
 def test_avisar_si_no_avisado_no_duplica(sin_avisos):

@@ -1,6 +1,7 @@
 name: Vigilar Congreso en vivo (Fase 0)
 
-# Detecta cuando el Pleno o una comision ordinaria entra EN VIVO en YouTube,
+# Detecta cuando el Pleno o una comision ordinaria entra EN VIVO en YouTube
+# (y las comisiones de la Asamblea EC en Facebook, cada 5 min),
 # avisa por WhatsApp, Y transcribe el audio real en vivo (yt-dlp +
 # faster-whisper) acumulando en sesiones_transcripciones. Repo publico =>
 # minutos de Actions gratis.
@@ -44,7 +45,10 @@ jobs:
 
       - name: Instalar deps
         run: |
-          pip install -q yt-dlp requests faster-whisper "av<19" imageio-ffmpeg
+          pip install -q yt-dlp requests faster-whisper "av<19" imageio-ffmpeg playwright
+          # Chromium para ver que comisiones EC estan en vivo en Facebook
+          # (congreso_live/facebook_ec.py). Facebook va sin WARP.
+          python -m playwright install --with-deps chromium > /dev/null
           # El ffmpeg portable de imageio-ffmpeg crasheaba (SIGSEGV) en este runner.
           sudo apt-get install -y -qq ffmpeg
 
