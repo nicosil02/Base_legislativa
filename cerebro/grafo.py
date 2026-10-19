@@ -25,6 +25,7 @@ from __future__ import annotations
 import asyncio
 import hashlib
 import os
+import re
 import sqlite3
 import sys
 import tarfile
@@ -43,7 +44,10 @@ LLM = "gemini-3.5-flash-lite"
 LLM_RESPALDO = "gemma-4-26b-a4b-it"  # = core.llm.GEMMA
 DIAS_PL = 60
 DIAS_NOTICIAS = 30
-AFINIDAD_NOTICIA = 0.62  # ponytail: a ojo sobre la prueba de Bayer (0.68-0.72 lo relevante, <0.55 lo ajeno); calibrar
+# Noticias del filtro de clientes (alerts/filtro.py). Los "noticias_*" viejos
+# entraron por afinidad con ruido: _construir los borra de a poco.
+PREFIJO_NOTICIAS = "noticiasf_"
+BORRAR_POR_CORRIDA = 10  # borrar re-arma entidades con el LLM: cupo gratuito
 MAX_DOCS_POR_CORRIDA = 40  # techo de llamadas al LLM por corrida (tier gratuito)
 
 # LightRAG 1.5 lee addon_params["entity_types_guidance"]; la lista vieja
@@ -185,11 +189,11 @@ def documentos() -> list[tuple[str, str]]:
             docs.append((f"pls_PE_{fec}", f"Proyectos de ley presentados en el Congreso del Perú el {fec}:\n"
                                          + "\n".join(pls)))
 
-        noticias = _noticias_afines(c, hoy)
+        noticias = _noticias_filtradas(c, hoy)
         c.close()
         for (pais, fec), items in noticias.items():
-            docs.append((f"noticias_{pais}_{fec}", f"Noticias relevantes para clientes, {pais}, {fec}:\n"
-                                                  + "\n".join(items)))
+            docs.append((f"{PREFIJO_NOTICIAS}{pais}_{fec}", f"Noticias relevantes para clientes, {pais}, {fec}:\n"
+                                                           + "\n".join(items)))
 
     ec = _db("proyectos_ec.db")
     if ec:
@@ -211,32 +215,34 @@ def documentos() -> list[tuple[str, str]]:
     return docs
 
 
-def _noticias_afines(conn: sqlite3.Connection, hoy: str) -> dict[tuple[str, str], list[str]]:
-    """Noticias de dias cerrados de la ventana con afinidad >= AFINIDAD_NOTICIA
-    con algun cliente, agrupadas por (pais, dia). {} si no hay cerebro."""
+def _noticias_filtradas(conn: sqlite3.Connection, hoy: str) -> dict[tuple[str, str], list[str]]:
+    """Noticias de dias cerrados que alerts/filtro.py marco "le interesa" a un
+    cliente, con el por que, agrupadas por (pais, dia). {} si no hay cerebro.
+    Antes era afinidad >= 0.62 y entraba ruido como "relevante" (viajes de la
+    Marina, ordenanzas regionales, columnas de opinion)."""
     try:
-        from cerebro.embeddings import CLIENTES, afinidad, conectar
+        from cerebro.embeddings import conectar
         cer = conectar()
+        veredictos: dict[int, list[str]] = {}
+        for clave, cliente, por_que in cer.execute(
+                "SELECT clave, cliente, por_que FROM relevancia WHERE interesa = 1 AND clave LIKE 'noticia_%'"):
+            veredictos.setdefault(int(clave.split("_", 1)[1]), []).append(f"{cliente}: {por_que}")
     except Exception:
         return {}
+    if not veredictos:
+        return {}
     desde = (date.today() - timedelta(days=DIAS_NOTICIAS)).isoformat()
-    filas = conn.execute(
-        """SELECT n.id, n.titulo, n.resumen, f.pais, f.nombre,
-                  substr(COALESCE(n.fecha_pub, n.first_seen_at),1,10) AS dia
-           FROM noticias n JOIN noticias_fuentes f ON f.id = n.fuente_id
-           WHERE dia >= ? AND dia < ?""", (desde, hoy)).fetchall()
-    claves = [f"noticia_{r[0]}" for r in filas]
-    mejor: dict[str, tuple[float, str]] = {}
-    for cli in CLIENTES:
-        for k, v in afinidad(claves, cli, cer).items():
-            if v >= AFINIDAD_NOTICIA and v > mejor.get(k, (0, ""))[0]:
-                mejor[k] = (v, cli)
+    lista = ",".join(map(str, veredictos))
     out: dict[tuple[str, str], list[str]] = {}
-    for nid, titulo, resumen, pais, fuente, dia in filas:
-        m = mejor.get(f"noticia_{nid}")
-        if m:
-            out.setdefault((pais or "PE", dia), []).append(
-                f"- [{fuente}] {titulo}. {(resumen or '')[:400]} (relevante para {m[1]})")
+    # ponytail: un dia ya cerrado que recibe veredictos tarde (el filtro mira 48 h)
+    # no se actualiza en el grafo; si pasa seguido, esperar 2 dias para insertarlo.
+    for nid, titulo, resumen, pais, fuente, dia in conn.execute(
+            f"""SELECT n.id, n.titulo, n.resumen, f.pais, f.nombre,
+                       substr(COALESCE(n.fecha_pub, n.first_seen_at),1,10) AS dia
+                FROM noticias n JOIN noticias_fuentes f ON f.id = n.fuente_id
+                WHERE n.id IN ({lista}) AND dia >= ? AND dia < ?""", (desde, hoy)):
+        out.setdefault((pais or "PE", dia), []).append(
+            f"- [{fuente}] {titulo}. {re.sub(r'<[^>]+>', '', resumen or '')[:400]} (le interesa a {'; '.join(veredictos[nid])})")
     return out
 
 
@@ -263,8 +269,14 @@ async def _construir(max_docs: int) -> dict:
                 await rag.adelete_by_doc_id(doc_id)
         if lote:
             await rag.ainsert([t for _, t in lote], ids=[i for i, _ in lote])
+        # Noticias viejas por afinidad: las FAILED no tienen entidades (borrado
+        # gratis); las PROCESSED de a pocas por el cupo.
+        viejos = sorted(k for k in fallidos if k.startswith("noticias_")) + \
+            sorted(k for k in ya if k.startswith("noticias_"))[:BORRAR_POR_CORRIDA]
+        for doc_id in viejos:
+            await rag.adelete_by_doc_id(doc_id)
         return {"documentos": len(docs), "ya_en_grafo": len(ya), "insertados": len(lote),
-                "pendientes": len(nuevos) - len(lote)}
+                "pendientes": len(nuevos) - len(lote), "borrados_viejos": len(viejos)}
     finally:
         await rag.finalize_storages()
 
