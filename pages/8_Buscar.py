@@ -109,7 +109,7 @@ if not GRAFO_ACTIVO:
 st.markdown("---")
 st.markdown("### Preguntarle al cerebro")
 st.caption("Responde cruzando proyectos de ley, sesiones, noticias y lo que le importa a cada cliente. "
-           "Tarda unos segundos y cita en qué se basa.")
+           "Tarda unos segundos y cita en qué se basa. Sabe hasta ayer; para lo de hoy usa «¿Qué pasó hoy?».")
 
 
 @st.cache_data(ttl=3600, show_spinner=False)

@@ -273,11 +273,40 @@ def construir(max_docs: int = MAX_DOCS_POR_CORRIDA) -> dict:
     return asyncio.run(_construir(max_docs))
 
 
+DIAS_SEMANA = ["lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domingo"]
+# ponytail: lista a mano; si una pregunta con tiempo no encuentra nada, sumar la palabra.
+PALABRAS_TIEMPO = ("hoy", "ayer", "semana", "recient", "últim", "ultim", "pasado", "pasó", "paso",
+                   "lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domingo")
+
+
+def _con_fechas(pregunta: str) -> str:
+    """El grafo no sabe que dia es: "hoy" o "el fin de semana" no encontraban
+    nada aunque los documentos (noticias_PE_2026-10-18...) estaban. Las
+    fechas en ISO, igual que en los documentos, para que la busqueda las use."""
+    if not any(p in pregunta.lower() for p in PALABRAS_TIEMPO):
+        return pregunta
+    hoy = date.today()
+    dias = ", ".join(f"{DIAS_SEMANA[d.weekday()]} {d.isoformat()}"
+                     for d in (hoy - timedelta(days=i) for i in range(1, 8)))
+    return (f"{pregunta}\n\n(Hoy es {DIAS_SEMANA[hoy.weekday()]} {hoy.isoformat()}. Días anteriores: {dias}. "
+            f"El grafo solo tiene días ya cerrados, no el de hoy.)")
+
+
+def _sin_plantilla(texto: str) -> str:
+    """LightRAG pide una seccion References; sin fuentes el modelo copiaba el
+    ejemplo de su plantilla ("[] Document Title One")."""
+    if "Document Title" in texto:
+        i = texto.rfind("References")
+        if i != -1:
+            texto = texto[:i].rstrip(" #\n")
+    return texto
+
+
 async def _preguntar(pregunta: str, modo: str) -> str:
     from lightrag import QueryParam
     rag = await _rag()
     try:
-        r = await rag.aquery_llm(pregunta, param=QueryParam(
+        r = await rag.aquery_llm(_con_fechas(pregunta), param=QueryParam(
             mode=modo,
             enable_rerank=False,  # no hay modelo de rerank configurado (evita el aviso)
             # Mismas reglas de escritura que las alertas; sin esto abría con un saludo.
@@ -290,7 +319,7 @@ async def _preguntar(pregunta: str, modo: str) -> str:
         texto = (r.get("llm_response") or {}).get("content")
         if not texto:
             raise RuntimeError(r.get("message") or "el grafo no devolvio respuesta")
-        return texto
+        return _sin_plantilla(texto)
     finally:
         await rag.finalize_storages()
 
