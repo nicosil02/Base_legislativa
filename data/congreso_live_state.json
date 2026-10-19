@@ -117,7 +117,8 @@
   "8kasJA2x5GQ",
   "Gk2Nok9Chtw",
   "uAeYokHjLzA",
-  "vl4EjrTtzIQ"
+  "vl4EjrTtzIQ",
+  "zIgPORESkkQ"
  ],
  "sesiones": [
   {
@@ -1034,6 +1035,14 @@
    "pais": "PE",
    "url": "https://www.youtube.com/watch?v=vl4EjrTtzIQ",
    "visto_at": "2026-10-19T19:20:11Z"
+  },
+  {
+   "id": "zIgPORESkkQ",
+   "titulo": "🔴EN VIVO: Comisión de Economía, Medio Ambiente y Defensa Nacional",
+   "tipo": "Comision: Defensa Nacional",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=zIgPORESkkQ",
+   "visto_at": "2026-10-19T20:16:31Z"
   }
  ]
 }
