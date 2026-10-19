@@ -189,9 +189,9 @@ def tv(pe: sqlite3.Connection, desde: str) -> list[str]:
         return []
 
 
-def material() -> dict[str, list[str]]:
+def material(cerebro: sqlite3.Connection | None = None) -> dict[str, list[str]]:
     from cerebro.embeddings import conectar
-    pe, ec, cerebro = _ro("proyectos.db"), _ro("proyectos_ec.db"), conectar()
+    pe, ec, cerebro = _ro("proyectos.db"), _ro("proyectos_ec.db"), cerebro or conectar()
     desde = _desde_utc()
     desde_local = (_lima_ahora() - timedelta(hours=24)).strftime("%Y-%m-%dT%H:%M:%S")
     return {"noticias": noticias(pe, cerebro, desde) if pe else [],

@@ -677,6 +677,12 @@ buscar = st.Page(
     icon="🔎",
     url_path="buscar",
 )
+que_paso = st.Page(
+    "pages/9_Que_paso.py",
+    title="¿Qué pasó hoy?",
+    icon="🗞️",
+    url_path="que-paso-hoy",
+)
 
 
 if _google_auth_configured() and st.user.is_logged_in:
@@ -711,7 +717,7 @@ if _google_auth_configured() and st.user.is_logged_in:
 
 nav = st.navigation(
     {
-        "Vali Intelligence": [home, buscar],
+        "Vali Intelligence": [home, que_paso, buscar],
         "Radar Legislativo": [peru, ecuador],
         "Agenda parlamentaria": [agenda_pe, agenda_ec],
         "Noticias y coyuntura": [noticias_pe, noticias_ec],
