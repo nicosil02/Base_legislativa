@@ -112,7 +112,8 @@ def juzgar_gemini(pares: list[dict], generar=llm.generar) -> list[bool | None]:
         for intento in range(4):
             try:
                 resp = generar(f"Para cada par responde {{indice, mismo}}.\n\n{lista}",
-                               system=SYSTEM, modelo=llm.LITE, schema=SCHEMA)
+                               system=SYSTEM, modelo=llm.LITE, schema=SCHEMA,
+                               **({"respaldo": False} if generar is llm.generar else {}))  # sin Gemma: la etiqueta dice "gemini"
                 break
             except Exception as e:  # 429 por minuto: esperar y reintentar; el diario corta
                 if "429" not in str(e) or "PerDay" in str(e) or intento == 3:
