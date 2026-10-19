@@ -18,9 +18,18 @@ import streamlit as st
 from alerts import historial
 from alerts.armar import SEMILLA
 from alerts.chat import contexto_relacionado, mensaje_inicial, nueva_conversacion
+from core import store
 from ui_kit import inject_theme
 
 _PAISES = {"PE": "Perú", "EC": "Ecuador"}
+# Alertas ya investigadas y redactadas fuera del chat (por ej. por Claude),
+# esperando revision: [{"id", "cliente", "titulo", "texto", "pais", "linea", "url", "sustento", "fecha"}]
+BORRADORES = "data/alertas_borradores.json"
+
+
+def _quitar_borrador(bid: str) -> None:
+    store.actualizar(BORRADORES, lambda bs: [b for b in bs if b.get("id") != bid],
+                     f"alertas: borrador {bid} fuera", [])
 
 
 def _vista_previa_whatsapp(texto: str) -> str:
@@ -91,6 +100,27 @@ if st.session_state.get("chat_cliente") != sel_cliente:
     st.session_state["chat_historial_ui"] = []
     st.session_state.pop("chat_material", None)
 
+for b in [b for b in store.cargar(BORRADORES, [], ttl=30) if b.get("cliente") == sel_cliente]:
+    with st.expander(f"📝 Borrador listo · {b['titulo']} ({b.get('fecha', '')})"):
+        st.markdown(f'<div style="white-space:pre-wrap;font-size:14px;">{_vista_previa_whatsapp(b["texto"])}</div>',
+                    unsafe_allow_html=True)
+        if b.get("sustento"):
+            st.caption("Sustento (de dónde sale cada dato)")
+            st.markdown(b["sustento"])
+        c = st.columns(2)
+        if c[0].button("Usar este borrador", key=f"usar_{b['id']}", type="primary"):
+            # Entra como una respuesta del chat: se puede pedir ajustes y guardar como enviada.
+            st.session_state["chat_material"] = {"cliente": sel_cliente, "items": [
+                {"titulo": b["titulo"], "url": b.get("url"), "pais": b.get("pais")}]}
+            st.session_state["chat_historial_ui"] = [
+                ("user", f"Borrador preparado para {sel_cliente}. Sustento:\n{b.get('sustento', '')}"),
+                ("assistant", b["texto"])]
+            st.session_state["borrador_id"] = b["id"]
+            st.rerun()
+        if c[1].button("Descartar", key=f"desc_{b['id']}"):
+            _quitar_borrador(b["id"])
+            st.rerun()
+
 material = st.session_state.get("chat_material")
 if material:
     for it in material["items"]:
@@ -151,6 +181,8 @@ if respuestas:
                 historial.agregar(sel_cliente, historial.entrada(titulo, texto, pais, url or None,
                                                                  linea or None),
                                   autor=st.user.get("email"))
+                if bid := st.session_state.pop("borrador_id", None):
+                    _quitar_borrador(bid)
                 st.success(f"Guardada en el historial de {sel_cliente}. Desde ahora el chat la tiene en "
                            "cuenta, y el cerebro la suma en la próxima corrida (menos de una hora).")
             except Exception as e:
