@@ -117,7 +117,7 @@ def parse_pagina(words, tol: float = 3) -> dict | None:
     def es_bancada(x, t):
         return t in siglas and any(abs(x - c) <= 5 for c in cols)
 
-    votos, y_primera = [], None
+    votos, y_primera, preside = [], None, None
     for y, ws in ls:
         if not (y_cab < y < y_fin) or not any(es_bancada(x, t) for x, t in ws):
             continue
@@ -132,6 +132,8 @@ def parse_pagina(words, tol: float = 3) -> dict | None:
                     voto = re.sub(r"[+\-.]", "", "".join(t2 for (x2, t2), v in zip(seg[1:], es_voto) if v)).upper()
                     # Fila sin voto = "sin respuesta" (ahi cae tambien el que preside
                     # en el Senado; en Diputados el que preside no sale en la lista).
+                    if "*" in nombre:
+                        preside = len(votos)
                     nombre = re.sub(r"[^\w.]+$", "", re.sub(r"\s*,\s*", ", ", nombre)).strip(" ,")  # "***" = preside
                     votos.append((nombre, bancada, "SINRESP" if voto in ("", "SINRES") else voto))
                 seg = [(x, t)]
@@ -162,11 +164,110 @@ def parse_pagina(words, tol: float = 3) -> dict | None:
                     totales[clave] = min(cerca, key=lambda n: abs(n[0] - y))[2]
                 break
 
-    conteo = collections.Counter(v for _, _, v in votos)
-    claves = [k for k in _CODIGO if k in totales]
-    cuadra = bool(votos) and ("si" in totales or "pre" in totales) and all(conteo[_CODIGO[k]] == totales[k] for k in claves)
+    tabla = cuadro_bancadas(ls, y_fin, siglas) if tipo == "votacion" else {}
+    cuadra = _cuadra(votos, totales, tabla)
+    if tabla and not cuadra:
+        cuadra = _reparar(votos, tabla, preside) and _cuadra(votos, totales, tabla)
+    if cuadra and tabla:
+        # El conteo real es el de la lista (= cuadro por bancada); el cuadro
+        # "Resultado" trae lo anunciado en sala, que a veces es menos (votos
+        # registrados despues: "se anunciaron 115 ... habiendose registrado 120").
+        for k in _VOTOS:
+            real = sum(t[k] for t in tabla.values())
+            if k in totales and totales[k] != real:
+                totales[f"{k}_anunciado"] = totales[k]
+            totales[k] = real
+    # "El senador X, presidente ..., deja constancia de su voto a favor": el
+    # que preside no vota en el sistema, pero su voto queda en el acta.
+    nota = _limpia(" ".join(t for y, ws in ls if y >= y_fin for x, t in ws if x > 200))  # sin la columna Resultado
+    m_const = re.search(r"CONSTANCIA DE SU VOTO (A FAVOR|EN CONTRA|EN ABSTENCION)", nota)
+    if m_const and preside is not None:
+        n, b, _v = votos[preside]
+        votos[preside] = (n, b, {"A FAVOR": "SI", "EN CONTRA": "NO"}.get(m_const.group(1), "ABST"))
     return {"tipo": tipo, "fecha": _fecha_a_iso(m.group(2)), "hora": _hora24(m.group(3), m.group(4), m.group(5)),
             "asunto": asunto, "votos": votos, "totales": totales, "cuadra": cuadra}
+
+
+_VOTOS = ("si", "no", "abst", "sin_resp")
+
+
+def cuadro_bancadas(ls, y_fin: float, siglas: set[str]) -> dict[str, dict[str, int]]:
+    """Cuadro "Grupo Parlamentario | Si+++ No--- Abst. Sin Resp." de abajo:
+    {sigla: {si, no, abst, sin_resp}}. {} si no esta o no se lee entero."""
+    cab = next(((y, ws) for y, ws in ls if y >= y_fin and any(_limpia(t) == "GRUPO" for _, t in ws)), None)
+    if not cab:
+        return {}
+    xs = {}
+    for x, t in cab[1]:
+        t = _limpia(t)
+        for k, pref in (("si", "SI"), ("no", "NO"), ("abst", "ABST"), ("sin_resp", "SIN")):
+            if t.startswith(pref) and k not in xs and x > 300:
+                xs[k] = x
+    if len(xs) < 4:
+        return {}
+    out = {}
+    for y, ws in ls:
+        if y <= cab[0]:
+            continue
+        sigla = next((t for _, t in ws if t in siglas), None)
+        if not sigla:
+            continue
+        fila = {}  # cada numero a la columna mas cercana ("Sin Resp." centra a la derecha de "Sin")
+        for x, t in ws:
+            if x > 300 and _numero(t) is not None:
+                k = min(xs, key=lambda k: abs(xs[k] - x))
+                if abs(xs[k] - x) <= 25:
+                    fila.setdefault(k, _numero(t))
+        if len(fila) == 4:
+            out[sigla] = fila
+    return out if len(out) == len(siglas) else {}
+
+
+def _por_bancada(votos) -> dict[str, collections.Counter]:
+    out: dict[str, collections.Counter] = collections.defaultdict(collections.Counter)
+    for _, b, v in votos:
+        out[b][v] += 1
+    return out
+
+
+def _cuadra(votos, totales: dict, tabla: dict) -> bool:
+    """Con cuadro por bancada: cada bancada igual al cuadro en SI/NO/ABST/SIN RESP
+    y el resto (ausentes, licencias) igual al cuadro Resultado. Sin cuadro
+    (asistencias, PDF viejos): todo contra el cuadro Resultado."""
+    if not votos or not ("si" in totales or "pre" in totales):
+        return False
+    conteo = collections.Counter(v for _, _, v in votos)
+    if tabla:
+        pb = _por_bancada(votos)
+        if any(pb[b][_CODIGO[k]] != t[k] for b, t in tabla.items() for k in _VOTOS):
+            return False
+        if any(pb[b][_CODIGO[k]] for b in pb if b not in tabla for k in _VOTOS):
+            return False
+        claves = [k for k in _CODIGO if k in totales and k not in _VOTOS]
+    else:
+        claves = [k for k in _CODIGO if k in totales]
+    return all(conteo[_CODIGO[k]] == totales[k] for k in claves)
+
+
+def _reparar(votos: list, tabla: dict, preside: int | None = None) -> bool:
+    """El OCR a veces no lee un voto (queda SIN RESP) o lo lee mal. Si en una
+    bancada el cuadro dice que falta exactamente 1 en una columna y sobra 1
+    en otra, y en esa otra hay una sola fila (sin contar al que preside, que
+    no vota en el sistema), esa fila es la mal leida.
+    Devuelve True si cambio algo."""
+    cambio = False
+    pb = _por_bancada(votos)
+    for b, t in tabla.items():
+        diff = {k: t[k] - pb[b][_CODIGO[k]] for k in _VOTOS}
+        falta = [k for k, d in diff.items() if d == 1]
+        sobra = [k for k, d in diff.items() if d == -1]
+        if len(falta) == 1 and len(sobra) == 1 and sum(abs(d) for d in diff.values()) == 2:
+            filas = [i for i, (_, b2, v) in enumerate(votos) if b2 == b and v == _CODIGO[sobra[0]] and i != preside]
+            if len(filas) == 1:
+                n, _, _ = votos[filas[0]]
+                votos[filas[0]] = (n, b, _CODIGO[falta[0]])
+                cambio = True
+    return cambio
 
 
 def pley_de_asunto(asunto: str) -> int | None:

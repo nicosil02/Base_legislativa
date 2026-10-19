@@ -96,3 +96,35 @@ def test_guardar_idempotente_y_gana_la_que_cuadra():
     assert d["QUITO SARMIENTO"]["pct_alineado"] == 100.0
     assert d["BONIFAZ CARMONA, NORA"]["pct_alineado"] == 0.0
     assert "TORRES MORALES, MIGUEL" not in d  # SINRESP no es postura
+
+
+def _pagina_ocr(nombre):
+    import gzip
+    import json
+    from pathlib import Path
+    with gzip.open(Path(__file__).with_name("ocr_paginas_reales.json.gz"), "rt", encoding="utf-8") as f:
+        return [tuple(w) for w in json.load(f)[nombre]]
+
+
+def test_votos_registrados_despues_cuadran_con_el_cuadro_por_bancada():
+    # Diputados 13/08 17:21: "se anunciaron 115 votos a favor, habiendose
+    # registrado 120". La lista y el cuadro por bancada traen 120.
+    b = parse_pagina(_pagina_ocr("diputados_2026-08-13_1721"), tol=5)
+    assert b["cuadra"]
+    assert b["totales"]["si"] == 120 and b["totales"]["si_anunciado"] == 115
+
+
+def test_ocr_que_no_leyo_un_voto_se_repara_con_el_cuadro_y_constancia_del_presidente():
+    # Senado 09/09 18:02: el OCR no leyo el SI de Velasquez Garcia (RP); el
+    # cuadro dice RP 8 SI y 0 sin respuesta. Torres Morales preside y deja
+    # constancia de su voto a favor.
+    b = parse_pagina(_pagina_ocr("senado_2026-09-09_1802"), tol=5)
+    assert b["cuadra"]
+    votos = {n: v for n, _b, v in b["votos"]}
+    assert votos["VELÁSQUEZ GARCÍA, MIGUEL"] == "SI"
+    assert votos["TORRES MORALES, MIGUEL"] == "SI"
+
+
+def test_el_que_preside_no_es_candidato_a_reparar():
+    # Senado 09/09 15:57: FP tiene 2 sin respuesta (el presidente y una mal leida)
+    assert parse_pagina(_pagina_ocr("senado_2026-09-09_1557"), tol=5)["cuadra"]
