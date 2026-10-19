@@ -61,7 +61,7 @@ Se cargan en Settings > Secrets and variables > Actions del repo.
 
 | Secreto | Para que sirve |
 |---|---|
-| `GEMINI_API_KEY` | Gemini (tier gratis) para resumir sesiones, avisos de TV, grafo del cerebro y el juez "mismo hecho" |
+| `GEMINI_API_KEY` | Gemini (tier gratis) para resumir sesiones, avisos de TV, grafo del cerebro y el juez "mismo hecho". Tambien es la clave de los datos de clientes (llega a cada workflow como `CLIENTES_CLAVE`, ver seccion 6b) |
 | `TELEGRAM_BOT_TOKEN` | Token del bot de alertas (@RadarValiAlertasBot) |
 | `TELEGRAM_CHAT_ID` | Chat o grupo donde el bot manda los avisos |
 | `CALLMEBOT_PHONE` | Numero de WhatsApp para CallMeBot (respaldo si Telegram falla) |
@@ -106,6 +106,23 @@ rama `main`, archivo `app.py` y Python 3.13.
 - **Google Cloud (OAuth)** tiene el cliente del login con Google, de donde
   salen `client_id` y `client_secret`. La URL de redireccion es la de la app
   terminada en `/oauth2callback`.
+
+## 6b. Datos de clientes (cifrados)
+
+El repo es publico, asi que perfiles, historial de alertas y matrices de
+clientes van en git solo como `clientes/**/*.cifrado` (`clientes/privado.py`).
+La web y los workflows los abren solos con el valor de `GEMINI_API_KEY`. En
+una PC nueva:
+
+```bash
+export CLIENTES_CLAVE="<el mismo valor de GEMINI_API_KEY>"
+python -m clientes.privado abrir      # .cifrado -> texto (tras git pull: --pisar)
+python -m clientes.privado cerrar     # texto -> .cifrado, antes de hacer commit
+```
+
+Sin la clave la app arranca igual, pero sin clientes. Si se cambia la clave
+de Gemini: primero `abrir` con la vieja, despues `cerrar` con la nueva y
+recien ahi cambiar el secreto.
 
 ## 7. Subir una version
 
