@@ -19,6 +19,8 @@ import streamlit as st
 
 from ui_kit import inject_button_polish
 
+from clientes.privado import abrir as _abrir_clientes  # noqa: E402
+
 # Cargar .env local (Streamlit Cloud usa st.secrets — se mapean a env vars
 # automaticamente via [secrets] section).
 _REPO_ROOT = Path(__file__).resolve().parent
@@ -374,6 +376,13 @@ if _logo_path is not None:
 
 
 # ─── CSS adicional: logo más grande + ocultar texto de íconos Material ─────
+# Datos de clientes cifrados en el repo (clientes/privado.py): en cada
+# ejecucion, por si un deploy nuevo borro el texto sin reiniciar el proceso.
+try:
+    _abrir_clientes()
+except Exception as _e:
+    print(f"[clientes] no pude abrir los datos cifrados: {_e}")
+
 # Aplica en todas las páginas (app.py se ejecuta antes de cada st.Page).
 # Mínimo, defensivo, sin @import ni :has() ni JS — para no romper nada.
 st.markdown(

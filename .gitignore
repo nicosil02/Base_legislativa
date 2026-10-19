@@ -35,46 +35,17 @@ scripts/recon_agenda_output.json
 # Proyecto aparte (mapas electorales geopandas), creado aquí por error
 mapa_electoral/
 
-# Notas y bluebooks de clientes: info de negocio confidencial, este repo es
-# publico. Se versiona SOLO notas.md/historial_alertas.md/formato_alertas.md
-# de cada cliente (lo que alerts/relevancia.py y el filtro Cliente necesitan
-# leer de verdad) - decision explicita de Nicolas, 2026-09-13. Todo lo demas
-# (bluebooks originales que dieron los propios clientes, clientes/chat.txt
-# con el chat interno del equipo) sigue local-only, nada de eso lo lee el
-# codigo en runtime.
-#
-# clientes/_plantillas/whatsapp_alerta.md y ejemplos_alertas.md SI se
-# versionan aparte (bug encontrado 2026-09-13: el agente programado de
-# alertas corre en un clone fresco del repo y los necesita para redactar -
-# no son confidenciales de ningun cliente puntual, son la guia de estilo
-# propia de Vali). El resto de _plantillas/ (bluebooks de referencia, docs
-# sin uso en runtime) sigue local-only.
-#
-# clientes/_plantillas/matriz_monitoreo/ SI se versiona (decision explicita
-# de Nicolas, 2026-09-16: "no hay problema que se publique") - es
-# investigacion de URLs de gobierno reales (PE/EC), no info de negocio
-# confidencial de ningun cliente puntual.
+# Datos de clientes (perfiles, historial de alertas, matrices): el repo es
+# publico, asi que van CIFRADOS (`*.cifrado`, ver clientes/privado.py) desde
+# 2026-10-19; el texto queda solo local. Lo demas de clientes/ (bluebooks
+# originales, Word de alertas, reportes, chat interno) no se sube nunca.
 clientes/*
 !clientes/*/
 clientes/*/*
-!clientes/*/notas.md
-!clientes/*/cliente.json
-!clientes/*/historial_alertas.md
-!clientes/*/formato_alertas.md
-!clientes/_plantillas/whatsapp_alerta.md
-!clientes/_plantillas/ejemplos_alertas.md
 !clientes/_plantillas/matriz_monitoreo/
-!clientes/_plantillas/matriz_monitoreo/*
-!clientes/test_*.py
-
-# Matrices puntuales de PLs (Bayer Crop/Syngenta, Incode) - decision
-# explicita de Nicolas 2026-09-13: se versionan para que la app en
-# produccion (Streamlit Cloud) pueda leerlas (mismo trato que notas.md).
-!clientes/MatrizPLAndinos_Bayer CROP.xlsx
-!clientes/140125 - Matriz - Matriz Legislativa y Regulatoria INCODE.xlsx
-!clientes/matrices.py
-!clientes/config.py
-!clientes/alertas_pl.py
+clientes/_plantillas/matriz_monitoreo/*
+!clientes/**/*.cifrado
+!clientes/*.py
 
 # Las bases comprimidas YA NO van en main (2026-09-27): sus versiones llevaron
 # el repo a 15 GB. Viven en la rama `datos` (scripts/publicar_db.sh); la app y

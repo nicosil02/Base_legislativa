@@ -23,6 +23,8 @@ concurrency:
   cancel-in-progress: false
 
 env:
+  # Abre los datos cifrados de clientes (clientes/privado.py).
+  CLIENTES_CLAVE: ${{ secrets.GEMINI_API_KEY }}
   VUELTAS: 10  # una cada 30 min, ~5 h por corrida
 
 jobs:
