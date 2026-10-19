@@ -1,0 +1,66 @@
+name: Votaciones Pleno bicameral (OCR de escaneados)
+
+# Las paginas escaneadas de "Votaciones y Asistencias" (Senado y Diputados)
+# que refrescar-pe cuenta y salta (pleno_votacion_pdf.paginas_sin_texto).
+# Aparte de refrescar-pe porque PaddleOCR pesa cientos de MB y tarda
+# ~10-20 s por pagina en CPU. Solo publica su parte (votaciones), que se une
+# fila por fila con lo que publica refrescar-pe.
+
+on:
+  schedule:
+    - cron: '30 12 * * *'   # 7:30am Lima, despues de la corrida nocturna de refrescar-pe
+  workflow_dispatch:
+    inputs:
+      minutos:
+        description: 'Minutos de OCR como maximo (lo que falte queda para la proxima)'
+        default: '90'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: votaciones-ocr-bicameral
+  cancel-in-progress: false
+
+jobs:
+  ocr:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Bajar proyectos.db de la rama datos
+        run: |
+          pip install requests pymupdf
+          bash scripts/bajar_db.sh proyectos.db.gz proyectos.db
+
+      - name: Ver si hay paginas pendientes
+        id: pend
+        run: |
+          N=$(python -X utf8 -c "
+          import sqlite3
+          from votaciones.pleno_bicameral import init_schema
+          from votaciones.pleno_bicameral_ocr import pendientes
+          c = sqlite3.connect('proyectos.db'); init_schema(c)
+          print(len(pendientes(c)))")
+          echo "PDF con paginas escaneadas pendientes: $N"
+          echo "n=$N" >> "$GITHUB_OUTPUT"
+
+      - name: Instalar OCR
+        if: steps.pend.outputs.n != '0'
+        # paddlepaddle fijo en 3.2.2 (3.3.x rompe en CPU con oneDNN, ver refrescar-pe.yml)
+        run: pip install pillow numpy "paddlepaddle==3.2.2" paddleocr
+
+      - name: OCR
+        if: steps.pend.outputs.n != '0'
+        run: python -X utf8 -u -m votaciones.pleno_bicameral_ocr --minutos "${{ inputs.minutos || '90' }}"
+
+      - name: Publicar parte votaciones
+        if: steps.pend.outputs.n != '0'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          bash scripts/publicar_db.sh proyectos.db votaciones
