@@ -4,6 +4,7 @@ from core import store
 
 def test_agregar_y_leer(tmp_path, monkeypatch):
     monkeypatch.delenv("GH_TOKEN", raising=False)
+    monkeypatch.setenv("CLIENTES_CLAVE", "clave-de-prueba")
     monkeypatch.setattr(store, "ROOT", tmp_path)
     monkeypatch.setattr(historial, "ROOT", tmp_path)
     e = historial.entrada("Minsa en reorganización", "*Texto* de la alerta", "Perú",

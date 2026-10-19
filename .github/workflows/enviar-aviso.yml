@@ -12,6 +12,12 @@ on:
 permissions:
   contents: read
 
+
+env:
+  # Abre los datos cifrados de clientes (clientes/privado.py). Otro nombre que
+  # GEMINI_API_KEY para no prender Gemini en pasos que no lo usan.
+  CLIENTES_CLAVE: ${{ secrets.GEMINI_API_KEY }}
+
 jobs:
   enviar:
     runs-on: ubuntu-latest

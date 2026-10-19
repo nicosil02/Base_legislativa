@@ -1,0 +1,43 @@
+name: Cifrar datos de clientes (una vez)
+
+# Pasa los datos de clientes que estaban en claro en el repo publico a
+# `*.cifrado` (clientes/privado.py) con la clave que ya tienen los secretos,
+# sin que salga de GitHub. Se corre a mano una vez; despues se puede borrar.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+env:
+  CLIENTES_CLAVE: ${{ secrets.GEMINI_API_KEY }}
+
+jobs:
+  cifrar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Cifrar, comprobar y sacar el texto del repo
+        run: |
+          python -X utf8 -m clientes.privado cerrar
+          python -X utf8 -c "
+          from clientes import privado
+          ps = privado.privados()
+          for p in ps:
+              c = p.with_name(p.name + privado.SUFIJO)
+              assert privado.descifrar(c.read_text(encoding='ascii')) == p.read_bytes(), p
+          print('ida y vuelta ok:', len(ps))"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          python -X utf8 -c "
+          from clientes import privado
+          print('\n'.join(str(p) for p in privado.privados()))" > /tmp/texto.txt
+          tr '\n' '\0' < /tmp/texto.txt | xargs -0 git rm -q --cached --
+          git add clientes
+          git status --short | head -50
+          git commit -q -m "clientes: datos cifrados en el repo (clientes/privado.py); el texto sale de git"
+          for i in 1 2 3; do git pull -q --rebase origin main && git push -q origin HEAD:main && break; sleep 5; done

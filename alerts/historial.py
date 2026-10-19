@@ -5,7 +5,7 @@ from __future__ import annotations
 import re
 from datetime import date
 
-from clientes import config
+from clientes import config, privado
 from core import store
 from core.db import ROOT
 
@@ -18,9 +18,10 @@ def ruta(slug: str) -> str:
 
 def leer(slug: str) -> str:
     """Lo ultimo publicado (GitHub si hay credenciales), asi una alerta
-    recien guardada entra al contexto sin esperar el redeploy."""
-    texto, _ = store.leer_texto(ruta(slug), "")
-    return texto or ""
+    recien guardada entra al contexto sin esperar el redeploy. En el repo
+    va cifrado (clientes/privado.py)."""
+    texto, _ = store.leer_texto(ruta(slug) + privado.SUFIJO, None)
+    return privado.descifrar(texto).decode("utf-8") if texto else ""
 
 
 def entrada(titulo: str, texto: str, pais: str, url: str | None = None,
@@ -31,11 +32,21 @@ def entrada(titulo: str, texto: str, pais: str, url: str | None = None,
 
 
 def agregar(slug: str, entrada_md: str, autor: str | None = None) -> None:
-    """Agrega la entrada al final del historial (commit en GitHub)."""
-    store.actualizar_texto(
-        ruta(slug), lambda t: t.rstrip() + "\n\n" + entrada_md,
-        f"alertas: enviada a {slug}" + (f" ({autor})" if autor else ""),
-        default=f"# {slug} — historial de alertas enviadas\n\n---\n")
+    """Agrega la entrada al final del historial (commit en GitHub, cifrado)
+    y deja la copia local en texto al dia."""
+    nuevo = {}
+
+    def cambio(cifrado: str) -> str:
+        texto = (privado.descifrar(cifrado).decode("utf-8") if cifrado
+                 else f"# {slug} — historial de alertas enviadas\n\n---\n")
+        nuevo["texto"] = texto.rstrip() + "\n\n" + entrada_md
+        return privado.cifrar(nuevo["texto"].encode("utf-8"))
+
+    store.actualizar_texto(ruta(slug) + privado.SUFIJO, cambio,
+                           f"alertas: enviada a {slug}" + (f" ({autor})" if autor else ""))
+    local = ROOT / ruta(slug)
+    local.parent.mkdir(parents=True, exist_ok=True)
+    local.write_text(nuevo["texto"], encoding="utf-8")
 
 
 def entradas(slug: str, texto: str | None = None) -> list[dict]:
