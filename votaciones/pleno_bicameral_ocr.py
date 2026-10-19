@@ -197,7 +197,7 @@ def bloques_pdf(pdf_bytes: bytes, ocr) -> tuple[list[dict], int]:
 
 # Cambio del parser que puede hacer cuadrar lo que antes no: los PDF con
 # bloques que no cuadraban, procesados antes de esta fecha, se rehacen una vez.
-PARSER_DESDE = "2026-10-19T02:00:00Z"  # validacion por cuadro de bancadas + votos registrados despues
+PARSER_DESDE = "2026-10-19T02:40:00Z"  # cuadro de bancadas tambien en asistencias + ausentes de mas en Resultado
 
 
 def pendientes(conn: sqlite3.Connection) -> list[tuple[str, str]]:
