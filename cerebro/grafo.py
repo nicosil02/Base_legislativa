@@ -111,7 +111,9 @@ async def _rag():
     # embebe miles de entidades y relaciones, y el tier gratuito de Gemini
     # corta en 1000 textos/dia. Gemini queda solo para extraer entidades y
     # redactar respuestas.
-    from cerebro.embeddings import DIM, MODELO, embeber
+    # En la app web el modelo no se carga (tumbaba Streamlit): proceso aparte.
+    from cerebro.embeddings import DIM, MODELO, _en_app_web, embeber, embeber_aparte
+    embeber = embeber_aparte if _en_app_web() else embeber
 
     # max_token_size alto a propósito: con 128 LightRAG parte cada documento
     # antes de extraer entidades (~20x más llamadas a Gemini).
@@ -275,7 +277,7 @@ async def _preguntar(pregunta: str, modo: str) -> str:
     from lightrag import QueryParam
     rag = await _rag()
     try:
-        return await rag.aquery(pregunta, param=QueryParam(
+        r = await rag.aquery_llm(pregunta, param=QueryParam(
             mode=modo,
             enable_rerank=False,  # no hay modelo de rerank configurado (evita el aviso)
             # Mismas reglas de escritura que las alertas; sin esto abría con un saludo.
@@ -284,6 +286,11 @@ async def _preguntar(pregunta: str, modo: str) -> str:
                          "frases de relleno. Cita los PL, sesiones y noticias concretos en que "
                          "te basas. Si la información no está, dilo en vez de suponer."),
         ))
+        # aquery() se traga los errores y devuelve None (la web mostraba "None").
+        texto = (r.get("llm_response") or {}).get("content")
+        if not texto:
+            raise RuntimeError(r.get("message") or "el grafo no devolvio respuesta")
+        return texto
     finally:
         await rag.finalize_storages()
 
