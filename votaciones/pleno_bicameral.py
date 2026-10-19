@@ -169,14 +169,15 @@ def parse_pagina(words, tol: float = 3) -> dict | None:
     if tabla and not cuadra:
         cuadra = _reparar(votos, tabla, preside) and _cuadra(votos, totales, tabla)
     if cuadra and tabla:
-        # El conteo real es el de la lista (= cuadro por bancada); el cuadro
-        # "Resultado" trae lo anunciado en sala, que a veces es menos (votos
-        # registrados despues: "se anunciaron 115 ... habiendose registrado 120").
+        # Resultado oficial = lo anunciado en sala (cuadro "Resultado", lo que
+        # vale y queda en el acta). La lista nominal y el cuadro por bancada
+        # pueden traer otra cifra (votos registrados antes o despues del
+        # anuncio, nota al pie: "se anunciaron 115 ... habiendose registrado
+        # 120"): va aparte, y la lista es la que dice quien voto que.
         for k in _VOTOS:
-            real = sum(t[k] for t in tabla.values())
-            if k in totales and totales[k] != real:
-                totales[f"{k}_anunciado"] = totales[k]
-            totales[k] = real
+            registrado = sum(t[k] for t in tabla.values())
+            if totales.get(k) != registrado:
+                totales[f"{k}_registrado"] = registrado
     # "El senador X, presidente ..., deja constancia de su voto a favor": el
     # que preside no vota en el sistema, pero su voto queda en el acta.
     nota = _limpia(" ".join(t for y, ws in ls if y >= y_fin for x, t in ws if x > 200))  # sin la columna Resultado

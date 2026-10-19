@@ -111,7 +111,9 @@ def test_votos_registrados_despues_cuadran_con_el_cuadro_por_bancada():
     # registrado 120". La lista y el cuadro por bancada traen 120.
     b = parse_pagina(_pagina_ocr("diputados_2026-08-13_1721"), tol=5)
     assert b["cuadra"]
-    assert b["totales"]["si"] == 120 and b["totales"]["si_anunciado"] == 115
+    # oficial = lo anunciado; lo registrado (lista nominal) va aparte
+    assert b["totales"]["si"] == 115 and b["totales"]["si_registrado"] == 120
+    assert sum(v == "SI" for _n, _b, v in b["votos"]) == 120
 
 
 def test_ocr_que_no_leyo_un_voto_se_repara_con_el_cuadro_y_constancia_del_presidente():
