@@ -1,0 +1,49 @@
+name: Vigia de salud
+
+# Avisa por Telegram si un workflow no corrio en su horario, fallo 2 veces
+# seguidas, la rama datos lleva 12+ h sin publicar o WARP no conecto
+# (sistema/salud.py). Un aviso por problema y otro cuando se recupera.
+#
+# Dos disparadores porque el cron nativo no es confiable: el horario y el fin
+# de cada corrida de refrescar-pe. salud.py se salta si ya reviso hace menos
+# de 50 min. Corrida liviana (~1 min, solo la API de GitHub).
+
+on:
+  schedule:
+    - cron: '23 * * * *'
+  workflow_run:
+    workflows: ["Actualizar Peru (PLs + snapshot)"]
+    types: [completed]
+  workflow_dispatch:
+
+permissions:
+  contents: write  # guarda data/salud_estado.json (core.store)
+  actions: read
+  checks: read     # anotaciones de WARP
+
+concurrency:
+  group: salud
+  cancel-in-progress: false
+
+jobs:
+  revisar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main  # workflow_run arranca en el commit del disparo
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: pip install -q requests pyyaml
+      - env:
+          GITHUB_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          CALLMEBOT_PHONE: ${{ secrets.CALLMEBOT_PHONE }}
+          CALLMEBOT_APIKEY: ${{ secrets.CALLMEBOT_APIKEY }}
+          PYTHONIOENCODING: utf-8
+        run: python -X utf8 -m sistema.salud ${{ github.event_name == 'workflow_dispatch' && '--forzar' || '' }}
