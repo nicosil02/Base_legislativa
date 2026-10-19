@@ -573,15 +573,6 @@ with tab_mesas:
 
 
 
-@st.cache_resource(show_spinner=False)
-def _modelo_whisper():
-    """Modelo de transcripcion cargado 1 sola vez por proceso (tarda ~30s
-    la primera vez, instantaneo despues) - usado por el boton "Transcribir
-    en vivo" de la pestaña Transcripciones."""
-    from faster_whisper import WhisperModel
-    return WhisperModel("small", device="cpu", compute_type="int8")
-
-
 def _render_resumen_card(res: dict, titulo_caja: str = "Resumen",
                           max_ideas: int = 3) -> None:
     """Tarjeta de resumen + ideas clave + cruce de agenda (si hay) para 1
@@ -640,15 +631,14 @@ with tab_transcripciones:
     if _vivos:
         st.markdown("##### 🔴 En vivo ahora")
         st.caption(
-            "Si `python -m congreso_live.cli live-watch` está corriendo en "
-            "background, estas sesiones ya se transcriben y resumen solas — "
-            "lo último que se sabe de cada una aparece acá abajo."
+            "GitHub detecta cada sesión en vivo y la transcribe sola. Lo último "
+            "que se sabe de cada una aparece acá abajo."
         )
         from congreso_live.resumenes_store import list_resumenes as _list_resumenes_vivo
         _resumenes_vivo = _list_resumenes_vivo()
         for _v in _vivos:
             with st.container(border=True):
-                cols_v = st.columns([5, 1.3])
+                cols_v = st.columns([1])
                 cols_v[0].markdown(f"**{_v['tipo']}** — {_v['titulo'][:90]}")
 
                 _estado = _estado_transcripcion_vivo(_v["id"])
@@ -670,56 +660,10 @@ with tab_transcripciones:
                         )
                 else:
                     cols_v[0].caption(
-                        "Todavía no se está transcribiendo automáticamente. "
-                        "Ejecuta `python -m congreso_live.cli live-watch` para "
-                        "que arranque sola, o prueba un vistazo rápido aquí:"
+                        "Todavía no aparece transcripción. GitHub revisa cada 10 minutos, "
+                        "publica el avance cada 5 y la web lo baja cada 10, así que una "
+                        "sesión recién empezada puede tardar unos 20 a 25 minutos en verse acá."
                     )
-
-                # Motivo mas probable de que este boton falle en cualquier
-                # paso (dep faltante o captura vacia): el mismo bloqueo de
-                # IP de datacenter que ya documentamos para sync-transcripciones.
-                # Un solo texto para no repetir la explicacion 2 veces.
-                _bloqueo_ip = (
-                    "Si esto corre en Streamlit Cloud o GitHub Actions, es casi seguro "
-                    "el bloqueo anti-bot de YouTube contra IPs de datacenter (mismo "
-                    "problema ya documentado para sync-transcripciones)."
-                )
-                if cols_v[1].button("Transcribir 30s", key=f"live_tr_{_v['id']}"):
-                    with st.spinner(
-                        "Escuchando los últimos 30 segundos de audio real "
-                        "(no se puede ir más rápido que tiempo real)..."
-                    ):
-                        # imageio_ffmpeg/faster_whisper se importan recien al
-                        # usarlos (dentro de capturar/transcribir), asi que el
-                        # ImportError tambien puede saltar abajo, no solo aca.
-                        _falta_dep = (
-                            "Este botón solo funciona en una instalación local: en la web "
-                            "no están `faster-whisper`/`imageio-ffmpeg` a propósito (pesan "
-                            "~200 MB). La sesión se transcribe sola desde GitHub Actions, "
-                            "el avance aparece a la izquierda."
-                        )
-                        try:
-                            from congreso_live.live_transcribe import (
-                                capturar_audio_en_vivo, transcribir_audio,
-                            )
-                        except ImportError:
-                            st.error(_falta_dep)
-                        else:
-                            try:
-                                wav = capturar_audio_en_vivo(_v["id"], segundos=30)
-                                if wav is None:
-                                    st.error(f"No se pudo capturar audio. {_bloqueo_ip}")
-                                else:
-                                    segs = transcribir_audio(wav, _modelo_whisper())
-                                    if not segs:
-                                        st.warning("Se capturó audio pero no se detectó habla clara.")
-                                    else:
-                                        st.success(f"Transcripto — últimos {segs[-1]['end']:.0f}s de audio real:")
-                                        st.markdown(" ".join(s["text"] for s in segs))
-                            except ImportError:
-                                st.error(_falta_dep)
-                            except Exception as e:
-                                st.error(f"No se pudo transcribir: {e}")
         st.markdown("")
 
     st.markdown(
