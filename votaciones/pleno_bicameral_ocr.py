@@ -195,11 +195,19 @@ def bloques_pdf(pdf_bytes: bytes, ocr) -> tuple[list[dict], int]:
     return bloques, n_ocr
 
 
+# Cambio del parser que puede hacer cuadrar lo que antes no: los PDF con
+# bloques que no cuadraban, procesados antes de esta fecha, se rehacen una vez.
+PARSER_DESDE = "2026-10-19T02:00:00Z"  # validacion por cuadro de bancadas + votos registrados despues
+
+
 def pendientes(conn: sqlite3.Connection) -> list[tuple[str, str]]:
-    """[(camara, pdf_url)] con paginas escaneadas que todavia no pasaron por OCR."""
+    """[(camara, pdf_url)] con paginas escaneadas que todavia no pasaron por OCR
+    (o que no cuadraban con un parser anterior a PARSER_DESDE)."""
     return [tuple(r) for r in conn.execute(
         "SELECT camara, pdf_url FROM pleno_votacion_pdf WHERE paginas_sin_texto > 0 "
-        "AND pdf_url NOT IN (SELECT pdf_url FROM pleno_votacion_ocr) ORDER BY fecha")]
+        "AND pdf_url NOT IN (SELECT pdf_url FROM pleno_votacion_ocr "
+        "                    WHERE cuadran >= bloques OR fetched_at >= ?) ORDER BY fecha",
+        (PARSER_DESDE,))]
 
 
 def run(db_path: str, minutos: float = 90) -> dict:
@@ -218,7 +226,11 @@ def run(db_path: str, minutos: float = 90) -> dict:
         if time.time() > fin:  # lo que falte va en la proxima corrida
             break
         try:
-            r = session.get(url, timeout=120)
+            try:
+                r = session.get(url, timeout=120)
+            except requests.RequestException:  # el Senado a veces no responde a la primera
+                time.sleep(30)
+                r = session.get(url, timeout=180)
             r.raise_for_status()
             bloques, n_ocr = bloques_pdf(r.content, ocr)
         except Exception as e:
@@ -234,6 +246,7 @@ def run(db_path: str, minutos: float = 90) -> dict:
         stats["bloques"] += len(bloques)
         stats["cuadran"] += cuadran
         log.info("%s: %s paginas OCR, %s bloques, %s cuadran", url.rsplit("/", 1)[-1], n_ocr, len(bloques), cuadran)
+    stats["pendientes"] = len(pendientes(conn))  # lo que queda para la proxima corrida
     conn.close()
     return stats
 

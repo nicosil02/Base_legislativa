@@ -58,5 +58,10 @@ def test_pendientes():
     c.executemany("INSERT INTO pleno_votacion_pdf VALUES (?,?,?,?,?,?)", [
         ("a.pdf", "senado", "2026-09-30", 5, 0, ""), ("b.pdf", "senado", "2026-10-07", 0, 5, ""),
         ("c.pdf", "diputados", "2026-08-05", 6, 0, "")])
-    c.execute("INSERT INTO pleno_votacion_ocr VALUES ('c.pdf', 6, 6, 5, '')")
+    c.execute("INSERT INTO pleno_votacion_ocr VALUES ('c.pdf', 6, 6, 6, '')")
+    assert pendientes(c) == [("senado", "a.pdf")]
+    # no cuadraba con el parser viejo: se rehace una vez; con el nuevo, no
+    c.execute("UPDATE pleno_votacion_ocr SET cuadran = 5, fetched_at = '2026-10-18T10:00:00Z'")
+    assert pendientes(c) == [("diputados", "c.pdf"), ("senado", "a.pdf")]
+    c.execute("UPDATE pleno_votacion_ocr SET fetched_at = '2026-10-20T10:00:00Z'")
     assert pendientes(c) == [("senado", "a.pdf")]
