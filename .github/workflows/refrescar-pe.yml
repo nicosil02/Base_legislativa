@@ -190,6 +190,10 @@ jobs:
           # visitando el articulo (--limit acota el tiempo por corrida).
           timeout 300 python -X utf8 -m noticias.cli backfill-fechas --limit 300 \
               || echo "[warn] noticias backfill-fechas fallo, sigo"
+          # Antes de la purga: anota la ultima noticia de cada fuente y avisa
+          # por Telegram las que llevan 7+ dias sin traer nada.
+          timeout 60 python -X utf8 -m noticias.fuentes_caidas \
+              || echo "[warn] fuentes caidas fallo, sigo"
           # Purge: la UI muestra por defecto solo "hoy"; conservamos 7d
           # como buffer historico para evitar que la DB crezca infinito.
           timeout 120 python -X utf8 -m noticias.cli purge --dias 7 \
