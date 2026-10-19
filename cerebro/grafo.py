@@ -40,7 +40,7 @@ RELEASE_URL = "https://github.com/nicosil02/Base_legislativa/releases/download/c
 # No gemini-3.6-flash: su cupo gratuito (20/día) es el de los chats y una
 # corrida del grafo lo agotó. Gemma solo si flash-lite se queda sin cupo.
 LLM = "gemini-3.5-flash-lite"
-LLM_RESPALDO = "gemma-4-26b-a4b-it"
+LLM_RESPALDO = "gemma-4-26b-a4b-it"  # = core.llm.GEMMA
 DIAS_PL = 60
 DIAS_NOTICIAS = 30
 AFINIDAD_NOTICIA = 0.62  # ponytail: a ojo sobre la prueba de Bayer (0.68-0.72 lo relevante, <0.55 lo ajeno); calibrar

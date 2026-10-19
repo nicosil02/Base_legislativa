@@ -217,12 +217,8 @@ def prompt(m: dict[str, list[str]]) -> str:
 
 
 def escribir(m: dict[str, list[str]], generar=llm.generar) -> str:
-    p = prompt(m)
-    try:
-        return generar(p, system=SYSTEM, modelo=llm.FLASH)
-    except Exception as e:  # cupo de flash (compartido con los chats): lite
-        print(f"[que_paso_hoy] flash fallo ({e}), uso lite")
-        return generar(p, system=SYSTEM, modelo=llm.LITE)
+    # Sin cupo de flash (compartido con los chats) llm.generar cae solo a lite.
+    return generar(prompt(m), system=SYSTEM, modelo=llm.FLASH)
 
 
 def partir(texto: str, largo: int = 3500) -> list[str]:
