@@ -114,7 +114,9 @@
   "xYH34kbaFJ8",
   "eyTg_e4hbjA",
   "wvYF_OCf-8M",
-  "8kasJA2x5GQ"
+  "8kasJA2x5GQ",
+  "Gk2Nok9Chtw",
+  "uAeYokHjLzA"
  ],
  "sesiones": [
   {
@@ -1007,6 +1009,22 @@
    "pais": "PE",
    "url": "https://www.youtube.com/watch?v=8kasJA2x5GQ",
    "visto_at": "2026-10-19T16:07:39Z"
+  },
+  {
+   "id": "Gk2Nok9Chtw",
+   "titulo": "🔴EN VIVO: Comisión de Defensa del Consumidor y Regulación de los Servicios Públicos | 19/10/2026",
+   "tipo": "Comision: Defensa Del Consumidor",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=Gk2Nok9Chtw",
+   "visto_at": "2026-10-19T16:12:46Z"
+  },
+  {
+   "id": "uAeYokHjLzA",
+   "titulo": "🔴EN VIVO: Comisión en asuntos de Salud, Educación, Mujer y Desarrollo Social y Digital l 19/10/2026",
+   "tipo": "Comision: Educacion",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=uAeYokHjLzA",
+   "visto_at": "2026-10-19T16:13:48Z"
   }
  ]
 }
