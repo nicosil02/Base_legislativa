@@ -215,21 +215,10 @@ jobs:
         # Ventana por hora real (steps.hora), no el string exacto del cron:
         # el cron nativo puede disparar tarde.
         if: steps.hora.outputs.hour == '13' || steps.hora.outputs.hour == '14' || github.event_name == 'workflow_dispatch'
-        run: |
-          # YouTube bloquea las IPs de datacenter de Actions ("not a bot"); el
-          # PO Token no alcanza y WARP si. Igual que vigilar-congreso.yml.
-          curl -fsSL --retry 3 --retry-delay 2 --retry-all-errors https://pkg.cloudflareclient.com/pubkey.gpg | sudo gpg --yes --dearmor --output /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg
-          echo "deb [signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] https://pkg.cloudflareclient.com/ $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/cloudflare-client.list
-          sudo apt-get update -qq
-          sudo apt-get install -y -qq cloudflare-warp
-          sudo systemctl enable --now warp-svc
-          sleep 3
-          warp-cli --accept-tos registration new
-          warp-cli --accept-tos mode proxy
-          warp-cli --accept-tos proxy port 40000
-          warp-cli --accept-tos connect
-          sleep 5
-          warp-cli --accept-tos status
+        # Si WARP no conecta el paso queda en rojo (lo ve sistema/salud.py)
+        # y la corrida sigue con lo que no depende de YouTube.
+        continue-on-error: true
+        run: bash scripts/warp.sh
 
       - name: Puente SOCKS5->HTTP para descargas de captions (privoxy :8118)
         # Ventana por hora real (steps.hora), no el string exacto del cron:
