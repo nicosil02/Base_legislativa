@@ -51,7 +51,7 @@ jobs:
 
       - name: Instalar deps
         run: |
-          pip install -q yt-dlp requests faster-whisper "av<19" imageio-ffmpeg playwright google-genai
+          pip install -c constraints.txt -q yt-dlp requests faster-whisper "av<19" imageio-ffmpeg playwright google-genai
           # Chromium para ver que comisiones EC estan en vivo en Facebook
           # (congreso_live/facebook_ec.py). Facebook va sin WARP.
           python -m playwright install --with-deps chromium > /dev/null

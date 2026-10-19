@@ -57,7 +57,7 @@ jobs:
 
       - name: Instalar deps
         run: |
-          pip install -q yt-dlp requests faster-whisper "av<19" imageio-ffmpeg
+          pip install -c constraints.txt -q yt-dlp requests faster-whisper "av<19" imageio-ffmpeg
           # ffmpeg de apt: el portable de imageio-ffmpeg crasheaba (SIGSEGV).
           sudo apt-get install -y -qq ffmpeg
 

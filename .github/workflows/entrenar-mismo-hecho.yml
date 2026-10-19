@@ -44,8 +44,8 @@ jobs:
           python-version: '3.13'
 
       - run: |
-          pip install -q torch --index-url https://download.pytorch.org/whl/cpu
-          pip install -q transformers google-genai sqlite-vec numpy
+          pip install -c constraints.txt -q torch --index-url https://download.pytorch.org/whl/cpu --extra-index-url https://pypi.org/simple
+          pip install -c constraints.txt -q transformers google-genai sqlite-vec numpy
 
       - name: Bajar DBs y el cerebro publicado
         env:

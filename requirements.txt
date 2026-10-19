@@ -1,41 +1,45 @@
-requests>=2.31
-pycryptodome>=3.20
-openpyxl>=3.1
-streamlit[auth]>=1.42
-pandas>=2.0
+# Lo que necesita la app de Streamlit. Streamlit Cloud instala este archivo.
+# Las versiones son las mismas de constraints.txt (las que corren hoy en CI);
+# si se sube una aca, subirla tambien alla. Local:
+#   pip install -r requirements.txt -c constraints.txt
+requests==2.34.2
+pycryptodome==4.0.1
+openpyxl==3.1.5
+streamlit[auth]==1.66.0
+pandas==3.0.6
 # Clasificador ML para temas de PLs (modulo clasificador/):
 # TF-IDF + LogisticRegression, entrenado con 14,589 PLs etiquetados a mano.
 # joblib (persiste el modelo) viene como dependencia de scikit-learn.
-scikit-learn>=1.4
-# Ecuador-only: usado por scraper_ec.playwright_detail para extraer URLs
-# públicas de PDFs desde el portal Ppless v2 (Angular SPA).
-# Requiere también `python -m playwright install chromium` después del pip install.
-playwright>=1.59
+scikit-learn==1.9.1
+# playwright NO va aca: solo lo usan los scrapers en los workflows
+# (scraper_ec, comisiones EC en Facebook), que lo instalan aparte. La app
+# nunca abre un navegador (Streamlit Cloud no tiene Chromium).
 # Cookies para persistir sesion: implementado via JS inyectado en
 # components.html (iframe srcdoc same-origin) + lectura via st.context.cookies.
 # No requiere libreria externa.
-cloudscraper
+cloudscraper==1.2.71
 # noticias.registro_oficial_ec: lee el PDF real de cada edicion (Corte
 # Constitucional EC) en vez de solo el indice en texto del post WP.
 # PyMuPDF extrae texto Y renderiza paginas a imagen sin depender de Poppler
 # (binario del sistema) - importa como `fitz`. El OCR de las paginas
 # escaneadas usa PaddleOCR, que NO va aca (pesa cientos de MB y la app
 # Streamlit no lo usa): se instala solo en refrescar-pe.yml.
-pymupdf>=1.24
-pillow>=10.0
+pymupdf==1.28.2
+# pillow<13: lo piden streamlit y fastembed.
+pillow==12.3.0
 # congreso_live: deteccion de Pleno/comisiones EN VIVO en YouTube (antes
 # solo lo usaba el workflow vigilar-congreso.yml via pip install ad-hoc;
 # ahora tambien lo usa la app para el banner "en vivo ahora").
-yt-dlp>=2026.8
+yt-dlp==2026.8.19
 # congreso_live.qa_chat: chat de preguntas sobre transcripciones. Gemini
 # (tier gratuito) en vez de la API de Claude para que no genere costo por
 # uso - decision de Nicolas 2026-09-15. GEMINI_API_KEY vive en st.secrets
 # (Streamlit Cloud) o .env (local), nunca en el codigo.
-google-genai>=1.0
+google-genai==2.31.0
 # cerebro/: busqueda por significado (vectores en data/cerebro.db) y grafo de
 # conocimiento (LightRAG, data/grafo/), ambos bajados del release "cerebro"
 # que arma .github/workflows/cerebro.yml. fastembed = modelo de embeddings
 # local (ONNX, ~120 MB, se baja solo la primera vez), sin API ni cupo.
-sqlite-vec>=0.1.6
-fastembed>=0.5
-lightrag-hku>=1.5
+sqlite-vec==0.1.9
+fastembed==0.9.0
+lightrag-hku==1.5.7

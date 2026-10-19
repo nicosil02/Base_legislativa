@@ -56,7 +56,7 @@ jobs:
         with:
           python-version: '3.13'
 
-      - run: pip install -q google-genai sqlite-vec lightrag-hku fastembed openpyxl  # openpyxl: matrices de PLs en el perfil del cliente
+      - run: pip install -c constraints.txt -q google-genai sqlite-vec lightrag-hku fastembed openpyxl  # openpyxl: matrices de PLs en el perfil del cliente
 
       - name: Bajar DBs y el cerebro publicado
         env:
@@ -96,8 +96,8 @@ jobs:
         run: |
           if gh release download cerebro -p mismo_hecho_modelo.tar.gz -D data --clobber; then
             tar -xzf data/mismo_hecho_modelo.tar.gz -C data
-            pip install -q torch --index-url https://download.pytorch.org/whl/cpu
-            pip install -q transformers
+            pip install -c constraints.txt -q torch --index-url https://download.pytorch.org/whl/cpu --extra-index-url https://pypi.org/simple
+            pip install -c constraints.txt -q transformers
           fi
           timeout 900 python -X utf8 -u -m noticias.mismo_hecho run
 
