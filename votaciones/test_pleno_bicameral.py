@@ -130,3 +130,18 @@ def test_ocr_que_no_leyo_un_voto_se_repara_con_el_cuadro_y_constancia_del_presid
 def test_el_que_preside_no_es_candidato_a_reparar():
     # Senado 09/09 15:57: FP tiene 2 sin respuesta (el presidente y una mal leida)
     assert parse_pagina(_pagina_ocr("senado_2026-09-09_1557"), tol=5)["cuadra"]
+
+
+def test_resultado_con_un_ausente_de_mas_cuadra_por_bancada():
+    # Senado 16/09 19:04: el Resultado dice 6 ausentes (61 en total, son 60);
+    # lista y cuadro por bancada traen 5. Los votos coinciden exactos.
+    b = parse_pagina(_pagina_ocr("senado_2026-09-16_1904"), tol=5)
+    assert b["cuadra"] and b["totales"]["aus"] == 6 and b["totales"]["aus_registrado"] == 5
+    assert b["totales"]["si"] == 34 and "si_registrado" not in b["totales"]
+
+
+def test_asistencia_se_valida_con_su_cuadro_por_bancada():
+    # Diputados 27/07: Resultado 85/45, cuadro por bancada 86/44 (con la
+    # errata "AUSEBTES" en la cabecera).
+    b = parse_pagina(_pagina_ocr("diputados_2026-07-27_asistencia"), tol=5)
+    assert b["cuadra"] and b["totales"]["pre"] == 85 and b["totales"]["pre_registrado"] == 86
