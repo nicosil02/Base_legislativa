@@ -360,6 +360,9 @@ def capturar_y_acumular_en_vivo(
     misses_seguidos = 0
     t_inicio = time.time()
     t_ultimo_aviso = 0.0
+    # Resumen para clientes: desde donde y cuando fue el ultimo tramo.
+    from congreso_live import resumen_vivo
+    ini_resumen, t_resumen = len(texto_acumulado), time.time()
     abierto = None  # (cola, cerrar) del ffmpeg continuo
     pendiente = np.zeros(0, dtype=np.float32)
     try:
@@ -410,6 +413,16 @@ def capturar_y_acumular_en_vivo(
                                       datetime.now(timezone.utc).date().isoformat(),
                                       duracion_acumulada, texto_acumulado, temas)
                 print(f"[live-transcribe] frase {chunks_ok}: {nuevo_texto[:120]}")
+                if (time.time() - t_resumen >= resumen_vivo.CADA_SEG
+                        and len(texto_acumulado) - ini_resumen >= resumen_vivo.MIN_CHARS):
+                    try:
+                        msg = resumen_vivo.resumir(tipo, titulo, texto_acumulado[ini_resumen:])
+                        if msg:
+                            from congreso_live.notify import enviar_whatsapp
+                            enviar_whatsapp(f"{msg}\n\n{url_video(video_id)}")
+                    except Exception as e:  # sin clave o sin cupo de Gemini: la transcripcion sigue
+                        print(f"[live-transcribe] resumen en vivo fallo: {e}")
+                    ini_resumen, t_resumen = len(texto_acumulado), time.time()
                 continue
 
             # Sin stream abierto (arranque, o ffmpeg termino): solo se sigue si
