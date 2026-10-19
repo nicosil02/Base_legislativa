@@ -40,7 +40,7 @@ jobs:
 
       - name: Bajar proyectos.db de la rama datos
         run: |
-          pip install requests pymupdf
+          pip install -c constraints.txt requests pymupdf
           bash scripts/bajar_db.sh proyectos.db.gz proyectos.db
 
       - name: Ver si hay paginas pendientes
@@ -58,7 +58,7 @@ jobs:
       - name: Instalar OCR
         if: steps.pend.outputs.n != '0'
         # paddlepaddle fijo en 3.2.2 (3.3.x rompe en CPU con oneDNN, ver refrescar-pe.yml)
-        run: pip install pillow numpy "paddlepaddle==3.2.2" paddleocr
+        run: pip install -c constraints.txt pillow numpy "paddlepaddle==3.2.2" paddleocr
 
       - name: OCR
         if: steps.pend.outputs.n != '0'

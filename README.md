@@ -11,14 +11,11 @@ scraping del API oficial.
 
 ### Camino rápido (PC nueva, usando la base publicada)
 
-Los workflows publican la base comprimida en la rama `datos`
-(`data/proyectos.db.gz`, ver `scripts/publicar_db.sh`). Para arrancar con ella:
+Paso a paso completo, con secretos y servicios externos, en `docs/INSTALAR.md`.
 
-```powershell
-pip install -r requirements.txt
-git fetch origin datos
-git restore --source=origin/datos --worktree data/proyectos.db.gz
-python -c "import gzip,shutil; shutil.copyfileobj(gzip.open('data/proyectos.db.gz'), open('proyectos.db','wb'))"
+```bash
+pip install -r requirements.txt -c constraints.txt
+bash scripts/bajar_db.sh proyectos.db.gz proyectos.db
 python -m streamlit run app.py            # abre el dashboard
 ```
 
@@ -27,7 +24,7 @@ Luego corres `python -m scraper.cli update` para traer los PLs nuevos.
 ### Camino desde cero
 
 ```powershell
-pip install -r requirements.txt
+pip install -r requirements.txt -c constraints.txt
 python -m scraper.cli init                       # crea proyectos.db + comisiones
 python -m scraper.cli update                     # carga completa (~30-40 min)
 ```

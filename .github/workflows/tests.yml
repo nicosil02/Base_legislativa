@@ -3,7 +3,7 @@ name: Tests
 on:
   push:
     branches: [main]
-    paths: ['**.py', 'pytest.ini', 'requirements.txt', '.github/workflows/tests.yml']
+    paths: ['**.py', 'pytest.ini', 'requirements.txt', 'constraints.txt', '.github/workflows/tests.yml']
   workflow_dispatch:
 
 
@@ -25,7 +25,7 @@ jobs:
           cache: pip
 
       - name: Instalar dependencias
-        run: pip install -r requirements.txt pytest pyyaml faster-whisper
+        run: pip install -c constraints.txt -r requirements.txt pytest pyyaml faster-whisper
 
       - name: pytest
         run: python -m pytest

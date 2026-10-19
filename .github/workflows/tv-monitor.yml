@@ -39,7 +39,7 @@ jobs:
           python-version: '3.13'
 
       - name: Instalar deps
-        run: pip install -q yt-dlp requests
+        run: pip install -c constraints.txt -q yt-dlp requests
 
       - name: Instalar Cloudflare WARP en modo proxy (SOCKS5 :40000)
         # Si WARP no conecta el paso queda en rojo (lo ve sistema/salud.py)

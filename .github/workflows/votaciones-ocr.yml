@@ -44,7 +44,7 @@ jobs:
           python-version: '3.12'
       - name: Instalar OCR
         # paddlepaddle fijo en 3.2.2 (3.3.x rompe en CPU con oneDNN, ver refrescar-pe.yml)
-        run: pip install requests pymupdf pillow numpy "paddlepaddle==3.2.2" paddleocr
+        run: pip install -c constraints.txt requests pymupdf pillow numpy "paddlepaddle==3.2.2" paddleocr
       - name: OCR de su parte
         run: |
           python -X utf8 -u -m votaciones.ocr_pleno procesar \
@@ -69,7 +69,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          pip install requests
+          pip install -c constraints.txt requests
           python -X utf8 -m votaciones.ocr_pleno juntar --salida votaciones_pe.db partes/*/*.db
           # Rearma con el parser de main (por si se corrigio despues del OCR)
           python -X utf8 -m votaciones.ocr_pleno reparsear --db votaciones_pe.db

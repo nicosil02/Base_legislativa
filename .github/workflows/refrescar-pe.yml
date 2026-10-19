@@ -67,12 +67,12 @@ jobs:
 
       - name: Instalar dependencias
         run: |
-          python -m pip install --upgrade pip
+          python -m pip install -c constraints.txt --upgrade pip
           # sklearn y yt-dlp se importan a nivel de modulo en pasos que corren antes
           # (digest de noticias, alertas_pl). certifi al dia: el de la imagen del
           # runner no reconocia CAs intermedias nuevas (Cancilleria EC).
-          pip install requests pycryptodome openpyxl pandas scikit-learn yt-dlp
-          pip install --upgrade certifi
+          pip install -c constraints.txt requests pycryptodome openpyxl pandas scikit-learn yt-dlp
+          pip install -c constraints.txt --upgrade certifi
 
       - name: Instalar dependencias de noticias (PDF/OCR Registro Oficial EC)
         # Ventana por hora real (steps.hora), no el string exacto del cron:
@@ -81,7 +81,7 @@ jobs:
         run: |
           # Solo 8-9am Lima: el Registro Oficial EC sale 1x/dia.
           # paddlepaddle 3.2.2: 3.3.x rompe en CPU con oneDNN.
-          pip install pymupdf pillow "paddlepaddle==3.2.2" paddleocr
+          pip install -c constraints.txt pymupdf pillow "paddlepaddle==3.2.2" paddleocr
 
       - name: Bootstrap DB Peru desde la rama datos (solo si no hay cache)
         if: hashFiles('proyectos.db') == ''
@@ -243,7 +243,7 @@ jobs:
           https_proxy: http://127.0.0.1:8118
         run: |
           # Los captions tardan dias en procesarse: alcanza 1x/dia.
-          pip install -q yt-dlp
+          pip install -c constraints.txt -q yt-dlp
           # --max 60: con 25 comisiones reconocidas, 20 streams no alcanzaban.
           timeout 300 python -X utf8 -m congreso_live.cli sync-transcripciones --max 60 \
               || echo "[warn] sync-transcripciones fallo, sigo"
@@ -254,7 +254,7 @@ jobs:
           # (re-entrenado weekly por entrenar-ml.yml). Aplica a PLs en
           # "Otros" con confianza >= 0.85 → cambio automatico. Confianza
           # 0.70-0.85 → sugerencia pendiente. ~10 seg.
-          pip install -q scikit-learn joblib
+          pip install -c constraints.txt -q scikit-learn joblib
           python -X utf8 -m clasificador.cli reclassify --apply || echo "[warn] reclassify fallo, sigo"
 
       - name: Aplicar decisiones de reclasificacion (aceptar/rechazar desde la app)
