@@ -90,6 +90,8 @@ def _es_reciente(n: dict, dias: int = DIAS_FRESCURA) -> bool:
         fecha = datetime.fromisoformat(fecha_pub.replace("Z", "+00:00"))
     except (ValueError, TypeError):
         return True
+    if fecha.tzinfo is None:  # "2026-10-18" o sin zona: tumbaba el filtro de clientes
+        fecha = fecha.replace(tzinfo=timezone.utc)
     return (datetime.now(timezone.utc) - fecha) <= timedelta(days=dias)
 
 

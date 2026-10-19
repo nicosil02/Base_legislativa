@@ -237,3 +237,10 @@ def test_ignora_noticias_viejas():
     assert 1 not in ids_incluidos, "un articulo de 2017 no debe colar como noticia de hoy"
     assert 2 in ids_incluidos, "una noticia real de hoy si debe pasar"
     assert 3 in ids_incluidos, "sin fecha_pub se trata como reciente, no se excluye"
+
+
+def test_es_reciente_fecha_sin_zona():
+    from datetime import date
+    from noticias.digest import _es_reciente
+    assert _es_reciente({"fecha_pub": date.today().isoformat()}, 2)
+    assert not _es_reciente({"fecha_pub": "2020-01-01T10:00:00"}, 2)
