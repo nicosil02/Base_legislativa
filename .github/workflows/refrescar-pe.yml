@@ -205,7 +205,7 @@ jobs:
           timeout 120 python -X utf8 -m noticias.cli purge --dias 7 \
               || echo "[warn] noticias purge fallo, sigo"
           # Aviso del Anexo 1 Foc R4T (Agrocalidad); se apaga el 2026-12-31.
-          timeout 120 python -X utf8 scripts/vigilar_anexo_foc.py \
+          timeout 240 python -X utf8 scripts/vigilar_anexo_foc.py \
               || echo "[warn] vigilar_anexo_foc fallo, sigo"
           # Aviso de la compra de medicinas a India (AIL EP); se apaga el 2026-12-31.
           timeout 120 python -X utf8 scripts/vigilar_medicinas_india.py \
