@@ -11,7 +11,7 @@
 # publico en el medio, se rechaza y se rehace desde el principio.
 #
 # Uso: scripts/publicar_db.sh proyectos.db PARTE [PARTE ...]
-#        PARTE: base (solo refrescar-pe), transcripciones, tv
+#        PARTE: base (solo refrescar-pe), transcripciones, tv, votaciones
 #      scripts/publicar_db.sh unico proyectos_ec.db
 #        sin partes ni union: un solo workflow la escribe.
 set -euo pipefail
