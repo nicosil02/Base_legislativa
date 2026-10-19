@@ -21,7 +21,11 @@ def leer(slug: str) -> str:
     recien guardada entra al contexto sin esperar el redeploy. En el repo
     va cifrado (clientes/privado.py)."""
     texto, _ = store.leer_texto(ruta(slug) + privado.SUFIJO, None)
-    return privado.descifrar(texto).decode("utf-8") if texto else ""
+    try:
+        return privado.descifrar(texto).decode("utf-8") if texto else ""
+    except (RuntimeError, ValueError):  # sin la clave (PC local): la copia en texto
+        p = ROOT / ruta(slug)
+        return p.read_text(encoding="utf-8") if p.exists() else ""
 
 
 def entrada(titulo: str, texto: str, pais: str, url: str | None = None,
