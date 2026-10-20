@@ -124,7 +124,8 @@
   "fBVip0i0wiY",
   "5xxUrBBfdCY",
   "pFd4J9ugLUc",
-  "2EIYKlqJBT8"
+  "2EIYKlqJBT8",
+  "fb_1443944621019762"
  ],
  "sesiones": [
   {
@@ -1097,6 +1098,14 @@
    "pais": "PE",
    "url": "https://www.youtube.com/watch?v=2EIYKlqJBT8",
    "visto_at": "2026-10-20T14:12:30Z"
+  },
+  {
+   "id": "fb_1443944621019762",
+   "titulo": "Sesión Nro. 2025-2027-163 de la Comisión de Soberanía, Integración y Seguridad Integral",
+   "tipo": "Comision: Seguridad Integral (EC)",
+   "pais": "EC",
+   "url": "https://www.facebook.com/watch/?v=1443944621019762",
+   "visto_at": "2026-10-20T14:26:13Z"
   }
  ]
 }
