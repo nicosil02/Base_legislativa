@@ -131,7 +131,10 @@
   "9noKK1K5ybU",
   "nG7VW9Mgmss",
   "R1E7WGTStac",
-  "SHSVUEeVePs"
+  "SHSVUEeVePs",
+  "fb_1092095570488188",
+  "CVI6JYhpN4I",
+  "34DpLfVMQu0"
  ],
  "sesiones": [
   {
@@ -1160,6 +1163,30 @@
    "pais": "PE",
    "url": "https://www.youtube.com/watch?v=SHSVUEeVePs",
    "visto_at": "2026-10-20T20:12:53Z"
+  },
+  {
+   "id": "fb_1092095570488188",
+   "titulo": "Sesión No. 129-2025-2027 de la Comisión de Soberanía Alimentaria y Desarrollo del Sector Agropecuario y Pesquero",
+   "tipo": "Comision: Soberanía Alimentaria (EC)",
+   "pais": "EC",
+   "url": "https://www.facebook.com/watch/?v=1092095570488188",
+   "visto_at": "2026-10-20T20:16:04Z"
+  },
+  {
+   "id": "CVI6JYhpN4I",
+   "titulo": "🔴EN VIVO: Comisión de Ciencia, Innovación Tecnológica de la Cámara de Diputados | 20/10/2026",
+   "tipo": "Comision: Ciencia",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=CVI6JYhpN4I",
+   "visto_at": "2026-10-20T20:17:07Z"
+  },
+  {
+   "id": "34DpLfVMQu0",
+   "titulo": "🔴EN VIVO: Comisión en asuntos de Gestión del Estado y Contraloría",
+   "tipo": "Comision: Gestion Del Estado",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=34DpLfVMQu0",
+   "visto_at": "2026-10-20T20:17:07Z"
   }
  ]
 }
