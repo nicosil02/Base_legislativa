@@ -126,7 +126,8 @@
   "pFd4J9ugLUc",
   "2EIYKlqJBT8",
   "fb_1443944621019762",
-  "ZwP8c58jmHE"
+  "ZwP8c58jmHE",
+  "EBD0GhqBXhg"
  ],
  "sesiones": [
   {
@@ -1115,6 +1116,14 @@
    "pais": "PE",
    "url": "https://www.youtube.com/watch?v=ZwP8c58jmHE",
    "visto_at": "2026-10-20T15:09:24Z"
+  },
+  {
+   "id": "EBD0GhqBXhg",
+   "titulo": "Sesión No. 132-AN-2025-2029 del pleno de la Asamblea Nacional",
+   "tipo": "Pleno: Asamblea Nacional (EC)",
+   "pais": "EC",
+   "url": "https://www.youtube.com/watch?v=EBD0GhqBXhg",
+   "visto_at": "2026-10-20T15:26:15Z"
   }
  ]
 }
