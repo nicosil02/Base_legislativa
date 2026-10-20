@@ -13,9 +13,11 @@ name: Cerebro (embeddings del corpus)
 
 on:
   workflow_run:
+    # Son patrones, no texto: el "+" va escapado (sin escapar no coincidia y
+    # refrescar-pe/enriquecer-ec nunca dispararon esto, ver core/test_workflows.py).
     workflows:
-      - "Actualizar Peru (PLs + snapshot)"
-      - "Actualizar Ecuador (CSV + documentos)"
+      - 'Actualizar Peru (PLs \+ snapshot)'
+      - 'Actualizar Ecuador (CSV \+ documentos)'
       - "Backfill automatico (sesiones perdidas)"
     types: [completed]
   workflow_dispatch:

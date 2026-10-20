@@ -12,7 +12,7 @@ on:
   schedule:
     - cron: '23 * * * *'
   workflow_run:
-    workflows: ["Actualizar Peru (PLs + snapshot)"]
+    workflows: ['Actualizar Peru (PLs \+ snapshot)']  # patron: "+" escapado
     types: [completed]
   workflow_dispatch:
 
