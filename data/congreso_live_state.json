@@ -127,7 +127,8 @@
   "2EIYKlqJBT8",
   "fb_1443944621019762",
   "ZwP8c58jmHE",
-  "EBD0GhqBXhg"
+  "EBD0GhqBXhg",
+  "9noKK1K5ybU"
  ],
  "sesiones": [
   {
@@ -1124,6 +1125,14 @@
    "pais": "EC",
    "url": "https://www.youtube.com/watch?v=EBD0GhqBXhg",
    "visto_at": "2026-10-20T15:26:15Z"
+  },
+  {
+   "id": "9noKK1K5ybU",
+   "titulo": "🔴EN VIVO: Comisión de Producción, Comercio Exterior y Turismo de la Cámara de Diputados | 20/10/2026",
+   "tipo": "Comision: Comercio Exterior",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=9noKK1K5ybU",
+   "visto_at": "2026-10-20T17:19:06Z"
   }
  ]
 }
