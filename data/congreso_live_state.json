@@ -130,7 +130,8 @@
   "EBD0GhqBXhg",
   "9noKK1K5ybU",
   "nG7VW9Mgmss",
-  "R1E7WGTStac"
+  "R1E7WGTStac",
+  "SHSVUEeVePs"
  ],
  "sesiones": [
   {
@@ -1151,6 +1152,14 @@
    "pais": "PE",
    "url": "https://www.youtube.com/watch?v=R1E7WGTStac",
    "visto_at": "2026-10-20T20:09:44Z"
+  },
+  {
+   "id": "SHSVUEeVePs",
+   "titulo": "🔴EN VIVO: Sesión de la Comisión de Desarrollo Agrario de la Cámara de Diputados | 20/10/2026",
+   "tipo": "Comision: Agrario",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=SHSVUEeVePs",
+   "visto_at": "2026-10-20T20:12:53Z"
   }
  ]
 }
