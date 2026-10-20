@@ -123,7 +123,8 @@
   "Nh1WjPVTzjE",
   "fBVip0i0wiY",
   "5xxUrBBfdCY",
-  "pFd4J9ugLUc"
+  "pFd4J9ugLUc",
+  "2EIYKlqJBT8"
  ],
  "sesiones": [
   {
@@ -1088,6 +1089,14 @@
    "pais": "PE",
    "url": "https://www.youtube.com/watch?v=pFd4J9ugLUc",
    "visto_at": "2026-10-20T14:06:16Z"
+  },
+  {
+   "id": "2EIYKlqJBT8",
+   "titulo": "🔴EN VIVO: Sesión de la Comisión de Energía y Minas | 20/1072026",
+   "tipo": "Comision: Energia Y Minas",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=2EIYKlqJBT8",
+   "visto_at": "2026-10-20T14:12:30Z"
   }
  ]
 }
