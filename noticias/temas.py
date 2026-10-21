@@ -170,6 +170,9 @@ TEMAS: dict[str, list[str]] = {
         "dinero electronico", "billetera digital", "billeteras digitales",
         "pagos digitales", "pago digital", "medios de pago", "sistema de pagos",
         "ecosistema de pagos", "pagos electronicos", "finanzas abiertas", "fintech",
+        # Fraude de identidad: el negocio de Incode.
+        "suplantación de identidad", "suplantacion de identidad",
+        "fraude bancario", "fraude financiero",
     ],
 }
 
