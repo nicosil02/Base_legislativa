@@ -143,7 +143,9 @@
   "fb_1974410993515218",
   "gD1ekqBA_Xs",
   "fb_28957761680521250",
-  "fb_2376024616547641"
+  "fb_2376024616547641",
+  "fb_1362073759338536",
+  "NNfSFqKV43o"
  ],
  "sesiones": [
   {
@@ -1268,6 +1270,22 @@
    "pais": "EC",
    "url": "https://www.facebook.com/watch/?v=2376024616547641",
    "visto_at": "2026-10-21T15:19:15Z"
+  },
+  {
+   "id": "fb_1362073759338536",
+   "titulo": "SESIÓN ORDINARIA Nro. 2025-2027-092 DE LA COMISIÓN ESPECIALIZADA PERMANENTE DE EDUCACIÓN - MODALIDAD VIRTUAL",
+   "tipo": "Comision: Educación (EC)",
+   "pais": "EC",
+   "url": "https://www.facebook.com/watch/?v=1362073759338536",
+   "visto_at": "2026-10-21T16:08:59Z"
+  },
+  {
+   "id": "NNfSFqKV43o",
+   "titulo": "🔴EN VIVO: Comisión de Modernización de la Gestión del Estado y Contraloría (Diputados) | 21/10/2026",
+   "tipo": "Comision: Gestion Del Estado",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=NNfSFqKV43o",
+   "visto_at": "2026-10-21T16:13:09Z"
   }
  ]
 }
