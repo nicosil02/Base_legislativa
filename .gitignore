@@ -45,6 +45,8 @@ clientes/*/*
 !clientes/_plantillas/matriz_monitoreo/
 clientes/_plantillas/matriz_monitoreo/*
 !clientes/**/*.cifrado
+!clientes/**/*.buzon
+!clientes/buzon.pub
 !clientes/*.py
 
 # Las bases comprimidas YA NO van en main (2026-09-27): sus versiones llevaron
