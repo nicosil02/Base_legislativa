@@ -363,6 +363,10 @@ def capturar_y_acumular_en_vivo(
     # Resumen para clientes: desde donde y cuando fue el ultimo tramo.
     from congreso_live import resumen_vivo
     ini_resumen, t_resumen = len(texto_acumulado), time.time()
+    # ponytail: en memoria del job; si la sesion pasa a otro tramo de 170 min
+    # puede repetirse un aviso y la alerta final solo ve lo del ultimo tramo.
+    avisado: list[str] = []
+    termino = False
     abierto = None  # (cola, cerrar) del ffmpeg continuo
     pendiente = np.zeros(0, dtype=np.float32)
     try:
@@ -416,7 +420,8 @@ def capturar_y_acumular_en_vivo(
                 if (time.time() - t_resumen >= resumen_vivo.CADA_SEG
                         and len(texto_acumulado) - ini_resumen >= resumen_vivo.MIN_CHARS):
                     try:
-                        msg = resumen_vivo.resumir(tipo, titulo, texto_acumulado[ini_resumen:])
+                        msg = resumen_vivo.resumir(tipo, titulo, texto_acumulado[ini_resumen:],
+                                                   avisado, texto_acumulado[:ini_resumen])
                         if msg:
                             from congreso_live.notify import enviar_whatsapp
                             enviar_whatsapp(f"{msg}\n\n{url_video(video_id)}")
@@ -439,6 +444,7 @@ def capturar_y_acumular_en_vivo(
             if not vivo:
                 misses_seguidos += 1
                 if misses_seguidos >= 2:
+                    termino = True
                     break  # 2 chequeos seguidos sin exito: la sesion termino de verdad
                 time.sleep(intervalo_seg)  # no reintentar en caliente, misma cadencia que un chunk
                 continue
@@ -452,6 +458,14 @@ def capturar_y_acumular_en_vivo(
         if abierto is not None:
             abierto[1]()
         conn.close()
+    if termino:
+        try:
+            msg = resumen_vivo.alerta_final(tipo, titulo, texto_acumulado, avisado)
+            if msg:
+                from congreso_live.notify import enviar_whatsapp
+                enviar_whatsapp(f"{msg}\n\n{url_video(video_id)}")
+        except Exception as e:
+            print(f"[live-transcribe] alerta final fallo: {e}")
     return {"chunks": chunks_ok, "duracion_seg": duracion_acumulada,
             "chars": len(texto_acumulado)}
 
