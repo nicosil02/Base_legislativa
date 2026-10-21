@@ -148,7 +148,8 @@
   "NNfSFqKV43o",
   "fb_29083195037986270",
   "fb_1662040862228406",
-  "fb_1874788896848368"
+  "fb_1874788896848368",
+  "fb_1020012634445195"
  ],
  "sesiones": [
   {
@@ -1313,6 +1314,14 @@
    "pais": "EC",
    "url": "https://www.facebook.com/watch/?v=1874788896848368",
    "visto_at": "2026-10-21T17:01:37Z"
+  },
+  {
+   "id": "fb_1020012634445195",
+   "titulo": "Sesión Nº127",
+   "tipo": "Comision: Transparencia y Participación Ciudadana (EC)",
+   "pais": "EC",
+   "url": "https://www.facebook.com/watch/?v=1020012634445195",
+   "visto_at": "2026-10-21T17:13:17Z"
   }
  ]
 }
