@@ -1,0 +1,53 @@
+name: Buzon de clientes
+
+# La PC local no tiene la clave de los datos de clientes. Alli se corre
+# `python -m clientes.privado enviar clientes/<slug>` (cifra con la llave
+# publica clientes/buzon.pub) y se suben los *.buzon; aca se abren con la
+# privada (CLIENTES_BUZON), se pasan a .cifrado con la clave de siempre y se
+# borran los buzones.
+
+on:
+  push:
+    branches: [main]
+    paths: ["clientes/**/*.buzon"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: buzon-clientes
+  cancel-in-progress: false
+
+env:
+  CLIENTES_CLAVE: ${{ secrets.GEMINI_API_KEY }}
+
+jobs:
+  recibir:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: pip install -c constraints.txt -q cryptography
+      - name: Abrir buzones y cifrar
+        env:
+          CLIENTES_BUZON: ${{ secrets.CLIENTES_BUZON }}
+        run: python -m clientes.privado recibir
+      - name: Commitear
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A clientes/
+          if git diff --staged --quiet; then
+            echo "sin cambios"
+            exit 0
+          fi
+          git commit -m "clientes: buzon cifrado [skip ci]"
+          for i in 1 2 3; do
+            git push && exit 0
+            git pull --rebase origin main
+          done
+          exit 1
