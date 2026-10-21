@@ -17,6 +17,7 @@ from __future__ import annotations
 
 import re
 
+from clientes import config as _clientes
 from core.text import norm as _norm
 
 
@@ -237,6 +238,14 @@ def _compile(kws: list[str], plural: bool = False,
     return re.compile("|".join(alts + (extra or [])), re.IGNORECASE)
 
 
+# Temas que trae la ficha de un cliente (clientes/<slug>/cliente.json,
+# "temas_propios"): un cliente nuevo de otro rubro no necesita tocar TEMAS.
+def _sumar_temas_propios() -> None:
+    for tema, kws in _clientes.temas_propios().items():
+        TEMAS[tema] = [*TEMAS.get(tema, []), *kws]
+
+
+_sumar_temas_propios()
 _PATTERNS = {tema: _compile(kws, plural=True, extra=_EXTRA_REGEX.get(tema))
              for tema, kws in TEMAS.items()}
 _PATTERN_NORMATIVA = _compile(KEYWORDS_NORMATIVA)
@@ -260,6 +269,8 @@ KEYWORDS_NORMA_INTERES = [
     "medicamentos", "productos farmaceuticos", "dispositivos medicos",
     "registro sanitario",
 ]
+# Mas las "palabras_norma" de cada ficha de cliente.
+KEYWORDS_NORMA_INTERES += [kw for kws in _clientes.campo("palabras_norma").values() for kw in kws]
 _PATTERN_NORMA_INTERES = _compile(KEYWORDS_NORMA_INTERES)
 # Tramite interno que menciona el tema de pasada.
 _PATTERN_NORMA_TRAMITE = re.compile(

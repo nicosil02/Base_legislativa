@@ -68,7 +68,7 @@ FUENTES_GENERALISTAS_FILTRAR_RUIDO: set[str] = {
 # TEMAS_CLIENTE solo se usa en INSTITUCIONES_AMPLIAS; PERFIL_ESTRICTO son las
 # fuentes donde el tema generico no alcanza (todo MINSA es "Salud", pero a
 # Bayer solo le sirve su bluebook) y se exige ademas una de PERFIL_KEYWORDS.
-TEMAS_CLIENTE: dict[str, list[str]] = config.campo("temas_noticias")
+TEMAS_CLIENTE: dict[str, list[str]] = {s: config.temas_de(s) for s in config.slugs() if config.temas_de(s)}
 PERFIL_ESTRICTO: dict[str, set[str]] = {k: set(v) for k, v in config.campo("fuentes_con_perfil_estricto").items()}
 PERFIL_KEYWORDS: dict[str, list[str]] = config.campo("palabras_clave")
 
