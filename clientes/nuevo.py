@@ -75,27 +75,37 @@ def crear(slug: str, nombre: str, paises: list[str]) -> Path:
 
 
 def noticias_de(slug: str, conn: sqlite3.Connection, desde: str) -> list[dict]:
-    """Noticias de los paises del cliente que caen en sus temas o vienen de
-    sus instituciones (el mismo criterio de fuentes/pagina, sin la UI)."""
-    from noticias.fuentes import matchea_perfil
-    from noticias.temas import clasificar
+    """Lo que la pagina Noticias muestra con el filtro Cliente (noticias/pagina.py):
+    fuentes del cliente o de "todos" segun noticias/fuentes.py, las amplias solo
+    con tema del cliente, las estrictas solo con sus palabras_clave."""
+    from noticias.fuentes import (FUENTES_GENERALISTAS_FILTRAR_RUIDO, INSTITUCIONES_AMPLIAS,
+                                  all_fuentes, matchea_perfil)
+    from noticias.temas import clasificar, es_fuente_multipais, es_seccion_fuera_de_foco, pais_por_contenido
     c = config.todos()[slug]
-    temas, inst = set(config.temas_de(slug)), set(c.get("instituciones", []))
+    temas = set(config.temas_de(slug))
     estrictas = set(c.get("fuentes_con_perfil_estricto", []))
-    filas = conn.execute(
-        "SELECT n.titulo, n.resumen, n.url, f.nombre, f.pais FROM noticias n "
-        "JOIN noticias_fuentes f ON f.id = n.fuente_id WHERE n.first_seen_at >= ? "
-        "ORDER BY n.first_seen_at DESC", (desde,)).fetchall()
+    fuentes = {f["nombre"]: f for f in all_fuentes()}
     out = []
-    for titulo, resumen, url, fuente, pais in filas:
-        if pais not in c["paises"]:
+    for titulo, resumen, url, nombre, pais in conn.execute(
+            "SELECT n.titulo, n.resumen, n.url, f.nombre, f.pais FROM noticias n "
+            "JOIN noticias_fuentes f ON f.id = n.fuente_id WHERE f.activa = 1 AND n.first_seen_at >= ? "
+            "ORDER BY n.first_seen_at DESC", (desde,)):
+        f = fuentes.get(nombre)
+        if not f or pais not in c["paises"] or not ({slug, "todos"} & set(f["clientes"])):
             continue
-        ts = set(clasificar(titulo, resumen, url)) & temas
-        if not ts and fuente not in inst:
+        if es_fuente_multipais(nombre) and pais_por_contenido(titulo, resumen, pais) != pais:
             continue
-        if fuente in estrictas and not matchea_perfil(slug, titulo, resumen):
+        if es_seccion_fuera_de_foco(url):
             continue
-        out.append({"pais": pais, "fuente": fuente, "titulo": titulo, "temas": sorted(ts)})
+        ts = set(clasificar(titulo, resumen, url))
+        if not ts and nombre in FUENTES_GENERALISTAS_FILTRAR_RUIDO and f["categoria"] == "Coyuntura Politica":
+            continue
+        if nombre in INSTITUCIONES_AMPLIAS and not ts & temas:
+            continue
+        if (nombre in estrictas or f["categoria"] in estrictas) and not matchea_perfil(slug, titulo, resumen):
+            continue
+        out.append({"pais": pais, "fuente": nombre, "titulo": titulo, "temas": sorted(ts & temas),
+                    "de_todos": slug not in f["clientes"]})
     return out
 
 
@@ -117,8 +127,10 @@ def probar(slug: str, dias: int = 30, muestra: int = 15) -> dict:
     pls = pls_de(slug, datetime.now(LIMA) - timedelta(days=dias))
 
     print(f"\n== {config.todos()[slug]['nombre']} · ultimos {dias} dias (desde {desde}) ==")
-    print(f"Noticias: {len(notis)} (~{len(notis) / dias:.1f} por dia)")
-    for n in notis[:muestra]:
+    propias = [n for n in notis if not n["de_todos"]]
+    print(f"Noticias: {len(notis)} (~{len(notis) / dias:.1f} por dia); de fuentes propias del cliente "
+          f"{len(propias)}, el resto es el tronco politico comun a todos")
+    for n in propias[:muestra]:
         print(f"  [{n['pais']}] {n['titulo'][:110]}  ({n['fuente']}; {', '.join(n['temas']) or 'institucion'})")
     print(f"\nProyectos de ley: {len(pls)}")
     for p in pls[:muestra]:

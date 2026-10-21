@@ -94,7 +94,10 @@ TEMAS: dict[str, list[str]] = {
         "botica", "brigada medica", "brigadas medicas", "vigilancia sanitaria",
     ],
     "Tech / Digital": [
-        "digital", "tecnología", "tecnologia", "ciberseguridad",
+        # "digital" suelta no: "se transmitia por plataformas digitales", "su
+        # nueva etapa digital" (medios) metian ~150 notas cada 2 semanas.
+        # Solo en frase, ver _EXTRA_REGEX.
+        "tecnología", "tecnologia", "ciberseguridad",
         "datos personales", "proteccion de datos", "protección de datos",
         "inteligencia artificial", "fintech", "criptomoneda",
         "criptomonedas", "cripto", "bitcoin", "blockchain",
@@ -184,7 +187,14 @@ _EXTRA_REGEX: dict[str, list[str]] = {
     # redes sociales" (farandula, sucesos) era la mayoria en la semana real.
     "Tech / Digital": [
         r"(?:menores|regula\w*|prohib\w*|ley|plataformas?)\W+(?:\w+\W+){0,4}redes sociales"
-        r"|redes sociales\W+(?:\w+\W+){0,4}(?:menores|regula\w*|prohib\w*|ley)\b"],
+        r"|redes sociales\W+(?:\w+\W+){0,4}(?:menores|regula\w*|prohib\w*|ley)\b",
+        r"\b(?:economia|derechos?|autoridad nacional|gobierno|fraudes?|estafas?|educacion|"
+        r"alfabetizacion|habilidades|negocios?|servicios?|infraestructura|agenda|cedulas?|"
+        r"identidad|firmas?|llave|billeteras?|pagos?|banca|comercio|transformacion|brecha|"
+        r"ciudadania|soberania|seguridad|proteccion|violencia|acoso|amenaza|adiccion|ecosistema|"
+        r"activos?|monedas?|dolar|euro|mercados?|publicidad|impuestos?|dni|documentos?|inclusion|"
+        r"empresas?|bancos?|entidad(?:es)? financieras?|dinero|creditos?|transacciones|tramites?|"
+        r"salud|apuestas) digital(?:es)?\b|\b100 ?% digital"],
     # Solo "bancos" (el sector): el singular es Banco Mundial/BID/Central.
     "KYC / AML / Financiero": [
         r"\bbancos\b(?! de (?:sangre|alimentos|leche|germoplasma|semillas|"

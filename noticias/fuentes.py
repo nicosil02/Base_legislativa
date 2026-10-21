@@ -51,7 +51,11 @@ CATEGORIA_CLIENTES: dict[str, list[str]] = {
 # Instituciones que publican de todo y tienen un solo angulo real para su
 # cliente (MEF <-> Google = IVA digital): el filtro Cliente exige ademas que
 # el titulo+resumen matchee TEMAS_CLIENTE via temas.clasificar.
-INSTITUCIONES_AMPLIAS: set[str] = {"MEF", "Salud con Lupa"}
+# 2026-10-20: BCRP (dolar, directorio) e INDECOPI (multas a conciertos) le
+# metian ~370 notas cada 2 semanas a Incode; quedan solo con su tema (pagos
+# digitales, datos personales).
+INSTITUCIONES_AMPLIAS: set[str] = {"MEF", "Salud con Lupa", "Google News PE — BCRP", "X - INDECOPI",
+                                   "X - Erick Iriarte (IALaw)"}  # columnas personales
 
 # Medios cuyo feed trae el sitio completo (deportes, espectaculos,
 # policiales), no solo politica: El Universo cae a su feed general porque el
@@ -249,7 +253,9 @@ FUENTES_PE: list[dict] = [
     {"categoria": "Temas KYC/AML", "pais": "PE", "nombre": "SBS - Resoluciones",
      "url": "https://www.sbs.gob.pe/", "tipo": "html",
      "notas": "Superintendencia de Banca, Seguros y AFP - normativa"},
-    _gn("PE", "Temas KYC/AML", "SUNAT", "SUNAT+Peru"),
+    # Recaudacion y tramites tributarios: no es KYC de Incode; a Google le
+    # toca por el IGV digital (igual que la cuenta de X de SUNAT).
+    {**_gn("PE", "Temas KYC/AML", "SUNAT", "SUNAT+Peru"), "clientes": ["google"]},
     _gn("PE", "Temas KYC/AML", "BCRP", "BCRP+Peru"),
     _gn("PE", "Temas KYC/AML", "UIF lavado", "UIF+lavado+activos+Peru"),
 
@@ -729,7 +735,7 @@ FUENTES_X_2026: list[dict] = [
        "Ministro de Trabajo, ve EsSalud"),
     _x("PE", "Temas Agrarios", "Vladimiro Huaroc (MINAM)", "VladimiroHuaroc", "A", _CROP,
        "Ministro del Ambiente"),
-    _x("PE", "Temas Salud", "Susana Matute (Comision Salud Senado)", "MatuteCharun", "A", _B + _I,
+    _x("PE", "Temas Salud", "Susana Matute (Comision Salud Senado)", "MatuteCharun", "A", _B,
        "Preside Comision de Salud y otras materias del Senado (El Peruano)"),
     _x("PE", "Institucion", "Oscar Reto (Pdte. Diputados)", "OscarReto62", "B", _T,
        "Presidente de la Camara de Diputados"),
