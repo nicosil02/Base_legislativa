@@ -228,13 +228,20 @@ def _bootstrap_dbs_impl():
     motivos = [m for gz in partes_gz.values() if (m := _needs_restore(pe_db, gz))]
     if partes_gz["base"].exists():
         if motivos:
+            # Las partes sueltas (~350 MB) van a una carpeta que se borra al
+            # terminar: en Streamlit Cloud el disco cuenta como memoria y
+            # dejarlas en data/ llevo la app a "over resource limits" (2026-10-21).
+            import tempfile
+            for gz in partes_gz.values():  # las que dejaba la version anterior
+                gz.with_suffix("").unlink(missing_ok=True)
             try:
-                sueltas = {}
-                for p, gz in partes_gz.items():
-                    if gz.exists():
-                        sueltas[p] = gz.with_suffix("")
-                        _descomprimir_atomico(gz, sueltas[p])
-                partes.armar(pe_db, sueltas)
+                with tempfile.TemporaryDirectory(dir=pe_gz.parent) as tmpdir:
+                    sueltas = {}
+                    for p, gz in partes_gz.items():
+                        if gz.exists():
+                            sueltas[p] = Path(tmpdir) / gz.with_suffix("").name
+                            _descomprimir_atomico(gz, sueltas[p])
+                    partes.armar(pe_db, sueltas)
                 print(f"[bootstrap] proyectos.db armada desde {list(sueltas)} ({motivos[0]})")
             except Exception as e:
                 print(f"[bootstrap] error armando PE DB: {e}")
