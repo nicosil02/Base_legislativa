@@ -159,7 +159,8 @@
   "7xb1vH1EPfQ",
   "7hbNGfyiJJw",
   "LLkxXj_QJyw",
-  "fb_959796786743679"
+  "fb_959796786743679",
+  "1GkSZl09wVw"
  ],
  "sesiones": [
   {
@@ -1412,12 +1413,23 @@
    "pais": "EC",
    "url": "https://www.facebook.com/watch/?v=959796786743679",
    "visto_at": "2026-10-21T20:15:26Z"
+  },
+  {
+   "id": "1GkSZl09wVw",
+   "titulo": "🔴EN VIVO: Sesión del Pleno del Senado de la República | 21 DE OCTUBRE DEL 2026",
+   "tipo": "Pleno: Senado",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=1GkSZl09wVw",
+   "visto_at": "2026-10-21T20:31:47Z"
   }
  ],
  "avisado": {
   "l-2b95G29Zw": [
    "La Comisión de Economía aprobó por mayoría invitar al ministro de Comercio Exterior y Turismo para la próxima sesión.",
    "Se solicitó que la Comisión de Economía acumule y debata la proposición legislativa 78/2026-CD, que busca excluir a la gran empresa de los beneficios tributarios de la Ley 32434 para mantenerlos exclusivamente en favor de los pequeños productores agrarios."
+  ],
+  "da-jbzlI3f4": [
+   "La Comision de Economia debate la proposicion legislativa 78 que excluye a la gran empresa de los beneficios tributarios de la Ley que promueve la transformacion productiva, competitiva y sostenible del sector agrario."
   ]
  }
 }
