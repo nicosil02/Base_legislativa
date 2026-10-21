@@ -38,9 +38,10 @@ def save_state(state: dict) -> None:
 
 def comision_seguida(tipo: str, seguidas_norm: set[str]) -> bool:
     """True si `tipo` ('Comision: Energia Y Minas') matchea por substring
-    alguna comision marcada en Seguimiento. Los Plenos siempre pasan, y sin
-    nada marcado pasa todo (para no dejar a nadie sin avisos)."""
-    if tipo.startswith("Pleno:") or not seguidas_norm:
+    alguna comision marcada en Seguimiento. Los Plenos y las mesas de trabajo
+    (ya filtradas por tema de cliente en detector) siempre pasan, y sin nada
+    marcado pasa todo (para no dejar a nadie sin avisos)."""
+    if tipo.startswith("Pleno:") or "Mesa de trabajo" in tipo or not seguidas_norm:
         return True
     kw = norm(tipo.split(":", 1)[-1].strip())
     return any(kw in nombre or nombre in kw for nombre in seguidas_norm)

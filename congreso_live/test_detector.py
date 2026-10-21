@@ -75,6 +75,7 @@ def test_clasificar_mesas():
              ) == "Comision: Mesa de trabajo Salud"
     assert C("EN VIVO: Foro sanidad agraria y plaguicidas") == "Comision: Mesa de trabajo Agro"
     assert C("EN VIVO: Mesa de trabajo “Sindicato SUNAFIL”") is None
+    assert C("EN VIVO: Mesa de trabajo sobre protección de datos personales") == "Comision: Mesa de trabajo Tecnologia"
     assert C("Mesa de trabajo “Validación del proyecto de Ley de acoso”") is None
     assert C("Campaña de vacunación en el Congreso") is None
 

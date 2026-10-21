@@ -58,10 +58,10 @@ EXCLUIR = (
 
 
 EVENTO_KEYWORDS = ("mesa de trabajo", "mesa tecnica", "foro", "conversatorio")
-# tema de noticias.temas.clasificar() -> etiqueta en el tipo. Solo los de
-# Bayer; sumar "Tech / Digital"/"KYC / AML / Financiero" si se quieren las
-# mesas de Google/Incode tambien.
-MESA_TEMAS = {"Salud": "Salud", "Crop": "Agro"}
+# tema de noticias.temas.clasificar() -> etiqueta en el tipo: Bayer/Syngenta
+# (Salud, Agro) y Google/Incode (Tecnologia, Datos y KYC).
+MESA_TEMAS = {"Salud": "Salud", "Crop": "Agro", "Tech / Digital": "Tecnologia",
+              "KYC / AML / Financiero": "Datos y KYC"}
 
 
 def clasificar_titulo(titulo: str | None, pais: str = "PE") -> str | None:
@@ -86,7 +86,7 @@ def clasificar_titulo(titulo: str | None, pais: str = "PE") -> str | None:
             if kw in t:
                 return f"Comision: {kw.title()}"
     # Mesas de trabajo/foros (sin "comision" en el titulo): solo si el tema
-    # es de interes de Bayer (Salud/Crop).
+    # es de interes de un cliente (MESA_TEMAS).
     if any(x in t for x in EVENTO_KEYWORDS):
         from noticias.temas import clasificar
         for tema in clasificar(titulo):
