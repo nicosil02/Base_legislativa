@@ -61,3 +61,7 @@ def test_avisado_sobrevive_entre_tramos(tmp_path, monkeypatch):
     monkeypatch.setattr(state, "STATE_PATH", tmp_path / "s.json")
     state.guardar_avisado("v1", ["Se voto el PL 99."])
     assert state.avisado_de("v1") == ["Se voto el PL 99."] and state.avisado_de("v2") == []
+
+
+def test_clientes_inventados_se_descartan():
+    assert resumen_vivo._quienes(["Bayer", "inconde", "Informa"]) == "Bayer"

@@ -53,6 +53,14 @@ def _perfiles(pais: str) -> str:
     return "\n\n".join(out)
 
 
+def _quienes(clientes) -> str:
+    """Nombres de los clientes reales; Gemini a veces inventa ('Inconde', 'Informa')."""
+    from clientes import config
+    validos = config.slugs()
+    return ", ".join(c.strip().lower().capitalize() for c in clientes or []
+                     if c.strip().lower() in validos)
+
+
 def _pais(tipo: str) -> str:
     return "EC" if tipo.endswith("(EC)") else "PE"
 
@@ -78,7 +86,7 @@ def resumir(tipo: str, titulo: str, texto_nuevo: str, avisado: list[str] | None 
     if not r.get("hay_algo") or not puntos:
         return None
     avisado.extend(puntos)
-    quienes = ", ".join(c.capitalize() for c in r.get("clientes") or [])
+    quienes = _quienes(r.get("clientes"))
     return (f"📝 *{tipo}* en vivo" + (f" ({quienes})" if quienes else "") + f"\n{titulo}\n\n"
             + "\n".join(f"• {p}" for p in puntos))
 
@@ -123,7 +131,7 @@ def alerta_final(tipo: str, titulo: str, texto: str, avisado: list[str],
     alerta = (r.get("alerta") or "").strip()
     if not r.get("hay_algo") or not alerta:
         return None
-    quienes = ", ".join(c.capitalize() for c in r.get("clientes") or [])
+    quienes = _quienes(r.get("clientes"))
     return f"✅ Fin de sesión · {tipo}" + (f" (para {quienes})" if quienes else "") + f"\n\n{alerta}"
 
 
@@ -155,8 +163,8 @@ def aviso_inicio(tipo: str, titulo: str, url: str, agenda: list[str],
     puntos = [p for p in r.get("puntos") or [] if str(p.get("texto", "")).strip()]
     if not r.get("hay_algo") or not puntos:
         return None
-    lineas = [f"• {p['texto'].strip()}" + (f" ({', '.join(c.capitalize() for c in p['clientes'])})"
-                                           if p.get("clientes") else "") for p in puntos]
+    lineas = [f"• {p['texto'].strip()}" + (f" ({_quienes(p['clientes'])})"
+                                           if _quienes(p.get("clientes")) else "") for p in puntos]
     pre = "Asamblea EC" if _pais(tipo) == "EC" else "Congreso"
     return f"🔴 {pre} EN VIVO · {tipo}\n{titulo}\n\n" + "\n".join(lineas) + f"\n\n{url}"
 
