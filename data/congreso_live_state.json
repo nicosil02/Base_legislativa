@@ -151,7 +151,8 @@
   "fb_1874788896848368",
   "fb_1020012634445195",
   "fb_1819599545719510",
-  "l-2b95G29Zw"
+  "l-2b95G29Zw",
+  "fb_1874572143904977"
  ],
  "sesiones": [
   {
@@ -1340,6 +1341,14 @@
    "pais": "PE",
    "url": "https://www.youtube.com/watch?v=l-2b95G29Zw",
    "visto_at": "2026-10-21T18:18:06Z"
+  },
+  {
+   "id": "fb_1874572143904977",
+   "titulo": "Sesión Nº128",
+   "tipo": "Comision: Transparencia y Participación Ciudadana (EC)",
+   "pais": "EC",
+   "url": "https://www.facebook.com/watch/?v=1874572143904977",
+   "visto_at": "2026-10-21T18:23:51Z"
   }
  ]
 }
