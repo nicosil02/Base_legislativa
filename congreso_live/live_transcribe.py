@@ -405,7 +405,7 @@ def capturar_y_acumular_en_vivo(
                     if extracto:
                         from congreso_live.notify import enviar_whatsapp
                         enviar_whatsapp(f"🗳️ {tipo}: votación o cuarto intermedio\n"
-                                        f"{titulo}\n\n{extracto}\n\n"
+                                        f"{titulo}\n\n{resumen_vivo.resumir_votacion(extracto)}\n\n"
                                         f"{url_video(video_id)}")
                         t_ultimo_aviso = time.time()
 
@@ -473,7 +473,7 @@ def capturar_y_acumular_en_vivo(
 def _avisar_si_no_avisado(v: dict) -> None:
     """Avisa de una sesion nueva descubierta a mitad del job (cmd_check solo
     corre al arrancar), con el mismo dedupe que cmd_check."""
-    from congreso_live.agenda_preview import agenda_extra_para
+    from congreso_live.agenda_preview import aviso_inicio
     from congreso_live.notify import enviar_whatsapp
     from congreso_live.state import (
         comision_seguida, load_state, save_state, seguidas_activas,
@@ -484,8 +484,9 @@ def _avisar_si_no_avisado(v: dict) -> None:
     if v["id"] in set(state.get("alertados", [])):
         return
     if comision_seguida(v["tipo"], seguidas_activas()):
-        enviar_whatsapp(f"🔴 {'Asamblea EC' if v.get('pais') == 'EC' else 'Congreso'} EN VIVO — {v['tipo']}\n{v['titulo']}\n{v['url']}"
-                         f"{agenda_extra_para(v)}")
+        msg = aviso_inicio(v)
+        if msg:
+            enviar_whatsapp(msg)
     state.setdefault("alertados", []).append(v["id"])
     state.setdefault("sesiones", []).append(
         {**v, "visto_at": now_iso()})

@@ -125,3 +125,52 @@ def alerta_final(tipo: str, titulo: str, texto: str, avisado: list[str],
         return None
     quienes = ", ".join(c.capitalize() for c in r.get("clientes") or [])
     return f"✅ Fin de sesión · {tipo}" + (f" (para {quienes})" if quienes else "") + f"\n\n{alerta}"
+
+
+SCHEMA_INICIO = {
+    "type": "object",
+    "properties": {
+        "hay_algo": {"type": "boolean"},
+        "puntos": {"type": "array", "items": {"type": "object", "properties": {
+            "texto": {"type": "string"}, "clientes": {"type": "array", "items": {"type": "string"}}},
+            "required": ["texto", "clientes"]}},
+    },
+    "required": ["hay_algo", "puntos"],
+}
+
+
+def aviso_inicio(tipo: str, titulo: str, url: str, agenda: list[str],
+                 generar=llm.generar) -> str | None:
+    """Aviso de sesion EN VIVO solo si su agenda (o, sin agenda, la comision)
+    le toca a un cliente; None si no. El 20/10 avisaba de todas las comisiones."""
+    perfiles = _perfiles(_pais(tipo))
+    if not perfiles:
+        return None
+    ag = "\n".join(f"- {p}" for p in agenda) or "(sin agenda; juzga por la comision y el titulo)"
+    prompt = (f"Perfiles de los clientes:\n{perfiles}\n\nSesion que empieza: {tipo} — {titulo}\n"
+              f"Agenda:\n{ag}\n\n'puntos' = solo los puntos de agenda (resumidos en una frase) que "
+              "le tocan a un cliente, con sus slugs. Sin agenda, un solo punto si la comision trata "
+              "temas del cliente.")
+    r = json.loads(generar(prompt, system=SYSTEM, modelo=llm.LITE, schema=SCHEMA_INICIO) or "{}")
+    puntos = [p for p in r.get("puntos") or [] if str(p.get("texto", "")).strip()]
+    if not r.get("hay_algo") or not puntos:
+        return None
+    lineas = [f"• {p['texto'].strip()}" + (f" ({', '.join(c.capitalize() for c in p['clientes'])})"
+                                           if p.get("clientes") else "") for p in puntos]
+    pre = "Asamblea EC" if _pais(tipo) == "EC" else "Congreso"
+    return f"🔴 {pre} EN VIVO · {tipo}\n{titulo}\n\n" + "\n".join(lineas) + f"\n\n{url}"
+
+
+SYSTEM_VOTO = ("Te pasan un extracto de transcripcion automatica (con errores de dictado) de un "
+               "Pleno donde hubo una votacion o un cuarto intermedio. Di en 1 o 2 frases cortas que "
+               "se voto y el resultado con el conteo si se oye. Si no se entiende que se voto, dilo. "
+               "Español simple, sin dos puntos como conector.")
+
+
+def resumir_votacion(extracto: str, generar=llm.generar) -> str:
+    """Una o dos frases de que se voto; si Gemini falla, el extracto tal cual."""
+    try:
+        return (generar(extracto, system=SYSTEM_VOTO, modelo=llm.LITE) or "").strip() or extracto
+    except Exception as e:
+        print(f"[live-transcribe] resumen de votacion fallo: {e}")
+        return extracto
