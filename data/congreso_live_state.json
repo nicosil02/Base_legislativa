@@ -146,7 +146,8 @@
   "fb_2376024616547641",
   "fb_1362073759338536",
   "NNfSFqKV43o",
-  "fb_29083195037986270"
+  "fb_29083195037986270",
+  "fb_1662040862228406"
  ],
  "sesiones": [
   {
@@ -1295,11 +1296,14 @@
    "pais": "EC",
    "url": "https://www.facebook.com/watch/?v=29083195037986270",
    "visto_at": "2026-10-21T16:14:43Z"
+  },
+  {
+   "id": "fb_1662040862228406",
+   "titulo": "Sesión Nro. 2025-2027-140 de la Comisión de Régimen Económico y Tributario y su Regulación y Control",
+   "tipo": "Comision: Régimen Económico (EC)",
+   "pais": "EC",
+   "url": "https://www.facebook.com/watch/?v=1662040862228406",
+   "visto_at": "2026-10-21T16:26:45Z"
   }
- ],
- "avisado": {
-  "gD1ekqBA_Xs": [
-   "El pleno del Senado debate la delegación de facultades legislativas al Poder Ejecutivo en materia de seguridad ciudadana e inteligencia."
-  ]
- }
+ ]
 }
