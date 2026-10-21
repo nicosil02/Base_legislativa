@@ -156,7 +156,9 @@
   "da-jbzlI3f4",
   "fb_1764340731931385",
   "fb_1446626054070945",
-  "7xb1vH1EPfQ"
+  "7xb1vH1EPfQ",
+  "7hbNGfyiJJw",
+  "LLkxXj_QJyw"
  ],
  "sesiones": [
   {
@@ -1385,6 +1387,22 @@
    "pais": "PE",
    "url": "https://www.youtube.com/watch?v=7xb1vH1EPfQ",
    "visto_at": "2026-10-21T20:01:59Z"
+  },
+  {
+   "id": "7hbNGfyiJJw",
+   "titulo": "🔴EN VIVO: Comisión Bicameral de Presupuesto y Cuenta General de la República l 21/10/2026",
+   "tipo": "Comision: Presupuesto",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=7hbNGfyiJJw",
+   "visto_at": "2026-10-21T20:08:24Z"
+  },
+  {
+   "id": "LLkxXj_QJyw",
+   "titulo": "🔴EN VIVO: Comisión de Educación, Cultura y Deporte 21/10/2026",
+   "tipo": "Comision: Cultura",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=LLkxXj_QJyw",
+   "visto_at": "2026-10-21T20:10:52Z"
   }
  ],
  "avisado": {
