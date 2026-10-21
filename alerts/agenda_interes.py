@@ -14,7 +14,7 @@ import argparse
 import hashlib
 import json
 import sqlite3
-from datetime import datetime, timedelta
+from datetime import date, datetime, timedelta
 
 from core import llm
 from core.tiempo import LIMA
@@ -44,39 +44,10 @@ def _ro(nombre: str) -> sqlite3.Connection | None:
 
 
 def sesiones(hoy: str, hasta: str) -> list[dict]:
-    """[{clave, pais, nombre, fecha, hora, texto}] con agenda cargada."""
-    from congreso_live.agenda_preview import agenda_texto
-    out = []
-    pe = _ro("proyectos.db")
-    if pe:
-        for id_s, com, camara, fecha, hora in pe.execute(
-                "SELECT id_sesion, nombre_comision, camara, fecha, hora_inicio FROM sesiones "
-                "WHERE fecha BETWEEN ? AND ? AND UPPER(COALESCE(estado,'')) = 'CONVOCADA'", (hoy, hasta)):
-            puntos = [t for (t,) in pe.execute(
-                "SELECT descripcion_texto FROM sesion_agenda_punto WHERE id_sesion = ? ORDER BY orden", (id_s,)) if t]
-            if puntos:
-                out.append({"clave": f"pe:{id_s}", "pais": "PE", "fecha": fecha, "hora": hora,
-                            "nombre": f"{com}" + (f" ({camara})" if camara else ""),
-                            "texto": "\n".join(f"- {p}" for p in puntos)})
-        for camara, fecha in pe.execute(
-                "SELECT DISTINCT camara, fecha FROM pleno_agenda_pdf WHERE fecha BETWEEN ? AND ? "
-                "AND upper(pdf_url) LIKE '%AGENDA%'", (hoy, hasta)):
-            texto = agenda_texto(f"Pleno: {camara.capitalize()}", "", fecha)
-            if texto:
-                out.append({"clave": f"pleno:{camara}:{fecha}", "pais": "PE", "fecha": fecha, "hora": None,
-                            "nombre": "Pleno del Senado" if camara == "senado" else "Pleno de la Cámara de Diputados",
-                            "texto": texto})
-        pe.close()
-    ec = _ro("proyectos_ec.db")
-    if ec:
-        for uid, com, fecha, hora, desc in ec.execute(
-                "SELECT uid, nombre_comision, fecha, hora_inicio, descripcion FROM sesiones_ec "
-                "WHERE fecha BETWEEN ? AND ? AND COALESCE(status,'') != 'CANCELLED'", (hoy, hasta)):
-            if desc and desc.strip():
-                out.append({"clave": f"ec:{uid}", "pais": "EC", "fecha": fecha, "hora": hora,
-                            "nombre": f"{'Pleno' if com == 'Pleno' else 'Comisión de ' + (com or '?')} (Asamblea EC)",
-                            "texto": desc})
-        ec.close()
+    """[{clave, pais, nombre, fecha, hora, texto, hash}] con agenda cargada (core.legislativo)."""
+    from core import legislativo
+    d, h = date.fromisoformat(hoy), date.fromisoformat(hasta)
+    out = [a for pais in legislativo.PAISES for a in legislativo.agendas(pais, d, h)]
     for s in out:
         s["texto"] = s["texto"][:MAX_CHARS]
         s["hash"] = hashlib.sha1(s["texto"].encode()).hexdigest()

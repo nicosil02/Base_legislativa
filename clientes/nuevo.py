@@ -16,15 +16,13 @@ commit de los .cifrado; el texto plano no se sube."""
 from __future__ import annotations
 
 import argparse
-import gzip
 import json
-import shutil
 import sqlite3
-import tempfile
 from datetime import datetime, timedelta
 from pathlib import Path
 
 from clientes import config
+from core.tiempo import LIMA
 
 FICHA = {
     "nombre": "",
@@ -76,21 +74,6 @@ def crear(slug: str, nombre: str, paises: list[str]) -> Path:
     return carpeta
 
 
-def _base_ec() -> Path | None:
-    """proyectos_ec.db; si solo esta el .gz de data/, se abre en un temporal."""
-    from core.db import ROOT, db_path
-    p = db_path("proyectos_ec.db")
-    if p.exists():
-        return p
-    gz = ROOT / "data" / "proyectos_ec.db.gz"
-    if not gz.exists():
-        return None
-    destino = Path(tempfile.gettempdir()) / "proyectos_ec_probar.db"
-    with gzip.open(gz) as f, open(destino, "wb") as out:
-        shutil.copyfileobj(f, out)
-    return destino
-
-
 def noticias_de(slug: str, conn: sqlite3.Connection, desde: str) -> list[dict]:
     """Noticias de los paises del cliente que caen en sus temas o vienen de
     sus instituciones (el mismo criterio de fuentes/pagina, sin la UI)."""
@@ -116,20 +99,13 @@ def noticias_de(slug: str, conn: sqlite3.Connection, desde: str) -> list[dict]:
     return out
 
 
-def pls_de(slug: str, pais: str, conn: sqlite3.Connection, desde: str) -> list[dict]:
-    """PL presentados desde `desde` cuya categoria (scraper/categorias) es del cliente."""
-    from scraper.categorias import classify
-    cats = set(config.todos()[slug].get("categorias_pl", []))
-    if pais == "PE":
-        q = "SELECT pley_num, titulo, sumilla FROM proyectos WHERE fec_presentacion >= ?"
-    else:
-        q = "SELECT n_tramite, titulo, '' FROM proyectos WHERE fec_presentacion >= ?"
-    out = []
-    for num, titulo, sumilla in conn.execute(q, (desde,)):
-        cat = classify(titulo, sumilla)
-        if cat in cats:
-            out.append({"pais": pais, "numero": num, "titulo": titulo, "categoria": cat})
-    return out
+def pls_de(slug: str, desde: datetime) -> list[dict]:
+    """PL presentados desde `desde`, en los paises del cliente, de sus categorias_pl."""
+    from core import legislativo
+    c = config.todos()[slug]
+    cats = set(c.get("categorias_pl", []))
+    return [p for pais in c["paises"] if pais in legislativo.PAISES
+            for p in legislativo.proyectos(pais, desde) if p["categoria"] in cats]
 
 
 def probar(slug: str, dias: int = 30, muestra: int = 15) -> dict:
@@ -137,12 +113,8 @@ def probar(slug: str, dias: int = 30, muestra: int = 15) -> dict:
     if slug not in config.todos():
         raise SystemExit(f"No hay clientes/{slug}/cliente.json")
     desde = (datetime.now() - timedelta(days=dias)).date().isoformat()
-    paises = config.todos()[slug]["paises"]
-    pe = sqlite3.connect(db_path("proyectos.db"))
-    notis = noticias_de(slug, pe, desde)
-    pls = pls_de(slug, "PE", pe, desde) if "PE" in paises else []
-    if "EC" in paises and (ec := _base_ec()):
-        pls += pls_de(slug, "EC", sqlite3.connect(ec), desde)
+    notis = noticias_de(slug, sqlite3.connect(db_path("proyectos.db")), desde)
+    pls = pls_de(slug, datetime.now(LIMA) - timedelta(days=dias))
 
     print(f"\n== {config.todos()[slug]['nombre']} · ultimos {dias} dias (desde {desde}) ==")
     print(f"Noticias: {len(notis)} (~{len(notis) / dias:.1f} por dia)")
@@ -150,7 +122,7 @@ def probar(slug: str, dias: int = 30, muestra: int = 15) -> dict:
         print(f"  [{n['pais']}] {n['titulo'][:110]}  ({n['fuente']}; {', '.join(n['temas']) or 'institucion'})")
     print(f"\nProyectos de ley: {len(pls)}")
     for p in pls[:muestra]:
-        print(f"  [{p['pais']}] {p['numero']} {p['titulo'][:110]}  ({p['categoria']})")
+        print(f"  [{p['pais']}] {p['numero']} {(p['titulo'] or '')[:110]}  ({p['categoria']})")
     print("\nSi hay ruido: sumar exclusiones en notas.md, sacar temas o pasar fuentes a "
           "fuentes_con_perfil_estricto. Si falta algo: temas_propios, palabras_clave o instituciones.")
     return {"noticias": notis, "pls": pls}
