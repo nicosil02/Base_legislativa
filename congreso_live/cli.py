@@ -9,7 +9,7 @@ from __future__ import annotations
 import argparse
 import logging
 
-from congreso_live.agenda_preview import agenda_extra_para
+from congreso_live.agenda_preview import aviso_inicio
 from congreso_live.detector import vivos_de_interes
 from congreso_live.notify import enviar_whatsapp
 from congreso_live.state import (
@@ -45,10 +45,10 @@ def cmd_check(args) -> int:
     enviados = 0
     for v in nuevos:
         if _comision_seguida(v["tipo"], seguidas_norm):
-            msg = (f"🔴 {'Asamblea EC' if v.get('pais') == 'EC' else 'Congreso'} EN VIVO — {v['tipo']}\n{v['titulo']}\n{v['url']}"
-                   f"{agenda_extra_para(v)}")
-            enviar_whatsapp(msg)
-            enviados += 1
+            msg = aviso_inicio(v)
+            if msg:
+                enviar_whatsapp(msg)
+                enviados += 1
         state.setdefault("alertados", []).append(v["id"])
         state.setdefault("sesiones", []).append({**v, "visto_at": now})
 

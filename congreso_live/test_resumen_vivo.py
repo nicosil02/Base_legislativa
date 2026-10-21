@@ -40,3 +40,17 @@ def test_alerta_final_solo_si_hubo_avisos():
     assert resumen_vivo.alerta_final("Comision: Salud", "S", "x" * 900, [], generar=falso) is None
     msg = resumen_vivo.alerta_final("Comision: Salud", "S", "x" * 900, ["algo"], generar=falso)
     assert msg.startswith("✅ Fin de sesión · Comision: Salud (para Bayer)") and "*Titulo*" in msg
+
+
+def test_aviso_inicio_solo_si_toca_a_un_cliente():
+    nada = lambda *a, **k: json.dumps({"hay_algo": False, "puntos": []})
+    assert resumen_vivo.aviso_inicio("Comision: Ciencia", "S", "u", ["Informe"], generar=nada) is None
+    algo = lambda *a, **k: json.dumps({"hay_algo": True, "puntos": [{"texto": "PL de plaguicidas", "clientes": ["bayer"]}]})
+    msg = resumen_vivo.aviso_inicio("Comision: Agrario", "S", "u", ["PL 550"], generar=algo)
+    assert msg.startswith("🔴 Congreso EN VIVO · Comision: Agrario") and "• PL de plaguicidas (Bayer)" in msg
+
+
+def test_votacion_sin_gemini_devuelve_el_extracto():
+    def roto(*a, **k):
+        raise RuntimeError("sin cupo")
+    assert resumen_vivo.resumir_votacion("…extracto…", generar=roto) == "…extracto…"

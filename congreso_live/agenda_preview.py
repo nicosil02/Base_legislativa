@@ -275,22 +275,38 @@ def _una_linea_corta(texto: str, max_chars: int = MAX_CHARS_PUNTO) -> str:
 
 
 def agenda_extra_para(v: dict) -> str:
-    """Bloque de agenda para el aviso de esta sesion, o '' si no hay DB,
-    no hay match o hay cualquier error: nunca debe romper el aviso."""
+    """Bloque de agenda para el aviso de esta sesion, o '' si no hay nada."""
+    return formatear_para_whatsapp(puntos_para(v))
+
+
+def puntos_para(v: dict) -> list[str]:
+    """Puntos de agenda de esta sesion, o [] si no hay DB, no hay match o hay
+    cualquier error: nunca debe romper el aviso."""
     from congreso_live.transcripciones import _find_db_path
 
     try:
         db_path = _find_db_path()
         if not db_path.exists():
-            return ""
+            return []
         conn = sqlite3.connect(f"file:{db_path}?mode=ro", uri=True)
         try:
-            puntos = puntos_agenda(conn, v["tipo"], v["titulo"])
+            return puntos_agenda(conn, v["tipo"], v["titulo"])
         finally:
             conn.close()
-        return formatear_para_whatsapp(puntos)
     except Exception:
-        return ""
+        return []
+
+
+def aviso_inicio(v: dict) -> str | None:
+    """Aviso de sesion EN VIVO solo si toca a un cliente (resumen_vivo.aviso_inicio).
+    Si Gemini falla, el aviso de siempre: mejor uno de mas que perder uno."""
+    from congreso_live.resumen_vivo import aviso_inicio as juzgar
+    try:
+        return juzgar(v["tipo"], v["titulo"], v["url"], puntos_para(v))
+    except Exception as e:
+        print(f"[live] aviso de inicio sin Gemini ({e}), mando el de siempre")
+        pre = "Asamblea EC" if v.get("pais") == "EC" else "Congreso"
+        return f"🔴 {pre} EN VIVO — {v['tipo']}\n{v['titulo']}\n{v['url']}{agenda_extra_para(v)}"
 
 
 def formatear_para_whatsapp(puntos: list[str]) -> str:
