@@ -130,7 +130,7 @@ recien ahi cambiar el secreto.
 python -m clientes.nuevo crear acme --nombre "Acme" --paises PE,EC
 # llenar clientes/acme/cliente.json y notas.md (Claude puede hacerlo con el bluebook)
 python -m clientes.nuevo probar acme --dias 30   # que le habria llegado el ultimo mes
-python -m clientes.privado cerrar                # y commit de los .cifrado
+python -m clientes.privado enviar clientes/acme  # commit + push de los .buzon; GitHub los cifra
 ```
 
 Un rubro que no esta en `noticias/temas.py` (mineria, energia...) va en la

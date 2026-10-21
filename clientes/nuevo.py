@@ -11,8 +11,9 @@ TV, alerta final). Se llenan a mano o pidiendoselo a Claude con el bluebook.
 base y muestra que le habria llegado (noticias y PL), con ejemplos para ver
 el ruido. Se ajusta la ficha y se vuelve a probar hasta que cierre.
 
-Despues: `python -m clientes.privado cerrar` (necesita CLIENTES_CLAVE) y
-commit de los .cifrado; el texto plano no se sube."""
+Despues: `python -m clientes.privado enviar clientes/<slug>` y push de los
+*.buzon (buzon-clientes.yml los cifra con la clave, que la PC no necesita);
+el texto plano no se sube."""
 from __future__ import annotations
 
 import argparse
