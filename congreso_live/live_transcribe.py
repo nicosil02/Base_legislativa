@@ -364,8 +364,10 @@ def capturar_y_acumular_en_vivo(
     from congreso_live import resumen_vivo
     ini_resumen, t_resumen = len(texto_acumulado), time.time()
     # Lo avisado vive en congreso_live_state.json: sobrevive al cambio de tramo (170 min).
-    from congreso_live.state import avisado_de, guardar_avisado
+    from congreso_live.state import avisado_de, comision_seguida, guardar_avisado, seguidas_activas
     avisado = avisado_de(video_id)
+    # Comisiones que no sigues: se transcriben igual, pero sin gastar Gemini en resumirlas.
+    con_resumen = comision_seguida(tipo, seguidas_activas())
     termino = False
     abierto = None  # (cola, cerrar) del ffmpeg continuo
     pendiente = np.zeros(0, dtype=np.float32)
@@ -417,7 +419,7 @@ def capturar_y_acumular_en_vivo(
                                       datetime.now(timezone.utc).date().isoformat(),
                                       duracion_acumulada, texto_acumulado, temas)
                 print(f"[live-transcribe] frase {chunks_ok}: {nuevo_texto[:120]}")
-                if (time.time() - t_resumen >= resumen_vivo.CADA_SEG
+                if (con_resumen and time.time() - t_resumen >= resumen_vivo.CADA_SEG
                         and len(texto_acumulado) - ini_resumen >= resumen_vivo.MIN_CHARS):
                     try:
                         msg = resumen_vivo.resumir(tipo, titulo, texto_acumulado[ini_resumen:],

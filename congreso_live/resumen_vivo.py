@@ -16,7 +16,7 @@ import json
 
 from core import llm
 
-CADA_SEG = 600
+CADA_SEG = 900  # 15 min: con 10 el cupo diario de LITE se acabo el 20/10
 MIN_CHARS = 800  # menos texto nuevo que esto: se espera al siguiente tramo
 
 SYSTEM = ("Eres analista de asuntos publicos. Lees un tramo de la transcripcion automatica "
