@@ -58,10 +58,20 @@ EXCLUIR = (
 
 
 EVENTO_KEYWORDS = ("mesa de trabajo", "mesa tecnica", "foro", "conversatorio")
-# tema de noticias.temas.clasificar() -> etiqueta en el tipo: Bayer/Syngenta
-# (Salud, Agro) y Google/Incode (Tecnologia, Datos y KYC).
-MESA_TEMAS = {"Salud": "Salud", "Crop": "Agro", "Tech / Digital": "Tecnologia",
-              "KYC / AML / Financiero": "Datos y KYC"}
+# Una mesa se transcribe si su tema (noticias.temas.clasificar) es de algun
+# cliente (temas de su ficha). Coyuntura queda fuera: es de todos y seria
+# cualquier mesa. Etiqueta corta para el tipo; un tema nuevo va con su nombre.
+_ETIQUETA_MESA = {"Salud": "Salud", "Crop": "Agro", "Tech / Digital": "Tecnologia",
+                  "KYC / AML / Financiero": "Datos y KYC"}
+
+
+def _mesa_temas() -> dict[str, str]:
+    from clientes import config
+    temas = {t for s in config.slugs() for t in config.temas_de(s)} - {"Coyuntura política"}
+    return {t: _ETIQUETA_MESA.get(t, t) for t in temas}
+
+
+MESA_TEMAS = _mesa_temas()
 
 
 def clasificar_titulo(titulo: str | None, pais: str = "PE") -> str | None:

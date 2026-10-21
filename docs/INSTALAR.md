@@ -124,6 +124,19 @@ Sin la clave la app arranca igual, pero sin clientes. Si se cambia la clave
 de Gemini: primero `abrir` con la vieja, despues `cerrar` con la nueva y
 recien ahi cambiar el secreto.
 
+### Cliente nuevo (sin tocar codigo)
+
+```bash
+python -m clientes.nuevo crear acme --nombre "Acme" --paises PE,EC
+# llenar clientes/acme/cliente.json y notas.md (Claude puede hacerlo con el bluebook)
+python -m clientes.nuevo probar acme --dias 30   # que le habria llegado el ultimo mes
+python -m clientes.privado cerrar                # y commit de los .cifrado
+```
+
+Un rubro que no esta en `noticias/temas.py` (mineria, energia...) va en la
+ficha como `temas_propios`; normas de su interes, en `palabras_norma`. Los
+jueces de Gemini (resumen en vivo, agendas, TV) leen `notas.md`.
+
 ## 7. Subir una version
 
 Cambiar el numero en `constraints.txt` (y en `requirements.txt` si la usa la

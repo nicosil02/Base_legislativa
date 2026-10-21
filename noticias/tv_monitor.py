@@ -337,10 +337,16 @@ def vale_aviso(terminos: list[str]) -> bool:
     return any(t not in CONTEXTO and t not in NO_AVISAR and t not in nombres for t in terminos)
 
 
+def _clientes_y_temas() -> str:
+    """'Bayer (Salud, Crop), Google (...)' desde las fichas de clientes."""
+    from clientes import config
+    return ", ".join(f"{c['nombre']} ({', '.join(config.temas_de(s))})"
+                     for s, c in config.todos().items())
+
+
 SYSTEM_AVISO = (
     "Sos analista de asuntos publicos en Peru y Ecuador para una consultora cuyos clientes son "
-    "Bayer (farma y agro), Syngenta (agro), Google e Incode (tecnologia, identidad digital, datos "
-    "personales, KYC). Recibis un fragmento transcrito automaticamente de un programa de TV o radio "
+    f"{_clientes_y_temas()}. Recibis un fragmento transcrito automaticamente de un programa de TV o radio "
     "en vivo. Decidi si es algo que el equipo querria saber YA: un anuncio, dato nuevo, decision o "
     "posicion concreta de una autoridad o actor directo (ministro, congresista, regulador, gremio) "
     "sobre normas, proyectos de ley, facultades, regulacion o politicas que tocan a esos clientes. "
