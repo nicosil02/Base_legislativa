@@ -54,3 +54,10 @@ def test_votacion_sin_gemini_devuelve_el_extracto():
     def roto(*a, **k):
         raise RuntimeError("sin cupo")
     assert resumen_vivo.resumir_votacion("…extracto…", generar=roto) == "…extracto…"
+
+
+def test_avisado_sobrevive_entre_tramos(tmp_path, monkeypatch):
+    from congreso_live import state
+    monkeypatch.setattr(state, "STATE_PATH", tmp_path / "s.json")
+    state.guardar_avisado("v1", ["Se voto el PL 99."])
+    assert state.avisado_de("v1") == ["Se voto el PL 99."] and state.avisado_de("v2") == []
