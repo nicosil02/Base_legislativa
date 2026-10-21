@@ -11,15 +11,29 @@ Corre con:
 """
 from __future__ import annotations
 
+import importlib
 import os
 import threading
 from pathlib import Path
 
 import streamlit as st
 
-from ui_kit import inject_button_polish
 
-from clientes.privado import abrir as _abrir_clientes  # noqa: E402
+def _importar(nombre: str):
+    """Tras cada push de codigo, Streamlit borra los modulos de la app de
+    sys.modules al empezar el siguiente rerun de CADA sesion. Si otra sesion
+    estaba importando en ese momento, el import revienta con KeyError
+    ('clientes', 'ui_kit' en los logs de 2026-10-21); reintentar lo arregla."""
+    for intento in range(3):
+        try:
+            return importlib.import_module(nombre)
+        except KeyError:
+            if intento == 2:
+                raise
+
+
+inject_button_polish = _importar("ui_kit").inject_button_polish
+_abrir_clientes = _importar("clientes.privado").abrir
 
 # Cargar .env local (Streamlit Cloud usa st.secrets — se mapean a env vars
 # automaticamente via [secrets] section).
@@ -221,7 +235,7 @@ def _bootstrap_dbs_impl():
     pe_gz = repo_root / "data" / "proyectos.db.gz"
     # Publicada en partes, una por dueño (core/partes.py): se bajan y se
     # arma la base completa. Sin partes en `datos`, la base entera de antes.
-    from core import partes
+    partes = _importar("core.partes")
     partes_gz = {p: repo_root / "data" / partes.archivo(p) for p in partes.NOMBRES}
     for gz in partes_gz.values():
         _bajar_de_datos(gz)
