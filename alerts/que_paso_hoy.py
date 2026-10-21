@@ -18,6 +18,8 @@ Material:
 """
 from __future__ import annotations
 
+from functools import lru_cache
+
 import argparse
 import json
 import sqlite3
@@ -138,34 +140,28 @@ def normas(pe: sqlite3.Connection, desde: str) -> list[str]:
     return out[:MAX["normas"]]
 
 
+@lru_cache(maxsize=None)
+def _matriz_nums(slug: str, pais: str) -> frozenset[str]:
+    # La matriz es un xlsx: leerla por cada PL tardaba minutos.
+    return frozenset(f["pl_numero"] for f in config.matriz(slug, pais))
+
+
 def _clientes_de_pl(tema: str | None, numero: str, pais: str) -> list[str]:
     return [s for s in config.slugs(pais)
             if (tema and tema in config.todos()[s].get("categorias_pl", []))
-            or numero in {f["pl_numero"] for f in config.matriz(s, pais)}]
+            or numero in _matriz_nums(s, pais)]
 
 
-def pls(pe: sqlite3.Connection | None, ec: sqlite3.Connection | None, desde_local: str, desde_utc: str) -> list[str]:
+def pls(desde: datetime) -> list[str]:
+    """PL de clientes (categoria o matriz) que cambiaron de estado o comision."""
+    from core import legislativo
     out = []
-    if pe:
-        for r in pe.execute(
-                """SELECT p.proyecto_ley, p.titulo, COALESCE(p.tema_manual, p.tema) AS tema,
-                          s.estado, s.comisiones, substr(s.fecha, 1, 10) AS fecha
-                   FROM seguimientos s JOIN proyectos p USING (per_par_id, cod_tipo_parl, pley_num)
-                   WHERE s.fecha >= ? ORDER BY s.fecha DESC""", (desde_local,)):
-            cl = _clientes_de_pl(r["tema"], str(r["proyecto_ley"]), "PE")
+    for pais in legislativo.PAISES:
+        for r in legislativo.cambios(pais, desde):
+            cl = _clientes_de_pl(r["categoria"], r["numero"], pais)
             if cl:
-                out.append(f"[PE] PL {r['proyecto_ley']} ({r['tema']}; {', '.join(cl)}) {r['titulo'][:160]} "
-                           f"-> {r['estado']} {r['comisiones'] or ''} ({r['fecha']})")
-    if ec:
-        for r in ec.execute(
-                """SELECT h.n_tramite, p.titulo, COALESCE(p.tema_manual, p.tema) AS tema, h.campo,
-                          h.valor_despues, p.url_portal FROM historial_cambios h
-                   JOIN proyectos p USING (n_tramite)
-                   WHERE h.changed_at >= ? AND h.campo IN ('estado', 'comision_asignada')""", (desde_utc,)):
-            cl = _clientes_de_pl(r["tema"], str(r["n_tramite"]), "EC")
-            if cl:
-                out.append(f"[EC] Tramite {r['n_tramite']} ({r['tema']}; {', '.join(cl)}) {r['titulo'][:160]} "
-                           f"-> {r['campo']}: {r['valor_despues']} {r['url_portal'] or ''}")
+                out.append(f"[{pais}] PL {r['numero']} ({r['categoria']}; {', '.join(cl)}) {r['titulo'][:160]} "
+                           f"-> {r['campo']}: {r['valor']} ({r['fecha']}) {r['url'] or ''}".rstrip())
     return out[:MAX["pls"]]
 
 
@@ -191,12 +187,11 @@ def tv(pe: sqlite3.Connection, desde: str) -> list[str]:
 
 def material(cerebro: sqlite3.Connection | None = None) -> dict[str, list[str]]:
     from cerebro.embeddings import conectar
-    pe, ec, cerebro = _ro("proyectos.db"), _ro("proyectos_ec.db"), cerebro or conectar()
+    pe, cerebro = _ro("proyectos.db"), cerebro or conectar()
     desde = _desde_utc()
-    desde_local = (_lima_ahora() - timedelta(hours=24)).strftime("%Y-%m-%dT%H:%M:%S")
     return {"noticias": noticias(pe, cerebro, desde) if pe else [],
             "normas": normas(pe, desde) if pe else [],
-            "pls": pls(pe, ec, desde_local, desde),
+            "pls": pls(_lima_ahora() - timedelta(hours=24)),
             "sesiones": sesiones(pe, desde),
             "tv": tv(pe, desde) if pe else []}
 
