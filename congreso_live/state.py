@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import json
 import logging
+import threading
 from pathlib import Path
 
 from core.text import norm
@@ -54,3 +55,23 @@ def seguidas_activas() -> set[str]:
     except Exception as e:
         log.warning("no se pudo leer comisiones seguidas, aviso de todo: %s", e)
         return set()
+
+
+_LOCK = threading.Lock()  # varias sesiones (hilos) leen y guardan el mismo JSON
+MAX_AVISADO = 30
+
+
+def avisado_de(video_id: str) -> list[str]:
+    """Puntos del resumen en vivo ya mandados de esta sesion (tramos anteriores incluidos)."""
+    with _LOCK:
+        return list(load_state().get("avisado", {}).get(video_id, []))
+
+
+def guardar_avisado(video_id: str, puntos: list[str]) -> None:
+    with _LOCK:
+        state = load_state()
+        av = state.setdefault("avisado", {})
+        av.pop(video_id, None)
+        av[video_id] = puntos
+        state["avisado"] = dict(list(av.items())[-MAX_AVISADO:])
+        save_state(state)

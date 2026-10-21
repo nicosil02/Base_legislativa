@@ -363,9 +363,9 @@ def capturar_y_acumular_en_vivo(
     # Resumen para clientes: desde donde y cuando fue el ultimo tramo.
     from congreso_live import resumen_vivo
     ini_resumen, t_resumen = len(texto_acumulado), time.time()
-    # ponytail: en memoria del job; si la sesion pasa a otro tramo de 170 min
-    # puede repetirse un aviso y la alerta final solo ve lo del ultimo tramo.
-    avisado: list[str] = []
+    # Lo avisado vive en congreso_live_state.json: sobrevive al cambio de tramo (170 min).
+    from congreso_live.state import avisado_de, guardar_avisado
+    avisado = avisado_de(video_id)
     termino = False
     abierto = None  # (cola, cerrar) del ffmpeg continuo
     pendiente = np.zeros(0, dtype=np.float32)
@@ -425,6 +425,7 @@ def capturar_y_acumular_en_vivo(
                         if msg:
                             from congreso_live.notify import enviar_whatsapp
                             enviar_whatsapp(f"{msg}\n\n{url_video(video_id)}")
+                            guardar_avisado(video_id, avisado)
                     except Exception as e:  # sin clave o sin cupo de Gemini: la transcripcion sigue
                         print(f"[live-transcribe] resumen en vivo fallo: {e}")
                     ini_resumen, t_resumen = len(texto_acumulado), time.time()
