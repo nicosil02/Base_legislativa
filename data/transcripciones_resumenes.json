@@ -5378,7 +5378,7 @@
   },
   {
     "video_id": "NNfSFqKV43o",
-    "resumen": "Sesion de la Comision de Modernizacion de la Gestion del Estado y Contraloria de la Camara de Diputados del Peru (21/10/2026), con estacion de pedidos y el debate del predictamen sobre las proposiciones legislativas 103 y 208, Ley que Fortalece la Eficiencia de la Gestion del Riesgo de Desastres, ante la proximidad del fenomeno de El Nino 2026-2027. Varios diputados insistieron en la ausencia del Contralor General por motivos de salud y plantearon pedidos puntuales sobre obras paralizadas y gobiernos locales en sus regiones; la transcripcion, capturada en vivo, tiene numerosos tramos con errores de reconocimiento de voz (sesion en curso al momento de este resumen).",
+    "resumen": "Sesion de la Comision de Modernizacion de la Gestion del Estado y Contraloria de la Camara de Diputados del Peru (21/10/2026), con estacion de pedidos y el debate del predictamen sobre las proposiciones legislativas 103 y 208, Ley que Fortalece la Eficiencia de la Gestion del Riesgo de Desastres, ante la proximidad del fenomeno de El Nino 2026-2027. Varios diputados insistieron en la ausencia del Contralor General por motivos de salud y plantearon pedidos puntuales sobre obras paralizadas y gobiernos locales en sus regiones; la transcripcion, capturada en vivo, tiene numerosos tramos con errores de reconocimiento de voz (la transcripcion capturada corta abruptamente aca, probablemente por una interrupcion tecnica en la captura - no hay evidencia de que la sesion siguiera en curso a esta altura).",
     "ideas_clave": [
       "Se debatio el predictamen de las proposiciones legislativas 103 y 208, 'Ley que Fortalece la Eficiencia de la Gestion del Riesgo de Desastres', que eleva a regla permanente la proteccion de recursos frente a emergencias como El Nino.",
       "Se cito que el Peru ocupa el puesto 14 del ranking mundial de riesgo (World Risk Index) y que el 48.3% del territorio nacional esta en riesgo alto frente a desastres.",
@@ -5388,7 +5388,7 @@
       "La diputada Poma relato una visita a la localidad fronteriza de Valparaiso (frontera con Bolivia) y a Chingayo, senalando falta de atencion en la posta medica y una obra escolar sin avance.",
       "El diputado Albaniel proyecto un video sobre el posible impacto del fenomeno de El Nino en la ciudad de Piura."
     ],
-    "generated_at": "2026-10-21T19:51:32Z",
+    "generated_at": "2026-10-21T23:49:40Z",
     "duracion_seg": 2810,
     "agenda_cumplida": null
   },
@@ -5426,17 +5426,19 @@
   },
   {
     "video_id": "fb_1819599545719510",
-    "resumen": "La Comisión de Soberanía Alimentaria y Desarrollo del Sector Agropecuario y Pesquero de la Asamblea Nacional del Ecuador recibió comparecencias sobre una propuesta de reforma al artículo 1 de la Ley Orgánica para el Desarrollo de la Acuicultura y Pesca, orientada a proteger cuencas hídricas amazónicas afectadas por minería ilegal y a regular el manejo de especies endémicas como el paiche (Arapaima). Expuso primero un criador amazónico con 20 años de experiencia domesticando especies en cautiverio, y luego el abogado José Alfredo Aime, experto en acuicultura, quien pidió incorporar los lineamientos de la Convención CITES en la reforma (sesión en curso al momento de este resumen).",
+    "resumen": "Sesion No. 130-2025-2027 de la Comision Especializada Permanente de Soberania Alimentaria y Desarrollo del Sector Agropecuario y Pesquero de la Asamblea Nacional del Ecuador (21/10/2026), dedicada en comision general a recibir a dos comparecientes expertos en acuicultura -el tecnologo Eloy Arturo Silva Zuniga y el abogado Jose Alfredo Jaime- sobre el proyecto de reforma a la Ley Organica para el Desarrollo de la Acuicultura y Pesca, orientado a proteger y fomentar la produccion de especies endemicas amazonicas como el paiche. Los comparecientes propusieron regionalizar el manejo de especies por su territorio de origen y crear un centro de investigacion acuicola financiado con fondos de la circunscripcion territorial amazonica; no hubo votacion, la comision cerro recibiendo observaciones para incorporarlas a la matriz de trabajo del proyecto.",
     "ideas_clave": [
-      "La reforma propuesta modifica el artículo 1 de la Ley Orgánica para el Desarrollo de la Acuicultura y Pesca, agregando un inciso que exige observar disposiciones constitucionales y de la Convención CITES para proteger cuencas hídricas amazónicas afectadas por minería ilegal.",
-      "Un criador amazónico (presentado como Eloy Arturo Sirvasuñiga) relató 20 años domesticando especies endémicas (paiche/pirarucú, bagres, bocachico, etc.) en cautiverio sin apoyo institucional, y pidió crear un Consejo Consultivo (art. 16) con representación de Pastaza, Napo, Morona Santiago y Sucumbíos.",
-      "Se advirtió sobre el riesgo de que el paiche (Arapaima gigas), al ser introducido fuera de su hábitat natural amazónico, se vuelva especie invasora; se citó el caso de la represa de Chongón (Guayas), donde ya hay reportes de ejemplares de hasta 3 metros.",
-      "El abogado José Alfredo Aime señaló que Ecuador incumple la Convención CITES sobre comercio de especies amenazadas y recordó que en 2019 murieron más de 5.000 alevines de paiche importados desde Perú por no aplicarse los procedimientos de desaduanización que exige esa convención.",
-      "Se mencionó que Colombia ya cuenta con un reglamento que limita el manejo del paiche a zonas específicas de su área natural de incidencia (Caquetá y Putumayo), como referencia para regionalizar la producción en Ecuador.",
-      "Los comparecientes pidieron apoyo estatal con investigación y programas de producción regionalizados en la Amazonía, señalando que hasta ahora casi no ha habido inversión pública en el sistema biacuático amazónico pese a su alta rentabilidad potencial."
+      "Quorum verificado con 9 de 10 asambleistas de la comision antes de instalar la sesion.",
+      "Los comparecientes -tecnologo Eloy Arturo Silva Zuniga (35 anos de experiencia en acuicultura en Pastaza) y abogado Jose Alfredo Jaime- propusieron reformar el articulo 1 de la Ley Organica para el Desarrollo de la Acuicultura y Pesca para incorporar enfoque ecosistemico, proteccion de cuencas hidricas amazonicas y los criterios de la Convencion CITES sobre comercio de especies amenazadas.",
+      "Datos presentados sobre el paiche: supera 46% de proteina, rendimiento de filete del 57% frente a 30% de la tilapia, precio de 16 a 18 dolares por kilo, y potencial de hasta 120,000 kilos por hectarea cultivada.",
+      "Se cito el caso de la importacion en 2019 de mas de 5,000 alevines de paiche desde Peru, que murieron porque el entonces Ministerio de Ambiente no aplico los lineamientos de la Convencion CITES para desaduanizarlos.",
+      "El abogado Jaime propuso una disposicion reformatoria al articulo 66 de la Ley Organica para la Planificacion y Desarrollo Integral de la Circunscripcion Territorial Especial Amazonica, para destinar un porcentaje (estimado en 5 a 10 millones de dolares en 2-3 anos) de los aproximadamente 250 millones de dolares que administra esa entidad a un centro de investigacion acuicola amazonico.",
+      "El vicepresidente Marco Gonzaga planteo, como alternativa de tecnica legislativa, ampliar el numeral 5 ya existente del componente economico productivo (dedicado al manejo sostenible del bosque nativo) para incluir explicitamente la investigacion acuicola, en vez de crear un nuevo numeral.",
+      "La asambleista Gutina cuestiono la propuesta de crear un nuevo centro de investigacion cuando ya existe el INIAP, que segun los comparecientes no recibe presupuesto suficiente para cumplir esa funcion en la region amazonica.",
+      "No hubo votacion: se clauso la comision general y se instruyo al equipo tecnico de la comision incorporar las observaciones de los comparecientes a la matriz de trabajo del proyecto de ley, solicitandoles ademas remitir sus aportes por escrito."
     ],
-    "generated_at": "2026-10-21T17:54:10Z",
-    "duracion_seg": 707,
+    "generated_at": "2026-10-21T23:50:22Z",
+    "duracion_seg": 3642,
     "agenda_cumplida": null
   },
   {
@@ -5473,7 +5475,7 @@
   },
   {
     "video_id": "l-2b95G29Zw",
-    "resumen": "Tramo de la sesion de la Comision de Economia, Banca, Finanzas e Inteligencia Financiera de la Camara de Diputados del Peru (21/10/2026), centrado en la estacion de informes y pedidos. La comision aprobo por mayoria invitar al ministro de Comercio Exterior y Turismo para que informe sobre la implementacion de las zonas economicas especiales, y varios diputados presentaron pedidos adicionales, incluida una solicitud para que el MEF sustente sus ejes de politica economica y fiscal ante la comision (sesion en curso al momento de este resumen).",
+    "resumen": "Tramo de la sesion de la Comision de Economia, Banca, Finanzas e Inteligencia Financiera de la Camara de Diputados del Peru (21/10/2026), centrado en la estacion de informes y pedidos. La comision aprobo por mayoria invitar al ministro de Comercio Exterior y Turismo para que informe sobre la implementacion de las zonas economicas especiales, y varios diputados presentaron pedidos adicionales, incluida una solicitud para que el MEF sustente sus ejes de politica economica y fiscal ante la comision (la transcripcion capturada corta abruptamente aca, probablemente por una interrupcion tecnica en la captura - no hay evidencia de que la sesion siguiera en curso a esta altura).",
     "ideas_clave": [
       "La presidencia informo que los dias 14 y 15 de octubre se realizaron reuniones tecnicas entre la comision y el Ministerio de Economia y Finanzas para evaluar las proposiciones legislativas urgentes 507/2028 y 509 del Ejecutivo, que el ministro de Economia sustentaria ese mismo dia.",
       "Se aprobo por mayoria (con la salvedad de la diputada Navas, que pidio que constara su posicion) invitar al ministro de Comercio Exterior y Turismo, Roger Martin Valencia Espinosa, para que informe sobre la implementacion de las zonas economicas especiales de la Ley 32449.",
@@ -5483,7 +5485,7 @@
       "Se menciono una proposicion legislativa (ley 301-2021-CD) sobre donacion de alimentos y facilitacion del transporte, sin que se precisara aun su tratamiento.",
       "Se incorporo a la sesion el diputado Cesar Revilla."
     ],
-    "generated_at": "2026-10-21T19:51:32Z",
+    "generated_at": "2026-10-21T23:49:10Z",
     "duracion_seg": 617,
     "agenda_cumplida": null
   },
@@ -5583,23 +5585,24 @@
   },
   {
     "video_id": "fb_959796786743679",
-    "resumen": "La Comisión Especializada Permanente de Descentralización, Competencias y Organización del Territorio de la Asamblea Nacional del Ecuador sesionó en comisión general para recibir al consultor Byron Gabriel Líger Mosquera, quien expuso una propuesta técnica de reforma al COOTAD orientada a fortalecer la gobernanza territorial de seguridad y convivencia ciudadana, en el marco de la construcción del informe para segundo debate del proyecto de ley reformatoria al COOTAD (sesión en curso al momento de este resumen).",
+    "resumen": "La Comision Especializada Permanente de Descentralizacion, Competencias y Organizacion del Territorio de la Asamblea Nacional del Ecuador sesiono en comision general para recibir al consultor (teniente coronel en servicio pasivo) Byron Gabriel Liger Mosquera, quien expuso y sometio a debate una propuesta de reforma al COOTAD para fortalecer la gobernanza territorial en seguridad y convivencia ciudadana, en el marco de la construccion del informe para segundo debate del proyecto de ley reformatoria al COOTAD. Varios asambleistas plantearon objeciones de fondo, en particular que la ley de gasto publico 70-30 reclasifico el gasto en seguridad de los GAD como gasto corriente en vez de gasto de inversion, limitando su financiamiento; la sesion se clausuro agotado el debate sin votacion, con el compromiso de recibir los aportes por escrito.",
     "ideas_clave": [
-      "La propuesta técnica contempla reformar 11 artículos, añadir 7 artículos nuevos y 9 disposiciones (4 generales y 5 transitorias) al COOTAD.",
-      "El consultor señaló que Perú, Colombia y Bolivia producen el 93% de la cocaína mundial, lo que expone a Ecuador como país de tránsito y, crecientemente, de operaciones del crimen organizado (carteles mexicanos, disidencias de las FARC, mafias albanesas, italianas y chinas).",
-      "Se propone crear un Consejo Provincial de Seguridad a cargo del prefecto y Comités Parroquiales de Seguridad presididos por los presidentes de juntas parroquiales, hoy existentes solo por acuerdo ministerial (0097-2024).",
-      "Solo el 10% de los Gobiernos Autónomos Descentralizados (GAD) cuenta con un plan de seguridad ciudadana aprobado, según el Plan Nacional 'Ecuador Defiende' 2026-2029, que busca elevar esa cifra al 47%.",
-      "Como ejemplo de subregistro, en el cantón Mejía el Cuadro de Mando Integral Policial contabilizó 405 delitos, mientras el ECU 911 recibió 1.780 llamadas y la Fiscalía reportó cerca de 3.000 eventos.",
-      "La reforma no modifica las competencias exclusivas de la Policía Nacional ni de las Fuerzas Armadas; busca que los GAD trabajen en prevención y gobernanza territorial, no en el uso de la fuerza.",
-      "La sesión se realizó en modalidad presencial con 10 asambleístas acreditando el cuórum reglamentario."
+      "La propuesta tecnica contempla reformar 11 articulos, anadir 7 articulos nuevos y 9 disposiciones (4 generales y 5 transitorias) al COOTAD, incluyendo la creacion de un Consejo Provincial de Seguridad a cargo del prefecto y Comites Parroquiales de Seguridad presididos por los presidentes de juntas parroquiales, hoy existentes solo por el acuerdo ministerial 0097-2024.",
+      "Solo el 10% de los Gobiernos Autonomos Descentralizados (GAD) cuenta con un plan de seguridad ciudadana aprobado, segun el Plan Nacional Ecuador Defiende 2026-2029, que busca elevar esa cifra al 47%.",
+      "La asambleista Patricia Nunez objeto que la ley de gasto publico conocida como 70-30, que ya le quito mas de 1,000 millones de dolares a los GAD, reclasifico el gasto en seguridad como gasto corriente en vez de gasto de inversion, lo que limita la capacidad de los municipios y consejos provinciales para financiar prevencion.",
+      "El consultor senalo que en los ultimos dos anos unos 10,000 policias han solicitado la baja y existen cerca de 7,000 solicitudes represadas en las Fuerzas Armadas por la sobrecarga operativa del personal de seguridad.",
+      "El asambleista por Esmeraldas (identificado como Samuel) propuso replicar el modelo chino de videovigilancia e identificacion facial con tecnologia Huawei a traves del ECU 911, citando un caso de un robo bancario en China resuelto en dos horas tras implementarse ese sistema.",
+      "Se debatio la figura de las tasas de seguridad municipales como fuente de financiamiento propio para los GAD, y se discutio la posibilidad de tipificar el abigeato como economia criminal (junto con extorsion y otros delitos) en lugar de tratarlo como robo comun.",
+      "La asambleista Jennifer Guillen y otros oficialistas defendieron la gestion de seguridad del gobierno de Daniel Noboa, citando las extradiciones a Estados Unidos de los cabecillas alias Fito y Patucho Celso y de un exministro del Interior por el caso del magnicidio de Fernando Villavicencio.",
+      "La sesion se clausuro a las 16:54 sin llegar a votacion: se agoto el orden del dia, se solicito al compareciente remitir por escrito sus argumentos y aportes, y las observaciones quedaron para su revision por los equipos tecnicos de los asambleistas de cara al informe para segundo debate."
     ],
-    "generated_at": "2026-10-21T20:50:21Z",
-    "duracion_seg": 1604,
+    "generated_at": "2026-10-21T23:51:56Z",
+    "duracion_seg": 5193,
     "agenda_cumplida": null
   },
   {
     "video_id": "7hbNGfyiJJw",
-    "resumen": "La Comision Bicameral de Presupuesto debatio y sometio a votacion nominal el predictamen que aprueba un credito suplementario de S/8,228.4 millones para el fenomeno del Nino 2026-2027, seguridad ciudadana, salud y educacion, sustentado por el ministro de Economia Elmer Cuba Bustinza y financiado con mayores ingresos tributarios y emision de bonos soberanos. Varios parlamentarios cuestionaron partidas especificas como la compra de aviones Casa (S/1,197 millones) y los gastos de comunicacion institucional y del despacho presidencial, mientras decenas de congresistas presentaron pedidos de proyectos regionales para ser evaluados por el MEF (sesion en curso al momento de este resumen).",
+    "resumen": "La Comision Bicameral de Presupuesto debatio y aprobo por mayoria (32 votos a favor, 0 en contra y 2 abstenciones) el predictamen que autoriza un credito suplementario de S/8,228.4 millones para el fenomeno del Nino 2026-2027, seguridad ciudadana, salud y educacion, sustentado por el ministro de Economia Elmer Cuba Bustinza y financiado con mayores ingresos tributarios y emision de bonos soberanos. Varios parlamentarios cuestionaron partidas especificas como la compra de aviones Casa (S/1,197 millones) y los gastos de comunicacion institucional y del despacho presidencial, mientras decenas de congresistas presentaron pedidos de proyectos regionales para ser evaluados por el MEF; la sesion se levanto tras la votacion, quedando el dictamen pendiente de debate en el Pleno de la siguiente semana.",
     "ideas_clave": [
       "El credito suplementario (PL 005-2026-2031-CR) se financia 46.2% con mayores ingresos tributarios y 53.8% con emision de bonos soberanos, e incluye S/1,596.7 millones para obligaciones ineludibles (Caja de Pensiones Militar Policial, Fondo de Estabilizacion de Precios de Combustibles), S/702.9 millones para prevencion del fenomeno del Nino, S/2,283.6 millones para servicios esenciales (incluye el incremento de Pension 65 para 824 mil beneficiarios) y S/3,645.2 millones para inversiones en curso (Linea 2 del Metro, Anillo Vial Periferico).",
       "Los senadores Chipana Chipana y Caballero Leon, y los diputados Tito Rojas y Fernandez Gonzalez, rechazaron los S/1,197 millones destinados a la compra de aviones Casa por considerarlos un gasto no vinculado al fenomeno del Nino ni a la seguridad ciudadana.",
@@ -5607,10 +5610,10 @@
       "El senador Caballero Leon critico que se destinen S/180 millones (US$52 millones) a contratar conectividad satelital a terceros en lugar de aprovechar infraestructura estatal subutilizada, como la red nacional de fibra optica (con menos de 10% de uso) y la senal satelital del IRTP.",
       "Decenas de congresistas (de Puno, Ucayali, Loreto, Huancavelica, Junin, Piura, San Martin, Madre de Dios) presentaron pedidos de inclusion de proyectos de inversion especificos de sus regiones, que el presidente de la comision remitio al MEF para su evaluacion de cara al debate en el Pleno la semana siguiente.",
       "El ministro de Economia defendio la compra de aviones como estrategia disuasiva de seguridad nacional y explico que los kits escolares se compran en esta epoca para la campana escolar 2027.",
-      "Al cierre de la transcripcion capturada se encontraba en curso la votacion nominal del predictamen, con votos a favor mayoritarios y dos abstenciones registradas (Fernandez Gonzalez, Prado Vallejos)."
+      "En la votacion nominal final del predictamen (proposicion de ley 005-2026-2031-CR), votaron 32 congresistas a favor, 0 en contra y 2 abstenciones (Fernandez Gonzalez y Prado Vallejos); el dictamen fue aprobado por mayoria y la comision se levanto a las 16:47, con la sesion del Pleno prevista para la semana siguiente."
     ],
-    "generated_at": "2026-10-21T21:53:38Z",
-    "duracion_seg": 4621,
+    "generated_at": "2026-10-21T23:50:53Z",
+    "duracion_seg": 4782,
     "agenda_cumplida": null
   }
 ]
