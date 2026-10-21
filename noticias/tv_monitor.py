@@ -345,9 +345,12 @@ SYSTEM_AVISO = (
     "posicion concreta de una autoridad o actor directo (ministro, congresista, regulador, gremio) "
     "sobre normas, proyectos de ley, facultades, regulacion o politicas que tocan a esos clientes. "
     "NO es relevante: opinion o comentario de conductores y analistas, repeticion de noticias ya "
-    "conocidas, farandula, publicidad. Responde SOLO JSON: "
+    "conocidas, anecdotas o hechos de años pasados, alguien que no se sabe quien es, farandula, "
+    "publicidad. Responde SOLO JSON: "
     '{"relevante": true/false, "quien": "quien habla, con cargo, o vacio si no se sabe", '
-    '"que": "que dijo en concreto, una oracion", "por_que": "por que importa y a que cliente, una oracion"}. '
+    '"que": "que dijo en concreto, una oracion", "por_que": "que cambia en concreto (fecha, '
+    'votacion, norma, area del negocio), una oracion; vacio si solo seria un generico como '
+    '\'puede afectar a los clientes\'"}. '
     "Español simple, sin dos puntos como conector, sin inventar nada que no este en el fragmento."
 )
 
@@ -374,7 +377,8 @@ def resumir_aviso(canal: str, vivo: dict, m: dict) -> dict | None:
 def mensaje_aviso(canal: str, vivo: dict, m: dict, r: dict) -> str:
     hora = ahora_lima().strftime("%H:%M")
     quien = f"{r['quien']}. " if r.get("quien") else ""
-    return (f"📺 {canal} en vivo, {hora}\n{quien}{r['que']}\n{r.get('por_que', '')}\n"
+    por_que = f"{r['por_que'].strip()}\n" if (r.get("por_que") or "").strip() else ""
+    return (f"📺 {canal} en vivo, {hora}\n{quien}{r['que']}\n{por_que}"
             f"https://www.youtube.com/watch?v={vivo['id']}")
 
 
