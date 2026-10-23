@@ -173,7 +173,9 @@
   "MynXZyWG3CA",
   "fb_28770012369326509",
   "LVnsorptGO4",
-  "fb_1098786769592386"
+  "fb_1098786769592386",
+  "l8UbrJtD6oQ",
+  "-A7NPORWCx8"
  ],
  "sesiones": [
   {
@@ -1538,6 +1540,22 @@
    "pais": "EC",
    "url": "https://www.facebook.com/watch/?v=1098786769592386",
    "visto_at": "2026-10-23T16:15:50Z"
+  },
+  {
+   "id": "l8UbrJtD6oQ",
+   "titulo": "🔴EN VIVO: Comisión Bicameral de Presupuesto y Cuenta General de la Republica | 23/10/2026",
+   "tipo": "Comision: Presupuesto",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=l8UbrJtD6oQ",
+   "visto_at": "2026-10-23T20:35:01Z"
+  },
+  {
+   "id": "-A7NPORWCx8",
+   "titulo": "🔴EN VIVO: Mesa de trabajo con directores de Hospitales de Alta Complejidad en Tumbes l 23/10/2026",
+   "tipo": "Comision: Mesa de trabajo Salud",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=-A7NPORWCx8",
+   "visto_at": "2026-10-23T20:35:01Z"
   }
  ],
  "avisado": {
