@@ -28,3 +28,14 @@ def test_tipos_prohibidos_nunca_interesan():
                            {"indice": 2, "tipo": "evento_o_protocolo", "interesa": True, "por_que": "EE.UU."}])
 
     assert filtro.juzgar("google", items, generar=falso) == {1: (False, "IA"), 2: (True, "EE.UU.")}
+
+
+def test_investigacion_periodistica_no_se_veta():
+    items = [{"titulo": "El informe que CultiVida quiere retirar", "resumen": "", "fecha": "2026-10-26",
+              "fuente": "Salud con Lupa", "pais": "PE"}]
+
+    def falso(prompt, system, modelo, schema):
+        assert "investigacion_periodistica (" in prompt
+        return json.dumps([{"indice": 1, "tipo": "investigacion_periodistica", "interesa": True, "por_que": "Crop"}])
+
+    assert filtro.juzgar("syngenta", items, generar=falso) == {1: (True, "Crop")}

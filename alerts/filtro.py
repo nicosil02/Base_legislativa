@@ -2,7 +2,7 @@
 cliente, con su bluebook (notas.md) y las alertas que ya se le mandaron.
 
 Corre en cerebro.yml despues de embeber: solo mira noticias de las ultimas
-48 h que el cerebro ya acerca al perfil del cliente (afinidad Media o mas) y
+48 h que el cerebro ya acerca al perfil del cliente (UMBRAL_CANDIDATA o mas) y
 que todavia no se juzgaron. Los veredictos van a la tabla `relevancia` de
 cerebro.db, que la app ya descarga. No manda nada a nadie.
 
@@ -22,6 +22,11 @@ from core.db import ROOT
 LOTE = 25
 MAX_POR_CLIENTE = 50
 VENTANA_HORAS = 48
+# Puerta de entrada al juez. Con AFINIDAD_MEDIA (0.55) se quedaban afuera la replica de
+# Salud con Lupa sobre plaguicidas (0.547 Bayer) y EsSalud sin oncologicos (0.542): el
+# embedding solo ve el titulo. El juez es el filtro estricto; esto solo decide a quien ve.
+# ponytail: umbral fijo, si Gemini se queda sin cupo subir a 0.52 (~2/3 de candidatas).
+UMBRAL_CANDIDATA = 0.50
 
 SYSTEM = ("Sos analista de asuntos publicos en Vali Consultores (Peru y Ecuador). Decidis si "
           "una noticia merece una alerta para un cliente puntual, segun su perfil real. Se "
@@ -36,7 +41,7 @@ SYSTEM = ("Sos analista de asuntos publicos en Vali Consultores (Peru y Ecuador)
 # SYSTEM (encuestas y viajes oficiales salian como "interesa"), asi que los
 # tipos que nunca merecen alerta se descartan en codigo.
 TIPOS = ["decision_publica", "proyecto_o_debate", "cambio_de_autoridad", "compra_publica",
-         "declaracion_de_autoridad", "encuesta_o_estudio", "opinion_o_analisis",
+         "declaracion_de_autoridad", "investigacion_periodistica", "encuesta_o_estudio", "opinion_o_analisis",
          "tramite_administrativo", "evento_o_protocolo", "otro"]
 # evento_o_protocolo no: el perfil de Google pide visitas de EE.UU. explicitamente.
 TIPOS_NO = {"encuesta_o_estudio", "opinion_o_analisis", "tramite_administrativo"}
@@ -68,7 +73,9 @@ Para CADA noticia de abajo responde {{"indice", "tipo", "interesa", "por_que"}}.
 "tipo": decision_publica (norma, resolucion, medida de un regulador o ministerio), proyecto_o_debate
 (PL, dictamen, debate o consulta publica de una norma), cambio_de_autoridad (designacion, renuncia,
 censura), compra_publica, declaracion_de_autoridad (un ministro, regulador o embajador anuncia o
-fija posicion), encuesta_o_estudio (cifras, rankings, sondeos, reportes de mercado),
+fija posicion), investigacion_periodistica (un medio documenta hechos nuevos, como documentos,
+reuniones o cifras, sobre una decision publica o un actor del perfil, incluida su replica a un
+desmentido; NO es opinion), encuesta_o_estudio (cifras, rankings, sondeos, reportes de mercado),
 opinion_o_analisis (columna, entrevista a un experto, nota explicativa, consejos),
 tramite_administrativo (viajes oficiales, licencias, encargos internos, modificaciones
 presupuestarias), evento_o_protocolo (visitas, ceremonias, premios, reuniones sin resultado), otro.
@@ -91,7 +98,7 @@ def juzgar(slug: str, items: list[dict], generar=llm.generar) -> dict[int, tuple
 
 
 def candidatos(cerebro: sqlite3.Connection, noticias: sqlite3.Connection, slug: str) -> list[dict]:
-    from cerebro.embeddings import AFINIDAD_MEDIA, afinidad
+    from cerebro.embeddings import afinidad
     from noticias.digest import _es_reciente
     desde = (datetime.now(timezone.utc) - timedelta(hours=VENTANA_HORAS)).strftime("%Y-%m-%dT%H:%M:%S")
     filas = {r[0]: r for r in noticias.execute(
@@ -100,7 +107,7 @@ def candidatos(cerebro: sqlite3.Connection, noticias: sqlite3.Connection, slug: 
            WHERE f.activa = 1 AND n.first_seen_at >= ?""", (desde,))}
     ya = {r[0] for r in cerebro.execute("SELECT clave FROM relevancia WHERE cliente = ?", (slug,))}
     af = afinidad([f"noticia_{i}" for i in filas if f"noticia_{i}" not in ya], slug, cerebro)
-    elegidas = sorted((c for c, v in af.items() if v >= AFINIDAD_MEDIA), key=af.get, reverse=True)
+    elegidas = sorted((c for c, v in af.items() if v >= UMBRAL_CANDIDATA), key=af.get, reverse=True)
     out = []
     cubiertos = historial.paises(slug)
     for clave in elegidas:
