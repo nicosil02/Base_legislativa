@@ -5851,5 +5851,21 @@
     "generated_at": "2026-10-24T14:52:13Z",
     "duracion_seg": 11990,
     "agenda_cumplida": null
+  },
+  {
+    "video_id": "bAnGPWSJmxY",
+    "resumen": "Sesion de la Comision de Medio Ambiente y Sostenibilidad de la Camara de Diputados del Peru (26/10/2026) con dos temas: primero, la exposicion de representantes del MTC/DGAC y de LAP (concesionario del aeropuerto Jorge Chavez) sobre el ruido de aeronaves en zonas aledanas, seguida de preguntas de varios diputados que reclamaron la ausencia del ministro de Transportes y del gerente general de LAP y exigieron plazos concretos de mitigacion; segundo, el inicio del debate (sin votacion) del dictamen sobre el PL 88026-2031-CDE que crea el Regimen de Promocion de Actividades Agrarias Sostenibles en la Amazonia (REPAS), cuya votacion se posterga a la espera de opiniones tecnicas pendientes del Ministerio del Ambiente y el Midagri. (sesion en curso al momento de este resumen)",
+    "ideas_clave": [
+      "El MTC/DGAC (Jimmy Lazaro) presento el diagnostico de la fase 1 del estudio de huella acustica del aeropuerto Jorge Chavez; la fase 2 (mediciones acusticas y gobernanza MTC-Minam) culminaria recien en septiembre de 2027, aunque el ECA nocturno exige 50 decibeles y el MTC reconoce que ningun aeropuerto del mundo cumple ese limite en la practica",
+      "El pico de operaciones nocturnas en Jorge Chavez se da entre las 23:00 y 00:00 con un promedio de 32-35 operaciones por hora, dentro de la capacidad maxima de 44 operaciones netas por hora (49 totales menos 10% de margen para emergencias)",
+      "LAP opera desde 2023 el sistema de monitoreo de ruido HEMS (24/7, con estaciones en varios puntos de la ciudad) y mantiene desde 2020 un Comite Tecnico de Mitigacion de Ruido con el gobierno regional del Callao y las municipalidades de Lima, San Miguel, Magdalena, La Perla, Bellavista y Carmen de la Legua",
+      "La Resolucion Ministerial 435 ya habilita sanciones de entre 30 y 950 UIT, incluida la revocacion del permiso de explotadores aereos, para aerolineas que incumplan los procedimientos operacionales de despegue del IP04-2023",
+      "Varios diputados (Yalta, Cabrera, Silupu, Guevara, de Arriba) criticaron que el ministro de Transportes y Comunicaciones y el gerente general de LAP declinaron asistir por segunda vez consecutiva (tras faltar tambien a la sesion de la Comision de Defensa del Consumidor del 20 de octubre) y pidieron cronogramas con plazos fiscalizables y comparacion con estandares internacionales, citando la restriccion nocturna de 24 operaciones por hora en el aeropuerto El Dorado de Bogota",
+      "Se inicio el debate del dictamen del PL 88026-2031-CDE, que crea el Regimen de Promocion de las Actividades Agrarias Sostenibles en la Amazonia (REPAS) con vigencia de 5 anos y fecha de corte de inscripcion al 31 de diciembre de 2024, excluyendo areas naturales protegidas, humedales Ramsar y territorios de comunidades nativas; el presidente de la comision indico que solo 5 de 18 opiniones tecnicas solicitadas habian llegado (faltan Minam y Midagri) y que la votacion se posterga a la siguiente sesion",
+      "Diputados de oposicion al dictamen agrario pidieron una cuestion previa para recabar opinion tecnica de los ministerios competentes antes de votar, y objetaron que la fecha de corte de 2024 'premiaria' deforestacion reciente, proponiendo alinearla con el estandar de la Union Europea (2020)"
+    ],
+    "generated_at": "2026-10-26T15:50:38Z",
+    "duracion_seg": 3160,
+    "agenda_cumplida": null
   }
 ]
