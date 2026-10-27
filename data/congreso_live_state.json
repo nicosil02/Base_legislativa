@@ -190,7 +190,10 @@
   "BHoc8DNfK10",
   "TQTihXaQo7A",
   "BGnG_EJ88tg",
-  "CXC0rWjtjTI"
+  "CXC0rWjtjTI",
+  "gFhyCd_ZH7I",
+  "_qIAOKG_ZVw",
+  "XjrXq2mcGCM"
  ],
  "sesiones": [
   {
@@ -1691,6 +1694,30 @@
    "pais": "PE",
    "url": "https://www.youtube.com/watch?v=CXC0rWjtjTI",
    "visto_at": "2026-10-27T20:09:17Z"
+  },
+  {
+   "id": "gFhyCd_ZH7I",
+   "titulo": "🔴EN VIVO: Comisión de Justicia y Derechos Humanos de la Cámara de Diputados l 27/10/2026",
+   "tipo": "Comision: Justicia",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=gFhyCd_ZH7I",
+   "visto_at": "2026-10-27T20:11:29Z"
+  },
+  {
+   "id": "_qIAOKG_ZVw",
+   "titulo": "🔴EN VIVO: Comisión de Desarrollo Agrario | 27/10/2026",
+   "tipo": "Comision: Agrario",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=_qIAOKG_ZVw",
+   "visto_at": "2026-10-27T20:13:33Z"
+  },
+  {
+   "id": "XjrXq2mcGCM",
+   "titulo": "Continuación de la Sesión No. 133-AN-2025-2029 del pleno de la Asamblea Nacional",
+   "tipo": "Pleno: Asamblea Nacional (EC)",
+   "pais": "EC",
+   "url": "https://www.youtube.com/watch?v=XjrXq2mcGCM",
+   "visto_at": "2026-10-27T20:13:34Z"
   }
  ],
  "avisado": {
