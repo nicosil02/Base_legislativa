@@ -6301,34 +6301,81 @@
   },
   {
     "video_id": "mJXvZAjW9To",
-    "resumen": "Sesión del Pleno del Congreso de la República (bicameral) del 28/10/2026: se completó la votación nominal en el Senado y se aprobó la Cuenta General de la República del ejercicio fiscal 2025 (PL 001-2026-2031-CR) por 36 votos a favor, 9 en contra y 9 abstenciones, sumándose a la aprobación previa en la Cámara de Diputados (85-11-25). A continuación se inició el debate del proyecto de ley 005-2026-2031-CR, que crea un crédito suplementario de S/ 8,228.4 millones para enfrentar el fenómeno de El Niño 2026-2027, sustentado por el senador José Arista, con intervenciones de varias bancadas sobre la compra de aviones Casa, la conectividad satelital, el gasto en publicidad estatal y la distribución regional de los recursos (sesión en curso al momento de este resumen).",
+    "resumen": "Sesion del Pleno del Congreso de la Republica (bicameral) del 28/10/2026: tras aprobarse la Cuenta General de la Republica del ejercicio fiscal 2025, el pleno continuo el debate del proyecto de ley 005-2026-2031-CR (credito suplementario de S/ 8,228.4 millones por el fenomeno de El Nino), con decenas de intervenciones de senadores y diputados de distintas regiones cuestionando la compra de aviones Casa, el gasto en publicidad estatal y la escasa asignacion a gobiernos regionales, y solicitando la incorporacion de proyectos de inversion especificos de sus circunscripciones (sesion en curso al momento de este resumen).",
     "ideas_clave": [
-      "El Senado aprobó la Cuenta General de la República 2025 por 36 votos a favor, 9 en contra y 9 abstenciones, completando la aprobación bicameral iniciada en la Cámara de Diputados (85 a favor, 11 en contra, 25 abstenciones).",
-      "El senador José Arista (presidente de la Comisión Bicameral de Presupuesto) sustentó el PL 005-2026-2031-CR: crédito suplementario de S/ 8,228.4 millones (3.19% del presupuesto 2026), financiado 46.2% con recursos ordinarios y 53.8% con operaciones de endeudamiento.",
-      "El crédito se reparte en cuatro bloques: S/ 702.9 millones para el fenómeno de El Niño (mantenimiento de 12,054 colegios, apoyo a pescadores afectados por la caída de 37% en la pesca, vacunación contra el dengue); S/ 2,308 millones para continuidad de servicios esenciales (kits escolares, conectividad satelital en cerca de 40,000 establecimientos públicos); S/ 3,620 millones para inversión pública (Línea 2 del Metro, anillo vial periférico, equipamiento de Fuerzas Armadas); y recursos para pensiones militares-policiales y el Fondo de Estabilización de Precios de Combustibles.",
-      "El diputado Éver López cuestionó la asignación de más de S/ 1,000 millones para la compra de aviones Casa y propuso reprogramar esa compra por etapas, priorizando hospitales inconclusos y obras paralizadas.",
-      "El senador Carlos Caballero (Partido del Buen Gobierno) denunció que solo el 0.6% (S/ 50 millones) del crédito se asigna directamente a los gobiernos regionales, cuestionó S/ 52 millones destinados a 'campañas publicitarias para la prensa' y S/ 180 millones para conectividad satelital temporal, comparándolo con el costo de adquirir un satélite propio (US$ 100 millones).",
-      "La diputada Rosana Liza (Buen Gobierno) anunció su voto a favor pero exigió el desglose de los S/ 1,933 millones etiquetados como 'otras intervenciones' y advirtió que el crédito consumiría casi todo el margen fiscal de S/ 8,400 millones, dejando solo S/ 171.6 millones disponibles.",
-      "El senador Jaime Delgado cuestionó si el crédito respeta la regla fiscal pese al 'excedente' reportado de S/ 8,000 millones, y pidió concentrar los recursos casi exclusivamente en la emergencia del fenómeno de El Niño."
+      "El Senado aprobo la Cuenta General de la Republica 2025 por 36 votos a favor, 9 en contra y 9 abstenciones, completando la aprobacion bicameral iniciada en la Camara de Diputados (85 a favor, 11 en contra, 25 abstenciones).",
+      "El senador Jose Arista sustento el PL 005-2026-2031-CR: credito suplementario de S/ 8,228.4 millones (financiado 46.2% con recursos ordinarios y 53.8% con endeudamiento), distribuido entre atencion al fenomeno de El Nino (S/ 702.9 millones), continuidad de servicios esenciales (S/ 2,308 millones) e inversion publica (S/ 3,620 millones, incluyendo la Linea 2 del Metro y equipamiento de las Fuerzas Armadas).",
+      "La diputada Marleni Arminta presento un desglose por ministerio: Defensa recibe S/ 1,832 millones (de los cuales cerca de S/ 1,197 millones son para la compra de aviones Casa fase 2), Interior S/ 1,097 millones (incluye S/ 245 millones en camionetas y chalecos antibalas) y Transportes S/ 1,037 millones; estimo un costo de intereses de aproximadamente S/ 299 millones anuales aplicando una tasa de 6.76%.",
+      "Numerosos congresistas de distintas bancadas (entre ellos los senadores Bernardo Quispe, Andres Ramos y Edison Morales, y los diputados Juan Cabrera y Oswaldo Kawasa) cuestionaron la compra de aviones Casa fase 2 por considerarla injustificada frente a emergencias de salud e incendios forestales, y denunciaron que apenas el 0.6% de los recursos del credito se asigna directamente a gobiernos regionales.",
+      "La senadora Carla Schaffer propuso incorporar un articulo que autorice de manera excepcional al Ministerio del Interior a adquirir patrulleros y chalecos antibalas fuera del regimen general de la Ley 32069 de Contrataciones Publicas, usando ahorros generados por el propio Congreso.",
+      "Varios congresistas solicitaron la incorporacion de proyectos de inversion especificos (identificados por codigo CUI) de sus regiones al credito suplementario, entre ellos obras de salud en Madre de Dios (hospital Santa Rosa de Puerto Maldonado, S/ 1.5 millones para estudios), carreteras en Huancavelica, y atencion a incendios forestales en Junin, Ayacucho y Cusco.",
+      "La diputada Jessica Perez solicito incorporar S/ 230 millones adicionales para el Ministerio Publico, vinculados al fortalecimiento de la investigacion de los hechos del 9 de enero."
     ],
-    "generated_at": "2026-10-28T18:50:45Z",
-    "duracion_seg": 6438,
+    "generated_at": "2026-10-28T19:52:52Z",
+    "duracion_seg": 9458,
     "agenda_cumplida": null
   },
   {
     "video_id": "LvsY8hVx-ec",
-    "resumen": "Sesión de la Comisión de Economía, Banca, Finanzas e Inteligencia Financiera (Diputados) del 28/10/2026 dedicada a una exposición técnica sobre el régimen de zonas económicas especiales (ZEE) en el Perú. El expositor repasó los modelos vigentes (ZOFRATACNA, zonas de Matarani y Paita), los requisitos e incentivos tributarios y aduaneros del régimen, y el proceso de creación y calificación de operadores privados; el fragmento disponible no registra debate parlamentario posterior.",
+    "resumen": "Continuacion de la sesion de la Comision de Economia, Banca, Finanzas e Inteligencia Financiera (Diputados) del Congreso del Peru: el ministro de Comercio Exterior y Turismo, Roger Marin Valencia Espinoza, y su viceministra respondieron preguntas de los diputados sobre el regimen de zonas economicas especiales (ZEE) y la situacion de ZOFRATACNA, y la comision paso a debatir y votar un dictamen sobre la Proposicion Legislativa 507 que amplia el regimen de donacion de alimentos (Ley 30498) (sesion en curso al momento de este resumen).",
     "ideas_clave": [
-      "La Ley 32449 (publicada en septiembre de 2025) creó el marco legal vigente para las zonas económicas especiales (ZEE) en el Perú; su decreto supremo reglamentario se publicó en abril de 2026 y en julio de 2026 se publicaron la resolución ministerial con los lineamientos para la calificación de zonas y el estudio sobre el índice de potencialidad de ZEE.",
-      "Los modelos actuales mencionados son la zona franca de Tacna (ZOFRATACNA) y las zonas económicas especiales de Matarani y Paita.",
-      "Requisitos para constituir una ZEE: área mínima de 90 hectáreas, compromiso de inversión del operador de al menos 1,500 UIT, y exoneración escalonada del impuesto a la renta por 25 años (tras lo cual el operador paga impuestos como cualquier otra empresa).",
-      "La rectoría del régimen de ZEE recae en el Ministerio de Comercio Exterior y Turismo (MINCETUR).",
-      "El proceso de creación y calificación tiene cuatro etapas: solicitud de admisibilidad de la zona, convocatoria y concurso de operadores interesados, aprobación del proyecto de ley específico (debe pasar por Diputados y ser aprobado por el Senado), y finalmente la autorización del operador privado.",
-      "Entre las condiciones exigidas a una ZEE están el acceso a servicios básicos (agua, desagüe, electricidad), la conectividad multimodal (corredor logístico) y la compatibilidad con la zonificación municipal del área.",
-      "El expositor señaló que el Estado espera que las ZEE atraigan inversión extranjera en sectores poco desarrollados, generen empleo de calidad, impulsen encadenamientos productivos y diversifiquen las exportaciones hacia bienes de mayor valor agregado."
+      "Una diputada (vicepresidenta de la comision) cuestiono al ministro de Comercio Exterior y Turismo sobre como se garantizara la transferencia tecnologica real de las inversiones en las ZEE, citando que el articulo 4 de la ley restringe las actividades permitidas a manufactura, ensamblaje y servicios asociados, sin exigir laboratorios de investigacion y desarrollo.",
+      "El viceministro y la directora general de la Industria respondieron que la ley no obliga a instalar laboratorios de I+D, que eso se trabajaria via promocion y convenios con universidades, y que modificar el alcance de actividades permitidas (articulo 4) requeriria una reforma legislativa, no solo reglamentaria.",
+      "Se comparo el retorno de las zonas francas en otros paises: Costa Rica devuelve 2 a 4 veces lo invertido en exoneraciones, Colombia 3 veces, Uruguay 6 veces y Republica Dominicana 7 veces, segun cifras presentadas por el ministerio para justificar el modelo de exoneraciones.",
+      "Una diputada por la region Tacna planteo preocupacion por la coexistencia del regimen publico vigente (ZOFRATACNA) con el nuevo regimen privado de ZEE, y consulto la posicion del MINCETUR sobre la eliminacion de la franquicia de licores de la zona comercial de Tacna prevista en el Decreto Supremo 324-2023, vigente desde el 1 de enero de 2027.",
+      "El ministerio explico que ZOFRATACNA (zona publica) y las ZEE privadas son regimenes complementarios: las zonas publicas mantienen arancel 0% y permiten mas actividades, mientras las privadas tienen exoneracion escalonada del impuesto a la renta por 25 anios; se menciono un decreto supremo reciente que habilito la inversion extranjera en Zofratacna, antes restringida por su cercania a la frontera con Chile.",
+      "La comision inicio el debate y la votacion nominal del dictamen que recomienda aprobar con modificaciones la Proposicion Legislativa 507 (Poder Ejecutivo), que reforma la Ley 30498 de promocion de donacion de alimentos, incorporando 79 bienes y 16-17 servicios al regimen de donaciones, con un costo fiscal estimado de 1.2 millones de soles anuales.",
+      "La transcripcion se corta durante el pase de lista de la votacion nominal del dictamen de la Proposicion Legislativa 507 (se alcanzan a registrar los votos de los diputados Aben Sur Pinasco, Chacon de Vitori y Condori Flores)."
     ],
-    "generated_at": "2026-10-28T18:50:45Z",
-    "duracion_seg": 634,
+    "generated_at": "2026-10-28T19:51:22Z",
+    "duracion_seg": 2544,
+    "agenda_cumplida": null
+  },
+  {
+    "video_id": "fb_1158945019806075",
+    "resumen": "La Comision Especializada Permanente de Biodiversidad y Recursos Naturales de la Asamblea Nacional del Ecuador sesiono para tratar en comision general, dentro del primer debate del proyecto de Ley Organica de Fomento a la Bioeconomia y Biocomercio Productivo (acceso regulado a recursos geneticos), la intervencion de Tarsicio Granizo Tamayo, director ejecutivo de WWF Ecuador, quien presento observaciones tecnicas al proyecto y respondio preguntas de la presidenta Camila Leon y del asambleista Franklin Samaniego.",
+    "ideas_clave": [
+      "WWF Ecuador, representado por su director ejecutivo Tarsicio Granizo Tamayo, presento una posicion tecnica sobre el proyecto de Ley Organica de Fomento a la Bioeconomia y Biocomercio Productivo basado en biodiversidad.",
+      "WWF solicito reformar el articulo 6 (Consejo Interinstitucional de Bioeconomia) para incorporar representacion con voz y voto de pueblos, nacionalidades, comunidades locales y del sector de biocomercio, por incompatibilidad con los articulos 57 y 398 de la Constitucion y el Convenio de Diversidad Biologica.",
+      "WWF pidio incorporar un articulo 12A con 'dominios de resultado verificables' y un articulo 12B con salvaguardas anti-greenwashing, al considerar que la certificacion de cumplimiento bioeconomico (articulos 12 a 14) no define que constituye un resultado positivo medible.",
+      "WWF solicito retirar la aplicacion general e indiferenciada de la ventanilla unica, certificacion y entornos controlados de pruebas regulatorias sobre la provincia de Galapagos, por riesgo de inconstitucionalidad por omision frente al articulo 258 de la Constitucion y la Ley Organica de Regimen Especial de Galapagos.",
+      "Se propuso incorporar en el articulo 3 una definicion de 'producto final con valor agregado' para evitar que el proyecto fomente la primarizacion exportadora (exportacion de materia prima sin transformacion sustancial).",
+      "WWF pidio un articulo 13B con tarifas y asistencia tecnica diferenciadas para pequenos productores, comunas y organizaciones de la economia popular y solidaria, y que la transferencia tecnologica (articulos 18, 25 y 26) sea exigible y no solo una posibilidad contractual, conforme al articulo 23 del Protocolo de Nagoya.",
+      "El asambleista Franklin Samaniego cuestiono que el proyecto confunde el concepto de bioeconomia con un programa de promocion exportadora sin mecanismos de contabilidad fisica ni monitoreo de la capacidad de regeneracion de los ecosistemas; Granizo coincidio en la necesidad de un ente de monitoreo del impacto ambiental de las actividades bioeconomicas."
+    ],
+    "generated_at": "2026-10-28T19:49:16Z",
+    "duracion_seg": 2257,
+    "agenda_cumplida": null
+  },
+  {
+    "video_id": "fb_1691627422324156",
+    "resumen": "La Comision Especializada Permanente de Desarrollo Economico, Productivo y la Microempresa de la Asamblea Nacional del Ecuador aboco conocimiento del proyecto de Ley Organica Reformatoria a varios cuerpos legales para el fortalecimiento integral del emprendimiento rural y comunitario, presentado por la asambleista Maria Paula Villacres Herrera, y recibio en comision general a Veronica Minaya (UNESCO Ecuador) y a Margot Paucar, vicepresidenta del GAD parroquial de Quisapincha, dentro del tramite previo al informe para primer debate.",
+    "ideas_clave": [
+      "El proyecto, calificado por el CAL mediante resolucion CAL-TCLE-2025-2027-507 del 10 de julio de 2026, reforma cinco cuerpos legales: la Ley de Emprendimiento e Innovacion, la Ley de Economia Popular y Solidaria, el Codigo Organico de la Produccion, la Ley de Contratacion Publica y el Codigo de la Economia Social de los Conocimientos.",
+      "La proponente Maria Paula Villacres presento cifras del INEC: pobreza de 37.6% en zona rural frente a 13.8% en zona urbana, empleo informal de 76% en zona rural, e ingreso laboral promedio rural de 365 dolares mensuales frente a 516 en zona urbana.",
+      "Entre las medidas propuestas: ventanilla unica fisica y digital para tramites rurales, categoria exclusiva de emprendimiento rural dentro del Registro Nacional de Emprendedores, y cronograma de implementacion escalonado (120 dias coordinacion institucional, 180 dias adecuacion reglamentaria y contratacion publica, 240 dias adecuacion de registros y plataformas).",
+      "La asambleista Silvia (interviniente) pregunto como evitara el proyecto la doble inscripcion de productores rurales entre el registro de la Ley de Economia Popular y Solidaria y el nuevo Registro Nacional de Emprendedores; la proponente respondio que el objetivo es unificar y simplificar esos tramites, no duplicarlos.",
+      "Veronica Minaya (UNESCO Ecuador) presento la experiencia del Programa Hombre y la Biosfera y senalo que Ecuador tiene 7 reservas de biosfera y el geoparque mundial UNESCO Volcan Tungurahua (acreditado en 2025), vinculando conservacion de biodiversidad con emprendimiento rural en comunidades indigenas.",
+      "El asambleista Tapia (alterno por Glenda Camacho) propuso medidas concretas: zonas especiales de comercializacion campesina via GAD cantonales/provinciales, un porcentaje de espacio en tiendas de cadenas comerciales grandes (ej. Tuti) para productores locales, y compras obligatorias de viveres a campesinos por parte de hospitales, carceles y escuelas via la reforma a la Ley de Contratacion Publica.",
+      "Margot Paucar, vicepresidenta del GAD parroquial de Quisapincha, invito formalmente a la comision a realizar una sesion de trabajo en territorio en Ambato (Tungurahua) para escuchar directamente a productores, mujeres emprendedoras y asociaciones rurales; el presidente encargado Diego Franco respaldo la idea."
+    ],
+    "generated_at": "2026-10-28T19:49:44Z",
+    "duracion_seg": 4149,
+    "agenda_cumplida": null
+  },
+  {
+    "video_id": "fb_2293913708204952",
+    "resumen": "La Comision Especializada Permanente del Derecho a la Salud y Deporte de la Asamblea Nacional del Ecuador aboco conocimiento del proyecto de ley de fomento a la alimentacion saludable y al consumo de proteina de alto valor biologico, presentado por el asambleista Andres Felipe Castillo Maldonado, aprobo su unificacion con el proyecto de ley organica para la atencion integral de las personas con obesidad (en tramite para segundo debate) y recibio la comparecencia del proponente.",
+    "ideas_clave": [
+      "La comision aprobo por 10 votos a favor, 0 en contra y 2 abstenciones la mocion de la asambleista Greys Suarez para unificar el proyecto de ley de alimentacion saludable y proteina de alto valor biologico con el proyecto de ley organica para la atencion integral de personas con obesidad, ya en tramite para segundo debate.",
+      "La asesora juridica Domenica Vinces fundamento la unificacion en el articulo 58.1 de la Ley Organica de la Funcion Legislativa, verificando los tres requisitos: autorizacion del CAL (resolucion CAL-MDMA-2025-2027-635), identidad de materia entre ambos proyectos, y que la unificacion se diera antes de la aprobacion del informe para segundo debate.",
+      "El proyecto del asambleista Andres Felipe Castillo Maldonado propone impulsar el consumo de proteina animal (carne, pollo, pescado, mariscos, leche, huevos) como politica publica de prevencion tanto de la obesidad como de la desnutricion cronica infantil y de adultos mayores.",
+      "Castillo Maldonado enfatizo que el proyecto no genera gasto publico ni crea nueva institucionalidad, y que busca generar planes de educacion nutricional y abaratar el acceso a proteina animal para pequenos productores ganaderos, avicolas y pescadores artesanales.",
+      "El proponente cito datos de que la edad promedio en Quito subio de 28 anios (2001) a 34 anios (2026), vinculando el envejecimiento poblacional con la necesidad de prevenir la perdida de masa muscular mediante mayor consumo de proteina.",
+      "Con la unificacion aprobada, ambos proyectos de ley continuaran su tramite conjunto hacia el informe para segundo debate dentro de la misma comision."
+    ],
+    "generated_at": "2026-10-28T19:50:04Z",
+    "duracion_seg": 1984,
     "agenda_cumplida": null
   }
 ]
