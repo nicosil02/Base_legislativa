@@ -58,7 +58,7 @@ jobs:
         with:
           python-version: '3.13'
 
-      - run: pip install -c constraints.txt -q google-genai sqlite-vec lightrag-hku fastembed openpyxl  # openpyxl: matrices de PLs en el perfil del cliente
+      - run: pip install -c constraints.txt -q google-genai sqlite-vec lightrag-hku fastembed openpyxl pymupdf  # openpyxl: matrices de PLs en el perfil del cliente; pymupdf: fecha real de los PDF
 
       - name: Bajar DBs y el cerebro publicado
         env:

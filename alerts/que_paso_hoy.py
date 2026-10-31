@@ -27,6 +27,7 @@ from datetime import datetime, timedelta, timezone
 
 from clientes import config
 from core import llm
+from core.http import session
 from core.db import db_path
 from core.tiempo import LIMA
 
@@ -34,6 +35,7 @@ HORA_DESDE = 18          # hora Lima desde la que sale el resumen del dia
 # Lo que importa es cuando PASO, no cuando el sistema lo vio: las busquedas
 # de Google News traen notas de hace años y el backfill resume sesiones viejas.
 DIAS_FRESCO = 2
+DIAS_PDF_VIEJO = 365     # un PDF de hace mas de un año resubido a la web no es novedad
 MAX = {"noticias": 70, "normas": 25, "pls": 40, "sesiones": 12, "tv": 12}
 
 SYSTEM = """Eres analista senior de asuntos publicos en Vali Consultores (Peru y Ecuador).
@@ -98,6 +100,28 @@ def _fresca(r) -> bool:
     return _es_reciente({"fecha_pub": r["fecha_pub"]}, DIAS_FRESCO)
 
 
+@lru_cache(maxsize=None)
+def _fecha_pdf(url: str) -> datetime | None:
+    """Fecha de creacion dentro del PDF; None si no se puede leer."""
+    import pymupdf
+    try:
+        r = session().get(url, timeout=30)
+        r.raise_for_status()
+        fecha = pymupdf.open(stream=r.content, filetype="pdf").metadata["creationDate"]
+        return datetime.strptime(fecha[2:10], "%Y%m%d").replace(tzinfo=timezone.utc)
+    except Exception:
+        return None
+
+
+def _pdf_viejo(url: str) -> bool:
+    """Las webs del Estado resuben documentos viejos en carpetas del mes: la
+    Resolucion 0117 de Agrocalidad, de 2016, aparecio como subida en 2026."""
+    if not url.lower().split("?")[0].endswith(".pdf"):
+        return False
+    fecha = _fecha_pdf(url)
+    return bool(fecha) and datetime.now(timezone.utc) - fecha > timedelta(days=DIAS_PDF_VIEJO)
+
+
 def _url(url: str) -> str:
     """Las de Google News pesan 500+ caracteres: se comen el prompt y el mensaje."""
     from congreso_live.notify import acortar_url
@@ -115,7 +139,8 @@ def noticias(pe: sqlite3.Connection, cerebro: sqlite3.Connection, desde: str) ->
     filas = {r["id"]: r for r in pe.execute(
         f"""SELECT n.id, n.titulo, n.url, n.fecha_pub, f.nombre AS fuente, f.pais FROM noticias n
             JOIN noticias_fuentes f ON f.id = n.fuente_id
-            WHERE n.id IN ({lista}) AND n.first_seen_at >= ? ORDER BY n.first_seen_at DESC""", (desde,)) if _fresca(r)}
+            WHERE n.id IN ({lista}) AND n.first_seen_at >= ? ORDER BY n.first_seen_at DESC""", (desde,))
+             if _fresca(r) and not _pdf_viejo(r["url"])}
     out = []
     for g in _grupos(list(filas), cerebro)[:MAX["noticias"]]:
         r = filas[g[0]]
@@ -135,7 +160,7 @@ def normas(pe: sqlite3.Connection, desde: str) -> list[str]:
                JOIN noticias_fuentes f ON f.id = n.fuente_id
                WHERE n.first_seen_at >= ? AND (n.tags LIKE '%normativa%' OR n.tags LIKE '%normas%')""",
             (desde,)):
-        if _fresca(r) and es_normativa_de_interes(r["tags"], r["resumen"]):
+        if _fresca(r) and es_normativa_de_interes(r["tags"], r["resumen"]) and not _pdf_viejo(r["url"]):
             out.append(f"[{r['pais']}] {r['titulo']}: {(r['resumen'] or '')[:250]} {_url(r['url'])}")
     return out[:MAX["normas"]]
 
