@@ -12,6 +12,18 @@ def test_prompt_solo_secciones_con_material():
     assert "NOTICIAS" in q.prompt(m) and "NORMAS" not in q.prompt(m)
 
 
+def test_pdf_viejo_mira_la_fecha_del_documento(monkeypatch):
+    from datetime import datetime, timezone
+    fechas = {"https://x.ec/2026/10/r117.pdf": datetime(2016, 6, 7, tzinfo=timezone.utc),
+              "https://x.ec/2026/10/manual.pdf": datetime.now(timezone.utc),
+              "https://x.ec/ilegible.pdf": None}
+    monkeypatch.setattr(q, "_fecha_pdf", fechas.get)
+    assert q._pdf_viejo("https://x.ec/2026/10/r117.pdf")
+    assert not q._pdf_viejo("https://x.ec/2026/10/manual.pdf")
+    assert not q._pdf_viejo("https://x.ec/ilegible.pdf")
+    assert not q._pdf_viejo("https://x.ec/nota.html")
+
+
 def test_fresca_descarta_notas_viejas():
     assert not q._fresca({"fecha_pub": "2016-07-18T10:00:00Z"})
     from datetime import datetime, timezone
