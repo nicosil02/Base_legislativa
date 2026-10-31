@@ -627,6 +627,8 @@ FUENTES_GOOGLE_NEWS: list[dict] = [
 # Medios y agregadores no se buscan por nombre (trae ruido); nombres comunes
 # llevan contexto en _GN_QUERY ("Fabiola Torres" sola traia Chile/Grecia).
 _GN_QUERY = {
+    # "SENASA" solo traia al argentino (langostas, Renspa) y al dominicano (seguro de salud)
+    "SENASA": '"Senasa" (Perú OR Midagri)',
     "Fabiola Torres": '"Fabiola Torres" "Salud con Lupa"',
     "Camila Leon (Comision Biodiversidad)": '"Camila León" asambleísta',
     "Sara Ortiz": '"Sara Ortiz" Expreso',
