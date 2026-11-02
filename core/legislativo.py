@@ -9,6 +9,7 @@ PAISES, sin tocar a quien las usa.
   proyectos(pais, desde)  [{pais, numero, titulo, categoria, estado, fecha, url}]
   cambios(pais, desde)    [{pais, numero, titulo, categoria, fecha, campo, valor, url}]
   agendas(pais, desde, hasta)  [{clave, pais, nombre, fecha, hora, texto}]
+  tramite(pais)           [{pais, numero, titulo, categoria, estado, etapa, fecha, cambio, url}]
 
 `desde`/`hasta` son datetimes con zona (o fechas para agendas); cada pais
 los pasa a como guarda sus fechas (PE en hora de Lima, EC changed_at en UTC).
@@ -27,6 +28,20 @@ from core.db import ROOT, db_path
 from core.tiempo import LIMA
 
 BASES = {"PE": "proyectos.db", "EC": "proyectos_ec.db"}
+
+# Etapas comunes a los dos paises. Un estado que no esta aca (archivado,
+# retirado) no cuenta como en tramite.
+ETAPAS = ("Presentado", "En comisión", "Con dictamen", "En Pleno", "Ley publicada")
+ETAPA_ESTADO = {
+    "PE": {"PRESENTADO": 0, "EN COMISIÓN": 1, "CON DICTAMEN": 2, "APROBADO": 3, "AUTÓGRAFA": 3,
+           "Expediente de propuesta legislativa remitida al senado de la república": 3,
+           "Publicada en el Diario Oficial El Peruano": 4},
+    "EC": {"PROYECTO PRESENTADO": 0, "CALIFICACIÓN DEL CONSEJO DE ADMINISTRACIÓN LEGISLATIVA (CAL)": 0,
+           "AVOCO DEL PROYECTO POR PARTE DE LA COMISIÓN": 1, "INFORME NO VINCULANTE UTL": 1,
+           "INFORME PARA PRIMER DEBATE": 2, "PROYECTO TRAMITADO EN PRIMER DEBATE": 3,
+           "INFORME PARA SEGUNDO DEBATE": 3, "TRAMITACIÓN DEL PROYECTO EN SEGUNDO DEBATE": 3,
+           "REGISTRO OFICIAL": 4},
+}
 
 
 def conectar(pais: str) -> sqlite3.Connection | None:
@@ -62,6 +77,14 @@ def _proyectos_pe(c: sqlite3.Connection, desde: datetime) -> list[dict]:
                 "SELECT pley_num, titulo, tema AS cat, estado, fec_presentacion, "
                 "url_portal FROM proyectos WHERE fec_presentacion >= ? ORDER BY fec_presentacion DESC",
                 (_lima(desde)[:10],))]
+
+
+def _tramite_pe(c: sqlite3.Connection) -> list[dict]:
+    return [{"pais": "PE", "numero": str(r["pley_num"]), "titulo": r["titulo"], "categoria": r["tema"],
+             "estado": r["estado"], "fecha": r["fec_presentacion"], "cambio": r["last_changed_at"],
+             "url": r["url_portal"]}
+            for r in c.execute("SELECT pley_num, titulo, tema, estado, fec_presentacion, last_changed_at, url_portal "
+                               "FROM proyectos WHERE per_par_id = (SELECT max(per_par_id) FROM proyectos)")]
 
 
 def _cambios_pe(c: sqlite3.Connection, desde: datetime) -> list[dict]:
@@ -119,6 +142,14 @@ def _proyectos_ec(c: sqlite3.Connection, desde: datetime) -> list[dict]:
                 (_lima(desde)[:10],))]
 
 
+def _tramite_ec(c: sqlite3.Connection) -> list[dict]:
+    return [{"pais": "EC", "numero": str(r["n_tramite"]), "titulo": r["titulo"], "categoria": _categoria_ec(r),
+             "estado": r["estado"], "fecha": r["fec_presentacion"], "cambio": r["last_changed_at"],
+             "url": r["url_portal"]}
+            for r in c.execute("SELECT n_tramite, titulo, tema AS cat, estado, fec_presentacion, last_changed_at, "
+                               "url_portal FROM proyectos WHERE periodo = '2025-2029'")]
+
+
 def _cambios_ec(c: sqlite3.Connection, desde: datetime) -> list[dict]:
     return [{"pais": "EC", "numero": str(r["n_tramite"]), "titulo": r["titulo"], "categoria": _categoria_ec(r),
              "fecha": (r["changed_at"] or "")[:10], "campo": "comision" if r["campo"] == "comision_asignada" else "estado",
@@ -143,8 +174,8 @@ def _agendas_ec(c: sqlite3.Connection, desde: date, hasta: date) -> list[dict]:
 
 
 PAISES = {
-    "PE": {"proyectos": _proyectos_pe, "cambios": _cambios_pe, "agendas": _agendas_pe},
-    "EC": {"proyectos": _proyectos_ec, "cambios": _cambios_ec, "agendas": _agendas_ec},
+    "PE": {"proyectos": _proyectos_pe, "cambios": _cambios_pe, "agendas": _agendas_pe, "tramite": _tramite_pe},
+    "EC": {"proyectos": _proyectos_ec, "cambios": _cambios_ec, "agendas": _agendas_ec, "tramite": _tramite_ec},
 }
 
 
@@ -168,3 +199,9 @@ def cambios(pais: str, desde: datetime) -> list[dict]:
 
 def agendas(pais: str, desde: date, hasta: date) -> list[dict]:
     return _correr(pais, "agendas", desde, hasta)
+
+
+def tramite(pais: str) -> list[dict]:
+    """Proyectos del periodo actual con su etapa (indice de ETAPAS)."""
+    etapas = ETAPA_ESTADO[pais]
+    return [{**p, "etapa": etapas[p["estado"]]} for p in _correr(pais, "tramite") if p["estado"] in etapas]

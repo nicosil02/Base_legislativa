@@ -22,6 +22,7 @@ from functools import lru_cache
 
 import argparse
 import json
+import re
 import sqlite3
 from datetime import datetime, timedelta, timezone
 
@@ -122,13 +123,34 @@ def _pdf_viejo(url: str) -> bool:
     return bool(fecha) and datetime.now(timezone.utc) - fecha > timedelta(days=DIAS_PDF_VIEJO)
 
 
+def titular_norma(titulo: str) -> tuple[str, str | None]:
+    """El Peruano titula "ENTIDAD — RESOLUCIÓN N° X: Modifican..." y gob.pe
+    "634-2026-MINSA — APROBAR la baja...". Devuelve lo que hace la norma y
+    aparte de quien es. Agrocalidad deja el nombre del archivo firmado
+    ("Aprobado(1) signed signed")."""
+    limpio = re.sub(r"(\(\d+\))?(\s+signed)+\s*$", "", titulo, flags=re.I)
+    m = re.match(r"^([^a-z]+?) [—–-] (.+?): (.+)$", limpio)
+    if m:
+        return m[3], f"{m[1].capitalize()}, {m[2]}"
+    m = re.match(r"^(\d\S+) [—–-] (\S+)(.*)$", limpio)
+    return (m[2].capitalize() + m[3], m[1]) if m else (limpio, None)
+
+
+def reparar(texto: str) -> str:
+    """Canal N llega de Google News con el UTF-8 leido como latin-1 ("MarÃa")."""
+    if "Ã" not in texto and "Â" not in texto:
+        return texto
+    return texto.encode("cp1252", "ignore").decode("utf-8", "ignore") or texto
+
+
 def _url(url: str) -> str:
     """Las de Google News pesan 500+ caracteres: se comen el prompt y el mensaje."""
     from congreso_live.notify import acortar_url
     return acortar_url(url) if "news.google." in url else url
 
 
-def noticias(pe: sqlite3.Connection, cerebro: sqlite3.Connection, desde: str) -> list[str]:
+def hallazgos(pe: sqlite3.Connection, cerebro: sqlite3.Connection, desde: str) -> list[dict]:
+    """Noticias que le interesan a un cliente, juntando las del mismo hecho."""
     por_id: dict[int, list[tuple[str, str]]] = {}
     for clave, cliente, por_que in cerebro.execute(
             "SELECT clave, cliente, por_que FROM relevancia WHERE interesa = 1"):
@@ -137,22 +159,28 @@ def noticias(pe: sqlite3.Connection, cerebro: sqlite3.Connection, desde: str) ->
         return []
     lista = ",".join(map(str, por_id))
     filas = {r["id"]: r for r in pe.execute(
-        f"""SELECT n.id, n.titulo, n.url, n.fecha_pub, f.nombre AS fuente, f.pais FROM noticias n
+        f"""SELECT n.id, n.titulo, n.url, n.fecha_pub, n.tags, f.nombre AS fuente, f.pais FROM noticias n
             JOIN noticias_fuentes f ON f.id = n.fuente_id
             WHERE n.id IN ({lista}) AND n.first_seen_at >= ? ORDER BY n.first_seen_at DESC""", (desde,))
              if _fresca(r) and not _pdf_viejo(r["url"])}
     out = []
     for g in _grupos(list(filas), cerebro)[:MAX["noticias"]]:
         r = filas[g[0]]
-        clientes = {c: p for i in g for c, p in por_id.get(i, [])}
-        otras = sorted({filas[i]["fuente"] for i in g[1:]} - {r["fuente"]})
-        out.append(f"[{r['pais']}] {r['titulo']} ({r['fuente']}"
-                   + (f"; tambien en {', '.join(otras)}" if otras else "") + f") {_url(r['url'])}\n"
-                   + "".join(f"   - {c}: {p}\n" for c, p in clientes.items()))
+        out.append({"id": r["id"], "ids": g, "titulo": reparar(r["titulo"]), "url": r["url"], "fuente": r["fuente"],
+                    "pais": r["pais"], "fecha": r["fecha_pub"], "es_norma": any(x in (r["tags"] or "") for x in ("normativa", "normas")),
+                    "otras": sorted({filas[i]["fuente"] for i in g[1:]} - {r["fuente"]}),
+                    "clientes": {c: p for i in g for c, p in por_id.get(i, [])}})
     return out
 
 
-def normas(pe: sqlite3.Connection, desde: str) -> list[str]:
+def noticias(pe: sqlite3.Connection, cerebro: sqlite3.Connection, desde: str) -> list[str]:
+    return [f"[{h['pais']}] {h['titulo']} ({h['fuente']}"
+            + (f"; tambien en {', '.join(h['otras'])}" if h["otras"] else "") + f") {_url(h['url'])}\n"
+            + "".join(f"   - {c}: {p}\n" for c, p in h["clientes"].items())
+            for h in hallazgos(pe, cerebro, desde)]
+
+
+def normas_datos(pe: sqlite3.Connection, desde: str) -> list[dict]:
     from noticias.temas import es_normativa_de_interes
     out = []
     for r in pe.execute(
@@ -161,8 +189,12 @@ def normas(pe: sqlite3.Connection, desde: str) -> list[str]:
                WHERE n.first_seen_at >= ? AND (n.tags LIKE '%normativa%' OR n.tags LIKE '%normas%')""",
             (desde,)):
         if _fresca(r) and es_normativa_de_interes(r["tags"], r["resumen"]) and not _pdf_viejo(r["url"]):
-            out.append(f"[{r['pais']}] {r['titulo']}: {(r['resumen'] or '')[:250]} {_url(r['url'])}")
+            out.append({"titulo": r["titulo"], "resumen": r["resumen"] or "", "url": _url(r["url"]), "pais": r["pais"]})
     return out[:MAX["normas"]]
+
+
+def normas(pe: sqlite3.Connection, desde: str) -> list[str]:
+    return [f"[{n['pais']}] {n['titulo']}: {n['resumen'][:250]} {n['url']}" for n in normas_datos(pe, desde)]
 
 
 @lru_cache(maxsize=None)
@@ -177,7 +209,7 @@ def _clientes_de_pl(tema: str | None, numero: str, pais: str) -> list[str]:
             or numero in _matriz_nums(s, pais)]
 
 
-def pls(desde: datetime) -> list[str]:
+def pls_datos(desde: datetime) -> list[dict]:
     """PL de clientes (categoria o matriz) que cambiaron de estado o comision."""
     from core import legislativo
     out = []
@@ -185,21 +217,30 @@ def pls(desde: datetime) -> list[str]:
         for r in legislativo.cambios(pais, desde):
             cl = _clientes_de_pl(r["categoria"], r["numero"], pais)
             if cl:
-                out.append(f"[{pais}] PL {r['numero']} ({r['categoria']}; {', '.join(cl)}) {r['titulo'][:160]} "
-                           f"-> {r['campo']}: {r['valor']} ({r['fecha']}) {r['url'] or ''}".rstrip())
+                out.append({**r, "pais": pais, "clientes": cl})
     return out[:MAX["pls"]]
 
 
-def sesiones(pe: sqlite3.Connection | None, desde: str) -> list[str]:
+def pls(desde: datetime) -> list[str]:
+    return [f"[{r['pais']}] PL {r['numero']} ({r['categoria']}; {', '.join(r['clientes'])}) {r['titulo'][:160]} "
+            f"-> {r['campo']}: {r['valor']} ({r['fecha']}) {r['url'] or ''}".rstrip() for r in pls_datos(desde)]
+
+
+def sesiones_datos(pe: sqlite3.Connection | None, desde: str) -> list[dict]:
     from congreso_live.resumenes_store import list_resumenes
-    fechas = dict(pe.execute("SELECT video_id, fecha FROM sesiones_transcripciones")) if pe else {}
+    filas = {r[0]: r for r in pe.execute("SELECT video_id, fecha, titulo, tipo FROM sesiones_transcripciones")} if pe else {}
     minimo = (_lima_ahora() - timedelta(days=DIAS_FRESCO)).date().isoformat()
     out = []
     for vid, r in list_resumenes().items():
-        if (r.get("generated_at") or "") >= desde and r["resumen"] and (fechas.get(vid) or "") >= minimo:
-            ideas = "; ".join(r["ideas_clave"][:4])
-            out.append(f"{r['resumen'][:500]} Ideas: {ideas}")
+        _, fecha, titulo, tipo = filas.get(vid, ("", "", "", ""))
+        if (r.get("generated_at") or "") >= desde and r["resumen"] and (fecha or "") >= minimo:
+            out.append({"video_id": vid, "titulo": titulo, "tipo": tipo or "", "fecha": fecha, "resumen": r["resumen"],
+                        "ideas": r["ideas_clave"]})
     return out[:MAX["sesiones"]]
+
+
+def sesiones(pe: sqlite3.Connection | None, desde: str) -> list[str]:
+    return [f"{s['resumen'][:500]} Ideas: {'; '.join(s['ideas'][:4])}" for s in sesiones_datos(pe, desde)]
 
 
 def tv(pe: sqlite3.Connection, desde: str) -> list[str]:
