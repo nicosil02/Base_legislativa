@@ -28,3 +28,26 @@ def test_fresca_descarta_notas_viejas():
     assert not q._fresca({"fecha_pub": "2016-07-18T10:00:00Z"})
     from datetime import datetime, timezone
     assert q._fresca({"fecha_pub": datetime.now(timezone.utc).isoformat()})
+
+
+def test_etapas_de_tramite_validas():
+    from core import legislativo
+    for estados in legislativo.ETAPA_ESTADO.values():
+        assert set(estados.values()) <= set(range(len(legislativo.ETAPAS)))
+    assert "ARCHIVADO" not in legislativo.ETAPA_ESTADO["EC"]
+
+
+def test_reparar_titulo_mal_codificado():
+    assert q.reparar("MarÃ­a plantea transiciÃ³n democrÃ¡tica") == "María plantea transición democrática"
+    assert q.reparar("Sin problema") == "Sin problema"
+
+
+def test_titular_norma():
+    from alerts.que_paso_hoy import titular_norma
+    assert titular_norma("MINISTERIO PÚBLICO — RESOLUCIÓN N° 34-2026-MP-FN: Nombran fiscal") == (
+        "Nombran fiscal", "Ministerio público, RESOLUCIÓN N° 34-2026-MP-FN")
+    assert titular_norma("Agrocalidad - Documentos publicados: Manual Aprobado(1) signed signed") == (
+        "Agrocalidad - Documentos publicados: Manual Aprobado", None)
+    assert titular_norma("634-2026-OA-CENARES-MINSA — APROBAR la baja de productos") == (
+        "Aprobar la baja de productos", "634-2026-OA-CENARES-MINSA")
+    assert titular_norma("Sexto Suplemento No. 401") == ("Sexto Suplemento No. 401", None)

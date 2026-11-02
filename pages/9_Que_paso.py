@@ -28,7 +28,7 @@ footer { visibility:hidden; }
     unsafe_allow_html=True,
 )
 st.markdown('<div class="country-eyebrow">Vali Intelligence</div>'
-            '<h1 class="country-title">¿Qué pasó hoy?</h1>'
+            '<h1 class="country-title">Resumen para clientes</h1>'
             '<p class="country-subtitle">Lo de las últimas 24 horas que le importa a cada cliente: '
             'noticias, normas, proyectos de ley, sesiones y TV, con el porqué y el link.</p>',
             unsafe_allow_html=True)
