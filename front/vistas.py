@@ -9,11 +9,14 @@ from __future__ import annotations
 
 import datetime as dt
 import html
+import importlib
 import json
 import re
 import sqlite3
 import threading
+import sys
 import time
+import types
 from datetime import date, datetime, timedelta, timezone
 
 import pandas as pd
@@ -577,12 +580,39 @@ SECCIONES = {
 }
 
 
+def _sanar(e: Exception) -> bool:
+    """Tras un push, Streamlit Cloud borra los modulos de sys.modules mientras
+    otras sesiones importan (ver _importar en app.py). Este hilo vive entre
+    recargas y puede quedar con un modulo a medio cargar: "module
+    'alerts.que_paso_hoy' has no attribute 'hallazgos'" (3/11/2026) en cada
+    vuelta. Se vuelve a importar y se cambia la referencia de este modulo."""
+    m = re.match(r"module '([\w.]+)' has no attribute", str(e))
+    if not isinstance(e, AttributeError) or not m:
+        return False
+    viejo = sys.modules.pop(m[1], None)
+    nuevo = importlib.import_module(m[1])
+    for k, v in list(globals().items()):
+        if isinstance(v, types.ModuleType) and (v is viejo or v.__name__ == m[1]):
+            globals()[k] = nuevo
+    print(f"[front] {m[1]} reimportado tras: {e}")
+    return True
+
+
+def _armar(fn):
+    try:
+        return fn()
+    except AttributeError as e:
+        if not _sanar(e):
+            raise
+        return fn()
+
+
 def _renovar(almacen: dict) -> None:
     while True:
         for nombre, fn in SECCIONES.items():
             t0 = time.time()
             try:
-                datos = fn()
+                datos = _armar(fn)
                 if datos is not None:
                     almacen[nombre] = {"v": t0, "datos": datos}
             except Exception as e:
