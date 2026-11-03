@@ -71,7 +71,7 @@ jobs:
           # sklearn y yt-dlp se importan a nivel de modulo en pasos que corren antes
           # (digest de noticias, alertas_pl). certifi al dia: el de la imagen del
           # runner no reconocia CAs intermedias nuevas (Cancilleria EC).
-          pip install -c constraints.txt requests pycryptodome openpyxl pandas scikit-learn yt-dlp
+          pip install -c constraints.txt requests pycryptodome openpyxl pandas scikit-learn yt-dlp "google-genai==2.31.0"
           pip install -c constraints.txt --upgrade certifi
 
       - name: Instalar dependencias de noticias (PDF/OCR Registro Oficial EC)
