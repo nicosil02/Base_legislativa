@@ -57,5 +57,14 @@
     "clientes": [
       "syngenta"
     ]
+  },
+  {
+    "noticia_id": 14,
+    "created_at": "2026-11-03T17:37:50Z",
+    "descartado_por": "nicolas.silva@valiconsultores.com",
+    "titulo": "MTC fortalece la seguridad digital del sector Transportes y Comunicaciones con la conformación del CSIRT Sectorial",
+    "clientes": [
+      "google"
+    ]
   }
 ]
