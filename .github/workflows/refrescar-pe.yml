@@ -124,6 +124,15 @@ jobs:
           # (ver clientes/alertas_pl.py).
           python -X utf8 -m clientes.alertas_pl check || echo "[warn] alertas_pl fallo, sigo"
 
+      - name: Avisar cambios en los PLs que sigue el analista (boton Seguir)
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          PYTHONIOENCODING: utf-8
+        run: python -X utf8 -m alerts.pls_seguidos PE || echo "[warn] pls_seguidos PE fallo, sigo"
+
       - name: Refrescar catalogo de comisiones (limpia basura)
         run: |
           # Re-baja el catalogo desde la API del Congreso PE. Filtra entradas

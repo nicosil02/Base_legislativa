@@ -13,9 +13,52 @@ const fechaCorta = (f) => (f ? String(f).slice(0, 10).split("-").reverse().join(
 const enlace = (u, t, clase = "") => (web(u) ? `<a class="${clase}" href="${web(u)}" target="_blank" rel="noopener">${esc(t)}</a>` : "");
 const unicos = (lista) => [...new Set(lista.filter((v) => v !== null && v !== undefined && String(v).trim()))].sort((a, b) => String(a).localeCompare(String(b), "es"));
 const plural = (n, s, p = `${s}s`) => `${miles(n)} ${n === 1 ? s : p}`;
+// Los titulos del Congreso llegan en mayusculas: gritan y cuestan leer
+const oracion = (t) => String(t ?? "").split(": ").map((s) => (s.length > 12 && s === s.toUpperCase() ? s.charAt(0) + s.slice(1).toLowerCase() : s)).join(": ");
+
+const ICONOS = {
+  inicio: '<path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/>',
+  micro: '<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/>',
+  doc: '<path d="M14 3H6v18h12V7z"/><path d="M14 3v4h4M9 13h6M9 17h6"/>',
+  cal: '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>',
+  diario: '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 8h10M7 12h10M7 16h6"/>',
+  pluma: '<path d="M4 20h4L19 9l-4-4L4 16z"/><path d="m13.5 6.5 4 4"/>',
+  lista: '<path d="M8 6h13M8 12h13M8 18h13M3.5 6h.01M3.5 12h.01M3.5 18h.01"/>',
+  buscar: '<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>',
+  lado: '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/>',
+  fuera: '<path d="M14 4h6v6M20 4l-9 9"/><path d="M18 14v6H4V6h6"/>',
+  x: '<path d="M6 6l12 12M18 6 6 18"/>',
+  reloj: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+  estrella: '<path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/>',
+};
+const icono = (k, n = 18) => `<svg width="${n}" height="${n}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONOS[k] ?? ""}</svg>`;
+const enlaceIcono = (u, t) => (web(u) ? `<a class="fuente" href="${web(u)}" target="_blank" rel="noopener" title="${esc(t)}" aria-label="${esc(t)}">${icono("fuera", 15)}</a>` : "");
+
+// Rutas por pais: "proyectos" + "pe" = "proyectos_pe"
+const base = (ruta) => String(ruta ?? "").replace(/_(pe|ec)$/, "");
+const paisDeRuta = (ruta) => (String(ruta ?? "").match(/_(pe|ec)$/)?.[1] ?? "").toUpperCase();
 
 const App = {
   raiz: null, d: null, ruta: null, secciones: {}, fuera: new Set(), enviar: () => {}, filtros: {},
+  bandeja: {}, pendientes: {}, seguidos: new Set(), siguiendo: 0,
+  // Seguir un PL: aviso por Telegram cuando cambie de estado (alerts/pls_seguidos.py)
+  async seguir(pais, p, si) {
+    const k = `${pais}:${p.pl}`;
+    if (si) this.seguidos.add(k); else this.seguidos.delete(k);
+    this.siguiendo++;
+    try { await this.pedir("seguir_pl", { pais, pl: p.pl, si, titulo: p.titulo, estado: p.estado, url: p.url }); }
+    catch (e) { if (si) this.seguidos.delete(k); else this.seguidos.add(k); this.fallo(e); }
+    this.siguiendo--;
+  },
+  // Bandeja del analista: estado null deshace
+  marcar(clave, estado, titulo) {
+    if (estado) this.bandeja[clave] = { estado, fecha: new Date().toISOString() }; else delete this.bandeja[clave];
+    this.pendientes[clave] = this.bandeja[clave];
+    this.pedir("bandeja", { clave, estado, titulo })
+      .then(() => { if (this.pendientes[clave] === this.bandeja[clave]) delete this.pendientes[clave]; })
+      .catch((e) => this.fallo(e));
+  },
+  pais: localStorage.getItem("vali:pais") ?? "",  // "" es ambos
 
   $(s) { return this.raiz.querySelector(s); },
   nombre(slug) { return this.d.clientes[slug]?.nombre ?? slug; },
@@ -59,6 +102,8 @@ const App = {
       if (!r.espera) {
         const antes = this.secciones[nombre];
         this.fuera = new Set(r.fuera);
+        this.bandeja = { ...r.bandeja, ...this.pendientes };  // lo marcado recien gana a lo que aun no guardo GitHub
+        if (!this.siguiendo) this.seguidos = new Set(r.seguidos);
         this.secciones[nombre] = { datos: r.datos, v: r.v, visto: Date.now() };
         if (antes && antes.v !== r.v && this.ruta === nombre) VISTAS[nombre]?.nuevos?.(r.datos);
         return r.datos;
@@ -80,25 +125,32 @@ const App = {
     sessionStorage.setItem(`vali:${vista}`, JSON.stringify(copia));
   },
 
+  // Acepta la ruta base de una seccion por pais y elige el pais vigente
+  resolver(ruta) {
+    if (VISTAS[ruta]) return ruta;
+    const p = (this.pais || "PE").toLowerCase();
+    return VISTAS[`${ruta}_${p}`] ? `${ruta}_${p}` : "panel";
+  },
   ir(ruta) {
-    if (!VISTAS[ruta]) ruta = "panel";
+    ruta = this.resolver(ruta);
     if (location.hash.slice(1) !== ruta) history.pushState(null, "", `#${ruta}`);
     this.pintarRuta(ruta);
   },
+  // Sin animacion de entrada: se cambia de seccion decenas de veces al dia
   async pintarRuta(ruta) {
     const v = VISTAS[ruta];
     this.ruta = ruta;
     this.cerrarDetalle();
     this.raiz.querySelectorAll("[data-ir]").forEach((b) => {
-      const es = b.dataset.ir === ruta;
+      const es = b.dataset.ir === base(ruta);
       b.classList.toggle("activo", es);
       if (es) b.setAttribute("aria-current", "page"); else b.removeAttribute("aria-current");
     });
+    selectorPais();
     const main = this.$(".main");
     main.scrollTop = 0;
     main.innerHTML = `<header class="top"><div class="titulo"><h1>${esc(v.titulo)}</h1><p class="sub">${esc(v.sub ?? "")}</p></div><div class="ctrl"></div></header><div class="cuerpo"></div>`;
     const cuerpo = main.querySelector(".cuerpo");
-    if (!quieto()) cuerpo.animate([{ opacity: 0, transform: "translateY(4px)" }, { opacity: 1, transform: "none" }], { duration: 170, easing: "cubic-bezier(.23,1,.32,1)" });
     try {
       await v.abrir(cuerpo, main.querySelector(".ctrl"));
     } catch (e) {
@@ -386,15 +438,27 @@ function montar(raiz) {
   };
   document.addEventListener("keydown", teclas);
   addEventListener("resize", () => App.ajustar());
-  addEventListener("popstate", () => App.pintarRuta(location.hash.slice(1) in VISTAS ? location.hash.slice(1) : "panel"));
+  addEventListener("popstate", () => App.pintarRuta(App.resolver(location.hash.slice(1))));
 }
 
 function menu() {
   const d = App.d;
-  App.$(".rail").innerHTML = `<div class="marca">Vali Intelligence<small>Radar Legislativo</small></div>`
+  App.$(".rail").innerHTML = `<div class="marca"><i class="logo" aria-hidden="true"></i><div>Vali Intelligence<small>Radar Legislativo</small></div></div><div class="r-pais"><div></div></div>`
     + d.menu.map(([g, items]) => (g ? `<div class="grupo">${esc(g)}</div>` : "")
-      + items.map(([t, r]) => `<button type="button" class="ir" data-ir="${esc(r)}">${esc(t)}</button>`).join("")).join("")
+      + items.map(([t, r, ic]) => `<button type="button" class="ir" data-ir="${esc(r)}">${icono(ic)}${esc(t)}</button>`).join("")).join("")
     + (d.usuario ? `<div class="pie">${esc(d.usuario)}<button type="button" class="salir">Cerrar sesión</button></div>` : "");
+}
+
+// Un solo pais para toda la app. Las secciones por pais cambian de ruta; las demas se repintan.
+function selectorPais() {
+  const nombres = { "": "Ambos", PE: "Perú", EC: "Ecuador" };
+  const p = paisDeRuta(App.ruta);
+  const ops = p ? ["Perú", "Ecuador"] : Object.values(nombres);  // proyectos, agenda y noticias son de un pais
+  segmentado(App.$(".r-pais > div"), ops, nombres[p || App.pais], (t) => {
+    App.pais = Object.keys(nombres).find((k) => nombres[k] === t);
+    localStorage.setItem("vali:pais", App.pais);
+    App.ir(paisDeRuta(App.ruta) ? base(App.ruta) : App.ruta);
+  });
 }
 
 // Deja listas las demas secciones sin estorbar: una a la vez y solo con el navegador libre.
@@ -413,8 +477,7 @@ export default function ({ data, parentElement, setTriggerValue }) {
     App.d = data;
     montar(raiz);
     menu();
-    const r = location.hash.slice(1);
-    App.pintarRuta(VISTAS[r] ? r : "panel").then(precargar);
+    App.pintarRuta(App.resolver(location.hash.slice(1))).then(precargar);
   }
   App.recibir(data?.salidas);
   return undefined;

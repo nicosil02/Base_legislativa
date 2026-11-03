@@ -140,6 +140,15 @@ jobs:
         run: |
           python -X utf8 -m scraper_ec.cli enriquecer-documentos ${{ steps.params.outputs.args }} || echo "[warn] enriquecer termino con errores, sigue al snapshot"
 
+      - name: Avisar cambios en los PLs que sigue el analista (boton Seguir)
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          PYTHONIOENCODING: utf-8
+        run: python -X utf8 -m alerts.pls_seguidos EC || echo "[warn] pls_seguidos EC fallo, sigo"
+
       - name: Actualizar agenda parlamentaria (ICS de Zimbra + matching PLs)
         run: |
           # Descarga el calendario publico de la Asamblea (Zimbra ICS feed),
