@@ -163,11 +163,7 @@ function vistaProyectos(pais) {
     const masEc = () => `<span class="f-com"></span>${opc("Tipo de proponente", "tipo_prop", unicos(d.filas.map((p) => p.tipo_prop)), "Todo tipo de proponente")}
       ${opc("Proponente", "proponente", prop, "Todo proponente")}${campoFiltro({ k: "unif", t: "Solo unificados", tipo: "check" }, f)}`;
     cuerpo.innerHTML = `<div class="kpis"></div>
-      <div class="dos dos-g"><div>${evolucion(d.evolucion)}</div><div class="lado"><h2>Estado de los datos</h2><p class="nota">${sync()}</p>
-        ${pe ? `<button type="button" class="btn r-live">Buscar proyectos nuevos en el Congreso</button><div class="r-res"></div>` : ""}
-        ${d.candidatas?.length ? `<details><summary>${d.candidatas.length} noticias de la Asamblea que podrían ser avance de trámite</summary>
-          <p class="nota">Suelen salir antes que el portal oficial. Revísalas a mano.</p>
-          ${d.candidatas.map((c) => `<div class="ag">${enlace(c.url, c.titulo)}<small>${esc(fechaCorta(c.fecha_pub))}</small></div>`).join("")}</details>` : ""}</div></div>
+      <div class="graf-pl">${evolucion(d.evolucion, 1400, 210)}</div>
       <div class="r-sug" hidden></div>
       <div class="barra"><div class="f-cli"></div></div>
       <div class="barra filtros">${campoFiltro({ k: "pl", t: pe ? "N.º de PL" : "N. Trámite", tipo: "texto" }, f)}
@@ -175,7 +171,12 @@ function vistaProyectos(pais) {
         ${campoFiltro({ k: "q", t: "Buscar en el título (tecla /)", tipo: "texto" }, f)}${campoFiltro({ k: "seg", t: "Solo los que sigo", tipo: "check" }, f)}
         <details class="mas-f"><summary>Más filtros</summary><div class="barra">${pe ? masPe() : masEc()}
           ${campoFiltro({ k: "ini", t: "Desde", tipo: "fecha" }, f)}${campoFiltro({ k: "fin", t: "Hasta", tipo: "fecha" }, f)}</div></details></div>
-      <p class="r-cuenta nota"></p><div class="t-pl"></div>`;
+      <p class="r-cuenta nota"></p><div class="t-pl"></div>
+      <details class="datos-pl"><summary>Estado de los datos: ${sync()}</summary>
+        ${pe ? `<button type="button" class="btn r-live">Buscar proyectos nuevos en el Congreso</button><div class="r-res"></div>` : ""}
+        ${d.candidatas?.length ? `<details><summary>${d.candidatas.length} noticias de la Asamblea que podrían ser avance de trámite</summary>
+          <p class="nota">Suelen salir antes que el portal oficial. Revísalas a mano.</p>
+          ${d.candidatas.map((c) => `<div class="ag">${enlace(c.url, c.titulo)}<small>${esc(fechaCorta(c.fecha_pub))}</small></div>`).join("")}</details>` : ""}</details>`;
     kpis(cuerpo.querySelector(".kpis"), Object.entries(d.kpis).map(([t, n]) => [n, t]));
     sugerencias(cuerpo.querySelector(".r-sug"));
     botonesCliente(cuerpo.querySelector(".f-cli"), d.clientes, f.cli, (v) => { f.cli = v; pintarTabla(); });
