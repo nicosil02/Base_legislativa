@@ -353,15 +353,15 @@ function item(titulo, url, resumen, pais, fuente, fecha, tipo = "noticia") {
 }
 
 // Grafico de lineas de dos series, sin dependencias.
-function evolucion(datos) {
+function evolucion(datos, an = 640, al = 150) {
   if (!datos?.length) return "";
-  const an = 640, al = 150, m = 26;
+  const m = 26;
   const tope = Math.max(...datos.flatMap((d) => [d.presentados, d.leyes]), 1);
   const x = (i) => (datos.length === 1 ? an / 2 : m + (i * (an - 2 * m)) / (datos.length - 1));
   const y = (v) => al - 22 - (v / tope) * (al - 40);
   const linea = (k, color) => `<polyline fill="none" stroke="${color}" stroke-width="2" points="${datos.map((d, i) => `${x(i)},${y(d[k])}`).join(" ")}"/>`
     + datos.map((d, i) => `<circle cx="${x(i)}" cy="${y(d[k])}" r="3.5" fill="${color}"><title>${esc(d.mes)}: ${d[k]}</title></circle>
-      <text x="${x(i)}" y="${y(d[k]) - 8}" text-anchor="middle" class="eti">${d[k]}</text>`).join("");
+      ${k === "leyes" && !d[k] ? "" : `<text x="${x(i)}" y="${y(d[k]) - 8}" text-anchor="middle" class="eti">${d[k]}</text>`}`).join("");
   return `<div class="graf"><div class="ley"><span class="s1">Presentados</span><span class="s2">Leyes publicadas</span></div>
     <svg viewBox="0 0 ${an} ${al}" role="img" aria-label="Evolución mensual de proyectos">
     ${datos.map((d, i) => `<text x="${x(i)}" y="${al - 4}" text-anchor="middle" class="eti">${d.mes.split("-").reverse().join("/")}</text>`).join("")}

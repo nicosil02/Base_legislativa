@@ -198,6 +198,11 @@ tr.clic { cursor:pointer; }
 tr.clic td { transition:background-color 100ms ease; }
 tr[aria-selected=true] td { background:var(--hover); }
 .dos-g { grid-template-columns:minmax(0,1fr) 320px; margin-bottom:16px; }
+.graf-pl { margin-bottom:16px; }
+.graf-pl .graf svg { max-height:250px; }
+.datos-pl { margin-top:18px; font-size:13px; color:var(--ink2); }
+.datos-pl > summary { cursor:pointer; }
+.datos-pl .btn { margin:8px 0; }
 .graf { background:#fff; border:1px solid var(--line2); border-radius:9px; padding:10px 14px; }
 .graf svg { display:block; width:100%; height:auto; max-height:170px; }
 .eti { font-size:11px; fill:var(--ink3); }
