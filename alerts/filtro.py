@@ -58,17 +58,23 @@ def asegurar_tabla(conn: sqlite3.Connection) -> None:
         PRIMARY KEY (clave, cliente))""")
 
 
-def prompt(slug: str, notas: str, alertas: list[str], items: list[dict]) -> str:
+def prompt(slug: str, notas: str, alertas: list[str], items: list[dict], descartes: list[str] = ()) -> str:
     lista = "\n\n".join(
         f"[{i}] ({it['pais']}, {it['fuente']}, {it['fecha']})\nTitulo: {it['titulo']}\n"
         f"Resumen: {it['resumen'] or '(sin resumen)'}" for i, it in enumerate(items, 1))
     previas = "\n".join(f"- {a}" for a in alertas[-15:]) or "(ninguna todavia)"
+    no = "\n".join(f"- {t}" for t in descartes)
+    no = f"""
+Noticias que el analista DESCARTO para este cliente aunque parecian de interes (lo parecido
+a estas no interesa, salvo que traiga una decision nueva):
+{no}
+""" if no else ""
     return f"""Perfil del cliente "{slug}" (bluebook):
 {notas}
 
 Alertas que ya se le mandaron (si una noticia sigue uno de estos temas, cuenta a favor):
 {previas}
-
+{no}
 Para CADA noticia de abajo responde {{"indice", "tipo", "interesa", "por_que"}}.
 "tipo": decision_publica (norma, resolucion, medida de un regulador o ministerio), proyecto_o_debate
 (PL, dictamen, debate o consulta publica de una norma), cambio_de_autoridad (designacion, renuncia,
@@ -88,7 +94,12 @@ def juzgar(slug: str, items: list[dict], generar=llm.generar) -> dict[int, tuple
     """{indice (1..n): (interesa, por_que)}. Indices que Gemini no devuelve no aparecen."""
     notas = (ROOT / "clientes" / slug / "notas.md").read_text(encoding="utf-8")
     alertas = [e["encabezado"] + " " + e["cuerpo"].split("\n", 1)[0] for e in historial.entradas(slug)]
-    texto = generar(prompt(slug, notas, alertas, items), system=SYSTEM, modelo=llm.LITE, schema=SCHEMA)
+    try:
+        from noticias.feedback_store import descartes_de
+        descartes = descartes_de(slug)
+    except Exception:  # sin GitHub (local o CI sin token) se juzga sin ellos
+        descartes = []
+    texto = generar(prompt(slug, notas, alertas, items, descartes), system=SYSTEM, modelo=llm.LITE, schema=SCHEMA)
     out = {}
     for v in json.loads(texto or "[]"):
         if isinstance(v, dict) and isinstance(v.get("indice"), int) and 1 <= v["indice"] <= len(items):

@@ -157,8 +157,22 @@ def _bajar_de_datos(gz_path: Path) -> None:
 
 def _bootstrap_dbs():
     lock = _get_bootstrap_lock()
+    # Con una base ya en disco nadie espera la nueva: se baja y se arma por
+    # detras y reemplaza a la anterior de un golpe (os.replace). Hacerlo en la
+    # ejecucion dejaba la pantalla en blanco a quien entraba tras cada dato nuevo.
+    if (_REPO_ROOT / "proyectos.db").exists():
+        if lock.acquire(blocking=False):
+            threading.Thread(target=_bootstrap_y_soltar, args=(lock,), daemon=True).start()
+        return
     if not lock.acquire(blocking=True, timeout=60):
         return
+    try:
+        _bootstrap_dbs_impl()
+    finally:
+        lock.release()
+
+
+def _bootstrap_y_soltar(lock: threading.Lock) -> None:
     try:
         _bootstrap_dbs_impl()
     finally:
@@ -408,6 +422,10 @@ except Exception as _e:
 # Mínimo, defensivo, sin @import ni :has() ni JS — para no romper nada.
 st.markdown(
     """<style>
+/* Sin el aviso de "Running" ni el gris mientras se recalcula la pagina. */
+[data-testid="stStatusWidget"] { display: none !important; }
+[data-stale="true"], [data-stale="true"] * { opacity: 1 !important; transition: none !important; }
+
 /* Logo grande: forzar el <img> generado por st.logo() a ~140px de alto.
    Streamlit le aplica un max-height chico por default; lo sobreescribimos. */
 [data-testid="stSidebarHeader"] {
@@ -634,10 +652,10 @@ inject_button_polish()
 
 
 # Definir páginas explícitamente.
-home = st.Page(
-    "home.py",
-    title="Inicio",
-    icon="🧠",
+hoy = st.Page(
+    "pages/0_Hoy.py",
+    title="Panel",
+    icon="📊",
     default=True,
     url_path="",
 )
@@ -700,7 +718,7 @@ buscar = st.Page(
 )
 que_paso = st.Page(
     "pages/9_Que_paso.py",
-    title="¿Qué pasó hoy?",
+    title="Resumen para clientes",
     icon="🗞️",
     url_path="que-paso-hoy",
 )
@@ -738,7 +756,7 @@ if _google_auth_configured() and st.user.is_logged_in:
 
 nav = st.navigation(
     {
-        "Vali Intelligence": [home, que_paso, buscar],
+        "Vali Intelligence": [hoy, que_paso, buscar],
         "Radar Legislativo": [peru, ecuador],
         "Agenda parlamentaria": [agenda_pe, agenda_ec],
         "Noticias y coyuntura": [noticias_pe, noticias_ec],

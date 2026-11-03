@@ -23,15 +23,23 @@ def list_descartadas() -> set[int]:
     return {int(d["noticia_id"]) for d in store.cargar(FEEDBACK_PATH, [], ttl=CACHE_TTL_SECONDS)}
 
 
-def registrar_descarte(noticia_id: int, descartado_por: str | None = None) -> bool:
-    """Idempotente: descartar 2 veces la misma noticia no duplica."""
+def registrar_descarte(noticia_id: int, descartado_por: str | None = None,
+                       titulo: str | None = None, clientes: list[str] | None = None) -> bool:
+    """Idempotente: descartar 2 veces la misma noticia no duplica. Con titulo y
+    clientes (descarte desde una alerta) el juez de alerts/filtro.py lo aprende."""
     def cambio(descartes: list) -> list | None:
         if any(d.get("noticia_id") == noticia_id for d in descartes):
             return None
         return descartes + [{"noticia_id": int(noticia_id), "created_at": now_iso(),
-                             "descartado_por": descartado_por}]
+                             "descartado_por": descartado_por, "titulo": titulo, "clientes": clientes or []}]
     store.actualizar(FEEDBACK_PATH, cambio, f"noticias: descartar {noticia_id}", [])
     return True
+
+
+def descartes_de(cliente: str, n: int = 20) -> list[str]:
+    """Titulos que el analista saco de las alertas de este cliente, lo mas nuevo al final."""
+    return [d["titulo"] for d in store.cargar(FEEDBACK_PATH, [], ttl=CACHE_TTL_SECONDS)
+            if d.get("titulo") and cliente in (d.get("clientes") or [])][-n:]
 
 
 def deshacer_descarte(noticia_id: int) -> bool:
