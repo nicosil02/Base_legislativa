@@ -54,6 +54,34 @@ def cambios(pais: str, conn: sqlite3.Connection, seguidos: dict[str, dict]) -> l
     return out
 
 
+def seguir_matrices() -> int:
+    """Sigue los PLs de las matrices de los clientes (clientes/<slug>/cliente.json)
+    que esten en la base. No toca los que ya se siguen. Devuelve cuantos agrego."""
+    from clientes import config
+    nuevos: dict[str, dict] = {}
+    ahora = datetime.now(timezone.utc).isoformat(timespec="seconds")
+    for pais, (db, _) in _DB.items():
+        col = "proyecto_ley" if pais == "PE" else "n_tramite"
+        conn = sqlite3.connect(f"file:{db}?mode=ro", uri=True)
+        for slug in config.slugs():
+            for f in config.matriz(slug, pais):
+                pl = str(f["pl_numero"]).replace(" ", "")
+                fila = conn.execute(f"SELECT {col}, titulo, estado, url_portal FROM proyectos WHERE {col} = ?", (pl,)).fetchone()
+                if not fila:
+                    continue
+                k = clave(pais, fila[0])
+                previo = nuevos.get(k)
+                por = f"matriz {slug}" if not previo else previo["por"] + ("" if slug in previo["por"] else f", {slug}")
+                nuevos[k] = {"pais": pais, "pl": fila[0], "titulo": fila[1] or "", "estado": fila[2],
+                             "url": fila[3], "por": por, "desde": ahora}
+    agregados = [k for k in nuevos if k not in store.leer(PATH, {})[0]]
+    if agregados:
+        store.actualizar(PATH, lambda d: {**{k: v for k, v in nuevos.items() if k not in d}, **d},
+                         f"seguir {len(agregados)} PLs de las matrices de clientes", {})
+    print(f"[pls_seguidos] matrices: {len(agregados)} agregados de {len(nuevos)}")
+    return len(agregados)
+
+
 def mensaje(c: dict) -> str:
     pais = {"PE": "Perú", "EC": "Ecuador"}[c["pais"]]
     return (f"📌 Proyecto que sigues ({pais}) cambió de estado\n"
@@ -91,7 +119,9 @@ def _chequeo() -> None:
 if __name__ == "__main__":
     if sys.argv[1:] == ["chequeo"]:
         _chequeo()
+    elif sys.argv[1:] == ["matrices"]:
+        seguir_matrices()
     elif sys.argv[1:2] and sys.argv[1] in _DB:
         revisar(sys.argv[1])
     else:
-        raise SystemExit("Uso: python -m alerts.pls_seguidos PE|EC|chequeo")
+        raise SystemExit("Uso: python -m alerts.pls_seguidos PE|EC|matrices|chequeo")
