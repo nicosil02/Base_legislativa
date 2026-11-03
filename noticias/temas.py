@@ -15,6 +15,7 @@ Tech/Digital con el badge Normativa.
 """
 from __future__ import annotations
 
+import functools
 import re
 
 from clientes import config as _clientes
@@ -359,9 +360,15 @@ def es_espectaculos(url: str | None) -> bool:
 def clasificar(titulo: str | None, resumen: str | None = None,
                url: str | None = None) -> list[str]:
     """Lista de temas detectados en el contenido. Orden estable."""
+    return list(_clasificar(titulo, resumen, url))
+
+
+# ~2 ms por noticia y la app reclasifica las mismas 5.000 cada 5 minutos (10 s)
+@functools.lru_cache(maxsize=30000)
+def _clasificar(titulo: str | None, resumen: str | None, url: str | None) -> tuple[str, ...]:
     texto = _norm(_sin_homonimos(titulo, resumen))
     if not texto.strip():
-        return []
+        return ()
     texto = _FRASES_NEUTRAS.sub(" ", texto)
     if _SENASA_DOMINICANA.search(texto) or "SeNaSa" in f"{titulo} {resumen}":
         texto = re.sub(r"\bsenasa\b", " ", texto)
@@ -376,7 +383,7 @@ def clasificar(titulo: str | None, resumen: str | None = None,
         temas = [t for t in temas if t != "KYC / AML / Financiero"]
     if _es_norma_tramite(titulo, resumen):
         temas = [t for t in temas if t == "Coyuntura política"]
-    return temas
+    return tuple(temas)
 
 
 # "salud" a secas solo en el TITULO: en el resumen suele ser una enumeracion

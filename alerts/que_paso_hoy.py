@@ -22,6 +22,7 @@ from functools import lru_cache
 
 import argparse
 import json
+import re
 import sqlite3
 from datetime import datetime, timedelta, timezone
 
@@ -72,26 +73,83 @@ def _ro(nombre: str) -> sqlite3.Connection | None:
     return c
 
 
-def _grupos(ids: list[int], cerebro: sqlite3.Connection) -> list[list[int]]:
-    """Junta las noticias que el juez dijo que cuentan el mismo hecho."""
-    padre = {i: i for i in ids}
+# Mismo hecho: lo dijo el juez (mismo_hecho), o vectores >= UMBRAL_NOTICIAS entre
+# portales distintos, o titulares casi iguales. Lo ultimo hace falta porque el
+# vector mezcla titulo y resumen: "ViaOCDE" en RPP y Google News, o "El Nino
+# amenaza la productividad avicola" en SENASA y AgroPeru, daban 0,79-0,81 y a
+# ese nivel tambien empatan cosas distintas (biocomercio vs semillas nativas).
+TITULO_IGUAL = 0.6  # Jaccard de palabras del titular sin el " - Medio" del final
+
+
+def _palabras_titulo(t: str) -> frozenset[str]:
+    from core.text import norm
+    t = re.split(r"\s+[-|–—]\s+(?=[^-|–—]{2,60}$)", t or "")[0]
+    return frozenset(re.findall(r"\w{4,}", norm(t)))
+
+
+def _mismo_titulo(a: frozenset, b: frozenset) -> bool:
+    return len(a) >= 3 and len(b) >= 3 and len(a & b) / len(a | b) >= TITULO_IGUAL
+
+
+def _grupos(clave: list[int], cerebro: sqlite3.Connection, candidatas: dict[int, dict]) -> list[list[int]]:
+    """Grupos del mismo hecho alrededor de `clave` (las que interesan, mas
+    recientes primero). `candidatas` {id: fila con titulo y fuente} son las
+    demas noticias de la ventana: entran al grupo como fuente extra aunque el
+    filtro no las haya marcado. Cada grupo empieza con una de `clave`."""
+    import numpy as np
+    from cerebro.embeddings import vectores_noticias
+    from noticias.historias import UMBRAL_NOTICIAS, _NUM_NORMA
+    todas = list(dict.fromkeys(clave + list(candidatas)))
+    try:
+        vec = vectores_noticias(todas, cerebro)
+    except Exception:
+        vec = {}
+    juicio: dict[tuple[int, int], bool] = {}
+    if clave:
+        lista_c, lista_t = ",".join(map(str, clave)), ",".join(map(str, todas))
+        try:
+            for a, b, igual in cerebro.execute(
+                    f"SELECT a, b, igual FROM mismo_hecho WHERE (a IN ({lista_c}) AND b IN ({lista_t})) "
+                    f"OR (b IN ({lista_c}) AND a IN ({lista_t}))"):
+                juicio[(a, b)] = juicio[(b, a)] = bool(igual)
+        except sqlite3.OperationalError:  # cerebro.db sin la tabla todavia
+            pass
+    pal = {i: _palabras_titulo(candidatas[i]["titulo"]) for i in todas}
+    normas = {i: set(_NUM_NORMA.findall(candidatas[i]["titulo"] or "")) for i in todas}
+    ids_v = [i for i in todas if i in vec]
+    m = np.stack([np.asarray(vec[i], "float32") for i in ids_v]) if ids_v else None
+
+    en_clave = set(clave)
+    padre = {i: i for i in todas}
 
     def raiz(i):
         while padre[i] != i:
             padre[i] = padre[padre[i]]
             i = padre[i]
         return i
-    if ids:
-        lista = ",".join(map(str, ids))
-        try:
-            for a, b in cerebro.execute(
-                    f"SELECT a, b FROM mismo_hecho WHERE igual = 1 AND a IN ({lista}) AND b IN ({lista})"):
-                padre[raiz(a)] = raiz(b)
-        except sqlite3.OperationalError:
-            pass
+    for c in clave:
+        sims = dict(zip(ids_v, m @ np.asarray(vec[c], "float32"))) if c in vec and m is not None else {}
+        for j in todas:
+            if j == c:
+                continue
+            if (c, j) in juicio:
+                igual = juicio[(c, j)]
+            elif normas[c] and normas[j] and not normas[c] & normas[j]:
+                igual = False  # DS 200-2026-EF vs 201-2026-EF
+            else:
+                # el vector solo entre marcadas: un post largo de SENASA sobre El Nino
+                # daba 0,83 con cualquier nota de El Nino, sin ser el mismo hecho
+                igual = _mismo_titulo(pal[c], pal[j]) or (
+                    j in en_clave and sims.get(j, 0) >= UMBRAL_NOTICIAS
+                    and candidatas[c]["fuente"] != candidatas[j]["fuente"])
+            if igual:
+                padre[raiz(j)] = raiz(c)
     grupos: dict[int, list[int]] = {}
-    for i in ids:
+    for i in clave:
         grupos.setdefault(raiz(i), []).append(i)
+    for i in candidatas:
+        if i not in en_clave and raiz(i) in grupos:
+            grupos[raiz(i)].append(i)
     return list(grupos.values())
 
 
@@ -122,37 +180,70 @@ def _pdf_viejo(url: str) -> bool:
     return bool(fecha) and datetime.now(timezone.utc) - fecha > timedelta(days=DIAS_PDF_VIEJO)
 
 
+def titular_norma(titulo: str) -> tuple[str, str | None]:
+    """El Peruano titula "ENTIDAD — RESOLUCIÓN N° X: Modifican..." y gob.pe
+    "634-2026-MINSA — APROBAR la baja...". Devuelve lo que hace la norma y
+    aparte de quien es. Agrocalidad deja el nombre del archivo firmado
+    ("Aprobado(1) signed signed")."""
+    limpio = re.sub(r"(\(\d+\))?(\s+signed)+\s*$", "", titulo, flags=re.I)
+    m = re.match(r"^([^a-z]+?) [—–-] (.+?): (.+)$", limpio)
+    if m:
+        return m[3], f"{m[1].capitalize()}, {m[2]}"
+    m = re.match(r"^(\d\S+) [—–-] (\S+)(.*)$", limpio)
+    return (m[2].capitalize() + m[3], m[1]) if m else (limpio, None)
+
+
+def reparar(texto: str) -> str:
+    """Canal N llega de Google News con el UTF-8 leido como latin-1 ("MarÃa")."""
+    if "Ã" not in texto and "Â" not in texto:
+        return texto
+    return texto.encode("cp1252", "ignore").decode("utf-8", "ignore") or texto
+
+
 def _url(url: str) -> str:
     """Las de Google News pesan 500+ caracteres: se comen el prompt y el mensaje."""
     from congreso_live.notify import acortar_url
     return acortar_url(url) if "news.google." in url else url
 
 
-def noticias(pe: sqlite3.Connection, cerebro: sqlite3.Connection, desde: str) -> list[str]:
+def hallazgos(pe: sqlite3.Connection, cerebro: sqlite3.Connection, desde: str) -> list[dict]:
+    """Noticias que le interesan a un cliente, juntando las del mismo hecho."""
     por_id: dict[int, list[tuple[str, str]]] = {}
     for clave, cliente, por_que in cerebro.execute(
             "SELECT clave, cliente, por_que FROM relevancia WHERE interesa = 1"):
         por_id.setdefault(int(clave.split("_", 1)[1]), []).append((cliente, por_que))
     if not por_id:
         return []
-    lista = ",".join(map(str, por_id))
-    filas = {r["id"]: r for r in pe.execute(
-        f"""SELECT n.id, n.titulo, n.url, n.fecha_pub, f.nombre AS fuente, f.pais FROM noticias n
-            JOIN noticias_fuentes f ON f.id = n.fuente_id
-            WHERE n.id IN ({lista}) AND n.first_seen_at >= ? ORDER BY n.first_seen_at DESC""", (desde,))
-             if _fresca(r) and not _pdf_viejo(r["url"])}
+    ventana = {r["id"]: r for r in pe.execute(
+        """SELECT n.id, n.titulo, n.url, n.fecha_pub, n.tags, f.nombre AS fuente, f.pais FROM noticias n
+           JOIN noticias_fuentes f ON f.id = n.fuente_id
+           WHERE n.first_seen_at >= ? ORDER BY n.first_seen_at DESC""", (desde,))}
+    filas = {i: r for i, r in ventana.items() if i in por_id and _fresca(r) and not _pdf_viejo(r["url"])}
     out = []
-    for g in _grupos(list(filas), cerebro)[:MAX["noticias"]]:
-        r = filas[g[0]]
-        clientes = {c: p for i in g for c, p in por_id.get(i, [])}
-        otras = sorted({filas[i]["fuente"] for i in g[1:]} - {r["fuente"]})
-        out.append(f"[{r['pais']}] {r['titulo']} ({r['fuente']}"
-                   + (f"; tambien en {', '.join(otras)}" if otras else "") + f") {_url(r['url'])}\n"
-                   + "".join(f"   - {c}: {p}\n" for c, p in clientes.items()))
+    for g in _grupos(list(filas), cerebro, ventana)[:MAX["noticias"]]:
+        r = ventana[g[0]]
+        # otras fuentes del mismo hecho, una por medio y sin repetir el enlace
+        fuentes, vistas = [], {r["fuente"], r["url"]}
+        for i in g[1:]:
+            x = ventana[i]
+            if x["fuente"] not in vistas and x["url"] not in vistas:
+                vistas |= {x["fuente"], x["url"]}
+                fuentes.append({"titulo": reparar(x["titulo"]), "url": x["url"], "fuente": x["fuente"], "fecha": x["fecha_pub"]})
+        out.append({"id": r["id"], "ids": g, "titulo": reparar(r["titulo"]), "url": r["url"], "fuente": r["fuente"],
+                    "pais": r["pais"], "fecha": r["fecha_pub"], "es_norma": any(x in (r["tags"] or "") for x in ("normativa", "normas")),
+                    "otras": [f["fuente"] for f in fuentes], "fuentes": fuentes,
+                    "clientes": {c: p for i in g for c, p in por_id.get(i, [])}})
     return out
 
 
-def normas(pe: sqlite3.Connection, desde: str) -> list[str]:
+def noticias(pe: sqlite3.Connection, cerebro: sqlite3.Connection, desde: str) -> list[str]:
+    return [f"[{h['pais']}] {h['titulo']} ({h['fuente']}"
+            + (f"; tambien en {', '.join(h['otras'])}" if h["otras"] else "") + f") {_url(h['url'])}\n"
+            + "".join(f"   - {c}: {p}\n" for c, p in h["clientes"].items())
+            for h in hallazgos(pe, cerebro, desde)]
+
+
+def normas_datos(pe: sqlite3.Connection, desde: str) -> list[dict]:
     from noticias.temas import es_normativa_de_interes
     out = []
     for r in pe.execute(
@@ -161,8 +252,12 @@ def normas(pe: sqlite3.Connection, desde: str) -> list[str]:
                WHERE n.first_seen_at >= ? AND (n.tags LIKE '%normativa%' OR n.tags LIKE '%normas%')""",
             (desde,)):
         if _fresca(r) and es_normativa_de_interes(r["tags"], r["resumen"]) and not _pdf_viejo(r["url"]):
-            out.append(f"[{r['pais']}] {r['titulo']}: {(r['resumen'] or '')[:250]} {_url(r['url'])}")
+            out.append({"titulo": r["titulo"], "resumen": r["resumen"] or "", "url": _url(r["url"]), "pais": r["pais"]})
     return out[:MAX["normas"]]
+
+
+def normas(pe: sqlite3.Connection, desde: str) -> list[str]:
+    return [f"[{n['pais']}] {n['titulo']}: {n['resumen'][:250]} {n['url']}" for n in normas_datos(pe, desde)]
 
 
 @lru_cache(maxsize=None)
@@ -177,7 +272,7 @@ def _clientes_de_pl(tema: str | None, numero: str, pais: str) -> list[str]:
             or numero in _matriz_nums(s, pais)]
 
 
-def pls(desde: datetime) -> list[str]:
+def pls_datos(desde: datetime) -> list[dict]:
     """PL de clientes (categoria o matriz) que cambiaron de estado o comision."""
     from core import legislativo
     out = []
@@ -185,21 +280,30 @@ def pls(desde: datetime) -> list[str]:
         for r in legislativo.cambios(pais, desde):
             cl = _clientes_de_pl(r["categoria"], r["numero"], pais)
             if cl:
-                out.append(f"[{pais}] PL {r['numero']} ({r['categoria']}; {', '.join(cl)}) {r['titulo'][:160]} "
-                           f"-> {r['campo']}: {r['valor']} ({r['fecha']}) {r['url'] or ''}".rstrip())
+                out.append({**r, "pais": pais, "clientes": cl})
     return out[:MAX["pls"]]
 
 
-def sesiones(pe: sqlite3.Connection | None, desde: str) -> list[str]:
+def pls(desde: datetime) -> list[str]:
+    return [f"[{r['pais']}] PL {r['numero']} ({r['categoria']}; {', '.join(r['clientes'])}) {r['titulo'][:160]} "
+            f"-> {r['campo']}: {r['valor']} ({r['fecha']}) {r['url'] or ''}".rstrip() for r in pls_datos(desde)]
+
+
+def sesiones_datos(pe: sqlite3.Connection | None, desde: str) -> list[dict]:
     from congreso_live.resumenes_store import list_resumenes
-    fechas = dict(pe.execute("SELECT video_id, fecha FROM sesiones_transcripciones")) if pe else {}
+    filas = {r[0]: r for r in pe.execute("SELECT video_id, fecha, titulo, tipo FROM sesiones_transcripciones")} if pe else {}
     minimo = (_lima_ahora() - timedelta(days=DIAS_FRESCO)).date().isoformat()
     out = []
     for vid, r in list_resumenes().items():
-        if (r.get("generated_at") or "") >= desde and r["resumen"] and (fechas.get(vid) or "") >= minimo:
-            ideas = "; ".join(r["ideas_clave"][:4])
-            out.append(f"{r['resumen'][:500]} Ideas: {ideas}")
+        _, fecha, titulo, tipo = filas.get(vid, ("", "", "", ""))
+        if (r.get("generated_at") or "") >= desde and r["resumen"] and (fecha or "") >= minimo:
+            out.append({"video_id": vid, "titulo": titulo, "tipo": tipo or "", "fecha": fecha, "resumen": r["resumen"],
+                        "ideas": r["ideas_clave"]})
     return out[:MAX["sesiones"]]
+
+
+def sesiones(pe: sqlite3.Connection | None, desde: str) -> list[str]:
+    return [f"{s['resumen'][:500]} Ideas: {'; '.join(s['ideas'][:4])}" for s in sesiones_datos(pe, desde)]
 
 
 def tv(pe: sqlite3.Connection, desde: str) -> list[str]:

@@ -9,6 +9,7 @@ Ecuador se cruza por número de PL, no por el estado de la matriz.
 from __future__ import annotations
 
 import re
+from functools import lru_cache
 from pathlib import Path
 
 from core.text import sin_tildes
@@ -162,22 +163,27 @@ MATRICES = {
 }
 
 
+# Cache: Noticias cruza ~5.000 noticias con ~40 PLs y normalizaba los mismos
+# textos 500 mil veces (70 s para armar Noticias EC).
+@lru_cache(maxsize=20000)
 def _normalizar_texto(s: str | None) -> str:
     return sin_tildes((s or "").lower())
 
 
-def _acronimos(texto: str | None) -> set[str]:
-    return {a for a in _RE_ACRONIMO.findall(texto or "") if a not in _ACRONIMOS_IGNORAR}
+@lru_cache(maxsize=20000)
+def _acronimos(texto: str | None) -> frozenset[str]:
+    return frozenset(a for a in _RE_ACRONIMO.findall(texto or "") if a not in _ACRONIMOS_IGNORAR)
 
 
-def palabras_clave_titulo(titulo: str | None, min_len: int = 5) -> set[str]:
+@lru_cache(maxsize=20000)
+def palabras_clave_titulo(titulo: str | None, min_len: int = 5) -> frozenset[str]:
     """Palabras que identifican a ESE PL (sin boilerplate, genéricas ni siglas)."""
     texto = _normalizar_texto(titulo)
     palabras = re.findall(r"[a-z]+", texto)
-    return {
+    return frozenset({
         p for p in palabras
         if len(p) >= min_len and p not in _STOPWORDS_PL and p not in _PALABRAS_GENERICAS_PL
-    }
+    })
 
 
 # Los PLs trackeados son de Ecuador: una noticia que nombra otro país y no a
