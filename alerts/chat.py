@@ -7,6 +7,9 @@ historial_alertas.md enteros, no un top-k) mas las reglas y ejemplos reales.
 """
 from __future__ import annotations
 
+import re
+from functools import lru_cache
+from html import unescape
 from pathlib import Path
 
 from core import llm
@@ -98,7 +101,7 @@ def mensaje_inicial(semilla: dict, contexto: str) -> str:
     return "\n\n".join(partes)
 
 
-def nueva_conversacion(slug: str, historial: list[dict] | None = None):
+def nueva_conversacion(slug: str, historial: list[dict] | None = None, modelo: str = MODEL):
     """Conversacion de Gemini con el contexto de `slug` como
     system_instruction. Levanta RuntimeError si falta GEMINI_API_KEY.
 
@@ -107,9 +110,89 @@ def nueva_conversacion(slug: str, historial: list[dict] | None = None):
     from google.genai import types
 
     client = llm.cliente()
+    system = construir_system_prompt(slug)
+    historial = list(historial or [])
+    if modelo.startswith("gemma"):  # Gemma no acepta system_instruction: va como primer turno
+        historial[:0] = [{"role": "user", "parts": [{"text": system}]},
+                         {"role": "model", "parts": [{"text": "Entendido."}]}]
+        system = None
     chat = client.chats.create(
-        model=MODEL,
-        config=types.GenerateContentConfig(system_instruction=construir_system_prompt(slug)),
+        model=modelo,
+        config=types.GenerateContentConfig(system_instruction=system),
         history=historial or None,
     )
     return client, chat
+
+
+URL = re.compile(r"https?://[^\s<>\"')\]]+")
+MAX_ENLACE = 40_000  # caracteres por enlace
+MAX_ENLACES = 5
+
+
+def _texto_html(html: str) -> str:
+    html = re.sub(r"(?is)<(script|style|nav|header|footer|aside|form|noscript)\b.*?</\1>", " ", html)
+    m = re.search(r"(?is)<article\b.*?</article>", html)
+    cuerpo = m.group(0) if m else html
+    bloques = re.findall(r"(?is)<(?:p|h[1-4]|li|td)\b[^>]*>(.*?)</(?:p|h[1-4]|li|td)>", cuerpo)
+    lineas = [re.sub(r"\s+", " ", unescape(re.sub(r"<[^>]+>", " ", b))).strip() for b in bloques]
+    texto = "\n".join(l for l in lineas if len(l) > 2)
+    if len(texto) >= 500:
+        return texto
+    # Sitios que arman la nota con <div> (Andina): lineas largas de toda la pagina.
+    crudo = unescape(re.sub(r"<[^>]+>", "", re.sub(r"(?i)<(?:/div|br|/p|/li|/h\d)[^>]*>", "\n", html)))
+    return "\n".join(l for l in (re.sub(r"\s+", " ", x).strip() for x in crudo.split("\n")) if len(l) >= 80)
+
+
+@lru_cache(maxsize=64)
+def leer_enlace(url: str) -> str:
+    """Texto de una pagina o PDF; si no se puede, el motivo entre corchetes
+    (asi Gemini sabe que no lo leyo en vez de inventar). Cacheado: el chat
+    reenvia la historia completa en cada turno."""
+    if "news.google.com" in url:
+        return "[enlace de Google News: no abre la nota directo, pegar el enlace del medio]"
+    try:
+        from core.http import session
+        r = session(reintentos=1).get(url, timeout=30)
+        if r.status_code >= 400:
+            return f"[no se pudo abrir: HTTP {r.status_code}]"
+        if r.content[:4] == b"%PDF":
+            import pymupdf
+            doc = pymupdf.open(stream=r.content, filetype="pdf")
+            paginas = [p.get_text().strip() for p in doc]
+            vacias = sum(1 for p in paginas if len(p) < 30)
+            texto = "\n".join(p for p in paginas if p)
+            nota = f"[PDF de {len(paginas)} paginas" + (f", {vacias} escaneadas sin texto]" if vacias else "]")
+            texto = f"{nota}\n{texto}"
+        else:
+            texto = _texto_html(r.text)
+        if len(texto) < 200:
+            return "[la pagina no tiene texto legible (puede cargarse con JavaScript o pedir inicio de sesion)]"
+        if len(texto) > MAX_ENLACE:
+            texto = texto[:MAX_ENLACE] + f"\n[recortado: se leyeron los primeros {MAX_ENLACE} caracteres]"
+        return texto
+    except Exception as e:
+        return f"[no se pudo abrir: {type(e).__name__}]"
+
+
+def con_enlaces(texto: str) -> str:
+    """El mensaje mas el contenido de los enlaces que trae."""
+    urls = list(dict.fromkeys(u.rstrip(".,;") for u in URL.findall(texto or "")))[:MAX_ENLACES]
+    if not urls:
+        return texto
+    bloques = [f"--- {u}\n{leer_enlace(u)}" for u in urls]
+    return (f"{texto}\n\n=== CONTENIDO DE LOS ENLACES (lo bajo el sistema; usalo como fuente y "
+            f"si un enlace dice que no se pudo leer, decimelo en vez de suponer lo que trae) ===\n"
+            + "\n\n".join(bloques))
+
+
+def responder(slug: str, historia: list, prompt: str) -> str:
+    """Un turno del chat: lee los enlaces de todos los mensajes del usuario y
+    reintenta/cambia de modelo si Gemini esta saturado (503) o sin cupo."""
+    previo = [{"role": "user" if rol == "user" else "model",
+               "parts": [{"text": con_enlaces(t) if rol == "user" else t}]} for rol, t in historia]
+    mensaje = con_enlaces(prompt)
+
+    def turno(modelo):
+        _client, chat = nueva_conversacion(slug, historial=previo, modelo=modelo)  # _client vivo hasta el send
+        return (chat.send_message(mensaje).text or "").strip()
+    return llm.con_respaldo(turno, MODEL)
