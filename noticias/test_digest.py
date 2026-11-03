@@ -244,3 +244,15 @@ def test_es_reciente_fecha_sin_zona():
     from noticias.digest import _es_reciente
     assert _es_reciente({"fecha_pub": date.today().isoformat()}, 2)
     assert not _es_reciente({"fecha_pub": "2020-01-01T10:00:00"}, 2)
+
+
+def test_criba_deja_normas_y_lo_que_elige_gemini():
+    from noticias.digest import _criba
+    norma = [{"titulo": "Decreto X", "fuente": "El Peruano", "tags": "normativa"}]
+    a = [{"titulo": "Congreso censura ministro", "fuente": "RPP", "tags": ""}]
+    b = [{"titulo": "Galarreta sobre encuestas", "fuente": "RPP", "tags": ""}]
+    assert _criba([norma, a, b], "Perú", generar=lambda *x, **k: "[1, 1, 9]") == [norma, a]
+
+    def falla(*x, **k):
+        raise RuntimeError("503")
+    assert _criba([norma, a, b], "Perú", generar=falla) == [norma]

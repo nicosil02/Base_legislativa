@@ -22,6 +22,7 @@ from noticias.temas import (FUENTES_MULTIPAIS, clasificar, es_fuente_multipais,
 
 UMBRAL_SIMILITUD = 0.35
 MAX_GRUPOS_POR_PAIS = 12
+MAX_CANDIDATOS = 40  # lo que ve la criba de Gemini antes de quedarse con MAX_CRIBA
 # Las busquedas de Google News van por relevancia, no por fecha: un articulo
 # de hace años entra hoy a la DB como nuevo. 2 dias de margen por fines de
 # semana y demoras del pipeline.
@@ -137,7 +138,44 @@ def armar_grupos(conn: sqlite3.Connection, pais: str) -> tuple[list[list[dict]],
     # Mas recientes primero - si hay mas de MAX_GRUPOS_POR_PAIS, importa
     # mas lo que acaba de pasar que lo mas viejo del lote sin revisar.
     grupos.sort(key=lambda g: max(n["id"] for n in g), reverse=True)
-    return grupos[:MAX_GRUPOS_POR_PAIS], max(n["id"] for n in vistas)
+    return grupos[:MAX_CANDIDATOS], max(n["id"] for n in vistas)
+
+
+MAX_CRIBA = 5
+CRIBA = """Eres analista politico de Vali Consultores. De estas noticias de {pais}, elige solo
+los hechos politicos de peso: decisiones, normas o medidas concretas del Ejecutivo; votaciones o
+decisiones del Congreso o la Asamblea; censuras, renuncias o nombramientos de ministros; fallos
+de altas cortes; crisis institucionales; anuncios de politica economica.
+Descarta declaraciones sin decision, encuestas y reacciones a encuestas, opinion y entrevistas,
+desmentidos, agenda (visitas, supervisiones, inauguraciones), campañas locales, noticias de otros
+paises, videos cortos y farandula. Varias notas del mismo hecho: elige una.
+Devuelve los indices, maximo {maximo}, del mas importante al menos; lista vacia si nada pasa.
+
+{lista}"""
+
+
+def _criba(grupos: list[list[dict]], pais: str, generar=None) -> list[list[dict]]:
+    """Gemini deja solo los hechos de peso: el clasificador por palabras
+    marca "Coyuntura política" a toda nota que nombra a la presidenta o a
+    Trump, y el canal recibia 60 mensajes en 6 dias. Las normas de interes
+    pasan siempre. Si Gemini falla no va coyuntura: callar es mejor que
+    inundar."""
+    import json
+
+    from core import llm
+    normas = [g for g in grupos if any({"normas", "normativa"} & set((n.get("tags") or "").split("|")) for n in g)]
+    resto = [g for g in grupos if g not in normas]
+    if not resto:
+        return normas
+    lista = "\n".join(f"[{i}] {g[0]['titulo']} ({g[0]['fuente']}, {len(g)} medios)" for i, g in enumerate(resto, 1))
+    try:
+        texto = (generar or llm.generar)(CRIBA.format(pais=pais, maximo=MAX_CRIBA, lista=lista),
+                                         modelo=llm.LITE, schema={"type": "array", "items": {"type": "integer"}})
+        elegidos = [i for i in dict.fromkeys(json.loads(texto or "[]")) if isinstance(i, int) and 1 <= i <= len(resto)]
+    except Exception as e:
+        print(f"[digest] criba sin Gemini ({str(e)[:100]}): va sin coyuntura")
+        elegidos = []
+    return normas + [resto[i - 1] for i in elegidos[:MAX_CRIBA]]
 
 
 def _matches_pl_ec(vistas: list[dict]) -> list[dict]:
@@ -253,8 +291,15 @@ def run(conn: sqlite3.Connection, dry_run: bool = False) -> dict:
     from congreso_live.notify import enviar_whatsapp
 
     init_schema(conn)
+    # La ventana del workflow dura 2 h y refrescar-pe corre cada hora: sin esto
+    # salian 2 digests por ventana (14:08 y 15:07 el 3/11).
+    ahora = int(datetime.now(timezone.utc).timestamp())
+    if not dry_run and ahora - _ultimo_id(conn, "_enviado") < 3 * 3600:
+        print("[digest] ya salio uno hace menos de 3 h, espero a la proxima ventana")
+        return {"grupos_pe": 0, "grupos_ec": 0, "matches_pl_ec": 0, "mensaje": "", "mensajes": [], "enviado": False}
     grupos_pe, ultimo_pe = armar_grupos(conn, "PE")
     grupos_ec, ultimo_ec = armar_grupos(conn, "EC")
+    grupos_pe, grupos_ec = _criba(grupos_pe, "Perú"), _criba(grupos_ec, "Ecuador")
     # Mismo lote EC que leyo armar_grupos, sin el filtro _es_relevante.
     vistas_ec = _noticias_desde(conn, "EC", _ultimo_id(conn, "EC"))
     matches_pl = _matches_pl_ec(vistas_ec)
@@ -270,6 +315,8 @@ def run(conn: sqlite3.Connection, dry_run: bool = False) -> dict:
     if not dry_run:
         _guardar_ultimo_id(conn, "PE", ultimo_pe)
         _guardar_ultimo_id(conn, "EC", ultimo_ec)
+        if mensajes:
+            _guardar_ultimo_id(conn, "_enviado", ahora)
 
     return {
         "grupos_pe": len(grupos_pe), "grupos_ec": len(grupos_ec),
