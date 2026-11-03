@@ -172,6 +172,7 @@ jobs:
         env:
           HOUR: ${{ steps.hora.outputs.hour }}
           IS_DISPATCH: ${{ github.event_name == 'workflow_dispatch' }}
+          GH_TOKEN_STORE: ${{ github.token }}
           CALLMEBOT_PHONE: ${{ secrets.CALLMEBOT_PHONE }}
           CALLMEBOT_APIKEY: ${{ secrets.CALLMEBOT_APIKEY }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
@@ -187,6 +188,11 @@ jobs:
               || echo "[warn] noticias seed fallo, sigo"
           timeout 600 python -X utf8 -m noticias.cli sync $RO_FLAG \
               || echo "[warn] noticias sync fallo, sigo"
+          # PLs seguidos de Ecuador: los boletines de la Asamblea cuentan el
+          # avance dias antes que el portal. Gemini (LITE) solo con notas nuevas.
+          GH_TOKEN="$GH_TOKEN_STORE" GH_REPO="${{ github.repository }}" GEMINI_API_KEY="$CLIENTES_CLAVE" \
+            timeout 180 python -X utf8 -m alerts.pls_seguidos noticias_ec \
+              || echo "[warn] pls_seguidos noticias_ec fallo, sigo"
           # Digest de WhatsApp en 2 horarios fijos (9-10am y 2-3pm Lima). Ventana
           # de 2 h, no minuto exacto: tolera cron atrasado y corridas por push.
           # digest.run no manda otro si ya salio uno hace menos de 3 h. Gemini
