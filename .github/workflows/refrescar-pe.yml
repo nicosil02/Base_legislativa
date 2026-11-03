@@ -189,14 +189,16 @@ jobs:
               || echo "[warn] noticias sync fallo, sigo"
           # Digest de WhatsApp en 2 horarios fijos (9-10am y 2-3pm Lima). Ventana
           # de 2 h, no minuto exacto: tolera cron atrasado y corridas por push.
+          # digest.run no manda otro si ya salio uno hace menos de 3 h. Gemini
+          # (LITE) solo en este paso: deja los 5 hechos de peso por pais.
           if [ "$HOUR" -ge 14 ] && [ "$HOUR" -le 15 ]; then
-            timeout 120 python -X utf8 -m noticias.cli avisar \
+            GEMINI_API_KEY="$CLIENTES_CLAVE" timeout 180 python -X utf8 -m noticias.cli avisar \
                 || echo "[warn] noticias avisar fallo, sigo"
           elif [ "$HOUR" -ge 19 ] && [ "$HOUR" -le 20 ]; then
-            timeout 120 python -X utf8 -m noticias.cli avisar \
+            GEMINI_API_KEY="$CLIENTES_CLAVE" timeout 180 python -X utf8 -m noticias.cli avisar \
                 || echo "[warn] noticias avisar fallo, sigo"
           elif [ "$IS_DISPATCH" = "true" ]; then
-            timeout 120 python -X utf8 -m noticias.cli avisar \
+            GEMINI_API_KEY="$CLIENTES_CLAVE" timeout 180 python -X utf8 -m noticias.cli avisar \
                 || echo "[warn] noticias avisar fallo, sigo"
           else
             echo "[avisar] fuera de los horarios fijos (9-10am/2-3pm Lima) - skip"
