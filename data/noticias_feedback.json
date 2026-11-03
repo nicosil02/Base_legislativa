@@ -48,5 +48,14 @@
     "noticia_id": 2258067,
     "created_at": "2026-10-05T13:54:43Z",
     "descartado_por": "nicolas.silva@valiconsultores.com"
+  },
+  {
+    "noticia_id": 27,
+    "created_at": "2026-11-03T14:16:41Z",
+    "descartado_por": "nicolas.silva@valiconsultores.com",
+    "titulo": "Gore Piura designa a Ílich López Orozco como Director Regional de Agricultura - Agraria.pe",
+    "clientes": [
+      "syngenta"
+    ]
   }
 ]
