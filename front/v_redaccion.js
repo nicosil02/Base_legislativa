@@ -3,8 +3,40 @@ const negrita = (t) => esc(t).replace(/\*([^*\n]+?)\*/g, "<b>$1</b>");
 
 VISTAS.alertas = (() => {
   // El chat vive en el navegador: seguir pidiendo ajustes no depende del servidor.
-  const c = { cliente: "", historia: [], material: null, borrador: null, ocupado: false };
+  // Se guarda en el navegador (localStorage): salir de la seccion, recargar o abrir otra alerta no borra nada.
+  const CLAVE = "vali:redaccion";
+  const guardado = (() => { try { return JSON.parse(localStorage.getItem(CLAVE) || "{}"); } catch { return {}; } })();
+  const c = { cliente: "", historia: [], material: null, borrador: null, final: null, entrada: "", ...guardado.c, ocupado: false };
+  let recientes = guardado.recientes ?? [];
   let raiz;
+  const persistir = () => {
+    const { ocupado, ...resto } = c;
+    try { localStorage.setItem(CLAVE, JSON.stringify({ c: resto, recientes })); } catch { /* lleno: se sigue sin guardar */ }
+  };
+  const tituloDe = (x) => x.material?.items?.[0]?.titulo || (x.historia.find(([r]) => r === "user")?.[1] ?? "").slice(0, 90) || "Sin título";
+  // La conversacion actual pasa a "anteriores" antes de empezar otra
+  function archivar() {
+    if (!c.historia.length) return;
+    const { ocupado, ...resto } = c;
+    recientes = [{ ...structuredClone(resto), fecha: new Date().toISOString(), titulo: tituloDe(c) }, ...recientes].slice(0, 10);
+  }
+  function anteriores() {
+    const caja = raiz.querySelector(".r-ant");
+    caja.innerHTML = recientes.length ? `<details><summary>Conversaciones anteriores (${recientes.length})</summary>
+      ${recientes.map((r, i) => `<div class="suger"><div><b>${esc(App.nombre(r.cliente))}</b> ${esc(oracion(r.titulo))}<small>${esc(fechaCorta(r.fecha))}</small></div>
+        <button type="button" class="btn" data-retomar="${i}">Retomar</button><button type="button" class="btn" data-borrar="${i}">Borrar</button></div>`).join("")}</details>` : "";
+    caja.onclick = (e) => {
+      const ret = e.target.closest("[data-retomar]"), bor = e.target.closest("[data-borrar]");
+      if (ret) {
+        const r = recientes[ret.dataset.retomar];
+        recientes = recientes.filter((x) => x !== r);
+        archivar();
+        Object.assign(c, { cliente: r.cliente, historia: r.historia, material: r.material, borrador: r.borrador, final: r.final ?? null, entrada: r.entrada ?? "" });
+        App.ir("alertas");  // repinta con el cliente de esa conversacion
+      }
+      if (bor) { recientes.splice(Number(bor.dataset.borrar), 1); persistir(); anteriores(); }
+    };
+  }
   const FALLO = "No se pudo conectar con Gemini: ";
   const validos = () => c.historia.filter(([r, t]) => r === "user" || !t.startsWith(FALLO));
   const respuestas = () => validos().filter(([r]) => r === "assistant");
@@ -17,6 +49,7 @@ VISTAS.alertas = (() => {
     const ult = caja.lastElementChild;
     if (ult && !quieto()) ult.animate([{ opacity: 0, transform: "translateY(6px)" }, { opacity: 1, transform: "none" }], { duration: 200, easing: "cubic-bezier(.23,1,.32,1)" });
     App.$(".main").scrollTop = App.$(".main").scrollHeight;
+    persistir();
     guardar();
   }
 
@@ -28,7 +61,7 @@ VISTAS.alertas = (() => {
     if (!ult) return;
     const p = c.material?.items?.[0] ?? {};
     caja.innerHTML = `<h2>Guardar como enviada</h2>
-      <label class="campo">Texto final<textarea class="g-texto" rows="9">${esc(ult[1])}</textarea></label>
+      <label class="campo">Texto final<textarea class="g-texto" rows="9">${esc(c.final ?? ult[1])}</textarea></label>
       <div class="barra"><input class="buscar g-titulo" placeholder="Título para el historial" aria-label="Título" value="${esc(p.titulo ?? "")}">
         <select class="g-pais" aria-label="País">${["Perú", "Ecuador", "Regional"].map((x) => `<option${x === (PAISES[p.pais] ?? "Perú") ? " selected" : ""}>${x}</option>`).join("")}</select>
         <input class="buscar g-linea" placeholder="Línea, opcional" aria-label="Línea"></div>
@@ -37,7 +70,7 @@ VISTAS.alertas = (() => {
       <div class="linea"><button type="button" class="btn g-copiar">Copiar</button><button type="button" class="btn pri g-guardar">Guardar en el historial de ${esc(App.nombre(c.cliente))}</button></div>`;
     const texto = caja.querySelector(".g-texto");
     const previa = () => { caja.querySelector(".previa").innerHTML = negrita(texto.value); };
-    texto.oninput = previa;
+    texto.oninput = () => { c.final = texto.value; persistir(); previa(); };
     previa();
     caja.querySelector(".g-copiar").onclick = async () => { await navigator.clipboard.writeText(texto.value); App.aviso("Texto copiado"); };
     caja.querySelector(".g-guardar").onclick = async (e) => {
@@ -48,6 +81,7 @@ VISTAS.alertas = (() => {
         await App.pedir("guardar_alerta", { cliente: c.cliente, titulo, texto: texto.value, pais: caja.querySelector(".g-pais").value,
                                             url: caja.querySelector(".g-url").value, linea: caja.querySelector(".g-linea").value, borrador: c.borrador });
         c.borrador = null;
+        persistir();
         App.aviso(`Guardada en el historial de ${App.nombre(c.cliente)}`);
         borradores();
       } catch (err) { App.fallo(err); }
@@ -72,10 +106,12 @@ VISTAS.alertas = (() => {
         const usar = e.target.closest("[data-usar]"), fuera = e.target.closest("[data-fuera]");
         if (usar) {
           const b = lista.find((x) => x.id === usar.dataset.usar);
+          archivar();
           c.material = { cliente: c.cliente, items: [{ titulo: b.titulo, url: b.url, pais: b.pais }] };
           c.historia = [["user", `Borrador preparado para ${c.cliente}. Sustento:\n${b.sustento ?? ""}`], ["assistant", b.texto]];
           c.borrador = b.id;
-          material(); mensajes();
+          c.final = null;
+          material(); mensajes(); anteriores();
         }
         if (fuera) { try { await App.pedir("borrador_fuera", { id: fuera.dataset.fuera }); borradores(); } catch (err) { App.fallo(err); } }
       };
@@ -89,19 +125,24 @@ VISTAS.alertas = (() => {
     try {
       const r = await App.pedir("chat", { cliente: c.cliente, historia: validos().slice(0, -1), prompt });
       c.historia.push(["assistant", r.respuesta]);
+      c.final = null;
     } catch (e) { c.historia.push(["assistant", FALLO + e.message]); }
+    persistir();
     c.ocupado = false;
     if (raiz?.isConnected) mensajes();
   }
 
   async function iniciar(semilla) {
-    Object.assign(c, { cliente: semilla.cliente, historia: [], material: semilla, borrador: null, ocupado: "Buscando contexto y redactando…" });
+    archivar();
+    Object.assign(c, { cliente: semilla.cliente, historia: [], material: semilla, borrador: null, final: null, ocupado: "Buscando contexto y redactando…" });
+    anteriores();
     material(); mensajes();
     try {
       const r = await App.pedir("chat_inicio", { cliente: c.cliente, material: semilla });
       c.historia.push(["user", r.prompt], ["assistant", r.error ? `${FALLO}${r.error}. Escribe "sigue" para reintentar.` : r.respuesta]);
     } catch (e) { c.historia.push(["user", ""], ["assistant", FALLO + e.message]); }
     c.ocupado = false;
+    persistir();
     if (raiz?.isConnected) mensajes();
   }
 
@@ -115,18 +156,22 @@ VISTAS.alertas = (() => {
       if (semilla) c.cliente = semilla.cliente;
       c.cliente ||= lista[0];
       ctrl.innerHTML = `<div class="r-cli"></div>`;
-      cuerpo.innerHTML = `<div class="redaccion"><div class="borr"></div><div class="material"></div><div class="chat" aria-live="polite"></div>
+      cuerpo.innerHTML = `<div class="redaccion"><div class="r-ant"></div><div class="borr"></div><div class="material"></div><div class="chat" aria-live="polite"></div>
         <form class="enviar"><textarea rows="2" aria-label="Mensaje" placeholder="Pega lo que quieras o pide un ajuste. Enter envía."></textarea><button class="btn pri">Enviar</button></form>
         <button type="button" class="btn r-nueva" hidden>Nueva conversación</button><div class="final" hidden></div></div>`;
       const form = cuerpo.querySelector(".enviar");
       const area = form.querySelector("textarea");
-      form.onsubmit = (e) => { e.preventDefault(); const t = area.value.trim(); if (t && !c.ocupado) { area.value = ""; enviar(t); } };
+      area.value = c.entrada ?? "";
+      area.oninput = () => { c.entrada = area.value; persistir(); };
+      form.onsubmit = (e) => { e.preventDefault(); const t = area.value.trim(); if (t && !c.ocupado) { area.value = ""; c.entrada = ""; enviar(t); } };
       area.onkeydown = (e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); form.requestSubmit(); } };
       botonesCliente(ctrl.querySelector(".r-cli"), lista, c.cliente, (v) => {
-        Object.assign(c, { cliente: v, historia: [], material: null, borrador: null });
-        material(); mensajes(); borradores();
+        archivar();
+        Object.assign(c, { cliente: v, historia: [], material: null, borrador: null, final: null });
+        material(); mensajes(); borradores(); anteriores();
       }, false);
-      cuerpo.querySelector(".r-nueva").onclick = () => { Object.assign(c, { historia: [], material: null, borrador: null }); material(); mensajes(); };
+      cuerpo.querySelector(".r-nueva").onclick = () => { archivar(); Object.assign(c, { historia: [], material: null, borrador: null, final: null }); material(); mensajes(); anteriores(); };
+      anteriores();
       if (semilla) iniciar(semilla); else { material(); mensajes(); }
       borradores();
     },

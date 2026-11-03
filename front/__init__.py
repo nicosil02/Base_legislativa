@@ -3,6 +3,7 @@ Filtros, pestanas y detalle no pasan por el servidor; Python solo entrega los
 datos y recibe las acciones que si escriben algo."""
 from __future__ import annotations
 
+import base64
 from pathlib import Path
 
 import streamlit as st
@@ -14,8 +15,9 @@ def _leer(nombre: str) -> str:
     return (_AQUI / nombre).read_text(encoding="utf8")
 
 
-_JS = ("nucleo.js", "v_panel.js", "v_noticias.js", "v_proyectos.js", "v_agenda.js", "v_redaccion.js")
-app = st.components.v2.component("vali_app", html='<div class="app"></div>', css=_leer("app.css"),
+_LOGO = base64.b64encode((_AQUI.parent / "assets" / "vali_logo.jpg").read_bytes()).decode()
+_JS = ("nucleo.js", "v_panel.js", "v_noticias.js", "v_proyectos.js", "v_agenda.js", "v_transcripciones.js", "v_redaccion.js")
+app = st.components.v2.component("vali_app", html='<div class="app"></div>', css=_leer("app.css") + f'.logo{{background-image:url("data:image/jpeg;base64,{_LOGO}")}}',
                                  js=chr(10).join(_leer(f) for f in _JS))
 
 # Quita el marco de Streamlit en las paginas que usan la interfaz propia

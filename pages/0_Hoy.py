@@ -14,11 +14,10 @@ inject_theme()
 st.markdown(SIN_MARCO, unsafe_allow_html=True)
 almacen()  # arranca el armado por detras desde la primera visita
 
-MENU = [["", [["Panel", "panel"], ["Resumen para clientes", "resumen"], ["Buscar en todo", "buscar"]]],
-        ["Proyectos de ley", [["Perú", "proyectos_pe"], ["Ecuador", "proyectos_ec"]]],
-        ["Agenda parlamentaria", [["Perú", "agenda_pe"], ["Ecuador", "agenda_ec"]]],
-        ["Noticias y coyuntura", [["Perú", "noticias_pe"], ["Ecuador", "noticias_ec"]]],
-        ["Alertas", [["Redactar", "alertas"]]]]
+# Proyectos, agenda y noticias van sin pais: el selector de arriba elige _pe o _ec
+MENU = [["", [["Panel", "panel", "inicio"], ["Transcripciones", "transcripciones", "micro"], ["Proyectos de ley", "proyectos", "doc"],
+              ["Agenda", "agenda", "cal"], ["Noticias", "noticias", "diario"]]],
+        ["Trabajo", [["Redactar alerta", "alertas", "pluma"], ["Resumen del día", "resumen", "lista"], ["Buscar en todo", "buscar", "buscar"]]]]
 BASE = {"menu": MENU, "usuario": st.user.get("email"),
         "clientes": {s: {"nombre": config.todos()[s]["nombre"], "paises": list(config.todos()[s]["paises"])}
                      for s in historial.clientes()}}

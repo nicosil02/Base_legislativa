@@ -73,26 +73,83 @@ def _ro(nombre: str) -> sqlite3.Connection | None:
     return c
 
 
-def _grupos(ids: list[int], cerebro: sqlite3.Connection) -> list[list[int]]:
-    """Junta las noticias que el juez dijo que cuentan el mismo hecho."""
-    padre = {i: i for i in ids}
+# Mismo hecho: lo dijo el juez (mismo_hecho), o vectores >= UMBRAL_NOTICIAS entre
+# portales distintos, o titulares casi iguales. Lo ultimo hace falta porque el
+# vector mezcla titulo y resumen: "ViaOCDE" en RPP y Google News, o "El Nino
+# amenaza la productividad avicola" en SENASA y AgroPeru, daban 0,79-0,81 y a
+# ese nivel tambien empatan cosas distintas (biocomercio vs semillas nativas).
+TITULO_IGUAL = 0.6  # Jaccard de palabras del titular sin el " - Medio" del final
+
+
+def _palabras_titulo(t: str) -> frozenset[str]:
+    from core.text import norm
+    t = re.split(r"\s+[-|–—]\s+(?=[^-|–—]{2,60}$)", t or "")[0]
+    return frozenset(re.findall(r"\w{4,}", norm(t)))
+
+
+def _mismo_titulo(a: frozenset, b: frozenset) -> bool:
+    return len(a) >= 3 and len(b) >= 3 and len(a & b) / len(a | b) >= TITULO_IGUAL
+
+
+def _grupos(clave: list[int], cerebro: sqlite3.Connection, candidatas: dict[int, dict]) -> list[list[int]]:
+    """Grupos del mismo hecho alrededor de `clave` (las que interesan, mas
+    recientes primero). `candidatas` {id: fila con titulo y fuente} son las
+    demas noticias de la ventana: entran al grupo como fuente extra aunque el
+    filtro no las haya marcado. Cada grupo empieza con una de `clave`."""
+    import numpy as np
+    from cerebro.embeddings import vectores_noticias
+    from noticias.historias import UMBRAL_NOTICIAS, _NUM_NORMA
+    todas = list(dict.fromkeys(clave + list(candidatas)))
+    try:
+        vec = vectores_noticias(todas, cerebro)
+    except Exception:
+        vec = {}
+    juicio: dict[tuple[int, int], bool] = {}
+    if clave:
+        lista_c, lista_t = ",".join(map(str, clave)), ",".join(map(str, todas))
+        try:
+            for a, b, igual in cerebro.execute(
+                    f"SELECT a, b, igual FROM mismo_hecho WHERE (a IN ({lista_c}) AND b IN ({lista_t})) "
+                    f"OR (b IN ({lista_c}) AND a IN ({lista_t}))"):
+                juicio[(a, b)] = juicio[(b, a)] = bool(igual)
+        except sqlite3.OperationalError:  # cerebro.db sin la tabla todavia
+            pass
+    pal = {i: _palabras_titulo(candidatas[i]["titulo"]) for i in todas}
+    normas = {i: set(_NUM_NORMA.findall(candidatas[i]["titulo"] or "")) for i in todas}
+    ids_v = [i for i in todas if i in vec]
+    m = np.stack([np.asarray(vec[i], "float32") for i in ids_v]) if ids_v else None
+
+    en_clave = set(clave)
+    padre = {i: i for i in todas}
 
     def raiz(i):
         while padre[i] != i:
             padre[i] = padre[padre[i]]
             i = padre[i]
         return i
-    if ids:
-        lista = ",".join(map(str, ids))
-        try:
-            for a, b in cerebro.execute(
-                    f"SELECT a, b FROM mismo_hecho WHERE igual = 1 AND a IN ({lista}) AND b IN ({lista})"):
-                padre[raiz(a)] = raiz(b)
-        except sqlite3.OperationalError:
-            pass
+    for c in clave:
+        sims = dict(zip(ids_v, m @ np.asarray(vec[c], "float32"))) if c in vec and m is not None else {}
+        for j in todas:
+            if j == c:
+                continue
+            if (c, j) in juicio:
+                igual = juicio[(c, j)]
+            elif normas[c] and normas[j] and not normas[c] & normas[j]:
+                igual = False  # DS 200-2026-EF vs 201-2026-EF
+            else:
+                # el vector solo entre marcadas: un post largo de SENASA sobre El Nino
+                # daba 0,83 con cualquier nota de El Nino, sin ser el mismo hecho
+                igual = _mismo_titulo(pal[c], pal[j]) or (
+                    j in en_clave and sims.get(j, 0) >= UMBRAL_NOTICIAS
+                    and candidatas[c]["fuente"] != candidatas[j]["fuente"])
+            if igual:
+                padre[raiz(j)] = raiz(c)
     grupos: dict[int, list[int]] = {}
-    for i in ids:
+    for i in clave:
         grupos.setdefault(raiz(i), []).append(i)
+    for i in candidatas:
+        if i not in en_clave and raiz(i) in grupos:
+            grupos[raiz(i)].append(i)
     return list(grupos.values())
 
 
@@ -157,18 +214,24 @@ def hallazgos(pe: sqlite3.Connection, cerebro: sqlite3.Connection, desde: str) -
         por_id.setdefault(int(clave.split("_", 1)[1]), []).append((cliente, por_que))
     if not por_id:
         return []
-    lista = ",".join(map(str, por_id))
-    filas = {r["id"]: r for r in pe.execute(
-        f"""SELECT n.id, n.titulo, n.url, n.fecha_pub, n.tags, f.nombre AS fuente, f.pais FROM noticias n
-            JOIN noticias_fuentes f ON f.id = n.fuente_id
-            WHERE n.id IN ({lista}) AND n.first_seen_at >= ? ORDER BY n.first_seen_at DESC""", (desde,))
-             if _fresca(r) and not _pdf_viejo(r["url"])}
+    ventana = {r["id"]: r for r in pe.execute(
+        """SELECT n.id, n.titulo, n.url, n.fecha_pub, n.tags, f.nombre AS fuente, f.pais FROM noticias n
+           JOIN noticias_fuentes f ON f.id = n.fuente_id
+           WHERE n.first_seen_at >= ? ORDER BY n.first_seen_at DESC""", (desde,))}
+    filas = {i: r for i, r in ventana.items() if i in por_id and _fresca(r) and not _pdf_viejo(r["url"])}
     out = []
-    for g in _grupos(list(filas), cerebro)[:MAX["noticias"]]:
-        r = filas[g[0]]
+    for g in _grupos(list(filas), cerebro, ventana)[:MAX["noticias"]]:
+        r = ventana[g[0]]
+        # otras fuentes del mismo hecho, una por medio y sin repetir el enlace
+        fuentes, vistas = [], {r["fuente"], r["url"]}
+        for i in g[1:]:
+            x = ventana[i]
+            if x["fuente"] not in vistas and x["url"] not in vistas:
+                vistas |= {x["fuente"], x["url"]}
+                fuentes.append({"titulo": reparar(x["titulo"]), "url": x["url"], "fuente": x["fuente"], "fecha": x["fecha_pub"]})
         out.append({"id": r["id"], "ids": g, "titulo": reparar(r["titulo"]), "url": r["url"], "fuente": r["fuente"],
                     "pais": r["pais"], "fecha": r["fecha_pub"], "es_norma": any(x in (r["tags"] or "") for x in ("normativa", "normas")),
-                    "otras": sorted({filas[i]["fuente"] for i in g[1:]} - {r["fuente"]}),
+                    "otras": [f["fuente"] for f in fuentes], "fuentes": fuentes,
                     "clientes": {c: p for i in g for c, p in por_id.get(i, [])}})
     return out
 

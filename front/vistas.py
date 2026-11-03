@@ -120,7 +120,7 @@ def _alertas(datos: dict) -> list[dict]:
              "resumen": p["valor"], "fuente": "Proyecto de ley", "otras": [], "id": None, "tema": p["categoria"]}
             for p in datos["pls"] if p["clientes"]]
     out += [{"tipo": "norma" if h["es_norma"] else "noticia", "titulo": h["titulo"], "url": h["url"], "pais": h["pais"], "fecha": h["fecha"],
-             "porque": h["clientes"], "resumen": None, "fuente": h["fuente"], "otras": h["otras"], "id": h["id"],
+             "porque": h["clientes"], "resumen": None, "fuente": h["fuente"], "otras": h["otras"], "fuentes": h.get("fuentes", []), "id": h["id"],
              "tema": next(iter(clasificar(h["titulo"], None, h["url"])), None)}
             for h in datos["noticias"] if h["clientes"]]
     for a in out:
@@ -398,6 +398,104 @@ def agenda_ecuador() -> dict:
             "matriz": {c: sorted(v) for c, v in matriz_pls("EC").items()}}
 
 
+def _organo(tipo: str) -> str:
+    """Los tipos vienen sin tildes ("Comision: Gestion Del Estado"): se arreglan los casos que se repiten."""
+    t = re.sub(r" (Del|De|La|Y|E) ", lambda m: f" {m[1].lower()} ", tipo.replace(" (EC)", "").strip())
+    t = re.sub(r"cion\b", "ción", t)
+    for sin, con in (("Politic", "Polític"), ("Economia", "Economía"), ("Energia", "Energía"), ("Gestion ", "Gestión "),
+                     ("Inclusion ", "Inclusión "), ("Etica ", "Ética "), (": Mujer", ": la Mujer")):
+        t = t.replace(sin, con)
+    if t.startswith("Pleno: "):
+        x = t[7:]
+        return "Pleno de la Asamblea Nacional" if x.startswith("Asamblea") else f"Pleno del {x}" if x in ("Senado", "Congreso") else f"Pleno de {x}"
+    if t.startswith("Comision: "):
+        x = t[10:]
+        return x[0].upper() + x[1:] if x.lower().startswith("mesa") else "Comisión Agraria" if x == "Agrario" else f"Comisión de {x}"
+    return t
+
+
+def transcripciones() -> dict:
+    """Todas las sesiones de los dos paises, para la seccion propia. El texto
+    completo se pide aparte al abrir una; aqui solo el inicio, que basta para
+    el extracto y para saber la camara."""
+    from congreso_live.facebook_ec import url_video
+    # ponytail: 8000 caracteres alcanzan para la camara; si _camara_del_texto empieza a fallar, subirlo
+    df = pd.read_sql_query("""SELECT video_id, tipo, titulo, fecha, duracion_seg, temas, substr(texto, 1, 8000) AS texto
+                              FROM sesiones_transcripciones WHERE tipo NOT LIKE 'Entrevista:%'
+                              ORDER BY fecha DESC, video_id DESC""", connect_ro("proyectos.db"))
+    ec = df["tipo"].str.endswith("(EC)")
+    filas = []
+    for pais, parte in (("PE", df[~ec]), ("EC", df[ec])):
+        for t in _transcripciones(parte, pais == "PE"):
+            # los titulos de YouTube conservan "EN VIVO" aunque la sesion ya termino
+            filas.append({**t, "pais": pais, "organo": _organo(t["tipo"]),
+                          "titulo": re.sub(r"^\W*EN VIVO\s*:?\s*", "", t["titulo"] or "", flags=re.I).strip() or "Sesión",
+                          "url": url_video(t["video_id"]) if pais == "EC" else f"https://www.youtube.com/watch?v={t['video_id']}"})
+    filas.sort(key=lambda t: (t["fecha"] or "", t["video_id"]), reverse=True)
+    return {"filas": filas}
+
+
+# ------------------------------------------------------------------ Ficha de un proyecto
+def _noticias_de_pl(pe: sqlite3.Connection, pais: str, n: int | None, titulo: str) -> list[dict]:
+    """Noticias que nombran el PL (Peru, por numero) o lo describen (Ecuador, por palabras)."""
+    filas = pe.execute("""SELECT n.id, n.titulo, n.resumen, n.url, COALESCE(n.fecha_pub, n.first_seen_at), f.nombre
+                          FROM noticias n JOIN noticias_fuentes f ON f.id = n.fuente_id
+                          WHERE f.pais = ? AND n.first_seen_at >= date('now', '-180 days')""", (pais,)).fetchall()
+    if n is not None:
+        # "PL 709", "proyecto de ley N.° 00709", "proposición legislativa 709/2026"
+        pat = re.compile(rf"\b(?:pl|proyecto de ley|proposici[oó]n legislativa)\s*(?:n\.?\s*[°º]\s*)?0*{n}\b", re.I)
+        hay = [f for f in filas if pat.search(f"{f[1]} {f[2] or ''}")]
+    else:
+        from clientes.matrices import coincide_con_noticia
+        # Solo el titular: los sumarios del Registro Oficial nombran de todo y empataban con cualquier PL
+        # y en minusculas: con titulos en MAYUSCULAS cada palabra contaba como sigla compartida
+        hay = [f for f in filas if coincide_con_noticia(titulo.lower(), f[1].lower(), noticia_titulo=f[1].lower())]
+    hay.sort(key=lambda f: f[4] or "", reverse=True)
+    return [{"id": i, "titulo": t, "url": u, "fecha": (fe or "")[:10], "fuente": fu} for i, t, _r, u, fe, fu in hay[:15]]
+
+
+def ficha_pl(pais: str, pl: str) -> dict:
+    """Todo lo del proyecto en un lugar: tramite, sesiones, votaciones y noticias."""
+    pe = connect_ro("proyectos.db")
+    if pais == "PE":
+        fila = pe.execute("SELECT per_par_id, cod_tipo_parl, pley_num FROM proyectos WHERE proyecto_ley = ?", (pl,)).fetchone()
+        if not fila:
+            return {"error": "No está en la base"}
+        per, tipo, num = fila
+        tramite = [{"fecha": (f or "")[:10], "estado": e, "detalle": ", ".join(x for x in (c, d) if x)}
+                   for f, e, c, d in pe.execute("""SELECT fecha, estado, comisiones, detalle FROM seguimientos
+                       WHERE per_par_id = ? AND cod_tipo_parl = ? AND pley_num = ? ORDER BY fecha DESC""", (per, tipo, num))]
+        sesiones = [{"fecha": f, "organo": o, "que": (c or "")[:220]} for f, o, c in pe.execute(
+            """SELECT DISTINCT s.fecha, s.nombre_comision, r.contexto FROM sesion_pl_referenciado r
+               JOIN sesiones s ON s.id_sesion = r.id_sesion WHERE r.pley_num = ? AND r.per_par_id = ?
+               ORDER BY s.fecha DESC LIMIT 20""", (num, per))]
+        votos = []
+        for vid, f, asunto, si, no, ab in pe.execute(
+                """SELECT id, fecha, asunto, si, no, abst FROM votacion_pleno
+                   WHERE pley_num = ? AND pl_cod_tipo_parl = ? ORDER BY fecha DESC""", (num, tipo)):
+            bancadas: dict[str, dict] = {}
+            for b, v, k in pe.execute("SELECT bancada, voto, count(*) FROM voto_pleno_nominal WHERE votacion_id = ? GROUP BY 1, 2", (vid,)):
+                bancadas.setdefault(b or "Sin bancada", {})[v] = k
+            votos.append({"fecha": f, "asunto": (asunto or "")[:260], "si": si, "no": no, "abst": ab, "bancadas": bancadas})
+        noticias = _noticias_de_pl(pe, "PE", num, "")
+    else:
+        ec = connect_ro("proyectos_ec.db")
+        fila = ec.execute("SELECT titulo FROM proyectos WHERE n_tramite = ?", (pl,)).fetchone()
+        if not fila:
+            return {"error": "No está en la base"}
+        tramite = [{"fecha": (f or "")[:10], "estado": d, "detalle": f"antes: {a}" if a else ""}
+                   for f, a, d in ec.execute("""SELECT changed_at, valor_antes, valor_despues FROM historial_cambios
+                       WHERE n_tramite = ? AND campo = 'estado' ORDER BY changed_at DESC""", (pl,))]
+        sesiones = [{"fecha": (f or "")[:10], "organo": o, "que": (s or "")[:220]} for f, o, s in ec.execute(
+            """SELECT DISTINCT s.fecha, s.nombre_comision, s.summary FROM sesion_ec_pl_referenciado r
+               JOIN sesiones_ec s ON s.uid = r.uid WHERE r.n_tramite = ? ORDER BY s.fecha DESC LIMIT 20""", (pl,))]
+        votos = []
+        noticias = _noticias_de_pl(pe, "EC", None, fila[0])
+    from alerts import pls_seguidos
+    return {"tramite": tramite, "sesiones": sesiones, "votos": votos, "noticias": noticias,
+            "seguido": pls_seguidos.clave(pais, pl) in pls_seguidos.lista()}
+
+
 def _texto_video(video_id: str) -> str:
     conn = connect_ro("proyectos.db")
     for tabla in ("sesiones_transcripciones", "tv_vistos"):
@@ -471,7 +569,7 @@ def _traer_en_vivo() -> None:
 
 
 SECCIONES = {
-    "panel": panel,
+    "panel": panel, "transcripciones": transcripciones,  # el orden es el de armado al arrancar
     "proyectos_pe": proyectos_pe, "proyectos_ec": proyectos_ec,
     "agenda_pe": agenda_peru, "agenda_ec": agenda_ecuador,
     "noticias_pe": lambda: noticias("PE"), "noticias_ec": lambda: noticias("EC"),
@@ -521,7 +619,8 @@ def atender(a: dict, usuario: str | None) -> dict | list | str | None:
         hecha = almacen().get(a["nombre"])
         if hecha is None:
             return {"espera": True}
-        return {**hecha, "fuera": sorted(list_descartadas())}
+        from alerts import bandeja, pls_seguidos
+        return {**hecha, "fuera": sorted(list_descartadas()), "bandeja": bandeja.estados(), "seguidos": sorted(pls_seguidos.lista())}
     if tipo == "texto":
         return _texto_video(a["video_id"])
     if tipo == "sesion_pe":
@@ -542,8 +641,19 @@ def atender(a: dict, usuario: str | None) -> dict | list | str | None:
         from congreso_live.qa_chat import preguntar
         return preguntar(a["pregunta"], _texto_video(a["video_id"]), titulo=a["titulo"])
     if tipo == "descartar":
-        registrar_descarte(int(a["id"]), usuario)
+        registrar_descarte(int(a["id"]), usuario, a.get("titulo"), a.get("clientes"))
         pagina.load_noticias.clear()
+    elif tipo == "ficha_pl":
+        return ficha_pl(a["pais"], str(a["pl"]))
+    elif tipo == "seguir_pl":
+        from alerts import pls_seguidos
+        if a.get("si"):
+            pls_seguidos.seguir(a["pais"], str(a["pl"]), a["titulo"], a.get("estado"), a.get("url"), usuario)
+        else:
+            pls_seguidos.dejar(a["pais"], str(a["pl"]))
+    elif tipo == "bandeja":
+        from alerts import bandeja
+        bandeja.marcar(a["clave"], a.get("estado"), usuario, a.get("titulo"))
     elif tipo == "deshacer":
         deshacer_descarte(int(a["id"]))
         pagina.load_noticias.clear()

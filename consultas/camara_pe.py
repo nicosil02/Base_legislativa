@@ -108,11 +108,28 @@ def _camara_de_descripcion(video_id: str) -> str | None:
     - o la descripcion tampoco la menciona)."""
     import os
 
+    # st.cache_data se pierde al reiniciar y cada consulta a YouTube tarda ~2 s
+    # (24 s para armar Transcripciones; en la nube YouTube bloquea y es peor).
+    # Lo ya resuelto queda en un JSON del repo: sirve en Streamlit Cloud y en cualquier PC.
+    from core import store
+    hechas = store.cargar(_DESCRIPCIONES, {}, ttl=3600)
+    if video_id in hechas:
+        return hechas[video_id] or None
+    camara = _descripcion_en_youtube(video_id, os.environ.get("YT_DLP_PROXY"))
+    if camara is not False:  # False = sin red o bloqueo: se reintenta en otra corrida
+        store.actualizar(_DESCRIPCIONES, lambda d: {**d, video_id: camara or ""},
+                         f"camara: descripcion de {video_id}", {})
+    return camara or None
+
+
+_DESCRIPCIONES = "data/camara_descripcion.json"
+
+
+def _descripcion_en_youtube(video_id: str, proxy: str | None) -> str | None | bool:
     import yt_dlp
 
-    opts = {"quiet": True, "no_warnings": True, "skip_download": True,
+    opts ={"quiet": True, "no_warnings": True, "skip_download": True,
             "socket_timeout": 15}
-    proxy = os.environ.get("YT_DLP_PROXY")
     if proxy:
         opts["proxy"] = proxy
     try:
@@ -120,7 +137,7 @@ def _camara_de_descripcion(video_id: str) -> str | None:
             info = ydl.extract_info(
                 f"https://www.youtube.com/watch?v={video_id}", download=False)
     except Exception:
-        return None
+        return False
     from congreso_live.detector import _norm
     t = _norm(info.get("description"))
     en_senado, en_diputados = "senado" in t, "diputados" in t

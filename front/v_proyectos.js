@@ -5,14 +5,14 @@ function vistaProyectos(pais) {
   const pe = pais === "PE";
   let d, raiz, activa = null;
   const s = () => App.f(nom, { pl: "", cli: "", tema: "", estado: "", camara: "", comision: "", bancada: "", proponente: "", autor: "", tipo_prop: "",
-                               q: "", ini: "", fin: "", unif: false, orden: ["presentado", -1] });
+                               q: "", ini: "", fin: "", unif: false, seg: false, orden: ["presentado", -1] });
   const camaraTipos = { Congreso: ["Ordinaria", "Bicameral"], Diputados: ["Diputados"], Senado: ["Senado"] };
 
   function filtrar() {
     const f = s();
     const q = (f.q ?? "").toLowerCase();
     const pl = (f.pl ?? "").toLowerCase();
-    return d.filas.filter((p) => (!pl || String(p.pl).toLowerCase().includes(pl)) && (!f.tema || p.tema === f.tema) && (!f.estado || p.estado === f.estado)
+    return d.filas.filter((p) => (!f.seg || App.seguidos.has(`${pais}:${p.pl}`)) && (!pl || String(p.pl).toLowerCase().includes(pl)) && (!f.tema || p.tema === f.tema) && (!f.estado || p.estado === f.estado)
       && (!f.cli || f.cli in p.clientes) && (!q || (p.titulo ?? "").toLowerCase().includes(q))
       && (!f.ini || (p.presentado ?? "") >= f.ini) && (!f.fin || (p.presentado ?? "") <= f.fin)
       && (!f.comision || (pe ? p.comisiones.includes(f.comision) : p.comision === f.comision))
@@ -28,6 +28,8 @@ function vistaProyectos(pais) {
     return [...unicos(d.comisiones.filter((c) => !tipos || tipos.includes(c.tipo)).map((c) => c.nombre)), d.especiales];
   }
 
+  const estrella = (p) => (App.seguidos.has(`${pais}:${p.pl}`) ? `<span class="estrella" title="Lo sigues">${icono("estrella", 13)}</span>` : "");
+
   function pintarTabla() {
     const f = s();
     App.recordar(nom, ["q", "pl"]);
@@ -37,10 +39,10 @@ function vistaProyectos(pais) {
     cuenta.textContent = `${plural(filas.length, "proyecto")} de ${miles(d.filas.length)}${mat ? `, ${mat} en la matriz de seguimiento` : ""}`;
     const nivel = f.cli ? [{ k: "rel", t: "Relevancia", ord: (p) => -(p.clientes[f.cli]?.[1] ?? -1), f: (p) => esc(p.clientes[f.cli]?.[0] ?? "") }] : [];
     const cols = pe
-      ? [{ k: "pl", t: "PL", f: (p) => enlace(p.url, String(p.pl).split("-")[0].replace(/^0+/, "") || p.pl) }, ...nivel, { k: "camara", t: "Cámara" },
+      ? [{ k: "pl", t: "PL", f: (p) => estrella(p) + enlace(p.url, String(p.pl).split("-")[0].replace(/^0+/, "") || p.pl) }, ...nivel, { k: "camara", t: "Cámara" },
         { k: "titulo", t: "Título", f: (p) => `<span class="corta">${esc(p.titulo)}</span>` }, { k: "presentado", t: "Presentado", f: (p) => esc(fechaCorta(p.presentado)) },
         { k: "estado", t: "Estado" }, { k: "autor", t: "Autor" }, { k: "bancada", t: "Bancada" }, { k: "comision", t: "Comisión" }, { k: "tema", t: "Tema" }]
-      : [{ k: "pl", t: "N. Trámite", f: (p) => enlace(p.url, p.pl) || esc(p.pl) }, ...nivel,
+      : [{ k: "pl", t: "N. Trámite", f: (p) => estrella(p) + (enlace(p.url, p.pl) || esc(p.pl)) }, ...nivel,
         { k: "titulo", t: "Título", f: (p) => `<span class="corta">${esc(p.titulo)}</span>` }, { k: "presentado", t: "Presentado", f: (p) => esc(fechaCorta(p.presentado)) },
         { k: "estado", t: "Estado" }, { k: "tipo_prop", t: "Tipo" }, { k: "proponente", t: "Proponente" }, { k: "comision", t: "Comisión" }, { k: "tema", t: "Tema" },
         { k: "unificado", t: "Unificado con" }];
@@ -58,15 +60,50 @@ function vistaProyectos(pais) {
     const it = item(titulo, p.url, `Estado: ${p.estado}`, pais, null, null, "pl");
     const elegido = s().cli || Object.keys(p.clientes)[0] || "";
     const dato = (t, v) => (v ? `<div class="dato"><span>${esc(t)}</span>${esc(v)}</div>` : "");
-    const det = App.detalle(`<div class="marcas"><span>${esc(p.estado)}</span><span>${esc(p.tema)}</span>${Object.keys(p.clientes).map((c) => `<span class="cli">${esc(App.nombre(c))}</span>`).join("")}</div>
-      <h2>${esc(p.titulo)}</h2>
+    const k = `${pais}:${p.pl}`;
+    const det = App.detalle(`<div class="marcas"><span class="tipo">${esc(p.estado)}</span><span>${esc(p.tema)}</span>${Object.keys(p.clientes).map((c) => `<span class="cli">${esc(App.nombre(c))}</span>`).join("")}</div>
+      <h2>${esc(oracion(p.titulo))}</h2>
+      <button type="button" class="seguir" aria-pressed="${App.seguidos.has(k)}">${icono("estrella", 15)}<span></span></button>
       ${dato(pe ? "Proyecto" : "N. Trámite", p.pl)}${dato("Presentado", fechaCorta(p.presentado))}${dato("Último cambio", fechaCorta(p.cambio))}${dato("Cámara", p.camara)}${dato("Comisión", p.comision)}
       ${dato("Bancada", p.bancada)}${dato(pe ? "Autores" : "Proponentes", pe ? p.autores : p.proponentes)}
       <div class="acciones">${enlace(p.url, pe ? "Abrir en el Congreso" : "Abrir el proyecto", "btn pri")}${pe ? enlace(p.pdf, "Ver PDF", "btn") : ""}${bloqueArmar([it], elegido, null, d.clientes)}</div>
-      <div class="d-extra"></div>`);
+      <div class="d-ficha">${espera(3)}</div><div class="d-extra"></div>`);
     conectarArmar(det, [it]);
+    const b = det.querySelector(".seguir");
+    const rotulo = () => { b.querySelector("span").textContent = App.seguidos.has(k) ? "Siguiendo: te aviso por Telegram si cambia" : "Seguir este proyecto"; };
+    rotulo();
+    b.onclick = () => {
+      const si = !App.seguidos.has(k);
+      App.seguir(pais, p, si).then(() => { rotulo(); b.setAttribute("aria-pressed", App.seguidos.has(k)); pintarTabla(); });
+      b.setAttribute("aria-pressed", si); rotulo();
+    };
     App.alCerrar = () => { activa = null; };
+    ficha(det.querySelector(".d-ficha"), p);
     if (!pe) documentos(det.querySelector(".d-extra"), p);
+  }
+
+  // Tramite, votaciones por bancada, sesiones y noticias del proyecto
+  async function ficha(caja, p) {
+    let r;
+    try { r = await App.pedir("ficha_pl", { pais, pl: p.pl }); } catch (e) { caja.innerHTML = `<p class="nota">No se pudo armar la ficha: ${esc(e.message)}</p>`; return; }
+    if (!caja.isConnected) return;
+    if (r.error) { caja.innerHTML = `<p class="nota">${esc(r.error)}</p>`; return; }
+    const bloque = (t, n, html, vacio) => `<section class="f-bloque"><h3 class="sub-t">${esc(t)}${n ? ` <small>${n}</small>` : ""}</h3>${n ? html : `<p class="nota">${esc(vacio)}</p>`}</section>`;
+    const voto = (v) => {
+      const tot = Math.max((v.si ?? 0) + (v.no ?? 0) + (v.abst ?? 0), 1);
+      const banc = Object.entries(v.bancadas).sort((a, b) => Object.values(b[1]).reduce((x, y) => x + y, 0) - Object.values(a[1]).reduce((x, y) => x + y, 0));
+      return `<div class="voto"><div class="v-cab"><b>${esc(fechaCorta(v.fecha))}</b><span class="v-si">${v.si} a favor</span><span class="v-no">${v.no} en contra</span><span>${v.abst} abst.</span></div>
+        <div class="v-barra"><i class="si" style="flex:${v.si / tot}"></i><i class="no" style="flex:${v.no / tot}"></i><i class="ab" style="flex:${v.abst / tot}"></i></div>
+        <p class="nota corta">${esc(oracion(v.asunto))}</p>
+        ${banc.length ? `<details><summary>Cómo votó cada bancada</summary><table class="v-banc"><tr class="nota"><td>Bancada</td><td>A favor</td><td>En contra</td><td></td></tr>${banc.map(([b, x]) => `<tr><td>${esc(b)}</td><td class="v-si">${x.SI ?? 0}</td><td class="v-no">${x.NO ?? 0}</td><td>${(x.ABST ?? 0) + (x.AUS ?? 0) ? `${(x.ABST ?? 0)} abst., ${(x.AUS ?? 0)} aus.` : ""}</td></tr>`).join("")}</table></details>` : ""}</div>`;
+    };
+    caja.innerHTML = bloque("Trámite", r.tramite.length, `<ol class="linea-t">${r.tramite.map((t) => `<li><b>${esc(fechaCorta(t.fecha))}</b>${esc(oracion(t.estado))}${t.detalle ? `<small class="corta">${esc(t.detalle)}</small>` : ""}</li>`).join("")}</ol>`, "Sin movimientos registrados.")
+      + (pe ? bloque("Votaciones en el Pleno", r.votos.length, r.votos.map(voto).join(""), "Todavía no se votó en el Pleno.") : "")
+      + bloque("En agenda de sesiones", r.sesiones.length, r.sesiones.map((x) => `<div class="ag">${esc(x.organo || "Sesión")}<small>${esc(fechaCorta(x.fecha))}</small>${x.que ? `<p class="corta">${esc(x.que)}</p>` : ""}</div>`).join(""), "No figura en agendas de sesiones.")
+      + bloque(pe ? "Noticias que lo nombran" : "Noticias sobre el mismo tema", r.noticias.length,
+        r.noticias.map((n) => `<div class="ag">${enlace(n.url, n.titulo) || esc(n.titulo)}<small>${esc(n.fuente)}, ${esc(fechaCorta(n.fecha))}</small></div>`).join(""),
+        pe ? "Ninguna noticia de los últimos 6 meses lo nombra por su número." : "Sin noticias parecidas en los últimos 6 meses.");
+    entrar(caja.querySelectorAll(".f-bloque"));
   }
 
   async function documentos(caja, p) {
@@ -135,7 +172,7 @@ function vistaProyectos(pais) {
       <div class="barra"><div class="f-cli"></div></div>
       <div class="barra filtros">${campoFiltro({ k: "pl", t: pe ? "N.º de PL" : "N. Trámite", tipo: "texto" }, f)}
         ${opc("Tema", "tema", unicos(d.filas.map((p) => p.tema)), "Todo tema")}${opc("Estado", "estado", unicos(d.filas.map((p) => p.estado)), "Todo estado")}
-        ${campoFiltro({ k: "q", t: "Buscar en el título (tecla /)", tipo: "texto" }, f)}
+        ${campoFiltro({ k: "q", t: "Buscar en el título (tecla /)", tipo: "texto" }, f)}${campoFiltro({ k: "seg", t: "Solo los que sigo", tipo: "check" }, f)}
         <details class="mas-f"><summary>Más filtros</summary><div class="barra">${pe ? masPe() : masEc()}
           ${campoFiltro({ k: "ini", t: "Desde", tipo: "fecha" }, f)}${campoFiltro({ k: "fin", t: "Hasta", tipo: "fecha" }, f)}</div></details></div>
       <p class="r-cuenta nota"></p><div class="t-pl"></div>`;
