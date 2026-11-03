@@ -24,7 +24,7 @@ import streamlit as st
 
 from alerts import historial
 from alerts import que_paso_hoy as q
-from alerts.chat import contexto_relacionado, mensaje_inicial, nueva_conversacion
+from alerts.chat import contexto_relacionado, mensaje_inicial, responder
 from cerebro.ui import afinidad_claves, afinidad_noticias, afinidad_tema_noticias, conexion, historias_noticias, le_interesa
 from consultas import agenda_ec, agenda_pe, camara_pe, ecuador, hora_a_minutos, matriz_pls, peru
 from core import legislativo, store
@@ -526,10 +526,7 @@ def _vivos() -> list[dict]:
 
 # ------------------------------------------------------------------ Alertas, Buscar, Resumen
 def _responder(cliente: str, historia: list, prompt: str) -> str:
-    previo = [{"role": "user" if rol == "user" else "model", "parts": [{"text": t}]} for rol, t in historia]
-    # Se retiene _client hasta despues del send: el Chat no lo referencia.
-    _client, chat = nueva_conversacion(cliente, historial=previo)
-    return (chat.send_message(prompt).text or "").strip()
+    return responder(cliente, historia, prompt)
 
 
 def _resumen() -> dict:
