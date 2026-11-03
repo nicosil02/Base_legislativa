@@ -76,16 +76,20 @@ def _llamar(modelo: str, prompt: str, system: str | None, json: bool, schema) ->
 def generar(prompt: str, system: str | None = None, modelo: str = FLASH,
             json: bool = False, schema=None, respaldo: bool = True) -> str:
     """Texto de la respuesta (vacio si Gemini no devolvio nada).
-
-    429 por minuto / 503: reintenta el mismo modelo con espera corta. Cupo
-    diario agotado o reintentos gastados: pasa al siguiente de la cadena
-    (FLASH -> LITE -> GEMMA). Quien pide LITE nunca sube a FLASH.
     respaldo=False: solo el modelo pedido (etiquetas que dicen que juez las puso)."""
+    return con_respaldo(lambda m: _llamar(m, prompt, system, json, schema), modelo, respaldo)
+
+
+def con_respaldo(llamada, modelo: str = FLASH, respaldo: bool = True):
+    """llamada(modelo) con reintentos. 429 por minuto / 503: reintenta el mismo
+    modelo con espera corta. Cupo diario agotado o reintentos gastados: pasa
+    al siguiente de la cadena (FLASH -> LITE -> GEMMA). Quien pide LITE nunca
+    sube a FLASH."""
     ultimo = None
     for m in (_cadena(modelo) if respaldo else [modelo]):
         for espera in ESPERAS + (None,):
             try:
-                return _llamar(m, prompt, system, json, schema)
+                return llamada(m)
             except Exception as e:
                 tipo = _tipo_error(e)
                 if tipo == "otro":
