@@ -82,6 +82,69 @@ def seguir_matrices() -> int:
     return len(agregados)
 
 
+# Ecuador: el portal de proyectos se actualiza dias despues; los boletines de la
+# Asamblea y la prensa cuentan antes el avance. Gemini dice a que PL seguido se
+# refiere cada nota nueva de tramite.
+VISTAS = "data/pls_seguidos_noticias.json"
+CRUCE = """Eres analista legislativo en Ecuador. Abajo van proyectos de ley que seguimos
+y noticias recientes. Busca las noticias que nombran alguno de esos proyectos (por su
+titulo o uno casi igual) y cuentan un hecho de su tramite: se presento, el CAL lo
+califico, se unifico con otro, la comision avoco, recibio comparecencias, aprobo
+informe, se debatio en el Pleno, se aprobo, veto o archivo. Si una noticia nombra
+varios proyectos de la lista, devuelve una fila por cada uno. Cada fila lleva el numero
+de la noticia, el codigo del proyecto tal como aparece en la lista y en una oracion que
+paso. Si la noticia habla de otro proyecto o de un tema general, no va.
+
+PROYECTOS:
+{pls}
+
+NOTICIAS:
+{noticias}"""
+ESQUEMA = {"type": "array", "items": {"type": "object", "properties": {
+    "noticia": {"type": "integer"}, "pl": {"type": "string"}, "paso": {"type": "string"}},
+    "required": ["noticia", "pl", "paso"]}}
+
+
+def cruzar(pls: dict[str, dict], noticias: list[dict], generar=None) -> list[dict]:
+    """[{pl, paso, noticia}] de las noticias que Gemini liga a un PL seguido."""
+    import json
+    if not pls or not noticias:
+        return []
+    if generar is None:
+        from core.llm import LITE, generar as g
+        generar = lambda p: g(p, modelo=LITE, json=True, schema=ESQUEMA)
+    txt_pls = "\n".join(f"{s['pl']}: {s['titulo'][:220]}" for s in pls.values())
+    txt_not = "\n".join(f"[{i}] {n['titulo']}. {(n.get('resumen') or '')[:400]}" for i, n in enumerate(noticias, 1))
+    por_pl = {s["pl"]: s for s in pls.values()}
+    out = []
+    for r in json.loads(generar(CRUCE.format(pls=txt_pls, noticias=txt_not)) or "[]"):
+        if r.get("pl") in por_pl and 1 <= r.get("noticia", 0) <= len(noticias):
+            out.append({"pl": por_pl[r["pl"]], "paso": r["paso"], "noticia": noticias[r["noticia"] - 1]})
+    return out
+
+
+def revisar_noticias_ec(db: str = "proyectos.db", dias: int = 3) -> int:
+    from congreso_live.notify import acortar_url, enviar_whatsapp
+    from noticias.avances_ec import noticias_tramite_recientes
+    seguidos = {k: v for k, v in store.leer(PATH, {})[0].items() if v["pais"] == "EC"}
+    vistas = set(store.leer(VISTAS, [])[0])
+    conn = sqlite3.connect(f"file:{db}?mode=ro", uri=True)
+    nuevas = [n for n in noticias_tramite_recientes(conn, dias=dias) if n["url"] not in vistas]
+    if not nuevas or not seguidos:
+        print(f"[pls_seguidos] noticias EC: {len(nuevas)} nuevas, nada que cruzar")
+        return 0
+    hay = cruzar(seguidos, nuevas)  # si Gemini falla, levanta y no se marcan como vistas
+    for c in hay:
+        p, n = c["pl"], c["noticia"]
+        enviar_whatsapp(f"📌 Proyecto que sigues (Ecuador): avance según noticia, antes que el portal\n"
+                        f"{p['pl']}: {p['titulo'][:120]}\n{c['paso']}\n{acortar_url(n['url'])}")
+    urls = [n["url"] for n in nuevas]
+    store.actualizar(VISTAS, lambda d: (d + [u for u in urls if u not in d])[-500:],
+                     f"PLs seguidos: {len(urls)} noticias EC revisadas", [])
+    print(f"[pls_seguidos] noticias EC: {len(nuevas)} revisadas, {len(hay)} avisos")
+    return len(hay)
+
+
 def mensaje(c: dict) -> str:
     pais = {"PE": "Perú", "EC": "Ecuador"}[c["pais"]]
     return (f"📌 Proyecto que sigues ({pais}) cambió de estado\n"
@@ -113,6 +176,9 @@ def _chequeo() -> None:
     c = cambios("PE", conn, seg)
     assert [x["clave"] for x in c] == ["PE:00709-2026-2031-CD"] and c[0]["ahora"] == "DICTAMEN", c
     assert "EN COMISIÓN → DICTAMEN" in mensaje(c[0])
+    falso = lambda p: '[{"noticia": 1, "pl": "9", "paso": "La comision aprobo el informe"}, {"noticia": 5, "pl": "9", "paso": "x"}, {"noticia": 1, "pl": "77", "paso": "x"}]'
+    r = cruzar({"EC:9": seg["EC:9"]}, [{"titulo": "Comision aprueba informe", "url": "u"}], falso)
+    assert len(r) == 1 and r[0]["pl"]["pl"] == "9" and r[0]["noticia"]["url"] == "u", r
     print("ok")
 
 
@@ -121,6 +187,8 @@ if __name__ == "__main__":
         _chequeo()
     elif sys.argv[1:] == ["matrices"]:
         seguir_matrices()
+    elif sys.argv[1:] == ["noticias_ec"]:
+        revisar_noticias_ec()
     elif sys.argv[1:2] and sys.argv[1] in _DB:
         revisar(sys.argv[1])
     else:

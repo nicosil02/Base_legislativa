@@ -17,7 +17,7 @@ import json
 import logging
 import re
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from email.utils import parsedate_to_datetime
 from urllib.parse import urljoin, urlparse
 
@@ -485,6 +485,42 @@ def _discover_rss(html_text: str, base_url: str,
 # Pipeline principal
 # ============================================================
 
+# Asamblea Nacional EC: el RSS solo trae la portada (~10 notas por semana); los
+# boletines de comisiones (informes, calificaciones del CAL, unificaciones)
+# salen en paginas de listado que el RSS no incluye.
+_RE_ASAMBLEA_ITEM = re.compile(
+    r'<h5><a href="(/es/noticia/[^"]+)"\s*>(.*?)</a></h5>\s*<small class="date">([^<]*)</small>(.*?)Leer m',
+    re.S)
+
+
+def parse_asamblea_ec(html_text: str, base_url: str) -> list[dict]:
+    out = []
+    for href, titulo, fecha, resto in _RE_ASAMBLEA_ITEM.findall(html_text):
+        m = re.search(r"(\d{1,2}) de ([a-zñ]+) del? (\d{4})(?:\s*-\s*(\d{1,2}):(\d{2}))?", fecha.lower())
+        fecha_pub = None
+        if m and _MESES.get(m.group(2)):
+            # Hora de Ecuador (UTC-5) a UTC
+            h = datetime(int(m.group(3)), _MESES[m.group(2)], int(m.group(1)),
+                         int(m.group(4) or 12), int(m.group(5) or 0), tzinfo=timezone.utc) + timedelta(hours=5)
+            fecha_pub = h.strftime("%Y-%m-%dT%H:%M:%SZ")
+        resumen = _strip_html(re.sub(r'<small class="user">.*?</small>', "", resto, flags=re.S))
+        out.append({"url": urljoin(base_url, href), "titulo": _strip_html(titulo)[:500],
+                    "resumen": resumen[:1000] or None, "fecha_pub": fecha_pub, "autor": None, "tags": None})
+    return out
+
+
+def _paginas_asamblea(fuente: dict, s: requests.Session, timeout: int) -> list[dict]:
+    out = []
+    for url in fuente.get("paginas") or ():
+        try:
+            r = _get(s, url, timeout)
+            r.raise_for_status()
+            out += parse_asamblea_ec(r.text, url)
+        except Exception as e:
+            log.warning("pagina fail %s (%s): %s", fuente["nombre"], url, e)
+    return out
+
+
 def fetch_fuente(fuente: dict, session: requests.Session | None = None,
                   timeout: int = 20) -> list[dict]:
     """Fetch + parse de una fuente. Devuelve list de items o [] si falla."""
@@ -504,7 +540,7 @@ def fetch_fuente(fuente: dict, session: requests.Session | None = None,
         try:
             r = _get(s, url, timeout)
             r.raise_for_status()
-            items = parse_rss_feed(r.text)
+            items = parse_rss_feed(r.text) + _paginas_asamblea(fuente, s, timeout)
             if items:
                 return items
         except Exception as e:
