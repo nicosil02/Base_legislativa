@@ -384,6 +384,9 @@ FUENTES_EC: list[dict] = [
      "url": "https://www.asambleanacional.gob.ec/",
      # El feed viejo (/es/noticias/feed) da 404; el real es /es/rss.xml.
      "rss_url": "https://www.asambleanacional.gob.ec/es/rss.xml",
+     # El RSS es solo la portada; los boletines de comisiones van aparte.
+     "paginas": ["https://www.asambleanacional.gob.ec/es/noticias/boletines-de-prensa",
+                 "https://www.asambleanacional.gob.ec/es/noticias/presentacion-proyectos-de-ley"],
      "tipo": "rss"},
     {"categoria": "Institucion", "pais": "EC",
      "nombre": "Agenda de la Asamblea Nacional",

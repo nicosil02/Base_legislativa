@@ -152,3 +152,15 @@ def test_wpmedia_limpia_titulos():
                   "title": {"rendered": "23092026_062842_Borrador-Resolucion-Portabilidad"}}])
     it = fetch_wpmedia({"nombre": "SPDP", "url": "https://spdp.gob.ec"}, s, 5)
     assert it[0]["titulo"] == "SPDP: Borrador Resolucion Portabilidad" and "normas" in it[0]["tags"]
+
+
+def test_parse_asamblea_ec_lee_boletines_con_fecha_y_resumen():
+    from noticias.scraper import parse_asamblea_ec
+    html = ('<h5><a href="/es/noticia/120576-seguridad" >Seguridad Integral aprueba informe</a></h5>\n'
+            '<small class="date">Sábado, 31 de octubre del 2026 - 13:06</small>\n'
+            '<small class="user">Elaborado por: Sala de prensa</small>\n<p><p>La Comisión aprobó el informe.</p></p>'
+            '<p><a href="/es/noticia/120576-seguridad" class="button small">Leer más</a>')
+    [n] = parse_asamblea_ec(html, "https://www.asambleanacional.gob.ec/es/noticias/boletines-de-prensa")
+    assert n["url"] == "https://www.asambleanacional.gob.ec/es/noticia/120576-seguridad"
+    assert n["fecha_pub"] == "2026-10-31T18:06:00Z"
+    assert n["resumen"] == "La Comisión aprobó el informe."
