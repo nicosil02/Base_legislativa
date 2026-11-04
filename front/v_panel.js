@@ -74,7 +74,7 @@ VISTAS.panel = (() => {
       App.marcar(clave(a), null);
       return dibujar(false);
     }
-    App.marcar(clave(a), que, a.titulo);
+    App.marcar(clave(a), que, a);
     if (que === "alertar") {
       return App.armar(itemsDe(a), f.cli || clientes[0] || "", a.porque?.[f.cli || clientes[0]] ?? null);
     }
@@ -171,7 +171,7 @@ VISTAS.panel = (() => {
     App.alCerrar = () => { sel = null; marcar(); };
     marcar();
     if (a.tipo === "sesion") return;
-    det.querySelector(".d-armar").addEventListener("click", () => App.marcar(clave(a), "alertar", a.titulo));
+    det.querySelector(".d-armar").addEventListener("click", () => App.marcar(clave(a), "alertar", a));
     det.querySelector(".d-despues").onclick = () => accion(a, "despues");
     det.querySelector(".d-interes").onclick = () => accion(a, "interesante");
     det.querySelector(".d-descartar").onclick = () => quitar(a);
@@ -182,7 +182,7 @@ VISTAS.panel = (() => {
   function quitar(a) {
     const f = s();
     const clientes = Object.keys(a.porque ?? {}).filter((c) => !f.cli || c === f.cli);
-    App.marcar(clave(a), "descartar", a.titulo);
+    App.marcar(clave(a), "descartar", a);
     salir(a, () => {
       if (a.id != null) return descartar(a.id, a.titulo, () => dibujar(false), { titulo: a.titulo, clientes }, () => App.marcar(clave(a), null));
       App.cerrarDetalle();

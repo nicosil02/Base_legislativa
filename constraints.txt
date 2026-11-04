@@ -84,6 +84,7 @@ numpy==2.3.5
 onnxruntime==1.31.0
 opencv-contrib-python==4.10.0.84
 openpyxl==3.1.5
+python-docx==1.2.0
 opentelemetry-api==1.45.1
 opt-einsum==3.3.0
 packaging==26.3
