@@ -309,5 +309,22 @@
       },
       "tipo": "noticia"
     }
+  },
+  "n2367679": {
+    "estado": "alertar",
+    "fecha": "2026-11-04T17:42:44+00:00",
+    "por": "nicolas.silva@valiconsultores.com",
+    "titulo": "Perú | MTC fortalece la seguridad digital del sector Transportes y Comunicaciones con la conformación del CSIRT Sectorial",
+    "item": {
+      "titulo": "Perú | MTC fortalece la seguridad digital del sector Transportes y Comunicaciones con la conformación del CSIRT Sectorial",
+      "url": "https://dplnews.com/peru-mtc-fortalece-la-seguridad-digital-del-sector-transportes-y-comunicaciones-con-la-conformacion-del-csirt-sectorial/",
+      "pais": "EC",
+      "resumen": null,
+      "porque": {
+        "incode": "Creación del CSIRT sectorial en el MTC vinculado a ciberresiliencia y seguridad digital.",
+        "google": "El MTC conforma el CSIRT Sectorial en ciberseguridad, tema clave de ciberseguridad e infraestructura."
+      },
+      "tipo": "noticia"
+    }
   }
 }
