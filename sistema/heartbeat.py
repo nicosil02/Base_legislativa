@@ -37,25 +37,6 @@ def record(db_path: str, source: str, status: str = "ok") -> None:
         conn.close()
 
 
-def get_all(db_path: str) -> dict[str, tuple[str, str]]:
-    """Devuelve {source: (last_run, last_status)} de todos los heartbeats
-    en la DB. Devuelve {} si la tabla no existe todavia."""
-    try:
-        conn = sqlite3.connect(f"file:{db_path}?mode=ro&immutable=1", uri=True)
-    except sqlite3.OperationalError:
-        return {}
-    try:
-        try:
-            rows = conn.execute(
-                "SELECT source, last_run, last_status FROM system_heartbeats"
-            ).fetchall()
-        except sqlite3.OperationalError:
-            return {}
-        return {r[0]: (r[1], r[2]) for r in rows}
-    finally:
-        conn.close()
-
-
 def main(argv: list[str] | None = None) -> int:
     p = argparse.ArgumentParser(prog="sistema.heartbeat",
         description="Registra un heartbeat de workflow")

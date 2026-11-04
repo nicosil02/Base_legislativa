@@ -117,7 +117,7 @@ def redactar(slug: str, items: list[dict], generar=None, formato: str = "trafico
     for i, it in enumerate(items):
         pagina = leer_enlace(it["url"])[:5000] if it.get("url") else ""
         bloques.append(f"[{i}] {it['titulo']}\nResumen: {it.get('resumen') or '-'}\nTexto de la pagina: {pagina or '-'}")
-    prompt = PROMPT.format(cliente=config.todos().get(slug, {}).get("nombre", slug), notas=_notas(slug),
+    prompt = (PROMPT_TTW if formato == "ttw" else PROMPT).format(cliente=config.todos().get(slug, {}).get("nombre", slug), notas=_notas(slug),
                            estilo=ESTILO["vinetas" if slug in VINETAS else "parrafo"], items="\n\n".join(bloques))
     try:
         hechos = {r["n"]: r for r in json.loads(generar(prompt) or "[]") if isinstance(r, dict)}
@@ -174,6 +174,9 @@ if __name__ == "__main__":  # chequeo sin Gemini ni GitHub
     ch.leer_enlace = lambda u: "pagina"
     r = redactar("syngenta", [{"titulo": "x", "url": "http://a", "pais": "EC"}, {"titulo": "y", "resumen": "r", "pais": "PE"}], falso)
     assert r[0]["titulo"] == "T0" and r[0]["texto"] == ["a", "b"] and r[1]["texto"] == ["r"], r
+    vistos = []
+    redactar("syngenta", [{"titulo": "x"}], lambda p: vistos.append(p) or "[]", formato="ttw")
+    assert vistos[0].startswith("You write"), vistos  # el Topics to Watch sale en ingles
     textos = [p.text for p in Document(io.BytesIO(word("bayer", r))).paragraphs]
     assert "PERÚ – ALERTAS DE INTERÉS" in textos and "• a" in textos and "http://a" in textos, textos
     textos = [p.text for p in Document(io.BytesIO(word("syngenta", r, "ttw"))).paragraphs]

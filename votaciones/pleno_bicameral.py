@@ -190,7 +190,6 @@ def parse_pagina(words, tol: float = 3) -> dict | None:
             "asunto": asunto, "votos": votos, "totales": totales, "cuadra": cuadra}
 
 
-_VOTOS = ("si", "no", "abst", "sin_resp")
 # Columnas del cuadro por bancada segun la hoja: {clave: prefijo de cabecera}.
 # "lic" junta las cuatro licencias (el cuadro de asistencia no las separa).
 _COLUMNAS = {"votacion": {"si": "SI", "no": "NO", "abst": "ABST", "sin_resp": "SIN"},
