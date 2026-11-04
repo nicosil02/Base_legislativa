@@ -25,7 +25,8 @@ VISTAS.personas = (() => {
   const MESES = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
   const fichas = new Map();  // ya pedidas: volver a abrir a alguien es instantaneo
   const temas = new Map();   // busquedas de tema ya hechas
-  let gente = null, porClave = new Map(), tema = null, cierreFuera = false;
+  let gente = null, porClave = new Map(), tema = null;
+  const cierreFuera = new WeakSet();
 
   const plano = (s) => (s ?? "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
   const clave = (p) => p.id;
@@ -395,11 +396,14 @@ VISTAS.personas = (() => {
       raiz.querySelector(".p-grupo").onclick = abrirDe;
       raiz.querySelector(".p-hemi").onkeydown = (e) => { if (e.key === "Enter") abrirDe(e); };
       raiz.onkeydown = (e) => { if (e.key === "Escape") cerrar(raiz); };
-      if (!cierreFuera) {  // clic fuera de la ficha la cierra (un solo oyente aunque se vuelva a la vista)
-        cierreFuera = true;
-        document.addEventListener("pointerdown", (e) => {
-          const raiz = document.querySelector(".personas");
-          if (raiz && f().id && !e.target.closest(".cajon-p, [data-p], .p-busca")) cerrar(raiz);
+      // clic fuera de la ficha la cierra. En la app la vista vive en un shadow DOM: se escucha
+      // en su raiz (document no ve dentro y retarget el clic al host). Un oyente por raiz.
+      const nodo = raiz.getRootNode();
+      if (!cierreFuera.has(nodo)) {
+        cierreFuera.add(nodo);
+        nodo.addEventListener("pointerdown", (e) => {
+          const r = nodo.querySelector(".personas");
+          if (r && f().id && !e.target.closest(".cajon-p, [data-p], .p-busca")) cerrar(r);
         });
       }
       escena(raiz);
