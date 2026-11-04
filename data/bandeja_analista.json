@@ -196,5 +196,21 @@
       },
       "tipo": "noticia"
     }
+  },
+  "n2366406": {
+    "estado": "descartar",
+    "fecha": "2026-11-04T15:43:49+00:00",
+    "por": "nicolas.silva@valiconsultores.com",
+    "titulo": "INEN garantiza continuidad de terapias: stock de productos farmacéuticos está al 95%",
+    "item": {
+      "titulo": "INEN garantiza continuidad de terapias: stock de productos farmacéuticos está al 95%",
+      "url": "https://andina.pe/agencia/noticia-inen-garantiza-continuidad-terapias-stock-productos-farmaceuticos-esta-al-95-1098509.aspx",
+      "pais": "PE",
+      "resumen": null,
+      "porque": {
+        "bayer": "Informa sobre el stock y abastecimiento de medicamentos oncológicos, tema clave de Farma."
+      },
+      "tipo": "noticia"
+    }
   }
 }
