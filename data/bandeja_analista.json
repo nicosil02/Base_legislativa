@@ -491,5 +491,22 @@
       },
       "tipo": "noticia"
     }
+  },
+  "n2365293": {
+    "estado": "descartar",
+    "fecha": "2026-11-04T19:43:26+00:00",
+    "por": "nicolas.silva@valiconsultores.com",
+    "titulo": "Perú y Estados Unidos fortalecen la cooperación en energía nuclear civil: acuerdo contempla reactores pequeños y capacitación especializad",
+    "item": {
+      "titulo": "Perú y Estados Unidos fortalecen la cooperación en energía nuclear civil: acuerdo contempla reactores pequeños y capacitación especializad",
+      "url": "https://www.infobae.com/peru/2026/11/03/peru-y-estados-unidos-fortalecen-la-cooperacion-en-energia-nuclear-civil-acuerdo-contempla-reactores-pequenos-y-capacitacion-especializad/",
+      "pais": "PE",
+      "resumen": null,
+      "porque": {
+        "google": "Detalles del acuerdo bilateral con EE.UU. en tecnologia y energia nuclear civil.",
+        "incode": "Impacta directamente en el eje prioritario de relacion bilateral e inversion con Estados Unidos."
+      },
+      "tipo": "noticia"
+    }
   }
 }
