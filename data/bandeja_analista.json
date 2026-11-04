@@ -244,5 +244,21 @@
       },
       "tipo": "noticia"
     }
+  },
+  "n2363983": {
+    "estado": "interesante",
+    "fecha": "2026-11-04T17:42:32+00:00",
+    "por": "nicolas.silva@valiconsultores.com",
+    "titulo": "En Hospital del IESS Los Ceibos, de Guayaquil, faltan reactivos para tuberculosis, aspirinas y un tomógrafo | Presidenta del Consejo Directivo pide mejorar la atención - Primicias",
+    "item": {
+      "titulo": "En Hospital del IESS Los Ceibos, de Guayaquil, faltan reactivos para tuberculosis, aspirinas y un tomógrafo | Presidenta del Consejo Directivo pide mejorar la atención - Primicias",
+      "url": "https://news.google.com/rss/articles/CBMi5AFBVV95cUxNTWRQdG5QOTNscXJybkl0dVU2aFRqMlJET2VDeTZQZmdUT0FPMkYyaWM4elZITGtmVThiZU04SGtqbHJZVHNVS1BXcHdEMU5tTUFZUUZkVTdLcE1pejN2UzEtUFpPdFdfS3owY21ybFd5a0xScUNObnNrUUF1cGdhbUVfZDA2cWZ1TmU5ZDBfLXhGNGk5Smlkd0pMSlFVV1JFZ3Rmd1NuNGVXc19mOTFUeVNncTNaT1VIc2dDT1ZfamhlZnkwN1dVWE1XQnZrcEpXTzJOemxqTlpxR19UWkVmODROcVM?oc=5",
+      "pais": "EC",
+      "resumen": null,
+      "porque": {
+        "bayer": "Informa sobre desabastecimiento critico en hospital del IESS y falta de insumos, clave para el monitoreo de Farma en Ecuador."
+      },
+      "tipo": "noticia"
+    }
   }
 }
