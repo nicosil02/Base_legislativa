@@ -228,5 +228,21 @@
       },
       "tipo": "noticia"
     }
+  },
+  "n2363036": {
+    "estado": "descartar",
+    "fecha": "2026-11-04T17:42:30+00:00",
+    "por": "nicolas.silva@valiconsultores.com",
+    "titulo": "Gobierno entrega 1.194 bombas de agua para proteger cultivos afectados por las lluvias - El Telégrafo (por eliminar)",
+    "item": {
+      "titulo": "Gobierno entrega 1.194 bombas de agua para proteger cultivos afectados por las lluvias - El Telégrafo (por eliminar)",
+      "url": "https://news.google.com/rss/articles/CBMi2AFBVV95cUxQYm9CZjJFaDhiSUl0ZTJBdElkNDQ1Skx4TTAwYldkWHJla1BzVXNwMjc0eGFsV1BWQ1lodWh1SjhldUVEcU9rcnhPRVNUbHhiQjdBRXFCdEJPeFpBZHFhLVBFbGJpWHR4bnExcDlualdNR0dQN0VoT2Rqak03dVc4cGtFU0VrSVdXZF83LTMwc1FnMWg2T2F2cFVpbElHdU0tWUI4WDI0UV9NMFh1c2hEZG9ycWVZSWpOTWxYRHpQYXFoMWkycW5xdmJCUW1vS0RTTmlOWUF6c3M?oc=5",
+      "pais": "EC",
+      "resumen": null,
+      "porque": {
+        "bayer": "Entrega gubernamental de equipos para proteger cultivos afectados, relevante para el monitoreo del sector agrario de Bayer Crop."
+      },
+      "tipo": "noticia"
+    }
   }
 }
