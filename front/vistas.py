@@ -702,8 +702,17 @@ def atender(a: dict, usuario: str | None) -> dict | list | str | None:
     elif tipo == "ficha_pl":
         return ficha_pl(a["pais"], str(a["pl"]))
     elif tipo == "personas":
+        from consultas.cargos import cargos
         from consultas.integrantes import integrantes
-        return integrantes()
+        c = cargos()
+        return [{**p, "cargos": c.get(p["id"], [])} for p in integrantes()]
+    elif tipo == "dijo_persona":
+        from consultas import posturas
+        return posturas.dijo(connect_ro("proyectos.db"), a["pais"], a["persona"], a["nombre"])
+    elif tipo == "debate_pl":
+        from consultas import posturas
+        from consultas.integrantes import integrantes
+        return posturas.debate(connect_ro("proyectos.db"), connect_ro("proyectos_ec.db"), a["pais"], str(a["pl"]), integrantes())
     elif tipo == "ficha_persona":
         from alerts import pls_seguidos
         from consultas import personas

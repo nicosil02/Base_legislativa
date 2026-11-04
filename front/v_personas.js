@@ -25,7 +25,7 @@ VISTAS.personas = (() => {
   const MESES = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
   const fichas = new Map();  // ya pedidas: volver a abrir a alguien es instantaneo
   const temas = new Map();   // busquedas de tema ya hechas
-  let gente = null, porClave = new Map(), tema = null;
+  let gente = null, porClave = new Map(), tema = null, cierreFuera = false;
 
   const plano = (s) => (s ?? "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
   const clave = (p) => p.id;
@@ -35,6 +35,8 @@ VISTAS.personas = (() => {
   const bancada = (b) => `<span class="pb"><i style="background:${color(b)}"></i>${esc(b)}</span>`;
   const camaras = () => CAMARAS.filter(([, , pais]) => !App.pais || pais === App.pais);
   const miembros = () => gente.filter((p) => p.camara === f().cam);
+  // presidir una comision decide que se agenda: va en la tarjeta
+  const preside = (p) => (p.cargos ?? []).find((c) => c.cargo.startsWith("Presiden"));
 
   // Asientos en semicirculo: filas proporcionales al radio, de izquierda a derecha.
   function asientos(n) {
@@ -129,7 +131,7 @@ VISTAS.personas = (() => {
     }
     raiz.querySelector(".p-grupo").innerHTML = `<h3>${esc(titulo)}</h3><div class="p-tarjetas">${lista.map((p) =>
       `<button type="button" class="p-tarj" data-p="${esc(clave(p))}">${foto(p, "tip-foto")}<span><b>${esc(nombre(p))}</b>
-        <small>${impulsa ? `${impulsa.get(clave(p))} ${impulsa.get(clave(p)) === 1 ? "proyecto" : "proyectos"} · ` : ""}${esc(f().bancada && !impulsa ? p.region ?? "" : p.bancada)}</small></span></button>`).join("")}</div>`;
+        <small>${impulsa ? `${impulsa.get(clave(p))} ${impulsa.get(clave(p)) === 1 ? "proyecto" : "proyectos"} · ` : ""}${esc(f().bancada && !impulsa ? p.region ?? "" : p.bancada)}</small>${preside(p) ? `<em class="p-cargo">Preside la ${esc(preside(p).organo.replace(/^Comisión /, "comisión "))}</em>` : ""}</span></button>`).join("")}</div>`;
   }
 
   // ---- ficha de la persona ----
@@ -171,9 +173,9 @@ VISTAS.personas = (() => {
     barra(caja.querySelector(".f-caja"), defs, sel, () => votos(caja, todos, sel, pais));
   }
 
-  const filaPl = (x) => `<div class="pv"><span class="pl-n">${esc(String(x.pl).split("-")[0].replace(/^0+/, "") || x.pl)}</span><div>
-      <p>${esc(oracion(x.titulo ?? ""))}</p><small>${x.primero ? "Lo presentó" : "Lo firmó"} · ${esc(fechaCorta(x.fecha))} · ${esc(x.estado ?? "")}${x.tema && x.tema !== "Otros" ? ` · ${esc(x.tema)}` : ""}${x.seguido ? " · lo sigues" : ""}</small></div></div>`;
-  function proyectos(caja, pls, sel) {
+  const filaPl = (x) => `<div class="pv pv-pl" data-pl="${esc(x.pl)}" tabindex="0" role="button" aria-expanded="false"><span class="pl-n">${esc(String(x.pl).split("-")[0].replace(/^0+/, "") || x.pl)}</span><div>
+      <p>${esc(oracion(x.titulo ?? ""))}</p><small>${x.primero ? "Lo presentó" : "Lo firmó"} · ${esc(fechaCorta(x.fecha))} · ${esc(x.estado ?? "")}${x.tema && x.tema !== "Otros" ? ` · ${esc(x.tema)}` : ""}${x.seguido ? " · lo sigues" : ""}</small><span class="pl-mas">Ver quién habló en su debate</span></div></div><div class="pl-debate" hidden></div>`;
+  function proyectos(caja, pls, sel, pais) {
     const defs = [
       { k: "tema", t: "Tema", ops: distintos(pls.map((x) => x.tema)).filter((t) => t !== "Otros").sort().map((t) => [t, t]) },
       { k: "rol", t: "Participación", ops: [["p", `Lo presentó (${pls.filter((x) => x.primero).length})`], ["f", `Lo firmó (${pls.filter((x) => !x.primero).length})`]] },
@@ -182,18 +184,67 @@ VISTAS.personas = (() => {
     const xs = pls.filter((x) => (!sel.tema || x.tema === sel.tema) && (!sel.rol || (sel.rol === "p") === x.primero) && (!sel.estado || x.estado === sel.estado));
     caja.innerHTML = `<div class="f-caja"></div><div class="v-cifras"><b>${xs.length} ${xs.length === 1 ? "proyecto" : "proyectos"}</b></div>
       ${[...xs.filter((x) => x.seguido), ...xs.filter((x) => !x.seguido)].map(filaPl).join("") || `<div class="vacio">Ninguno con estos filtros.</div>`}`;
-    barra(caja.querySelector(".f-caja"), defs, sel, () => proyectos(caja, pls, sel));
+    barra(caja.querySelector(".f-caja"), defs, sel, () => proyectos(caja, pls, sel, pais));
+    caja.querySelectorAll(".pv-pl").forEach((fila) => {
+      fila.onclick = () => {
+        const d = fila.nextElementSibling, abre = d.hidden;
+        d.hidden = !abre; fila.setAttribute("aria-expanded", abre);
+        if (abre && !d.innerHTML) debate(d, pais, fila.dataset.pl);
+      };
+      fila.onkeydown = (e) => { if (e.key === "Enter") fila.click(); };
+    });
   }
 
-  function dijo(caja, r, sel) {
-    const defs = [{ k: "organo", t: "Dónde", ops: distintos(r.sesiones.map((x) => x.organo)).sort().map((o) => [o, o]) }];
-    const ses = r.sesiones.filter((x) => !sel.organo || x.organo === sel.organo);
-    caja.innerHTML = `<div class="f-caja"></div>` + (ses.map((x) => `<div class="pv dicho"><div><small>${esc(fechaCorta(x.fecha))} · ${esc(x.organo)} ${enlaceIcono(x.url, "Ver la sesión")}</small>
-        ${x.trozos.map((t) => `<p>«${esc(t)}»</p>`).join("")}</div></div>`).join("")
-      + (r.mesas.length && !sel.organo ? `<h3 class="p-sub">Mesas técnicas que organizó</h3>${r.mesas.map((m) => `<div class="pv"><div><p>${esc(m.titulo ?? "")}</p>
+  const MENCION = "solo lo mencionan";
+  const POSTURA = { "a favor": "bv-SI", "en contra": "bv-NO", "con observaciones": "bv-ABST", propone: "bv-SI" };
+  const chipPostura = (x) => `<span class="voto ${POSTURA[x] ?? "bv-nv"}">${esc(oracion(x))}</span>`;
+
+  // lo que dijo llega aparte (Gemini lee cada sesion): la ficha no lo espera
+  function dijo(caja, r, sel, p) {
+    if (!r.dijo) {
+      caja.innerHTML = `<p class="nota">Leyendo lo que dijo en cada sesión. Tarda unos segundos la primera vez.</p>${espera(3)}`;
+      r.pidiendo ??= App.pedir("dijo_persona", { pais: p.pais, persona: p.id, nombre: nombre(p) });
+      r.pidiendo.then((d) => { r.dijo = d; if (caja.isConnected && f().id === clave(p)) dijo(caja, r, sel, p); },
+        (e) => { r.pidiendo = null; if (caja.isConnected) caja.innerHTML = `<div class="aviso">No se pudo leer: ${esc(e.message)}</div>`; });
+      return;
+    }
+    const todas = r.dijo.sesiones;
+    const habla = todas.filter((x) => x.postura !== MENCION);
+    const defs = [
+      { k: "organo", t: "Dónde", ops: distintos(todas.map((x) => x.organo)).sort().map((o) => [o, o]) },
+      { k: "postura", t: "Postura", ops: distintos(habla.map((x) => x.postura)).map((o) => [o, oracion(o)]) },
+    ];
+    const ses = habla.filter((x) => (!sel.organo || x.organo === sel.organo) && (!sel.postura || x.postura === sel.postura));
+    const mencion = todas.length - habla.length;
+    caja.innerHTML = `<div class="f-caja"></div>` + (ses.map((x) => `<div class="pv dicho">${x.postura ? chipPostura(x.postura) : ""}<div>
+        ${x.tema ? `<p class="d-tema">${esc(oracion(x.tema))}</p>` : ""}
+        ${x.piensa ? `<p>${esc(x.piensa)}</p>` : x.trozos.map((t) => `<p>«${esc(t)}»</p>`).join("")}
+        <small>${esc(fechaCorta(x.fecha))} · ${esc(x.organo)} ${enlaceIcono(x.url, "Ver la sesión")}</small></div></div>`).join("")
+      || `<div class="vacio">${todas.length ? "Ninguna intervención con estos filtros." : "No aparece en las sesiones transcritas."}</div>`)
+      + (mencion && !sel.postura ? `<p class="nota">En ${mencion} ${mencion === 1 ? "sesión más solo lo nombran" : "sesiones más solo lo nombran"}, sin que hable.</p>` : "")
+      + (r.dijo.mesas.length && !sel.organo && !sel.postura ? `<h3 class="p-sub">Mesas técnicas que organizó</h3>${r.dijo.mesas.map((m) => `<div class="pv"><div><p>${esc(m.titulo ?? "")}</p>
         <small>${esc(fechaCorta(m.fecha))} ${enlaceIcono(m.url, "Abrir")}</small></div></div>`).join("")}` : "")
-      || `<div class="vacio">No aparece en las sesiones transcritas.</div>`);
-    barra(caja.querySelector(".f-caja"), defs, sel, () => dijo(caja, r, sel));
+      + (habla.some((x) => x.piensa) ? `<p class="nota">Resumen hecho con IA a partir de la transcripción. Abre la sesión para el texto exacto.</p>` : "");
+    barra(caja.querySelector(".f-caja"), defs, sel, () => dijo(caja, r, sel, p));
+  }
+
+  // quien hablo del proyecto cuando se sustento o debatio, agrupado por bancada
+  const debates = new Map();
+  async function debate(caja, pais, pl) {
+    caja.innerHTML = `<p class="nota">Buscando el debate en las sesiones transcritas…</p>`;
+    let d = debates.get(`${pais}:${pl}`);
+    if (!d) {
+      try { d = await App.pedir("debate_pl", { pais, pl }); } catch (e) { caja.innerHTML = `<div class="aviso">No se pudo leer: ${esc(e.message)}</div>`; return; }
+      debates.set(`${pais}:${pl}`, d);
+    }
+    if (!d.length) { caja.innerHTML = `<p class="nota">No encontramos su sustentación o debate en las sesiones transcritas.</p>`; return; }
+    const grupos = {};
+    d.forEach((x) => { (grupos[x.bancada ?? "Ejecutivo, invitados y otros"] ??= []).push(x); });
+    caja.innerHTML = Object.entries(grupos).sort(([a], [b]) => lugar(a) - lugar(b)).map(([b, xs]) => `<div class="db-grupo">
+        <h4>${COLOR[b] ? bancada(b) : esc(b)}</h4>${xs.map((x) => `<div class="db-dicho">${chipPostura(x.postura)}<div>
+          <p><b>${esc(x.nombre ? nombre({ ...x, pais }) : oracion(x.orador))}</b> <small>${esc(x.rol)}</small></p><p>${esc(x.dijo)}</p>
+          <small>${esc(fechaCorta(x.fecha))} · ${esc(x.organo)} ${enlaceIcono(x.url, "Ver la sesión")}</small></div></div>`).join("")}</div>`).join("")
+      + `<p class="nota">Resumen hecho con IA a partir de la transcripción.</p>`;
   }
 
   // temas de sus proyectos (los que presento pesan el doble): lo que impulsa
@@ -217,6 +268,7 @@ VISTAS.personas = (() => {
     const enlace = p.url ? `<a class="nota" href="${esc(p.url)}" target="_blank" rel="noopener">${p.url.includes("observatorio") ? "Perfil en el Observatorio Legislativo" : "Perfil oficial"}</a>` : "";
     panel.innerHTML = `<div class="cp-cab">${foto(p, "cp-foto")}<div class="cp-tit"><h2>${esc(nombre(p))}</h2>
         <p>${bancada(p.bancada)} · ${esc(NOMBRE_CAMARA[p.camara])}${p.region ? ` · ${esc(p.region)}` : ""}${p.condicion && p.condicion !== "en ejercicio" ? ` · ${esc(p.condicion)}` : ""}</p>
+        ${(p.cargos ?? []).map((c) => `<p class="cp-cargo"><b>${esc(c.cargo)}</b> ${esc(c.organo)}</p>`).join("")}
         ${enlace}</div>
         <button type="button" class="cp-x" aria-label="Cerrar">${icono("x", 18)}</button></div>
       <div class="cp-resena">${p.resena ? `<p>${esc(p.resena)}</p>` : ""}</div>
@@ -241,8 +293,8 @@ VISTAS.personas = (() => {
       [propios, "proyectos presentados"], [r.pls.length - propios, "firmó con otros"],
     ].map(([n, t]) => `<div><b>${n}</b><span>${t}</span></div>`).join("");
     const sel = {};
-    const tabs = [["Votos", (c) => votos(c, r.votos, sel, p.pais)], ["Proyectos", (c) => proyectos(c, r.pls, sel)],
-      [`Qué dijo (${r.sesiones.length})`, (c) => dijo(c, r, sel)]].filter(([t]) => t !== "Votos" || r.votos.length);
+    const tabs = [["Votos", (c) => votos(c, r.votos, sel, p.pais)], ["Proyectos", (c) => proyectos(c, r.pls, sel, p.pais)],
+      ["Qué dijo", (c) => dijo(c, r, sel, p)]].filter(([t]) => t !== "Votos" || r.votos.length);
     const cuerpo = panel.querySelector(".cp-cuerpo");
     let actual = tabs[0];
     const ir = (t) => {
@@ -251,6 +303,9 @@ VISTAS.personas = (() => {
       actual[1](cuerpo);
     };
     ir(actual[0]);
+    // empieza a leer lo que dijo apenas sale la ficha
+    r.pidiendo ??= App.pedir("dijo_persona", { pais: p.pais, persona: p.id, nombre: nombre(p) });
+    r.pidiendo.then((d) => { r.dijo = d; }, () => { r.pidiendo = null; });
     const caja = panel.querySelector(".cp-temas");
     const ts = posturas(r);
     caja.innerHTML = ts.length ? `<span class="nota">Temas de sus proyectos</span>${ts.map((t) => `<button type="button" class="chip-tema" data-t="${esc(t)}">${esc(t)}</button>`).join("")}` : "";
@@ -340,6 +395,13 @@ VISTAS.personas = (() => {
       raiz.querySelector(".p-grupo").onclick = abrirDe;
       raiz.querySelector(".p-hemi").onkeydown = (e) => { if (e.key === "Enter") abrirDe(e); };
       raiz.onkeydown = (e) => { if (e.key === "Escape") cerrar(raiz); };
+      if (!cierreFuera) {  // clic fuera de la ficha la cierra (un solo oyente aunque se vuelva a la vista)
+        cierreFuera = true;
+        document.addEventListener("pointerdown", (e) => {
+          const raiz = document.querySelector(".personas");
+          if (raiz && f().id && !e.target.closest(".cajon-p, [data-p], .p-busca")) cerrar(raiz);
+        });
+      }
       escena(raiz);
       if (porClave.has(f().id)) abrir(raiz, porClave.get(f().id));
     },

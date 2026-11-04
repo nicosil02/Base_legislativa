@@ -45,7 +45,8 @@ def _patron(ap: str) -> re.Pattern:
     return re.compile(rf"\b{re.escape(ap)}\b|\b{_TITULO}\s+(?:\w+\s+){{0,3}}?{primero}\b")
 
 
-def _sesiones(pe: sqlite3.Connection, pais: str, ap: str) -> list[dict]:
+def _sesiones(pe: sqlite3.Connection, pais: str, ap: str, contexto: bool = False) -> list[dict]:
+    """contexto: suma tramos largos (lo que dijo tras darle la palabra) para que Gemini los lea."""
     from congreso_live.facebook_ec import url_video
     patron = _patron(ap)
     # SQLite no ignora tildes: las letras que pueden llevarla van como comodin ("n_nez" halla "Núñez")
@@ -69,6 +70,7 @@ def _sesiones(pe: sqlite3.Connection, pais: str, ap: str) -> list[dict]:
         trozos = [re.sub(r"\s+", " ", base[max(0, m.start() - 80):m.end() + 360]).strip() for m in sorted(mejores, key=lambda m: m.start())]
         salida.append({"fecha": fecha, "organo": tipo, "titulo": titulo, "video_id": vid, "menciones": len(hallados),
                        "trozos": trozos,
+                       **({"contexto": [base[max(0, m.start() - 300):m.end() + 2200] for m in mejores]} if contexto else {}),
                        "url": url_video(vid) if pais == "EC" else f"https://www.youtube.com/watch?v={vid}"})
         if len(salida) == MAX_SESIONES:
             break
@@ -134,9 +136,6 @@ def ficha(pe: sqlite3.Connection, ec: sqlite3.Connection, pais: str, ident: str,
                         "contra_bancada": v["voto"] in _POSTURAS and mayoria.get((v["id"], v["bancada"])) not in (None, v["voto"])}
                        for v in reversed(votos)]
         d = next((x for x in disciplina(pe, camara) if clave_congresista(x["camara"], x["congresista"]) == ident), None)
-        mesas = [{"fecha": f, "titulo": t, "url": u} for f, t, u, c in pe.execute(
-                    "SELECT fecha, titulo, url, congresista FROM mesas_tecnicas WHERE congresista IS NOT NULL ORDER BY fecha DESC")
-                 if ap in norm(c)][:15]
         resumen = {"votaciones": len(votos), "ausencias": sum(v["voto"] not in _POSTURAS for v in votos),
                    "pct_alineado": d["pct_alineado"] if d else None,
                    "bancada": votos[-1]["bancada"] if votos else None}
@@ -149,11 +148,11 @@ def ficha(pe: sqlite3.Connection, ec: sqlite3.Connection, pais: str, ident: str,
                 (PERIODO_EC,)):
             if id_ec(nombre) == ident:
                 pls.append({"pl": pl, "titulo": t, "estado": e, "fecha": (f or "")[:10], "bancada": None, "primero": orden in (0, 1), "tema": tm})
-        mesas = []
         lista_votos, resumen = _votos_ec(ident)
     for p in pls:
         p["seguido"] = f"{pais}:{p['pl']}" in seguidos
-    return {**resumen, "pls": pls, "votos": lista_votos, "mesas": mesas, "sesiones": _sesiones(pe, pais, ap)}
+    # lo que dijo en las sesiones va aparte (consultas/posturas.dijo): leerlo tarda
+    return {**resumen, "pls": pls, "votos": lista_votos}
 
 
 def por_tema(pe: sqlite3.Connection, ec: sqlite3.Connection, pais: str, camara: str, q: str,
@@ -220,7 +219,8 @@ if __name__ == "__main__":  # chequeo sobre una base minima en memoria
         CREATE TABLE proponentes (n_tramite TEXT, nombre TEXT, tipo TEXT, orden INT);""")
     f = ficha(pe, ec, "PE", "senado:matute charun", {"PE:00001-2026-2031-CS"})
     assert [p["pl"] for p in f["pls"]] == ["00001-2026-2031-CS"] and f["pls"][0]["seguido"] and f["pls"][0]["primero"], f["pls"]
-    assert f["votos"][0]["contra_bancada"] is False and f["mesas"] and [s["video_id"] for s in f["sesiones"]] == ["v1"], f
+    assert f["votos"][0]["contra_bancada"] is False, f
+    assert [s["video_id"] for s in _sesiones(pe, "PE", "matute charun", contexto=True)] == ["v1"]
     t = por_tema(pe, ec, "PE", "senado", "pl 5", [{"id": "senado:matute charun"}, {"id": "senado:perez"}])
     assert t["votaciones"][0]["votos"]["senado:matute charun"] == "NO", t
     t = por_tema(pe, ec, "PE", "senado", "ley", [{"id": "senado:matute charun"}, {"id": "senado:perez"}])

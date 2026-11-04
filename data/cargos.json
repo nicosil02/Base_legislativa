@@ -1,0 +1,580 @@
+{
+"senado:mesia ramirez": [
+{
+"cargo": "Presidente",
+"organo": "Comisión de constitución, reglamento y relaciones exteriores"
+}
+],
+"senado:astucuri laura": [
+{
+"cargo": "Vicepresidente",
+"organo": "Comisión de constitución, reglamento y relaciones exteriores"
+}
+],
+"senado:ampuero meza": [
+{
+"cargo": "Secretaria",
+"organo": "Comisión de constitución, reglamento y relaciones exteriores"
+},
+{
+"cargo": "Presidente",
+"organo": "Comisión de justicia y derechos humanos"
+}
+],
+"senado:calisto giampietri": [
+{
+"cargo": "Presidente",
+"organo": "Comisión de defensa nacional y orden interno"
+}
+],
+"senado:gago rodriguez": [
+{
+"cargo": "Vicepresidente",
+"organo": "Comisión de defensa nacional y orden interno"
+}
+],
+"senado:melgar valdez": [
+{
+"cargo": "Secretario",
+"organo": "Comisión de defensa nacional y orden interno"
+}
+],
+"senado:barragan coloma": [
+{
+"cargo": "Presidente",
+"organo": "Comisión en asuntos de desarrollo productivo, energía y minas, infraestructura y trabajo"
+}
+],
+"senado:flores suarez": [
+{
+"cargo": "Vicepresidente",
+"organo": "Comisión en asuntos de desarrollo productivo, energía y minas, infraestructura y trabajo"
+},
+{
+"cargo": "Secretario",
+"organo": "Comisión bicameral de presupuesto y cuenta general de la república"
+}
+],
+"senado:schaefer cuculiza": [
+{
+"cargo": "Secretaria",
+"organo": "Comisión en asuntos de desarrollo productivo, energía y minas, infraestructura y trabajo"
+}
+],
+"senado:lopez chau nava": [
+{
+"cargo": "Presidente",
+"organo": "Comisión de economía, medio ambiente y defensa del consumidor"
+}
+],
+"senado:noriega reategui": [
+{
+"cargo": "Vicepresidente",
+"organo": "Comisión de economía, medio ambiente y defensa del consumidor"
+}
+],
+"senado:iturregui byrne": [
+{
+"cargo": "Secretaria",
+"organo": "Comisión de economía, medio ambiente y defensa del consumidor"
+}
+],
+"senado:matute charun": [
+{
+"cargo": "Presidente",
+"organo": "Comisión en asuntos de salud, educación, cultura, mujer y desarrollo social y digital"
+}
+],
+"senado:chipana chipana": [
+{
+"cargo": "Vicepresidente",
+"organo": "Comisión en asuntos de salud, educación, cultura, mujer y desarrollo social y digital"
+}
+],
+"senado:tapia bernal": [
+{
+"cargo": "Secretario",
+"organo": "Comisión en asuntos de salud, educación, cultura, mujer y desarrollo social y digital"
+}
+],
+"senado:osorio palpan": [
+{
+"cargo": "Presidente",
+"organo": "Comisión en asuntos de gestión del estado y contraloría"
+}
+],
+"senado:ventura angel": [
+{
+"cargo": "Vicepresidente",
+"organo": "Comisión en asuntos de gestión del estado y contraloría"
+}
+],
+"senado:vasquez chuquilin": [
+{
+"cargo": "Secretario",
+"organo": "Comisión en asuntos de gestión del estado y contraloría"
+}
+],
+"senado:gavidia rodriguez": [
+{
+"cargo": "Vicepresidente",
+"organo": "Comisión de justicia y derechos humanos"
+}
+],
+"senado:aguinaga recuenco": [
+{
+"cargo": "Secretario",
+"organo": "Comisión de justicia y derechos humanos"
+}
+],
+"senado:ramos huillcas": [
+{
+"cargo": "Presidente",
+"organo": "Comisión de ética parlamentaria"
+}
+],
+"senado:miyashiro arashiro": [
+{
+"cargo": "Vicepresidente",
+"organo": "Comisión de ética parlamentaria"
+}
+],
+"senado:velasquez garcia": [
+{
+"cargo": "Secretario",
+"organo": "Comisión de ética parlamentaria"
+}
+],
+"senado:rospigliosi capurro": [
+{
+"cargo": "Presidente",
+"organo": "Comisión de inteligencia"
+}
+],
+"senado:caballero leon": [
+{
+"cargo": "Vicepresidente",
+"organo": "Comisión de inteligencia"
+}
+],
+"senado:morales ramirez": [
+{
+"cargo": "Secretario",
+"organo": "Comisión de inteligencia"
+}
+],
+"senado:ccahuana aymachoque": [
+{
+"cargo": "Presidente",
+"organo": "Comisión de procedimientos especiales"
+}
+],
+"senado:vasquez villanueva": [
+{
+"cargo": "Vicepresidente",
+"organo": "Comisión de procedimientos especiales"
+}
+],
+"senado:moyano delgado": [
+{
+"cargo": "Secretario",
+"organo": "Comisión de procedimientos especiales"
+},
+{
+"cargo": "Presidente",
+"organo": "Comisión de control político sobre actos normativos del poder ejecutivo y regímenes de excepción"
+}
+],
+"senado:munante barrios": [
+{
+"cargo": "Vicepresidente",
+"organo": "Comisión de control político sobre actos normativos del poder ejecutivo y regímenes de excepción"
+},
+{
+"cargo": "Primer Vicepresidente",
+"organo": "Mesa Directiva del Senado"
+}
+],
+"senado:arista arbildo": [
+{
+"cargo": "Presidente",
+"organo": "Comisión bicameral de presupuesto y cuenta general de la república"
+}
+],
+"diputados:zunini yerren": [
+{
+"cargo": "Vicepresidente",
+"organo": "Comisión bicameral de presupuesto y cuenta general de la república"
+}
+],
+"senado:torres morales": [
+{
+"cargo": "Presidente",
+"organo": "Mesa Directiva del Senado"
+}
+],
+"senado:chacon trujillo": [
+{
+"cargo": "Segunda Vicepresidenta",
+"organo": "Mesa Directiva del Senado"
+}
+],
+"senado:mancha pineda": [
+{
+"cargo": "Tercer Vicepresidente",
+"organo": "Mesa Directiva del Senado"
+}
+],
+"diputados:columbus murata": [
+{
+"cargo": "Presidente",
+"organo": "Comisión de ciencia, innovación, tecnología y sociedad digital"
+}
+],
+"diputados:fernandez de la torre": [
+{
+"cargo": "Vicepresidente",
+"organo": "Comisión de ciencia, innovación, tecnología y sociedad digital"
+},
+{
+"cargo": "Secretario",
+"organo": "Comisión de constitución, reglamento y relaciones exteriores"
+},
+{
+"cargo": "Secretario",
+"organo": "Comisión de defensa nacional y orden interno"
+},
+{
+"cargo": "Secretario",
+"organo": "Comisión de desarrollo agrario"
+},
+{
+"cargo": "Secretario",
+"organo": "Comisión de medio ambiente y sostenibilidad"
+},
+{
+"cargo": "Secretario",
+"organo": "Comisión de modernización de la gestión del estado y contraloría"
+},
+{
+"cargo": "Secretario",
+"organo": "Comisión de ordenamiento y seguimiento legislativo"
+}
+],
+"diputados:leiva baylon": [
+{
+"cargo": "Secretario",
+"organo": "Comisión de ciencia, innovación, tecnología y sociedad digital"
+}
+],
+"diputados:avendano vilca": [
+{
+"cargo": "Presidente",
+"organo": "Comisión de constitución, reglamento y relaciones exteriores"
+}
+],
+"diputados:garcia huby": [
+{
+"cargo": "Vicepresidente",
+"organo": "Comisión de constitución, reglamento y relaciones exteriores"
+}
+],
+"diputados:masco caceres": [
+{
+"cargo": "Presidente",
+"organo": "Comisión de defensa del consumidor y regulación de los servicios públicos"
+}
+],
+"diputados:meneses crispin": [
+{
+"cargo": "Vicepresidente",
+"organo": "Comisión de defensa del consumidor y regulación de los servicios públicos"
+}
+],
+"diputados:llaque linares": [
+{
+"cargo": "Secretario",
+"organo": "Comisión de defensa del consumidor y regulación de los servicios públicos"
+}
+],
+"diputados:segura figueroa": [
+{
+"cargo": "Presidente",
+"organo": "Comisión de defensa nacional y orden interno"
+}
+],
+"diputados:gatica vega": [
+{
+"cargo": "Vicepresidente",
+"organo": "Comisión de defensa nacional y orden interno"
+}
+],
+"diputados:alvaron de la cruz": [
+{
+"cargo": "Presidente",
+"organo": "Comisión de desarrollo agrario"
+}
+],
+"diputados:jibaja ramos": [
+{
+"cargo": "Vicepresidente",
+"organo": "Comisión de desarrollo agrario"
+}
+],
+"diputados:marcelo salazar": [
+{
+"cargo": "Presidente",
+"organo": "Comisión de economía, banca, finanzas e inteligencia financiera"
+}
+],
+"diputados:barbaran reyes": [
+{
+"cargo": "Vicepresidente",
+"organo": "Comisión de economía, banca, finanzas e inteligencia financiera"
+}
+],
+"diputados:cabrera nieto": [
+{
+"cargo": "Secretario",
+"organo": "Comisión de economía, banca, finanzas e inteligencia financiera"
+}
+],
+"diputados:castrejon fernandez": [
+{
+"cargo": "Presidente",
+"organo": "Comisión de educación, cultura y deporte"
+}
+],
+"diputados:tito rojas": [
+{
+"cargo": "Vicepresidente",
+"organo": "Comisión de educación, cultura y deporte"
+}
+],
+"diputados:pacheco quispe": [
+{
+"cargo": "Secretario",
+"organo": "Comisión de educación, cultura y deporte"
+}
+],
+"diputados:paredes navarro": [
+{
+"cargo": "Presidente",
+"organo": "Comisión de energía y minas"
+}
+],
+"diputados:camargo porta": [
+{
+"cargo": "Vicepresidente",
+"organo": "Comisión de energía y minas"
+}
+],
+"diputados:santana vera": [
+{
+"cargo": "Secretario",
+"organo": "Comisión de energía y minas"
+}
+],
+"diputados:meza rivera": [
+{
+"cargo": "Presidente",
+"organo": "Comisión de inclusión social, familia, mujer, pueblos andinos, amazónicos y afroperuanos"
+}
+],
+"diputados:pinasco montenegro": [
+{
+"cargo": "Vicepresidente",
+"organo": "Comisión de inclusión social, familia, mujer, pueblos andinos, amazónicos y afroperuanos"
+}
+],
+"diputados:isla rojas": [
+{
+"cargo": "Secretario",
+"organo": "Comisión de inclusión social, familia, mujer, pueblos andinos, amazónicos y afroperuanos"
+}
+],
+"diputados:quispe candia": [
+{
+"cargo": "Presidente",
+"organo": "Comisión de infraestructura, vivienda y transportes"
+}
+],
+"diputados:pena cordova": [
+{
+"cargo": "Vicepresidente",
+"organo": "Comisión de infraestructura, vivienda y transportes"
+}
+],
+"diputados:valqui ordonez": [
+{
+"cargo": "Secretario",
+"organo": "Comisión de infraestructura, vivienda y transportes"
+}
+],
+"diputados:palomino casavilca": [
+{
+"cargo": "Presidente",
+"organo": "Comisión de justicia y derechos humanos"
+}
+],
+"diputados:gonzales polar": [
+{
+"cargo": "Vicepresidente",
+"organo": "Comisión de justicia y derechos humanos"
+}
+],
+"diputados:huilca flores": [
+{
+"cargo": "Secretario",
+"organo": "Comisión de justicia y derechos humanos"
+}
+],
+"diputados:alegria garcia": [
+{
+"cargo": "Presidente",
+"organo": "Comisión de medio ambiente y sostenibilidad"
+}
+],
+"diputados:quezada castro": [
+{
+"cargo": "Vicepresidente",
+"organo": "Comisión de medio ambiente y sostenibilidad"
+}
+],
+"diputados:martinez paitan": [
+{
+"cargo": "Presidente",
+"organo": "Comisión de modernización de la gestión del estado y contraloría"
+}
+],
+"diputados:obando morgan": [
+{
+"cargo": "Vicepresidente",
+"organo": "Comisión de modernización de la gestión del estado y contraloría"
+}
+],
+"diputados:palma mendoza": [
+{
+"cargo": "Presidente",
+"organo": "Comisión de producción, comercio exterior y turismo"
+}
+],
+"diputados:medina stein": [
+{
+"cargo": "Vicepresidente",
+"organo": "Comisión de producción, comercio exterior y turismo"
+}
+],
+"diputados:guevara ramirez": [
+{
+"cargo": "Secretario",
+"organo": "Comisión de producción, comercio exterior y turismo"
+}
+],
+"diputados:huaman cornejo": [
+{
+"cargo": "Presidente",
+"organo": "Comisión de salud"
+}
+],
+"diputados:fernandez gonzalez": [
+{
+"cargo": "Vicepresidente",
+"organo": "Comisión de salud"
+}
+],
+"diputados:yuffra lugo": [
+{
+"cargo": "Secretario",
+"organo": "Comisión de salud"
+}
+],
+"diputados:castillo rivas": [
+{
+"cargo": "Presidente",
+"organo": "Comisión de trabajo y seguridad social"
+}
+],
+"diputados:yalta sotelo": [
+{
+"cargo": "Vicepresidente",
+"organo": "Comisión de trabajo y seguridad social"
+}
+],
+"diputados:tapullima insapillo": [
+{
+"cargo": "Secretario",
+"organo": "Comisión de trabajo y seguridad social"
+}
+],
+"diputados:varas seguin": [
+{
+"cargo": "Presidente",
+"organo": "Comisión de acusaciones constitucionales"
+}
+],
+"diputados:beteta rubin": [
+{
+"cargo": "Vicepresidente",
+"organo": "Comisión de acusaciones constitucionales"
+}
+],
+"diputados:bravo quispe": [
+{
+"cargo": "Secretario",
+"organo": "Comisión de acusaciones constitucionales"
+}
+],
+"diputados:albanil carmona": [
+{
+"cargo": "Presidente",
+"organo": "Comisión de ética parlamentaria"
+}
+],
+"diputados:perez quispe": [
+{
+"cargo": "Vicepresidente",
+"organo": "Comisión de ética parlamentaria"
+}
+],
+"diputados:colchado huamani": [
+{
+"cargo": "Secretario",
+"organo": "Comisión de ética parlamentaria"
+},
+{
+"cargo": "Segundo Vicepresidente",
+"organo": "Mesa Directiva de la Cámara de Diputados"
+}
+],
+"diputados:abensur pinasco": [
+{
+"cargo": "Presidente",
+"organo": "Comisión de ordenamiento y seguimiento legislativo"
+}
+],
+"diputados:krklec torres": [
+{
+"cargo": "Vicepresidente",
+"organo": "Comisión de ordenamiento y seguimiento legislativo"
+}
+],
+"diputados:reto otero": [
+{
+"cargo": "Presidente",
+"organo": "Mesa Directiva de la Cámara de Diputados"
+}
+],
+"diputados:marquez huanca": [
+{
+"cargo": "Primera Vicepresidenta",
+"organo": "Mesa Directiva de la Cámara de Diputados"
+}
+],
+"diputados:yataco torrealva": [
+{
+"cargo": "Tercer Vicepresidente",
+"organo": "Mesa Directiva de la Cámara de Diputados"
+}
+]
+}
