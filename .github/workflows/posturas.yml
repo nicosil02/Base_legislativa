@@ -1,0 +1,44 @@
+name: Posturas de congresistas (Gemma)
+
+# Lee con Gemma las sesiones transcritas que aun no tienen posturas (consultas/posturas.py).
+# Gemma es gratis y tiene su propio cupo, asi no gasta el de flash-lite que usan la app y
+# las alertas. Va a una llamada por minuto: cada corrida avanza lo que puede en ~100 min y
+# la siguiente sigue donde quedo (guarda de a 3 sesiones con commit en main).
+
+on:
+  schedule:
+    - cron: '20 */3 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: posturas
+  cancel-in-progress: false
+
+jobs:
+  leer:
+    runs-on: ubuntu-latest
+    timeout-minutes: 115
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: main
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+
+      - run: pip install -c constraints.txt -q requests "google-genai==2.31.0" streamlit
+
+      - name: Bajar la base (transcripciones)
+        run: bash scripts/bajar_db.sh proyectos.db.gz proyectos.db
+
+      - name: Leer sesiones nuevas
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          PYTHONIOENCODING: utf-8
+        run: timeout 100m python -X utf8 -u -m consultas.posturas precalcular || echo "[warn] corte por tiempo o error; la proxima corrida sigue"
