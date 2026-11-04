@@ -575,5 +575,21 @@
       },
       "tipo": "noticia"
     }
+  },
+  "n2367699": {
+    "estado": "interesante",
+    "fecha": "2026-11-04T21:38:55+00:00",
+    "por": "nicolas.silva@valiconsultores.com",
+    "titulo": "Fenómeno El Niño: Lima instalará sala de crisis para monitorear riesgos y prevenir emergen",
+    "item": {
+      "titulo": "Fenómeno El Niño: Lima instalará sala de crisis para monitorear riesgos y prevenir emergen",
+      "url": "https://andina.pe/agencia/noticia-fenomeno-nino-lima-instalara-sala-crisis-para-monitorear-riesgos-y-prevenir-emergen-1098578.aspx",
+      "pais": "PE",
+      "resumen": null,
+      "porque": {
+        "syngenta": "Reunion de coordinacion del titular del MIDAGRI con la Municipalidad de Lima por acciones frente a El Nino, impactando la gestion de campanas agricolas."
+      },
+      "tipo": "noticia"
+    }
   }
 }
