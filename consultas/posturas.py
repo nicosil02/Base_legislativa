@@ -1,4 +1,4 @@
-"""Posturas en el Congreso: quien dijo que en cada sesion transcrita, leido por Gemini.
+"""Posturas en el Congreso: quien dijo que en cada sesion transcrita, leido por Gemma.
 
 Cada sesion se lee UNA vez y de esa lectura salen todos los que hablaron, sobre que,
 con que postura y si hablaban de un proyecto. De ahi salen:
@@ -6,7 +6,11 @@ con que postura y si hablaban de un proyecto. De ahi salen:
   debate(): quien hablo de un proyecto cuando se sustento o debatio, por bancada
 Ninguna de las dos llama a Gemini: solo leen lo guardado.
 
-precalcular() lee las sesiones que faltan; corre en refrescar-pe.yml (13-14 y 23 UTC).
+precalcular() lee las sesiones que faltan; corre en posturas.yml cada pocas horas.
+Usa Gemma (gratis, cupo diario propio y alto, no el de flash-lite que usa la app). Su
+limite es de 16 mil tokens de entrada por minuto: la sesion va en trozos de ~10 mil
+tokens y sale como mucho una llamada por minuto (_turno). Es lento (~3 min por trozo),
+por eso corre en su propio workflow y no en refrescar-pe.
 Se guarda por mes en data/posturas/AAAA-MM.json (core/store: commit en main), para
 que ningun archivo pase el limite de 1 MB de la API de GitHub.
 """
@@ -15,6 +19,8 @@ from __future__ import annotations
 import json
 import re
 import sqlite3
+import threading
+import time
 
 from consultas.personas import apellidos, id_ec
 from core import llm, store
@@ -22,6 +28,8 @@ from core.text import norm
 from scraper.categorias import CATEGORIAS
 
 CARPETA = "data/posturas"
+TROZO, SOLAPE = 38_000, 2_500  # caracteres: ~10 mil tokens, bajo el limite de Gemma por minuto
+PAUSA = 65  # segundos entre llamadas a Gemma
 VERSION = 4  # sube si cambia lo que se le pide a Gemini: lo leido con otra version se vuelve a leer
 DESDE = {"PE": "2026-07-26", "EC": "2025-05-14"}  # inicio de cada periodo
 POSTURAS = ["a favor", "en contra", "con observaciones", "pregunta", "propone", "comenta"]
@@ -133,14 +141,53 @@ def _guardar(nuevas: dict) -> None:
 
 
 # ---- lectura con Gemini ----
+_candado, _ultima = threading.Lock(), [0.0]
+
+
+def _turno() -> None:
+    """Espera hasta que pasen PAUSA segundos desde la ultima llamada (entre todos los hilos)."""
+    with _candado:
+        espera = _ultima[0] + PAUSA - time.time()
+        if espera > 0:
+            time.sleep(espera)
+        _ultima[0] = time.time()
+
+
+def _gemma(prompt: str) -> str:
+    _turno()
+    return llm.generar(prompt, modelo=llm.GEMMA, json=True, schema=_ESQ, respaldo=False)
+
+
+def trozos(texto: str) -> list[str]:
+    """La sesion en partes de TROZO caracteres, cortadas en un espacio y con SOLAPE para no
+    perder a quien se le dio la palabra justo antes del corte."""
+    out, i = [], 0
+    while i < len(texto):
+        fin = min(len(texto), i + TROZO)
+        if fin < len(texto):
+            fin = texto.rfind(" ", i + TROZO // 2, fin) + 1 or fin
+        out.append(texto[i:fin])
+        if fin >= len(texto):
+            break
+        i = fin - SOLAPE
+    return out
+
+
 def leer(vid: str, tipo: str, titulo: str, fecha: str, texto: str, gente: list[dict], generar=None) -> dict:
     """Una sesion leida: {fecha, organo, url, pais, v, dichos: [...]}. Los legisladores llevan su id."""
     from congreso_live.facebook_ec import url_video
     pais = "EC" if tipo.endswith("(EC)") else "PE"
-    if generar is None:
-        generar = lambda p: llm.generar(p, modelo=llm.LITE, json=True, schema=_ESQ, respaldo=False)  # gemma no aguanta sesiones largas
+    generar = generar or _gemma
     lugar = "Asamblea Nacional de Ecuador" if pais == "EC" else "Congreso de Peru"
-    crudo = json.loads(generar(PROMPT.format(lugar=lugar, titulo=titulo, fecha=fecha, texto=texto[:400_000])) or "[]")
+    partes = trozos(texto)
+    crudo, vistos = [], set()
+    for n, t in enumerate(partes, 1):
+        parte = f" (parte {n} de {len(partes)})" if len(partes) > 1 else ""
+        for x in json.loads(generar(PROMPT.format(lugar=lugar, titulo=titulo + parte, fecha=fecha, texto=t)) or "[]"):
+            clave = (norm(x.get("orador", "")), norm(x.get("dijo", ""))[:40])  # el solape repite alguno
+            if clave not in vistos:
+                vistos.add(clave)
+                crudo.append(x)
     pares = _pares(gente, pais, _camara(tipo)) or _pares(gente, pais)
     dichos = []
     for x in crudo:
@@ -152,9 +199,9 @@ def leer(vid: str, tipo: str, titulo: str, fecha: str, texto: str, gente: list[d
 
 
 def precalcular(db: str, gente: list[dict], hilos: int = 3, maximo: int | None = None) -> int:
-    """Lee las sesiones que faltan (o leidas con otra VERSION), de la mas nueva, y guarda de a 10.
-    ponytail: el tope por corrida cuida el cupo gratis de flash-lite (500 al dia, compartido con
-    toda la app); el atraso se pone al dia en unos dias. Con cupo pagado se puede quitar."""
+    """Lee las sesiones que faltan (o leidas con otra VERSION), de la mas nueva, y guarda de a 3.
+    Va lento a proposito (una llamada por minuto); el workflow lo corta por tiempo y la
+    proxima corrida sigue donde quedo."""
     from concurrent.futures import ThreadPoolExecutor
     ya = guardado()
     c = sqlite3.connect(db)
@@ -179,7 +226,7 @@ def precalcular(db: str, gente: list[dict], hilos: int = 3, maximo: int | None =
         for i, (vid, s) in enumerate(ex.map(una, faltan), 1):
             if s:
                 lote[vid] = s
-            if len(lote) >= 10 or (i == len(faltan) and lote):  # de a poco: si el timeout corta, lo leido queda
+            if len(lote) >= 3 or (i == len(faltan) and lote):  # de a poco: si el timeout corta, lo leido queda
                 _guardar(lote)
                 total += len(lote)
                 lote = {}
@@ -255,6 +302,8 @@ if __name__ == "__main__":
                                   {"orador": "ministro Pérez", "cargo": "ministro o autoridad", "sobre": "x", "postura": "comenta",
                                    "tema": "Salud", "dijo": "Explicó.", "proyecto": ""}])
     s = leer("v1", "Pleno: Senado", "t", "2026-10-01", "texto", gente, falso)
+    ts = trozos("palabra " * 12_000)
+    assert len(ts) == 3 and all(len(t) <= TROZO for t in ts) and ts[1][:SOLAPE] == ts[0][-SOLAPE:], [len(t) for t in ts]
     assert [d["id"] for d in s["dichos"]] == ["senado:matute charun", None] and s["organo"] == "Pleno del Senado", s
     if "precalcular" in sys.argv:
         from consultas.integrantes import integrantes
