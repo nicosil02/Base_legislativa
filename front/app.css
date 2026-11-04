@@ -433,7 +433,7 @@ b.contra { color:#C62828; font-weight:600; }
 .pv p { margin:0 0 2px; font-size:13.5px; line-height:1.45; }
 .pv small { color:var(--ink3); font-size:12px; }
 .pv.dicho p { font-size:13px; color:var(--ink2); margin-top:4px; }
-.pv.dicho .d-tema { font-weight:600; color:var(--ink); margin-top:0; }
+.pv.dicho .d-piensa { font-size:13.5px; color:var(--ink); margin-top:0; }
 .pv .voto { flex:none; }
 .cp-tit .cp-cargo { font-size:12.5px; color:var(--ink2); margin:0 0 2px; }
 .cp-tit .cp-cargo b { color:var(--ink); font-weight:600; }

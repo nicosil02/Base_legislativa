@@ -288,6 +288,19 @@ jobs:
             python -X utf8 -m congreso_live.reclasificar_temas run || echo "[warn] reclasificar_temas fallo, sigo"
           fi
 
+      - name: Posturas de congresistas leidas con IA (solo sesiones nuevas) y cargos en comisiones
+        # Tras bajar las transcripciones (13-14 UTC) y a las 18 de Lima (23 UTC) por las
+        # sesiones en vivo de la tarde. Solo lee lo que falta en data/posturas.json.
+        # Los cargos salen de las paginas del Senado y de Diputados (consultas/cargos.py).
+        if: steps.hora.outputs.hour == '13' || steps.hora.outputs.hour == '14' || steps.hora.outputs.hour == '23' || github.event_name == 'workflow_dispatch'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          PYTHONIOENCODING: utf-8
+        run: |
+          GEMINI_API_KEY="$CLIENTES_CLAVE" timeout 1500 python -X utf8 -m consultas.posturas precalcular || echo "[warn] posturas fallo, sigo"
+          timeout 300 python -X utf8 -m consultas.cargos || echo "[warn] cargos fallo, sigo"
+
       - name: Envio de alerta diaria (am/pm)
         env:
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}

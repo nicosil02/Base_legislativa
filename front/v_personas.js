@@ -37,6 +37,12 @@ VISTAS.personas = (() => {
   const camaras = () => CAMARAS.filter(([, , pais]) => !App.pais || pais === App.pais);
   const miembros = () => gente.filter((p) => p.camara === f().cam);
   // presidir una comision decide que se agenda: va en la tarjeta
+  // titular o suplente de una comision (solo el Senado lo publica)
+  const MIEMBRO = /^(Titular|Suplente)$/;
+  const integra = (p) => {
+    const xs = (p.cargos ?? []).filter((c) => MIEMBRO.test(c.cargo));
+    return xs.length ? `<p class="cp-cargo">Integra ${xs.map((c) => `${esc(c.organo.replace(/^Comisión /, "la comisión "))}${c.cargo === "Suplente" ? " (suplente)" : ""}`).join(", ")}</p>` : "";
+  };
   const preside = (p) => (p.cargos ?? []).find((c) => c.cargo.startsWith("Presiden"));
 
   // Asientos en semicirculo: filas proporcionales al radio, de izquierda a derecha.
@@ -201,33 +207,37 @@ VISTAS.personas = (() => {
   const chipPostura = (x) => `<span class="voto ${POSTURA[x] ?? "bv-nv"}">${esc(oracion(x))}</span>`;
 
   // lo que dijo llega aparte (Gemini lee cada sesion): la ficha no lo espera
+  // posturas: Gemini ya las leyo en la corrida diaria (consultas/posturas.precalcular)
+  const PESTANA = "Posturas en el Congreso";
   function dijo(caja, r, sel, p) {
     if (!r.dijo) {
-      caja.innerHTML = `<p class="nota">Leyendo lo que dijo en cada sesión. Tarda unos segundos la primera vez.</p>${espera(3)}`;
-      r.pidiendo ??= App.pedir("dijo_persona", { pais: p.pais, persona: p.id, nombre: nombre(p) });
-      r.pidiendo.then((d) => { r.dijo = d; if (caja.isConnected && f().id === clave(p)) dijo(caja, r, sel, p); },
-        (e) => { r.pidiendo = null; if (caja.isConnected) caja.innerHTML = `<div class="aviso">No se pudo leer: ${esc(e.message)}</div>`; });
+      caja.innerHTML = espera(3);
+      pedirDijo(r, p).then(() => { if (caja.isConnected && f().id === clave(p)) dijo(caja, r, sel, p); },
+        (e) => { if (caja.isConnected) caja.innerHTML = `<div class="aviso">No se pudo traer: ${esc(e.message)}</div>`; });
       return;
     }
     const todas = r.dijo.sesiones;
     const habla = todas.filter((x) => x.postura !== MENCION);
     const defs = [
-      { k: "organo", t: "Dónde", ops: distintos(todas.map((x) => x.organo)).sort().map((o) => [o, o]) },
+      { k: "tema", t: "Tema", ops: distintos(habla.map((x) => x.tema)).filter((t) => t !== "Otros").sort().map((t) => [t, t]) },
       { k: "postura", t: "Postura", ops: distintos(habla.map((x) => x.postura)).map((o) => [o, oracion(o)]) },
+      { k: "organo", t: "Dónde", ops: distintos(habla.map((x) => x.organo)).sort().map((o) => [o, o]) },
     ];
-    const ses = habla.filter((x) => (!sel.organo || x.organo === sel.organo) && (!sel.postura || x.postura === sel.postura));
+    const ses = habla.filter((x) => (!sel.tema || x.tema === sel.tema) && (!sel.organo || x.organo === sel.organo) && (!sel.postura || x.postura === sel.postura));
     const mencion = todas.length - habla.length;
-    caja.innerHTML = `<div class="f-caja"></div>` + (ses.map((x) => `<div class="pv dicho">${x.postura ? chipPostura(x.postura) : ""}<div>
-        ${x.tema ? `<p class="d-tema">${esc(oracion(x.tema))}</p>` : ""}
-        ${x.piensa ? `<p>${esc(x.piensa)}</p>` : x.trozos.map((t) => `<p>«${esc(t)}»</p>`).join("")}
-        <small>${esc(fechaCorta(x.fecha))} · ${esc(x.organo)} ${enlaceIcono(x.url, "Ver la sesión")}</small></div></div>`).join("")
-      || `<div class="vacio">${todas.length ? "Ninguna intervención con estos filtros." : "No aparece en las sesiones transcritas."}</div>`)
-      + (mencion && !sel.postura ? `<p class="nota">En ${mencion} ${mencion === 1 ? "sesión más solo lo nombran" : "sesiones más solo lo nombran"}, sin que hable.</p>` : "")
-      + (r.dijo.mesas.length && !sel.organo && !sel.postura ? `<h3 class="p-sub">Mesas técnicas que organizó</h3>${r.dijo.mesas.map((m) => `<div class="pv"><div><p>${esc(m.titulo ?? "")}</p>
+    const libre = !sel.tema && !sel.organo && !sel.postura;
+    caja.innerHTML = `<div class="f-caja"></div>` + (ses.map((x) => `<div class="pv dicho">${x.postura ? chipPostura(x.postura) : `<span class="voto bv-nv">Sin resumir</span>`}<div>
+        ${x.piensa ? `<p class="d-piensa">${esc(x.piensa)}</p>` : x.trozos.slice(0, 1).map((t) => `<p>«${esc(t)}»</p>`).join("")}
+        <small>${x.tema && x.tema !== "Otros" ? `${esc(x.tema)} · ` : ""}${esc(fechaCorta(x.fecha))} · ${esc(x.organo)} ${enlaceIcono(x.url, "Ver la sesión")}</small></div></div>`).join("")
+      || `<div class="vacio">${todas.length ? "Ninguna postura con estos filtros." : "No interviene en las sesiones transcritas."}</div>`)
+      + (mencion && libre ? `<p class="nota">En ${mencion} ${mencion === 1 ? "sesión más solo lo nombran" : "sesiones más solo lo nombran"}, sin que hable.</p>` : "")
+      + (r.dijo.mesas.length && libre ? `<h3 class="p-sub">Mesas técnicas que organizó</h3>${r.dijo.mesas.map((m) => `<div class="pv"><div><p>${esc(m.titulo ?? "")}</p>
         <small>${esc(fechaCorta(m.fecha))} ${enlaceIcono(m.url, "Abrir")}</small></div></div>`).join("")}` : "")
-      + (habla.some((x) => x.piensa) ? `<p class="nota">Resumen hecho con IA a partir de la transcripción. Abre la sesión para el texto exacto.</p>` : "");
+      + (habla.some((x) => x.piensa) ? `<p class="nota">Resumido con IA a partir de la transcripción. Abre la sesión para el texto exacto.</p>` : "");
     barra(caja.querySelector(".f-caja"), defs, sel, () => dijo(caja, r, sel, p));
   }
+  const pedirDijo = (r, p) => (r.pidiendo ??= App.pedir("dijo_persona", { pais: p.pais, persona: p.id, nombre: nombre(p) })
+    .then((d) => { r.dijo = d; }, (e) => { r.pidiendo = null; throw e; }));
 
   // quien hablo del proyecto cuando se sustento o debatio, agrupado por bancada
   const debates = new Map();
@@ -252,6 +262,7 @@ VISTAS.personas = (() => {
   function posturas(r) {
     const n = {};
     r.pls.forEach((x) => { if (x.tema && x.tema !== "Otros") n[x.tema] = (n[x.tema] ?? 0) + (x.primero ? 2 : 1); });
+    (r.dijo?.sesiones ?? []).forEach((x) => { if (x.tema && x.tema !== "Otros" && x.postura !== MENCION) n[x.tema] = (n[x.tema] ?? 0) + 1; });
     return Object.entries(n).sort((a, b) => b[1] - a[1]).slice(0, 7).map(([t]) => t);
   }
 
@@ -269,7 +280,8 @@ VISTAS.personas = (() => {
     const enlace = p.url ? `<a class="nota" href="${esc(p.url)}" target="_blank" rel="noopener">${p.url.includes("observatorio") ? "Perfil en el Observatorio Legislativo" : "Perfil oficial"}</a>` : "";
     panel.innerHTML = `<div class="cp-cab">${foto(p, "cp-foto")}<div class="cp-tit"><h2>${esc(nombre(p))}</h2>
         <p>${bancada(p.bancada)} · ${esc(NOMBRE_CAMARA[p.camara])}${p.region ? ` · ${esc(p.region)}` : ""}${p.condicion && p.condicion !== "en ejercicio" ? ` · ${esc(p.condicion)}` : ""}</p>
-        ${(p.cargos ?? []).map((c) => `<p class="cp-cargo"><b>${esc(c.cargo)}</b> ${esc(c.organo)}</p>`).join("")}
+        ${(p.cargos ?? []).filter((c) => !MIEMBRO.test(c.cargo)).map((c) => `<p class="cp-cargo"><b>${esc(c.cargo)}</b> ${esc(c.organo)}</p>`).join("")}
+        ${integra(p)}
         ${enlace}</div>
         <button type="button" class="cp-x" aria-label="Cerrar">${icono("x", 18)}</button></div>
       <div class="cp-resena">${p.resena ? `<p>${esc(p.resena)}</p>` : ""}</div>
@@ -295,7 +307,7 @@ VISTAS.personas = (() => {
     ].map(([n, t]) => `<div><b>${n}</b><span>${t}</span></div>`).join("");
     const sel = {};
     const tabs = [["Votos", (c) => votos(c, r.votos, sel, p.pais)], ["Proyectos", (c) => proyectos(c, r.pls, sel, p.pais)],
-      ["Qué dijo", (c) => dijo(c, r, sel, p)]].filter(([t]) => t !== "Votos" || r.votos.length);
+      [PESTANA, (c) => dijo(c, r, sel, p)]].filter(([t]) => t !== "Votos" || r.votos.length);
     const cuerpo = panel.querySelector(".cp-cuerpo");
     let actual = tabs[0];
     const ir = (t) => {
@@ -304,18 +316,21 @@ VISTAS.personas = (() => {
       actual[1](cuerpo);
     };
     ir(actual[0]);
-    // empieza a leer lo que dijo apenas sale la ficha
-    r.pidiendo ??= App.pedir("dijo_persona", { pais: p.pais, persona: p.id, nombre: nombre(p) });
-    r.pidiendo.then((d) => { r.dijo = d; }, () => { r.pidiendo = null; });
+    // temas que trabaja: sus proyectos y sus posturas (estas llegan un instante despues)
     const caja = panel.querySelector(".cp-temas");
-    const ts = posturas(r);
-    caja.innerHTML = ts.length ? `<span class="nota">Temas de sus proyectos</span>${ts.map((t) => `<button type="button" class="chip-tema" data-t="${esc(t)}">${esc(t)}</button>`).join("")}` : "";
-    // un tema lleva a sus proyectos de ese tema
-    caja.querySelectorAll(".chip-tema").forEach((b) => { b.onclick = () => {
-      sel.tema = sel.tema === b.dataset.t ? "" : b.dataset.t;
-      caja.querySelectorAll(".chip-tema").forEach((x) => x.classList.toggle("activa", x.dataset.t === sel.tema));
-      ir("Proyectos");
-    }; });
+    const chips = () => {
+      const ts = posturas(r);
+      caja.innerHTML = ts.length ? `<span class="nota">Temas que trabaja</span>${ts.map((t) => `<button type="button" class="chip-tema${sel.tema === t ? " activa" : ""}" data-t="${esc(t)}">${esc(t)}</button>`).join("")}` : "";
+      // un tema filtra todas las pestañas; abre sus posturas si las hay, si no sus proyectos
+      caja.querySelectorAll(".chip-tema").forEach((b) => { b.onclick = () => {
+        sel.tema = sel.tema === b.dataset.t ? "" : b.dataset.t;
+        caja.querySelectorAll(".chip-tema").forEach((x) => x.classList.toggle("activa", x.dataset.t === sel.tema));
+        const hay = (r.dijo?.sesiones ?? []).some((x) => x.tema === sel.tema && x.postura !== MENCION);
+        ir(!sel.tema ? actual[0] : hay ? PESTANA : "Proyectos");
+      }; });
+    };
+    chips();
+    pedirDijo(r, p).then(() => { if (f().id === k) chips(); }, () => {});
     if (!p.resena) {  // la reseña de Wikipedia llega despues, sin frenar lo demas
       const w = p.wiki !== undefined ? p.wiki : (p.wiki = await App.pedir("resena_persona", { pais: p.pais, nombre: p.nombre }).catch(() => null));
       if (w && f().id === k) panel.querySelector(".cp-resena").innerHTML = `<p>${esc(w.texto)}</p><a class="nota" href="${esc(w.url)}" target="_blank" rel="noopener">Reseña de Wikipedia</a>`;
