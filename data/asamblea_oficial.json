@@ -1,0 +1,1059 @@
+[
+{
+"slug": "alextoapanta",
+"nombre": "Alex Toapanta Jami",
+"partido": "Pachakutik",
+"id": "EC:toapanta jami",
+"foto": "alextoapanta.jpg"
+},
+{
+"slug": "adriancastro",
+"nombre": "Adrián Castro Piedra",
+"partido": "Acción Democrática Nacional",
+"id": "EC:castro piedra",
+"foto": "adriancastro.jpg"
+},
+{
+"slug": "alejandrovanegas",
+"nombre": "Vanegas Cortazar Alejandro Vanegas Cortazar",
+"partido": "Revolución Ciudadana",
+"id": "EC:vanegas cortazar",
+"foto": "alejandrovanegas.jpg"
+},
+{
+"slug": "alexmoran",
+"nombre": "Morán Galarza Alex Morán Galarza",
+"partido": "Acción Democrática Nacional",
+"id": "EC:moran galarza",
+"foto": "alexmoran.jpg"
+},
+{
+"slug": "alfredoserrano",
+"nombre": "Serrano Valladares Alfredo",
+"partido": "Partido Social Cristiano",
+"id": null,
+"foto": "alfredoserrano.jpg"
+},
+{
+"slug": "amablechica",
+"nombre": "Antonio Chica Valencia Amable Antonio Chica Valencia",
+"partido": "Revolución Ciudadana",
+"id": "EC:chica valencia",
+"foto": "amablechica.jpg"
+},
+{
+"slug": "anaguim",
+"nombre": "Ana Cristina Guim Alfago",
+"partido": "Acción Democrática Nacional",
+"id": "EC:guim alfago",
+"foto": "anaguim.jpg"
+},
+{
+"slug": "anaraffo",
+"nombre": "Ana María Raffo",
+"partido": "Revolución Ciudadana",
+"id": "EC:raffo guevara",
+"foto": "anaraffo.jpg"
+},
+{
+"slug": "anaherrera",
+"nombre": "Herrera Gómez Ana Herrera Gómez",
+"partido": "Revolución Ciudadana",
+"id": "EC:herrera gomez",
+"foto": "anaherrera.jpg"
+},
+{
+"slug": "anateran",
+"nombre": "Belén Terán Lamán Ana Belén Terán Lamán",
+"partido": "Partido Social Cristiano",
+"id": "EC:teran laman",
+"foto": "anateran.jpg"
+},
+{
+"slug": "andrescastillo",
+"nombre": "Andrés Felipe Castillo Maldonado",
+"partido": "Acción Democrática Nacional",
+"id": "EC:castillo maldonado",
+"foto": "andrescastillo.jpg"
+},
+{
+"slug": "anayela",
+"nombre": "Ana Yela Duarte",
+"partido": "Revolución Ciudadana",
+"id": "EC:yela duarte",
+"foto": "anayela.jpg"
+},
+{
+"slug": "anelissejaramillo",
+"nombre": "Anelisse Josebeth Jaramillo Rodríguez",
+"partido": "Acción Democrática Nacional",
+"id": "EC:jaramillo rodriguez",
+"foto": "anelissejaramillo.jpg"
+},
+{
+"slug": "annabellaazin",
+"nombre": "Annabella Azín Arce",
+"partido": "Acción Democrática Nacional",
+"id": "EC:azin arce",
+"foto": "annabellaazin.jpg"
+},
+{
+"slug": "anniemunoz",
+"nombre": "Annie Muñoz Aroca",
+"partido": "Sin bancada",
+"id": "EC:munoz aroca",
+"foto": "anniemunoz.jpg"
+},
+{
+"slug": "anthonybecerra",
+"nombre": "Anthony Becerra Contreras",
+"partido": "Acción Democrática Nacional",
+"id": "EC:becerra contreras",
+"foto": "anthonybecerra.jpg"
+},
+{
+"slug": "berthavelez",
+"nombre": "Vélez Vélez Bertha Vélez Vélez",
+"partido": "Revolución Ciudadana",
+"id": "EC:velez velez",
+"foto": "berthavelez.jpg"
+},
+{
+"slug": "camilaleon",
+"nombre": "Camila León",
+"partido": "Acción Democrática Nacional",
+"id": "EC:leon cueva",
+"foto": "camilaleon.jpg"
+},
+{
+"slug": "blascoluna",
+"nombre": "Blasco Luna Arévalo.",
+"partido": "Revolución Ciudadana",
+"id": "EC:luna arevalo",
+"foto": "blascoluna.jpg"
+},
+{
+"slug": "arisdelyparrales",
+"nombre": "Arisdely Parrales Yagual",
+"partido": "Revolución Ciudadana",
+"id": "EC:parrales yagual",
+"foto": "arisdelyparrales.jpg"
+},
+{
+"slug": "camilacueva",
+"nombre": "Camila Anahi Cueva Toro",
+"partido": "Acción Democrática Nacional",
+"id": "EC:cueva tarco",
+"foto": "camilacueva.jpg"
+},
+{
+"slug": "carloscuesta",
+"nombre": "Carlos Miguel Cuesta Alvarez",
+"partido": "Acción Democrática Nacional",
+"id": "EC:cuesta alvarez",
+"foto": "carloscuesta.jpg"
+},
+{
+"slug": "carlosgavilanez",
+"nombre": "Carlos Alberto Gavilánez Muñoz",
+"partido": "Acción Democrática Nacional",
+"id": "EC:gavilanez munoz",
+"foto": "carlosgavilanez.jpg"
+},
+{
+"slug": "carlospulley",
+"nombre": "Alfredo Pulley Iturralde Carlos Alfredo Pulley Iturralde",
+"partido": "Partido Social Cristiano",
+"id": "EC:pulley iturralde",
+"foto": "carlospulley.jpg"
+},
+{
+"slug": "cesarpalacios",
+"nombre": "Palacios Alejandro César Palacios Alejandro",
+"partido": "Revolución Ciudadana",
+"id": "EC:palacios alejandro",
+"foto": "cesarpalacios.jpg"
+},
+{
+"slug": "carlosvillacres",
+"nombre": "Villacrés Steve Villacrés",
+"partido": "Acción Democrática Nacional",
+"id": "EC:villacres salazar",
+"foto": "carlosvillacres.jpg"
+},
+{
+"slug": "christianhernandez",
+"nombre": "Hernández Yunda Christian Hernández Yunda",
+"partido": "Revolución Ciudadana",
+"id": "EC:hernandez yunda",
+"foto": "christianhernandez.jpg"
+},
+{
+"slug": "carmentiupul",
+"nombre": "Carmen Tiupul Urquizo",
+"partido": "Pachakutik",
+"id": "EC:tiupul urquizo",
+"foto": "carmentiupul.jpg"
+},
+{
+"slug": "christopherjaramillo",
+"nombre": "Christopher Jaramillo Gómez",
+"partido": "Acción Democrática Nacional",
+"id": "EC:jaramillo gomez",
+"foto": "christopherjaramillo.jpg"
+},
+{
+"slug": "dianajacome",
+"nombre": "Diana Angélica Jácome Silva",
+"partido": "Acción Democrática Nacional",
+"id": "EC:jacome silva",
+"foto": "dianajacome.jpg"
+},
+{
+"slug": "compscordova",
+"nombre": "Córdova Diaz Comps Córdova Diaz",
+"partido": "Revolución Ciudadana",
+"id": "EC:cordova diaz",
+"foto": "compscordova.jpg"
+},
+{
+"slug": "cristianbenavides",
+"nombre": "Andres Benavides Fuentes Cristian Andres Benavides Fuentes",
+"partido": "Sin bancada",
+"id": "EC:benavides fuentes",
+"foto": "cristianbenavides.jpg"
+},
+{
+"slug": "diegofranco",
+"nombre": "Diego Martín Franco Hanze",
+"partido": "Acción Democrática Nacional",
+"id": "EC:franco hanze",
+"foto": "diegofranco.jpg"
+},
+{
+"slug": "dinafarinango",
+"nombre": "Maribel Farinango Quilumbaquin Dina Maribel Farinango Quilumbaquin",
+"partido": "Pachakutik",
+"id": "EC:farinango quilumbaquin",
+"foto": "dinafarinango.jpg"
+},
+{
+"slug": "dianablacio",
+"nombre": "Diana Blacio Carrión",
+"partido": "Acción Democrática Nacional",
+"id": "EC:blacio carrion",
+"foto": "dianablacio.jpg"
+},
+{
+"slug": "diegosalas",
+"nombre": "Enrique Salas Barriga Diego Enrique Salas Barriga",
+"partido": "Revolución Ciudadana",
+"id": "EC:salas barriga",
+"foto": "diegosalas.jpg"
+},
+{
+"slug": "eckennerrecalde",
+"nombre": "Eckenner Recalde Álava",
+"partido": "Acción Democrática Nacional",
+"id": "EC:recalde alava",
+"foto": "eckennerrecalde.jpg"
+},
+{
+"slug": "domenicaescobar",
+"nombre": "Doménica Escobar Galarza",
+"partido": "Acción Democrática Nacional",
+"id": "EC:escobar galarza",
+"foto": "domenicaescobar.jpg"
+},
+{
+"slug": "edmundocerda",
+"nombre": "Edmundo Cerda Tapuy",
+"partido": "Pachakutik",
+"id": "EC:cerda tapuy",
+"foto": "edmundocerda.jpg"
+},
+{
+"slug": "esperanzarogel",
+"nombre": "Esperanza Rogel",
+"partido": "Acción Democrática Nacional",
+"id": "EC:rogel esperanza",
+"foto": "esperanzarogel.jpg"
+},
+{
+"slug": "dominiqueserrano",
+"nombre": "Dominique Serrano Molina",
+"partido": "Acción Democrática Nacional",
+"id": "EC:serrano molina",
+"foto": "dominiqueserrano.jpg"
+},
+{
+"slug": "elianacorrea",
+"nombre": "Correa González Eliana",
+"partido": "Revolución Ciudadana",
+"id": null,
+"foto": "elianacorrea.jpg"
+},
+{
+"slug": "edwinjarrin",
+"nombre": "Estuardo Jarrín Rivadeneira Edwin Estuardo Jarrín Rivadeneira",
+"partido": "Sin bancada",
+"id": "EC:jarrin rivadeneira",
+"foto": "edwinjarrin.jpg"
+},
+{
+"slug": "elizabethvega",
+"nombre": "Elizabeth Vega Segura",
+"partido": "Acción Democrática Nacional",
+"id": "EC:vega segura",
+"foto": "elizabethvega.jpg"
+},
+{
+"slug": "fabiolasanmartin",
+"nombre": "Sanmartín Parra Fabiola Sanmartín Parra",
+"partido": "Acción Democrática Nacional",
+"id": "EC:sanmartin parra",
+"foto": "fabiolasanmartin.jpg"
+},
+{
+"slug": "estebantorres",
+"nombre": "Esteban Torres Cobo",
+"partido": "Acción Democrática Nacional",
+"id": "EC:torres cobo",
+"foto": "estebantorres.jpg"
+},
+{
+"slug": "fernandocedeno",
+"nombre": "Cedeño Rivadeneira Fernando Cedeño Rivadeneira",
+"partido": "Revolución Ciudadana",
+"id": "EC:cedeno rivadeneira",
+"foto": "fernandocedeno.jpg"
+},
+{
+"slug": "enriquevargas",
+"nombre": "Vargas Quijano Carlos Vargas Quijano",
+"partido": "Sin bancada",
+"id": "EC:vargas quijano",
+"foto": "enriquevargas.jpg"
+},
+{
+"slug": "estefanialopez",
+"nombre": "Estefanía Elizabeth López Pico",
+"partido": "Acción Democrática Nacional",
+"id": "EC:lopez pico",
+"foto": "estefanialopez.jpg"
+},
+{
+"slug": "ferdinanalvarez",
+"nombre": "Ferdinan Alvarez",
+"partido": "Acción Democrática Nacional",
+"id": "EC:alvarez zambrano",
+"foto": "ferdinanalvarez.jpg"
+},
+{
+"slug": "fernandodelatorre",
+"nombre": "Fernando De la Torre",
+"partido": "Revolución Ciudadana",
+"id": "EC:de la",
+"foto": "fernandodelatorre.jpg"
+},
+{
+"slug": "gabrielamolina",
+"nombre": "GABRIELA MOLINA MENÉNDEZ MARÍA GABRIELA MOLINA MENÉNDEZ",
+"partido": "Revolución Ciudadana",
+"id": "EC:molina menendez",
+"foto": "gabrielamolina.jpg"
+},
+{
+"slug": "fernandamendez",
+"nombre": "Mabel Méndez Rojas",
+"partido": "Revolución Ciudadana",
+"id": "EC:mendez rojas",
+"foto": "fernandamendez.jpg"
+},
+{
+"slug": "franklinsamaniego",
+"nombre": "Franklin Samaniego",
+"partido": "Revolución Ciudadana",
+"id": "EC:samaniego maigua",
+"foto": "franklinsamaniego.jpg"
+},
+{
+"slug": "gracesuarez",
+"nombre": "Grace Alexandra Suarez Morales",
+"partido": "Acción Democrática Nacional",
+"id": "EC:suarez morales",
+"foto": "gracesuarez.jpg"
+},
+{
+"slug": "guillermobaez",
+"nombre": "Vicente Baez Mera Guillermo Vicente Baez Mera",
+"partido": "Revolución Ciudadana",
+"id": "EC:baez mera",
+"foto": "guillermobaez.jpg"
+},
+{
+"slug": "gerardomachado",
+"nombre": "Gerardo Machado Clavijo",
+"partido": "Revolución Ciudadana",
+"id": "EC:machado clavijo",
+"foto": "gerardomachado.jpg"
+},
+{
+"slug": "gracielaramirez",
+"nombre": "Ramírez Chalán Graciela Janeth",
+"partido": null,
+"id": "EC:ramirez chalen",
+"foto": "gracielaramirez.jpg"
+},
+{
+"slug": "guidomendoza",
+"nombre": "Mendoza Andrade Guido Mendoza Andrade",
+"partido": "Revolución Ciudadana",
+"id": "EC:mendoza andrade",
+"foto": "guidomendoza.jpg"
+},
+{
+"slug": "hernanzapata",
+"nombre": "Hernán Zapata Rojas",
+"partido": "Acción Democrática Nacional",
+"id": "EC:zapata rojas",
+"foto": "hernanzapata.jpg"
+},
+{
+"slug": "gustavomateus",
+"nombre": "Gustavo Mateus Acosta",
+"partido": "Revolución Ciudadana",
+"id": "EC:mateus acosta",
+"foto": "gustavomateus.jpg"
+},
+{
+"slug": "hectorvalladarez",
+"nombre": "Valladarez González Héctor",
+"partido": "Revolución Ciudadana",
+"id": null,
+"foto": "hectorvalladarez.jpg"
+},
+{
+"slug": "glendaimaicela",
+"nombre": "Vanessa Imaicela Camacho Glenda Vanessa Imaicela Camacho",
+"partido": "Acción Democrática Nacional",
+"id": "EC:imaicela camacho",
+"foto": "glendaimaicela.jpg"
+},
+{
+"slug": "henrybosquez",
+"nombre": "Bósquez Villena Henry Bósquez Villena",
+"partido": "Acción Democrática Nacional",
+"id": "EC:bosquez villena",
+"foto": "henrybosquez.jpg"
+},
+{
+"slug": "hermelcampos",
+"nombre": "Hermel Campos Tobar",
+"partido": "Revolución Ciudadana",
+"id": "EC:campos tobar",
+"foto": "hermelcampos.jpg"
+},
+{
+"slug": "jesusarias",
+"nombre": "David Arias Montalvo Jesús David Arias Montalvo",
+"partido": "Sin bancada",
+"id": "EC:arias montalvo",
+"foto": "jesusarias.jpg"
+},
+{
+"slug": "inesalarcon",
+"nombre": "Inés Margarita Alarcón",
+"partido": "Acción Democrática Nacional",
+"id": "EC:alarcon bueno",
+"foto": "inesalarcon.jpg"
+},
+{
+"slug": "jahirennoriega",
+"nombre": "Jahiren Elizabeth Noriega Donoso",
+"partido": "Revolución Ciudadana",
+"id": "EC:noriega donoso",
+"foto": "jahirennoriega.jpg"
+},
+{
+"slug": "hectorrodriguez",
+"nombre": "Rodríguez Chávez Héctor Rodríguez Chávez",
+"partido": "Revolución Ciudadana",
+"id": "EC:rodriguez chavez",
+"foto": "hectorrodriguez.jpg"
+},
+{
+"slug": "janinarizzo",
+"nombre": "Janina Rizzo Alvear",
+"partido": "Acción Democrática Nacional",
+"id": "EC:rizzo alvear",
+"foto": "janinarizzo.jpg"
+},
+{
+"slug": "jorgechamba",
+"nombre": "Jorge Chamba Cabanilla",
+"partido": "Acción Democrática Nacional",
+"id": "EC:chamba cabanilla",
+"foto": "jorgechamba.jpg"
+},
+{
+"slug": "jhajairaurresta",
+"nombre": "Urresta Jhajaira Urresta",
+"partido": "Sin bancada",
+"id": "EC:urresta guzman",
+"foto": "jhajairaurresta.jpg"
+},
+{
+"slug": "jenniferguillen",
+"nombre": "Noelia Guillen Rodriguez Jennifer Noelia Guillen Rodriguez",
+"partido": "Acción Democrática Nacional",
+"id": "EC:guillen rodriguez",
+"foto": "jenniferguillen.jpg"
+},
+{
+"slug": "jhonnylavayen",
+"nombre": "Lavayen Tamayo Johnny Lavayen Tamayo",
+"partido": "Acción Democrática Nacional",
+"id": "EC:lavayen tamayo",
+"foto": "jhonnylavayen.jpg"
+},
+{
+"slug": "isaacsolano",
+"nombre": "Isaac Solano Calle",
+"partido": "Acción Democrática Nacional",
+"id": "EC:solano calle",
+"foto": "isaacsolano.jpg"
+},
+{
+"slug": "josefinaromero",
+"nombre": "Josefina Romero Ponguillo",
+"partido": "Revolución Ciudadana",
+"id": "EC:romero ponguillo",
+"foto": "josefinaromero.jpg"
+},
+{
+"slug": "jhonpolanco",
+"nombre": "Polanco Lara John Polanco Lara",
+"partido": "Acción Democrática Nacional",
+"id": "EC:polanco lara",
+"foto": "jhonpolanco.jpg"
+},
+{
+"slug": "jimmyblacio",
+"nombre": "Jimmy Roberto Blacio Ochoa",
+"partido": "Acción Democrática Nacional",
+"id": "EC:blacio ochoa",
+"foto": "jimmyblacio.jpg"
+},
+{
+"slug": "josenango",
+"nombre": "Luis Nango Cuji José Luis Nango Cuji",
+"partido": "Pachakutik",
+"id": "EC:nango cuji",
+"foto": "josenango.jpg"
+},
+{
+"slug": "jimmyerazo",
+"nombre": "Carlos Erazo Andi Jimmy Carlos Erazo Andi",
+"partido": "Acción Democrática Nacional",
+"id": "EC:erazo andi",
+"foto": "jimmyerazo.jpg"
+},
+{
+"slug": "josenantipia",
+"nombre": "José Nantipia",
+"partido": null,
+"id": "EC:nantipia chumpi",
+"foto": null
+},
+{
+"slug": "karolinaduenas",
+"nombre": "Karolina Dueñas Palma",
+"partido": "Acción Democrática Nacional",
+"id": "EC:duenas palma",
+"foto": "karolinaduenas.jpg"
+},
+{
+"slug": "jorgetamayo",
+"nombre": "Fabricio Tamayo Triviño Jorge Fabricio Tamayo Triviño",
+"partido": "Acción Democrática Nacional",
+"id": "EC:tamayo trivino",
+"foto": "jorgetamayo.jpg"
+},
+{
+"slug": "josevallejo",
+"nombre": "Luis Vallejo Ayala José Luis Vallejo Ayala",
+"partido": "Revolución Ciudadana",
+"id": "EC:vallejo ayala",
+"foto": "josevallejo.jpg"
+},
+{
+"slug": "juanguzman",
+"nombre": "Guzmán Cruz Juan Guzmán Cruz",
+"partido": "Revolución Ciudadana",
+"id": "EC:guzman cruz",
+"foto": "juanguzman.jpg"
+},
+{
+"slug": "juanmolina",
+"nombre": "Juan Pablo Molina",
+"partido": "Revolución Ciudadana",
+"id": "EC:molina saldana",
+"foto": "juanmolina.jpg"
+},
+{
+"slug": "juliolasso",
+"nombre": "Xavier Lasso Mendoza",
+"partido": "Revolución Ciudadana",
+"id": "EC:lasso mendoza",
+"foto": "juliolasso.jpg"
+},
+{
+"slug": "juangonzalez",
+"nombre": "Juan Andrés González Alvear",
+"partido": "Revolución Ciudadana",
+"id": "EC:gonzalez alvear",
+"foto": "juangonzalez.jpg"
+},
+{
+"slug": "lizardocasanova",
+"nombre": "Lizardo Manuel Casanova Montesino",
+"partido": "Revolución Ciudadana",
+"id": "EC:casanova montesino",
+"foto": "lizardocasanova.jpg"
+},
+{
+"slug": "jorgeguevara",
+"nombre": "Jorge Guevara Benavidez",
+"partido": "Acción Democrática Nacional",
+"id": "EC:guevara benavidez",
+"foto": "jorgeguevara.jpg"
+},
+{
+"slug": "ledyzuniga",
+"nombre": "Zuñiga Rocha Ledy Zuñiga Rocha",
+"partido": "Revolución Ciudadana",
+"id": "EC:zuniga rocha",
+"foto": "ledyzuniga.jpg"
+},
+{
+"slug": "lilianaduran",
+"nombre": "Liliana Durán Aguilar",
+"partido": "Revolución Ciudadana",
+"id": "EC:duran aguilar",
+"foto": "lilianaduran.jpg"
+},
+{
+"slug": "leninbarreto",
+"nombre": "Barreto Lenin Barreto",
+"partido": "Revolución Ciudadana",
+"id": "EC:barreto zambrano",
+"foto": "leninbarreto.jpg"
+},
+{
+"slug": "manuelblacio",
+"nombre": "Blacio Castillo Manuel Blacio Castillo",
+"partido": "Acción Democrática Nacional",
+"id": "EC:blacio castillo",
+"foto": "manuelblacio.jpg"
+},
+{
+"slug": "keevingallardo",
+"nombre": "Gallardo Ruiz Keevin Gallardo Ruiz",
+"partido": "Acción Democrática Nacional",
+"id": "EC:gallardo ruiz",
+"foto": "keevingallardo.jpg"
+},
+{
+"slug": "juangonzaga",
+"nombre": "Juan Gonzaga Salazar",
+"partido": "Sin bancada",
+"id": "EC:gonzaga salazar",
+"foto": "juangonzaga.jpg"
+},
+{
+"slug": "luisjacome",
+"nombre": "Luis Fernando Jácome",
+"partido": "Acción Democrática Nacional",
+"id": "EC:jacome mejia",
+"foto": "luisjacome.jpg"
+},
+{
+"slug": "maitelevi",
+"nombre": "Levi Maite Levi",
+"partido": "Acción Democrática Nacional",
+"id": "EC:levi cabello",
+"foto": "maitelevi.jpg"
+},
+{
+"slug": "luismolina",
+"nombre": "Luis Molina",
+"partido": null,
+"id": "EC:molina onofa",
+"foto": null
+},
+{
+"slug": "mariamendoza",
+"nombre": "Besibell Mendoza Ibarra",
+"partido": "Acción Democrática Nacional",
+"id": "EC:mendoza ibarra",
+"foto": "mariamendoza.jpg"
+},
+{
+"slug": "katherinepacheco",
+"nombre": "Katherine Pacheco Machuca",
+"partido": "Acción Democrática Nacional",
+"id": "EC:pacheco machuca",
+"foto": "katherinepacheco.jpg"
+},
+{
+"slug": "marcosalvarado",
+"nombre": "Alvarado Espinel Humberto Alvarado Espinel",
+"partido": "Revolución Ciudadana",
+"id": "EC:alvarado espinel",
+"foto": "marcosalvarado.jpg"
+},
+{
+"slug": "mauricioordonez",
+"nombre": "Xavier Ordoñez Fuentes",
+"partido": "Acción Democrática Nacional",
+"id": "EC:ordonez fuentes",
+"foto": "mauricioordonez.jpg"
+},
+{
+"slug": "luigigarcia",
+"nombre": "García Velásquez Luigi García Velásquez",
+"partido": "Acción Democrática Nacional",
+"id": "EC:garcia velasquez",
+"foto": "luigigarcia.jpg"
+},
+{
+"slug": "mariainiguez",
+"nombre": "María Verónica Iñiguez Gallardo",
+"partido": "Revolución Ciudadana",
+"id": "EC:iniguez gallardo",
+"foto": "mariainiguez.jpg"
+},
+{
+"slug": "mariaacuna",
+"nombre": "Maria Acuña Vaca",
+"partido": "Acción Democrática Nacional",
+"id": "EC:acuna vaca",
+"foto": "mariaacuna.jpg"
+},
+{
+"slug": "luciajaramillo",
+"nombre": "Jaramillo Zurita Lucía Jaramillo Zurita",
+"partido": "Acción Democrática Nacional",
+"id": "EC:jaramillo zurita lucia",
+"foto": "luciajaramillo.jpg"
+},
+{
+"slug": "monicapalacios",
+"nombre": "Palacios Zambrano Mónica Palacios Zambrano",
+"partido": "Revolución Ciudadana",
+"id": "EC:palacios zambrano",
+"foto": "monicapalacios.jpg"
+},
+{
+"slug": "marianayumbay",
+"nombre": "Yumbay Yallico Mariana Yumbay Yallico",
+"partido": "Pachakutik",
+"id": "EC:yumbay yallico",
+"foto": "marianayumbay.jpg"
+},
+{
+"slug": "marcoolmedo",
+"nombre": "Olmedo Arias Marco Olmedo Arias",
+"partido": "Acción Democrática Nacional",
+"id": "EC:olmedo arias",
+"foto": "marcoolmedo.jpg"
+},
+{
+"slug": "marjorierosado",
+"nombre": "Lorena Rosado Sánchez",
+"partido": "Acción Democrática Nacional",
+"id": "EC:rosado sanchez",
+"foto": "marjorierosado.jpg"
+},
+{
+"slug": "mariozambrano",
+"nombre": "Zambrano Vera Mario Amado",
+"partido": "Acción Democrática Nacional",
+"id": null,
+"foto": "mariozambrano.jpg"
+},
+{
+"slug": "nuviavega",
+"nombre": "Rocío Vega Morillo Nuvia Rocío Vega Morillo",
+"partido": "Acción Democrática Nacional",
+"id": "EC:vega morillo",
+"foto": "nuviavega.jpg"
+},
+{
+"slug": "mariavillacreses",
+"nombre": "Villacreses Herrera María Villacreses Herrera",
+"partido": "Acción Democrática Nacional",
+"id": "EC:villacreses herrera",
+"foto": "mariavillacreses.jpg"
+},
+{
+"slug": "mireyapazmino",
+"nombre": "Mireya Pazmiño Arregui",
+"partido": "Revolución Ciudadana",
+"id": "EC:pazmino arregui",
+"foto": "mireyapazmino.jpg"
+},
+{
+"slug": "mishelmancheno",
+"nombre": "Mishel Mancheno Dávila",
+"partido": "Acción Democrática Nacional",
+"id": "EC:mancheno davila",
+"foto": "mishelmancheno.jpg"
+},
+{
+"slug": "marciaortiz",
+"nombre": "Verónica Ortiz Chipre Marcia Verónica Ortiz Chipre",
+"partido": "Revolución Ciudadana",
+"id": "EC:ortiz chipre",
+"foto": "marciaortiz.jpg"
+},
+{
+"slug": "monicaaleman",
+"nombre": "Mónica Alemán Mármol",
+"partido": "Revolución Ciudadana",
+"id": "EC:aleman marmol",
+"foto": "monicaaleman.jpg"
+},
+{
+"slug": "raulchavez",
+"nombre": "Chávez Raúl Chávez",
+"partido": "Revolución Ciudadana",
+"id": "EC:chavez nunez",
+"foto": "raulchavez.jpg"
+},
+{
+"slug": "miltonaguas",
+"nombre": "Milton Aguas",
+"partido": "Acción Democrática Nacional",
+"id": "EC:aguas flores",
+"foto": "miltonaguas.jpg"
+},
+{
+"slug": "mariamolina",
+"nombre": "María Molina Coro",
+"partido": "Acción Democrática Nacional",
+"id": "EC:molina coro",
+"foto": "mariamolina.jpg"
+},
+{
+"slug": "nankisaant",
+"nombre": "Nanki Lauro Saant Juank",
+"partido": "Revolución Ciudadana",
+"id": "EC:saant juank",
+"foto": "nankisaant.jpg"
+},
+{
+"slug": "nathalyfarinango",
+"nombre": "Nathaly Farinango Delgado",
+"partido": "Acción Democrática Nacional",
+"id": "EC:farinango delgado",
+"foto": "nathalyfarinango.jpg"
+},
+{
+"slug": "nuriabutina",
+"nombre": "Nuria Butiña Martinez",
+"partido": "Revolución Ciudadana",
+"id": "EC:butina martinez",
+"foto": "nuriabutina.jpg"
+},
+{
+"slug": "milenajacome",
+"nombre": "Cristina Jácome Milena Cristina Jácome",
+"partido": "Revolución Ciudadana",
+"id": "EC:jacome benitez",
+"foto": "milenajacome.jpg"
+},
+{
+"slug": "roqueordonez",
+"nombre": "Martin Ordoñez Quezada Roque Martin Ordoñez Quezada",
+"partido": "Revolución Ciudadana",
+"id": "EC:ordonez quezada",
+"foto": "roqueordonez.jpg"
+},
+{
+"slug": "paolacabezas",
+"nombre": "Paola Cabezas Castillo",
+"partido": "Revolución Ciudadana",
+"id": "EC:cabezas castillo",
+"foto": "paolacabezas.jpg"
+},
+{
+"slug": "paolajaramillo",
+"nombre": "Paola Michael Jaramillo Zurita",
+"partido": "Acción Democrática Nacional",
+"id": "EC:jaramillo zurita paola",
+"foto": "paolajaramillo.jpg"
+},
+{
+"slug": "monicasalazar",
+"nombre": "Salazar Hidalgo Mónica de Jesús",
+"partido": null,
+"id": null,
+"foto": "monicasalazar.jpg"
+},
+{
+"slug": "patriciochavez",
+"nombre": "Patricio Chávez Zavala",
+"partido": "Revolución Ciudadana",
+"id": "EC:chavez zavala",
+"foto": "patriciochavez.jpg"
+},
+{
+"slug": "robertojaramillo",
+"nombre": "Fernando Jaramillo Martínez",
+"partido": "Acción Democrática Nacional",
+"id": "EC:jaramillo martinez",
+"foto": "robertojaramillo.jpg"
+},
+{
+"slug": "saracabrera",
+"nombre": "Cabrera Chacón Sara Cabrera Chacón",
+"partido": "Revolución Ciudadana",
+"id": "EC:cabrera chacon",
+"foto": "saracabrera.jpg"
+},
+{
+"slug": "robertocuero",
+"nombre": "Roberto Cuero",
+"partido": "Revolución Ciudadana",
+"id": "EC:cuero medina",
+"foto": "robertocuero.jpg"
+},
+{
+"slug": "pablojurado",
+"nombre": "Pablo Aníbal Jurado Moreno",
+"partido": "Sin bancada",
+"id": "EC:jurado moreno",
+"foto": "pablojurado.jpg"
+},
+{
+"slug": "ronalgonzalez",
+"nombre": "González Valero Ronal González Valero",
+"partido": "Revolución Ciudadana",
+"id": "EC:gonzalez valero",
+"foto": "ronalgonzalez.jpg"
+},
+{
+"slug": "nailaquintana",
+"nombre": "Naila Quintana Tapia",
+"partido": "Acción Democrática Nacional",
+"id": "EC:quintana tapia",
+"foto": "nailaquintana.jpg"
+},
+{
+"slug": "samuelcelleri",
+"nombre": "Samuel Célleri Gómez",
+"partido": "Partido Social Cristiano",
+"id": "EC:celleri gomez",
+"foto": "samuelcelleri.jpg"
+},
+{
+"slug": "victoriadesintonio",
+"nombre": "Desintonio Victoria Desintonio",
+"partido": "Revolución Ciudadana",
+"id": "EC:desintonio malave",
+"foto": "victoriadesintonio.jpg"
+},
+{
+"slug": "rebecaveloz",
+"nombre": "Veloz Ramírez Viviana Veloz Ramírez",
+"partido": "Revolución Ciudadana",
+"id": "EC:veloz ramirez",
+"foto": "rebecaveloz.jpg"
+},
+{
+"slug": "sadefritschi",
+"nombre": "Sade Fritschi Naranjo",
+"partido": "Acción Democrática Nacional",
+"id": "EC:fritschi naranjo",
+"foto": "sadefritschi.jpg"
+},
+{
+"slug": "sandrafigueroa",
+"nombre": "Figueroa Aguilar Sandra Figueroa Aguilar",
+"partido": "Revolución Ciudadana",
+"id": "EC:figueroa aguilar",
+"foto": "sandrafigueroa.jpg"
+},
+{
+"slug": "pamelaaguirre",
+"nombre": "Pamela Aguirre",
+"partido": "Revolución Ciudadana",
+"id": "EC:aguirre zambonino",
+"foto": "pamelaaguirre.jpg"
+},
+{
+"slug": "silvianunez",
+"nombre": "Patricia Núñez",
+"partido": "Revolución Ciudadana",
+"id": "EC:nunez ramos",
+"foto": "silvianunez.jpg"
+},
+{
+"slug": "valentinacenteno",
+"nombre": "Centeno Arteaga Valentina Centeno Arteaga",
+"partido": "Acción Democrática Nacional",
+"id": "EC:centeno arteaga",
+"foto": "valentinacenteno.jpg"
+},
+{
+"slug": "sergiopena",
+"nombre": "Sergio Peña Veloz",
+"partido": "Sin bancada",
+"id": "EC:pena veloz",
+"foto": "sergiopena.jpg"
+},
+{
+"slug": "rosabaltazar",
+"nombre": "Cecilia Baltazar",
+"partido": "Pachakutik",
+"id": "EC:baltazar yucailla",
+"foto": "rosabaltazar.jpg"
+},
+{
+"slug": "ricardopatino",
+"nombre": "Ricardo Patiño Aroca",
+"partido": "Revolución Ciudadana",
+"id": "EC:patino aroca",
+"foto": "ricardopatino.jpg"
+},
+{
+"slug": "rosatorres",
+"nombre": "Alegría Torres Cadena Rosa Alegría Torres Cadena",
+"partido": "Acción Democrática Nacional",
+"id": "EC:torres cadena",
+"foto": "rosatorres.jpg"
+},
+{
+"slug": "segundochoro",
+"nombre": "Choro Duchi Manuel Choro Duchi",
+"partido": "Pachakutik",
+"id": "EC:choro duchi",
+"foto": "segundochoro.jpg"
+},
+{
+"slug": "segundotuala",
+"nombre": "Tuala Eustaquio Tuala",
+"partido": "Revolución Ciudadana",
+"id": "EC:tuala muntza",
+"foto": "segundotuala.jpg"
+},
+{
+"slug": "zoilazambrano",
+"nombre": "Isabel Zambrano Rodríguez Zoila Isabel Zambrano Rodríguez",
+"partido": "Revolución Ciudadana",
+"id": "EC:zambrano rodriguez",
+"foto": "zoilazambrano.jpg"
+}
+]

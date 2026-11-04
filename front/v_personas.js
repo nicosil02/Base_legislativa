@@ -12,11 +12,14 @@ VISTAS.personas = (() => {
   const ORIENTACION = ["Revolución Ciudadana", "Pachakutik", "Juntos por el Perú", "Ahora Nación", "Partido Cívico Obras",
     "Partido del Buen Gobierno", "Sin bancada", "Renovación Popular", "Fuerza Popular", "Partido Social Cristiano", "Acción Democrática Nacional"];
   const lugar = (b) => (ORIENTACION.includes(b) ? ORIENTACION.indexOf(b) : ORIENTACION.indexOf("Sin bancada"));
-  // color de cada partido segun sus plantillas de Wikipedia ("Party color")
-  const COLOR = { "Fuerza Popular": "#E9511B", "Renovación Popular": "#07769F", "Juntos por el Perú": "#60BC0F",
-    "Ahora Nación": "#E90305", "Partido del Buen Gobierno": "#FAD60A", "Partido Cívico Obras": "#006100",
-    "Acción Democrática Nacional": "#6E328A", "Revolución Ciudadana": "#00B0F6", "Pachakutik": "#FE2EC8",
-    "Partido Social Cristiano": "#FFD700", "Sin bancada": "#A3AFBA" };
+  // el color principal del logo de cada partido
+  const COLOR = { "Fuerza Popular": "#E8541F", "Renovación Popular": "#0F6E9C", "Juntos por el Perú": "#5DB320",
+    "Ahora Nación": "#E30613", "Partido del Buen Gobierno": "#F9C80E", "Partido Cívico Obras": "#1E7B1E",
+    "Acción Democrática Nacional": "#6C2C91", "Revolución Ciudadana": "#3FA9E0", "Pachakutik": "#D7262A",
+    "Partido Social Cristiano": "#F7C21A", "Sin bancada": "#A3AFBA" };
+  const TEMAS = ["Agricultura", "Ambiente", "Banca", "Comercio", "Construcción", "Consumo masivo", "Deporte", "Educación", "Energía",
+    "Farma", "Horeca", "Infraestructura", "Informalidad", "Inmobiliario", "Minería", "Mype", "Pensiones", "Pesca", "Salud",
+    "Saneamiento", "Seguros", "Tecnología", "Telecomunicaciones", "Trabajo", "Transporte", "Tributos"];
   const RESTO = ["#8D6E63", "#5C6BC0", "#26A69A", "#78909C"];
   const color = (b) => COLOR[b] ?? (COLOR[b] = RESTO[Object.keys(COLOR).length % RESTO.length]);
   const MESES = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
@@ -35,8 +38,8 @@ VISTAS.personas = (() => {
 
   // Asientos en semicirculo: filas proporcionales al radio, de izquierda a derecha.
   function asientos(n) {
-    const filas = Math.max(4, Math.round(Math.sqrt(n / 3.2)));
-    const radios = Array.from({ length: filas }, (_, i) => 0.38 + (0.62 * i) / (filas - 1));
+    const filas = Math.max(4, Math.ceil(Math.sqrt(n / 3)));
+    const radios = Array.from({ length: filas }, (_, i) => 0.42 + (0.58 * i) / (filas - 1));
     const suma = radios.reduce((a, b) => a + b, 0);
     const cuantos = radios.map((r) => Math.round((n * r) / suma));
     cuantos[filas - 1] += n - cuantos.reduce((a, b) => a + b, 0);
@@ -47,7 +50,9 @@ VISTAS.personas = (() => {
         pos.push({ x: r * Math.cos(a), y: r * Math.sin(a), a });
       }
     });
-    return { pos: pos.sort((p, q) => q.a - p.a), punto: (0.62 / (filas - 1)) * 0.42 };
+    // el punto cabe en el menor espacio entre filas o entre vecinos de una misma fila
+    const hueco = Math.min(0.58 / (filas - 1), ...radios.map((r, i) => (cuantos[i] > 1 ? (Math.PI * r) / (cuantos[i] - 1) : 1)));
+    return { pos: pos.sort((p, q) => q.a - p.a), punto: hueco * 0.44 };
   }
 
   function orden(gs) {
@@ -89,7 +94,7 @@ VISTAS.personas = (() => {
         ${r.votaciones.map((v, i) => `<button type="button" class="p-vot ${tema.v === i ? "activa" : ""}" data-v="${i}"><small>${esc(fechaCorta(v.fecha))}</small>${esc(oracion(v.asunto))}</button>`).join("")}</div>` : ""}
       ${tema.v != null ? leyendaVoto(r.votaciones[tema.v]) : `<p class="nota">El color fuerte marca a quien presentó o firmó proyectos sobre el tema.</p>`}
       ${r.ejemplos.length ? `<h3 class="p-sub">Proyectos recientes</h3>${r.ejemplos.slice(0, 5).map((x) => `<p class="p-ej"><small>${esc(fechaCorta(x.fecha))}</small> ${esc(oracion(x.titulo ?? ""))}</p>`).join("")}` : ""}`;
-    caja.querySelector(".p-quitar").onclick = () => { tema = null; f().q = ""; raiz.querySelector(".p-q").value = ""; pintar(raiz); };
+    caja.querySelector(".p-quitar").onclick = () => { tema = null; f().q = ""; raiz.querySelector(".p-tema").value = ""; pintar(raiz); };
     caja.querySelectorAll("[data-v]").forEach((x) => { x.onclick = () => { tema.v = x.dataset.v === "" ? null : Number(x.dataset.v); pintar(raiz); }; });
   }
 
@@ -129,55 +134,69 @@ VISTAS.personas = (() => {
 
   // ---- ficha de la persona ----
   const tipoVoto = (v) => (VOTO[v.voto] ? v.voto : "nv");
+  const nombreMes = (m) => `${MESES[Number(m.slice(5)) - 1]} ${m.slice(0, 4)}`;
+  const distintos = (xs) => [...new Set(xs.filter(Boolean))];
 
-  function votos(caja, todos, filtro, pais) {
+  // Barra de filtros con opciones fijas (sin escribir): cada uno es un <select> con lo que existe en los datos.
+  function barra(caja, defs, sel, alCambiar) {
+    const vivos = defs.filter((d) => d.ops.length > 1);
+    caja.innerHTML = vivos.length ? `<div class="fx">${vivos.map((d) => `<label><span>${d.t}</span>
+        <select data-k="${d.k}"><option value="">${d.todos ?? "Todos"}</option>${d.ops.map(([v, t]) => `<option value="${esc(v)}"${sel[d.k] === v ? " selected" : ""}>${esc(t)}</option>`).join("")}</select></label>`).join("")}
+      ${vivos.some((d) => sel[d.k]) ? `<button type="button" class="enlace f-limpiar">Limpiar</button>` : ""}</div>` : "";
+    caja.querySelectorAll("select").forEach((s) => { s.onchange = () => { sel[s.dataset.k] = s.value; alCambiar(); }; });
+    const l = caja.querySelector(".f-limpiar");
+    if (l) l.onclick = () => { defs.forEach((d) => { sel[d.k] = ""; }); alCambiar(); };
+  }
+
+  function votos(caja, todos, sel, pais) {
     if (!todos.length) { caja.innerHTML = `<div class="vacio">Sin votaciones nominales registradas.</div>`; return; }
-    const hasta = pais === "EC" ? `<p class="nota">Votos nominales del Observatorio Legislativo, que llegan hasta el ${esc(fechaCorta(todos[0].fecha))}. Lo posterior aún no está publicado por nombre, y se omiten las votaciones que el Observatorio cargó con error.</p>` : "";
-    const meses = [...new Set(todos.map((v) => v.fecha.slice(0, 7)))];  // lo mas nuevo primero
-    const pinta = (m) => {
-      const vs = todos.filter((v) => (!m || v.fecha.startsWith(m)) && (!filtro || plano(v.asunto).includes(filtro) || plano(v.tema) === filtro));
-      const n = (k) => vs.filter((v) => tipoVoto(v) === k).length;
-      const contra = vs.filter((v) => v.contra_bancada);
-      caja.querySelector(".v-res").innerHTML = vs.length ? `<div class="barra-votos">${["SI", "NO", "ABST", "BLANCO", "nv"].filter(n).map((k) => `<span class="bv-${k}" style="flex:${n(k)}"></span>`).join("")}</div>
-        <div class="v-cifras">${["SI", "NO", "ABST", "BLANCO", "nv"].filter(n).map((k) => `<span><i class="bv-${k}"></i>${n(k)} ${(VOTO[k] ?? "no votó").toLowerCase()}</span>`).join("")}</div>
-        ${contra.length ? `<p class="nota">${contra.length} ${contra.length === 1 ? "vez" : "veces"} votó distinto a la mayoría de su bancada. Van primero.</p>` : ""}` : "";
-      caja.querySelector(".v-lista").innerHTML = [...contra, ...vs.filter((v) => !v.contra_bancada)].slice(0, 60).map((v) => `<div class="pv">
+    const defs = [
+      { k: "tema", t: "Tema", ops: distintos(todos.map((v) => v.tema)).filter((t) => t !== "Otros").sort().map((t) => [t, t]) },
+      { k: "mes", t: "Mes", ops: distintos(todos.map((v) => v.fecha.slice(0, 7))).map((m) => [m, nombreMes(m)]) },
+      { k: "voto", t: "Cómo votó", ops: ["SI", "NO", "ABST", "BLANCO", "nv"].filter((k) => todos.some((v) => tipoVoto(v) === k)).map((k) => [k, VOTO[k] ?? "No votó"]) },
+      { k: "contra", t: "Frente a su bancada", todos: "Todas", ops: [["si", "Votó distinto a su bancada"], ["no", "Votó con su bancada"]] },
+    ];
+    const vs = todos.filter((v) => (!sel.tema || v.tema === sel.tema) && (!sel.mes || v.fecha.startsWith(sel.mes))
+      && (!sel.voto || tipoVoto(v) === sel.voto) && (!sel.contra || (sel.contra === "si") === !!v.contra_bancada));
+    const n = (k) => vs.filter((v) => tipoVoto(v) === k).length;
+    const tipos = ["SI", "NO", "ABST", "BLANCO", "nv"].filter(n);
+    caja.innerHTML = `<div class="f-caja"></div>
+      ${vs.length ? `<div class="barra-votos">${tipos.map((k) => `<span class="bv-${k}" style="flex:${n(k)}"></span>`).join("")}</div>
+      <div class="v-cifras"><b>${vs.length} ${vs.length === 1 ? "votación" : "votaciones"}</b>${tipos.map((k) => `<span><i class="bv-${k}"></i>${n(k)} ${(VOTO[k] ?? "no votó").toLowerCase()}</span>`).join("")}</div>` : ""}
+      <div class="v-lista">${vs.slice(0, 80).map((v) => `<div class="pv">
           <span class="voto bv-${tipoVoto(v)}">${esc(VOTO[v.voto] ?? "No votó")}</span><div><p>${esc(oracion(v.asunto))}</p>
-          <small>${esc(fechaCorta(v.fecha))}${v.tema && v.tema !== "Otros" ? ` · ${esc(v.tema)}` : ""}${v.contra_bancada ? " · contra su bancada" : ""}</small></div></div>`).join("")
-        || `<div class="vacio">Ninguna votación${filtro ? " con ese filtro" : ""}.</div>`;
-    };
-    caja.innerHTML = `${hasta}<div class="v-meses"></div><div class="v-res"></div><div class="v-lista"></div>`;
-    const ops = ["Todo", ...meses.map((m) => `${MESES[Number(m.slice(5)) - 1]} ${m.slice(2, 4)}`)];
-    segmentado(caja.querySelector(".v-meses"), ops, "Todo", (t) => pinta(meses[ops.indexOf(t) - 1]));
-    pinta(null);
+          <small>${esc(fechaCorta(v.fecha))}${v.tema && v.tema !== "Otros" ? ` · ${esc(v.tema)}` : ""}${v.contra_bancada ? ` · <b class="contra">distinto a su bancada</b>` : ""}</small></div></div>`).join("")
+        || `<div class="vacio">Ninguna votación con estos filtros.</div>`}</div>
+      ${pais === "EC" ? `<p class="nota">Votos del Observatorio Legislativo, hasta el ${esc(fechaCorta(todos[0].fecha))}. Se omiten las votaciones que cargó con error.</p>` : ""}`;
+    barra(caja.querySelector(".f-caja"), defs, sel, () => votos(caja, todos, sel, pais));
   }
 
   const filaPl = (x) => `<div class="pv"><span class="pl-n">${esc(String(x.pl).split("-")[0].replace(/^0+/, "") || x.pl)}</span><div>
-      <p>${esc(oracion(x.titulo ?? ""))}</p><small>${esc(fechaCorta(x.fecha))} · ${esc(x.estado ?? "")}${x.tema && x.tema !== "Otros" ? ` · ${esc(x.tema)}` : ""}${x.seguido ? " · lo sigues" : ""}</small></div></div>`;
-  function proyectos(caja, pls, filtro) {
-    const vale = pls.filter((x) => !filtro || plano(x.titulo).includes(filtro) || plano(x.tema) === filtro);
-    const grupos = { Presentó: vale.filter((x) => x.primero), "Firmó": vale.filter((x) => !x.primero) };
-    const pinta = (t) => {
-      const xs = grupos[t.replace(/ \(\d+\)$/, "")];
-      caja.querySelector(".pr-lista").innerHTML = [...xs.filter((x) => x.seguido), ...xs.filter((x) => !x.seguido)].map(filaPl).join("")
-        || `<div class="vacio">Ninguno${filtro ? " con ese filtro" : ""}.</div>`;
-    };
-    caja.innerHTML = `<div class="pr-seg"></div><div class="pr-lista"></div>`;
-    const ops = Object.entries(grupos).map(([k, v]) => `${k} (${v.length})`);
-    segmentado(caja.querySelector(".pr-seg"), ops, ops[0], pinta);
-    pinta(ops[0]);
+      <p>${esc(oracion(x.titulo ?? ""))}</p><small>${x.primero ? "Lo presentó" : "Lo firmó"} · ${esc(fechaCorta(x.fecha))} · ${esc(x.estado ?? "")}${x.tema && x.tema !== "Otros" ? ` · ${esc(x.tema)}` : ""}${x.seguido ? " · lo sigues" : ""}</small></div></div>`;
+  function proyectos(caja, pls, sel) {
+    const defs = [
+      { k: "tema", t: "Tema", ops: distintos(pls.map((x) => x.tema)).filter((t) => t !== "Otros").sort().map((t) => [t, t]) },
+      { k: "rol", t: "Participación", ops: [["p", `Lo presentó (${pls.filter((x) => x.primero).length})`], ["f", `Lo firmó (${pls.filter((x) => !x.primero).length})`]] },
+      { k: "estado", t: "Estado", ops: distintos(pls.map((x) => x.estado)).sort().map((e) => [e, oracion(e)]) },
+    ];
+    const xs = pls.filter((x) => (!sel.tema || x.tema === sel.tema) && (!sel.rol || (sel.rol === "p") === x.primero) && (!sel.estado || x.estado === sel.estado));
+    caja.innerHTML = `<div class="f-caja"></div><div class="v-cifras"><b>${xs.length} ${xs.length === 1 ? "proyecto" : "proyectos"}</b></div>
+      ${[...xs.filter((x) => x.seguido), ...xs.filter((x) => !x.seguido)].map(filaPl).join("") || `<div class="vacio">Ninguno con estos filtros.</div>`}`;
+    barra(caja.querySelector(".f-caja"), defs, sel, () => proyectos(caja, pls, sel));
   }
 
-  function dijo(caja, r, filtro) {
-    const ses = r.sesiones.filter((x) => !filtro || x.trozos.some((t) => plano(t).includes(filtro)));
-    caja.innerHTML = ses.map((x) => `<div class="pv dicho"><div><small>${esc(fechaCorta(x.fecha))} · ${esc(x.organo)} ${enlaceIcono(x.url, "Ver la sesión")}</small>
+  function dijo(caja, r, sel) {
+    const defs = [{ k: "organo", t: "Dónde", ops: distintos(r.sesiones.map((x) => x.organo)).sort().map((o) => [o, o]) }];
+    const ses = r.sesiones.filter((x) => !sel.organo || x.organo === sel.organo);
+    caja.innerHTML = `<div class="f-caja"></div>` + (ses.map((x) => `<div class="pv dicho"><div><small>${esc(fechaCorta(x.fecha))} · ${esc(x.organo)} ${enlaceIcono(x.url, "Ver la sesión")}</small>
         ${x.trozos.map((t) => `<p>«${esc(t)}»</p>`).join("")}</div></div>`).join("")
-      + (r.mesas.length && !filtro ? `<h3 class="p-sub">Mesas técnicas que organizó</h3>${r.mesas.map((m) => `<div class="pv"><div><p>${esc(m.titulo ?? "")}</p>
+      + (r.mesas.length && !sel.organo ? `<h3 class="p-sub">Mesas técnicas que organizó</h3>${r.mesas.map((m) => `<div class="pv"><div><p>${esc(m.titulo ?? "")}</p>
         <small>${esc(fechaCorta(m.fecha))} ${enlaceIcono(m.url, "Abrir")}</small></div></div>`).join("")}` : "")
-      || `<div class="vacio">${filtro ? "No habló de eso en las sesiones transcritas." : "No aparece en las sesiones transcritas."}</div>`;
+      || `<div class="vacio">No aparece en las sesiones transcritas.</div>`);
+    barra(caja.querySelector(".f-caja"), defs, sel, () => dijo(caja, r, sel));
   }
 
-  // temas de sus proyectos y de lo que voto distinto a su bancada: lo que lo define
+  // temas de sus proyectos (los que presento pesan el doble): lo que impulsa
   function posturas(r) {
     const n = {};
     r.pls.forEach((x) => { if (x.tema && x.tema !== "Otros") n[x.tema] = (n[x.tema] ?? 0) + (x.primero ? 2 : 1); });
@@ -195,13 +214,13 @@ VISTAS.personas = (() => {
     raiz.querySelectorAll("circle.elegido").forEach((c) => c.classList.remove("elegido"));
     raiz.querySelector(`circle[data-p="${CSS.escape(clave(p))}"]`)?.classList.add("elegido");
     const panel = raiz.querySelector(".cajon-p");
+    const enlace = p.url ? `<a class="nota" href="${esc(p.url)}" target="_blank" rel="noopener">${p.url.includes("observatorio") ? "Perfil en el Observatorio Legislativo" : "Perfil oficial"}</a>` : "";
     panel.innerHTML = `<div class="cp-cab">${foto(p, "cp-foto")}<div class="cp-tit"><h2>${esc(nombre(p))}</h2>
         <p>${bancada(p.bancada)} · ${esc(NOMBRE_CAMARA[p.camara])}${p.region ? ` · ${esc(p.region)}` : ""}${p.condicion && p.condicion !== "en ejercicio" ? ` · ${esc(p.condicion)}` : ""}</p>
-        ${p.url ? `<a class="nota" href="${esc(p.url)}" target="_blank" rel="noopener">${p.pais === "EC" ? "Perfil en el Observatorio Legislativo" : "Perfil oficial"}</a>` : ""}</div>
+        ${enlace}</div>
         <button type="button" class="cp-x" aria-label="Cerrar">${icono("x", 18)}</button></div>
       <div class="cp-resena">${p.resena ? `<p>${esc(p.resena)}</p>` : ""}</div>
       <div class="cp-cifras">${espera(1)}</div><div class="cp-temas"></div>
-      <input type="search" class="buscar cp-filtro" placeholder="Filtrar sus votos, proyectos y lo que dijo (ej. agua, salud)" aria-label="Filtrar">
       <div class="cp-tabs"></div><div class="cp-cuerpo"></div>`;
     panel.classList.add("abierto");
     panel.scrollTop = 0;
@@ -221,18 +240,26 @@ VISTAS.personas = (() => {
       ...(r.votaciones ? [[r.pct_alineado != null ? `${r.pct_alineado}%` : "—", "vota con su bancada"], [r.votaciones, "votaciones"], [r.ausencias, "no votó"]] : []),
       [propios, "proyectos presentados"], [r.pls.length - propios, "firmó con otros"],
     ].map(([n, t]) => `<div><b>${n}</b><span>${t}</span></div>`).join("");
-    const ts = posturas(r);
-    panel.querySelector(".cp-temas").innerHTML = ts.length ? `<span class="nota">Temas que impulsa</span>${ts.map((t) => `<button type="button" class="chip-tema" data-t="${esc(t)}">${esc(t)}</button>`).join("")}` : "";
-    let filtro = "", actual;
-    const tabs = [["Votos", (c) => votos(c, r.votos, filtro, p.pais)], ["Proyectos", (c) => proyectos(c, r.pls, filtro)],
-      [`Qué dijo (${r.sesiones.length})`, (c) => dijo(c, r, filtro)]].filter(([t]) => t !== "Votos" || r.votos.length);
+    const sel = {};
+    const tabs = [["Votos", (c) => votos(c, r.votos, sel, p.pais)], ["Proyectos", (c) => proyectos(c, r.pls, sel)],
+      [`Qué dijo (${r.sesiones.length})`, (c) => dijo(c, r, sel)]].filter(([t]) => t !== "Votos" || r.votos.length);
     const cuerpo = panel.querySelector(".cp-cuerpo");
-    actual = tabs[0][1];
-    segmentado(panel.querySelector(".cp-tabs"), tabs.map(([t]) => t), tabs[0][0], (t) => { actual = tabs.find(([x]) => x === t)[1]; actual(cuerpo); });
-    actual(cuerpo);
-    const campo = panel.querySelector(".cp-filtro");
-    campo.oninput = () => { filtro = plano(campo.value.trim()); actual(cuerpo); };
-    panel.querySelectorAll(".chip-tema").forEach((b) => { b.onclick = () => { campo.value = b.dataset.t; campo.oninput(); }; });
+    let actual = tabs[0];
+    const ir = (t) => {
+      actual = tabs.find(([y]) => y === t);
+      segmentado(panel.querySelector(".cp-tabs"), tabs.map(([x]) => x), t, ir);
+      actual[1](cuerpo);
+    };
+    ir(actual[0]);
+    const caja = panel.querySelector(".cp-temas");
+    const ts = posturas(r);
+    caja.innerHTML = ts.length ? `<span class="nota">Temas de sus proyectos</span>${ts.map((t) => `<button type="button" class="chip-tema" data-t="${esc(t)}">${esc(t)}</button>`).join("")}` : "";
+    // un tema lleva a sus proyectos de ese tema
+    caja.querySelectorAll(".chip-tema").forEach((b) => { b.onclick = () => {
+      sel.tema = sel.tema === b.dataset.t ? "" : b.dataset.t;
+      caja.querySelectorAll(".chip-tema").forEach((x) => x.classList.toggle("activa", x.dataset.t === sel.tema));
+      ir("Proyectos");
+    }; });
     if (!p.resena) {  // la reseña de Wikipedia llega despues, sin frenar lo demas
       const w = p.wiki !== undefined ? p.wiki : (p.wiki = await App.pedir("resena_persona", { pais: p.pais, nombre: p.nombre }).catch(() => null));
       if (w && f().id === k) panel.querySelector(".cp-resena").innerHTML = `<p>${esc(w.texto)}</p><a class="nota" href="${esc(w.url)}" target="_blank" rel="noopener">Reseña de Wikipedia</a>`;
@@ -284,11 +311,12 @@ VISTAS.personas = (() => {
   }
 
   return {
-    titulo: "Congresistas y asambleístas", sub: "Elige la cámara. Busca a una persona o un tema para ver quién lo impulsa y cómo votó cada uno.",
+    titulo: "Congresistas y asambleístas", sub: "Elige la cámara. Con un tema ves quién lo impulsa y cómo votó cada uno.",
     async abrir(cuerpo) {
       cuerpo.innerHTML = `<div class="personas"><div class="p-arriba"><div class="p-camaras"></div>
-          <form class="p-busca"><input type="search" class="buscar p-q" list="p-lista" placeholder="Persona o tema: minería, salud, agua…" aria-label="Buscar" value="${esc(f().q)}">
-          <button type="submit" class="btn">Buscar</button></form></div><datalist id="p-lista"></datalist>
+          <form class="p-busca fx"><label><span>Persona</span><input type="search" class="buscar p-q" list="p-lista" placeholder="Escribe un nombre y elige" aria-label="Persona"></label>
+          <label><span>Tema</span><select class="p-tema"><option value="">Ninguno</option>${TEMAS.map((t) => `<option${f().q === t ? " selected" : ""}>${t}</option>`).join("")}</select></label></form></div>
+          <datalist id="p-lista"></datalist>
         <div class="p-escena"><div class="p-hemi">${espera(2)}</div><aside class="p-lado"></aside></div>
         <section class="p-grupo"></section><div class="p-tip" hidden></div><aside class="cajon-p" aria-label="Ficha"></aside></div>`;
       const raiz = cuerpo.querySelector(".personas");
@@ -302,14 +330,11 @@ VISTAS.personas = (() => {
       raiz.querySelectorAll(".p-cam").forEach((b) => { b.onclick = () => { if (f().cam === b.dataset.cam) return; f().cam = b.dataset.cam; f().bancada = ""; cerrar(raiz); escena(raiz); }; });
       tarjeta(raiz);
       const q = raiz.querySelector(".p-q");
-      const elegir = () => {
-        const txt = q.value.trim();
-        if (!txt) { tema = null; f().q = ""; pintar(raiz); return; }
-        const p = miembros().find((x) => nombre(x) === txt) ?? miembros().find((x) => plano(nombre(x)).includes(plano(txt)));
-        if (p) { f().q = ""; abrir(raiz, p); } else buscarTema(raiz, txt);
-      };
-      q.oninput = () => { if (miembros().some((x) => nombre(x) === q.value)) elegir(); };
-      raiz.querySelector(".p-busca").onsubmit = (e) => { e.preventDefault(); elegir(); };
+      const persona = () => miembros().find((x) => nombre(x) === q.value.trim()) ?? miembros().find((x) => plano(nombre(x)).includes(plano(q.value.trim())));
+      q.oninput = () => { if (miembros().some((x) => nombre(x) === q.value)) { abrir(raiz, persona()); q.value = ""; } };
+      raiz.querySelector(".p-busca").onsubmit = (e) => { e.preventDefault(); const p = q.value.trim() && persona(); if (p) { abrir(raiz, p); q.value = ""; } };
+      const selTema = raiz.querySelector(".p-tema");
+      selTema.onchange = () => { if (selTema.value) buscarTema(raiz, selTema.value); else { tema = null; f().q = ""; pintar(raiz); } };
       const abrirDe = (e) => { const s = e.target.closest("[data-p]"); if (s) { raiz.querySelector(".p-tip").hidden = true; abrir(raiz, porClave.get(s.dataset.p)); } };
       raiz.querySelector(".p-hemi").onclick = abrirDe;
       raiz.querySelector(".p-grupo").onclick = abrirDe;
