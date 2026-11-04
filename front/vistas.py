@@ -707,10 +707,10 @@ def atender(a: dict, usuario: str | None) -> dict | list | str | None:
     elif tipo == "ficha_persona":
         from alerts import pls_seguidos
         from consultas import personas
+        return personas.ficha(connect_ro("proyectos.db"), connect_ro("proyectos_ec.db"), a["pais"], a["persona"], set(pls_seguidos.lista()))
+    elif tipo == "resena_persona":  # la pagina oficial casi nunca trae reseña: Wikipedia, aparte para no frenar la ficha
         from consultas.integrantes import resena_wiki
-        f = personas.ficha(connect_ro("proyectos.db"), connect_ro("proyectos_ec.db"), a["pais"], a["persona"], set(pls_seguidos.lista()))
-        # la pagina oficial casi nunca trae reseña: se busca en Wikipedia
-        return {**f, "wiki": resena_wiki(a["pais"], a["nombre"]) if a.get("nombre") and not a.get("con_resena") else None}
+        return resena_wiki(a["pais"], a["nombre"])
     elif tipo == "seguir_pl":
         from alerts import pls_seguidos
         if a.get("si"):

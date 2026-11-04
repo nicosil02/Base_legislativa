@@ -54,7 +54,8 @@ def _peru(sesion, camara: str) -> list[dict]:
     sitio, tipo = ("senado", "senador") if camara == "senado" else ("diputados", "diputado")
     filas = []
     for pagina in (1, 2):
-        r = sesion.get(f"https://{sitio}.congreso.gob.pe/wp-json/wp/v2/{tipo}", params={"per_page": 100, "page": pagina}, timeout=40)
+        r = sesion.get(f"https://{sitio}.congreso.gob.pe/wp-json/wp/v2/{tipo}", params={"per_page": 100, "page": pagina, "_embed": "wp:featuredmedia",
+                                   "_fields": "title,link,content,class_list,_links,_embedded"}, timeout=60)
         if r.status_code == 400:  # ya no hay pagina 2
             break
         r.raise_for_status()
@@ -63,7 +64,9 @@ def _peru(sesion, camara: str) -> list[dict]:
     for x in filas:
         nombre = html.unescape(x["title"]["rendered"])  # "Velásquez García, Miguel Angel"
         b, reg = _tax(x, "grupo_parlamentario"), _tax(x, "distrito_electoral")
-        foto = (x.get("yoast_head_json", {}).get("og_image") or [{}])[0].get("url")
+        # la de 300 px: la original pesa ~400 KB y en el hemiciclo se piden muchas
+        tam = ((x.get("_embedded", {}).get("wp:featuredmedia") or [{}])[0].get("media_details") or {}).get("sizes", {})
+        foto = (tam.get("medium") or tam.get("full") or {}).get("source_url")
         out.append({"pais": "PE", "camara": camara, "id": f"{camara}:{apellidos('PE', nombre)}", "nombre": nombre,
                     "bancada": _BANCADA_PE.get(b, (b or "Sin bancada").replace("-", " ").capitalize()),
                     "region": _REGION_PE.get(reg, (reg or "").replace("-", " ").title() or None),
@@ -122,16 +125,22 @@ _estado: dict = {"datos": None, "hora": 0.0}
 _CANDADO = threading.Lock()
 
 
+def _renovar() -> None:
+    try:
+        _estado["datos"] = bajar()
+    except Exception as e:  # queda lo que habia; se reintenta en un dia
+        print(f"[integrantes] sigo con la copia: {e}")
+
+
 def integrantes() -> list[dict]:
-    """La lista del dia. Si no se puede bajar, la copia guardada en el repo."""
+    """Responde al tiro con lo que hay (la copia del repo al arrancar) y, una vez
+    al dia, baja la lista nueva por detras."""
     with _CANDADO:
-        if _estado["datos"] is None or time.time() - _estado["hora"] > CADA_SEG:
-            try:
-                _estado["datos"] = bajar()
-            except Exception as e:
-                print(f"[integrantes] uso la copia: {e}")
-                _estado["datos"] = _estado["datos"] or json.loads(COPIA.read_text(encoding="utf-8"))
-            _estado["hora"] = time.time()  # si fallo, se reintenta en un dia, no en cada visita
+        if _estado["datos"] is None:
+            _estado["datos"] = json.loads(COPIA.read_text(encoding="utf-8"))
+        if time.time() - _estado["hora"] > CADA_SEG:
+            _estado["hora"] = time.time()
+            threading.Thread(target=_renovar, daemon=True, name="vali-integrantes").start()
         return _estado["datos"]
 
 

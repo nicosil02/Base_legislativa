@@ -1,27 +1,31 @@
-// Congresistas y asambleistas: un hemiciclo por camara con sus bancadas
-// (consultas/integrantes.py); clic en un asiento abre su ficha (consultas/personas.py):
-// foto, reseña, proyectos que presento o apoyo, votos por mes, lo que dijo y sus mesas.
+// Congresistas y asambleistas: un hemiciclo por camara, bancadas de izquierda a
+// derecha (consultas/integrantes.py). Pasar sobre un asiento muestra quien es; el
+// clic abre su ficha en un panel lateral (consultas/personas.py).
 VISTAS.personas = (() => {
   const f = () => App.f("personas", { id: "", q: "" });
   const CAMARAS = [["senado", "Senado", "PE"], ["diputados", "Cámara de Diputados", "PE"], ["asamblea", "Asamblea Nacional", "EC"]];
   const NOMBRE_CAMARA = Object.fromEntries(CAMARAS.map(([k, t]) => [k, t]));
   const VOTO = { SI: "A favor", NO: "En contra", ABST: "Abstención" };
+  // De izquierda a derecha en el hemiciclo; lo que no esta aca va al centro
+  const ORIENTACION = ["Revolución Ciudadana", "Pachakutik", "Juntos por el Perú", "Ahora Nación", "Partido del Buen Gobierno",
+    "Sin bancada", "Partido Cívico Obras", "Renovación Popular", "Fuerza Popular", "Partido Social Cristiano", "Acción Democrática Nacional"];
+  const lugar = (b) => (ORIENTACION.includes(b) ? ORIENTACION.indexOf(b) : ORIENTACION.indexOf("Sin bancada"));
   // colores aproximados de cada bancada; las que no estan toman uno de la lista
   const COLOR = { "Fuerza Popular": "#EE7F1B", "Juntos por el Perú": "#2E8B57", "Renovación Popular": "#2A9FD8",
     "Partido del Buen Gobierno": "#7E57C2", "Partido Cívico Obras": "#D9A900", "Ahora Nación": "#C62828",
     "Acción Democrática Nacional": "#6A3FA0", "Revolución Ciudadana": "#17A2C4", "Pachakutik": "#3E9B3E", "Sin bancada": "#A3AFBA" };
   const RESTO = ["#8D6E63", "#EC407A", "#5C6BC0", "#26A69A", "#78909C"];
+  const color = (b) => COLOR[b] ?? (COLOR[b] = RESTO[Object.keys(COLOR).length % RESTO.length]);
   const MESES = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
-  let gente = null;
+  const fichas = new Map();  // ya pedidas: volver a abrir a alguien es instantaneo
+  let gente = null, lista = [], porClave = new Map();
 
+  const clave = (p) => `${p.camara}|${p.nombre}`;
   const nombre = (p) => (p.pais === "PE" ? p.nombre.split(",").reverse().join(" ") : p.nombre).replace(/\s+/g, " ").trim();
   const etiqueta = (p) => `${nombre(p)} · ${NOMBRE_CAMARA[p.camara]}, ${p.bancada}`;
   const iniciales = (p) => nombre(p).split(" ").slice(0, 2).map((w) => w[0]).join("");
   const foto = (p, cls) => `<span class="${cls}" style="--c:${color(p.bancada)}">${iniciales(p)}${p.foto ? `<img src="${esc(p.foto)}" alt="" loading="lazy" onerror="this.remove()">` : ""}</span>`;
-  function color(b) {
-    if (COLOR[b]) return COLOR[b];
-    return (COLOR[b] = RESTO[Object.keys(COLOR).length % RESTO.length]);
-  }
+  const bancada = (b) => `<span class="pb"><i style="background:${color(b)}"></i>${esc(b)}</span>`;
 
   // Asientos en semicirculo: filas proporcionales al radio, de izquierda a derecha.
   function asientos(n) {
@@ -37,126 +41,161 @@ VISTAS.personas = (() => {
         pos.push({ x: r * Math.cos(a), y: r * Math.sin(a), a });
       }
     });
-    return { pos: pos.sort((p, q) => q.a - p.a), punto: 0.58 / (filas - 1) * 0.4 };
+    return { pos: pos.sort((p, q) => q.a - p.a), punto: (0.58 / (filas - 1)) * 0.4 };
   }
 
   function hemiciclo(miembros, titulo) {
     const cuenta = {};
     miembros.forEach((p) => { cuenta[p.bancada] = (cuenta[p.bancada] ?? 0) + 1; });
-    const orden = Object.keys(cuenta).sort((a, b) => (a === "Sin bancada") - (b === "Sin bancada") || cuenta[b] - cuenta[a]);
-    const lista = [...miembros].sort((p, q) => orden.indexOf(p.bancada) - orden.indexOf(q.bancada) || nombre(p).localeCompare(nombre(q)));
-    const { pos, punto } = asientos(lista.length);
-    const mitad = Math.floor(lista.length / 2) + 1;
-    return `<section class="hemi"><h2>${esc(titulo)} <span>${lista.length} integrantes, mayoría ${mitad}</span></h2>
-      <svg viewBox="-1.12 -1.12 2.24 1.22" role="group" aria-label="${esc(titulo)}">
-        ${pos.map((s, i) => `<circle cx="${s.x.toFixed(4)}" cy="${(-s.y).toFixed(4)}" r="${punto.toFixed(4)}" fill="${color(lista[i].bancada)}"
-          data-p="${esc(lista[i].camara + "|" + lista[i].nombre)}" tabindex="0"><title>${esc(nombre(lista[i]))}, ${esc(lista[i].bancada)}</title></circle>`).join("")}
-        <text x="0" y="-0.08" text-anchor="middle" class="hemi-n">${lista.length}</text></svg>
-      <ul class="leyenda">${orden.map((b) => `<li><i style="background:${color(b)}"></i>${esc(b)} <b>${cuenta[b]}</b></li>`).join("")}</ul></section>`;
+    const orden = Object.keys(cuenta).sort((a, b) => lugar(a) - lugar(b) || cuenta[b] - cuenta[a]);
+    const sentados = [...miembros].sort((p, q) => orden.indexOf(p.bancada) - orden.indexOf(q.bancada) || nombre(p).localeCompare(nombre(q)));
+    const { pos, punto } = asientos(sentados.length);
+    return `<section class="hemi"><h2>${esc(titulo)}<span>${sentados.length} escaños · mayoría ${Math.floor(sentados.length / 2) + 1}</span></h2>
+      <svg viewBox="-1.12 -1.12 2.24 1.2" role="group" aria-label="${esc(titulo)}">
+        ${pos.map((s, i) => `<circle cx="${s.x.toFixed(4)}" cy="${(-s.y).toFixed(4)}" r="${punto.toFixed(4)}" fill="${color(sentados[i].bancada)}"
+          data-p="${esc(clave(sentados[i]))}" data-b="${esc(sentados[i].bancada)}" tabindex="0" aria-label="${esc(nombre(sentados[i]))}"></circle>`).join("")}
+        <text x="0" y="-0.06" text-anchor="middle" class="hemi-n">${sentados.length}</text></svg>
+      <ul class="leyenda">${orden.map((b) => `<li data-b="${esc(b)}"><i style="background:${color(b)}"></i>${esc(b)} <b>${cuenta[b]}</b></li>`).join("")}</ul></section>`;
   }
 
-  // ---- ficha ----
+  // ---- panel de la persona ----
   const mes = (fecha) => fecha.slice(0, 7);
-  const nombreMes = (m) => `${MESES[Number(m.slice(5)) - 1]} ${m.slice(0, 4)}`;
-  const reparto = (vs) => ["SI", "NO", "ABST", ""].map((k) => [k, vs.filter((v) => (VOTO[v.voto] ? v.voto : "") === k).length]);
+  const nombreMes = (m) => `${MESES[Number(m.slice(5)) - 1].slice(0, 3)} ${m.slice(2, 4)}`;
+  const tipoVoto = (v) => (VOTO[v.voto] ? v.voto : "nv");
 
   function votos(caja, todos) {
-    const meses = [...new Set(todos.map((v) => mes(v.fecha)))];
+    if (!todos.length) { caja.innerHTML = `<div class="vacio">Sin votaciones nominales registradas.</div>`; return; }
+    const meses = [...new Set(todos.map((v) => mes(v.fecha)))].reverse();
     const pintar = (m) => {
       const vs = m ? todos.filter((v) => mes(v.fecha) === m) : todos;
+      const n = (k) => vs.filter((v) => tipoVoto(v) === k).length;
       const contra = vs.filter((v) => v.contra_bancada);
-      const r = reparto(vs);
-      caja.querySelector(".v-resumen").innerHTML = `<div class="barra-votos">${r.filter(([, n]) => n).map(([k, n]) =>
-          `<span class="bv-${k || "nv"}" style="flex:${n}" title="${esc(VOTO[k] ?? "No votó")}: ${n}"></span>`).join("")}</div>
-        <p class="nota">${r.map(([k, n]) => `${n} ${(VOTO[k] ?? "no votó").toLowerCase()}`).join(", ")}${contra.length ? `. ${contra.length} contra la mayoría de su bancada, van primero` : ""}</p>`;
-      caja.querySelector(".v-lista").innerHTML = [...contra, ...vs.filter((v) => !v.contra_bancada)].slice(0, 30).map((v) => `<article class="fila"><div class="marcas"><span>${esc(fechaCorta(v.fecha))}</span>
-          <span class="voto bv-${VOTO[v.voto] ? v.voto : "nv"}">${esc(VOTO[v.voto] ?? "No votó")}</span>${v.contra_bancada ? `<span class="cli">Contra su bancada</span>` : ""}</div><p>${esc(oracion(v.asunto))}</p></article>`).join("")
-        + (vs.length > 30 ? `<p class="nota">Y ${vs.length - 30} votaciones más en este periodo.</p>` : "");
+      caja.querySelector(".v-res").innerHTML = `<div class="barra-votos">${["SI", "NO", "ABST", "nv"].filter(n).map((k) => `<span class="bv-${k}" style="flex:${n(k)}"></span>`).join("")}</div>
+        <div class="v-cifras">${["SI", "NO", "ABST", "nv"].map((k) => `<span><i class="bv-${k}"></i>${n(k)} ${(VOTO[k] ?? "no votó").toLowerCase()}</span>`).join("")}</div>
+        ${contra.length ? `<p class="nota">${contra.length} ${contra.length === 1 ? "vez" : "veces"} votó distinto a la mayoría de su bancada. Van primero.</p>` : ""}`;
+      caja.querySelector(".v-lista").innerHTML = [...contra, ...vs.filter((v) => !v.contra_bancada)].slice(0, 40).map((v) => `<div class="pv">
+          <span class="voto bv-${tipoVoto(v)}">${esc(VOTO[v.voto] ?? "No votó")}</span><div><p>${esc(oracion(v.asunto))}</p>
+          <small>${esc(fechaCorta(v.fecha))}${v.contra_bancada ? " · contra su bancada" : ""}</small></div></div>`).join("");
     };
-    if (!todos.length) { caja.innerHTML = `<div class="vacio">Sin votaciones nominales registradas.</div>`; return; }
-    caja.innerHTML = `<div class="v-meses"></div><div class="v-resumen"></div><div class="v-lista"></div>`;
-    const ops = ["Todo el periodo", ...meses.reverse().map(nombreMes)];
-    segmentado(caja.querySelector(".v-meses"), ops, ops[0], (t) => pintar(meses[ops.indexOf(t) - 1]));
+    caja.innerHTML = `<div class="v-meses"></div><div class="v-res"></div><div class="v-lista"></div>`;
+    const ops = ["Todo", ...meses.map(nombreMes)];
+    segmentado(caja.querySelector(".v-meses"), ops, "Todo", (t) => pintar(meses[ops.indexOf(t) - 1]));
     pintar(null);
   }
 
-  const filaPl = (x) => `<article class="fila pl"><div class="marcas"><span>${esc(x.pl)}</span><span>${esc(fechaCorta(x.fecha))}</span>
-      ${x.seguido ? `<span class="cli">${icono("estrella", 12)}Lo sigues</span>` : ""}</div>
-      <h3>${esc(oracion(x.titulo ?? ""))}</h3><small>${esc(x.estado ?? "")}</small></article>`;
-  const listaPl = (xs, vacio) => {
-    const orden = [...xs.filter((x) => x.seguido), ...xs.filter((x) => !x.seguido)];
-    return orden.map((x, i) => (i === 6 ? `<details class="mas-f"><summary>Ver los otros ${orden.length - 6}</summary>` : "") + filaPl(x)).join("")
-      + (orden.length > 6 ? "</details>" : "") || `<div class="vacio">${vacio}</div>`;
-  };
+  const filaPl = (x) => `<div class="pv"><span class="pl-n">${esc(x.pl.split("-")[0].replace(/^0+/, "") || x.pl)}</span><div>
+      <p>${esc(oracion(x.titulo ?? ""))}</p><small>${esc(fechaCorta(x.fecha))} · ${esc(x.estado ?? "")}${x.seguido ? " · lo sigues" : ""}</small></div></div>`;
+  function proyectos(caja, pls) {
+    const grupos = { Presentó: pls.filter((x) => x.primero), "Apoyó con su firma": pls.filter((x) => !x.primero) };
+    const pintar = (t) => {
+      const xs = grupos[t.replace(/ \(\d+\)$/, "")];
+      caja.querySelector(".pr-lista").innerHTML = [...xs.filter((x) => x.seguido), ...xs.filter((x) => !x.seguido)].map(filaPl).join("")
+        || `<div class="vacio">Ninguno en este periodo.</div>`;
+    };
+    caja.innerHTML = `<div class="pr-seg"></div><div class="pr-lista"></div>`;
+    const ops = Object.entries(grupos).map(([k, v]) => `${k} (${v.length})`);
+    segmentado(caja.querySelector(".pr-seg"), ops, ops[0], pintar);
+    pintar(ops[0]);
+  }
 
-  async function ficha(caja, p) {
+  function dijo(r) {
+    return r.sesiones.map((x) => `<div class="pv dicho"><div><small>${esc(fechaCorta(x.fecha))} · ${esc(x.organo)} ${enlaceIcono(x.url, "Ver la sesión")}</small>
+        ${x.trozos.map((t) => `<p>«${esc(t)}»</p>`).join("")}</div></div>`).join("")
+      + (r.mesas.length ? `<h3 class="cajon-sub">Mesas técnicas que organizó</h3>${r.mesas.map((m) => `<div class="pv"><div><p>${esc(m.titulo ?? "")}</p>
+        <small>${esc(fechaCorta(m.fecha))} ${enlaceIcono(m.url, "Abrir")}</small></div></div>`).join("")}` : "")
+      || `<div class="vacio">No aparece en las sesiones transcritas.</div>`;
+  }
+
+  function cerrar(raiz) {
+    f().id = ""; f().q = "";
+    raiz.querySelector(".p-q").value = "";
+    raiz.querySelectorAll("circle.elegido").forEach((c) => c.classList.remove("elegido"));
+    raiz.querySelector(".cajon-p").classList.remove("abierto");
+  }
+
+  async function abrir(raiz, p) {
+    f().id = clave(p); f().q = etiqueta(p);
+    raiz.querySelectorAll("circle.elegido").forEach((c) => c.classList.remove("elegido"));
+    raiz.querySelector(`circle[data-p="${CSS.escape(clave(p))}"]`)?.classList.add("elegido");
+    const panel = raiz.querySelector(".cajon-p");
     const pe = p.pais === "PE";
-    caja.innerHTML = `<button type="button" class="btn p-volver">← Volver a ${esc(NOMBRE_CAMARA[p.camara])}</button>
-      <header class="p-cab">${foto(p, "p-foto")}<div><h2>${esc(nombre(p))}</h2>
-        <div class="marcas"><span>${esc(NOMBRE_CAMARA[p.camara])}, ${esc(PAISES[p.pais])}</span><span class="bancada"><i style="background:${color(p.bancada)}"></i>${esc(p.bancada)}</span>
-          ${p.region ? `<span>${esc(p.region)}</span>` : ""}${p.condicion && p.condicion !== "en ejercicio" ? `<span class="cli">${esc(p.condicion)}</span>` : ""}
-          ${p.url ? enlaceIcono(p.url, "Perfil oficial") : ""}</div>
-        ${p.resena ? `<p class="p-resena">${esc(p.resena)}</p>` : ""}</div></header>
-      <div class="p-datos">${espera(4)}</div>`;
-    caja.querySelector(".p-volver").onclick = () => { f().id = ""; f().q = ""; App.ir("personas"); };
-    const resena = caja.querySelector(".p-resena");
-    if (resena) resena.onclick = () => resena.classList.toggle("abierta");
-    App.$(".main").scrollTop = 0;
-    let r;
-    try { r = await App.pedir("ficha_persona", { pais: p.pais, persona: p.id, nombre: p.nombre, con_resena: !!p.resena }); } catch (e) { caja.querySelector(".p-datos").innerHTML = `<div class="aviso">No se pudo armar la ficha: ${esc(e.message)}</div>`; return; }
-    if (f().id !== `${p.camara}|${p.nombre}`) return;
-    const propios = r.pls.filter((x) => x.primero), apoyos = r.pls.filter((x) => !x.primero);
-    if (r.wiki && !p.resena) {
-      caja.querySelector(".p-cab > div").insertAdjacentHTML("beforeend", `<p class="p-resena">${esc(r.wiki.texto)}</p><small class="nota">Reseña de <a href="${esc(r.wiki.url)}" target="_blank" rel="noopener">Wikipedia</a></small>`);
-      const w = caja.querySelector(".p-resena");
-      w.onclick = () => w.classList.toggle("abierta");
+    panel.innerHTML = `<div class="cp-cab">${foto(p, "cp-foto")}<div class="cp-tit"><h2>${esc(nombre(p))}</h2>
+        <p>${bancada(p.bancada)} · ${esc(NOMBRE_CAMARA[p.camara])}${p.region ? ` · ${esc(p.region)}` : ""}${p.condicion && p.condicion !== "en ejercicio" ? ` · ${esc(p.condicion)}` : ""}</p>
+        ${p.url ? `<a class="nota" href="${esc(p.url)}" target="_blank" rel="noopener">Perfil oficial</a>` : ""}</div>
+        <button type="button" class="cp-x" aria-label="Cerrar">${icono("x", 18)}</button></div>
+      <div class="cp-resena">${p.resena ? `<p>${esc(p.resena)}</p>` : ""}</div>
+      <div class="cp-cifras">${espera(1)}</div><div class="cp-tabs"></div><div class="cp-cuerpo"></div>`;
+    panel.classList.add("abierto");
+    panel.scrollTop = 0;
+    panel.querySelector(".cp-x").onclick = () => cerrar(raiz);
+    const k = clave(p);
+    let r = fichas.get(k);
+    if (!r) {
+      try { r = await App.pedir("ficha_persona", { pais: p.pais, persona: p.id }); } catch (e) {
+        if (f().id === k) panel.querySelector(".cp-cifras").innerHTML = `<div class="aviso">No se pudo armar la ficha: ${esc(e.message)}</div>`;
+        return;
+      }
+      fichas.set(k, r);
     }
-    const datos = caja.querySelector(".p-datos");
-    datos.innerHTML = `<div class="kpis"></div>
-      ${pe ? `<h2 class="grupo-t">Votos en el Pleno por periodo <span>cómo votó cada mes</span></h2><div class="p-votos"></div>` : ""}
-      <div class="dos"><div><h2 class="grupo-t">Proyectos que presentó <span>${propios.length}, como primer firmante</span></h2>${listaPl(propios, "No presentó proyectos como primer firmante.")}</div>
-        <div><h2 class="grupo-t">Proyectos que apoyó con su firma <span>${apoyos.length}</span></h2>${listaPl(apoyos, "No firmó proyectos de otros.")}</div></div>
-      <h2 class="grupo-t">Qué dijo en las sesiones <span>${r.sesiones.length}, las más recientes donde se le nombra (la transcripción automática puede escribir mal los apellidos)</span></h2>
-      ${r.sesiones.map((x) => `<article class="fila"><div class="marcas"><span>${esc(fechaCorta(x.fecha))}</span><span>${esc(x.organo)}</span>
-          <span>${x.menciones} ${x.menciones === 1 ? "mención" : "menciones"}</span>${enlaceIcono(x.url, "Ver la sesión")}</div>
-          ${x.trozos.map((t) => `<p>«${esc(t)}»</p>`).join("")}</article>`).join("") || `<div class="vacio">No aparece en las sesiones transcritas.</div>`}
-      ${r.mesas.length ? `<h2 class="grupo-t">Mesas técnicas que organizó <span>${r.mesas.length}</span></h2>
-      ${r.mesas.map((m) => `<article class="fila"><div class="marcas"><span>${esc(fechaCorta(m.fecha))}</span>${enlaceIcono(m.url, "Abrir")}</div><h3>${esc(m.titulo ?? "")}</h3></article>`).join("")}` : ""}`;
-    kpis(datos.querySelector(".kpis"), [
-      ...(pe ? [[r.pct_alineado != null ? `${r.pct_alineado} %` : "—", "Vota con su bancada", `en ${r.votaciones} votaciones del Pleno`],
-        [r.ausencias ?? "—", "No votó", "ausente, licencia o sin respuesta"]] : []),
-      [propios.length, "Proyectos presentados", pe ? "periodo 2026-2031" : "periodo 2025-2029"],
-      [apoyos.length, "Proyectos que apoyó", "con su firma"],
-    ]);
-    if (pe) votos(datos.querySelector(".p-votos"), r.votos);
-    entrar(datos.querySelectorAll(".fila"));
+    if (f().id !== k) return;
+    const propios = r.pls.filter((x) => x.primero).length;
+    panel.querySelector(".cp-cifras").innerHTML = [
+      ...(pe ? [[r.pct_alineado != null ? `${r.pct_alineado}%` : "—", "vota con su bancada"], [r.votaciones ?? "—", "votaciones"], [r.ausencias ?? "—", "no votó"]] : []),
+      [propios, "proyectos presentados"], [r.pls.length - propios, "apoyó con su firma"],
+    ].map(([n, t]) => `<div><b>${n}</b><span>${t}</span></div>`).join("");
+    const tabs = [...(pe ? [["Votos", (c) => votos(c, r.votos)]] : []), ["Proyectos", (c) => proyectos(c, r.pls)],
+      [`Qué dijo (${r.sesiones.length})`, (c) => { c.innerHTML = dijo(r); }]];
+    const cuerpo = panel.querySelector(".cp-cuerpo");
+    segmentado(panel.querySelector(".cp-tabs"), tabs.map(([t]) => t), tabs[0][0], (t) => tabs.find(([x]) => x === t)[1](cuerpo));
+    tabs[0][1](cuerpo);
+    if (!p.resena) {  // la reseña de Wikipedia llega despues, sin frenar lo demas
+      const w = p.wiki !== undefined ? p.wiki : (p.wiki = await App.pedir("resena_persona", { pais: p.pais, nombre: p.nombre }).catch(() => null));
+      if (w && f().id === k) panel.querySelector(".cp-resena").innerHTML = `<p>${esc(w.texto)}</p><a class="nota" href="${esc(w.url)}" target="_blank" rel="noopener">Reseña de Wikipedia</a>`;
+    }
+  }
+
+  function tarjeta(raiz) {
+    const tip = raiz.querySelector(".p-tip");
+    const hemis = raiz.querySelector(".hemis");
+    hemis.onpointerover = (e) => {
+      // pasar por una bancada de la leyenda resalta sus asientos
+      const li = e.target.closest(".leyenda li");
+      raiz.querySelectorAll("circle").forEach((c) => c.classList.toggle("apagado", !!li && c.dataset.b !== li.dataset.b));
+      const s = e.target.closest("circle[data-p]");
+      if (!s) { tip.hidden = true; return; }
+      const p = porClave.get(s.dataset.p);
+      tip.innerHTML = `${foto(p, "tip-foto")}<div><b>${esc(nombre(p))}</b>${bancada(p.bancada)}<small>${esc(p.region ?? "")}</small></div>`;
+      const b = s.getBoundingClientRect(), r = raiz.getBoundingClientRect();
+      tip.style.left = `${Math.max(130, Math.min(b.left - r.left + b.width / 2, r.width - 130))}px`;
+      tip.style.top = `${b.top - r.top}px`;
+      tip.hidden = false;
+    };
+    hemis.onpointerleave = () => { tip.hidden = true; raiz.querySelectorAll("circle.apagado").forEach((c) => c.classList.remove("apagado")); };
   }
 
   return {
-    titulo: "Congresistas y asambleístas", sub: "Cómo se reparten las bancadas. Haz clic en un asiento para ver qué presentó, qué apoyó y cómo votó.",
+    titulo: "Congresistas y asambleístas", sub: "Bancadas de izquierda a derecha. Pasa sobre un asiento para ver quién es y haz clic para su ficha.",
     async abrir(cuerpo) {
-      cuerpo.innerHTML = `<div class="barra filtros"><label class="campo grande">Buscar por nombre
-          <input type="search" class="p-q" list="p-lista" style="min-width:min(30rem,90vw)" placeholder="Escribe un apellido" value="${esc(f().q)}"></label></div>
-        <datalist id="p-lista"></datalist><div class="p-caja">${espera(3)}</div>`;
-      const caja = cuerpo.querySelector(".p-caja");
+      cuerpo.innerHTML = `<div class="personas"><div class="barra"><input type="search" class="buscar p-q" list="p-lista" placeholder="Buscar por nombre o apellido" aria-label="Buscar" value="${esc(f().q)}"></div>
+        <datalist id="p-lista"></datalist><div class="hemis">${espera(3)}</div><div class="p-tip" hidden></div><aside class="cajon-p" aria-label="Ficha"></aside></div>`;
+      const raiz = cuerpo.querySelector(".personas");
       if (!gente) {
-        try { gente = await App.pedir("personas"); } catch (e) { caja.innerHTML = `<div class="aviso">No se pudo traer la lista: ${esc(e.message)}</div>`; return; }
+        try { gente = await App.pedir("personas"); } catch (e) { raiz.querySelector(".hemis").innerHTML = `<div class="aviso">No se pudo traer la lista: ${esc(e.message)}</div>`; return; }
       }
-      const lista = gente.filter((p) => !App.pais || p.pais === App.pais);
-      cuerpo.querySelector("#p-lista").innerHTML = lista.map((p) => `<option value="${esc(etiqueta(p))}"></option>`).join("");
-      const abrir = (p) => { f().id = `${p.camara}|${p.nombre}`; f().q = etiqueta(p); ficha(caja, p); };
-      const q = cuerpo.querySelector(".p-q");
-      q.oninput = () => { const p = lista.find((x) => etiqueta(x) === q.value); if (p) abrir(p); };
-      const elegido = lista.find((x) => `${x.camara}|${x.nombre}` === f().id);
-      if (elegido) return ficha(caja, elegido);
-      caja.innerHTML = `<div class="hemis">${CAMARAS.filter(([, , pais]) => !App.pais || pais === App.pais)
-          .map(([k, t]) => hemiciclo(lista.filter((p) => p.camara === k), t)).join("")}</div>
-        ${!App.pais || App.pais === "EC" ? `<p class="nota">Asamblea de Ecuador según Wikipedia: el sitio oficial de la Asamblea no responde desde el 4 de noviembre de 2026. Bancadas y salidas pueden ir con atraso.</p>` : ""}`;
-      caja.onclick = caja.onkeydown = (e) => {
-        if (e.type === "keydown" && e.key !== "Enter") return;
-        const s = e.target.closest("[data-p]");
-        if (s) abrir(lista.find((x) => `${x.camara}|${x.nombre}` === s.dataset.p));
-      };
+      lista = gente.filter((p) => !App.pais || p.pais === App.pais);
+      porClave = new Map(lista.map((p) => [clave(p), p]));
+      raiz.querySelector("#p-lista").innerHTML = lista.map((p) => `<option value="${esc(etiqueta(p))}"></option>`).join("");
+      raiz.querySelector(".hemis").innerHTML = CAMARAS.filter(([, , pais]) => !App.pais || pais === App.pais)
+        .map(([k, t]) => hemiciclo(lista.filter((p) => p.camara === k), t)).join("")
+        + (!App.pais || App.pais === "EC" ? `<p class="nota hemi-nota">Asamblea de Ecuador según Wikipedia: el sitio oficial no responde desde el 4/11/2026.</p>` : "");
+      tarjeta(raiz);
+      const q = raiz.querySelector(".p-q");
+      q.oninput = () => { const p = lista.find((x) => etiqueta(x) === q.value); if (p) abrir(raiz, p); };
+      const hemis = raiz.querySelector(".hemis");
+      hemis.onclick = (e) => { const s = e.target.closest("circle[data-p]"); if (s) { raiz.querySelector(".p-tip").hidden = true; abrir(raiz, porClave.get(s.dataset.p)); } };
+      hemis.onkeydown = (e) => { const s = e.target.closest("circle[data-p]"); if (s && e.key === "Enter") abrir(raiz, porClave.get(s.dataset.p)); };
+      raiz.onkeydown = (e) => { if (e.key === "Escape") cerrar(raiz); };
+      if (porClave.has(f().id)) abrir(raiz, porClave.get(f().id));
     },
   };
 })();
