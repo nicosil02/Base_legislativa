@@ -392,5 +392,22 @@
       },
       "tipo": "noticia"
     }
+  },
+  "n2365333": {
+    "estado": "interesante",
+    "fecha": "2026-11-04T19:35:11+00:00",
+    "por": "nicolas.silva@valiconsultores.com",
+    "titulo": "Embajador de EE. UU. en Perú destaca visita de la presidenta Keiko Fujimori a El Salvador - RPP Noticias",
+    "item": {
+      "titulo": "Embajador de EE. UU. en Perú destaca visita de la presidenta Keiko Fujimori a El Salvador - RPP Noticias",
+      "url": "https://news.google.com/rss/articles/CBMizwFBVV95cUxPZ1BwNDVqTzdmeXBNVXhjUzJMeWhIN0ptOHlKMFEyZlFRVmhnTXdaUzhaNGFjNVdVNUlJb28tT2xXaC1WUk0yd0FWVWxvUnlScDVZbUk0VUhfRHpadHpQclhkb1A5ZXNPMjhLM0xWUDAyd1JHZ0VEMnRmSWk0ckNXczEwZnJTSFVxMXhJTW1hZWpqam5aSG5oSHFrMGpsa1RzbEtERW4tV1JyMHo1SUJyVG5IdXNnc3BEYWZUQktfR0M3VDV5OXNENWhyS2pENHM?oc=5",
+      "pais": "PE",
+      "resumen": null,
+      "porque": {
+        "google": "Involucra la visita oficial de un alto funcionario de EE.UU. en temas de seguridad, alineado con el eje de relación Perú-EE.UU.",
+        "incode": "Declaracion del embajador de EE.UU. sobre Peru, alineado con el interes de relacion bilateral para empresas norteamericanas."
+      },
+      "tipo": "noticia"
+    }
   }
 }
