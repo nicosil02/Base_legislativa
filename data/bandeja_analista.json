@@ -212,5 +212,21 @@
       },
       "tipo": "noticia"
     }
+  },
+  "n2366073": {
+    "estado": "alertar",
+    "fecha": "2026-11-04T15:44:57+00:00",
+    "por": "nicolas.silva@valiconsultores.com",
+    "titulo": "92,000 productores accederán a tecnología para mejorar cultivos y enfrentar a El Niño",
+    "item": {
+      "titulo": "92,000 productores accederán a tecnología para mejorar cultivos y enfrentar a El Niño",
+      "url": "https://andina.pe/agencia/noticia-92000-productores-accederan-a-tecnologia-para-mejorar-cultivos-y-enfrentar-a-nino-1098488.aspx",
+      "pais": "PE",
+      "resumen": null,
+      "porque": {
+        "syngenta": "Iniciativa institucional del INIA sobre tecnología y asistencia técnica a productores que impacta en el segmento de semillas y capacitación agrícola del cliente."
+      },
+      "tipo": "noticia"
+    }
   }
 }
