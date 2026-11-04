@@ -474,5 +474,22 @@
       },
       "tipo": "noticia"
     }
+  },
+  "n2364550": {
+    "estado": "descartar",
+    "fecha": "2026-11-04T19:43:19+00:00",
+    "por": "nicolas.silva@valiconsultores.com",
+    "titulo": "Perú y Estados Unidos refuerzan coordinación en seguridad y defensa",
+    "item": {
+      "titulo": "Perú y Estados Unidos refuerzan coordinación en seguridad y defensa",
+      "url": "https://andina.pe/agencia/noticia-peru-y-estados-unidos-refuerzan-coordinacion-seguridad-y-defensa-1098408.aspx",
+      "pais": "PE",
+      "resumen": null,
+      "porque": {
+        "google": "Alineado con el eje transversal de relacion bilateral Peru-EE.UU. y acuerdos de seguridad.",
+        "incode": "Acuerdo oficial bilateral con EE.UU. en seguridad, afectando el eje de relacion con EE.UU. monitoreado por el cliente."
+      },
+      "tipo": "noticia"
+    }
   }
 }
