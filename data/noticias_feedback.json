@@ -111,5 +111,14 @@
     "clientes": [
       "incode"
     ]
+  },
+  {
+    "noticia_id": 26,
+    "created_at": "2026-11-04T19:40:20Z",
+    "descartado_por": "nicolas.silva@valiconsultores.com",
+    "titulo": "La IA redacta el CV y la IA lo descarta. En el medio, ningún humano evaluó al candidato",
+    "clientes": [
+      "google"
+    ]
   }
 ]
