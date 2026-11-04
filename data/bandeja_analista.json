@@ -559,5 +559,21 @@
       },
       "tipo": "noticia"
     }
+  },
+  "n2367907": {
+    "estado": "interesante",
+    "fecha": "2026-11-04T21:38:22+00:00",
+    "por": "nicolas.silva@valiconsultores.com",
+    "titulo": "Memorando nuclear con Estados Unidos: un regulador independiente para proteger a la población y el ambiente",
+    "item": {
+      "titulo": "Memorando nuclear con Estados Unidos: un regulador independiente para proteger a la población y el ambiente",
+      "url": "https://www.infobae.com/peru/2026/11/04/memorando-nuclear-con-estados-unidos-un-regulador-independiente-para-proteger-a-la-poblacion-y-el-ambiente/",
+      "pais": "PE",
+      "resumen": null,
+      "porque": {
+        "google": "Involucra un acuerdo oficial con EE.UU. y regulación técnica, alineado con el eje prioritario de relación bilateral y cooperación tecnológica."
+      },
+      "tipo": "noticia"
+    }
   }
 }
