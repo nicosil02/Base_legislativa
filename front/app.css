@@ -342,11 +342,23 @@ tr[aria-selected=true] td { background:var(--hover); }
 .p-cam small { font-size:12px; color:var(--ink3); }
 .p-cam.activa { background:var(--ink); border-color:var(--ink); color:#fff; }
 .p-cam.activa span, .p-cam.activa small { color:#C9D6E2; }
-.p-busca { flex:1 1 320px; display:flex; gap:8px; align-items:center; }
-.p-busca .p-q { flex:1; padding:10px 14px; font-size:14px; border-radius:10px; }
+.p-busca { flex:1 1 380px; align-self:center; }
+.p-busca label:first-child { flex:1 1 220px; }
+.p-busca .p-q { width:100%; max-width:none; flex:none; min-height:34px; }
+.fx { display:flex; flex-wrap:wrap; gap:10px 12px; align-items:flex-end; margin-bottom:12px; }
+.fx label { display:flex; flex-direction:column; gap:3px; min-width:140px; flex:0 1 auto; }
+.fx label span { font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:.04em; color:var(--ink3); }
+.fx select, .fx input { font-size:13px; padding:7px 30px 7px 10px; border:1px solid var(--line); border-radius:8px; background:#fff; color:var(--ink); min-height:34px; }
+.fx select { appearance:none; cursor:pointer; background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%235D7286' stroke-width='1.5'/%3E%3C/svg%3E") no-repeat right 10px center; }
+.fx select:focus, .fx input:focus { outline:2px solid #B9C6D1; outline-offset:0; }
+.fx .f-limpiar { align-self:center; margin-top:14px; }
+.chip-tema.activa { background:var(--ink); border-color:var(--ink); color:#fff; }
+b.contra { color:#C62828; font-weight:600; }
+.v-cifras b { color:var(--ink); margin-right:4px; }
 .p-escena { display:grid; grid-template-columns:minmax(0,1fr) 320px; gap:16px; background:#fff; border:1px solid var(--line2); border-radius:14px; padding:18px 20px; }
 @media (max-width: 980px) { .p-escena { grid-template-columns:1fr; } }
-.p-hemi svg { display:block; width:100%; max-height:430px; }
+.p-hemi { display:flex; align-items:center; justify-content:center; }
+.p-hemi svg { display:block; width:100%; max-width:640px; max-height:360px; }
 .p-hemi circle { cursor:pointer; transition:opacity 160ms ease, fill 220ms ease, transform 140ms cubic-bezier(.23,1,.32,1); transform-box:fill-box; transform-origin:center; outline:none; }
 .p-hemi circle:hover, .p-hemi circle:focus-visible { transform:scale(1.45); }
 .p-hemi circle.apagado { opacity:.14; }
@@ -416,7 +428,6 @@ tr[aria-selected=true] td { background:var(--hover); }
 .cp-temas .nota { margin-right:4px; }
 .chip-tema { border:1px solid var(--line); background:#fff; border-radius:999px; padding:3px 10px; font-size:12.5px; cursor:pointer; color:var(--ink); }
 .chip-tema:hover { background:var(--hover); }
-.cp-filtro { width:100%; max-width:none; margin-bottom:12px; padding:8px 12px; }
 .cp-tabs, .v-meses, .pr-seg { margin-bottom:12px; overflow-x:auto; max-width:100%; }
 .pv { display:flex; gap:10px; align-items:flex-start; padding:10px 0; border-top:1px solid var(--line2); }
 .pv p { margin:0 0 2px; font-size:13.5px; line-height:1.45; }

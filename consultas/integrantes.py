@@ -133,17 +133,40 @@ def _observatorio(sesion) -> dict[str, dict]:
     return out
 
 
+OFICIAL_EC = COPIA.parent / "asamblea_oficial.json"
+_FOTOS_EC = "https://raw.githubusercontent.com/nicosil02/Base_legislativa/main/data/fotos_ec/"
+
+
+def _con_oficial(asamblea: list[dict]) -> list[dict]:
+    """Cruza con la lista oficial de los 151 (data/asamblea_oficial.json): pone la foto
+    oficial y el blog de cada uno y suma a quien Wikipedia no tiene. El sitio de la
+    Asamblea solo responde a un navegador, por eso es una copia bajada a mano con
+    Playwright (fotos en data/fotos_ec/) el 4/11/2026."""
+    por_id = {p["id"]: p for p in asamblea}
+    for o in json.loads(OFICIAL_EC.read_text(encoding="utf-8")):
+        ident = o["id"] or id_ec(o["nombre"])
+        p = por_id.get(ident)
+        if p is None and o["partido"]:
+            p = por_id[ident] = {"pais": "EC", "camara": "asamblea", "id": ident, "nombre": o["nombre"], "bancada": o["partido"],
+                                 "region": None, "condicion": None, "foto": None, "url": None, "resena": None}
+            asamblea.append(p)
+        if p is not None:
+            p["foto"] = f"{_FOTOS_EC}{o['foto']}" if o["foto"] else p["foto"]
+            p["url"] = f"https://www.asambleanacional.gob.ec/blogs/{o['slug']}"
+    return asamblea
+
+
 def bajar() -> list[dict]:
     from core.http import session
     s = session()
     ec = s.get(_WIKI_EC, timeout=40)
     ec.raise_for_status()
-    asamblea = ecuador_de_wiki(ec.json()["parse"]["wikitext"]["*"])
+    asamblea = _con_oficial(ecuador_de_wiki(ec.json()["parse"]["wikitext"]["*"]))
     try:  # foto que falte en Wikipedia y enlace al perfil con su trayectoria
         obs = _observatorio(s)
         for p in asamblea:
             o = obs.get(p["id"], {})
-            p["foto"], p["url"] = p["foto"] or o.get("foto"), o.get("url")
+            p["foto"], p["url"] = p["foto"] or o.get("foto"), p["url"] or o.get("url")
     except Exception as e:
         print(f"[integrantes] observatorio: {e}")
     return _peru(s, "senado") + _peru(s, "diputados") + asamblea
@@ -231,6 +254,6 @@ if __name__ == "__main__":
         ("León Cueva Camila", "Acción Democrática Nacional", "Azuay", "EC:leon cueva")], gente
     datos = bajar()
     cuenta = {c: sum(p["camara"] == c for p in datos) for c in ("senado", "diputados", "asamblea")}
-    assert cuenta["senado"] == 60 and cuenta["diputados"] == 130 and 140 <= cuenta["asamblea"] <= 151, cuenta
+    assert cuenta["senado"] == 60 and cuenta["diputados"] == 130 and 148 <= cuenta["asamblea"] <= 152, cuenta
     COPIA.write_text(json.dumps(datos, ensure_ascii=False, indent=0), encoding="utf-8")
     print("ok", cuenta)
