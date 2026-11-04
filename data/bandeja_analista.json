@@ -276,5 +276,21 @@
       },
       "tipo": "noticia"
     }
+  },
+  "n2364528": {
+    "estado": "descartar",
+    "fecha": "2026-11-04T17:42:38+00:00",
+    "por": "nicolas.silva@valiconsultores.com",
+    "titulo": "Perú | Proyecto 911 alcanza cerca del 80% de avance en su infraestructura",
+    "item": {
+      "titulo": "Perú | Proyecto 911 alcanza cerca del 80% de avance en su infraestructura",
+      "url": "https://dplnews.com/peru-proyecto-911-alcanza-80-avance-en-su-infraestructura/",
+      "pais": "EC",
+      "resumen": null,
+      "porque": {
+        "google": "Avance en infraestructura tecnológica y conectividad del Estado (Proyecto 911), monitoreado en el eje de infraestructura crítica."
+      },
+      "tipo": "noticia"
+    }
   }
 }
