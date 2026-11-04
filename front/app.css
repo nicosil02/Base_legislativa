@@ -328,3 +328,29 @@ tr[aria-selected=true] td { background:var(--hover); }
 .v-banc { width:100%; font-size:12.5px; border-collapse:collapse; margin-top:4px; }
 .v-banc td { padding:3px 6px 3px 0; border-bottom:1px solid var(--line2); }
 @media (hover:hover) and (pointer:fine) { .seguir:hover { border-color:#B7C5CF; color:var(--ink); } }
+
+/* Congresistas y asambleistas: hemiciclos y ficha */
+.hemis { display:grid; grid-template-columns:repeat(auto-fit,minmax(340px,1fr)); gap:16px; margin-top:6px; }
+.hemi { background:#fff; border:1px solid var(--line2); border-radius:10px; padding:14px 16px 12px; }
+.hemi h2 { font-size:15px; font-weight:650; margin:0 0 6px; }
+.hemi h2 span { font-weight:400; color:var(--ink3); font-size:12.5px; margin-left:4px; }
+.hemi svg { display:block; width:100%; height:auto; }
+.hemi circle { cursor:pointer; stroke:#fff; stroke-width:.006; transition:transform 140ms cubic-bezier(.23,1,.32,1); transform-box:fill-box; transform-origin:center; }
+.hemi circle:hover, .hemi circle:focus-visible { transform:scale(1.35); outline:none; stroke:var(--ink); stroke-width:.01; }
+.hemi-n { font-size:.2px; font-weight:650; fill:var(--ink); }
+.leyenda { list-style:none; display:flex; flex-wrap:wrap; gap:4px 14px; padding:0; margin:8px 0 0; font-size:12.5px; color:var(--ink2); }
+.leyenda i, .bancada i { display:inline-block; width:9px; height:9px; border-radius:50%; margin-right:5px; vertical-align:0; }
+.leyenda b { color:var(--ink); font-weight:600; margin-left:2px; }
+.p-volver { margin-bottom:12px; }
+.p-cab { display:flex; gap:18px; align-items:flex-start; background:#fff; border:1px solid var(--line2); border-radius:10px; padding:16px 18px; margin-bottom:14px; }
+.p-cab h2 { font-size:20px; margin:0 0 6px; }
+.p-foto { position:relative; flex:0 0 112px; height:112px; border-radius:50%; overflow:hidden; display:grid; place-items:center;
+  background:var(--c); color:#fff; font-size:30px; font-weight:650; box-shadow:0 0 0 3px #fff, 0 0 0 5px var(--c); }
+.p-foto img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:top; background:#fff; }
+.p-resena { margin:10px 0 0; font-size:13.5px; line-height:1.55; color:var(--ink2); display:-webkit-box; -webkit-line-clamp:5; -webkit-box-orient:vertical; overflow:hidden; cursor:pointer; }
+.p-resena.abierta { -webkit-line-clamp:unset; }
+.v-meses { margin-bottom:10px; overflow-x:auto; }
+.barra-votos { display:flex; height:10px; border-radius:5px; overflow:hidden; gap:2px; margin:4px 0 6px; }
+.bv-SI { background:#2E8B57; } .bv-NO { background:var(--rojo); } .bv-ABST { background:#D9A900; } .bv-nv { background:#C5CED6; }
+.marcas .voto { color:#fff; border-radius:5px; padding:1px 7px; }
+@media (max-width:700px) { .p-cab { flex-direction:column; } }

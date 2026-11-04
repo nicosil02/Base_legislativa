@@ -30,25 +30,6 @@ def apellidos(pais: str, nombre: str) -> str:
     return " ".join(norm(nombre).split()[:2])
 
 
-def personas(pe: sqlite3.Connection, ec: sqlite3.Connection) -> list[dict]:
-    """Quienes votan en el Pleno peruano y los asambleistas que firmaron proyectos."""
-    vistos: dict[str, dict] = {}
-    for camara, nombre, bancada in pe.execute(
-            """SELECT v.camara, n.congresista, n.bancada FROM voto_pleno_nominal n
-               JOIN votacion_pleno v ON v.id = n.votacion_id ORDER BY v.fecha, v.hora"""):
-        k = clave_congresista(camara, nombre)
-        p = vistos.setdefault(k, {"pais": "PE", "id": k, "nombre": nombre, "camara": camara})
-        if len(nombre) > len(p["nombre"]):  # los PDF truncan nombres distinto segun la pagina
-            p["nombre"] = nombre
-        p["bancada"] = bancada  # la ultima: hay quienes cambian de bancada
-    for (nombre,) in ec.execute(
-            """SELECT DISTINCT p.nombre FROM proponentes p JOIN proyectos x ON x.n_tramite = p.n_tramite
-               WHERE p.tipo = 'ASAMBLEÍSTA' AND x.periodo = ?""", (PERIODO_EC,)):
-        vistos.setdefault(f"EC:{apellidos('EC', nombre)}", {"pais": "EC", "id": f"EC:{apellidos('EC', nombre)}",
-                                                            "nombre": nombre, "camara": "asamblea", "bancada": None})
-    return sorted(vistos.values(), key=lambda p: (p["pais"], norm(p["nombre"])))
-
-
 def _patron(ap: str) -> re.Pattern:
     primero = re.escape(ap.split()[0])
     return re.compile(rf"\b{re.escape(ap)}\b|\b{_TITULO}\s+(?:\w+\s+){{0,3}}?{primero}\b")
@@ -130,7 +111,7 @@ def ficha(pe: sqlite3.Connection, ec: sqlite3.Connection, pais: str, ident: str,
         resumen = {"votaciones": None, "ausencias": None, "pct_alineado": None, "bancada": None}
     for p in pls:
         p["seguido"] = f"{pais}:{p['pl']}" in seguidos
-    return {**resumen, "pls": pls, "votos": lista_votos[:40], "mesas": mesas, "sesiones": _sesiones(pe, pais, ap)}
+    return {**resumen, "pls": pls, "votos": lista_votos, "mesas": mesas, "sesiones": _sesiones(pe, pais, ap)}
 
 
 if __name__ == "__main__":  # chequeo sobre una base minima en memoria
@@ -153,8 +134,6 @@ if __name__ == "__main__":  # chequeo sobre una base minima en memoria
     ec = sqlite3.connect(":memory:")
     ec.executescript("""CREATE TABLE proyectos (n_tramite TEXT, titulo TEXT, estado TEXT, fec_presentacion TEXT, periodo TEXT);
         CREATE TABLE proponentes (n_tramite TEXT, nombre TEXT, tipo TEXT, orden INT);""")
-    gente = personas(pe, ec)
-    assert [p["nombre"] for p in gente if "MATUTE" in p["nombre"]] == ["MATUTE CHARUN, SUSANA"], gente
     f = ficha(pe, ec, "PE", "senado:matute charun", {"PE:00001-2026-2031-CS"})
     assert [p["pl"] for p in f["pls"]] == ["00001-2026-2031-CS"] and f["pls"][0]["seguido"] and f["pls"][0]["primero"], f["pls"]
     assert f["votos"][0]["contra_bancada"] is False and f["mesas"] and [s["video_id"] for s in f["sesiones"]] == ["v1"], f
