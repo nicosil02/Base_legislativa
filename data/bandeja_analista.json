@@ -292,5 +292,22 @@
       },
       "tipo": "noticia"
     }
+  },
+  "n2367270": {
+    "estado": "interesante",
+    "fecha": "2026-11-04T17:42:40+00:00",
+    "por": "nicolas.silva@valiconsultores.com",
+    "titulo": "Agrocalidad mantiene firme su intervención en El Quemado con acciones sostenidas para contener el Foc R4T",
+    "item": {
+      "titulo": "Agrocalidad mantiene firme su intervención en El Quemado con acciones sostenidas para contener el Foc R4T",
+      "url": "https://www.agrocalidad.gob.ec/agrocalidad-mantiene-firme-su-intervencion-en-el-quemado-con-acciones-sostenidas-para-contener-el-foc-r4t/",
+      "pais": "EC",
+      "resumen": null,
+      "porque": {
+        "bayer": "Acciones de Agrocalidad sobre el hongo Foc R4T en banano, un tema fitosanitario clave para Bayer Crop en Ecuador.",
+        "syngenta": "Acciones de Agrocalidad para contener el hongo Foc R4T en banano, plaga prioritaria para el sector."
+      },
+      "tipo": "noticia"
+    }
   }
 }
