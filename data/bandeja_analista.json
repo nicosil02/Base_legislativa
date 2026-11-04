@@ -442,5 +442,21 @@
       },
       "tipo": "noticia"
     }
+  },
+  "n2364893": {
+    "estado": "descartar",
+    "fecha": "2026-11-04T19:40:13+00:00",
+    "por": "nicolas.silva@valiconsultores.com",
+    "titulo": "Más de 200 personas salieron irregularmente de Perú mediante trama detectada en red de funcionarios de Migraciones",
+    "item": {
+      "titulo": "Más de 200 personas salieron irregularmente de Perú mediante trama detectada en red de funcionarios de Migraciones",
+      "url": "https://www.infobae.com/peru/2026/11/03/mas-de-200-personas-salieron-irregularmente-de-peru-mediante-trama-detectada-en-red-de-funcionarios-de-migraciones/",
+      "pais": "PE",
+      "resumen": null,
+      "porque": {
+        "incode": "Vulneracion informatica y red de corrupcion en Migraciones, relevante para el monitoreo de seguridad de identidad."
+      },
+      "tipo": "noticia"
+    }
   }
 }
