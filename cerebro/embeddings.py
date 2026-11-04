@@ -18,10 +18,12 @@ from __future__ import annotations
 import functools
 import hashlib
 import json
+import shutil
 import re
 import sqlite3
 import struct
 import sys
+import threading
 import time
 import urllib.request
 from pathlib import Path
@@ -147,23 +149,37 @@ def _texto_fts(t: str | None) -> str:
     return t + " " + " ".join(re.findall(r"(?<!\d)0+([1-9]\d*)", t))
 
 
+_DESCARGA = threading.Lock()
+_ULTIMO_FALLO = 0.0
+ESPERA_TRAS_FALLO = 600
+
+
 def descargar_si_falta(path: Path | None = None, max_edad_seg: int = 3 * 3600) -> Path | None:
     """Para la app (Streamlit Cloud): baja el cerebro.db publicado si no hay
     copia local o si la local tiene mas de max_edad_seg. None si no se pudo
     (sin red, release todavia no creado)."""
+    global _ULTIMO_FALLO
     path = path or CEREBRO_DB
     if path.exists() and time.time() - path.stat().st_mtime < max_edad_seg:
         return path
-    try:
-        tmp = path.with_suffix(".tmp")
-        path.parent.mkdir(parents=True, exist_ok=True)
-        with urllib.request.urlopen(RELEASE_URL, timeout=60) as r, open(tmp, "wb") as f:
-            f.write(r.read())
-        tmp.replace(path)
-        return path
-    except Exception as e:
-        print(f"[cerebro] no pude bajar {RELEASE_URL}: {e}")
-        return path if path.exists() else None
+    # Una descarga a la vez y, si fallo, nada de reintentar en cada llamada: el 4/11/2026
+    # cada seccion reintentaba los 280 MB y Streamlit Cloud le bajo la CPU a la app
+    with _DESCARGA:
+        if path.exists() and time.time() - path.stat().st_mtime < max_edad_seg:
+            return path  # la bajo otro hilo mientras este esperaba
+        if time.time() - _ULTIMO_FALLO < ESPERA_TRAS_FALLO:
+            return path if path.exists() else None
+        try:
+            tmp = path.with_suffix(".tmp")
+            path.parent.mkdir(parents=True, exist_ok=True)
+            with urllib.request.urlopen(RELEASE_URL, timeout=120) as r, open(tmp, "wb") as f:
+                shutil.copyfileobj(r, f, 1 << 20)  # por partes: no 280 MB en memoria
+            tmp.replace(path)
+            return path
+        except Exception as e:
+            _ULTIMO_FALLO = time.time()
+            print(f"[cerebro] no pude bajar {RELEASE_URL}: {e}")
+            return path if path.exists() else None
 
 
 # ------------------------------------------------------------------ corpus
