@@ -116,5 +116,21 @@
       },
       "tipo": "norma"
     }
+  },
+  "n2366904": {
+    "estado": "descartar",
+    "fecha": "2026-11-04T13:20:15+00:00",
+    "por": "nicolas.silva@valiconsultores.com",
+    "titulo": "Autorizan ingreso al país de ciento nueve mil doscientos (109,200) plantas de arándano de origen y procedencia de la República de Chile, que se realizará durante el mes de noviembre de 2026 y bajo la responsabilidad de la empresa Los Olivos de Villacuri S.A.C.",
+    "item": {
+      "titulo": "Autorizan ingreso al país de ciento nueve mil doscientos (109,200) plantas de arándano de origen y procedencia de la República de Chile, que se realizará durante el mes de noviembre de 2026 y bajo la responsabilidad de la empresa Los Olivos de Villacuri S.A.C.",
+      "url": "https://busquedas.elperuano.pe/dispositivo/NL/2570926-1",
+      "pais": "PE",
+      "resumen": null,
+      "porque": {
+        "syngenta": "Involucra un trámite de sanidad vegetal y vigilancia fitosanitaria del SENASA en importación de material vegetal, tema prioritario de la cuenta."
+      },
+      "tipo": "norma"
+    }
   }
 }
