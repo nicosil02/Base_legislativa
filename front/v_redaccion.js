@@ -225,7 +225,7 @@ VISTAS.resumen = (() => {
   const pintar = (caja, r) => {
     caja.innerHTML = r.nota ? `<div class="vacio">${esc(r.nota)}</div>`
       : `<p class="nota">${r.cuenta ? `Armado a las ${esc(r.fecha)} en Lima con ${Object.entries(r.cuenta).map(([k, v]) => `${v} ${esc(k)}`).join(", ")}` : `Último resumen enviado por Telegram, ${esc(fechaCorta(r.fecha))}`}</p>
-         <div class="resumen">${negrita(r.texto.replace(/\*\*/g, "*"))}</div>`;
+         <div class="resumen">${negrita(r.texto.replace(/\*\*/g, "*")).replace(/\[([^\]\n]+)\]\((https?:\/\/[^)\s]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>')}</div>`;
   };
   return {
     titulo: "Resumen para clientes", sub: "Lo de las últimas 24 horas que le importa a cada cliente, con el porqué y el enlace",
