@@ -409,5 +409,22 @@
       },
       "tipo": "noticia"
     }
+  },
+  "n2365324": {
+    "estado": "interesante",
+    "fecha": "2026-11-04T19:35:37+00:00",
+    "por": "nicolas.silva@valiconsultores.com",
+    "titulo": "Perú y Estados Unidos suscriben Memorándum de Entendimiento sobre Cooperación Nuclear Civil Estratégica",
+    "item": {
+      "titulo": "Perú y Estados Unidos suscriben Memorándum de Entendimiento sobre Cooperación Nuclear Civil Estratégica",
+      "url": "https://www.gob.pe/institucion/rree/noticias/1468569-peru-y-estados-unidos-suscriben-memorandum-de-entendimiento-sobre-cooperacion-nuclear-civil-estrategica",
+      "pais": "PE",
+      "resumen": null,
+      "porque": {
+        "google": "Trata sobre un acuerdo estrategico bilateral de cooperacion entre Peru y EE.UU.",
+        "incode": "Impacta directamente en el eje prioritario de relacion bilateral e inversion con Estados Unidos."
+      },
+      "tipo": "noticia"
+    }
   }
 }
