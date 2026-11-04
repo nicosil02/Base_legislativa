@@ -607,5 +607,21 @@
       },
       "tipo": "noticia"
     }
+  },
+  "n2367837": {
+    "estado": "alertar",
+    "fecha": "2026-11-04T21:39:36+00:00",
+    "por": "nicolas.silva@valiconsultores.com",
+    "titulo": "CENARES y el Organismo Andino de Salud avanzan en acciones para fortalecer la negociación conjunta de precios de medicamentos",
+    "item": {
+      "titulo": "CENARES y el Organismo Andino de Salud avanzan en acciones para fortalecer la negociación conjunta de precios de medicamentos",
+      "url": "https://www.gob.pe/institucion/cenares/noticias/1468997-cenares-y-el-organismo-andino-de-salud-avanzan-en-acciones-para-fortalecer-la-negociacion-conjunta-de-precios-de-medicamentos",
+      "pais": "PE",
+      "resumen": null,
+      "porque": {
+        "bayer": "CENARES y el ORAS-CONHU avanzan en negociaciones conjuntas de precios de medicamentos, afectando el acceso de Farma."
+      },
+      "tipo": "noticia"
+    }
   }
 }
