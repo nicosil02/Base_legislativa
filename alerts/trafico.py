@@ -79,7 +79,7 @@ def redactar(slug: str, items: list[dict], generar=None) -> list[dict]:
     for i, it in enumerate(items):
         pagina = leer_enlace(it["url"])[:5000] if it.get("url") else ""
         bloques.append(f"[{i}] {it['titulo']}\nResumen: {it.get('resumen') or '-'}\nTexto de la pagina: {pagina or '-'}")
-    prompt = PROMPT.format(cliente=config.todos()[slug]["nombre"], notas=_notas(slug),
+    prompt = PROMPT.format(cliente=config.todos().get(slug, {}).get("nombre", slug), notas=_notas(slug),
                            estilo=ESTILO["vinetas" if slug in VINETAS else "parrafo"], items="\n\n".join(bloques))
     try:
         hechos = {r["n"]: r for r in json.loads(generar(prompt) or "[]") if isinstance(r, dict)}
