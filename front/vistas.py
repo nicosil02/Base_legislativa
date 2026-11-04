@@ -54,7 +54,8 @@ def _filas(df: pd.DataFrame) -> list[dict]:
 def _resumen_limpio(resumen: str | None, titulo: str) -> str:
     """Google News manda de resumen un enlace con el mismo titulo: eso no aporta."""
     # algunas fuentes lo mandan escapado (&lt;a href...): decodificar antes de quitar etiquetas
-    t = html.unescape(re.sub(r"<[^>]+>", " ", html.unescape(resumen or "")))
+    # y a veces viene cortado a mitad de etiqueta (<a href="... sin cerrar)
+    t = html.unescape(re.sub(r"<[a-zA-Z/!][^>]*(>|$)", " ", html.unescape(resumen or "")))
     t = re.sub(r"\s+", " ", t).strip()
     return "" if t[:40].lower() == titulo[:40].lower() else t[:LARGO_RESUMEN]
 
