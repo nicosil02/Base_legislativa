@@ -592,22 +592,6 @@
       "tipo": "noticia"
     }
   },
-  "n2367836": {
-    "estado": "alertar",
-    "fecha": "2026-11-04T21:39:17+00:00",
-    "por": "nicolas.silva@valiconsultores.com",
-    "titulo": "CENARES expone avances en el abastecimiento de medicamentos oncológicos durante el IV Congreso de Políticas Públicas en Cáncer 2026",
-    "item": {
-      "titulo": "CENARES expone avances en el abastecimiento de medicamentos oncológicos durante el IV Congreso de Políticas Públicas en Cáncer 2026",
-      "url": "https://www.gob.pe/institucion/cenares/noticias/1469052-cenares-expone-avances-en-el-abastecimiento-de-medicamentos-oncologicos-durante-el-iv-congreso-de-politicas-publicas-en-cancer-2026",
-      "pais": "PE",
-      "resumen": null,
-      "porque": {
-        "bayer": "CENARES expone sobre abastecimiento de medicamentos oncológicos, un tema clave para la división Farma en Perú."
-      },
-      "tipo": "noticia"
-    }
-  },
   "n2367837": {
     "estado": "alertar",
     "fecha": "2026-11-04T21:39:36+00:00",
@@ -620,6 +604,22 @@
       "resumen": null,
       "porque": {
         "bayer": "CENARES y el ORAS-CONHU avanzan en negociaciones conjuntas de precios de medicamentos, afectando el acceso de Farma."
+      },
+      "tipo": "noticia"
+    }
+  },
+  "n2367836": {
+    "estado": "alertar",
+    "fecha": "2026-11-04T21:39:38+00:00",
+    "por": "nicolas.silva@valiconsultores.com",
+    "titulo": "CENARES expone avances en el abastecimiento de medicamentos oncológicos durante el IV Congreso de Políticas Públicas en Cáncer 2026",
+    "item": {
+      "titulo": "CENARES expone avances en el abastecimiento de medicamentos oncológicos durante el IV Congreso de Políticas Públicas en Cáncer 2026",
+      "url": "https://www.gob.pe/institucion/cenares/noticias/1469052-cenares-expone-avances-en-el-abastecimiento-de-medicamentos-oncologicos-durante-el-iv-congreso-de-politicas-publicas-en-cancer-2026",
+      "pais": "PE",
+      "resumen": null,
+      "porque": {
+        "bayer": "CENARES expone sobre abastecimiento de medicamentos oncológicos, un tema clave para la división Farma en Perú."
       },
       "tipo": "noticia"
     }
