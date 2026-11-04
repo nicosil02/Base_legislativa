@@ -1,5 +1,6 @@
 """Quienes integran hoy el Senado y la Camara de Diputados (Peru, 2026-2031) y la
 Asamblea Nacional (Ecuador, 2025-2029), con bancada, region, foto y una reseña.
+Las fotos que faltan en Wikipedia salen del Observatorio Legislativo (consultas/votos_ec).
 
 Peru sale de las paginas oficiales de cada camara (WordPress, /wp-json/wp/v2/senador
 y /diputado). Ecuador sale del anexo de Wikipedia de la Asamblea: el sitio oficial
@@ -19,7 +20,7 @@ import threading
 import time
 from pathlib import Path
 
-from consultas.personas import apellidos
+from consultas.personas import apellidos, id_ec
 
 COPIA = Path(__file__).resolve().parent.parent / "data" / "integrantes.json"
 CADA_SEG = 24 * 3600
@@ -106,10 +107,29 @@ def ecuador_de_wiki(wikitexto: str) -> list[dict]:
             region = provincia or ("Nacional" if not extra else f"Exterior, {extra}")
             if provincia and extra.isdigit():
                 region = f"{provincia}, distrito {extra}"
-            out.append({"pais": "EC", "camara": "asamblea", "id": f"EC:{apellidos('EC', nombre)}", "nombre": nombre,
+            out.append({"pais": "EC", "camara": "asamblea", "id": id_ec(nombre), "nombre": nombre,
                         "bancada": _BANCADA_EC.get(bancada, bancada or "Sin bancada"), "region": region, "condicion": None,
                         "foto": f"https://commons.wikimedia.org/wiki/Special:FilePath/{archivo}?width=240" if archivo else None,
                         "url": None, "resena": None})
+    return out
+
+
+def _observatorio(sesion) -> dict[str, dict]:
+    """Foto y perfil de cada asambleista actual en el Observatorio Legislativo
+    (los que tienen bancada asignada son los del periodo 2025-2029)."""
+    out = {}
+    for pagina in (1, 2):
+        r = sesion.get("https://observatoriolegislativo.ec/wp-json/wp/v2/perfil", timeout=90, params={
+            "per_page": 100, "page": pagina, "bancada": "428,431,438,465,466", "_embed": "wp:featuredmedia",
+            "_fields": "title,link,_links,_embedded"})
+        if r.status_code == 400:
+            break
+        r.raise_for_status()
+        for x in r.json():
+            m = (x.get("_embedded", {}).get("wp:featuredmedia") or [{}])[0]
+            tam = (m.get("media_details") or {}).get("sizes", {})
+            out[id_ec(html.unescape(x["title"]["rendered"]))] = {
+                "foto": (tam.get("medium") or tam.get("full") or {}).get("source_url"), "url": x["link"]}
     return out
 
 
@@ -118,7 +138,15 @@ def bajar() -> list[dict]:
     s = session()
     ec = s.get(_WIKI_EC, timeout=40)
     ec.raise_for_status()
-    return _peru(s, "senado") + _peru(s, "diputados") + ecuador_de_wiki(ec.json()["parse"]["wikitext"]["*"])
+    asamblea = ecuador_de_wiki(ec.json()["parse"]["wikitext"]["*"])
+    try:  # foto que falte en Wikipedia y enlace al perfil con su trayectoria
+        obs = _observatorio(s)
+        for p in asamblea:
+            o = obs.get(p["id"], {})
+            p["foto"], p["url"] = p["foto"] or o.get("foto"), o.get("url")
+    except Exception as e:
+        print(f"[integrantes] observatorio: {e}")
+    return _peru(s, "senado") + _peru(s, "diputados") + asamblea
 
 
 _estado: dict = {"datos": None, "hora": 0.0}
