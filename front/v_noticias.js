@@ -20,10 +20,14 @@ function vistaNoticias(pais) {
     }
     if (f.norma === "Sin normativa") filas = filas.filter((n) => !n.norma);
     if (f.norma === "Solo normativa") filas = filas.filter((n) => n.norma);
-    // Coyuntura politica pasa siempre y lo que el cerebro aun no leyo tambien
+    // Coyuntura politica pasa siempre. Lo que el cerebro aun no comparo con los clientes
+    // (llego hace menos de ~1 h) no se mezcla: va aparte, marcado "sin evaluar"
     const pesos = (n) => Object.entries(n.af).filter(([c]) => !f.cli || c === f.cli).map(([, v]) => v);
-    const relevante = (n) => { const p = pesos(n); return !p.length || Math.max(...p) >= d.umbral || n.temas.includes("Coyuntura política"); };
-    const ocultas = filas.filter((n) => !relevante(n)).length;
+    const coy = (n) => n.temas.includes("Coyuntura política");
+    const sinEvaluar = (n) => !pesos(n).length && !coy(n);
+    const relevante = (n) => { const p = pesos(n); return coy(n) || (p.length > 0 && Math.max(...p) >= d.umbral); };
+    const ocultas = filas.filter((n) => !relevante(n) && !sinEvaluar(n)).length;
+    const nuevas = f.relevante ? filas.filter(sinEvaluar) : [];
     if (f.relevante) filas = filas.filter(relevante);
     const merece = (n) => Object.keys(n.interesa).some((c) => !f.cli || c === f.cli);
     const conAlerta = filas.filter(merece).length;
@@ -37,7 +41,7 @@ function vistaNoticias(pais) {
       if (!principal.has(n.grupo)) { principal.set(n.grupo, n); tambien.set(n.id, []); } else tambien.get(principal.get(n.grupo).id).push(n);
     }
     lista = [...principal.values()];
-    return { ocultas, conAlerta, plana: !!(f.tema || f.cat || porAfin) };
+    return { ocultas, conAlerta, nuevas, plana: !!(f.tema || f.cat || porAfin) };
   }
 
   function tarjeta(n) {
@@ -69,7 +73,9 @@ function vistaNoticias(pais) {
     raiz.querySelector(".r-ale").textContent = `Solo las que merecen alerta (${r.conAlerta})`;
     raiz.querySelector(".r-afi").hidden = !f.cli;
     raiz.querySelector(".r-cuenta").textContent = `${plural(lista.length, "noticia")}, ${f.ven.toLowerCase()}`;
-    if (!lista.length) { caja.innerHTML = `<div class="vacio">Sin noticias con esos filtros. Prueba ampliar el periodo, cambiar el tema o limpiar la búsqueda.</div>`; return; }
+    const aparte = r.nuevas.length ? `<h2 class="grupo-t">Sin evaluar todavía <span>${r.nuevas.length}, recién llegadas: el sistema aún no las compara con tus clientes</span></h2>
+      <div class="sin-eval">${r.nuevas.slice(0, 40).map(tarjeta).join("")}</div>` : "";
+    if (!lista.length) { caja.innerHTML = (r.nuevas.length ? "" : `<div class="vacio">Sin noticias con esos filtros. Prueba ampliar el periodo, cambiar el tema o limpiar la búsqueda.</div>`) + aparte; return; }
     if (r.plana) caja.innerHTML = lista.slice(0, 150).map(tarjeta).join("");
     else {
       const grupos = new Map(d.temas.map((t) => [t, []]));
@@ -81,6 +87,7 @@ function vistaNoticias(pais) {
       const bloque = (t, g, max) => (g.length ? `<h2 class="grupo-t">${esc(t)} <span>${g.length}</span></h2>${g.slice(0, max).map(tarjeta).join("")}` : "");
       caja.innerHTML = [...grupos].map(([t, g]) => bloque(t, g, 30)).join("") + bloque("Otros", otros, 20);
     }
+    caja.insertAdjacentHTML("beforeend", aparte);
     if (animar) entrar(caja.querySelectorAll(".fila"));
     dibujarCombinar();
   }

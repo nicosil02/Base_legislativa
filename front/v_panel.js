@@ -201,12 +201,13 @@ VISTAS.panel = (() => {
     const f = s();
     const r = filtrar();
     const conPuntos = agenda.filter((a) => a.puntos.length).length;
+    // Solo cifras que piden algo: lo que falta revisar, lo pendiente y lo que viene
+    const docs = r.paises.reduce((n, p) => n + (r.v.entradas[p] ?? 0), 0);
     kpis(raiz.querySelector(".kpis"), [
-      [r.paises.reduce((n, p) => n + (r.v.entradas[p] ?? 0), 0), "Documentos revisados", f.ven],
-      [r.todas.length, "Relevantes para clientes", f.cli ? App.nombre(f.cli) : `${r.todas.filter((a) => a.tipo === "norma").length} normas`],
-      [proyectos.length, "Proyectos de clientes", `de ${miles(r.total)} en trámite`],
+      [r.todas.filter((a) => !estado(a)).length, "Por revisar", `de ${r.todas.length} para clientes, entre ${miles(docs)} documentos`],
+      [r.todas.filter((a) => estado(a) === "despues").length, "Dejadas para después", "pendientes de decidir"],
       [r.todas.filter((a) => a.tipo === "pl").length, "Proyectos que se movieron", f.ven],
-      [agenda.length, `Sesiones en ${d.dias_agenda} días`, `${conPuntos} con temas de interés`],
+      [conPuntos, "Sesiones con temas de clientes", `en los próximos ${d.dias_agenda} días`],
     ]);
     pestanas(raiz.querySelector(".tabs"), [["alertas", `Alertas (${r.todas.length})`], ["proyectos", `Proyectos de clientes (${proyectos.length})`]], f.tab, (t) => {
       f.tab = t; raiz.querySelector(".vista").innerHTML = ""; dibujar(true);
