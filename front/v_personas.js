@@ -17,9 +17,9 @@ VISTAS.personas = (() => {
     const contra = r.votos.filter((v) => v.contra_bancada);
     caja.innerHTML = `<h2 class="sub-t">${esc(nombre(p))}</h2><div class="kpis"></div>
       <h2 class="grupo-t">Proyectos que firmó <span>${r.pls.length}${r.pls.some((x) => x.seguido) ? `, ${r.pls.filter((x) => x.seguido).length} que sigues` : ""}</span></h2>
-      ${r.pls.slice(0, 40).map((x) => `<article class="fila pl"><div class="marcas"><span>${esc(x.pl)}</span><span>${esc(fechaCorta(x.fecha))}</span>
+      ${[...r.pls.filter((x) => x.seguido), ...r.pls.filter((x) => !x.seguido)].map((x, i) => `${i === 8 ? `<details class="mas-f"><summary>Ver los otros ${r.pls.length - 8}</summary>` : ""}<article class="fila pl"><div class="marcas"><span>${esc(x.pl)}</span><span>${esc(fechaCorta(x.fecha))}</span>
           ${x.primero ? "<span>Primer firmante</span>" : ""}${x.seguido ? `<span class="cli">${icono("estrella", 12)}Lo sigues</span>` : ""}</div>
-          <h3>${esc(oracion(x.titulo ?? ""))}</h3><small>${esc(x.estado ?? "")}</small></article>`).join("")
+          <h3>${esc(oracion(x.titulo ?? ""))}</h3><small>${esc(x.estado ?? "")}</small></article>`).join("") + (r.pls.length > 8 ? "</details>" : "")
         || `<div class="vacio">No firmó proyectos en este periodo, o la base todavía no los tiene.</div>`}
       ${p.pais === "PE" ? `<h2 class="grupo-t">Votos en el Pleno <span>${contra.length ? `${contra.length} contra la mayoría de su bancada, arriba` : "los últimos"}</span></h2>
       ${[...contra, ...r.votos.filter((v) => !v.contra_bancada)].slice(0, 25).map((v) => `<article class="fila"><div class="marcas"><span>${esc(fechaCorta(v.fecha))}</span>
@@ -47,7 +47,7 @@ VISTAS.personas = (() => {
     titulo: "Congresistas y asambleístas", sub: "Qué firmó, cómo votó y qué dijo cada uno. Para el quién apoyó y quién cuestionó de las alertas.",
     async abrir(cuerpo) {
       cuerpo.innerHTML = `<div class="barra filtros"><label class="campo grande">Nombre o apellido
-          <input type="search" class="p-q" list="p-lista" placeholder="Escribe un apellido" value="${esc(f().q)}"></label></div>
+          <input type="search" class="p-q" list="p-lista" style="min-width:min(30rem,90vw)" placeholder="Escribe un apellido" value="${esc(f().q)}"></label></div>
         <datalist id="p-lista"></datalist><div class="p-ficha"></div>`;
       const caja = cuerpo.querySelector(".p-ficha");
       if (!gente) {
