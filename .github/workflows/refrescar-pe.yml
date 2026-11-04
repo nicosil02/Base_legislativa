@@ -298,8 +298,12 @@ jobs:
           GH_REPO: ${{ github.repository }}
           PYTHONIOENCODING: utf-8
         run: |
-          GEMINI_API_KEY="$CLIENTES_CLAVE" timeout 1500 python -X utf8 -m consultas.posturas precalcular || echo "[warn] posturas fallo, sigo"
+          GEMINI_API_KEY="$CLIENTES_CLAVE" timeout 1500 python -X utf8 -m consultas.posturas precalcular 40 || echo "[warn] posturas fallo, sigo"
           timeout 300 python -X utf8 -m consultas.cargos || echo "[warn] cargos fallo, sigo"
+          if [ "${{ steps.hora.outputs.hour }}" = "14" ] || [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            GEMINI_API_KEY="$CLIENTES_CLAVE" timeout 900 python -X utf8 -m consultas.votos_ec_comisiones \
+              || echo "[warn] votos de comisiones EC fallo, sigo"
+          fi
 
       - name: Envio de alerta diaria (am/pm)
         env:

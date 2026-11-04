@@ -92,7 +92,11 @@ def _votos_ec(ident: str, votaciones: list[dict] | None = None, bancadas: dict[s
     if votaciones is None:
         from consultas.integrantes import integrantes
         from consultas.votos_ec import votaciones as _v
-        votaciones, bancadas = _v(), {m["id"]: m["bancada"] for m in integrantes() if m["pais"] == "EC"}
+        from consultas.votos_ec_comisiones import votaciones as _c
+        # Pleno (Observatorio) y comisiones (PDF de la Asamblea), por fecha
+        comisiones = [{**v, "asunto": f"{v['comision']} · {v['asunto']}"} for v in _c()]
+        votaciones = sorted(_v() + comisiones, key=lambda v: v["fecha"])
+        bancadas = {m["id"]: m["bancada"] for m in integrantes() if m["pais"] == "EC"}
     b = bancadas.get(ident)
     companeros = [i for i, x in bancadas.items() if x == b and i != ident] if b and b != "Sin bancada" else []
     lista, iguales, con_postura = [], 0, 0

@@ -1,11 +1,14 @@
-"""Que piensa cada quien, leido por Gemini en las sesiones transcritas.
+"""Posturas en el Congreso: quien dijo que en cada sesion transcrita, leido por Gemini.
 
-dijo():   la postura de un congresista en cada sesion donde hablo.
-debate(): quien hablo de un proyecto cuando se sustento o debatio, con su bancada.
+Cada sesion se lee UNA vez y de esa lectura salen todos los que hablaron, sobre que,
+con que postura y si hablaban de un proyecto. De ahi salen:
+  dijo():   las posturas de un congresista o asambleista (sin limite de sesiones)
+  debate(): quien hablo de un proyecto cuando se sustento o debatio, por bancada
+Ninguna de las dos llama a Gemini: solo leen lo guardado.
 
-Las transcripciones no dicen quien habla: Gemini lo deduce de "tiene la palabra
-el congresista X". Lo leido se guarda en data/posturas.json (GitHub, ver
-core/store) para no volver a pagarlo; una sesion ya leida no cambia.
+precalcular() lee las sesiones que faltan; corre en refrescar-pe.yml (13-14 y 23 UTC).
+Se guarda por mes en data/posturas/AAAA-MM.json (core/store: commit en main), para
+que ningun archivo pase el limite de 1 MB de la API de GitHub.
 """
 from __future__ import annotations
 
@@ -13,54 +16,54 @@ import json
 import re
 import sqlite3
 
-from consultas.personas import _sesiones, apellidos, id_ec
+from consultas.personas import apellidos, id_ec
 from core import llm, store
 from core.text import norm
 from scraper.categorias import CATEGORIAS
 
-PATH = "data/posturas.json"
-VERSION = "v2"  # cambia si cambia lo que se le pide a Gemini: lo viejo deja de servir
-POSTURAS = ["a favor", "en contra", "con observaciones", "pregunta o pide información", "propone", "neutral", "solo lo mencionan"]
+CARPETA = "data/posturas"
+VERSION = 4  # sube si cambia lo que se le pide a Gemini: lo leido con otra version se vuelve a leer
+DESDE = {"PE": "2026-07-26", "EC": "2025-05-14"}  # inicio de cada periodo
+POSTURAS = ["a favor", "en contra", "con observaciones", "pregunta", "propone", "comenta"]
 TEMAS = sorted(set(CATEGORIAS) - {"Transporte y telecomunicaciones", "Energía y minas", "Control de la actividad privada"}) + [
     "Seguridad y orden interno", "Justicia", "Política y control político", "Presupuesto y gasto público", "Otros"]
 
-_ESQ_DIJO = {"type": "array", "items": {"type": "object", "properties": {
-    "i": {"type": "integer"}, "tema": {"type": "string", "enum": TEMAS}, "postura": {"type": "string", "enum": POSTURAS},
-    "piensa": {"type": "string"}}, "required": ["i", "tema", "postura", "piensa"]}}
-_ESQ_DEBATE = {"type": "array", "items": {"type": "object", "properties": {
-    "i": {"type": "integer"}, "orador": {"type": "string"}, "rol": {"type": "string"},
-    "postura": {"type": "string", "enum": POSTURAS[:6]}, "dijo": {"type": "string"}},
-    "required": ["i", "orador", "rol", "postura", "dijo"]}}
+_ESQ = {"type": "array", "items": {"type": "object", "properties": {
+    "orador": {"type": "string"}, "cargo": {"type": "string", "enum": ["legislador", "ministro o autoridad", "invitado"]},
+    "sobre": {"type": "string"}, "postura": {"type": "string", "enum": POSTURAS},
+    "tema": {"type": "string", "enum": TEMAS}, "dijo": {"type": "string"}, "proyecto": {"type": "string"}},
+    "required": ["orador", "cargo", "sobre", "postura", "tema", "dijo", "proyecto"]}}
 
-_COMUN = """Las transcripciones son automaticas y no marcan quien habla. Quien preside da la palabra
-("tiene la palabra el congresista X", "adelante asambleista X"); lo que sigue es de esa persona hasta que
-se da la palabra a otra. El texto puede venir sin tildes ni enies: tu respuesta va en espanol con tildes,
-enies y ortografia correctas (Comisión, Señaló, Niñez), en tercera persona, sin adornos ni dos puntos.
-Cuenta solo lo que la persona dijo, sin inventar ni completar."""
+PROMPT = """Transcripción automática de una sesión del {lugar}: {titulo} ({fecha}).
+No marca quién habla. Quien preside da la palabra ("tiene la palabra el congresista X", "adelante
+asambleísta X", "senadora X, por favor"); lo que sigue es de esa persona hasta que se da la palabra a otra.
+La transcripción puede venir sin tildes; tú escribes siempre con tildes y eñes correctas.
 
-PROMPT_DIJO = _COMUN + """
+Lista cada intervención con contenido (una por persona y por asunto; ignora saludos, lista de asistencia,
+votaciones nombre por nombre y frases de trámite de quien preside):
+- orador: nombre y apellidos como se dicen en la sesión
+- cargo: legislador (congresista, senador, diputado, asambleísta), ministro o autoridad, invitado
+- sobre: el asunto concreto en menos de 8 palabras (un proyecto, un decreto, la gestión de un ministro,
+  el presupuesto de un sector...)
+- postura: su posición frente a "sobre"
+  "a favor": lo apoya o lo defiende de forma explícita
+  "en contra": lo rechaza, lo critica, lo cuestiona o denuncia un problema en él
+  "con observaciones": lo apoya pero pide cambios o pone reparos
+  "pregunta": solo pide información, sin juzgar
+  "propone": plantea algo nuevo (una medida, un cambio, una citación)
+  "comenta": informa o describe sin tomar posición
+  Ejemplos: "Cuestionó la baja ejecución" es en contra. "Informó sobre la situación de Piura" es comenta.
+  "Pidió citar al ministro" es propone.
+- tema: la categoría del asunto (beneficios tributarios es Tributos, no Trabajo)
+- dijo: UNA oración de menos de 22 palabras, en tercera persona, que empiece con un verbo en pasado
+  (Defendió, Cuestionó, Pidió, Propuso, Rechazó, Preguntó, Denunció, Respaldó) y diga lo concreto
+  (cifra, entidad, proyecto), con tildes: número, ejecución, aprobación, público
+- proyecto: si habla de un proyecto de ley específico, su número ("PL 230") o su nombre corto; si no, ""
 
-Para cada sesion numerada, lee los fragmentos donde aparece {nombre} y responde
-- tema: la categoria que mejor describe lo que se discutia
-- postura: que posicion tomo {nombre}. "solo lo mencionan" si no habla en el fragmento
-- piensa: UNA oracion de menos de 20 palabras que empiece con un verbo en pasado (Defendió, Cuestionó,
-  Pidió, Propuso, Criticó, Respaldó, Rechazó, Preguntó) y diga sobre qué, con lo concreto (cifra, entidad,
-  proyecto). Ejemplo "Cuestionó el endeudamiento de 4428 millones para comprar aviones de guerra."
+No inventes: si no se entiende quién habla, no lo incluyas.
 
-{sesiones}"""
-
-PROMPT_DEBATE = _COMUN + """
-
-Proyecto: {titulo}
-
-Para cada sesion numerada, identifica a cada persona que habla SOBRE ESTE PROYECTO (autor que lo sustenta,
-congresistas, ministros o invitados). Si en una sesion no se trata este proyecto, no devuelvas nada de ella.
-- orador: nombre o apellido como se dice en la sesion
-- rol: autor, presidente de la comision, congresista, ministro, invitado...
-- postura: su posicion sobre el proyecto
-- dijo: UNA oracion de menos de 25 palabras que empiece con un verbo en pasado (Defendió, Cuestionó, Pidió...)
-
-{sesiones}"""
+TRANSCRIPCION
+{texto}"""
 
 # "Comision: Energia Y Minas" -> "Comisión de Energía y Minas"
 _TILDES = {"comision": "Comisión", "energia": "Energía", "economia": "Economía", "politico": "Político", "gestion": "Gestión",
@@ -78,113 +81,8 @@ def organo(tipo: str) -> str:
     return nombre if nombre.lower().startswith(("mesa", "comisión", "sesión")) else f"Comisión de {nombre}"
 
 
-def _guardado() -> dict:
-    return store.cargar(PATH, {}, ttl=120)
-
-
-def _guardar(nuevo: dict) -> None:
-    if nuevo:
-        store.actualizar(PATH, lambda d: {**d, **nuevo}, f"posturas: {len(nuevo)} lecturas", {})
-
-
-def _gemini(prompt: str, esquema: dict) -> list[dict] | None:
-    if not llm.disponible():
-        return None
-    try:
-        return json.loads(llm.generar(prompt, modelo=llm.LITE, json=True, schema=esquema) or "[]")
-    except Exception as e:  # sin cupo o respuesta rota: quedan los fragmentos sin leer
-        print(f"[posturas] {e}")
-        return None
-
-
-def _ap(pais: str, ident: str) -> str:
-    return ident.split(":", 1)[1] if pais == "PE" else " ".join(ident.split(":", 1)[1].split()[:2])
-
-
-def _clave(ident: str, vid: str) -> str:
-    return f"{VERSION}|{ident}|{vid}"
-
-
-def leer(pe: sqlite3.Connection, pais: str, ident: str, nombre: str, ya: dict) -> dict:
-    """Pasa por Gemini las sesiones de la persona que aun no estan en `ya`. Devuelve lo nuevo."""
-    faltan = [s for s in _sesiones(pe, pais, _ap(pais, ident), contexto=True) if _clave(ident, s["video_id"]) not in ya]
-    if not faltan:
-        return {}
-    texto = "\n\n".join(f"[{i}] {s['fecha']} {s['titulo']}\n" + "\n...\n".join(s["contexto"]) for i, s in enumerate(faltan, 1))
-    return {_clave(ident, faltan[r["i"] - 1]["video_id"]): {k: r[k] for k in ("tema", "postura", "piensa")}
-            for r in _gemini(PROMPT_DIJO.format(nombre=nombre, sesiones=texto), _ESQ_DIJO) or []
-            if 1 <= r.get("i", 0) <= len(faltan)}
-
-
-def precalcular(pe: str, gente: list[dict], hilos: int = 4) -> int:
-    """Lee por adelantado lo nuevo de todos y lo guarda de una vez (un commit).
-    Corre a diario en refrescar-pe.yml despues de bajar las transcripciones."""
-    from concurrent.futures import ThreadPoolExecutor
-    ya = dict(_guardado())
-
-    def uno(p):
-        nombre = " ".join(p["nombre"].split(",")[::-1]).strip() if p["pais"] == "PE" else p["nombre"]
-        try:
-            return leer(sqlite3.connect(pe), p["pais"], p["id"], nombre, ya)
-        except Exception as e:
-            print(f"[posturas] {p['id']}: {e}")
-            return {}
-    nuevo: dict = {}
-    total = 0
-    with ThreadPoolExecutor(hilos) as ex:
-        for i, r in enumerate(ex.map(uno, gente), 1):
-            nuevo.update(r)
-            if i % 25 == 0 or i == len(gente):  # guarda de a poco: si el timeout corta, lo leido queda
-                _guardar(nuevo)
-                total += len(nuevo)
-                nuevo = {}
-                print(f"[posturas] {i}/{len(gente)} personas, {total} sesiones leidas", flush=True)
-    return total
-
-
-def dijo(pe: sqlite3.Connection, pais: str, ident: str, nombre: str) -> dict:
-    """{sesiones, mesas}. No llama a Gemini: lo ya leido sale de data/posturas.json; una
-    sesion que aun no se leyo va con sus fragmentos y se lee en la corrida diaria."""
-    ap = _ap(pais, ident)
-    ya = _guardado()
-    if not any(k.startswith(f"{VERSION}|{ident}|") for k in ya):
-        # nadie la leyo todavia (antes de la primera corrida diaria): se lee ahora y queda guardada
-        nuevo = leer(pe, pais, ident, nombre, ya)
-        _guardar(nuevo)
-        ya = {**ya, **nuevo}
-    ses = _sesiones(pe, pais, ap)
-    for s in ses:
-        s["organo"] = organo(s["organo"])
-        s.update(ya.get(_clave(ident, s["video_id"])) or {})
-    mesas = []
-    if pais == "PE":
-        mesas = [{"fecha": f, "titulo": t, "url": u} for f, t, u, c in pe.execute(
-                    "SELECT fecha, titulo, url, congresista FROM mesas_tecnicas WHERE congresista IS NOT NULL ORDER BY fecha DESC")
-                 if ap in norm(c)][:15]
-    return {"sesiones": ses, "mesas": mesas}
-
-
-_RX_PL = r"proyectos? de (?:ley|resoluci\w+ legislativa)\s*(?:n[uú]mero|n\.?\s*°?|nro\.?)?\s*{n}\b"
-
-
-def _ventana(texto: str, num: str | None, titulo: str) -> str | None:
-    """El tramo de la sesion donde se trata el proyecto: donde se dice su numero o,
-    si no, donde mas se repiten las palabras largas de su titulo."""
-    m = re.search(_RX_PL.format(n=re.escape(num)), texto, re.I) if num else None
-    if m:
-        ini = m.start()
-    else:
-        pal = {w for w in norm(titulo).split() if len(w) >= 7}
-        plano = norm(texto)
-        mejor = max(range(0, max(1, len(plano) - 3000), 1500), key=lambda i: sum(w in plano[i:i + 3000] for w in pal), default=0)
-        if len(pal) < 2 or sum(w in plano[mejor:mejor + 3000] for w in pal) < min(3, len(pal)):
-            return None
-        ini = mejor
-    return texto[max(0, ini - 1500):ini + 14000]
-
-
-def _bancada(orador: str, gente: list[tuple[str, dict]]) -> dict | None:
-    """Miembro (de pares (apellidos, miembro)) cuyo apellido se dice; None si no hay uno
+def _miembro(orador: str, gente: list[tuple[str, dict]]) -> dict | None:
+    """Miembro (de pares (apellidos, miembro)) cuyos apellidos se dicen; None si no hay uno
     solo (ministro, invitado, apellido repetido)."""
     pal = set(norm(orador).split())
     for minimo in (2, 1):
@@ -194,75 +92,173 @@ def _bancada(orador: str, gente: list[tuple[str, dict]]) -> dict | None:
     return None
 
 
-def debate(pe: sqlite3.Connection, ec: sqlite3.Connection, pais: str, pl: str, gente: list[dict]) -> list[dict]:
-    """[{fecha, organo, url, orador, rol, postura, dijo, bancada, id}] de las sesiones transcritas
-    en que se trato el proyecto, de la mas nueva a la mas vieja."""
+def _pares(gente: list[dict], pais: str, camara: str | None = None) -> list[tuple[str, dict]]:
+    return [(apellidos(pais, p["nombre"]) if pais == "PE" else id_ec(p["nombre"])[3:], p)
+            for p in gente if p["pais"] == pais and (not camara or p["camara"] == camara)]
+
+
+def _camara(tipo: str) -> str | None:
+    """Del Pleno se sabe la camara; una comision puede ser bicameral."""
+    return {"Pleno: Senado": "senado", "Pleno: Diputados": "diputados"}.get(tipo)
+
+
+# ---- guardado por mes ----
+def _mes(fecha: str) -> str:
+    return f"{CARPETA}/{fecha[:7]}.json"
+
+
+_leido: dict = {}
+
+
+def guardado() -> dict:
+    """{video_id: sesion leida} de todos los meses. Lee la copia del repo (la app en la nube se
+    actualiza con cada push a main); se relee solo si cambio algun archivo."""
+    from core.db import ROOT
+    archivos = sorted((ROOT / CARPETA).glob("*.json"))
+    firma = tuple((a.name, a.stat().st_mtime_ns) for a in archivos)
+    if _leido.get("firma") != firma:
+        datos: dict = {}
+        for a in archivos:
+            datos.update(json.loads(a.read_text(encoding="utf-8")))
+        _leido.update(firma=firma, datos=datos)
+    return _leido["datos"]
+
+
+def _guardar(nuevas: dict) -> None:
+    por_mes: dict = {}
+    for vid, s in nuevas.items():
+        por_mes.setdefault(_mes(s["fecha"]), {})[vid] = s
+    for path, xs in por_mes.items():
+        store.actualizar(path, lambda d, xs=xs: {**d, **xs}, f"posturas: {len(xs)} sesiones leidas", {})
+
+
+# ---- lectura con Gemini ----
+def leer(vid: str, tipo: str, titulo: str, fecha: str, texto: str, gente: list[dict], generar=None) -> dict:
+    """Una sesion leida: {fecha, organo, url, pais, v, dichos: [...]}. Los legisladores llevan su id."""
     from congreso_live.facebook_ec import url_video
-    clave = f"debate|{pais}:{pl}"
+    pais = "EC" if tipo.endswith("(EC)") else "PE"
+    if generar is None:
+        generar = lambda p: llm.generar(p, modelo=llm.LITE, json=True, schema=_ESQ, respaldo=False)  # gemma no aguanta sesiones largas
+    lugar = "Asamblea Nacional de Ecuador" if pais == "EC" else "Congreso de Peru"
+    crudo = json.loads(generar(PROMPT.format(lugar=lugar, titulo=titulo, fecha=fecha, texto=texto[:400_000])) or "[]")
+    pares = _pares(gente, pais, _camara(tipo)) or _pares(gente, pais)
+    dichos = []
+    for x in crudo:
+        m = _miembro(x["orador"], pares) if x.get("cargo") == "legislador" else None
+        dichos.append({k: x.get(k, "") for k in ("orador", "cargo", "sobre", "postura", "tema", "dijo", "proyecto")}
+                      | {"id": m["id"] if m else None})
+    return {"fecha": fecha, "organo": organo(tipo), "pais": pais, "v": VERSION, "dichos": dichos,
+            "url": url_video(vid) if pais == "EC" else f"https://www.youtube.com/watch?v={vid}"}
+
+
+def precalcular(db: str, gente: list[dict], hilos: int = 3, maximo: int | None = None) -> int:
+    """Lee las sesiones que faltan (o leidas con otra VERSION), de la mas nueva, y guarda de a 10.
+    ponytail: el tope por corrida cuida el cupo gratis de flash-lite (500 al dia, compartido con
+    toda la app); el atraso se pone al dia en unos dias. Con cupo pagado se puede quitar."""
+    from concurrent.futures import ThreadPoolExecutor
+    ya = guardado()
+    c = sqlite3.connect(db)
+    faltan = [r for r in c.execute(
+        """SELECT video_id, tipo, titulo, fecha FROM sesiones_transcripciones
+           WHERE tipo NOT LIKE 'Entrevista:%' AND length(texto) > 2000
+             AND ((tipo LIKE '%(EC)' AND fecha >= ?) OR (tipo NOT LIKE '%(EC)' AND fecha >= ?))
+           ORDER BY fecha DESC""", (DESDE["EC"], DESDE["PE"]))
+              if (ya.get(r[0]) or {}).get("v") != VERSION][:maximo]
+    print(f"[posturas] {len(faltan)} sesiones por leer", flush=True)
+
+    def una(fila):
+        vid, tipo, titulo, fecha = fila
+        try:
+            texto = sqlite3.connect(db).execute("SELECT texto FROM sesiones_transcripciones WHERE video_id = ?", (vid,)).fetchone()[0]
+            return vid, leer(vid, tipo, titulo or "", fecha, texto, gente)
+        except Exception as e:  # sin cupo o respuesta rota: se reintenta en la proxima corrida
+            print(f"[posturas] {vid}: {str(e)[:150]}", flush=True)
+            return vid, None
+    total, lote = 0, {}
+    with ThreadPoolExecutor(hilos) as ex:
+        for i, (vid, s) in enumerate(ex.map(una, faltan), 1):
+            if s:
+                lote[vid] = s
+            if len(lote) >= 10 or (i == len(faltan) and lote):  # de a poco: si el timeout corta, lo leido queda
+                _guardar(lote)
+                total += len(lote)
+                lote = {}
+                print(f"[posturas] {i}/{len(faltan)} sesiones, {total} guardadas", flush=True)
+    return total
+
+
+# ---- consultas (sin Gemini) ----
+def dijo(pe: sqlite3.Connection, pais: str, ident: str, nombre: str = "") -> dict:
+    """{sesiones: [{fecha, organo, url, sobre, postura, tema, piensa}], mesas: [...]}, de la mas nueva."""
+    sesiones = []
+    for vid, s in guardado().items():
+        for x in s["dichos"]:
+            if x.get("id") == ident:
+                sesiones.append({"video_id": vid, "fecha": s["fecha"], "organo": s["organo"], "url": s["url"], "sobre": x["sobre"],
+                                 "postura": x["postura"], "tema": x["tema"], "piensa": x["dijo"], "proyecto": x["proyecto"]})
+    sesiones.sort(key=lambda x: x["fecha"], reverse=True)
+    mesas = []
     if pais == "PE":
-        fila = pe.execute("SELECT pley_num, per_par_id, titulo, fec_presentacion FROM proyectos WHERE proyecto_ley = ?", (pl,)).fetchone()
-        if not fila:
-            return []
-        num, per, titulo, desde = str(fila[0]), fila[1], fila[2] or "", (fila[3] or "")[:10]
-        agenda = {(f[:10], norm(c).split()[0]) for f, c in pe.execute(
-            """SELECT s.fecha, s.nombre_comision FROM sesion_pl_referenciado r JOIN sesiones s ON s.id_sesion = r.id_sesion
-               WHERE r.pley_num = ? AND r.per_par_id = ?""", (fila[0], per)) if c}
-        filtro = "NOT LIKE '%(EC)'"
+        ap = ident.split(":", 1)[1]
+        mesas = [{"fecha": f, "titulo": t, "url": u} for f, t, u, c in pe.execute(
+                    "SELECT fecha, titulo, url, congresista FROM mesas_tecnicas WHERE congresista IS NOT NULL ORDER BY fecha DESC")
+                 if ap in norm(c)][:15]
+    return {"sesiones": sesiones, "mesas": mesas}
+
+
+def _es_el_proyecto(dicho: str, num: str | None, titulo: str) -> bool:
+    """El 'proyecto' que anoto Gemini es este PL: por numero (PE) o por palabras del titulo (EC)."""
+    if not dicho:
+        return False
+    if num:
+        return len(num.lstrip("0")) >= 2 and num.lstrip("0") in {d.lstrip("0") for d in re.findall(r"\d+", dicho.replace(".", ""))}
+    pal = {w for w in norm(titulo).split() if len(w) >= 6}
+    return len(pal & set(norm(dicho).split())) >= min(3, max(2, len(pal) // 2))
+
+
+def debate(pe: sqlite3.Connection, ec: sqlite3.Connection, pais: str, pl: str, gente: list[dict]) -> list[dict]:
+    """[{fecha, organo, url, orador, rol, postura, dijo, bancada, id, nombre}] de quien hablo del
+    proyecto en las sesiones leidas, de la mas nueva a la mas vieja."""
+    if pais == "PE":
+        fila = pe.execute("SELECT pley_num, titulo, fec_presentacion FROM proyectos WHERE proyecto_ley = ?", (pl,)).fetchone()
+        num, titulo = (str(fila[0]), fila[1] or "") if fila else (None, "")
     else:
         fila = ec.execute("SELECT titulo, fec_presentacion FROM proyectos WHERE n_tramite = ?", (pl,)).fetchone()
-        if not fila:
-            return []
-        num, titulo, desde = None, fila[0] or "", (fila[1] or "")[:10]
-        agenda = {((f or "")[:10], norm(c).split()[0]) for f, c in ec.execute(
-            """SELECT s.fecha, s.nombre_comision FROM sesion_ec_pl_referenciado r JOIN sesiones_ec s ON s.uid = r.uid
-               WHERE r.n_tramite = ?""", (pl,)) if c}
-        filtro = "LIKE '%(EC)'"
-    candidatas = []
-    for vid, tipo, tit, fecha, texto in pe.execute(
-            f"""SELECT video_id, tipo, titulo, fecha, texto FROM sesiones_transcripciones
-                WHERE tipo {filtro} AND tipo NOT LIKE 'Entrevista:%' AND fecha >= ? ORDER BY fecha DESC""", (desde,)):
-        organo = norm(tipo.split(":", 1)[-1].replace("(EC)", ""))
-        en_agenda = any(f == fecha and (w in organo or "pleno" in organo) for f, w in agenda)
-        if not (en_agenda or (num and re.search(_RX_PL.format(n=num), texto or "", re.I))):
-            continue
-        v = _ventana(texto or "", num, titulo)
-        if v:
-            candidatas.append({"video_id": vid, "fecha": fecha, "organo": organo(tipo), "titulo": tit, "texto": v,
-                               "url": url_video(vid) if pais == "EC" else f"https://www.youtube.com/watch?v={vid}"})
-        if len(candidatas) == 4:
-            break
-    if not candidatas:
+        num, titulo = None, (fila[0] or "") if fila else ""
+    if not fila:
         return []
-    ya = _guardado().get(f"{VERSION}|{clave}")
-    leidas = {x["video_id"] for x in ya["sesiones"]} if ya else set()
-    if not ya or {c["video_id"] for c in candidatas} - leidas:
-        texto = "\n\n".join(f"[{i}] {c['fecha']} {c['titulo']}\n{c['texto']}" for i, c in enumerate(candidatas, 1))
-        r = _gemini(PROMPT_DEBATE.format(titulo=titulo, sesiones=texto), _ESQ_DEBATE)
-        if r is None:
-            return []
-        ya = {"sesiones": [{k: c[k] for k in ("video_id", "fecha", "organo", "url")} for c in candidatas],
-              "dichos": [x for x in r if 1 <= x.get("i", 0) <= len(candidatas)]}
-        _guardar({f"{VERSION}|{clave}": ya})
-    pares = [(apellidos(pais, p["nombre"]) if pais == "PE" else id_ec(p["nombre"])[3:], p) for p in gente if p["pais"] == pais]
+    por_id = {p["id"]: p for p in gente}
     out = []
-    for x in ya["dichos"]:
-        s, m = ya["sesiones"][x["i"] - 1], _bancada(x["orador"], pares)
-        out.append({**{k: s[k] for k in ("fecha", "organo", "url")}, **{k: x[k] for k in ("orador", "rol", "postura", "dijo")},
-                    "bancada": m["bancada"] if m else None, "id": m["id"] if m else None, "nombre": m["nombre"] if m else None})
-    return out
+    for s in guardado().values():
+        if s["pais"] != pais or s["fecha"] < (fila[-1] or "")[:10]:  # un numero de PL se repite entre periodos
+            continue
+        for x in s["dichos"]:
+            if _es_el_proyecto(x["proyecto"], num, titulo):
+                m = por_id.get(x["id"])
+                out.append({"fecha": s["fecha"], "organo": s["organo"], "url": s["url"], "orador": x["orador"],
+                            "rol": x["cargo"] if not m else "", "postura": x["postura"], "dijo": x["dijo"],
+                            "bancada": m["bancada"] if m else None, "id": m["id"] if m else None, "nombre": m["nombre"] if m else None})
+    return sorted(out, key=lambda x: x["fecha"], reverse=True)
 
 
 if __name__ == "__main__":
-    t = "x " * 900 + "Pasamos al proyecto de ley número 230 que propone la ley de agua potable rural" + " y" * 50
-    assert _ventana(t, "230", "").strip().startswith("x x") and "230" in _ventana(t, "230", "")
-    assert _ventana("nada que ver " * 400, None, "Ley que promueve la inversión hidráulica agraria") is None
+    import sys
     g = [("flores ruiz", {"id": "a"}), ("flores vilchez", {"id": "b"}), ("matute charun", {"id": "c"})]
-    assert _bancada("congresista Matute", g)["id"] == "c" and _bancada("Flores", g) is None and _bancada("Víctor Flores Ruiz", g)["id"] == "a"
+    assert _miembro("congresista Matute", g)["id"] == "c" and _miembro("Flores", g) is None and _miembro("Víctor Flores Ruiz", g)["id"] == "a"
     assert organo("Comision: Energia Y Minas") == "Comisión de Energía y Minas" and organo("Pleno: Senado") == "Pleno del Senado"
     assert organo("Comision: Derecho a la Salud (EC)") == "Comisión de Derecho a la Salud"
-    import sys
+    assert _es_el_proyecto("PL 230", "230", "") and _es_el_proyecto("PL 00230-2026", "230", "") and not _es_el_proyecto("PL 2301", "230", "") and not _es_el_proyecto("", "230", "")
+    assert _es_el_proyecto("Ley de Gestión Costera Integrada", None, "Ley Orgánica de Gestión Costera Integrada")
+    gente = [{"pais": "PE", "camara": "senado", "id": "senado:matute charun", "nombre": "MATUTE CHARUN, SUSANA", "bancada": "FP"}]
+    falso = lambda p: json.dumps([{"orador": "senadora Matute", "cargo": "legislador", "sobre": "PL 5", "postura": "a favor",
+                                   "tema": "Salud", "dijo": "Defendió el PL 5.", "proyecto": "PL 5"},
+                                  {"orador": "ministro Pérez", "cargo": "ministro o autoridad", "sobre": "x", "postura": "comenta",
+                                   "tema": "Salud", "dijo": "Explicó.", "proyecto": ""}])
+    s = leer("v1", "Pleno: Senado", "t", "2026-10-01", "texto", gente, falso)
+    assert [d["id"] for d in s["dichos"]] == ["senado:matute charun", None] and s["organo"] == "Pleno del Senado", s
     if "precalcular" in sys.argv:
         from consultas.integrantes import integrantes
         from core.db import ROOT
-        print("leidas", precalcular(str(ROOT / "proyectos.db"), integrantes()))
+        maximo = int(sys.argv[sys.argv.index("precalcular") + 1]) if len(sys.argv) > sys.argv.index("precalcular") + 1 else None
+        print("leidas", precalcular(str(ROOT / "proyectos.db"), integrantes(), maximo=maximo))
     print("ok")

@@ -1,0 +1,1023 @@
+{
+  "fb_29234569932835770": {
+    "fecha": "2026-11-03",
+    "organo": "Comisión de Desarrollo Económico",
+    "pais": "EC",
+    "v": 3,
+    "dichos": [
+      {
+        "orador": "Gilda Alcívar García",
+        "cargo": "ministro o autoridad",
+        "sobre": "Proforma Presupuestaria 2027 del Ministerio de Trabajo",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Señaló que el presupuesto total es de 2.372 millones de dólares para el año 2027.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Gilda Alcívar García",
+        "cargo": "ministro o autoridad",
+        "sobre": "Proyecto de compensación de jubilaciones",
+        "postura": "a favor",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Afirmó que se destinan recursos para cubrir la deuda histórica con los jubilados.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Gilda Alcívar García",
+        "cargo": "ministro o autoridad",
+        "sobre": "Proyecto de nueva infancia",
+        "postura": "a favor",
+        "tema": "Salud",
+        "dijo": "Destacó que se logró disminuir la desnutrición crónica infantil en 2,9 puntos porcentuales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Gilda Alcívar García",
+        "cargo": "ministro o autoridad",
+        "sobre": "Proforma Presupuestaria 2027 del Ministerio de Educación",
+        "postura": "comenta",
+        "tema": "Educación",
+        "dijo": "Indicó que la Proforma asciende a 6.888,31 millones de dólares distribuidos en gasto corriente y de inversión.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Gilda Alcívar García",
+        "cargo": "ministro o autoridad",
+        "sobre": "Proforma Presupuestaria 2027 de Infraestructura y Transporte",
+        "postura": "comenta",
+        "tema": "Infraestructura",
+        "dijo": "Explicó que la Proforma comprende 765,5 millones de dólares orientados a mantener la conectividad vial y digital.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Liliana Elizabeth Durán Aguilar",
+        "cargo": "legislador",
+        "sobre": "Unidades educativas en Manabí",
+        "postura": "pregunta",
+        "tema": "Educación",
+        "dijo": "Preguntó si el ministerio tiene proyectos específicos de reconstrucción para escuelas en Manabí tras el terremoto de 2016.",
+        "proyecto": "",
+        "id": "EC:duran aguilar"
+      },
+      {
+        "orador": "Liliana Elizabeth Durán Aguilar",
+        "cargo": "legislador",
+        "sobre": "Mantenimiento de la red vial",
+        "postura": "pregunta",
+        "tema": "Transporte",
+        "dijo": "Consultó qué tiene programado el ministerio para el mantenimiento vial ante los daños del fenómeno del Niño.",
+        "proyecto": "",
+        "id": "EC:duran aguilar"
+      },
+      {
+        "orador": "Diego Salas",
+        "cargo": "legislador",
+        "sobre": "Bonos sociales y recortes presupuestarios",
+        "postura": "pregunta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Cuestionó a cuántas personas se les quitará el bono en el 2027 debido al recorte presupuestario.",
+        "proyecto": "",
+        "id": "EC:salas barriga"
+      },
+      {
+        "orador": "Diego Salas",
+        "cargo": "legislador",
+        "sobre": "Ejecución presupuestaria en obras públicas",
+        "postura": "en contra",
+        "tema": "Infraestructura",
+        "dijo": "Rechazó la baja ejecución presupuestaria registrada en el primer semestre del año en obras viales.",
+        "proyecto": "",
+        "id": "EC:salas barriga"
+      },
+      {
+        "orador": "Estefania López",
+        "cargo": "legislador",
+        "sobre": "Proyecto de jóvenes en acción",
+        "postura": "pregunta",
+        "tema": "Trabajo",
+        "dijo": "Consultó qué busca lograr este proyecto y cuántos jóvenes se proyecta atender en el 2027.",
+        "proyecto": "",
+        "id": "EC:lopez pico"
+      },
+      {
+        "orador": "Mabel Méndez",
+        "cargo": "legislador",
+        "sobre": "Presupuesto de la Universidad de Cuenca",
+        "postura": "pregunta",
+        "tema": "Educación",
+        "dijo": "Preguntó cuál es la explicación técnica de la reducción del presupuesto para la Universidad de Cuenca en 2027.",
+        "proyecto": "",
+        "id": "EC:mendez rojas"
+      },
+      {
+        "orador": "Mabel Méndez",
+        "cargo": "legislador",
+        "sobre": "Residencias universitarias CASAUN",
+        "postura": "pregunta",
+        "tema": "Educación",
+        "dijo": "Solicitó precisiones sobre los recursos, fecha operativa y condiciones de acceso a la residencia gratuita.",
+        "proyecto": "CASAUN",
+        "id": "EC:mendez rojas"
+      },
+      {
+        "orador": "Manuel Tapia",
+        "cargo": "legislador",
+        "sobre": "Infraestructura y conectividad en El Oro",
+        "postura": "a favor",
+        "tema": "Infraestructura",
+        "dijo": "Agradeció el apoyo brindado en obras viales y habitacionales en la provincia de El Oro.",
+        "proyecto": "",
+        "id": "EC:quintana tapia"
+      },
+      {
+        "orador": "Jimi Eulacio",
+        "cargo": "legislador",
+        "sobre": "Programas de becas y educación",
+        "postura": "pregunta",
+        "tema": "Educación",
+        "dijo": "Preguntó cuántas becas y montos están presupuestados para el próximo año.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Alex Morán",
+        "cargo": "legislador",
+        "sobre": "Presupuesto para obras nuevas",
+        "postura": "pregunta",
+        "tema": "Infraestructura",
+        "dijo": "Solicitó aclaración sobre cuánto presupuesto de 2027 se destinará a obras nuevas versus planillas pendientes.",
+        "proyecto": "",
+        "id": "EC:moran galarza"
+      },
+      {
+        "orador": "Nabila A. Inguela",
+        "cargo": "legislador",
+        "sobre": "Ejecución del presupuesto de Educación",
+        "postura": "en contra",
+        "tema": "Educación",
+        "dijo": "Cuestionó la diferencia entre los montos asignados y lo realmente ejecutado por el Ministerio de Educación.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Sergio Peña",
+        "cargo": "legislador",
+        "sobre": "Proyecto del Quinto Puente",
+        "postura": "pregunta",
+        "tema": "Infraestructura",
+        "dijo": "Solicitó que se explique de manera didáctica a los ecuatorianos en qué consiste la obra del Quinto Puente.",
+        "proyecto": "Quinto Puente",
+        "id": "EC:pena veloz"
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=29234569932835770"
+  },
+  "ur86EyKoVIQ": {
+    "fecha": "2026-11-03",
+    "organo": "Comisión de Presupuesto",
+    "pais": "PE",
+    "v": 3,
+    "dichos": [
+      {
+        "orador": "Maddie Verónica Jones Núñez",
+        "cargo": "legislador",
+        "sobre": "escala remunerativa del SAT y continuidad de inversiones ante fenómeno del niño",
+        "postura": "propone",
+        "tema": "Tributos",
+        "dijo": "Propuso actualizar la escala remunerativa de los trabajadores del SAT y garantizar la continuidad presupuestaria para el fenómeno del niño.",
+        "proyecto": "",
+        "id": "diputados:yonz nunez"
+      },
+      {
+        "orador": "Diego Alonso Fernando Basán Calderón",
+        "cargo": "legislador",
+        "sobre": "incorporación de 14 disposiciones complementarias finales en la ley de presupuesto",
+        "postura": "propone",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Propuso incorporar catorce disposiciones complementarias finales para la continuidad de proyectos y servicios públicos en diversas entidades.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Wilfredo Verano Saravia",
+        "cargo": "legislador",
+        "sobre": "presupuesto para proyectos de saneamiento e infraestructura en Cusco",
+        "postura": "propone",
+        "tema": "Saneamiento",
+        "dijo": "Propuso destinar presupuesto para proyectos de saneamiento básico, agua potable e infraestructura vial en la región Cusco.",
+        "proyecto": "PL 002-2026",
+        "id": "senado:verano saravia"
+      },
+      {
+        "orador": "Juan Carlos de la Irina Cárdenas",
+        "cargo": "legislador",
+        "sobre": "financiamiento de la estrategia de acción social con sostenibilidad en la Amazonía",
+        "postura": "propone",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Propuso asignar más de sesenta y ocho millones de soles para financiar la estrategia de acción social con sostenibilidad en la Amazonía.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ana Bertha Patiño-Urgo",
+        "cargo": "legislador",
+        "sobre": "continuidad del servicio de módulos temporales de vivienda en Ica",
+        "postura": "propone",
+        "tema": "Construcción",
+        "dijo": "Propuso incorporar un articulado para garantizar la continuidad de módulos temporales de vivienda mediante obras por impuestos en Ica.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Héctor Guillén Valencia",
+        "cargo": "legislador",
+        "sobre": "asignación presupuestal para proyectos de inversión pública en Huancavelica",
+        "postura": "propone",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Propuso incorporar proyectos de inversión pública para la región Huancavelica y la zona centro del Perú.",
+        "proyecto": "",
+        "id": "diputados:guillen valencia"
+      },
+      {
+        "orador": "Carlos David Caballero León",
+        "cargo": "legislador",
+        "sobre": "financiamiento para la nueva carretera central y hospital en San Juan de Lurigancho",
+        "postura": "a favor",
+        "tema": "Infraestructura",
+        "dijo": "Defendió la asignación presupuestal para la nueva carretera central y la construcción del hospital de alta complejidad en San Juan de Lurigancho.",
+        "proyecto": "",
+        "id": "senado:caballero leon"
+      },
+      {
+        "orador": "Jorge Velázquez",
+        "cargo": "legislador",
+        "sobre": "traslado del sistema CAS al régimen 728 y mantenimiento vial en Ucayali",
+        "postura": "propone",
+        "tema": "Trabajo",
+        "dijo": "Propuso atender el traslado del sistema CAS al régimen 728 y garantizar el mantenimiento vial en Ucayali.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Segundo Leucario Tapia Bernal",
+        "cargo": "legislador",
+        "sobre": "asignación de presupuesto para represa Chonta, aeropuerto de Jaén y universidades",
+        "postura": "propone",
+        "tema": "Educación",
+        "dijo": "Propuso asignar presupuesto para la represa de Chonta, el aeropuerto de Jaén y diversas universidades nacionales en Cajamarca.",
+        "proyecto": "",
+        "id": "senado:tapia bernal"
+      },
+      {
+        "orador": "Huber Flores Suárez",
+        "cargo": "legislador",
+        "sobre": "proyectos de inversión prioritaria en infraestructura y salud para Arequipa",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Propuso evaluar la incorporación de proyectos prioritarios de inversión pública en agua, salud y vialidad para Arequipa.",
+        "proyecto": "",
+        "id": "senado:flores suarez"
+      },
+      {
+        "orador": "Ernesto Sunini",
+        "cargo": "legislador",
+        "sobre": "demandas laborales de trabajadores estatales y ampliación del servicio alimentario",
+        "postura": "propone",
+        "tema": "Trabajo",
+        "dijo": "Propuso financiar la ampliación del servicio alimentario para infantes y atender las demandas laborales del sector público.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Edwin Espinosa Wilka",
+        "cargo": "legislador",
+        "sobre": "incorporación de 23 proyectos de inversión para la región Cusco",
+        "postura": "propone",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Propuso incorporar veintitrés proyectos de inversión en salud, educación y saneamiento para evitar la paralización de obras en Cusco.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Jessica Benitez Barrio Nuevo",
+        "cargo": "legislador",
+        "sobre": "incremento de bonificación para profesionales de salud pública y residentado odontológico",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Propuso incrementar la bonificación por puesto para personal de salud pública y destinar cinco millones para el residentado odontológico.",
+        "proyecto": "",
+        "id": "diputados:benitez barrionuevo"
+      },
+      {
+        "orador": "Carlos Alberto Yalta Sotelo",
+        "cargo": "legislador",
+        "sobre": "financiamiento de obras viales en el Callao y destrabe de obras por impuestos",
+        "postura": "propone",
+        "tema": "Infraestructura",
+        "dijo": "Propuso financiamiento para obras viales en el Callao y destravar el mecanismo de obras por impuestos para gobiernos locales.",
+        "proyecto": "",
+        "id": "diputados:yalta sotelo"
+      },
+      {
+        "orador": "Jesús Pérez",
+        "cargo": "legislador",
+        "sobre": "financiamiento para el primer hospital en la región Madre de Dios",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Propuso incluir el presupuesto para el perfil y expediente técnico del primer hospital Santa Rosa en Puerto Maldonado.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Saúl Andrés Armacánqui Morales",
+        "cargo": "legislador",
+        "sobre": "proyectos de agua, saneamiento y movilidad urbana en Canas, Cusco",
+        "postura": "propone",
+        "tema": "Saneamiento",
+        "dijo": "Propuso financiar proyectos de agua, saneamiento y movilidad urbana en la provincia de Canas y respaldar a trabajadores de la Biblioteca Nacional.",
+        "proyecto": "",
+        "id": "senado:armacanqui morales"
+      },
+      {
+        "orador": "Caterin Milagro San Pueró Mesa",
+        "cargo": "legislador",
+        "sobre": "presupuesto para Juegos Panamericanos, Ministerio Público y rechazo a financiamiento por UNOPS",
+        "postura": "con observaciones",
+        "tema": "Política y control político",
+        "dijo": "Rechazó la autorización de transferencias a la UNOPS para obras en Amazonas y propuso presupuesto para los Juegos Panamericanos y el Ministerio Público.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Elmer Cuba",
+        "cargo": "ministro o autoridad",
+        "sobre": "retiro de autorización de financiamiento a través de la UNOPS",
+        "postura": "a favor",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Informó que el Ministerio de Economía procederá a retirar la autorización de financiamiento observada en el artículo trece.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Lila Prado Vallejos",
+        "cargo": "legislador",
+        "sobre": "reactivación de cuatro obras hídricas paralizadas en Ica",
+        "postura": "propone",
+        "tema": "Agricultura",
+        "dijo": "Propuso reactivar cuatro obras hídricas paralizadas por falta de recursos en la región Ica y actualizar la escala remunerativa de la Contraloría.",
+        "proyecto": "",
+        "id": "diputados:prado vallejos"
+      },
+      {
+        "orador": "Gloria Charito Hirachi Pizarro",
+        "cargo": "legislador",
+        "sobre": "asignación de presupuesto para proyectos de riego y hospitales en Arequipa",
+        "postura": "propone",
+        "tema": "Agricultura",
+        "dijo": "Propuso incorporar códigos de inversión para canales de riego y mayor presupuesto para el hospital Goyeneche en Arequipa.",
+        "proyecto": "",
+        "id": "diputados:hirache pizarro"
+      },
+      {
+        "orador": "Daniel Barragán",
+        "cargo": "legislador",
+        "sobre": "financiamiento de proyectos de inversión en saneamiento y transporte a nivel nacional",
+        "postura": "propone",
+        "tema": "Infraestructura",
+        "dijo": "Propuso incorporar presupuesto para proyectos de inversión viabilizados en saneamiento básico y carreteras a nivel nacional.",
+        "proyecto": "",
+        "id": "senado:barragan coloma"
+      },
+      {
+        "orador": "Alejandro Muñante",
+        "cargo": "legislador",
+        "sobre": "aplicación de medidas de urgencia para movilidad urbana en Lima",
+        "postura": "propone",
+        "tema": "Transporte",
+        "dijo": "Propuso autorizar a la Municipalidad Metropolitana de Lima la aplicación de normas de urgencia para proyectos de movilidad urbana.",
+        "proyecto": "",
+        "id": "senado:munante barrios"
+      },
+      {
+        "orador": "José Moisés Chipana Chipana",
+        "cargo": "legislador",
+        "sobre": "atención presupuestal en salud, educación y carreteras para la región Puno",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Propuso atender presupuestalmente hospitales, carreteras e instituciones educativas en la región Puno.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Hilmer Trujillo Segarra",
+        "cargo": "legislador",
+        "sobre": "creación de la Universidad Nacional de Pataz y proyectos viales en La Libertad",
+        "postura": "propone",
+        "tema": "Educación",
+        "dijo": "Propuso incluir la ley de creación de la Universidad Nacional de Pataz y proyectos viales en los anexos de presupuesto.",
+        "proyecto": "Ley 32546",
+        "id": null
+      },
+      {
+        "orador": "César Tito Rojas",
+        "cargo": "legislador",
+        "sobre": "escala remunerativa de la Contraloría y presupuesto para plazas docentes universitarias",
+        "postura": "propone",
+        "tema": "Educación",
+        "dijo": "Propuso actualizar la escala remunerativa de la Contraloría y destinar presupuesto para plazas docentes en universidades nacionales.",
+        "proyecto": "",
+        "id": "diputados:tito rojas"
+      },
+      {
+        "orador": "Henry Antonio Albañil Carmona",
+        "cargo": "legislador",
+        "sobre": "financiamiento para reconstrucción con cambios y proyectos viales en Piura",
+        "postura": "propone",
+        "tema": "Infraestructura",
+        "dijo": "Propuso incorporar disposiciones para identificar obligaciones de la reconstrucción con cambios y financiar proyectos prioritarios en Piura.",
+        "proyecto": "",
+        "id": "diputados:albanil carmona"
+      },
+      {
+        "orador": "Jessica Navasánchez",
+        "cargo": "legislador",
+        "sobre": "observaciones a artículos del presupuesto y proyectos de saneamiento",
+        "postura": "con observaciones",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Cuestionó diversos artículos del predictamen de presupuesto y propuso modificaciones sobre el uso de saldos de canon y saneamiento.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Juli Ambrosio",
+        "cargo": "invitado",
+        "sobre": "reconsideración de presupuestos para proyectos de inversión en Huánuco",
+        "postura": "propone",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Propuso reconsiderar los presupuestos de proyectos de inversión local en Huánuco para evitar obras paralizadas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Nilsa Chacón",
+        "cargo": "legislador",
+        "sobre": "autorización a gobiernos regionales para ejecutar inversiones del programa País",
+        "postura": "propone",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Propuso autorizar a los gobiernos regionales financiar plataformas de servicios del programa Nacional País en zonas de pobreza.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ángel Meneses",
+        "cargo": "legislador",
+        "sobre": "incorporación de proyectos para cierre de brechas en Junín, Huancavelica y Lima",
+        "postura": "propone",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Propuso incluir proyectos de inversión para cerrar brechas en las regiones de Junín, Huancavelica y Lima provincias.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Víctor Cotipa",
+        "cargo": "legislador",
+        "sobre": "implementación de la ley del Poder Judicial y previsiones presupuestarias",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Propuso exceptuar al Poder Judicial de restricciones presupuestales para incorporar personal y regular previsiones presupuestarias.",
+        "proyecto": "Ley 32504",
+        "id": null
+      },
+      {
+        "orador": "Absalom Vásquez Villanueva",
+        "cargo": "legislador",
+        "sobre": "declaración de interés público de inversiones en Lima y presupuesto para el Tribunal Constitucional",
+        "postura": "propone",
+        "tema": "Infraestructura",
+        "dijo": "Propuso declarar de interés público la cartera de inversiones de Lima Metropolitana y ampliar el presupuesto del Tribunal Constitucional.",
+        "proyecto": "",
+        "id": "senado:vasquez villanueva"
+      },
+      {
+        "orador": "Edgar Mancha Pineda",
+        "cargo": "legislador",
+        "sobre": "proyectos de agua, educación y cultura en Puno y Ayacucho",
+        "postura": "propone",
+        "tema": "Educación",
+        "dijo": "Propuso incluir proyectos de agua, educación, movilidad urbana y la puesta en valor de la iglesia San Antonio Abad en Puno.",
+        "proyecto": "",
+        "id": "senado:mancha pineda"
+      },
+      {
+        "orador": "Luis Arturo Alegría García",
+        "cargo": "legislador",
+        "sobre": "obra del puente Sauzal, CTS de Contraloría y presupuesto para la Junta Nacional de Justicia",
+        "postura": "propone",
+        "tema": "Infraestructura",
+        "dijo": "Propuso buscar continuidad para el puente Sauzal en San Martín y financiar las funciones de la Contraloría y Junta Nacional de Justicia.",
+        "proyecto": "",
+        "id": "diputados:alegria garcia"
+      },
+      {
+        "orador": "Admarlo Aguirras Ramos",
+        "cargo": "legislador",
+        "sobre": "modificaciones presupuestarias para pago de gratificaciones y proyectos en Junín",
+        "postura": "propone",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Propuso autorizar modificaciones para gratificaciones del personal CAS y financiar proyectos viales en Junín.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Carlos Alberto Dominguez Herrera",
+        "cargo": "legislador",
+        "sobre": "proyectos especiales de irrigación, terminal portuario de Chimbote e infraestructura en Ancash",
+        "postura": "propone",
+        "tema": "Agricultura",
+        "dijo": "Propuso financiar el proyecto especial Chinecas, el terminal portuario de Chimbote y la infraestructura hospitalaria en Ancash.",
+        "proyecto": "",
+        "id": "diputados:dominguez herrera"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=ur86EyKoVIQ"
+  },
+  "A13FbaXLgrg": {
+    "fecha": "2026-11-03",
+    "organo": "Comisión de Salud",
+    "pais": "PE",
+    "v": 3,
+    "dichos": [
+      {
+        "orador": "Luis Ernesto Neyra",
+        "cargo": "legislador",
+        "sobre": "sesión descentralizada de salud en Piura",
+        "postura": "a favor",
+        "tema": "Salud",
+        "dijo": "Inició la sesión descentralizada destacando la importancia de la prevención sanitaria y fiscalización.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "María Magdalena Seminario Marón",
+        "cargo": "ministro o autoridad",
+        "sobre": "protección y prevención de violencia",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Destacó la implementación de centros de emergencia mujer y acciones frente al fenómeno natural.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Miguel Feliz Guamancornejo",
+        "cargo": "ministro o autoridad",
+        "sobre": "estrategia frente al dengue y fenómeno",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Informó sobre la activación de los consejos regionales de salud y la capacitación en dengue.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Luis Dyer Fernández",
+        "cargo": "ministro o autoridad",
+        "sobre": "presupuesto y camas hospitalarias",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Reportó cifras actualizadas de contagios y la distribución de camas en las regiones del norte.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "José Augusto Alvines",
+        "cargo": "invitado",
+        "sobre": "situación de red asistencial en Piura",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Detalló el plan de contingencia y la distribución de camas hospitalarias ante la emergencia.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Marlene Armintas",
+        "cargo": "legislador",
+        "sobre": "ausencia de autoridades regionales",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestiono severamente la inasistencia del gobernador regional y de los alcaldes a la sesión.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ana Eufra",
+        "cargo": "legislador",
+        "sobre": "ejecución presupuestal y prevención",
+        "postura": "con observaciones",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Senaló la baja ejecución presupuestal en planes de prevención frente al dengue en Piura.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Giovanna Navarrete",
+        "cargo": "invitado",
+        "sobre": "impago a trabajadores de control vectorial",
+        "postura": "pregunta",
+        "tema": "Trabajo",
+        "dijo": "Reclamo el retraso en el pago de salarios a más de trescientos locadores de servicios.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=A13FbaXLgrg"
+  },
+  "fb_28932338263099928": {
+    "fecha": "2026-11-03",
+    "organo": "Comisión de Gobiernos Autónomos",
+    "pais": "EC",
+    "v": 3,
+    "dichos": [
+      {
+        "orador": "Sergio Jesús Peñavelos",
+        "cargo": "legislador",
+        "sobre": "ausencia temporal y subrogación en los GAD",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso un límite de 90 días para ausencias temporales de autoridades de los GAD.",
+        "proyecto": "Código Orgánico de Organización Territorial, Autonomía y Descentralización",
+        "id": null
+      },
+      {
+        "orador": "Jennifer Guillen",
+        "cargo": "legislador",
+        "sobre": "ausencias temporales y medios telemáticos",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Presentó una observación sobre el cómputo de plazos de ausencia temporal y funciones telemáticas.",
+        "proyecto": "Código Orgánico de Organización Territorial, Autonomía y Descentralización",
+        "id": "EC:guillen rodriguez"
+      },
+      {
+        "orador": "Javier Lazo",
+        "cargo": "legislador",
+        "sobre": "eliminación de artículos sobre asentamientos",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestiono la eliminación de los artículos 46 y 47 sin una explicación jurídica clara.",
+        "proyecto": "Código Orgánico de Organización Territorial, Autonomía y Descentralización",
+        "id": null
+      },
+      {
+        "orador": "Sandra Figueroa",
+        "cargo": "legislador",
+        "sobre": "legalización de tierras y asentamientos humanos",
+        "postura": "con observaciones",
+        "tema": "Política y control político",
+        "dijo": "Pregunto sobre los tiempos de posesión necesarios para la regularización en asentamientos consolidados.",
+        "proyecto": "Código Orgánico de Organización Territorial, Autonomía y Descentralización",
+        "id": "EC:figueroa aguilar"
+      },
+      {
+        "orador": "Diego Flores",
+        "cargo": "ministro o autoridad",
+        "sobre": "constitucionalidad de artículos sobre asentamientos",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Explico que los artículos 46 y 47 chocaban con el Código Civil y presentaban problemas constitucionales.",
+        "proyecto": "Código Orgánico de Organización Territorial, Autonomía y Descentralización",
+        "id": null
+      },
+      {
+        "orador": "Pablo Jurado",
+        "cargo": "legislador",
+        "sobre": "incorporación de aportes normativos",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Defendio la legalidad de recibir aportes de los asambleistas durante el proceso de debate.",
+        "proyecto": "Código Orgánico de Organización Territorial, Autonomía y Descentralización",
+        "id": "EC:jurado moreno"
+      },
+      {
+        "orador": "Samuel Celleri",
+        "cargo": "legislador",
+        "sobre": "jornada de concejales y estímulos tributarios",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso la implementación de 40 horas semanales para concejales y la transmisión obligatoria de sesiones.",
+        "proyecto": "Código Orgánico de Organización Territorial, Autonomía y Descentralización",
+        "id": "EC:celleri gomez"
+      },
+      {
+        "orador": "Milton Aguas",
+        "cargo": "legislador",
+        "sobre": "situación de Galápagos y el proyecto de ley",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Apoyo la moción de aprobación y denuncio obras abandonadas que afectaron a la población.",
+        "proyecto": "Código Orgánico de Organización Territorial, Autonomía y Descentralización",
+        "id": "EC:aguas flores"
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=28932338263099928"
+  },
+  "fb_1161524416554420": {
+    "fecha": "2026-11-02",
+    "organo": "Comisión de Desarrollo Económico",
+    "pais": "EC",
+    "v": 3,
+    "dichos": [
+      {
+        "orador": "Juan Francisco Martínez",
+        "cargo": "ministro o autoridad",
+        "sobre": "el presupuesto de defensa para el 2027",
+        "postura": "a favor",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Detalló que el presupuesto del Ministerio de Defensa asciende a 1954 millones de dólares para el año 2027.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Pablo Rivera",
+        "cargo": "ministro o autoridad",
+        "sobre": "el gasto permanente y no permanente del interior",
+        "postura": "a favor",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Señaló que el Ministerio del Interior tiene 35 millones en gasto permanente y 175 millones en gasto no permanente.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Diego Franco",
+        "cargo": "legislador",
+        "sobre": "el despliegue y proyectos en Manabí",
+        "postura": "pregunta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Preguntó si existen proyectos emblemáticos para el año 2027 guardando las reservas del caso.",
+        "proyecto": "",
+        "id": "EC:franco hanze"
+      },
+      {
+        "orador": "Jimmy Blasio",
+        "cargo": "legislador",
+        "sobre": "los proyectos presupuestados para el 2027",
+        "postura": "pregunta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Consultó si los proyectos presupuestados ya se vienen ejecutando o si son todos nuevos para el 2027.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "López",
+        "cargo": "legislador",
+        "sobre": "el incremento del gasto de seguridad",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Destacó que la lucha contra el crimen organizado y el narcotráfico requiere de un incremento en la seguridad.",
+        "proyecto": "",
+        "id": "EC:lopez pico"
+      },
+      {
+        "orador": "Diego Salas",
+        "cargo": "legislador",
+        "sobre": "el recorte en bienes y servicios policiales",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Cuestionó una supuesta contradicción alarmante por un recorte considerable en la partida de bienes y servicios de consumo.",
+        "proyecto": "",
+        "id": "EC:salas barriga"
+      },
+      {
+        "orador": "Morán",
+        "cargo": "legislador",
+        "sobre": "la ley de fortalecimiento y cooperación regional",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Afirmó que la ley aprobada el 23 de octubre de 2025 ayuda sustancialmente a las fuerzas armadas y policía.",
+        "proyecto": "",
+        "id": "EC:moran galarza"
+      },
+      {
+        "orador": "Tabra",
+        "cargo": "legislador",
+        "sobre": "la ejecución presupuestaria y resultados medibles",
+        "postura": "con observaciones",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Cuestionó la falta de metas medibles y la baja ejecución presupuestaria reportada en el ministerio.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Peña",
+        "cargo": "legislador",
+        "sobre": "el respaldo a la labor de seguridad",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Defendió la inversión necesaria en seguridad nacional y criticó las posturas de ciertos sectores.",
+        "proyecto": "",
+        "id": "EC:pena veloz"
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1161524416554420"
+  },
+  "fb_1640629901103393": {
+    "fecha": "2026-11-02",
+    "organo": "Comisión de Desarrollo Económico",
+    "pais": "EC",
+    "v": 3,
+    "dichos": [
+      {
+        "orador": "Juan Carlos Campuzano",
+        "cargo": "ministro o autoridad",
+        "sobre": "Proyecciones de recaudación tributaria 2027",
+        "postura": "comenta",
+        "tema": "Tributos",
+        "dijo": "Explicó que el modelo Arima proyecta una recaudación bruta de veinticinco mil millones de dólares.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Edison Jiménez",
+        "cargo": "ministro o autoridad",
+        "sobre": "Proforma presupuestaria de salud 2027",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Detalló que la proforma de salud contempla cinco mil trescientos millones para priorizar el primer nivel.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Mabel Mendes",
+        "cargo": "legislador",
+        "sobre": "Modelo de proyección tributaria",
+        "postura": "pregunta",
+        "tema": "Tributos",
+        "dijo": "Consultó sobre el periodo de diez años considerado y la base de datos del modelo Arima.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Diego Franco",
+        "cargo": "legislador",
+        "sobre": "Compra de medicamentos en salud",
+        "postura": "pregunta",
+        "tema": "Salud",
+        "dijo": "Preguntó si el incremento presupuestario garantizará un ochenta por ciento de stock de medicamentos.",
+        "proyecto": "",
+        "id": "EC:franco hanze"
+      },
+      {
+        "orador": "Diego Salas",
+        "cargo": "legislador",
+        "sobre": "Recaudación fiscal y presupuesto de salud",
+        "postura": "con observaciones",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Cuestiono la variación del crecimiento tributario y la supuesta reducción en el presupuesto de salud.",
+        "proyecto": "",
+        "id": "EC:salas barriga"
+      },
+      {
+        "orador": "Liliana Durán",
+        "cargo": "legislador",
+        "sobre": "Beneficios tributarios y gasto en salud",
+        "postura": "en contra",
+        "tema": "Tributos",
+        "dijo": "Rechazo la desigualdad en beneficios tributarios y el supuesto recorte presupuestario para la salud.",
+        "proyecto": "",
+        "id": "EC:duran aguilar"
+      },
+      {
+        "orador": "Sergio Peña",
+        "cargo": "legislador",
+        "sobre": "Sostenibilidad presupuestaria y eficiencia",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Defendio la necesidad de hablar con la verdad a los ecuatorianos sobre los problemas heredados.",
+        "proyecto": "",
+        "id": "EC:pena veloz"
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1640629901103393"
+  },
+  "fb_1125238246659838": {
+    "fecha": "2026-11-02",
+    "organo": "Comisión de Desarrollo Económico",
+    "pais": "EC",
+    "v": 3,
+    "dichos": [
+      {
+        "orador": "Mabel Mendes Rojas",
+        "cargo": "legislador",
+        "sobre": "el crecimiento de la recaudación tributaria",
+        "postura": "pregunta",
+        "tema": "Tributos",
+        "dijo": "Pregunto qué parte del incremento tributario proviene del crecimiento económico y qué parte de medidas de administración o control.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Sergio Peña",
+        "cargo": "legislador",
+        "sobre": "la asignación a la seguridad social",
+        "postura": "comenta",
+        "tema": "Pensiones",
+        "dijo": "Señaló que el Estado está cumpliendo con la regla de asignación del 40 por ciento para el IESS y las demás instituciones.",
+        "proyecto": "",
+        "id": "EC:pena veloz"
+      },
+      {
+        "orador": "Liliana Durán Aguilar",
+        "cargo": "legislador",
+        "sobre": "el decreto 527 y el gasto permanente",
+        "postura": "pregunta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Preguntó a cuánto asciende el monto del decreto 527 para pagar gasto permanente con ingresos no permanentes en 2027.",
+        "proyecto": "",
+        "id": "EC:duran aguilar"
+      },
+      {
+        "orador": "Luigi García Velázquez",
+        "cargo": "legislador",
+        "sobre": "el porcentaje de inversión en nuevos proyectos",
+        "postura": "pregunta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Preguntó qué porcentaje de la inversión corresponde a proyectos nuevos frente a los que ya están en curso.",
+        "proyecto": "",
+        "id": "EC:garcia velasquez"
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1125238246659838"
+  },
+  "lfKGx7svgzo": {
+    "fecha": "2026-11-02",
+    "organo": "Comisión de Presupuesto",
+    "pais": "PE",
+    "v": 3,
+    "dichos": [
+      {
+        "orador": "Alonso Fernando Diego Basán Calderón",
+        "cargo": "legislador",
+        "sobre": "endeudamiento",
+        "postura": "propone",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Propuso incorporar una disposición complementaria final para autorizar garantías a la municipalidad de Lima.",
+        "proyecto": "PL 004",
+        "id": null
+      },
+      {
+        "orador": "Carlos David Caballero León",
+        "cargo": "legislador",
+        "sobre": "endeudamiento",
+        "postura": "propone",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Propuso una operación de endeudamiento para financiar el proyecto satelital peruSAT II.",
+        "proyecto": "PL 004",
+        "id": "senado:caballero leon"
+      },
+      {
+        "orador": "Nilza Chacón Trujillo",
+        "cargo": "legislador",
+        "sobre": "endeudamiento",
+        "postura": "a favor",
+        "tema": "Saneamiento",
+        "dijo": "Saludó la inclusión de un préstamo de la agencia francesa para el proyecto de agua en Chimbote.",
+        "proyecto": "PL 004",
+        "id": "senado:chacon trujillo"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=lfKGx7svgzo"
+  },
+  "fb_1588360136311967": {
+    "fecha": "2026-11-02",
+    "organo": "Comisión de Desarrollo Económico",
+    "pais": "EC",
+    "v": 3,
+    "dichos": [
+      {
+        "orador": "Yuri Colorado Marquez",
+        "cargo": "invitado",
+        "sobre": "presupuesto general del estado 2027",
+        "postura": "a favor",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Saludo el incremento considerable de seiscientos diez millones de dólares adicionales para los gobiernos autónomos descentralizados.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Fredy Gallardo",
+        "cargo": "invitado",
+        "sobre": "asignaciones presupuestarias a prefecturas",
+        "postura": "a favor",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Aplaudió el espacio y la entrega de asignaciones a tiempo por parte del gobierno central para las prefecturas.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1588360136311967"
+  }
+}
