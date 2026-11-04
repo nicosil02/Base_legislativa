@@ -36,20 +36,48 @@ def _quien(nombre: str, gente: list[dict]) -> str | None:
     return mejor["id"] if mejor and len(pal & set(norm(mejor["nombre"].replace(",", " ")).split())) >= 2 else None
 
 
-def de_comisiones(h: str, gente: list[dict]) -> list[tuple[str, str, str]]:
-    """[(id, cargo, comision)] de la tabla de mesas directivas de comisiones."""
-    out = []
+def _filas(h: str):
+    """(celdas en texto, html de la fila, nombre de la comision) de la tabla de mesas directivas."""
     for fila in re.findall(r"<tr.*?</tr>", h, re.S):
         celdas = [_texto(c) for c in re.findall(r"<td[^>]*>(.*?)</td>", fila, re.S)]
         if len(celdas) < 3 or not celdas[0].strip().isdigit():
             continue
-        cuerpo = " ".join(celdas[1:3])
         comision = re.split(r";|\(Fecha|Fecha de|President[ea]\s*:", celdas[1])[0].strip(" ;")
         comision = comision.capitalize() if comision.upper() == comision else comision
-        for rol, nombre in _ROL.findall(cuerpo):
+        yield celdas, fila, comision if re.match(r"Comisi|Mesa", comision) else f"Comisión de {comision[0].lower()}{comision[1:]}"
+
+
+def de_comisiones(h: str, gente: list[dict]) -> list[tuple[str, str, str]]:
+    """[(id, cargo, comision)] de la tabla de mesas directivas de comisiones."""
+    out = []
+    for celdas, _, comision in _filas(h):
+        for rol, nombre in _ROL.findall(" ".join(celdas[1:3])):
             ident = _quien(nombre, gente)
             if ident:
-                out.append((ident, rol, comision if re.match(r"Comisi|Mesa", comision) else f"Comisión de {comision[0].lower()}{comision[1:]}"))
+                out.append((ident, rol, comision))
+    return out
+
+
+def enlaces(h: str) -> list[tuple[str, str]]:
+    """[(comision, slug)] de "Ver integrantes" (solo el Senado los tiene; Diputados no
+    publica los integrantes de sus comisiones en un formato que se pueda leer)."""
+    out = []
+    for _, fila, comision in _filas(h):
+        m = re.search(r'href="https://senado\.congreso\.gob\.pe/([^/"]+)/?"', fila)
+        if m:
+            out.append((comision, m.group(1)))
+    return out
+
+
+def de_integrantes(h: str, gente: list[dict], comision: str) -> list[tuple[str, str, str]]:
+    """Titulares y suplentes de la pagina de una comision del Senado (la mesa ya sale de de_comisiones)."""
+    out = []
+    for fila in re.findall(r"<tr.*?</tr>", h, re.S):
+        nombre = re.search(r'senate-name-link[^>]*>(.*?)</a>', fila, re.S)
+        rol = re.search(r'senate-role[^>]*>\s*(Titular|Suplente)\s*<', fila)
+        ident = nombre and rol and _quien(_texto(nombre.group(1)), gente)
+        if ident:
+            out.append((ident, rol.group(1), comision))
     return out
 
 
@@ -76,7 +104,12 @@ def bajar(gente: list[dict]) -> dict[str, list[dict]]:
         for pid, fn in ((comisiones, lambda h: de_comisiones(h, miembros)), (mesa, lambda h: de_mesa(h, camara, [p for p in miembros if p["camara"] == camara]))):
             r = s.get(f"https://{camara}.congreso.gob.pe/wp-json/wp/v2/pages/{pid}", params={"_fields": "content"}, timeout=40)
             if r.ok:
-                filas += fn(r.json()["content"]["rendered"])
+                h = r.json()["content"]["rendered"]
+                filas += fn(h)
+                for comision, slug in enlaces(h) if pid == comisiones else []:
+                    x = s.get(f"https://{camara}.congreso.gob.pe/wp-json/wp/v2/pages", params={"slug": slug, "_fields": "content"}, timeout=40)
+                    if x.ok and x.json():
+                        filas += de_integrantes(x.json()[0]["content"]["rendered"], miembros, comision)
         for ident, cargo, organo in filas:
             if {"cargo": cargo, "organo": organo} not in cargos.setdefault(ident, []):
                 cargos[ident].append({"cargo": cargo, "organo": organo})
@@ -102,9 +135,15 @@ if __name__ == "__main__":
            <tr><td>2</td><td>CONSTITUCIÓN Presidente: <br>Giannina Iris Avendaño Vilca (JPP)</td><td>Edificio</td></tr>"""
     assert de_comisiones(h, gente) == [("senado:mesia ramirez", "Presidente", "Comisión de constitución"),
                                        ("diputados:avendano vilca", "Presidente", "Comisión de constitución")], de_comisiones(h, gente)
+    fila = """<tr class="senate-row"><td><a class="senate-name-link" href="u">Mesía Ramírez, Carlos Fernando</a></td>
+              <td><span class="senate-group-span">FP</span></td><td><span class="senate-role-titular">Titular</span></td></tr>"""
+    assert de_integrantes(fila, gente, "Comisión X") == [("senado:mesia ramirez", "Titular", "Comisión X")]
     from consultas.integrantes import integrantes
     datos = bajar(integrantes())
     n = sum(len(v) for v in datos.values())
     assert n >= 60, n
     COPIA.write_text(json.dumps(datos, ensure_ascii=False, indent=0), encoding="utf-8")
+    from core import store  # en la corrida diaria (GH_TOKEN) queda como commit en main
+    if store._cfg():
+        store.actualizar("data/cargos.json", lambda d: datos if d != datos else None, "cargos: renovados", {})
     print("ok", len(datos), "personas", n, "cargos")

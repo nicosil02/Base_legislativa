@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import os
+import threading
 import time
 
 FLASH = "gemini-3.6-flash"  # 20 pedidos/dia compartidos con los chats
@@ -10,18 +11,20 @@ GEMMA = "gemma-4-26b-a4b-it"  # cupo propio; ultimo respaldo (lo usa cerebro/gra
 ESPERAS = (3, 10)  # segundos entre reintentos del mismo modelo
 
 _cliente = None
+_CANDADO = threading.Lock()  # dos hilos que lo crean a la vez dejan uno huerfano que el GC cierra
 
 
 def cliente():
     """El cliente vive a nivel de modulo: si el GC lo recolecta, cierra la
     sesion HTTP que siguen usando los chats creados con el."""
     global _cliente
-    if _cliente is None:
-        key = os.environ.get("GEMINI_API_KEY")
-        if not key:
-            raise RuntimeError("Falta GEMINI_API_KEY en el entorno")
-        from google import genai
-        _cliente = genai.Client(api_key=key)
+    with _CANDADO:
+        if _cliente is None:
+            key = os.environ.get("GEMINI_API_KEY")
+            if not key:
+                raise RuntimeError("Falta GEMINI_API_KEY en el entorno")
+            from google import genai
+            _cliente = genai.Client(api_key=key)
     return _cliente
 
 
