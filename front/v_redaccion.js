@@ -44,8 +44,24 @@ VISTAS.alertas = (() => {
   function mensajes() {
     const caja = raiz.querySelector(".chat");
     // el primer mensaje con material es el prompt interno, no algo que se escribio
-    caja.innerHTML = c.historia.slice(c.material?.items?.length && !c.borrador ? 1 : 0).map(([r, t]) => `<div class="msg ${r}">${negrita(t).replace(/\n/g, "<br>")}</div>`).join("")
-      + (c.ocupado ? `<div class="msg assistant pensando">${esc(c.ocupado)}</div>` : "");
+    // el texto completo de cada version esta a la derecha; aca va recortado y con su numero
+    let n = 0;
+    const ultima = respuestas().at(-1);
+    caja.innerHTML = c.historia.slice(c.material?.items?.length && !c.borrador ? 1 : 0).map((m) => {
+      const [r, t] = m;
+      if (r === "user") return `<div class="msg user">${negrita(t).replace(/\n/g, "<br>")}</div>`;
+      if (t.startsWith(FALLO)) return `<div class="msg assistant">${esc(t)}</div>`;
+      n += 1;
+      return `<button type="button" class="msg assistant version${m === ultima ? " actual" : ""}" data-v="${n}">
+        <b>Versión ${n}${m === ultima ? ", a la derecha" : ""}</b><span>${negrita(t).replace(/\n/g, "<br>")}</span></button>`;
+    }).join("") + (c.ocupado ? `<div class="msg assistant pensando">${esc(c.ocupado)}</div>` : "");
+    caja.onclick = (e) => {  // volver a una version anterior: pasa a la derecha para editarla
+      const v = e.target.closest("[data-v]");
+      if (!v) return;
+      c.final = respuestas()[v.dataset.v - 1][1];
+      persistir(); guardar();
+      App.aviso(`Versión ${v.dataset.v} a la derecha`);
+    };
     const ult = caja.lastElementChild;
     if (ult && !quieto()) ult.animate([{ opacity: 0, transform: "translateY(6px)" }, { opacity: 1, transform: "none" }], { duration: 200, easing: "cubic-bezier(.23,1,.32,1)" });
     App.$(".main").scrollTop = App.$(".main").scrollHeight;
@@ -56,22 +72,31 @@ VISTAS.alertas = (() => {
   function guardar() {
     const caja = raiz.querySelector(".final");
     const ult = respuestas().at(-1);
-    caja.hidden = !ult;
     raiz.querySelector(".r-nueva").hidden = !c.historia.length;
-    if (!ult) return;
+    if (!ult) {
+      caja.innerHTML = `<h2>La alerta</h2><div class="vacio">Aquí aparece la alerta cuando Gemini la redacte. A la izquierda conversas con él para ajustarla.</div>`;
+      return;
+    }
     const p = c.material?.items?.[0] ?? {};
-    caja.innerHTML = `<h2>Guardar como enviada</h2>
-      <label class="campo">Texto final<textarea class="g-texto" rows="9">${esc(c.final ?? ult[1])}</textarea></label>
+    caja.innerHTML = `<div class="f-cab"><h2>La alerta</h2><span class="nota">${(i => i < 0 ? "Con tus cambios" : `Versión ${i + 1}`)(respuestas().findIndex(([, t]) => t === (c.final ?? ult[1])))}</span>
+        <button type="button" class="btn g-editar">Editar</button><button type="button" class="btn pri g-copiar">Copiar</button></div>
+      <div class="previa wa"></div><textarea class="g-texto" rows="14" hidden aria-label="Texto de la alerta">${esc(c.final ?? ult[1])}</textarea>
+      <h3 class="f-sub">Guardar en el historial</h3>
       <div class="barra"><input class="buscar g-titulo" placeholder="Título para el historial" aria-label="Título" value="${esc(p.titulo ?? "")}">
         <select class="g-pais" aria-label="País">${["Perú", "Ecuador", "Regional"].map((x) => `<option${x === (PAISES[p.pais] ?? "Perú") ? " selected" : ""}>${x}</option>`).join("")}</select>
         <input class="buscar g-linea" placeholder="Línea, opcional" aria-label="Línea"></div>
       <input class="buscar g-url" placeholder="Fuente" aria-label="Fuente" value="${esc(p.url ?? "")}">
-      <p class="nota">Vista previa con la negrita de WhatsApp</p><div class="previa"></div>
-      <div class="linea"><button type="button" class="btn g-copiar">Copiar</button><button type="button" class="btn pri g-guardar">Guardar en el historial de ${esc(App.nombre(c.cliente))}</button></div>`;
+      <div class="linea"><button type="button" class="btn g-guardar">Guardar como enviada a ${esc(App.nombre(c.cliente))}</button></div>`;
     const texto = caja.querySelector(".g-texto");
     const previa = () => { caja.querySelector(".previa").innerHTML = negrita(texto.value); };
     texto.oninput = () => { c.final = texto.value; persistir(); previa(); };
     previa();
+    caja.querySelector(".g-editar").onclick = (e) => {
+      texto.hidden = !texto.hidden;
+      caja.querySelector(".previa").hidden = !texto.hidden;
+      e.target.textContent = texto.hidden ? "Editar" : "Ver como queda";
+      if (!texto.hidden) texto.focus();
+    };
     caja.querySelector(".g-copiar").onclick = async () => { await navigator.clipboard.writeText(texto.value); App.aviso("Texto copiado"); };
     caja.querySelector(".g-guardar").onclick = async (e) => {
       const titulo = caja.querySelector(".g-titulo").value.trim();
@@ -156,9 +181,10 @@ VISTAS.alertas = (() => {
       if (semilla) c.cliente = semilla.cliente;
       c.cliente ||= lista[0];
       ctrl.innerHTML = `<div class="r-cli"></div>`;
-      cuerpo.innerHTML = `<div class="redaccion"><div class="r-ant"></div><div class="borr"></div><div class="material"></div><div class="chat" aria-live="polite"></div>
+      cuerpo.innerHTML = `<div class="redaccion"><section class="r-izq" aria-label="Conversación con Gemini"><h2>Conversación</h2>
+        <div class="r-ant"></div><div class="borr"></div><div class="material"></div><div class="chat" aria-live="polite"></div>
         <form class="enviar"><textarea rows="2" aria-label="Mensaje" placeholder="Pega lo que quieras o pide un ajuste. Enter envía."></textarea><button class="btn pri">Enviar</button></form>
-        <button type="button" class="btn r-nueva" hidden>Nueva conversación</button><div class="final" hidden></div></div>`;
+        <button type="button" class="btn r-nueva" hidden>Nueva conversación</button></section><aside class="final"></aside></div>`;
       const form = cuerpo.querySelector(".enviar");
       const area = form.querySelector("textarea");
       area.value = c.entrada ?? "";
