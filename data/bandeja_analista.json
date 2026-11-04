@@ -196,21 +196,5 @@
       },
       "tipo": "noticia"
     }
-  },
-  "n2364947": {
-    "estado": "descartar",
-    "fecha": "2026-11-04T13:48:01+00:00",
-    "por": "nicolas.silva@valiconsultores.com",
-    "titulo": "La IA redacta el CV y la IA lo descarta. En el medio, ningún humano evaluó al candidato",
-    "item": {
-      "titulo": "La IA redacta el CV y la IA lo descarta. En el medio, ningún humano evaluó al candidato",
-      "url": "https://www.infobae.com/peru/2026/11/03/la-ia-redacta-el-cv-y-la-ia-lo-descarta-en-el-medio-ningun-humano-evaluo-al-candidato/",
-      "pais": "PE",
-      "resumen": null,
-      "porque": {
-        "google": "Aborda directamente la regulacion de inteligencia artificial y su impacto operativo bajo el reglamento peruano."
-      },
-      "tipo": "noticia"
-    }
   }
 }
