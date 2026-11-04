@@ -343,5 +343,21 @@
       },
       "tipo": "noticia"
     }
+  },
+  "n2367404": {
+    "estado": "interesante",
+    "fecha": "2026-11-04T19:34:26+00:00",
+    "por": "nicolas.silva@valiconsultores.com",
+    "titulo": "Conveagro advierte reducción de hasta 50 % en producción de papa y otros cultivos por sequía - Exitosa Noticias",
+    "item": {
+      "titulo": "Conveagro advierte reducción de hasta 50 % en producción de papa y otros cultivos por sequía - Exitosa Noticias",
+      "url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxOMzB6cGZNeDdWRVg1ei0xLXBEWnVkeURZalF5dDRielFNWkpNQ0hPc3gxaUhsbV8wcktJV1RIN01RXy1fZUJtWnF6MkJha0hxMkJ3Q0N6WHY3VDhxaktrNThaOUluaE5nZWdwME5nQVBFVFpNNzNmSDJHOWFyRnk0YjVjT2QyWjRQYmlNNk8tc0dlUVppVTl1aXc5WEdmUVhkTU56Y1A1Vi0zY2RGVU1tdTRmZENKUGVjMk5V?oc=5",
+      "pais": "PE",
+      "resumen": null,
+      "porque": {
+        "syngenta": "Conveagro advierte caida de produccion por sequia, afectando directamente la campaña agricola y la provisión de insumos del cliente."
+      },
+      "tipo": "noticia"
+    }
   }
 }
