@@ -624,10 +624,13 @@ def _armar(fn):
 
 def _renovar(almacen: dict) -> None:
     while True:
-        for nombre, fn in SECCIONES.items():
+        # el hilo vive todo el proceso: tras un push, Streamlit recarga el modulo y
+        # aqui se toma la version nueva en vez de seguir con las funciones viejas
+        m = sys.modules.get(__name__) or importlib.import_module(__name__)
+        for nombre, fn in m.SECCIONES.items():
             t0 = time.time()
             try:
-                datos = _armar(fn)
+                datos = m._armar(fn)
                 if datos is not None:
                     almacen[nombre] = {"v": t0, "datos": datos}
             except Exception as e:
