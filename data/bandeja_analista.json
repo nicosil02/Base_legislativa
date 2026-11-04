@@ -260,5 +260,21 @@
       },
       "tipo": "noticia"
     }
+  },
+  "n2364529": {
+    "estado": "interesante",
+    "fecha": "2026-11-04T17:42:34+00:00",
+    "por": "nicolas.silva@valiconsultores.com",
+    "titulo": "Perú | Empresas operadoras deben continuar con cortes del servicio móvil y el bloqueo de equipos usados desde centros penitenciarios",
+    "item": {
+      "titulo": "Perú | Empresas operadoras deben continuar con cortes del servicio móvil y el bloqueo de equipos usados desde centros penitenciarios",
+      "url": "https://dplnews.com/peru-empresas-operadoras-deben-continuar-cortes-servicio-movil-bloqueo-equipos-usados-centros-penitenciarios/",
+      "pais": "EC",
+      "resumen": null,
+      "porque": {
+        "google": "Disposición de OSIPTEL sobre telecomunicaciones y bloqueo de equipos que involucra el ecosistema digital regulado."
+      },
+      "tipo": "noticia"
+    }
   }
 }
