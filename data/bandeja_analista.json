@@ -164,5 +164,21 @@
       },
       "tipo": "noticia"
     }
+  },
+  "n2366530": {
+    "estado": "interesante",
+    "fecha": "2026-11-04T13:30:12+00:00",
+    "por": "nicolas.silva@valiconsultores.com",
+    "titulo": "Municipalidad de Lima incorporará nuevas herramientas en sala de crisis ante El Niño",
+    "item": {
+      "titulo": "Municipalidad de Lima incorporará nuevas herramientas en sala de crisis ante El Niño",
+      "url": "https://andina.pe/agencia/noticia-municipalidad-lima-incorporara-nuevas-herramientas-sala-crisis-ante-nino-1098516.aspx",
+      "pais": "PE",
+      "resumen": null,
+      "porque": {
+        "syngenta": "Reunion de coordinacion del titular del MIDAGRI con la Municipalidad de Lima por acciones frente a El Nino, impactando la gestion de campanas agricolas."
+      },
+      "tipo": "noticia"
+    }
   }
 }
