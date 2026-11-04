@@ -708,6 +708,11 @@ def atender(a: dict, usuario: str | None) -> dict | list | str | None:
         from alerts import pls_seguidos
         from consultas import personas
         return personas.ficha(connect_ro("proyectos.db"), connect_ro("proyectos_ec.db"), a["pais"], a["persona"], set(pls_seguidos.lista()))
+    elif tipo == "por_tema":
+        from consultas import personas
+        from consultas.integrantes import integrantes
+        return personas.por_tema(connect_ro("proyectos.db"), connect_ro("proyectos_ec.db"), a["pais"], a["camara"], a["q"],
+                                 [m for m in integrantes() if m["camara"] == a["camara"]])
     elif tipo == "resena_persona":  # la pagina oficial casi nunca trae reseña: Wikipedia, aparte para no frenar la ficha
         from consultas.integrantes import resena_wiki
         return resena_wiki(a["pais"], a["nombre"])

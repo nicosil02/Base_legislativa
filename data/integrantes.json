@@ -2288,7 +2288,7 @@
 "region": "Nacional",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/SESIÓN_N.º_046_DEL_PLENO_DE_LA_ASAMBLEA_NACIONAL._ECUADOR,_02_DE_OCTUBRE_DEL_2025_-_54827896353.jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/azin-arce-annabella-emma/",
 "resena": null
 },
 {
@@ -2312,7 +2312,7 @@
 "region": "Nacional",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/Diana_Jácome_ECUADOR,_15_DE_JULIO_DE_2025_(sq_cropped).jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/jacome-silva-diana-angelica/",
 "resena": null
 },
 {
@@ -2324,7 +2324,7 @@
 "region": "Nacional",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/Luis_Esteban_Torres_2023.jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/torres-cobo-luis-esteban/",
 "resena": null
 },
 {
@@ -2336,7 +2336,7 @@
 "region": "Nacional",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/Sade_Fritschi,_ministra_del_Ambiente_ante_la_Comisión_de_Biodiversidad_(cropped).jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/fritschi-naranjo-sade-rashel/",
 "resena": null
 },
 {
@@ -2360,7 +2360,7 @@
 "region": "Nacional",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/Diana_Blacio,_12_DE_AGOSTO_DE_2025_(sq_cropped).jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/blacio-carrion-diana-patricia/",
 "resena": null
 },
 {
@@ -2372,7 +2372,7 @@
 "region": "Nacional",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/Raúl_Chávez_(cropped).jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/chavez-nunez-del-arco-raul-arturo/",
 "resena": null
 },
 {
@@ -2384,7 +2384,7 @@
 "region": "Nacional",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/Paola_Cabezas_Castillo.jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/cabezas-castillo-janeth-paola/",
 "resena": null
 },
 {
@@ -2396,7 +2396,7 @@
 "region": "Nacional",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/Xavier_Lasso_-_Clausura_y_Lectura_de_la_Declaración_del_II_Foro_Beijing_+_20_(21498189265).jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/lasso-mendoza-julio-vicente-patricio-xavier/",
 "resena": null
 },
 {
@@ -2408,7 +2408,7 @@
 "region": "Nacional",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/SESIÓN_N.º_046_DEL_PLENO_DE_LA_ASAMBLEA_NACIONAL._ECUADOR,_02_DE_OCTUBRE_DEL_2025_-_54826779802.jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/munoz-aroca-annie-christina-2/",
 "resena": null
 },
 {
@@ -2420,7 +2420,7 @@
 "region": "Nacional",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/Franklin_Samaniego_(cropped).jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/samaniego-maigua-franklin-omar/",
 "resena": null
 },
 {
@@ -2432,7 +2432,7 @@
 "region": "Nacional",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/Liliana_Duran.jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/duran-aguilar-liliana-elizabeth/",
 "resena": null
 },
 {
@@ -2443,8 +2443,8 @@
 "bancada": "Sin bancada",
 "region": "Nacional",
 "condicion": null,
-"foto": null,
-"url": null,
+"foto": "https://observatoriolegislativo.ec/wp-content/uploads/2025/05/pena-300x294.png",
+"url": "https://observatoriolegislativo.ec/perfil/pena-veloz-sergio-jesus/",
 "resena": null
 },
 {
@@ -2456,19 +2456,19 @@
 "region": "Guayas, distrito 1",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/Jorge_Chamba_(cropped).jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/chamba-cabanilla-jorge-enrique/",
 "resena": null
 },
 {
 "pais": "EC",
 "camara": "asamblea",
-"id": "EC:jaramillo zurita",
+"id": "EC:jaramillo zurita paola",
 "nombre": "Jaramillo Zurita Paola Michael",
 "bancada": "Acción Democrática Nacional",
 "region": "Guayas, distrito 1",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/SESIÓN_N.º_066_DEL_PLENO_DE_LA_ASAMBLEA_NACIONAL._ECUADOR,_04_DE_FEBRERO_DEL_2026.jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/jaramillo-zurita-paola-michael/",
 "resena": null
 },
 {
@@ -2479,8 +2479,8 @@
 "bancada": "Acción Democrática Nacional",
 "region": "Guayas, distrito 1",
 "condicion": null,
-"foto": null,
-"url": null,
+"foto": "https://observatoriolegislativo.ec/wp-content/uploads/2025/05/solano-1-300x294.png",
+"url": "https://observatoriolegislativo.ec/perfil/solano-calle-isaac-vladimir/",
 "resena": null
 },
 {
@@ -2492,7 +2492,7 @@
 "region": "Guayas, distrito 1",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/Ricardo_Patiño_en_2018.jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/patino-aroca-ricardo-armando/",
 "resena": null
 },
 {
@@ -2503,8 +2503,8 @@
 "bancada": "Revolución Ciudadana",
 "region": "Guayas, distrito 1",
 "condicion": null,
-"foto": null,
-"url": null,
+"foto": "https://observatoriolegislativo.ec/wp-content/uploads/2025/05/yela-300x294.png",
+"url": "https://observatoriolegislativo.ec/perfil/yela-duarte-ana-belen/",
 "resena": null
 },
 {
@@ -2516,7 +2516,7 @@
 "region": "Guayas, distrito 1",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/Roberto_Cuero,_julio_de_2021_(cropped).jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/cuero-medina-roberto-emilio/",
 "resena": null
 },
 {
@@ -2528,7 +2528,7 @@
 "region": "Guayas, distrito 2",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/Victoria_Desintonio_Malave.jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/desintonio-malave-victoria-tatiana/",
 "resena": null
 },
 {
@@ -2540,7 +2540,7 @@
 "region": "Guayas, distrito 2",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/Juan_Pablo_Molina_(cropped).jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/molina-saldana-juan-pablo/",
 "resena": null
 },
 {
@@ -2576,7 +2576,7 @@
 "region": "Guayas, distrito 2",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/Janina_Rizzo_Alvear_COMISIÓN_DE_SOBERANÍA_ALIMENTARIA._ECUADOR,_03_DE_DICIEMBRE_DE_2025_08.jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/rizzo-alvear-janina-jadira/",
 "resena": null
 },
 {
@@ -2587,20 +2587,20 @@
 "bancada": "Acción Democrática Nacional",
 "region": "Guayas, distrito 2",
 "condicion": null,
-"foto": null,
-"url": null,
+"foto": "https://observatoriolegislativo.ec/wp-content/uploads/2025/05/MORAN-300x294.png",
+"url": "https://observatoriolegislativo.ec/perfil/moran-galarza-alex-steven/",
 "resena": null
 },
 {
 "pais": "EC",
 "camara": "asamblea",
-"id": "EC:jaramillo zurita",
+"id": "EC:jaramillo zurita lucia",
 "nombre": "Jaramillo Zurita Lucía Lizbeth",
 "bancada": "Acción Democrática Nacional",
 "region": "Guayas, distrito 3",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/Lucía_Jaramillo_(cropped).jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/jaramillo-zurita-lucia-lizbeth/",
 "resena": null
 },
 {
@@ -2612,7 +2612,7 @@
 "region": "Guayas, distrito 3",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/Ferdinan_Alvarez,_junio_de_2021_(cropped).jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/alvarez-zambrano-ferdinan-arturo/",
 "resena": null
 },
 {
@@ -2624,7 +2624,7 @@
 "region": "Guayas, distrito 3",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/Naila_Quintana_SESIÓN_N.º_038,_17_DE_SEPTIEMBRE_DEL_2025_(sq_cropped).jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/quintana-tapia-naila-victoria/",
 "resena": null
 },
 {
@@ -2636,7 +2636,7 @@
 "region": "Guayas, distrito 3",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/Nuria_Butiña_(cropped).jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/butina-martinez-nuria-susana/",
 "resena": null
 },
 {
@@ -2648,7 +2648,7 @@
 "region": "Guayas, distrito 3",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/Vanegas_Abogados_54.jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/vanegas-cortazar-alejandro-lorenzo/",
 "resena": null
 },
 {
@@ -2659,8 +2659,8 @@
 "bancada": "Revolución Ciudadana",
 "region": "Guayas, distrito 3",
 "condicion": null,
-"foto": null,
-"url": null,
+"foto": "https://observatoriolegislativo.ec/wp-content/uploads/2025/05/figuero-300x294.png",
+"url": "https://observatoriolegislativo.ec/perfil/figueroa-aguilar-sandra-elizabeth/",
 "resena": null
 },
 {
@@ -2672,7 +2672,7 @@
 "region": "Guayas, distrito 4",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/SESIÓN_PARLAMENTARIA_DE_POSESIÓN_DE_LAS_Y_LOS_ASAMBLEÍSTAS_PARA_EL_PERÍODO_LEGISLATIVO_2021_-_2025,_ECUADOR,_14_DE_MAYO_DEL_2021_(51180248635)_(cropped).jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/vanegas-cortazar-alejandro-lorenzo-copy-copy-copy/",
 "resena": null
 },
 {
@@ -2696,7 +2696,7 @@
 "region": "Guayas, distrito 4",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/SESIÓN_N.º_046_DEL_PLENO_DE_LA_ASAMBLEA_NACIONAL._ECUADOR,_02_DE_OCTUBRE_DEL_2025_-_54826779747.jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/vanegas-cortazar-alejandro-lorenzo-copy-copy-copy-copy/",
 "resena": null
 },
 {
@@ -2707,8 +2707,8 @@
 "bancada": "Sin bancada",
 "region": "Guayas, distrito 4",
 "condicion": null,
-"foto": null,
-"url": null,
+"foto": "https://observatoriolegislativo.ec/wp-content/uploads/2025/05/vargas-300x294.png",
+"url": "https://observatoriolegislativo.ec/perfil/vanegas-cortazar-alejandro-lorenzo-copy-copy/",
 "resena": null
 },
 {
@@ -2732,7 +2732,7 @@
 "region": "Guayas, distrito 4",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/Lorena_Rosado_(cropped).jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/rosado-sanchez-marjorie-lorena/",
 "resena": null
 },
 {
@@ -2743,8 +2743,8 @@
 "bancada": "Revolución Ciudadana",
 "region": "Manabí, distrito 1",
 "condicion": null,
-"foto": null,
-"url": null,
+"foto": "https://observatoriolegislativo.ec/wp-content/uploads/2025/05/mendoza-1-300x294.png",
+"url": "https://observatoriolegislativo.ec/perfil/mendoza-andrade-guido-andres/",
 "resena": null
 },
 {
@@ -2755,8 +2755,8 @@
 "bancada": "Revolución Ciudadana",
 "region": "Manabí, distrito 1",
 "condicion": null,
-"foto": null,
-"url": null,
+"foto": "https://observatoriolegislativo.ec/wp-content/uploads/2025/05/velez-300x294.png",
+"url": "https://observatoriolegislativo.ec/perfil/velez-velez-bertha-betsabe/",
 "resena": null
 },
 {
@@ -2768,7 +2768,7 @@
 "region": "Manabí, distrito 1",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/LENIN1800x2700.jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/barreto-zambrano-lenin-daniel/",
 "resena": null
 },
 {
@@ -2780,7 +2780,7 @@
 "region": "Manabí, distrito 1",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/Besibell_Mendoza_9_DE_SEPTIEMBRE_DE_2026_-_55518048266.jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/mendoza-ibarra-maria-besibell/",
 "resena": null
 },
 {
@@ -2792,7 +2792,7 @@
 "region": "Manabí, distrito 2",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/FERNANDO_CEDEÑO.jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/cedeno-rivadeneira-fernando-enrique/",
 "resena": null
 },
 {
@@ -2804,7 +2804,7 @@
 "region": "Manabí, distrito 2",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/María_Gabriela_Molina.jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/molina-menendez-maria-gabriela/",
 "resena": null
 },
 {
@@ -2828,7 +2828,7 @@
 "region": "Manabí, distrito 2",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/VALENTINA_CENTENO_(Crooped).jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/centeno-arteaga-valentina/",
 "resena": null
 },
 {
@@ -2839,8 +2839,8 @@
 "bancada": "Acción Democrática Nacional",
 "region": "Manabí, distrito 2",
 "condicion": null,
-"foto": null,
-"url": null,
+"foto": "https://observatoriolegislativo.ec/wp-content/uploads/2025/05/franco-1-300x294.png",
+"url": "https://observatoriolegislativo.ec/perfil/franco-hanze-diego-martin/",
 "resena": null
 },
 {
@@ -2852,7 +2852,7 @@
 "region": "Pichincha",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/Inés_Alarcón_(cropped).jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/alarcon-bueno-ines-margarita/",
 "resena": null
 },
 {
@@ -2864,7 +2864,7 @@
 "region": "Pichincha",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/COMISIÓN_DE_SALUD_(VIRTUAL)_._ECUADOR,_31_DE_OCTUBRE_DE_2025.jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/castillo-maldonado-andres-felipe/",
 "resena": null
 },
 {
@@ -2876,7 +2876,7 @@
 "region": "Pichincha",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/COMISIÓN_DEL_RÉGIMEN_ECONÓMICO._ECUADOR,_19_DE_NOVIEMBRE_DE_2025_-_54934625823.jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/molina-coro-maria-del-cisne/",
 "resena": null
 },
 {
@@ -2887,8 +2887,8 @@
 "bancada": "Revolución Ciudadana",
 "region": "Pichincha",
 "condicion": null,
-"foto": null,
-"url": null,
+"foto": "https://observatoriolegislativo.ec/wp-content/uploads/2025/05/rodriguez-1-300x294.png",
+"url": "https://observatoriolegislativo.ec/perfil/rodriguez-chavez-hector-eduardo/",
 "resena": null
 },
 {
@@ -2900,7 +2900,7 @@
 "region": "Pichincha",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/Ledy_Zúñiga_Rocha.jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/zuniga-rocha-ledy-andrea/",
 "resena": null
 },
 {
@@ -2912,7 +2912,7 @@
 "region": "Pichincha",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/Eckenner_recalde_(cropped).jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/recalde-alava-eckenner-reader/",
 "resena": null
 },
 {
@@ -2923,8 +2923,8 @@
 "bancada": "Acción Democrática Nacional",
 "region": "Pichincha",
 "condicion": null,
-"foto": null,
-"url": null,
+"foto": "https://observatoriolegislativo.ec/wp-content/uploads/2026/04/garcia-300x294.png",
+"url": "https://observatoriolegislativo.ec/perfil/15299/",
 "resena": null
 },
 {
@@ -2936,7 +2936,7 @@
 "region": "Pichincha",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/Diana_Jácome_COMISIÓN_DE_TRANSPARENCIA._ECUADOR,_28_DE_NOVIEMBRE_DE_2025_02.jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/serrano-molina-dominique-elian/",
 "resena": null
 },
 {
@@ -2947,8 +2947,8 @@
 "bancada": "Revolución Ciudadana",
 "region": "Pichincha",
 "condicion": null,
-"foto": null,
-"url": null,
+"foto": "https://observatoriolegislativo.ec/wp-content/uploads/2025/05/hernandez-300x294.png",
+"url": "https://observatoriolegislativo.ec/perfil/hernandez-yunda-christian-alberto/",
 "resena": null
 },
 {
@@ -2960,7 +2960,7 @@
 "region": "Pichincha",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/Jhajaira_Urresta_2022.jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/urresta-guzman-jhajaira-estefania/",
 "resena": null
 },
 {
@@ -2972,7 +2972,7 @@
 "region": "Pichincha",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/Nathaly_Farinango_(cropped).jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/farinango-delgado-nathaly-estefania/",
 "resena": null
 },
 {
@@ -2983,8 +2983,8 @@
 "bancada": "Acción Democrática Nacional",
 "region": "Pichincha",
 "condicion": null,
-"foto": null,
-"url": null,
+"foto": "https://observatoriolegislativo.ec/wp-content/uploads/2025/05/jacome2-300x294.png",
+"url": "https://observatoriolegislativo.ec/perfil/jacome-mejia-luis-fernando/",
 "resena": null
 },
 {
@@ -2996,7 +2996,7 @@
 "region": "Pichincha",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/Elizabeth_Vega_SESIÓN_NO._18_DEL_PLENO_DE_LA_ASAMBLEA_NACIONAL._ECUADOR,_15_DE_JULIO_DE_2025_-_54657242629.jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/vega-segura-elizabeth-juliette/",
 "resena": null
 },
 {
@@ -3008,7 +3008,7 @@
 "region": "Pichincha",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/Jahiren_Noriega.jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/noriega-donoso-jahiren-elizabeth/",
 "resena": null
 },
 {
@@ -3020,7 +3020,7 @@
 "region": "Pichincha",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/Patricio_Chávez_(cropped).jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/chavez-zavala-patricio-alberto/",
 "resena": null
 },
 {
@@ -3032,7 +3032,7 @@
 "region": "Pichincha",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/Monicaleman_(cropped).jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/aleman-marmol-monica-rocio/",
 "resena": null
 },
 {
@@ -3043,8 +3043,8 @@
 "bancada": "Revolución Ciudadana",
 "region": "Pichincha",
 "condicion": null,
-"foto": null,
-"url": null,
+"foto": "https://observatoriolegislativo.ec/wp-content/uploads/2025/05/molina2-300x294.png",
+"url": "https://observatoriolegislativo.ec/perfil/molina-onofa-luis-fernando/",
 "resena": null
 },
 {
@@ -3056,7 +3056,7 @@
 "region": "Pichincha",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/Hernán_Zapata_(cropped).jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/zapata-rojas-hernan-patricio/",
 "resena": null
 },
 {
@@ -3068,7 +3068,7 @@
 "region": "Pichincha",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/Dina_Farinango.jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/farinango-quilumbaquin-dina-maribel/",
 "resena": null
 },
 {
@@ -3080,7 +3080,7 @@
 "region": "Azuay",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/Adrián_Castro_(cropped).jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/castro-piedra-adrian-ernesto/",
 "resena": null
 },
 {
@@ -3092,7 +3092,7 @@
 "region": "Azuay",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/Camila_León_(cropped).jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/leon-cueva-camila/",
 "resena": null
 },
 {
@@ -3103,8 +3103,8 @@
 "bancada": "Acción Democrática Nacional",
 "region": "Azuay",
 "condicion": null,
-"foto": null,
-"url": null,
+"foto": "https://observatoriolegislativo.ec/wp-content/uploads/2025/05/becerra-300x294.png",
+"url": "https://observatoriolegislativo.ec/perfil/becerra-contreras-anthony-sebastian/",
 "resena": null
 },
 {
@@ -3115,8 +3115,8 @@
 "bancada": "Revolución Ciudadana",
 "region": "Azuay",
 "condicion": null,
-"foto": null,
-"url": null,
+"foto": "https://observatoriolegislativo.ec/wp-content/uploads/2025/05/ordonez-1-1-300x294.png",
+"url": "https://observatoriolegislativo.ec/perfil/ordonez-quezada-roque-martin/",
 "resena": null
 },
 {
@@ -3128,7 +3128,7 @@
 "region": "Azuay",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/Mabel_Mendez_(cropped).jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/mendez-rojas-fernanda-mabel/",
 "resena": null
 },
 {
@@ -3139,8 +3139,8 @@
 "bancada": "Revolución Ciudadana",
 "region": "Azuay",
 "condicion": null,
-"foto": null,
-"url": null,
+"foto": "https://observatoriolegislativo.ec/wp-content/uploads/2025/05/machado-1-300x294.png",
+"url": "https://observatoriolegislativo.ec/perfil/machado-clavijo-gerardo-eugenio/",
 "resena": null
 },
 {
@@ -3152,7 +3152,7 @@
 "region": "Bolívar",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/Henry_Bósquez_(cropped).jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/bosquez-villena-henry-saul/",
 "resena": null
 },
 {
@@ -3164,7 +3164,7 @@
 "region": "Bolívar",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/Mariana_Yumbay_(cropped).jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/yumbay-yallico-mariana/",
 "resena": null
 },
 {
@@ -3176,7 +3176,7 @@
 "region": "Bolívar",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/Mireya_Pazmiño_Arregui.jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/pazmino-arregui-mireya-katerine/",
 "resena": null
 },
 {
@@ -3188,7 +3188,7 @@
 "region": "Cañar",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/Fabiola_Sanmartín_(cropped).jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/sanmartin-parra-fabiola-maribel/",
 "resena": null
 },
 {
@@ -3200,7 +3200,7 @@
 "region": "Cañar",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/Blasco_luna_(cropped).jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/luna-arevalo-blasco-remigio/",
 "resena": null
 },
 {
@@ -3212,7 +3212,7 @@
 "region": "Cañar",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/Manuel_Choro_(cropped).jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/choro-duchi-segundo-manuel/",
 "resena": null
 },
 {
@@ -3236,7 +3236,7 @@
 "region": "Carchi",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/José_Vallejo_Ayala,_octubre_de_2021_(cropped).jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/vallejo-ayala-jose-luis/",
 "resena": null
 },
 {
@@ -3248,7 +3248,7 @@
 "region": "Carchi",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/Cristian_Benavides_alcalde_de_Tulcan.jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/benavides-fuentes-cristian-andres/",
 "resena": null
 },
 {
@@ -3260,7 +3260,7 @@
 "region": "Chimborazo",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/Michelle_Mancheno_(cropped).jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/mancheno-davila-mishel-andrea/",
 "resena": null
 },
 {
@@ -3271,8 +3271,8 @@
 "bancada": "Acción Democrática Nacional",
 "region": "Chimborazo",
 "condicion": null,
-"foto": null,
-"url": null,
+"foto": "https://observatoriolegislativo.ec/wp-content/uploads/2025/05/gallardo-1-300x294.png",
+"url": "https://observatoriolegislativo.ec/perfil/gallardo-ruiz-keevin-fernando/",
 "resena": null
 },
 {
@@ -3284,7 +3284,7 @@
 "region": "Chimborazo",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/CONTINUACIÓN_DE_LA_SESIÓN_NO._771_DEL_PLENO_DE_LA_ASAMBLEA_NACIONAL._ECUADOR,_21_DE_ABRIL_DE_2022_(52020303493).jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/nunez-ramos-silvia-patricia/",
 "resena": null
 },
 {
@@ -3296,7 +3296,7 @@
 "region": "Chimborazo",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/Carmen_Tiupul_(cropped).jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/tiupul-urquizo-carmen-yolanda/",
 "resena": null
 },
 {
@@ -3307,8 +3307,8 @@
 "bancada": "Acción Democrática Nacional",
 "region": "Cotopaxi",
 "condicion": null,
-"foto": null,
-"url": null,
+"foto": "https://observatoriolegislativo.ec/wp-content/uploads/2025/05/olmedo-1-300x294.png",
+"url": "https://observatoriolegislativo.ec/perfil/olmedo-arias-marco-patricio/",
 "resena": null
 },
 {
@@ -3331,8 +3331,8 @@
 "bancada": "Pachakutik",
 "region": "Cotopaxi",
 "condicion": null,
-"foto": null,
-"url": null,
+"foto": "https://observatoriolegislativo.ec/wp-content/uploads/2025/05/toapanta-300x294.png",
+"url": "https://observatoriolegislativo.ec/perfil/toapanta-jami-alex-fabricio/",
 "resena": null
 },
 {
@@ -3344,7 +3344,7 @@
 "region": "Cotopaxi",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/Asambleista_ana_herrera_(cropped).jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/herrera-gomez-ana-cecilia/",
 "resena": null
 },
 {
@@ -3355,8 +3355,8 @@
 "bancada": "Revolución Ciudadana",
 "region": "El Oro",
 "condicion": null,
-"foto": null,
-"url": null,
+"foto": "https://observatoriolegislativo.ec/wp-content/uploads/2025/05/salas-1-300x294.png",
+"url": "https://observatoriolegislativo.ec/perfil/salas-barriga-diego-enrique/",
 "resena": null
 },
 {
@@ -3368,7 +3368,7 @@
 "region": "El Oro",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/CONTINUACIÓN_DE_LA_SESIÓN_NO._774_DEL_PLENO_DE_LA_ASAMBLEA_NACIONAL._ECUADOR,_07_DE_JUNIO_DE_2022_(cropped).jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/cabrera-chacon-sara-noemi/",
 "resena": null
 },
 {
@@ -3379,8 +3379,8 @@
 "bancada": "Acción Democrática Nacional",
 "region": "El Oro",
 "condicion": null,
-"foto": null,
-"url": null,
+"foto": "https://observatoriolegislativo.ec/wp-content/uploads/2025/05/blacio2-300x294.png",
+"url": "https://observatoriolegislativo.ec/perfil/blacio-castillo-manuel-de-jesus/",
 "resena": null
 },
 {
@@ -3392,7 +3392,7 @@
 "region": "El Oro",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/Katherine_Pacheco_(cropped).jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/pacheco-machuca-katherine-alexandra/",
 "resena": null
 },
 {
@@ -3427,8 +3427,8 @@
 "bancada": "Revolución Ciudadana",
 "region": "Esmeraldas",
 "condicion": null,
-"foto": null,
-"url": null,
+"foto": "https://observatoriolegislativo.ec/wp-content/uploads/2025/05/casanova-300x294.png",
+"url": "https://observatoriolegislativo.ec/perfil/casanova-montesino-lizardo-manuel/",
 "resena": null
 },
 {
@@ -3440,7 +3440,7 @@
 "region": "Esmeraldas",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/John_Polanco_(cropped).jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/polanco-lara-john-edison/",
 "resena": null
 },
 {
@@ -3452,7 +3452,7 @@
 "region": "Esmeraldas",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/Karolina_Dueñas_(cropped).jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/duenas-palma-gema-karolina/",
 "resena": null
 },
 {
@@ -3464,7 +3464,7 @@
 "region": "Esmeraldas",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/Samuel_Celleri_(cropped).jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/celleri-gomez-samuel-elias/",
 "resena": null
 },
 {
@@ -3476,7 +3476,7 @@
 "region": "Galápagos",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/Milton_Aguas_(cropped).jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/aguas-flores-milton-javier/",
 "resena": null
 },
 {
@@ -3487,8 +3487,8 @@
 "bancada": "Sin bancada",
 "region": "Galápagos",
 "condicion": null,
-"foto": null,
-"url": null,
+"foto": "https://observatoriolegislativo.ec/wp-content/uploads/2025/05/arias-300x294.png",
+"url": "https://observatoriolegislativo.ec/perfil/arias-montalvo-jesus-david/",
 "resena": null
 },
 {
@@ -3500,7 +3500,7 @@
 "region": "Imbabura",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/Pamela_Aguirre.jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/aguirre-zambonino-pamela-alejandra/",
 "resena": null
 },
 {
@@ -3512,7 +3512,7 @@
 "region": "Imbabura",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/Fernando_de_la_Torre_(cropped).jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/de-la-torre-de-la-torre-fernando/",
 "resena": null
 },
 {
@@ -3524,7 +3524,7 @@
 "region": "Imbabura",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/Fernando_Jaramillo_(cropped).jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/jaramillo-martinez-roberto-fernando/",
 "resena": null
 },
 {
@@ -3536,7 +3536,7 @@
 "region": "Imbabura",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/Pablo_Jurado_Moreno_(cropped).jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/jurado-moreno-pablo-anibal/",
 "resena": null
 },
 {
@@ -3548,7 +3548,7 @@
 "region": "Loja",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/Jorge_Guevara_(cropped).jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/guevara-benavidez-jorge-luis/",
 "resena": null
 },
 {
@@ -3559,8 +3559,8 @@
 "bancada": "Acción Democrática Nacional",
 "region": "Loja",
 "condicion": null,
-"foto": null,
-"url": null,
+"foto": "https://observatoriolegislativo.ec/wp-content/uploads/2025/05/jaramillo-2-1-300x294.png",
+"url": "https://observatoriolegislativo.ec/perfil/jaramillo-rodriguez-anelisse-josebeth/",
 "resena": null
 },
 {
@@ -3572,7 +3572,7 @@
 "region": "Loja",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/Verónica_Iñiguez_26_DE_NOVIEMBRE_DE_2025_(sq_cropped).jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/iniguez-gallardo-maria-veronica/",
 "resena": null
 },
 {
@@ -3583,8 +3583,8 @@
 "bancada": "Revolución Ciudadana",
 "region": "Loja",
 "condicion": null,
-"foto": null,
-"url": null,
+"foto": "https://observatoriolegislativo.ec/wp-content/uploads/2025/05/gonzales-300x294.png",
+"url": "https://observatoriolegislativo.ec/perfil/gonzalez-alvear-juan-andres/",
 "resena": null
 },
 {
@@ -3596,7 +3596,7 @@
 "region": "Los Ríos",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/Humberto_Alvarado_2022.jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/alvarado-espinel-marcos-humberto/",
 "resena": null
 },
 {
@@ -3608,7 +3608,7 @@
 "region": "Los Ríos",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/Monica_salazar_hidalgo_(cropped).jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/salazar-hidalgo-monica-de-jesus/",
 "resena": null
 },
 {
@@ -3620,7 +3620,7 @@
 "region": "Los Ríos",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/RONAL_GONZALEZ_VALERO.jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/gonzalez-valero-ronal-eduardo/",
 "resena": null
 },
 {
@@ -3644,7 +3644,7 @@
 "region": "Los Ríos",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/Rosa_Alegría_Torres_(cropped).jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/torres-cadena-rosa-alegria/",
 "resena": null
 },
 {
@@ -3668,7 +3668,7 @@
 "region": "Morona Santiago",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/COMISIÓN_DE_JUSTICIA._(SEGUNDA)._ECUADOR,_06_DE_AGOSTO_DE_2025.jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/nantipia-chumpi-jose-fernando/",
 "resena": null
 },
 {
@@ -3680,7 +3680,7 @@
 "region": "Morona Santiago",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/Nanki_Saant_(cropped).jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/saant-juank-nanki-lauro/",
 "resena": null
 },
 {
@@ -3692,7 +3692,7 @@
 "region": "Morona Santiago",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/EDWIN_JARRÍN_(cropped).jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/jarrin-rivadeneira-edwin-estuardo/",
 "resena": null
 },
 {
@@ -3715,8 +3715,8 @@
 "bancada": "Sin bancada",
 "region": "Napo",
 "condicion": null,
-"foto": null,
-"url": null,
+"foto": "https://observatoriolegislativo.ec/wp-content/uploads/2025/05/cerda-1-300x294.png",
+"url": "https://observatoriolegislativo.ec/perfil/cerda-tapuy-edmundo-jorge/",
 "resena": null
 },
 {
@@ -3727,8 +3727,8 @@
 "bancada": "Revolución Ciudadana",
 "region": "Orellana",
 "condicion": null,
-"foto": null,
-"url": null,
+"foto": "https://observatoriolegislativo.ec/wp-content/uploads/2025/12/Juan-Kliner-300x300.png",
+"url": "https://observatoriolegislativo.ec/perfil/juan-kleiner-guzman-cruz/",
 "resena": null
 },
 {
@@ -3740,7 +3740,7 @@
 "region": "Orellana",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/Guillermo_Báez_(cropped).jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/baez-mera-guillermo-vicente/",
 "resena": null
 },
 {
@@ -3752,7 +3752,7 @@
 "region": "Orellana",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/Nuvia_Vega_at_the_COMISIÓN_DE_JUSTICIA._ECUADOR.jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/vega-morillo-nuvia-rocio/",
 "resena": null
 },
 {
@@ -3764,7 +3764,7 @@
 "region": "Pastaza",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/María_Cristina_Acuña_19-8-2025.jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/acuna-vaca-maria-cristina/",
 "resena": null
 },
 {
@@ -3775,8 +3775,8 @@
 "bancada": "Sin bancada",
 "region": "Pastaza",
 "condicion": null,
-"foto": null,
-"url": null,
+"foto": "https://observatoriolegislativo.ec/wp-content/uploads/2025/05/nango-1-300x294.png",
+"url": "https://observatoriolegislativo.ec/perfil/nango-cuji-jose-luis/",
 "resena": null
 },
 {
@@ -3788,7 +3788,7 @@
 "region": "Santa Elena",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/César_Palacios_Alejandro_(cropped).jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/palacios-alejandro-cesar-gustavo/",
 "resena": null
 },
 {
@@ -3800,7 +3800,7 @@
 "region": "Santa Elena",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/Arisdely_Parrales_(cropped).jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/parrales-yagual-arisdely-paola/",
 "resena": null
 },
 {
@@ -3811,8 +3811,8 @@
 "bancada": "Acción Democrática Nacional",
 "region": "Santa Elena",
 "condicion": null,
-"foto": null,
-"url": null,
+"foto": "https://observatoriolegislativo.ec/wp-content/uploads/2025/05/tamayo-1-300x294.png",
+"url": "https://observatoriolegislativo.ec/perfil/tamayo-trivino-jorge-fabricio/",
 "resena": null
 },
 {
@@ -3836,7 +3836,7 @@
 "region": "Santo Domingo",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/Viviana_Veloz_(cropped).jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/veloz-ramirez-rebeca-viviana/",
 "resena": null
 },
 {
@@ -3847,8 +3847,8 @@
 "bancada": "Revolución Ciudadana",
 "region": "Santo Domingo",
 "condicion": null,
-"foto": null,
-"url": null,
+"foto": "https://observatoriolegislativo.ec/wp-content/uploads/2025/05/campos-300x294.png",
+"url": "https://observatoriolegislativo.ec/perfil/campos-tobar-hermel-andres/",
 "resena": null
 },
 {
@@ -3872,7 +3872,7 @@
 "region": "Santo Domingo",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/Christopher_Jaramillo_-_Asambleísta_(cropped).jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/jaramillo-gomez-christopher-manuel/",
 "resena": null
 },
 {
@@ -3884,7 +3884,7 @@
 "region": "Sucumbíos",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/COMPS_CORDOVA_DIAZ.jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/cordova-diaz-comps-pascacio/",
 "resena": null
 },
 {
@@ -3895,8 +3895,8 @@
 "bancada": "Acción Democrática Nacional",
 "region": "Sucumbíos",
 "condicion": null,
-"foto": null,
-"url": null,
+"foto": "https://observatoriolegislativo.ec/wp-content/uploads/2025/05/VILLACRES-1-300x294.png",
+"url": "https://observatoriolegislativo.ec/perfil/villacres-salazar-carlos-steve/",
 "resena": null
 },
 {
@@ -3907,8 +3907,8 @@
 "bancada": "Sin bancada",
 "region": "Sucumbíos",
 "condicion": null,
-"foto": null,
-"url": null,
+"foto": "https://observatoriolegislativo.ec/wp-content/uploads/2025/05/gonzaga-300x294.png",
+"url": "https://observatoriolegislativo.ec/perfil/gonzaga-salazar-juan-marco/",
 "resena": null
 },
 {
@@ -3920,7 +3920,7 @@
 "region": "Tungurahua",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/MARÍA_PAULA_VILLACRESES_(cropped).jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/villacreses-herrera-maria-paula/",
 "resena": null
 },
 {
@@ -3944,7 +3944,7 @@
 "region": "Tungurahua",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/Doménica_Escobar_(cropped).jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/escobar-galarza-domenica-carolina/",
 "resena": null
 },
 {
@@ -3956,7 +3956,7 @@
 "region": "Tungurahua",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/Eustaquio_Tuala_(cropped).jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/tuala-muntza-segundo-eustaquio/",
 "resena": null
 },
 {
@@ -3968,7 +3968,7 @@
 "region": "Tungurahua",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/Cecilia_Baltazar(cropped).jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/baltazar-yucailla-rosa-cecilia/",
 "resena": null
 },
 {
@@ -3980,7 +3980,7 @@
 "region": "Zamora Chinchipe",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/Esperanza_Rogel_(cropped).jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/rogel-esperanza-del-cisne/",
 "resena": null
 },
 {
@@ -4004,7 +4004,7 @@
 "region": "Exterior, Europa, Asia y Oceanía",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/Gustavo_Mateus_Acosta.jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/mateus-acosta-gustavo-enrique/",
 "resena": null
 },
 {
@@ -4016,7 +4016,7 @@
 "region": "Exterior, EE. UU. y Canadá",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/Johnny_Lavayen_(cropped).jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/lavayen-tamayo-johnny-alfredo/",
 "resena": null
 },
 {
@@ -4028,7 +4028,7 @@
 "region": "Exterior, EE. UU. y Canadá",
 "condicion": null,
 "foto": "https://commons.wikimedia.org/wiki/Special:FilePath/Asambleísta_Mónica_Palacios.jpg?width=240",
-"url": null,
+"url": "https://observatoriolegislativo.ec/perfil/palacios-zambrano-monica-estefania/",
 "resena": null
 },
 {
@@ -4039,8 +4039,8 @@
 "bancada": "Acción Democrática Nacional",
 "region": "Exterior, América Latina, Caribe y África",
 "condicion": null,
-"foto": null,
-"url": null,
+"foto": "https://observatoriolegislativo.ec/wp-content/uploads/2025/06/asamblea-2025-300x294.png",
+"url": "https://observatoriolegislativo.ec/perfil/orellana-padilla-elizabeth-nathaly-copy-copy-copy-copy/",
 "resena": null
 }
 ]
