@@ -376,5 +376,21 @@
       },
       "tipo": "noticia"
     }
+  },
+  "n2365509": {
+    "estado": "descartar",
+    "fecha": "2026-11-04T19:35:07+00:00",
+    "por": "nicolas.silva@valiconsultores.com",
+    "titulo": "Presidenta Fujimori hizo entrega de 6,500 computadoras a Colegios de Alto Rendimiento - El Peruano",
+    "item": {
+      "titulo": "Presidenta Fujimori hizo entrega de 6,500 computadoras a Colegios de Alto Rendimiento - El Peruano",
+      "url": "https://news.google.com/rss/articles/CBMivAFBVV95cUxQakhqNlRyZWNQVWZqQVlTdm1nSmRsV0FrUnNOOVF0TERwd3dkaEhwcExXdlF5Z2pKNFQzazUxcGxJQS1wOUdEV0JaVlEwcEkzY2xLMktqeUVlcWhBcmNrRllQbWtMTDRxVUNMMzRmcVQtWDZqTVR2RF9kX0dmeEhfa1g2MnBoUWpHWmxTMUhxRUNtWktEamlIOTh0ZjdoM2wyZHE0NTU0eW5NckJ4MkctTUxJaThtbVRFLTBtdg?oc=5",
+      "pais": "PE",
+      "resumen": null,
+      "porque": {
+        "google": "Entrega masiva de computadoras a colegios del Estado vincula contratacion publica tecnologica."
+      },
+      "tipo": "noticia"
+    }
   }
 }
