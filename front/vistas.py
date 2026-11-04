@@ -20,7 +20,6 @@ import types
 from datetime import date, datetime, timedelta, timezone
 
 import pandas as pd
-import streamlit as st
 
 from alerts import historial
 from alerts import que_paso_hoy as q
@@ -652,12 +651,20 @@ def _vigilar_vivos(almacen: dict) -> None:
         time.sleep(90)
 
 
-@st.cache_resource
+_ARRANQUE = threading.Lock()
+
+
 def almacen() -> dict:
-    """Una por proceso, compartida entre sesiones."""
-    d: dict = {}
-    threading.Thread(target=_renovar, args=(d,), daemon=True).start()
-    threading.Thread(target=_vigilar_vivos, args=(d,), daemon=True).start()
+    """Una por proceso, compartida entre sesiones. Vive en `sys` y no en
+    st.cache_resource: tras cada push Streamlit recarga este modulo, el cache
+    arrancaba hilos nuevos y los viejos seguian (4/11/2026: varios _renovar
+    rearmando todo a la vez, Streamlit Cloud le bajo la CPU a la app)."""
+    with _ARRANQUE:
+        d = getattr(sys, "_vali_almacen", None)
+        if d is None:
+            d = sys._vali_almacen = {}
+            threading.Thread(target=_renovar, args=(d,), daemon=True, name="vali-renovar").start()
+            threading.Thread(target=_vigilar_vivos, args=(d,), daemon=True, name="vali-vivos").start()
     return d
 
 
