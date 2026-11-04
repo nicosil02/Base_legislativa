@@ -359,5 +359,22 @@
       },
       "tipo": "noticia"
     }
+  },
+  "n2366181": {
+    "estado": "interesante",
+    "fecha": "2026-11-04T19:35:04+00:00",
+    "por": "nicolas.silva@valiconsultores.com",
+    "titulo": "🔴🔵 El embajador Bernie Navarro se refirió a la visita de Keiko Fujimori a El Salvador, y señaló que Estados Unidos podría brindar tecnología para implementar nuevos establecimientos penitenciarios en Perú. 🌐Más información en: https://www.exitosanoticias - Facebook",
+    "item": {
+      "titulo": "🔴🔵 El embajador Bernie Navarro se refirió a la visita de Keiko Fujimori a El Salvador, y señaló que Estados Unidos podría brindar tecnología para implementar nuevos establecimientos penitenciarios en Perú. 🌐Más información en: https://www.exitosanoticias - Facebook",
+      "url": "https://news.google.com/rss/articles/CBMi5AFBVV95cUxNaERQR2ZqbDZhVk13eHRtY1dfRDRGUlB2ZUtCSjZySHR2R0YxQVRzYllvSFFieFhaSEtYVFJiWGtJOHpwMHBIUUhSY0lyRVZqNG1uU0hrYUw4Q2k5bU0tZlN2dTdtS0VVYzM5b3VSV1BENnFkcUJtRkR4Tko2MUV2cG02MVhTazFtYWd4X3JHOEwxd1hnQS1BVzNDMzhKd28wSGttVDktcmRtOWN3LVdJc3BmVUU2Y1NVVzZ0RXp5dWN2Y1ZLWUZ1SnY2MHFwOHR4Rnl6WEtTbUhjOW4wdVN1b2FCN2g?oc=5",
+      "pais": "PE",
+      "resumen": null,
+      "porque": {
+        "google": "Alineado con el eje transversal de relacion bilateral Peru-EE.UU. y cooperacion tecnologica.",
+        "incode": "Aplica al eje de cooperacion tecnologica e inversion con Estados Unidos."
+      },
+      "tipo": "noticia"
+    }
   }
 }
