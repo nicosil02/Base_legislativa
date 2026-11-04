@@ -25,6 +25,7 @@ const ICONOS = {
   pluma: '<path d="M4 20h4L19 9l-4-4L4 16z"/><path d="m13.5 6.5 4 4"/>',
   lista: '<path d="M8 6h13M8 12h13M8 18h13M3.5 6h.01M3.5 12h.01M3.5 18h.01"/>',
   gente: '<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14a6 6 0 0 1 3.5 6"/>',
+  persona: '<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>',
   buscar: '<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>',
   lado: '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/>',
   fuera: '<path d="M14 4h6v6M20 4l-9 9"/><path d="M18 14v6H4V6h6"/>',
@@ -247,7 +248,7 @@ function pestanas(caja, opciones, valor, alCambiar) {
 function cifra(el, hasta) {
   const desde = Number(el.dataset.n ?? hasta);
   el.dataset.n = hasta;
-  if (desde === hasta || quieto()) { el.textContent = miles(hasta); return; }
+  if (typeof hasta !== "number" || desde === hasta || quieto()) { el.textContent = typeof hasta === "number" ? miles(hasta) : hasta; return; }
   const t0 = performance.now();
   const paso = (t) => {
     if (Number(el.dataset.n) !== hasta) return;

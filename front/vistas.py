@@ -694,6 +694,13 @@ def atender(a: dict, usuario: str | None) -> dict | list | str | None:
         pagina.load_noticias.clear()
     elif tipo == "ficha_pl":
         return ficha_pl(a["pais"], str(a["pl"]))
+    elif tipo == "personas":
+        from consultas import personas
+        return personas.personas(connect_ro("proyectos.db"), connect_ro("proyectos_ec.db"))
+    elif tipo == "ficha_persona":
+        from alerts import pls_seguidos
+        from consultas import personas
+        return personas.ficha(connect_ro("proyectos.db"), connect_ro("proyectos_ec.db"), a["pais"], a["id"], set(pls_seguidos.lista()))
     elif tipo == "seguir_pl":
         from alerts import pls_seguidos
         if a.get("si"):
