@@ -25,8 +25,11 @@ VENTANA_HORAS = 48
 # Puerta de entrada al juez. Con AFINIDAD_MEDIA (0.55) se quedaban afuera la replica de
 # Salud con Lupa sobre plaguicidas (0.547 Bayer) y EsSalud sin oncologicos (0.542): el
 # embedding solo ve el titulo. El juez es el filtro estricto; esto solo decide a quien ve.
-# ponytail: umbral fijo, si Gemini se queda sin cupo subir a 0.52 (~2/3 de candidatas).
-UMBRAL_CANDIDATA = 0.50
+# Ecuador va mas bajo: sus titulos puntuan menos contra los perfiles (mediana 0.33 vs 0.38
+# de Peru, 30/10-3/11) y con 0.50 quedaban afuera Proforma de salud (0.46-0.49) o falta de
+# medicinas en el IESS Los Ceibos (0.46) para Bayer. Con 0.45 entran ~35 mas por cliente al dia.
+# ponytail: umbral fijo por pais, si Gemini se queda sin cupo subir a 0.52/0.47.
+UMBRAL_CANDIDATA = {"PE": 0.50, "EC": 0.45}
 
 SYSTEM = ("Sos analista de asuntos publicos en Vali Consultores (Peru y Ecuador). Decidis si "
           "una noticia merece una alerta para un cliente puntual, segun su perfil real. Se "
@@ -111,6 +114,7 @@ def juzgar(slug: str, items: list[dict], generar=llm.generar) -> dict[int, tuple
 def candidatos(cerebro: sqlite3.Connection, noticias: sqlite3.Connection, slug: str) -> list[dict]:
     from cerebro.embeddings import afinidad
     from noticias.digest import _es_reciente
+    from noticias.temas import es_fuente_multipais, pais_por_contenido
     desde = (datetime.now(timezone.utc) - timedelta(hours=VENTANA_HORAS)).strftime("%Y-%m-%dT%H:%M:%S")
     filas = {r[0]: r for r in noticias.execute(
         """SELECT n.id, n.titulo, n.resumen, COALESCE(n.fecha_pub, n.first_seen_at), f.nombre, f.pais
@@ -118,17 +122,22 @@ def candidatos(cerebro: sqlite3.Connection, noticias: sqlite3.Connection, slug: 
            WHERE f.activa = 1 AND n.first_seen_at >= ?""", (desde,))}
     ya = {r[0] for r in cerebro.execute("SELECT clave FROM relevancia WHERE cliente = ?", (slug,))}
     af = afinidad([f"noticia_{i}" for i in filas if f"noticia_{i}" not in ya], slug, cerebro)
-    elegidas = sorted((c for c, v in af.items() if v >= UMBRAL_CANDIDATA), key=af.get, reverse=True)
     out = []
+    por_pais: dict[str, int] = {}
     cubiertos = historial.paises(slug)
-    for clave in elegidas:
+    for clave in sorted(af, key=af.get, reverse=True):
         _, titulo, resumen, fecha, fuente, pais = filas[int(clave.split("_", 1)[1])]
+        if es_fuente_multipais(fuente):  # DPL News EC trae "Perú | Osiptel...": el pais sale del texto
+            pais = pais_por_contenido(titulo, resumen, pais)
         # first_seen_at es cuando el sistema la vio: las busquedas de Google
         # News traen notas de hace años. Lo que cuenta es cuando se publico.
-        if pais not in cubiertos or not _es_reciente({"fecha_pub": fecha}, VENTANA_HORAS // 24):
+        if (pais not in cubiertos or af[clave] < UMBRAL_CANDIDATA.get(pais, 0.50)
+                or not _es_reciente({"fecha_pub": fecha}, VENTANA_HORAS // 24)):
             continue
-        if len(out) == MAX_POR_CLIENTE:
-            break
+        # cupo por pais: con uno solo, Peru (puntua mas alto) lo llenaba en las corridas con atraso
+        if por_pais.get(pais, 0) == MAX_POR_CLIENTE:
+            continue
+        por_pais[pais] = por_pais.get(pais, 0) + 1
         out.append({"clave": clave, "titulo": titulo, "resumen": (resumen or "")[:500],
                     "fecha": (fecha or "")[:10], "fuente": fuente, "pais": pais})
     return out
