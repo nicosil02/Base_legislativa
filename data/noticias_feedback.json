@@ -93,5 +93,14 @@
     "clientes": [
       "bayer"
     ]
+  },
+  {
+    "noticia_id": 15,
+    "created_at": "2026-11-04T17:42:37Z",
+    "descartado_por": "nicolas.silva@valiconsultores.com",
+    "titulo": "Perú | Proyecto 911 alcanza cerca del 80% de avance en su infraestructura",
+    "clientes": [
+      "google"
+    ]
   }
 ]
