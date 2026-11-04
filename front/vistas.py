@@ -639,7 +639,7 @@ def _renovar(almacen: dict) -> None:
             print(f"[front] {nombre} {time.time() - t0:.1f}s")
         completo = "panel" in almacen and not almacen["panel"]["datos"]["sin_cerebro"]
         _traer_en_vivo()
-        time.sleep(CADA_SEG if completo else 20)
+        time.sleep(CADA_SEG if completo else 90)  # sin cerebro se reintenta, pero cada vuelta rearma todo
 
 
 def _vigilar_vivos(almacen: dict) -> None:
