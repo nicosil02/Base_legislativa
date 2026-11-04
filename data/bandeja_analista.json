@@ -148,5 +148,21 @@
       },
       "tipo": "norma"
     }
+  },
+  "n2367226": {
+    "estado": "interesante",
+    "fecha": "2026-11-04T13:29:59+00:00",
+    "por": "nicolas.silva@valiconsultores.com",
+    "titulo": "Es oficial: seguros de salud ya no podrán rechazar a pacientes que superaron el cáncer hace cinco años",
+    "item": {
+      "titulo": "Es oficial: seguros de salud ya no podrán rechazar a pacientes que superaron el cáncer hace cinco años",
+      "url": "https://www.infobae.com/peru/2026/11/04/es-oficial-seguros-de-salud-ya-no-podran-rechazar-a-pacientes-que-superaron-el-cancer-hace-cinco-anos/",
+      "pais": "PE",
+      "resumen": null,
+      "porque": {
+        "bayer": "Reglamentacion sobre el olvido oncologico prohibiendo restricciones de seguros, impactando indirectamente el entorno del area de oncologia de Bayer Farma."
+      },
+      "tipo": "noticia"
+    }
   }
 }
