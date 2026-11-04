@@ -16,7 +16,7 @@ def _leer(nombre: str) -> str:
 
 
 _LOGO = base64.b64encode((_AQUI.parent / "assets" / "vali_logo.jpg").read_bytes()).decode()
-_JS = ("nucleo.js", "v_panel.js", "v_noticias.js", "v_proyectos.js", "v_agenda.js", "v_transcripciones.js", "v_redaccion.js", "v_clientes.js")
+_JS = ("nucleo.js", "v_panel.js", "v_noticias.js", "v_proyectos.js", "v_agenda.js", "v_transcripciones.js", "v_redaccion.js", "v_clientes.js", "v_personas.js")
 app = st.components.v2.component("vali_app", html='<div class="app"></div>', css=_leer("app.css") + f'.logo{{background-image:url("data:image/jpeg;base64,{_LOGO}")}}',
                                  js=chr(10).join(_leer(f) for f in _JS))
 
