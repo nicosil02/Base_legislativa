@@ -426,5 +426,21 @@
       },
       "tipo": "noticia"
     }
+  },
+  "n2365003": {
+    "estado": "interesante",
+    "fecha": "2026-11-04T19:40:10+00:00",
+    "por": "nicolas.silva@valiconsultores.com",
+    "titulo": "Perú incorpora servicio de acreditación para impulsar productos sostenibles en la región - Agraria.pe",
+    "item": {
+      "titulo": "Perú incorpora servicio de acreditación para impulsar productos sostenibles en la región - Agraria.pe",
+      "url": "https://news.google.com/rss/articles/CBMinwFBVV95cUxOekVtekxmOG1yVjhocnhHT3J4OWQ4a2ZQNnNYOXlfVS1hUW9Db1o2RXB1RHFWR3ljN05ZQ1M3b1RSUTBFZ1NJcDFJbzM0U0haY3o5QWN4dGdBbk94bUtFa2tmT2xUS1NFWDkwNE5lTFgya3FuS2lGWGFSWGIyV1BiWkhlN0JGRC15S21nd3VhVHd3cWV5dXc4cF9LQkRXdU0?oc=5",
+      "pais": "PE",
+      "resumen": null,
+      "porque": {
+        "syngenta": "Incorpora acreditación para productos sostenibles, vinculado a la trazabilidad e inocuidad agrícola."
+      },
+      "tipo": "noticia"
+    }
   }
 }
