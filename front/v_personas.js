@@ -12,7 +12,7 @@ VISTAS.personas = (() => {
   async function ficha(caja, p) {
     caja.innerHTML = espera(4);
     let r;
-    try { r = await App.pedir("ficha_persona", { pais: p.pais, id: p.id }); } catch (e) { caja.innerHTML = `<div class="aviso">No se pudo armar la ficha: ${esc(e.message)}</div>`; return; }
+    try { r = await App.pedir("ficha_persona", { pais: p.pais, persona: p.id }); } catch (e) { caja.innerHTML = `<div class="aviso">No se pudo armar la ficha: ${esc(e.message)}</div>`; return; }
     if (f().id !== p.id) return;
     const contra = r.votos.filter((v) => v.contra_bancada);
     caja.innerHTML = `<h2 class="sub-t">${esc(nombre(p))}</h2><div class="kpis"></div>
