@@ -53,7 +53,7 @@ VISTAS.alertas = (() => {
       if (t.startsWith(FALLO)) return `<div class="msg assistant">${esc(t)}</div>`;
       n += 1;
       return `<button type="button" class="msg assistant version${m === ultima ? " actual" : ""}" data-v="${n}">
-        <b>Versión ${n}${m === ultima ? ", a la derecha" : ""}</b><span>${negrita(t).replace(/\n/g, "<br>")}</span></button>`;
+        <b>Versión ${n}${m === ultima ? ", a la derecha" : ""}</b><span>${esc(t.replace(/\*/g, "").replace(/\s*\n+\s*/g, " · "))}</span></button>`;
     }).join("") + (c.ocupado ? `<div class="msg assistant pensando">${esc(c.ocupado)}</div>` : "");
     caja.onclick = (e) => {  // volver a una version anterior: pasa a la derecha para editarla
       const v = e.target.closest("[data-v]");
@@ -78,7 +78,7 @@ VISTAS.alertas = (() => {
       return;
     }
     const p = c.material?.items?.[0] ?? {};
-    caja.innerHTML = `<div class="f-cab"><h2>La alerta</h2><span class="nota">${(i => i < 0 ? "Con tus cambios" : `Versión ${i + 1}`)(respuestas().findIndex(([, t]) => t === (c.final ?? ult[1])))}</span>
+    caja.innerHTML = `<div class="f-cab"><h2>La alerta</h2><span class="nota">${(i => i < 0 ? "Con tus cambios" : `Versión ${i + 1}`)(respuestas().findLastIndex(([, t]) => t === (c.final ?? ult[1])))}</span>
         <button type="button" class="btn g-editar">Editar</button><button type="button" class="btn pri g-copiar">Copiar</button></div>
       <div class="previa wa"></div><textarea class="g-texto" rows="14" hidden aria-label="Texto de la alerta">${esc(c.final ?? ult[1])}</textarea>
       <h3 class="f-sub">Guardar en el historial</h3>
