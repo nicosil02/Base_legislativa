@@ -548,88 +548,338 @@
     "url": "https://www.youtube.com/watch?v=ur86EyKoVIQ"
   },
   "A13FbaXLgrg": {
-    "fecha": "2026-11-03",
+    "fecha": "2026-11-04",
     "organo": "Comisión de Salud",
     "pais": "PE",
-    "v": 3,
+    "v": 4,
     "dichos": [
       {
-        "orador": "Luis Ernesto Neyra",
-        "cargo": "legislador",
-        "sobre": "sesión descentralizada de salud en Piura",
-        "postura": "a favor",
+        "orador": "Rector de la Universidad Nacional de Piura",
+        "cargo": "invitado",
+        "sobre": "Sesión en la Universidad Nacional de Piura",
+        "postura": "comenta",
         "tema": "Salud",
-        "dijo": "Inició la sesión descentralizada destacando la importancia de la prevención sanitaria y fiscalización.",
+        "dijo": "Saludó a la comisión en la Universidad Nacional de Piura.",
         "proyecto": "",
         "id": null
       },
       {
         "orador": "María Magdalena Seminario Marón",
         "cargo": "ministro o autoridad",
-        "sobre": "protección y prevención de violencia",
+        "sobre": "Protección de poblaciones vulnerables",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Explicó las medidas del Ministerio de la Mujer en Piura.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "María Magdalena Seminario Marón",
+        "cargo": "ministro o autoridad",
+        "sobre": "Reconstrucción con cambios en Piura",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Cuestionó los presupuestos de la reconstrucción con cambios.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Carlos Espinoza Barreto",
+        "cargo": "ministro o autoridad",
+        "sobre": "Consejo Nacional de Salud",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Denunció el abandono del Consejo Nacional de Salud.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Carlos Espinoza Barreto",
+        "cargo": "ministro o autoridad",
+        "sobre": "Estrategia ante el fenómeno del Niño",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Detalló la estrategia sanitaria ante el fenómeno del Niño.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Darcheara y Pacheco",
+        "cargo": "autoridad",
+        "sobre": "Asignación de un médico de enlace",
         "postura": "propone",
         "tema": "Salud",
-        "dijo": "Destacó la implementación de centros de emergencia mujer y acciones frente al fenómeno natural.",
+        "dijo": "Pidió la asignación de un médico de enlace para evacuaciones aeromédicas.",
         "proyecto": "",
         "id": null
       },
       {
-        "orador": "Miguel Feliz Guamancornejo",
-        "cargo": "ministro o autoridad",
-        "sobre": "estrategia frente al dengue y fenómeno",
+        "orador": "José Lisama Díaz",
+        "cargo": "autoridad",
+        "sobre": "Situación del dengue en Piura",
         "postura": "comenta",
         "tema": "Salud",
-        "dijo": "Informó sobre la activación de los consejos regionales de salud y la capacitación en dengue.",
+        "dijo": "Informó sobre el aumento de casos por un nuevo serotipo.",
         "proyecto": "",
         "id": null
       },
       {
-        "orador": "Luis Dyer Fernández",
-        "cargo": "ministro o autoridad",
-        "sobre": "presupuesto y camas hospitalarias",
+        "orador": "José Lisama Díaz",
+        "cargo": "autoridad",
+        "sobre": "Gestión del dengue en la región Piura",
         "postura": "comenta",
         "tema": "Salud",
-        "dijo": "Reportó cifras actualizadas de contagios y la distribución de camas en las regiones del norte.",
+        "dijo": "Informó sobre las acciones de vigilancia y control vectorial en la región.",
         "proyecto": "",
         "id": null
       },
       {
-        "orador": "José Augusto Alvines",
+        "orador": "José Lisama Díaz",
+        "cargo": "autoridad",
+        "sobre": "Capacitación de personal de salud",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Informó sobre la capacitación de profesionales para el manejo del dengue.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "José Lisama Díaz",
+        "cargo": "autoridad",
+        "sobre": "Disponibilidad de camas hospitalarias",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Informó sobre la disponibilidad de camas y las donaciones recibidas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "José Lisama Díaz",
+        "cargo": "autoridad",
+        "sobre": "Adquisición de nuevas ambulancias",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Informó sobre la solicitud de más ambulancias mediante servicios por impuestos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "José Lisama Díaz",
+        "cargo": "autoridad",
+        "sobre": "Educación sanitaria en colegios",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Propuso incluir la prevención de salud en la currícula escolar.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "José Lisama Díaz",
+        "cargo": "autoridad",
+        "sobre": "Avance de la vacunación en Piura",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Informó sobre el progreso de la vacunación en la región Piura.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Denis Fernández Alemán",
+        "cargo": "autoridad",
+        "sobre": "Capacidad del Hospital Militar de Piura",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Informó sobre la capacidad operativa y la nueva categoría del hospital.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Denis Fernández Alemán",
+        "cargo": "autoridad",
+        "sobre": "Riesgo de inundaciones en Piura",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Informó sobre el riesgo de inundación en el sector de Castilla.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Denis Fernández Alemán",
+        "cargo": "autoridad",
+        "sobre": "Plan de contingencia ante inundaciones",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Informó sobre el plan de traslado del hospital ante posibles inundaciones.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Denis Fernández Alemán",
+        "cargo": "autoridad",
+        "sobre": "Vacunación de familiares militares",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Propuso ampliar la vacunación contra el dengue a los familiares militares.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Denis Fernández",
         "cargo": "invitado",
-        "sobre": "situación de red asistencial en Piura",
+        "sobre": "Preparación del Hospital Militar en Piura",
         "postura": "comenta",
         "tema": "Salud",
-        "dijo": "Detalló el plan de contingencia y la distribución de camas hospitalarias ante la emergencia.",
+        "dijo": "Detalló la preparación del Hospital Militar ante posibles desastres naturales.",
         "proyecto": "",
         "id": null
       },
       {
-        "orador": "Marlene Armintas",
+        "orador": "Luis Dayer",
+        "cargo": "ministro o autoridad",
+        "sobre": "Plan de respuesta ante El Niño",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Informó sobre las acciones de respuesta ante el fenómeno de El Niño.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "José Augusto Alvinez",
+        "cargo": "ministro o autoridad",
+        "sobre": "Capacidad asistencial de EsSalud en Piura",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Expuso la situación de la red asistencial frente al dengue.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Marleni Arminta",
         "cargo": "legislador",
-        "sobre": "ausencia de autoridades regionales",
+        "sobre": "Ausencia del gobernador regional de Piura",
         "postura": "en contra",
         "tema": "Política y control político",
-        "dijo": "Cuestiono severamente la inasistencia del gobernador regional y de los alcaldes a la sesión.",
+        "dijo": "Criticó la falta de presencia del gobernador regional de Piura.",
         "proyecto": "",
-        "id": null
+        "id": "diputados:arminta valencia"
       },
       {
-        "orador": "Ana Eufra",
+        "orador": "Aldo Bravo",
         "cargo": "legislador",
-        "sobre": "ejecución presupuestal y prevención",
-        "postura": "con observaciones",
-        "tema": "Presupuesto y gasto público",
-        "dijo": "Senaló la baja ejecución presupuestal en planes de prevención frente al dengue en Piura.",
+        "sobre": "Desplante del gobernador regional de Piura",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso enviar un documento de protesta por la inasistencia regional.",
+        "proyecto": "",
+        "id": "diputados:bravo quispe"
+      },
+      {
+        "orador": "Ana Yufra",
+        "cargo": "legislador",
+        "sobre": "Paralización de hospitales en Piura",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Denunció la paralización de hospitales y la falta de infraestructura.",
         "proyecto": "",
         "id": null
       },
       {
-        "orador": "Giovanna Navarrete",
+        "orador": "Ana Yufra",
+        "cargo": "legislador",
+        "sobre": "Ejecución del plan contra el dengue",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Cuestionó la baja ejecución presupuestal del plan contra el dengue.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Marlen Arminta",
+        "cargo": "legislador",
+        "sobre": "pago de locadores de control vectorial",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Denunció la falta de pago de 300 locadores de servicios.",
+        "proyecto": "",
+        "id": "diputados:arminta valencia"
+      },
+      {
+        "orador": "Ana Yufra",
+        "cargo": "legislador",
+        "sobre": "ejecución del plan dengue en Piura",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Cuestionó la baja ejecución del plan contra el dengue.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Jessica Benítez",
+        "cargo": "legislador",
+        "sobre": "continuidad de servicios de salud",
+        "postura": "a favor",
+        "tema": "Salud",
+        "dijo": "Respaldó las acciones del ministro de salud en la emergencia.",
+        "proyecto": "",
+        "id": "diputados:benitez barrionuevo"
+      },
+      {
+        "orador": "Mary Infante",
+        "cargo": "legislador",
+        "sobre": "situación de trabajadores de salud",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Denunció el impago de remuneraciones a trabajadores de salud.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Jen Samamés",
+        "cargo": "legislador",
+        "sobre": "carencias en hospitales militares",
+        "postura": "con observaciones",
+        "tema": "Salud",
+        "dijo": "Señaló la falta de camas en los hospitales militares.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Giovana Navarrete Atoche",
         "cargo": "invitado",
-        "sobre": "impago a trabajadores de control vectorial",
-        "postura": "pregunta",
-        "tema": "Trabajo",
-        "dijo": "Reclamo el retraso en el pago de salarios a más de trescientos locadores de servicios.",
+        "sobre": "impago de salarios a locadores",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Pidió una fecha exacta para el pago de salarios.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "José Lisama",
+        "cargo": "ministro o autoridad",
+        "sobre": "transferencia de presupuesto para pagos",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Informó que el presupuesto para los pagos ya fue transferido.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Aldo Bravo",
+        "cargo": "legislador",
+        "sobre": "gestión de pagos de trabajadores",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Cuestionó la responsabilidad del subdirector ante los impagos.",
+        "proyecto": "",
+        "id": "diputados:bravo quispe"
+      },
+      {
+        "orador": "Francesca Silva",
+        "cargo": "invitado",
+        "sobre": "falta de agua en Curumuy",
+        "postura": "en contra",
+        "tema": "Saneamiento",
+        "dijo": "Denunció la falta de agua potable en el caserío Curumuy.",
         "proyecto": "",
         "id": null
       }
@@ -1019,5 +1269,113 @@
       }
     ],
     "url": "https://www.facebook.com/watch/?v=1588360136311967"
+  },
+  "fb_2204286467161661": {
+    "fecha": "2026-11-04",
+    "organo": "Comisión de Relaciones Internacionales",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Javier Ordoñez",
+        "cargo": "legislador",
+        "sobre": "Inclusión de migrantes en misiones diplomáticas",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Propuso reformar la Ley del Servicio Exterior para incluir migrantes.",
+        "proyecto": "Ley de Servicio Exterior",
+        "id": null
+      },
+      {
+        "orador": "Graciela Ramírez",
+        "cargo": "legislador",
+        "sobre": "Contratación de ecuatorianos en el exterior",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Respaldó la prioridad de contratación para ciudadanos ecuatorianos.",
+        "proyecto": "Ley de Servicio Exterior",
+        "id": null
+      },
+      {
+        "orador": "Asambleísta De la Bayente",
+        "cargo": "legislador",
+        "sobre": "Prioridad para la comunidad migrante",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Apoyó la iniciativa para contratar ecuatorianos en el exterior.",
+        "proyecto": "Ley de Servicio Exterior",
+        "id": "EC:de la"
+      },
+      {
+        "orador": "Edwin Jarrín",
+        "cargo": "legislador",
+        "sobre": "Reforma al servicio exterior",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Respaldó la atención personalizada para los migrantes ecuatorianos.",
+        "proyecto": "Ley de Servicio Exterior",
+        "id": "EC:jarrin rivadeneira"
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=2204286467161661"
+  },
+  "fb_1479662207393964": {
+    "fecha": "2026-11-04",
+    "organo": "Comisión de Derecho a la Salud",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Alfredo Eduardo Oyo-Sabala",
+        "cargo": "ministro o autoridad",
+        "sobre": "Proyecto de atención de la obesidad",
+        "postura": "a favor",
+        "tema": "Salud",
+        "dijo": "Defendió el proyecto de ley para la atención integral de la obesidad.",
+        "proyecto": "Ley para la atención de la obesidad",
+        "id": null
+      },
+      {
+        "orador": "Greys Suárez",
+        "cargo": "legislador",
+        "sobre": "Programas de prevención de la obesidad",
+        "postura": "pregunta",
+        "tema": "Educación",
+        "dijo": "Preguntó si el Ministerio de Educación tiene otros programas de prevención de la obesidad.",
+        "proyecto": "",
+        "id": "EC:suarez morales"
+      },
+      {
+        "orador": "Alfredo Eduardo Oyo-Sabala",
+        "cargo": "ministro o autoridad",
+        "sobre": "Actividades extracurriculares del Ministerio de Educación",
+        "postura": "comenta",
+        "tema": "Educación",
+        "dijo": "Informó que el Ministerio de Educación permite actividades físicas extracurriculares sin extender la jornada.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Gabriela del Rocío Quina Luisa Chamorro",
+        "cargo": "ministro o autoridad",
+        "sobre": "Proyecto de atención de la obesidad",
+        "postura": "con observaciones",
+        "tema": "Salud",
+        "dijo": "Sugirió incluir proteínas vegetales y delimitar las competencias de las instituciones en la ley.",
+        "proyecto": "Ley para la atención de la obesidad",
+        "id": null
+      },
+      {
+        "orador": "José Luis Ortiz",
+        "cargo": "invitado",
+        "sobre": "Proyecto de atención de la obesidad",
+        "postura": "a favor",
+        "tema": "Salud",
+        "dijo": "Respaldó el proyecto de ley para la atención integral de la obesidad.",
+        "proyecto": "Ley para la atención de la obesidad",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1479662207393964"
   }
 }
