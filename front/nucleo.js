@@ -24,6 +24,7 @@ const ICONOS = {
   diario: '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 8h10M7 12h10M7 16h6"/>',
   pluma: '<path d="M4 20h4L19 9l-4-4L4 16z"/><path d="m13.5 6.5 4 4"/>',
   lista: '<path d="M8 6h13M8 12h13M8 18h13M3.5 6h.01M3.5 12h.01M3.5 18h.01"/>',
+  gente: '<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14a6 6 0 0 1 3.5 6"/>',
   buscar: '<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>',
   lado: '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/>',
   fuera: '<path d="M14 4h6v6M20 4l-9 9"/><path d="M18 14v6H4V6h6"/>',
@@ -51,10 +52,12 @@ const App = {
     this.siguiendo--;
   },
   // Bandeja del analista: estado null deshace
-  marcar(clave, estado, titulo) {
+  // a: el item del Panel; se guarda lo que necesita el espacio por cliente
+  marcar(clave, estado, a) {
+    const item = a && { titulo: a.titulo, url: a.url ?? null, pais: a.pais ?? null, resumen: a.resumen ?? null, porque: a.porque ?? {}, tipo: a.tipo };
     if (estado) this.bandeja[clave] = { estado, fecha: new Date().toISOString() }; else delete this.bandeja[clave];
     this.pendientes[clave] = this.bandeja[clave];
-    this.pedir("bandeja", { clave, estado, titulo })
+    this.pedir("bandeja", { clave, estado, titulo: a?.titulo, item })
       .then(() => { if (this.pendientes[clave] === this.bandeja[clave]) delete this.pendientes[clave]; })
       .catch((e) => this.fallo(e));
   },

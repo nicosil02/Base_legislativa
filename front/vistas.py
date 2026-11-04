@@ -702,7 +702,14 @@ def atender(a: dict, usuario: str | None) -> dict | list | str | None:
             pls_seguidos.dejar(a["pais"], str(a["pl"]))
     elif tipo == "bandeja":
         from alerts import bandeja
-        bandeja.marcar(a["clave"], a.get("estado"), usuario, a.get("titulo"))
+        bandeja.marcar(a["clave"], a.get("estado"), usuario, a.get("titulo"), a.get("item"))
+    elif tipo == "cliente_espacio":
+        from alerts import trafico
+        return trafico.datos(a["cliente"], a["desde"])
+    elif tipo == "cliente_word":
+        import base64
+        from alerts import trafico
+        return base64.b64encode(trafico.word(a["cliente"], trafico.redactar(a["cliente"], a["items"]))).decode()
     elif tipo == "deshacer":
         deshacer_descarte(int(a["id"]))
         pagina.load_noticias.clear()

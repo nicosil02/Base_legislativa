@@ -14,15 +14,17 @@ from core import store
 
 PATH = "data/bandeja_analista.json"
 ESTADOS = {"alertar", "interesante", "despues", "descartar"}
-GUARDAR_DIAS = 14  # el Panel mira como mucho 2 dias atras
+GUARDAR_DIAS = 45  # el Panel mira 2 dias; el espacio por cliente (trafico quincenal de Bayer) mas
 
 
 def estados() -> dict[str, dict]:
     return store.cargar(PATH, {}, ttl=20)
 
 
-def marcar(clave: str, estado: str | None, por: str | None = None, titulo: str | None = None) -> None:
-    """estado None deshace. Lo de mas de GUARDAR_DIAS se borra al escribir."""
+def marcar(clave: str, estado: str | None, por: str | None = None, titulo: str | None = None,
+           item: dict | None = None) -> None:
+    """estado None deshace. Lo de mas de GUARDAR_DIAS se borra al escribir.
+    item: titulo, url, pais, resumen y porque {cliente: razon}, para el espacio por cliente."""
     if estado is not None and estado not in ESTADOS:
         raise ValueError(f"estado desconocido: {estado}")
     ahora = datetime.now(timezone.utc)
@@ -32,6 +34,8 @@ def marcar(clave: str, estado: str | None, por: str | None = None, titulo: str |
         d = {k: v for k, v in d.items() if v.get("fecha", "") >= corte and k != clave}
         if estado:
             d[clave] = {"estado": estado, "fecha": ahora.isoformat(timespec="seconds"), "por": por, "titulo": titulo}
+            if item:
+                d[clave]["item"] = item
         return d
     store.actualizar(PATH, cambio, f"bandeja: {estado or 'deshacer'} {clave[:40]}", {})
 

@@ -17,7 +17,7 @@ almacen()  # arranca el armado por detras desde la primera visita
 # Proyectos, agenda y noticias van sin pais: el selector de arriba elige _pe o _ec
 MENU = [["", [["Panel", "panel", "inicio"], ["Transcripciones", "transcripciones", "micro"], ["Proyectos de ley", "proyectos", "doc"],
               ["Agenda", "agenda", "cal"], ["Noticias", "noticias", "diario"]]],
-        ["Trabajo", [["Redactar alerta", "alertas", "pluma"], ["Resumen del día", "resumen", "lista"], ["Buscar en todo", "buscar", "buscar"]]]]
+        ["Trabajo", [["Redactar alerta", "alertas", "pluma"], ["Resumen del día", "resumen", "lista"], ["Espacio por cliente", "clientes", "gente"], ["Buscar en todo", "buscar", "buscar"]]]]
 BASE = {"menu": MENU, "usuario": st.user.get("email"),
         "clientes": {s: {"nombre": config.todos()[s]["nombre"], "paises": list(config.todos()[s]["paises"])}
                      for s in historial.clientes()}}
