@@ -7,13 +7,21 @@ import streamlit as st
 
 
 @st.cache_resource(ttl=3 * 3600, show_spinner="Cargando el cerebro...")
+def _conexion():
+    from cerebro.embeddings import conectar, descargar_si_falta
+    path = descargar_si_falta()
+    if not path:
+        # sin cachear: si la descarga falla (p. ej. el release se esta
+        # reemplazando) se reintenta en la proxima llamada, no en 3 h
+        raise RuntimeError("cerebro.db todavia no se pudo bajar")
+    return conectar(path)
+
+
 def conexion():
     """Conexion a data/cerebro.db (bajado del release, ver
     cerebro.embeddings.descargar_si_falta). None si todavia no esta."""
-    from cerebro.embeddings import conectar, descargar_si_falta
     try:
-        path = descargar_si_falta()
-        return conectar(path) if path else None
+        return _conexion()
     except Exception as e:
         print(f"[cerebro] no disponible: {e}")
         return None
