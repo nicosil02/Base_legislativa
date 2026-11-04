@@ -17,8 +17,20 @@ def _leer(nombre: str) -> str:
 
 _LOGO = base64.b64encode((_AQUI.parent / "assets" / "vali_logo.jpg").read_bytes()).decode()
 _JS = ("nucleo.js", "v_panel.js", "v_noticias.js", "v_proyectos.js", "v_agenda.js", "v_transcripciones.js", "v_redaccion.js", "v_clientes.js", "v_personas.js")
-app = st.components.v2.component("vali_app", html='<div class="app"></div>', css=_leer("app.css") + f'.logo{{background-image:url("data:image/jpeg;base64,{_LOGO}")}}',
-                                 js=chr(10).join(_leer(f) for f in _JS))
+_hecho: dict = {}
+
+
+def app(*args, **kwargs):
+    """El componente se vuelve a registrar si cambio un .js o el .css: Streamlit Cloud
+    recarga los modulos .py que cambian, no estos archivos, y un push que solo tocaba
+    el front seguia sirviendo el codigo viejo."""
+    firma = tuple((_AQUI / f).stat().st_mtime_ns for f in (*_JS, "app.css"))
+    if _hecho.get("firma") != firma:
+        _hecho["comp"] = st.components.v2.component(
+            "vali_app", html='<div class="app"></div>', css=_leer("app.css") + f'.logo{{background-image:url("data:image/jpeg;base64,{_LOGO}")}}',
+            js=chr(10).join(_leer(f) for f in _JS))
+        _hecho["firma"] = firma
+    return _hecho["comp"](*args, **kwargs)
 
 # Quita el marco de Streamlit en las paginas que usan la interfaz propia
 # Inter para app.css; <link> y no @import, que frena el resto del estilo
