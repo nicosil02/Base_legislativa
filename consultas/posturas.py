@@ -130,13 +130,16 @@ def precalcular(pe: str, gente: list[dict], hilos: int = 4) -> int:
             print(f"[posturas] {p['id']}: {e}")
             return {}
     nuevo: dict = {}
+    total = 0
     with ThreadPoolExecutor(hilos) as ex:
         for i, r in enumerate(ex.map(uno, gente), 1):
             nuevo.update(r)
-            if i % 25 == 0:
-                print(f"[posturas] {i}/{len(gente)} personas, {len(nuevo)} sesiones leidas")
-    _guardar(nuevo)
-    return len(nuevo)
+            if i % 25 == 0 or i == len(gente):  # guarda de a poco: si el timeout corta, lo leido queda
+                _guardar(nuevo)
+                total += len(nuevo)
+                nuevo = {}
+                print(f"[posturas] {i}/{len(gente)} personas, {total} sesiones leidas", flush=True)
+    return total
 
 
 def dijo(pe: sqlite3.Connection, pais: str, ident: str, nombre: str) -> dict:
