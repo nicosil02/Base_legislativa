@@ -34,69 +34,6 @@ def _ffmpeg_bin() -> Path:
     return dst
 
 
-def capturar_audio_en_vivo(video_id: str, segundos: int = 30) -> Path | None:
-    """Graba los proximos `segundos` de un video EN VIVO a un .wav temporal
-    (16 kHz mono). Bloquea unos `segundos`. None si no salio nada util."""
-    ffmpeg_local = _ffmpeg_bin()
-    tmp_dir = Path(tempfile.mkdtemp(prefix="vali_live_"))
-    clip_path = tmp_dir / "clip.mp4"
-    stderr_path = tmp_dir / "yt-dlp.stderr.log"
-    cmd = [
-        sys.executable, "-m", "yt_dlp",
-        "--ffmpeg-location", str(ffmpeg_local.parent),
-        "-f", "bestaudio/best",
-        "-o", str(clip_path),
-        f"https://www.youtube.com/watch?v={video_id}",
-    ]
-    # En vivo yt-dlp delega la descarga a ffmpeg y le pasa su --proxy, y
-    # ffmpeg no entiende socks5://: se usa el puente HTTP (privoxy,
-    # FFMPEG_HTTP_PROXY) como proxy de yt-dlp.
-    proxy = os.environ.get("FFMPEG_HTTP_PROXY") or os.environ.get("YT_DLP_PROXY")
-    if proxy:
-        cmd += ["--proxy", proxy, "--hls-prefer-native"]
-    # Popen + matar el arbol entero (no run(timeout=)): yt-dlp lanza ffmpeg
-    # como nieto, y matar solo al hijo deja el ffmpeg huerfano, el pipe
-    # abierto y el archivo sin cerrar. start_new_session permite killpg.
-    stderr_f = open(stderr_path, "wb")
-    try:
-        proc = subprocess.Popen(
-            cmd, stdout=subprocess.DEVNULL, stderr=stderr_f,
-            start_new_session=(os.name != "nt"),
-        )
-    finally:
-        stderr_f.close()  # el hijo ya tiene su propio fd duplicado, este puede cerrarse
-    try:
-        proc.wait(timeout=segundos)
-    except subprocess.TimeoutExpired:
-        _matar_arbol(proc)
-
-    part_path = clip_path.with_suffix(clip_path.suffix + ".part")
-    src = part_path if part_path.exists() else clip_path
-    if not src.exists() or src.stat().st_size < 10_000:
-        tam = src.stat().st_size if src.exists() else None
-        # Las lineas que importan, de todo el stderr: la cola suele ser ruido
-        # tardio que tapa el error real.
-        texto = stderr_path.read_text(encoding="utf-8", errors="replace") if stderr_path.exists() else ""
-        claves = ("ERROR", "SOCKS", "exited with code", "Sign in to confirm", "Traceback")
-        relevantes = [l for l in texto.splitlines() if any(k in l for k in claves)]
-        err = "\n".join(relevantes) if relevantes else texto[-500:]
-        print(f"[live-transcribe] {video_id}: yt-dlp no genero un archivo util "
-              f"(existe={src.exists()}, tamano={tam}, path={src}) stderr: {err}")
-        return None
-
-    wav_path = tmp_dir / "clip.wav"
-    r = subprocess.run(
-        [str(ffmpeg_local), "-y", "-i", str(src), "-ar", "16000", "-ac", "1", str(wav_path)],
-        capture_output=True, timeout=30,
-    )
-    if r.returncode != 0 or not wav_path.exists():
-        err = (r.stderr or b"").decode("utf-8", errors="replace")[-500:]
-        print(f"[live-transcribe] {video_id}: ffmpeg fallo la conversion a wav "
-              f"(returncode={r.returncode}): {err}")
-        return None
-    return wav_path
-
-
 def _matar_arbol(proc: subprocess.Popen) -> None:
     """Mata el proceso y sus hijos (yt-dlp lanza ffmpeg como nieto)."""
     if proc.poll() is not None:

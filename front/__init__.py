@@ -21,7 +21,10 @@ app = st.components.v2.component("vali_app", html='<div class="app"></div>', css
                                  js=chr(10).join(_leer(f) for f in _JS))
 
 # Quita el marco de Streamlit en las paginas que usan la interfaz propia
-SIN_MARCO = """<style>
+# Inter para app.css; <link> y no @import, que frena el resto del estilo
+SIN_MARCO = """<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&display=swap" rel="stylesheet">
+<style>
 [data-testid="stSidebar"], [data-testid="stHeader"], footer { display:none !important; }
 [data-testid="stMain"] { overflow:hidden !important; }
 [data-testid="stMain"] .block-container { padding:0 !important; max-width:none !important; animation:none !important; }

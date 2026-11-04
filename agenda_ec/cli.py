@@ -14,7 +14,6 @@ from __future__ import annotations
 import argparse
 import sqlite3
 import sys
-from pathlib import Path
 
 from .schema import SCHEMA_AGENDA_EC
 from .sync import rematch_all, sync

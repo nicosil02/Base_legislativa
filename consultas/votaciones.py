@@ -37,12 +37,6 @@ def votos_de_pl(conn: sqlite3.Connection, pley_num: int, cod_tipo_parl: str | No
     return _votos(conn, "AND v.pley_num = ?", (pley_num,))
 
 
-def votos_de_congresista(conn: sqlite3.Connection, nombre: str) -> list[dict]:
-    """Votos de quien tenga `nombre` (sin tildes ni mayusculas) en su nombre."""
-    q = norm(nombre)
-    return [v for v in _votos(conn) if q in norm(v["congresista"])]
-
-
 def disciplina(conn: sqlite3.Connection, camara: str | None = None) -> list[dict]:
     """Por congresista: votaciones con postura (SI/NO/ABST) y % en que voto
     igual que la mayoria de su bancada en esa votacion. Si la bancada empata

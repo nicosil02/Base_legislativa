@@ -8,9 +8,7 @@ from alerts import historial
 from clientes import config
 from front import SIN_MARCO, app
 from front.vistas import almacen, atender
-from ui_kit import inject_theme
 
-inject_theme()
 st.markdown(SIN_MARCO, unsafe_allow_html=True)
 almacen()  # arranca el armado por detras desde la primera visita
 

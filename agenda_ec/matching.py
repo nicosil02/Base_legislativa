@@ -328,20 +328,3 @@ def extract_modalidad(summary: str, location: str = "") -> str | None:
         return "presencial"
     return None
 
-
-def strip_modalidad(summary: str) -> str:
-    """Limpia el SUMMARY de la cola ", modalidad X" para mostrarlo
-    como titulo de sesion sin info redundante."""
-    if not summary:
-        return ""
-    # Cortar en ", modalidad" o ", virtual" / ", presencial"
-    s = summary.strip()
-    low = s.lower()
-    for tok in (", modalidad", ", virtual", ", presencial",
-                " modalidad virtual", " modalidad presencial",
-                "modalidad virtual", "modalidad presencial"):
-        idx = low.find(tok)
-        if idx >= 0:
-            s = s[:idx].rstrip(" ,.;")
-            low = s.lower()
-    return s
