@@ -31,7 +31,7 @@ from core import legislativo, store
 from core.db import connect_ro
 from noticias import pagina
 from noticias.feedback_store import deshacer_descarte, list_descartadas, registrar_combinadas, registrar_descarte
-from noticias.temas import clasificar, todos_los_temas
+from noticias.temas import clasificar, pais_por_contenido, todos_los_temas
 from scraper.categorias import CATEGORIA_CLIENTES_PL
 from scraper.sync import FECHA_INICIO_BICAMERAL
 
@@ -57,6 +57,22 @@ def _resumen_limpio(resumen: str | None, titulo: str) -> str:
     t = html.unescape(re.sub(r"<[^>]+>", " ", html.unescape(resumen or "")))
     t = re.sub(r"\s+", " ", t).strip()
     return "" if t[:40].lower() == titulo[:40].lower() else t[:LARGO_RESUMEN]
+
+
+# Seccion internacional de medios nacionales (Ecuavisa: elecciones de EE. UU.):
+# sin ninguna señal de PE/EC y nombrando otro pais, no es coyuntura de aqui.
+_EXTRANJERO = re.compile(r"\b(ee\.? ?uu|estados unidos|trump|espa[ñn]a|venezuela|colombia|argentina|chile|"
+                         r"m[ée]xico|brasil|bolivia|ir[áa]n|israel|ucrania|rusia|china|europa|gaza)\b", re.I)
+# relacion bilateral, lugar o actor local: si es de aqui aunque nombre otro pais
+_LOCAL = re.compile(r"\b(lima|quito|guayaquil|cuenca|arequipa|cusco|trujillo|canciller\w*|embajad\w*|congresista\w*|fiscal[ií]a|ministr[oa] de salud)\b", re.I)
+
+
+def _temas_locales(temas: list, titulo: str, resumen: str) -> list:
+    if ("Coyuntura política" in temas and _EXTRANJERO.search(titulo)
+            and not _LOCAL.search(f"{titulo} {resumen}")
+            and pais_por_contenido(titulo, resumen, "?") is None):
+        return [t for t in temas if t != "Coyuntura política"]
+    return temas
 
 
 # ------------------------------------------------------------------ Panel
@@ -190,7 +206,7 @@ def noticias(pais: str) -> dict:
         i = int(r["ID"])
         filas.append({
             "id": i, "titulo": (r["Título"] or "").strip(), "resumen": _resumen_limpio(r["Resumen"], (r["Título"] or "").strip()), "url": r["Enlace"],
-            "fecha": (r["Fecha"] or "")[:10], "fuente": r["Fuente"], "cat": r["Categoría fuente"], "temas": r["Temas"],
+            "fecha": (r["Fecha"] or "")[:10], "fuente": r["Fuente"], "cat": r["Categoría fuente"], "temas": _temas_locales(r["Temas"] or [], r["Título"] or "", r["Resumen"] or ""),
             "norma": bool(r["EsNormativa"]), "pl": r["PL_relacionado"] if isinstance(r["PL_relacionado"], str) else None,
             "para": [c for c in clientes if c in de_fuente.get(r["Fuente"], "") or "todos" in de_fuente.get(r["Fuente"], "")], "grupo": int(grupo),
             "af": {c: round(v, 3) for c in clientes if (v := afinidad[c].get(i)) is not None},
