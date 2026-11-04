@@ -576,5 +576,239 @@
 "cargo": "Tercer Vicepresidente",
 "organo": "Mesa Directiva de la Cámara de Diputados"
 }
+],
+"EC:mancheno davila": [
+{
+"cargo": "Presidenta",
+"organo": "Asamblea Nacional y Consejo de Administración Legislativa (CAL)"
+}
+],
+"EC:torres cobo": [
+{
+"cargo": "Primer Vicepresidente",
+"organo": "Asamblea Nacional y CAL"
+}
+],
+"EC:tiupul urquizo": [
+{
+"cargo": "Segunda Vicepresidenta",
+"organo": "Asamblea Nacional y CAL"
+}
+],
+"EC:fritschi naranjo": [
+{
+"cargo": "Primera Vocal",
+"organo": "Consejo de Administración Legislativa (CAL)"
+}
+],
+"EC:celleri gomez": [
+{
+"cargo": "Segundo Vocal",
+"organo": "Consejo de Administración Legislativa (CAL)"
+}
+],
+"EC:salazar hidalgo": [
+{
+"cargo": "Tercera Vocal",
+"organo": "Consejo de Administración Legislativa (CAL)"
+}
+],
+"EC:pacheco machuca": [
+{
+"cargo": "Cuarta Vocal",
+"organo": "Consejo de Administración Legislativa (CAL)"
+}
+],
+"EC:torres cadena": [
+{
+"cargo": "Presidente",
+"organo": "Comisión de Justicia y Estructura del Estado"
+}
+],
+"EC:nantipia chumpi": [
+{
+"cargo": "Vicepresidente",
+"organo": "Comisión de Justicia y Estructura del Estado"
+}
+],
+"EC:recalde alava": [
+{
+"cargo": "Presidente",
+"organo": "Comisión del Derecho al Trabajo y a la Seguridad Social"
+}
+],
+"EC:jaramillo zurita paola": [
+{
+"cargo": "Vicepresidenta",
+"organo": "Comisión del Derecho al Trabajo y a la Seguridad Social"
+}
+],
+"EC:farinango delgado": [
+{
+"cargo": "Presidente",
+"organo": "Comisión del Régimen Económico y Tributario y su Regulación y Control"
+}
+],
+"EC:castro piedra": [
+{
+"cargo": "Vicepresidente",
+"organo": "Comisión del Régimen Económico y Tributario y su Regulación y Control"
+}
+],
+"EC:centeno arteaga": [
+{
+"cargo": "Presidente",
+"organo": "Comisión del Desarrollo Económico, Productivo y la Microempresa"
+}
+],
+"EC:franco hanze": [
+{
+"cargo": "Vicepresidente",
+"organo": "Comisión del Desarrollo Económico, Productivo y la Microempresa"
+}
+],
+"EC:jaramillo zurita lucia": [
+{
+"cargo": "Presidente",
+"organo": "Comisión de Relaciones Internacionales y Movilidad Humana"
+}
+],
+"EC:jarrin rivadeneira": [
+{
+"cargo": "Vicepresidente",
+"organo": "Comisión de Relaciones Internacionales y Movilidad Humana"
+}
+],
+"EC:leon cueva": [
+{
+"cargo": "Presidente",
+"organo": "Comisión de Biodiversidad y Recursos Naturales"
+}
+],
+"EC:jaramillo martinez": [
+{
+"cargo": "Vicepresidente",
+"organo": "Comisión de Biodiversidad y Recursos Naturales"
+}
+],
+"EC:rizzo alvear": [
+{
+"cargo": "Presidente",
+"organo": "Comisión de Soberanía Alimentaria y Desarrollo del Sector Agropecuario y Pesquero"
+}
+],
+"EC:gonzaga salazar": [
+{
+"cargo": "Vicepresidente",
+"organo": "Comisión de Soberanía Alimentaria y Desarrollo del Sector Agropecuario y Pesquero"
+}
+],
+"EC:benavides fuentes": [
+{
+"cargo": "Presidente",
+"organo": "Comisión de Gobiernos Autónomos, Descentralización, Competencias y Organización del Territorio"
+}
+],
+"EC:guillen rodriguez": [
+{
+"cargo": "Vicepresidenta",
+"organo": "Comisión de Gobiernos Autónomos, Descentralización, Competencias y Organización del Territorio"
+}
+],
+"EC:baltazar yucailla": [
+{
+"cargo": "Presidente",
+"organo": "Comisión de Educación, Cultura, Ciencia y Tecnología, Innovación y Saberes Ancestrales"
+}
+],
+"EC:polanco lara": [
+{
+"cargo": "Vicepresidente",
+"organo": "Comisión de Educación, Cultura, Ciencia y Tecnología, Innovación y Saberes Ancestrales"
+}
+],
+"EC:guim alfago": [
+{
+"cargo": "Presidente",
+"organo": "Comisión del Derecho a la Salud y Deporte"
+}
+],
+"EC:becerra contreras": [
+{
+"cargo": "Vicepresidente",
+"organo": "Comisión del Derecho a la Salud y Deporte"
+}
+],
+"EC:jacome silva": [
+{
+"cargo": "Presidente",
+"organo": "Comisión de Transparencia, Participación Ciudadana y Control Social"
+}
+],
+"EC:cerda tapuy": [
+{
+"cargo": "Vicepresidente",
+"organo": "Comisión de Transparencia, Participación Ciudadana y Control Social"
+}
+],
+"EC:iniguez gallardo": [
+{
+"cargo": "Presidente",
+"organo": "Comisión de Garantías Constitucionales, Derechos Humanos, Derechos Colectivos y la Interculturalidad"
+}
+],
+"EC:cedeno rivadeneira": [
+{
+"cargo": "Vicepresidente",
+"organo": "Comisión de Garantías Constitucionales, Derechos Humanos, Derechos Colectivos y la Interculturalidad"
+}
+],
+"EC:alarcon bueno": [
+{
+"cargo": "Presidente",
+"organo": "Comisión de Soberanía, Integración y Seguridad Integral"
+}
+],
+"EC:castillo maldonado": [
+{
+"cargo": "Vicepresidente",
+"organo": "Comisión de Soberanía, Integración y Seguridad Integral"
+}
+],
+"EC:veloz ramirez": [
+{
+"cargo": "Presidente",
+"organo": "Comisión de Protección Integral a Niñas, Niños y Adolescentes"
+}
+],
+"EC:chavez nunez": [
+{
+"cargo": "Vicepresidente",
+"organo": "Comisión de Protección Integral a Niñas, Niños y Adolescentes"
+}
+],
+"EC:alvarez zambrano": [
+{
+"cargo": "Presidente",
+"organo": "Comisión de Fiscalización y Control Político"
+}
+],
+"EC:villacreses herrera": [
+{
+"cargo": "Vicepresidenta",
+"organo": "Comisión de Fiscalización y Control Político"
+}
+],
+"EC:lavayen tamayo": [
+{
+"cargo": "Presidente",
+"organo": "Comité de Ética"
+}
+],
+"EC:mendoza ibarra": [
+{
+"cargo": "Vicepresidenta",
+"organo": "Comité de Ética"
+}
 ]
 }

@@ -5,8 +5,8 @@ Salen de las paginas de WordPress del Senado y de Diputados: "Mesas directivas y
 horarios de sesion de las comisiones" y "Mesa Directiva". Quien preside una
 comision decide que dictamenes se agendan, por eso pesa en el tramite.
 
-Ecuador no tiene esta tabla en un formato que se pueda leer (el sitio de la
-Asamblea responde 403 a los programas).
+Ecuador sale de la pagina oficial de comisiones y del CAL de la Asamblea, que
+responde 403 a los programas: se bajo con un navegador a data/cargos_ec_oficial.json.
     python -m consultas.cargos   # renueva data/cargos.json
 """
 from __future__ import annotations
@@ -19,6 +19,7 @@ from pathlib import Path
 from core.text import norm
 
 COPIA = Path(__file__).resolve().parent.parent / "data" / "cargos.json"
+OFICIAL_EC = COPIA.parent / "cargos_ec_oficial.json"
 # (camara, id de pagina de comisiones, id de pagina de mesa directiva)
 _PAGINAS = [("senado", 1744, 1542), ("diputados", 2269, 1478)]
 _ROL = re.compile(r"(President[ea]|Vicepresident[ea]|Secretari[oa])\s*:\s*(.*?)(?=(?:President[ea]|Vicepresident[ea]|Secretari[oa])\s*:|$)", re.S)
@@ -79,6 +80,13 @@ def bajar(gente: list[dict]) -> dict[str, list[dict]]:
         for ident, cargo, organo in filas:
             if {"cargo": cargo, "organo": organo} not in cargos.setdefault(ident, []):
                 cargos[ident].append({"cargo": cargo, "organo": organo})
+    ec = [p for p in gente if p["pais"] == "EC"]
+    for nombre, cargo, organo in json.loads(OFICIAL_EC.read_text(encoding="utf-8"))["cargos"]:
+        ident = _quien(nombre, ec)
+        if ident:
+            cargos.setdefault(ident, []).append({"cargo": cargo, "organo": organo})
+        else:
+            print(f"[cargos] sin asambleista para {nombre}")
     return cargos
 
 
