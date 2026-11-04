@@ -75,5 +75,14 @@
     "clientes": [
       "syngenta"
     ]
+  },
+  {
+    "noticia_id": 9,
+    "created_at": "2026-11-04T13:23:33Z",
+    "descartado_por": "nicolas.silva@valiconsultores.com",
+    "titulo": "Autorizar el ingreso al país de ciento nueve mil doscientos (109,200) plantas de arándano (Vaccinium corymbosum) de origen y procedencia de la República de Chile, a través del Complejo Fronterizo Santa Rosa ubicado e ...",
+    "clientes": [
+      "syngenta"
+    ]
   }
 ]
