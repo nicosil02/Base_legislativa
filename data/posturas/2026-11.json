@@ -1377,5 +1377,192 @@
       }
     ],
     "url": "https://www.facebook.com/watch/?v=1479662207393964"
+  },
+  "fb_1567277195417313": {
+    "fecha": "2026-11-04",
+    "organo": "Comisión de Educación",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Johanna Córdoba",
+        "cargo": "ministro o autoridad",
+        "sobre": "Estrategia para el fomento de la IA",
+        "postura": "comenta",
+        "tema": "Tecnología",
+        "dijo": "Explicó la estrategia para el desarrollo de la inteligencia artificial.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Marco Insuasti",
+        "cargo": "ministro o autoridad",
+        "sobre": "Ejes de la estrategia nacional de IA",
+        "postura": "comenta",
+        "tema": "Tecnología",
+        "dijo": "Detalló los ejes de gobernanza y adopción tecnológica.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Anabela Yela",
+        "cargo": "legislador",
+        "sobre": "Postura sobre la regulación de la IA",
+        "postura": "pregunta",
+        "tema": "Tecnología",
+        "dijo": "Consultó si cambió la posición sobre la regulación.",
+        "proyecto": "",
+        "id": "EC:yela duarte"
+      },
+      {
+        "orador": "Johanna Córdoba",
+        "cargo": "ministro o autoridad",
+        "sobre": "Avances en la implementación de la IA",
+        "postura": "comenta",
+        "tema": "Tecnología",
+        "dijo": "Aclaró que ya trabajan con el sector privado.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Johanna Córdoba",
+        "cargo": "ministro o autoridad",
+        "sobre": "Postura sobre la legislación de IA",
+        "postura": "comenta",
+        "tema": "Tecnología",
+        "dijo": "Explicó que se mantiene una postura conservadora.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Juan Carlos Abiles",
+        "cargo": "invitado",
+        "sobre": "Definiciones de sostenibilidad en la ley",
+        "postura": "con observaciones",
+        "tema": "Tecnología",
+        "dijo": "Sugirió incluir conceptos de sostenibilidad en el proyecto.",
+        "proyecto": "Proyecto de ley de inteligencia artificial",
+        "id": null
+      },
+      {
+        "orador": "Kevin Rojas",
+        "cargo": "invitado",
+        "sobre": "Regulación de la inteligencia artificial por riesgos",
+        "postura": "con observaciones",
+        "tema": "Tecnología",
+        "dijo": "Propuso que la regulación se base en la funcionalidad y no en el sector.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Rosa Albuja",
+        "cargo": "invitado",
+        "sobre": "Auditoría de productividad en inteligencia artificial",
+        "postura": "propone",
+        "tema": "Tecnología",
+        "dijo": "Propuso incorporar auditorías de productividad y sostenibilidad en la normativa.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Rosa Albuja",
+        "cargo": "invitado",
+        "sobre": "Incentivos y alfabetización en inteligencia artificial",
+        "postura": "propone",
+        "tema": "Tecnología",
+        "dijo": "Propuso la incorporación de auditorías y capacitación en inteligencia artificial.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Martín Vaca",
+        "cargo": "invitado",
+        "sobre": "Definición de roles en inteligencia artificial",
+        "postura": "con observaciones",
+        "tema": "Tecnología",
+        "dijo": "Propuso definir mejor los roles para evitar la incertidumbre jurídica.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1567277195417313"
+  },
+  "fb_1023351800782714": {
+    "fecha": "2026-11-04",
+    "organo": "Comisión de Niñez y Adolescencia",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Rodrigo Fernando Varela Torres",
+        "cargo": "invitado",
+        "sobre": "Contenidos de los textos escolares",
+        "postura": "comenta",
+        "tema": "Educación",
+        "dijo": "Informó que la Defensoría no recibió quejas sobre los textos escolares.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Gladis Lorena Chaves Ledesma",
+        "cargo": "invitado",
+        "sobre": "Denuncias sobre textos escolares",
+        "postura": "comenta",
+        "tema": "Educación",
+        "dijo": "Confirmó que no existen denuncias registradas en el sistema CIGED.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1023351800782714"
+  },
+  "fb_1864386448199006": {
+    "fecha": "2026-11-04",
+    "organo": "Comisión de Relaciones Internacionales",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "María Ociliadora Mosquera",
+        "cargo": "ministro o autoridad",
+        "sobre": "Tratado de extradición con Costa Rica",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Informó sobre los aspectos técnicos del tratado de extradición con Costa Rica.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Corina Indelira Espinoza",
+        "cargo": "ministro o autoridad",
+        "sobre": "Tratado de extradición con Costa Rica",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Detalló los antecedentes, estructura y beneficios del tratado bilateral.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ordoñez",
+        "cargo": "legislador",
+        "sobre": "Vigencia del tratado con Costa Rica",
+        "postura": "pregunta",
+        "tema": "Justicia",
+        "dijo": "Preguntó por qué el tratado con Costa Rica no aparece como vigente.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Corina Indelira Espinoza",
+        "cargo": "ministro o autoridad",
+        "sobre": "Vigencia del tratado con Costa Rica",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Explicó que la entrada en vigor requiere la notificación de ambos países.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1864386448199006"
   }
 }
