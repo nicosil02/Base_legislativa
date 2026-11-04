@@ -203,7 +203,7 @@ VISTAS.personas = (() => {
   }
 
   const MENCION = "solo lo mencionan";
-  const POSTURA = { "a favor": "bv-SI", "en contra": "bv-NO", "con observaciones": "bv-ABST", propone: "bv-SI" };
+  const POSTURA = { "a favor": "bv-SI", "en contra": "bv-NO", "con observaciones": "bv-ABST", propone: "bv-PROP", pregunta: "bv-nv", comenta: "bv-nv" };
   const chipPostura = (x) => `<span class="voto ${POSTURA[x] ?? "bv-nv"}">${esc(oracion(x))}</span>`;
 
   // lo que dijo llega aparte (Gemini lee cada sesion): la ficha no lo espera
@@ -227,8 +227,8 @@ VISTAS.personas = (() => {
     const mencion = todas.length - habla.length;
     const libre = !sel.tema && !sel.organo && !sel.postura;
     caja.innerHTML = `<div class="f-caja"></div>` + (ses.map((x) => `<div class="pv dicho">${x.postura ? chipPostura(x.postura) : `<span class="voto bv-nv">Sin resumir</span>`}<div>
-        ${x.piensa ? `<p class="d-piensa">${esc(x.piensa)}</p>` : x.trozos.slice(0, 1).map((t) => `<p>«${esc(t)}»</p>`).join("")}
-        <small>${x.tema && x.tema !== "Otros" ? `${esc(x.tema)} · ` : ""}${esc(fechaCorta(x.fecha))} · ${esc(x.organo)} ${enlaceIcono(x.url, "Ver la sesión")}</small></div></div>`).join("")
+        ${x.piensa ? `<p class="d-piensa">${esc(x.piensa)}</p>` : (x.trozos ?? []).slice(0, 1).map((t) => `<p>«${esc(t)}»</p>`).join("")}
+        <small>${x.sobre ? `Sobre ${esc(x.sobre)} · ` : x.tema && x.tema !== "Otros" ? `${esc(x.tema)} · ` : ""}${esc(fechaCorta(x.fecha))} · ${esc(x.organo)} ${enlaceIcono(x.url, "Ver la sesión")}</small></div></div>`).join("")
       || `<div class="vacio">${todas.length ? "Ninguna postura con estos filtros." : "No interviene en las sesiones transcritas."}</div>`)
       + (mencion && libre ? `<p class="nota">En ${mencion} ${mencion === 1 ? "sesión más solo lo nombran" : "sesiones más solo lo nombran"}, sin que hable.</p>` : "")
       + (r.dijo.mesas.length && libre ? `<h3 class="p-sub">Mesas técnicas que organizó</h3>${r.dijo.mesas.map((m) => `<div class="pv"><div><p>${esc(m.titulo ?? "")}</p>

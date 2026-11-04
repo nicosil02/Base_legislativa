@@ -453,5 +453,5 @@ b.contra { color:#C62828; font-weight:600; }
 .barra-votos { display:flex; height:10px; border-radius:5px; overflow:hidden; gap:2px; }
 .v-cifras { display:flex; flex-wrap:wrap; gap:4px 14px; margin:8px 0 4px; font-size:12.5px; color:var(--ink2); }
 .v-cifras i { display:inline-block; width:8px; height:8px; border-radius:2px; margin-right:5px; }
-.bv-SI { background:#2E8B57; } .bv-NO { background:#C62828; } .bv-ABST { background:#D9A900; } .bv-BLANCO { background:#7E8A97; } .bv-nv { background:#B8C2CC; }
+.bv-SI { background:#2E8B57; } .bv-NO { background:#C62828; } .bv-ABST { background:#D9A900; } .bv-BLANCO { background:#7E8A97; } .bv-nv { background:#B8C2CC; } .bv-PROP { background:#3B6FB6; }
 @media (prefers-reduced-motion: reduce) { .cajon-p, .cajon-p.abierto, .p-hemi circle { transition:none; } }
