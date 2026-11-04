@@ -103,13 +103,6 @@ def fetch_live_agenda_pe(periodo_par: int = PER_PAR_ID_ACTUAL, periodo_leg: int 
         "error": None,
     }
 
-@st.cache_data(ttl=60)
-def has_sesiones_table() -> bool:
-    conn = get_conn()
-    r = conn.execute(
-        "SELECT name FROM sqlite_master WHERE type='table' AND name='sesiones'"
-    ).fetchone()
-    return r is not None
 
 @st.cache_data(ttl=60)
 def has_pleno_table() -> bool:

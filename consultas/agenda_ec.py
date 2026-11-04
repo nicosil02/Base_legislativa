@@ -62,13 +62,6 @@ def fetch_live_agenda_ec() -> dict:
         "error": None,
     }
 
-@st.cache_data(ttl=60)
-def has_sesiones_table() -> bool:
-    conn = get_conn()
-    r = conn.execute(
-        "SELECT name FROM sqlite_master WHERE type='table' AND name='sesiones_ec'"
-    ).fetchone()
-    return r is not None
 
 @st.cache_data(ttl=60)
 def kpi_totals() -> dict[str, int]:

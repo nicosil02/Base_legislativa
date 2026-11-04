@@ -88,6 +88,12 @@ def mensaje(avisos: list[tuple[dict, list[dict], bool]]) -> str:
     return "\n\n".join(partes)
 
 
+def _con_clientes(p: dict) -> str:
+    """El punto con sus clientes al final, como en el Telegram: el espacio por
+    cliente (alerts/trafico.py) filtra la agenda por ese nombre."""
+    return p["texto"].strip() + (f" ({', '.join(c.capitalize() for c in p['clientes'])})" if p["clientes"] else "")
+
+
 def _tabla(cerebro: sqlite3.Connection) -> None:
     cerebro.execute("CREATE TABLE IF NOT EXISTS agenda_avisada (clave TEXT PRIMARY KEY, hash TEXT, "
                     "puntos TEXT, juzgado_at TEXT)")
@@ -119,7 +125,7 @@ def run(enviar: bool = True, generar=llm.generar) -> str | None:
                     avisos.append((s, puntos, s["clave"] in guardado))
                 anteriores = previos.get(s["clave"], [])
                 cerebro.execute("INSERT OR REPLACE INTO agenda_avisada VALUES (?,?,?,datetime('now'))",
-                                (s["clave"], s["hash"], json.dumps(anteriores + [p["texto"] for p in puntos], ensure_ascii=False)))
+                                (s["clave"], s["hash"], json.dumps(anteriores + [_con_clientes(p) for p in puntos], ensure_ascii=False)))
             cerebro.commit()
     if not avisos:
         return None

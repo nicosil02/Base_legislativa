@@ -705,11 +705,14 @@ def atender(a: dict, usuario: str | None) -> dict | list | str | None:
         bandeja.marcar(a["clave"], a.get("estado"), usuario, a.get("titulo"), a.get("item"))
     elif tipo == "cliente_espacio":
         from alerts import trafico
-        return trafico.datos(a["cliente"], a["desde"])
+        agenda = [{**x, "cuando": _cuando(x)} for x in _agenda(conexion())]
+        return trafico.datos(a["cliente"], a["desde"], agenda)
     elif tipo == "cliente_word":
         import base64
         from alerts import trafico
-        return base64.b64encode(trafico.word(a["cliente"], trafico.redactar(a["cliente"], a["items"]))).decode()
+        formato = a.get("formato") or "trafico"
+        hecho = trafico.redactar(a["cliente"], a["items"], formato=formato)
+        return base64.b64encode(trafico.word(a["cliente"], hecho, formato)).decode()
     elif tipo == "deshacer":
         deshacer_descarte(int(a["id"]))
         pagina.load_noticias.clear()
