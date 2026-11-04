@@ -525,5 +525,22 @@
       },
       "tipo": "pl"
     }
+  },
+  "pl:https://wb2server.congreso.gob.pe/spley-portal/#/diputados/expediente/2026/751": {
+    "estado": "interesante",
+    "fecha": "2026-11-04T21:38:12+00:00",
+    "por": "nicolas.silva@valiconsultores.com",
+    "titulo": "Proyecto 00751-2026-2031-CD: PROPOSICIÓN LEGISLATIVA DEL SEGURO AGRÍCOLA CATASTRÓFICO.",
+    "item": {
+      "titulo": "Proyecto 00751-2026-2031-CD: PROPOSICIÓN LEGISLATIVA DEL SEGURO AGRÍCOLA CATASTRÓFICO.",
+      "url": "https://wb2server.congreso.gob.pe/spley-portal/#/diputados/expediente/2026/751",
+      "pais": "PE",
+      "resumen": "PRESENTADO",
+      "porque": {
+        "bayer": "Pasó a PRESENTADO",
+        "syngenta": "Pasó a PRESENTADO"
+      },
+      "tipo": "pl"
+    }
   }
 }
