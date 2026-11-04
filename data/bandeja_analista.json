@@ -180,5 +180,21 @@
       },
       "tipo": "noticia"
     }
+  },
+  "n2366534": {
+    "estado": "alertar",
+    "fecha": "2026-11-04T13:31:05+00:00",
+    "por": "nicolas.silva@valiconsultores.com",
+    "titulo": "Perú reafirma compromiso con integración económica en APEC",
+    "item": {
+      "titulo": "Perú reafirma compromiso con integración económica en APEC",
+      "url": "https://andina.pe/agencia/noticia-peru-reafirma-compromiso-integracion-economica-apec-1098506.aspx",
+      "pais": "PE",
+      "resumen": null,
+      "porque": {
+        "google": "El titular del MINCETUR aborda la agenda de integración en APEC, espacioexplicitamente monitoreado en el perfil para comercio y gobernanza digital."
+      },
+      "tipo": "noticia"
+    }
   }
 }
