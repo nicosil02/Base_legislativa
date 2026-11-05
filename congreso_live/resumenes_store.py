@@ -18,15 +18,47 @@ def _local_path() -> Path:
     return Path(__file__).resolve().parent.parent / RESUMENES_PATH
 
 
+REMOTO_URL = ("https://raw.githubusercontent.com/nicosil02/Base_legislativa/main/"
+              + RESUMENES_PATH)
+_remoto: dict = {"t": 0.0, "data": []}
+
+
+def _bajar_remoto() -> list:
+    """El JSON de main, cada 10 min como mucho. La app baja las transcripciones
+    frescas de la rama `datos`, pero el JSON local queda viejo si el checkout
+    no esta al dia (PC con otra rama, o entre redespliegues): sin esto, las
+    sesiones nuevas salian 'Resumen pendiente' aunque ya estuvieran resumidas."""
+    import time
+    import urllib.request
+    if time.time() - _remoto["t"] > 600:
+        _remoto["t"] = time.time()
+        try:
+            with urllib.request.urlopen(REMOTO_URL, timeout=20) as r:
+                _remoto["data"] = json.loads(r.read().decode("utf-8"))
+        except Exception as e:
+            print(f"[resumenes] no pude bajar de main: {e}")
+    return _remoto["data"]
+
+
 def list_resumenes(path: str | Path | None = None) -> dict[str, dict]:
-    """video_id -> {resumen, ideas_clave, generated_at, ...}. {} si no hay."""
+    """video_id -> {resumen, ideas_clave, generated_at, ...}. {} si no hay.
+
+    Sin `path`, junta el archivo local con el de main y por sesion se queda
+    con el mas reciente."""
     p = Path(path) if path else _local_path()
-    if not p.exists():
-        return {}
-    try:
-        data = json.loads(p.read_text(encoding="utf-8"))
-    except Exception:
-        return {}
+    data = []
+    if p.exists():
+        try:
+            data = json.loads(p.read_text(encoding="utf-8"))
+        except Exception:
+            data = []
+    if path is None:
+        por_id = {r.get("video_id"): r for r in data}
+        for r in _bajar_remoto():
+            loc = por_id.get(r.get("video_id"))
+            if not loc or (r.get("generated_at") or "") > (loc.get("generated_at") or ""):
+                por_id[r.get("video_id")] = r
+        data = list(por_id.values())
     out = {}
     for r in data:
         # el agente que resume a veces guarda el resumen como lista de parrafos
