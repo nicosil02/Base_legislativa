@@ -81,5 +81,14 @@
     "clientes": [
       "bayer"
     ]
+  },
+  {
+    "noticia_id": 19,
+    "created_at": "2026-11-05T23:19:10Z",
+    "descartado_por": "nicolas.silva@valiconsultores.com",
+    "titulo": "El Gobierno del presidente Daniel Noboa adquiere microscopios para mejorar el diagnóstico de malaria en 15 provincias",
+    "clientes": [
+      "bayer"
+    ]
   }
 ]
