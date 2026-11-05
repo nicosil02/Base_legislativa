@@ -16,5 +16,14 @@
     "clientes": [
       "syngenta"
     ]
+  },
+  {
+    "noticia_id": 13,
+    "created_at": "2026-11-05T16:51:48Z",
+    "descartado_por": "nicolas.silva@valiconsultores.com",
+    "titulo": "Establecen requisitos fitosanitarios de cumplimiento obligatorio para la importación de fibra de algodón sin cardar ni peinar, de origen y procedencia del Estado Plurinacional de Bolivia",
+    "clientes": [
+      "syngenta"
+    ]
   }
 ]
