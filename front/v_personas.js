@@ -385,6 +385,7 @@ VISTAS.personas = (() => {
   }
 
   return {
+    asientos,  // la ficha del proyecto dibuja su votacion con el mismo hemiciclo
     titulo: "Congresistas y asambleístas", sub: "Elige la cámara. Con un tema ves quién lo impulsa y cómo votó cada uno.",
     async abrir(cuerpo) {
       cuerpo.innerHTML = `<div class="personas"><div class="p-arriba"><div class="p-camaras"></div>

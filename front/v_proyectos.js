@@ -89,16 +89,36 @@ function vistaProyectos(pais) {
     if (!caja.isConnected) return;
     if (r.error) { caja.innerHTML = `<p class="nota">${esc(r.error)}</p>`; return; }
     const bloque = (t, n, html, vacio) => `<section class="f-bloque"><h3 class="sub-t">${esc(t)}${n ? ` <small>${n}</small>` : ""}</h3>${n ? html : `<p class="nota">${esc(vacio)}</p>`}</section>`;
+    // Hemiciclo pintado por voto (a favor a la izquierda) y quien voto que, por bancada
+    const GRUPOS = [["SI", "A favor", "#2E8B57"], ["NO", "En contra", "#C62828"], ["ABST", "Abstención", "#D9A900"]];
+    const tono = (x) => (GRUPOS.find(([k]) => k === x) ?? [, , "#D5DCE3"])[2];
+    const quien = (n) => (pe ? n.nombre.split(",").reverse().join(" ") : n.nombre).replace(/\s+/g, " ").trim().toLowerCase().replace(/(^|\s)\S/g, (c) => c.toUpperCase());
     const voto = (v) => {
       const tot = Math.max((v.si ?? 0) + (v.no ?? 0) + (v.abst ?? 0), 1);
-      const banc = Object.entries(v.bancadas).sort((a, b) => Object.values(b[1]).reduce((x, y) => x + y, 0) - Object.values(a[1]).reduce((x, y) => x + y, 0));
-      return `<div class="voto"><div class="v-cab"><b>${esc(fechaCorta(v.fecha))}</b><span class="v-si">${v.si} a favor</span><span class="v-no">${v.no} en contra</span><span>${v.abst} abst.</span></div>
-        <div class="v-barra"><i class="si" style="flex:${v.si / tot}"></i><i class="no" style="flex:${v.no / tot}"></i><i class="ab" style="flex:${v.abst / tot}"></i></div>
-        <p class="nota corta">${esc(oracion(v.asunto))}</p>
-        ${banc.length ? `<details><summary>Cómo votó cada bancada</summary><table class="v-banc"><tr class="nota"><td>Bancada</td><td>A favor</td><td>En contra</td><td></td></tr>${banc.map(([b, x]) => `<tr><td>${esc(b)}</td><td class="v-si">${x.SI ?? 0}</td><td class="v-no">${x.NO ?? 0}</td><td>${(x.ABST ?? 0) + (x.AUS ?? 0) ? `${(x.ABST ?? 0)} abst., ${(x.AUS ?? 0)} aus.` : ""}</td></tr>`).join("")}</table></details>` : ""}</div>`;
+      const lugar = (x) => { const i = ["SI", "ABST", "NO"].indexOf(x); return i < 0 ? 3 : i; };
+      const gente = [...v.nominal].sort((a, b) => lugar(a.voto) - lugar(b.voto) || a.bancada.localeCompare(b.bancada));
+      let hemi = "";
+      if (gente.length) {
+        const { pos, punto } = VISTAS.personas.asientos(gente.length);
+        hemi = `<svg class="v-hemi" viewBox="-1.1 -1.1 2.2 1.15" role="img" aria-label="${v.si} a favor, ${v.no} en contra, ${v.abst} abstenciones">${pos.map((s, i) =>
+          `<circle cx="${s.x.toFixed(4)}" cy="${(-s.y).toFixed(4)}" r="${punto.toFixed(4)}" fill="${tono(gente[i].voto)}"><title>${esc(quien(gente[i]))} (${esc(gente[i].bancada)})</title></circle>`).join("")}</svg>`;
+      }
+      const lista = GRUPOS.map(([k, t, c]) => {
+        const xs = gente.filter((n) => n.voto === k);
+        if (!xs.length) return "";
+        const porB = {};
+        xs.forEach((n) => { (porB[n.bancada] ??= []).push(quien(n)); });
+        return `<h4 style="color:${c}">${t} <small>${xs.length}</small></h4>${Object.entries(porB).sort((a, b) => b[1].length - a[1].length)
+          .map(([b, ns]) => `<p class="v-quien"><b>${esc(b)} (${ns.length})</b> ${esc(ns.join(", "))}</p>`).join("")}`;
+      }).join("");
+      const otros = gente.length - gente.filter((n) => lugar(n.voto) < 3).length;
+      return `<div class="voto"><div class="v-cab"><b>${esc(fechaCorta(v.fecha))}</b><span>${esc(v.donde)}</span><span class="v-si">${v.si} a favor</span><span class="v-no">${v.no} en contra</span><span>${v.abst} abst.</span></div>
+        ${hemi || `<div class="v-barra"><i class="si" style="flex:${v.si / tot}"></i><i class="no" style="flex:${v.no / tot}"></i><i class="ab" style="flex:${v.abst / tot}"></i></div>`}
+        <p class="nota corta">${esc(oracion(v.asunto))}${v.url ? ` ${enlace(v.url, "Ver acta")}` : ""}</p>
+        ${lista ? `<details><summary>Quién votó a favor, en contra y se abstuvo</summary>${lista}${otros ? `<p class="nota">${otros} no votaron (ausentes, con licencia o sin respuesta).</p>` : ""}</details>` : ""}</div>`;
     };
     caja.innerHTML = bloque("Trámite", r.tramite.length, `<ol class="linea-t">${r.tramite.map((t) => `<li><b>${esc(fechaCorta(t.fecha))}</b>${esc(oracion(t.estado))}${t.detalle ? `<small class="corta">${esc(t.detalle)}</small>` : ""}</li>`).join("")}</ol>`, "Sin movimientos registrados.")
-      + (pe ? bloque("Votaciones en el Pleno", r.votos.length, r.votos.map(voto).join(""), "Todavía no se votó en el Pleno.") : "")
+      + bloque("Votaciones", r.votos.length, r.votos.map(voto).join(""), pe ? "Todavía no se votó en el Pleno." : "No hay votaciones nominales que nombren este proyecto.")
       + bloque("En agenda de sesiones", r.sesiones.length, r.sesiones.map((x) => `<div class="ag">${esc(x.organo || "Sesión")}<small>${esc(fechaCorta(x.fecha))}</small>${x.que ? `<p class="corta">${esc(x.que)}</p>` : ""}</div>`).join(""), "No figura en agendas de sesiones.")
       + bloque(pe ? "Noticias que lo nombran" : "Noticias sobre el mismo tema", r.noticias.length,
         r.noticias.map((n) => `<div class="ag">${enlace(n.url, n.titulo) || esc(n.titulo)}<small>${esc(n.fuente)}, ${esc(fechaCorta(n.fecha))}</small></div>`).join(""),

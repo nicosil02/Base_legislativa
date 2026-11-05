@@ -325,6 +325,10 @@ tr[aria-selected=true] td { background:var(--hover); }
 .v-no { color:var(--rojo); font-weight:600; }
 .v-barra { display:flex; height:7px; border-radius:99px; overflow:hidden; background:var(--line2); margin:6px 0; }
 .v-barra .si { background:#2E9B5B; } .v-barra .no { background:var(--rojo); } .v-barra .ab { background:#B9C6D0; }
+.v-hemi { display:block; width:100%; max-width:340px; margin:6px auto 2px; }
+.v-hemi circle { stroke:#fff; stroke-width:.004; }
+.voto h4 { font-size:12.5px; margin:10px 0 2px; }
+.v-quien { font-size:12.5px; margin:2px 0; line-height:1.45; }
 .v-banc { width:100%; font-size:12.5px; border-collapse:collapse; margin-top:4px; }
 .v-banc td { padding:3px 6px 3px 0; border-bottom:1px solid var(--line2); }
 @media (hover:hover) and (pointer:fine) { .seguir:hover { border-color:#B7C5CF; color:var(--ink); } }
