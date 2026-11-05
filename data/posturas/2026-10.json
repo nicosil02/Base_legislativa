@@ -6461,177 +6461,277 @@
     "fecha": "2026-10-27",
     "organo": "Comisión de Justicia",
     "pais": "PE",
-    "v": 3,
+    "v": 4,
     "dichos": [
       {
-        "orador": "César Tito",
+        "orador": "César Tito Rojas",
         "cargo": "legislador",
-        "sobre": "la muerte de víctimas en Puno",
+        "sobre": "Situación de víctimas en Puno",
         "postura": "propone",
         "tema": "Justicia",
-        "dijo": "Pidio a la Comisión de Justicia celeridad en las investigaciones por la muerte de manifestantes en Puno.",
+        "dijo": "Pidió celeridad en la investigación sobre las muertes en Puno.",
         "proyecto": "",
         "id": "diputados:tito rojas"
       },
       {
         "orador": "Javier Castro Cruz",
         "cargo": "legislador",
-        "sobre": "los trámites de títulos de propiedad",
-        "postura": "comenta",
+        "sobre": "Deficiencias en Registros Públicos de Lambayeque",
+        "postura": "en contra",
         "tema": "Justicia",
-        "dijo": "Denuncio la falta de operatividad en la oficina registral de Chiclayo que afecta a agricultores.",
+        "dijo": "Denunció la falta de operatividad en la oficina de Chiclayo.",
         "proyecto": "",
         "id": "diputados:castro cruz"
       },
       {
         "orador": "Romina Uribe",
         "cargo": "legislador",
-        "sobre": "la red parlamentaria y crimen organizado",
+        "sobre": "Encuentro de la red parlamentaria",
         "postura": "comenta",
         "tema": "Justicia",
-        "dijo": "Informo sobre su participación en un encuentro internacional sobre criminalidad organizada y derechos humanos.",
+        "dijo": "Respaldó el trabajo de la red parlamentaria.",
         "proyecto": "",
         "id": "diputados:uribe saenz"
       },
       {
         "orador": "César Eusobio Padilla",
         "cargo": "legislador",
-        "sobre": "la suspensión del plazo de prescripción",
+        "sobre": "Derogación de las leyes procrimen",
         "postura": "a favor",
         "tema": "Justicia",
-        "dijo": "Defendio la derogación de las leyes que limitan la prescripción para evitar la impunidad penal.",
-        "proyecto": "PL 471",
+        "dijo": "Defendió la derogación de las leyes 31751 y 32104.",
+        "proyecto": "PL 00007-2031-CD",
         "id": "diputados:eusebio padilla"
       },
       {
         "orador": "Javier Cipriani",
         "cargo": "legislador",
-        "sobre": "el principio de plazo razonable",
+        "sobre": "Límite de suspensión de la prescripción",
         "postura": "a favor",
         "tema": "Justicia",
-        "dijo": "Propuso eliminar el límite uniforme de un año incorporando el principio de plazo razonable.",
+        "dijo": "Propuso eliminar el límite de un año para la suspensión.",
         "proyecto": "PL 471",
         "id": "diputados:cipriani thorne"
       },
       {
         "orador": "Javier Castro Cruz",
         "cargo": "legislador",
-        "sobre": "los acuerdos de la sesión anterior",
-        "postura": "con observaciones",
-        "tema": "Justicia",
-        "dijo": "Cuestiono la falta de cumplimiento del acuerdo previo para debatir con mayor profundidad el predictamen.",
+        "sobre": "Cumplimiento de acuerdos de la comisión",
+        "postura": "pregunta",
+        "tema": "Política y control político",
+        "dijo": "Preguntó si se han recibido los informes de la sesión anterior.",
         "proyecto": "",
         "id": "diputados:castro cruz"
       },
       {
         "orador": "Carina Beteta",
         "cargo": "legislador",
-        "sobre": "el predictamen de prescripción penal",
+        "sobre": "Gestión de la presidencia de la comisión",
         "postura": "en contra",
-        "tema": "Justicia",
-        "dijo": "Rechazo el predictamen señalando que no se invitó adecuadamente a los especialistas y protege a corruptos.",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó la conducción autoritaria de la presidenta.",
         "proyecto": "",
         "id": "diputados:beteta rubin"
       },
       {
         "orador": "Roxana Rocha",
         "cargo": "legislador",
-        "sobre": "la fórmula de prescripción penal",
+        "sobre": "Modificación del plazo de prescripción",
         "postura": "con observaciones",
         "tema": "Justicia",
-        "dijo": "Propuso adecuar el predictamen a la propuesta de plazos vinculados con cada etapa procesal.",
+        "dijo": "Propuso adecuar el predictamen a la propuesta de Cipriani.",
         "proyecto": "",
         "id": "diputados:rocha gallegos"
       },
       {
         "orador": "Jan Marco",
         "cargo": "legislador",
-        "sobre": "las demoras en la investigación fiscal",
-        "postura": "con observaciones",
+        "sobre": "Efectos de ampliar la suspensión",
+        "postura": "en contra",
         "tema": "Justicia",
-        "dijo": "Señalo que ampliar los plazos de suspensión sin mejorar la investigación no resuelve el problema judicial.",
+        "dijo": "Cuestionó que ampliar la suspensión no soluciona problemas judiciales.",
         "proyecto": "",
         "id": null
       },
       {
-        "orador": "Domínguez",
+        "orador": "Dominguez",
         "cargo": "legislador",
-        "sobre": "el debate sobre la prescripción penal",
-        "postura": "con observaciones",
+        "sobre": "Consenso sobre la modificación de prescripción",
+        "postura": "propone",
         "tema": "Justicia",
-        "dijo": "Pidio buscar un punto intermedio consensuado entre las bancadas sobre los plazos de prescripción.",
+        "dijo": "Propuso buscar un punto intermedio para alcanzar un consenso.",
         "proyecto": "",
         "id": null
       },
       {
-        "orador": "Eberlópez Letona",
+        "orador": "Eber López Letona",
         "cargo": "legislador",
-        "sobre": "las leyes sobre prescripción penal",
+        "sobre": "Análisis técnico de las leyes procrimen",
         "postura": "con observaciones",
         "tema": "Justicia",
-        "dijo": "Cuestiono el doble discurso político y la necesidad de jerarquizar los delitos en la norma.",
+        "dijo": "Pidió un análisis técnico de las leyes para mayor proporcionalidad.",
         "proyecto": "",
         "id": "diputados:lopez letona"
       },
       {
         "orador": "Edra González",
         "cargo": "legislador",
-        "sobre": "la urgencia del predictamen penal",
+        "sobre": "Urgencia de modificar la norma",
         "postura": "a favor",
         "tema": "Justicia",
-        "dijo": "Solicito continuar con el trámite y aprobar el predictamen debido a la premura de los plazos.",
+        "dijo": "Respaldó la urgencia de modificar la norma de prescripción.",
         "proyecto": "",
         "id": "diputados:fernandez gonzalez"
       },
       {
-        "orador": "Indira Wilkas",
+        "orador": "Indira Wilka",
         "cargo": "legislador",
-        "sobre": "la derogación de las leyes Soto",
+        "sobre": "Impacto de las leyes Soto",
         "postura": "a favor",
         "tema": "Justicia",
-        "dijo": "Defendio la derogación de las leyes que establecieron un tope de un año para la prescripción.",
-        "proyecto": "",
-        "id": null
-      },
-      {
-        "orador": "Quezada",
-        "cargo": "legislador",
-        "sobre": "la gradualidad de las penas",
-        "postura": "propone",
-        "tema": "Justicia",
-        "dijo": "Propuso una cuestión previa para elaborar un predictamen con una regla razonable y graduada por delitos.",
-        "proyecto": "",
-        "id": "diputados:quezada castro"
-      },
-      {
-        "orador": "Holguín",
-        "cargo": "legislador",
-        "sobre": "la proporcionalidad de la prescripción",
-        "postura": "a favor",
-        "tema": "Justicia",
-        "dijo": "Defendio el texto sustitutorio que restablece la proporcionalidad del plazo de prescripción más su mitad.",
-        "proyecto": "",
+        "dijo": "Denunció la impunidad generada por las leyes Soto.",
+        "proyecto": "Ley 31751",
         "id": null
       },
       {
         "orador": "Roxana Rocha",
         "cargo": "legislador",
-        "sobre": "el proceso de extinción de dominio",
+        "sobre": "Opinión de la Defensoría del Pueblo",
         "postura": "con observaciones",
         "tema": "Justicia",
-        "dijo": "Formulo seis observaciones al predictamen sobre extinción de dominio, incluyendo la falta de un plazo razonable.",
+        "dijo": "Pidió considerar la opinión de la Defensoría del Pueblo.",
         "proyecto": "",
         "id": "diputados:rocha gallegos"
       },
       {
-        "orador": "Javier Castro Cruz",
+        "orador": "Indira Wilka",
         "cargo": "legislador",
-        "sobre": "la votación de los predictámenes",
+        "sobre": "Límite de la suspensión de prescripción",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Propuso un plazo proporcional al delito.",
+        "proyecto": "Ley 32104",
+        "id": null
+      },
+      {
+        "orador": "Roxana Rocha",
+        "cargo": "legislador",
+        "sobre": "Regla graduada para la prescripción",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Pidió una regla graduada según el delito.",
+        "proyecto": "Ley 32104",
+        "id": "diputados:rocha gallegos"
+      },
+      {
+        "orador": "Bobadilla Galindo",
+        "cargo": "legislador",
+        "sobre": "Proporcionalidad en los plazos",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Propuso un texto más consensuado sobre proporcionalidad.",
+        "proyecto": "",
+        "id": "diputados:bobadilla galindo"
+      },
+      {
+        "orador": "Quezada",
+        "cargo": "legislador",
+        "sobre": "Cuestión previa para el dictamen",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Propuso una cuestión previa para el dictamen.",
+        "proyecto": "",
+        "id": "diputados:quezada castro"
+      },
+      {
+        "orador": "César Holguín",
+        "cargo": "legislador",
+        "sobre": "Impunidad por plazos de prescripción",
         "postura": "en contra",
         "tema": "Justicia",
-        "dijo": "Cuestiono que la votación responda a barreras ideológicas y políticas y no a criterios técnicos.",
+        "dijo": "Denunció que el plazo actual genera impunidad.",
+        "proyecto": "Ley 32104",
+        "id": null
+      },
+      {
+        "orador": "Beteta",
+        "cargo": "legislador",
+        "sobre": "Extremos en la prescripción penal",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Cuestionó los extremos en la prescripción penal.",
         "proyecto": "",
-        "id": "diputados:castro cruz"
+        "id": "diputados:beteta rubin"
+      },
+      {
+        "orador": "Eberlo Letona",
+        "cargo": "legislador",
+        "sobre": "Mejora del texto del predictamen",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Propuso mejorar el texto del predictamen.",
+        "proyecto": "",
+        "id": "diputados:lopez letona"
+      },
+      {
+        "orador": "Tito Rojas",
+        "cargo": "legislador",
+        "sobre": "Responsabilidad en la prescripción",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Cuestionó la responsabilidad de sus colegas.",
+        "proyecto": "",
+        "id": "diputados:tito rojas"
+      },
+      {
+        "orador": "Domínguez Herrera",
+        "cargo": "legislador",
+        "sobre": "Aportes de la mesa técnica",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Cuestionó la falta de información técnica.",
+        "proyecto": "Decreto Legislativo 1373",
+        "id": "diputados:dominguez herrera"
+      },
+      {
+        "orador": "Roxana Rocha",
+        "cargo": "legislador",
+        "sobre": "Observaciones al predictamen de extinción",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Pidió incorporar seis observaciones al predictamen.",
+        "proyecto": "Decreto Legislativo 1373",
+        "id": "diputados:rocha gallegos"
+      },
+      {
+        "orador": "Javier Castro",
+        "cargo": "legislador",
+        "sobre": "Barreras ideológicas en el debate",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció barreras ideológicas en el debate.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Beteta",
+        "cargo": "legislador",
+        "sobre": "Respeto a las mesas técnicas",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó la falta de respeto a las mesas.",
+        "proyecto": "",
+        "id": "diputados:beteta rubin"
+      },
+      {
+        "orador": "Domínguez Herrera",
+        "cargo": "legislador",
+        "sobre": "Tinte político en la comisión",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó el tinte político de la comisión.",
+        "proyecto": "",
+        "id": "diputados:dominguez herrera"
       }
     ],
     "url": "https://www.youtube.com/watch?v=gFhyCd_ZH7I"
@@ -6640,37 +6740,47 @@
     "fecha": "2026-10-27",
     "organo": "Comisión de Niñez y Adolescencia",
     "pais": "EC",
-    "v": 3,
+    "v": 4,
     "dichos": [
       {
         "orador": "Jonathan Rosero",
         "cargo": "invitado",
-        "sobre": "Octavo informe de seguimiento de fiscalización",
+        "sobre": "Informe de seguimiento resolución 032",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Informó sobre las conclusiones y recomendaciones del informe de seguimiento de la resolución.",
+        "proyecto": "Resolución RL 2023-2025-032",
+        "id": null
+      },
+      {
+        "orador": "Melissa Zambrán",
+        "cargo": "legislador",
+        "sobre": "Aprobación del octavo informe de seguimiento",
         "postura": "propone",
-        "tema": "Política y control político",
-        "dijo": "Detallo las conclusiones y recomendaciones del informe de fiscalización sobre el acogimiento institucional de niños.",
-        "proyecto": "",
+        "tema": "Otros",
+        "dijo": "Propuso aprobar el octavo informe y solicitar su inclusión en el orden del día.",
+        "proyecto": "Resolución RL 2023-2025-032",
         "id": null
       },
       {
-        "orador": "Evelyn Melisa Zambrano Chávez",
+        "orador": "Ricardo Pateña",
         "cargo": "legislador",
-        "sobre": "Octavo informe de seguimiento",
-        "postura": "a favor",
-        "tema": "Política y control político",
-        "dijo": "Presento la moción para aprobar el octavo informe y solicitar su inclusión en el pleno.",
-        "proyecto": "",
-        "id": null
-      },
-      {
-        "orador": "Ricardo Patiño",
-        "cargo": "legislador",
-        "sobre": "Inclusión de informes en el Pleno",
+        "sobre": "Omisión de informes en el orden del día",
         "postura": "en contra",
         "tema": "Política y control político",
-        "dijo": "Cuestiono la indolencia de la Asamblea por no tratar los informes de fiscalización de la niñez.",
+        "dijo": "Denunció la falta de atención de la Asamblea a los informes de fiscalización.",
         "proyecto": "",
-        "id": "EC:patino aroca"
+        "id": null
+      },
+      {
+        "orador": "Secretario",
+        "cargo": "ministro o autoridad",
+        "sobre": "Moción sobre acogimiento institucional",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Certificó la recepción de la moción y su aprobación con ocho votos afirmativos.",
+        "proyecto": "",
+        "id": null
       }
     ],
     "url": "https://www.facebook.com/watch/?v=4642109872727106"
@@ -9218,5 +9328,64 @@
       }
     ],
     "url": "https://www.youtube.com/watch?v=VSF1rifH-j4"
+  },
+  "fb_1606171874587229": {
+    "fecha": "2026-10-27",
+    "organo": "Comisión de Seguridad Integral",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Diego Villamarín",
+        "cargo": "invitado",
+        "sobre": "Acceso gestionado en centros penitenciarios",
+        "postura": "con observaciones",
+        "tema": "Telecomunicaciones",
+        "dijo": "Propuso el uso de sistemas de acceso gestionado en centros penitenciarios.",
+        "proyecto": "Proyecto Ley Orgánica de telecomunicaciones no autorizadas desde CPL",
+        "id": null
+      },
+      {
+        "orador": "Luis Camillo",
+        "cargo": "invitado",
+        "sobre": "Regulación de sistemas de videovigilancia",
+        "postura": "con observaciones",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Cuestionó la seguridad y obligatoriedad del proyecto de videovigilancia.",
+        "proyecto": "Proyecto Ley Orgánica de Regulación de sistemas de videovigilancia",
+        "id": null
+      },
+      {
+        "orador": "Luis Alberto Viñas Gadea",
+        "cargo": "invitado",
+        "sobre": "Prevención del reclutamiento de niños",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso fortalecer la implementación de la reforma de personas desaparecidas.",
+        "proyecto": "Proyecto Ley Orgánica Reformatoria en casos de personas desaparecidas",
+        "id": null
+      },
+      {
+        "orador": "Machá",
+        "cargo": "legislador",
+        "sobre": "Reclutamiento de niños y delincuencia",
+        "postura": "con observaciones",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Denunció el uso de niños por parte de mafias organizadas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Luis Alberto Viñas Gadea",
+        "cargo": "invitado",
+        "sobre": "Metodología de prevención de reclutamiento",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Informó los pasos para prevenir el reclutamiento de menores.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1606171874587229"
   }
 }
