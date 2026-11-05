@@ -44,5 +44,15 @@
       "google",
       "incode"
     ]
+  },
+  {
+    "noticia_id": 18,
+    "created_at": "2026-11-05T16:58:19Z",
+    "descartado_por": "nicolas.silva@valiconsultores.com",
+    "titulo": "Embajador de EE. UU. en Perú destaca visita de la presidenta Keiko Fujimori a El Salvador - RPP Noticias",
+    "clientes": [
+      "google",
+      "incode"
+    ]
   }
 ]
