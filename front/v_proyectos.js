@@ -118,7 +118,7 @@ function vistaProyectos(pais) {
         ${lista ? `<details><summary>Quién votó a favor, en contra y se abstuvo</summary>${lista}${otros ? `<p class="nota">${otros} no votaron (ausentes, con licencia o sin respuesta).</p>` : ""}</details>` : ""}</div>`;
     };
     caja.innerHTML = bloque("Trámite", r.tramite.length, `<ol class="linea-t">${r.tramite.map((t) => `<li><b>${esc(fechaCorta(t.fecha))}</b>${esc(oracion(t.estado))}${t.detalle ? `<small class="corta">${esc(t.detalle)}</small>` : ""}</li>`).join("")}</ol>`, "Sin movimientos registrados.")
-      + bloque("Votaciones", r.votos.length, r.votos.map(voto).join(""), pe ? "Todavía no se votó en el Pleno." : "No hay votaciones nominales que nombren este proyecto.")
+      + bloque("Votaciones", r.votos.length, r.votos.map(voto).join(""), pe ? "Todavía no se votó en comisión ni en el Pleno." : "No hay votaciones nominales que nombren este proyecto.")
       + bloque("En agenda de sesiones", r.sesiones.length, r.sesiones.map((x) => `<div class="ag">${esc(x.organo || "Sesión")}<small>${esc(fechaCorta(x.fecha))}</small>${x.que ? `<p class="corta">${esc(x.que)}</p>` : ""}</div>`).join(""), "No figura en agendas de sesiones.")
       + bloque(pe ? "Noticias que lo nombran" : "Noticias sobre el mismo tema", r.noticias.length,
         r.noticias.map((n) => `<div class="ag">${enlace(n.url, n.titulo) || esc(n.titulo)}<small>${esc(n.fuente)}, ${esc(fechaCorta(n.fecha))}</small></div>`).join(""),
