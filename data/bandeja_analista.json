@@ -300,5 +300,21 @@
       },
       "tipo": "noticia"
     }
+  },
+  "n2369942": {
+    "estado": "descartar",
+    "fecha": "2026-11-05T17:42:05+00:00",
+    "por": "nicolas.silva@valiconsultores.com",
+    "titulo": "Cuarto Suplemento No. 403",
+    "item": {
+      "titulo": "Cuarto Suplemento No. 403",
+      "url": "https://www.registroficial.gob.ec/cuarto-suplemento-no-403/",
+      "pais": "EC",
+      "resumen": null,
+      "porque": {
+        "syngenta": "Resolución de Agrocalidad sobre atribuciones de su Director Ejecutivo en Ecuador."
+      },
+      "tipo": "norma"
+    }
   }
 }
