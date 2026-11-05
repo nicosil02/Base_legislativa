@@ -333,5 +333,22 @@
       },
       "tipo": "pl"
     }
+  },
+  "n2370964": {
+    "estado": "descartar",
+    "fecha": "2026-11-05T23:19:00+00:00",
+    "por": "nicolas.silva@valiconsultores.com",
+    "titulo": "Sector ganadero destaca la importancia de fortalecer la investigación agropecuaria en la Amazonía",
+    "item": {
+      "titulo": "Sector ganadero destaca la importancia de fortalecer la investigación agropecuaria en la Amazonía",
+      "url": "https://www.asambleanacional.gob.ec/es/noticia/120634-sector-ganadero-destaca-la-importancia-de-fortalecer-la",
+      "pais": "EC",
+      "resumen": null,
+      "porque": {
+        "bayer": "Proyecto de ley sobre el INIAP que impacta el marco institucional agrario en Ecuador.",
+        "syngenta": "El proyecto de ley afecta la estructura del INIAP, actor clave en investigación agropecuaria en Ecuador."
+      },
+      "tipo": "noticia"
+    }
   }
 }
