@@ -5,6 +5,7 @@ import congreso_live.resumenes_store as rs
 def test_crea_y_actualiza(tmp_path, monkeypatch):
     destino = tmp_path / "data" / "transcripciones_resumenes.json"
     monkeypatch.setattr(rs, "_local_path", lambda: destino)
+    monkeypatch.setattr(rs, "_bajar_remoto", lambda: [])
     assert rs.list_resumenes() == {}
     rs.guardar_resumen(video_id="abc123", resumen="Se debatio X",
                        ideas_clave=["Punto 1", "Punto 2"])
