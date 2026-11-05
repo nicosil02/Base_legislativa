@@ -782,5 +782,19 @@
       },
       "tipo": "noticia"
     }
+  },
+  "norma:https://www.gob.pe/institucion/senasa/normas-legales/8793710-042-2026-midagri-senasa-dsv": {
+    "estado": "descartar",
+    "fecha": "2026-11-05T14:28:57+00:00",
+    "por": "nicolas.silva@valiconsultores.com",
+    "titulo": "Establecer los requisitos fitosanitarios cumplimiento obligatorio para la importación de fibra de algodón sin cardar ni peinar (Gossypium hirsutum) de origen y procedencia del Estado Plurinacional de Bolivia.",
+    "item": {
+      "titulo": "Establecer los requisitos fitosanitarios cumplimiento obligatorio para la importación de fibra de algodón sin cardar ni peinar (Gossypium hirsutum) de origen y procedencia del Estado Plurinacional de Bolivia.",
+      "url": "https://www.gob.pe/institucion/senasa/normas-legales/8793710-042-2026-midagri-senasa-dsv",
+      "pais": "PE",
+      "resumen": "ESTABLECER los requisitos fitosanitarios cumplimiento obligatorio para la importación de fibra de algodón sin cardar ni peinar (Gossypium hirsutum) de origen y procedencia del Estado Plurinacional de Bolivia.",
+      "porque": {},
+      "tipo": "norma"
+    }
   }
 }
