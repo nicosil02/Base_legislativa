@@ -2851,5 +2851,131 @@
       }
     ],
     "url": "https://www.facebook.com/watch/?v=1390088896260615"
+  },
+  "ItiWpcu5UmY": {
+    "fecha": "2026-11-05",
+    "organo": "Comisión de Presupuesto",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Elmer Rafael Cubo Bustinza",
+        "cargo": "ministro o autoridad",
+        "sobre": "texto sustitutorio de la ley de presupuesto 2027",
+        "postura": "a favor",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Respaldó las modificaciones incorporadas al texto sustitutorio de la ley de presupuesto.",
+        "proyecto": "Ley de Presupuesto 2027",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=ItiWpcu5UmY"
+  },
+  "buLF7ezbmRw": {
+    "fecha": "2026-11-05",
+    "organo": "Mesa de trabajo Tecnologia",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Ana Obando Morgan",
+        "cargo": "legislador",
+        "sobre": "Conectividad en zonas rurales",
+        "postura": "a favor",
+        "tema": "Telecomunicaciones",
+        "dijo": "Resaltó la importancia de la conectividad para estudiantes rurales.",
+        "proyecto": "Ley 31878",
+        "id": "diputados:obando morgan"
+      },
+      {
+        "orador": "Ignacio Letemendía",
+        "cargo": "invitado",
+        "sobre": "Proyecto Internet para todos",
+        "postura": "comenta",
+        "tema": "Telecomunicaciones",
+        "dijo": "Informó que casi cuatro millones de peruanos ya están conectados.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Soilapunt",
+        "cargo": "invitado",
+        "sobre": "Impacto del desarrollo rural",
+        "postura": "comenta",
+        "tema": "Telecomunicaciones",
+        "dijo": "Expresó interés en el impacto del desarrollo rural.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ana Claudia Quintanilla",
+        "cargo": "invitado",
+        "sobre": "Modelo de infraestructura compartida",
+        "postura": "comenta",
+        "tema": "Telecomunicaciones",
+        "dijo": "Explicó las ventajas del modelo de infraestructura compartida.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Rosa Bat",
+        "cargo": "invitado",
+        "sobre": "Mejora tecnológica ante el Fenómeno del Niño",
+        "postura": "propone",
+        "tema": "Telecomunicaciones",
+        "dijo": "Propuso migrar la tecnología 2G a 4G rápidamente.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Juan Manuel Gesto",
+        "cargo": "invitado",
+        "sobre": "Articulación público-privada para conectividad",
+        "postura": "comenta",
+        "tema": "Telecomunicaciones",
+        "dijo": "Destacó la relevancia de la articulación público-privada.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ana Obando Morgan",
+        "cargo": "legislador",
+        "sobre": "Obstáculos para la conectividad",
+        "postura": "pregunta",
+        "tema": "Telecomunicaciones",
+        "dijo": "Preguntó cuáles son los principales obstáculos actuales.",
+        "proyecto": "",
+        "id": "diputados:obando morgan"
+      },
+      {
+        "orador": "Ana Claudia Quintanilla",
+        "cargo": "invitado",
+        "sobre": "Mejora de políticas de conectividad",
+        "postura": "comenta",
+        "tema": "Telecomunicaciones",
+        "dijo": "Sugirió mejorar el mecanismo de canon por expansión.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ana Obando Morgan",
+        "cargo": "legislador",
+        "sobre": "Continuidad de la mesa de trabajo",
+        "postura": "propone",
+        "tema": "Telecomunicaciones",
+        "dijo": "Propuso convocar a representantes del Poder Ejecutivo.",
+        "proyecto": "",
+        "id": "diputados:obando morgan"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=buLF7ezbmRw"
+  },
+  "fb_1473685954676095": {
+    "fecha": "2026-11-05",
+    "organo": "Comisión de Seguridad Integral",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [],
+    "url": "https://www.facebook.com/watch/?v=1473685954676095"
   }
 }
