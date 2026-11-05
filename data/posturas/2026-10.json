@@ -2151,27 +2151,27 @@
     "fecha": "2026-10-29",
     "organo": "Comisión de Control Político",
     "pais": "PE",
-    "v": 3,
+    "v": 4,
     "dichos": [
       {
-        "orador": "Senador Muñante",
+        "orador": "Muñante",
         "cargo": "legislador",
-        "sobre": "Tratado Comercial con China",
+        "sobre": "Error en dictamen TIE 001-2026",
         "postura": "con observaciones",
         "tema": "Comercio",
-        "dijo": "Advirtio un error material en la conclusion numero uno del dictamen.",
+        "dijo": "Pidió corregir un error material en la conclusión del dictamen.",
         "proyecto": "TIE 001-2026",
         "id": "senado:munante barrios"
       },
       {
-        "orador": "Senador Quito",
+        "orador": "Guido",
         "cargo": "legislador",
-        "sobre": "Decreto de emergencia en Arequipa y Moquegua",
-        "postura": "con observaciones",
-        "tema": "Infraestructura",
-        "dijo": "Senalo que la carretera conecta a todo el sur del pais.",
-        "proyecto": "Decreto Supremo 118-2026-PCM",
-        "id": "senado:quito sarmiento"
+        "sobre": "Decreto Supremo 118-2026",
+        "postura": "en contra",
+        "tema": "Transporte",
+        "dijo": "Cuestionó la efectividad del Decreto Supremo 118-2026 en las carreteras.",
+        "proyecto": "DS 118-2026",
+        "id": null
       }
     ],
     "url": "https://www.youtube.com/watch?v=LL2GxtowMAA"
@@ -2180,16 +2180,16 @@
     "fecha": "2026-10-29",
     "organo": "Comisión de Relaciones Internacionales",
     "pais": "EC",
-    "v": 3,
+    "v": 4,
     "dichos": [
       {
         "orador": "David Fernando Carrón",
         "cargo": "invitado",
-        "sobre": "Ley Orgánica del Servicio Exterior",
+        "sobre": "Reforma a la Ley del Servicio Exterior",
         "postura": "con observaciones",
-        "tema": "Política y control político",
-        "dijo": "Analizó la reforma desde la visión constitucional e identificó riesgos jurídicos y salvaguardas necesarias.",
-        "proyecto": "Ley Orgánica del Servicio Exterior",
+        "tema": "Otros",
+        "dijo": "Propuso ajustes constitucionales y presupuestarios a la reforma de la Ley del Servicio Exterior.",
+        "proyecto": "Orgánica Reformatoria a la Ley Orgánica del Servicio Exterior",
         "id": null
       }
     ],
@@ -2199,56 +2199,56 @@
     "fecha": "2026-10-29",
     "organo": "Comisión de Soberanía Alimentaria",
     "pais": "EC",
-    "v": 3,
+    "v": 4,
     "dichos": [
       {
         "orador": "Lizarro Mauricio Reina-Bowen",
         "cargo": "invitado",
-        "sobre": "Proyecto de ley del INIAP",
+        "sobre": "Reformas al proyecto de ley de Alineab",
         "postura": "con observaciones",
         "tema": "Agricultura",
-        "dijo": "Propuso cinco cambios concretos al proyecto de ley para fortalecer la articulación con las universidades.",
-        "proyecto": "Ley del INIAP",
+        "dijo": "Propuso cambios para fortalecer la articulación con las universidades.",
+        "proyecto": "Proyecto de Ley de Alineab",
         "id": null
       },
       {
         "orador": "Baez",
         "cargo": "legislador",
-        "sobre": "Presupuesto del INIAP",
+        "sobre": "Viabilidad presupuestaria del proyecto",
         "postura": "pregunta",
         "tema": "Presupuesto y gasto público",
-        "dijo": "Pregunto como seria viable aplicar las propuestas ante los continuos recortes de presupuesto al INIAP.",
-        "proyecto": "Ley del INIAP",
+        "dijo": "Preguntó sobre la viabilidad del proyecto ante recortes presupuestarios.",
+        "proyecto": "Proyecto de Ley de Alineab",
         "id": "EC:baez mera"
       },
       {
         "orador": "Lizarro Mauricio Reina-Bowen",
         "cargo": "invitado",
-        "sobre": "Alianzas estratégicas universitarias",
-        "postura": "a favor",
-        "tema": "Educación",
-        "dijo": "Respondió que las alianzas estrategicas con universidades permiten optimizar los recursos existentes en las instituciones publicas.",
-        "proyecto": "Ley del INIAP",
+        "sobre": "Eficiencia mediante alianzas estratégicas",
+        "postura": "comenta",
+        "tema": "Agricultura",
+        "dijo": "Explicó que las alianzas con universidades optimizarán los recursos.",
+        "proyecto": "Proyecto de Ley de Alineab",
         "id": null
       },
       {
         "orador": "Vicepresidente",
         "cargo": "legislador",
-        "sobre": "Practicas pre profesionales y mesas regionales",
+        "sobre": "Reglamentación del aporte estudiantil",
         "postura": "pregunta",
         "tema": "Agricultura",
-        "dijo": "Pregunto como normar el aporte de los estudiantes mediante las mesas regionales y estaciones experimentales.",
-        "proyecto": "Ley del INIAP",
+        "dijo": "Preguntó cómo reglamentar la participación de estudiantes en la ley.",
+        "proyecto": "Proyecto de Ley de Alineab",
         "id": null
       },
       {
         "orador": "Lizarro Mauricio Reina-Bowen",
         "cargo": "invitado",
-        "sobre": "Fondos concursables y mesas regionales",
+        "sobre": "Fortalecimiento mediante las mesas regionales",
         "postura": "comenta",
         "tema": "Agricultura",
-        "dijo": "Explico que las mesas regionales organizaran el uso de los fondos concursables FIAAS para la investigacion.",
-        "proyecto": "Ley del INIAP",
+        "dijo": "Indicó que las mesas regionales facilitarán la investigación científica.",
+        "proyecto": "Proyecto de Ley de Alineab",
         "id": null
       }
     ],
