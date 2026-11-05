@@ -78,7 +78,7 @@ def _sin_clave():
 # Lo demas de clientes/ (Word de alertas, bluebooks originales, reportes) no
 # se sube ni cifrado.
 PATRONES = ["*/cliente.json", "*/notas.md", "*/historial_alertas.md", "*/formato_alertas.md",
-            "_plantillas/whatsapp_alerta.md", "_plantillas/ejemplos_alertas.md",
+            "_plantillas/whatsapp_alerta.md", "_plantillas/ejemplos_alertas.md", "_plantillas/correcciones_alertas.md",
             "_plantillas/matriz_monitoreo/*", "MatrizPLAndinos_Bayer CROP.xlsx",
             "140125 - Matriz - Matriz Legislativa y Regulatoria INCODE.xlsx"]
 
@@ -90,7 +90,8 @@ def privados(carpeta: Path = CARPETA) -> list[Path]:
 
 
 def abrir(pisar: bool = False, carpeta: Path = CARPETA) -> int:
-    """Escribe el texto de cada .cifrado que falte (o todos con `pisar`).
+    """Escribe el texto de cada .cifrado que falte o que sea mas nuevo que su texto
+    (un git pull lo actualizo), o todos con `pisar`.
     Sin clave no hace nada: lo que dependa de clientes vera la carpeta vacia."""
     claves = _claves()
     if not claves:
@@ -98,8 +99,8 @@ def abrir(pisar: bool = False, carpeta: Path = CARPETA) -> int:
     n = 0
     for c in carpeta.rglob("*" + SUFIJO):
         destino = c.with_name(c.name[:-len(SUFIJO)])
-        if destino.exists() and not pisar:
-            continue
+        if destino.exists() and not pisar and destino.stat().st_mtime >= c.stat().st_mtime:
+            continue  # el texto local es igual de nuevo o lo editaron a mano despues
         datos = descifrar(c.read_text(encoding="ascii"), claves)
         if not destino.exists() or destino.read_bytes() != datos:
             destino.write_bytes(datos)

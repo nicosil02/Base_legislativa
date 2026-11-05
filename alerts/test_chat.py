@@ -53,5 +53,5 @@ def test_enlaces_se_leen_y_503_pasa_al_respaldo(monkeypatch):
             return type("R", (), {"text": "ok"})()
     monkeypatch.setattr(chat, "nueva_conversacion", lambda s, historial=None, modelo=None: (None, Chat(modelo)))
     monkeypatch.setattr(llm, "ESPERAS", (0,))
-    assert chat.responder("bayer", [["user", "ver https://b.pe"]], "dale") == "ok"
+    assert chat.responder("bayer", [["user", "ver https://b.pe"]], "dale")[0] == "ok"
     assert usados[-1][0] == llm.LITE

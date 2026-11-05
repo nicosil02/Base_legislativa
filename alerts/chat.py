@@ -32,6 +32,7 @@ def construir_system_prompt(slug: str) -> str:
     historial = leer_historial(slug)
     formato = _leer(CLIENTES_DIR / "_plantillas" / "whatsapp_alerta.md")
     ejemplos = _leer(CLIENTES_DIR / "_plantillas" / "ejemplos_alertas.md")
+    correcciones = _leer(CLIENTES_DIR / "_plantillas" / "correcciones_alertas.md")
 
     return f"""Sos el asistente de redaccion de alertas de Vali Intelligence / Vali Consultores,
 ayudando a Nicolas a escribir la alerta de WhatsApp final para el cliente "{slug}".
@@ -57,6 +58,10 @@ analisis, no como dato de relleno separado) ===
 === EJEMPLOS REALES gold-standard (ejemplos_alertas.md - incluye comparacion de un borrador de IA vs. la
 redaccion real del equipo, estudiala) ===
 {ejemplos}
+
+=== CORRECCIONES DE NICOLAS (correcciones_alertas.md - reglas que salieron de corregir borradores reales;
+pesan MAS que todo lo anterior: si chocan con un ejemplo, gana la correccion) ===
+{correcciones}
 """
 
 
@@ -185,14 +190,15 @@ def con_enlaces(texto: str) -> str:
             + "\n\n".join(bloques))
 
 
-def responder(slug: str, historia: list, prompt: str) -> str:
-    """Un turno del chat: lee los enlaces de todos los mensajes del usuario y
-    reintenta/cambia de modelo si Gemini esta saturado (503) o sin cupo."""
+def responder(slug: str, historia: list, prompt: str) -> tuple[str, str]:
+    """Un turno del chat: (texto, modelo que lo escribio). Lee los enlaces de todos
+    los mensajes del usuario y reintenta/cambia de modelo si Gemini esta saturado
+    (503) o sin cupo."""
     previo = [{"role": "user" if rol == "user" else "model",
-               "parts": [{"text": con_enlaces(t) if rol == "user" else t}]} for rol, t in historia]
+               "parts": [{"text": con_enlaces(t) if rol == "user" else t}]} for rol, t, *_ in historia]
     mensaje = con_enlaces(prompt)
 
     def turno(modelo):
         _client, chat = nueva_conversacion(slug, historial=previo, modelo=modelo)  # _client vivo hasta el send
-        return (chat.send_message(mensaje).text or "").strip()
+        return (chat.send_message(mensaje).text or "").strip(), modelo
     return llm.con_respaldo(turno, MODEL)

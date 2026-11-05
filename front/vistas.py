@@ -603,8 +603,9 @@ def _vivos() -> list[dict]:
 
 
 # ------------------------------------------------------------------ Alertas, Buscar, Resumen
-def _responder(cliente: str, historia: list, prompt: str) -> str:
-    return responder(cliente, historia, prompt)
+def _responder(cliente: str, historia: list, prompt: str) -> dict:
+    texto, modelo = responder(cliente, historia, prompt)
+    return {"respuesta": texto, "modelo": modelo}
 
 
 def _resumen() -> dict:
@@ -836,11 +837,11 @@ def atender(a: dict, usuario: str | None) -> dict | list | str | None:
         prompt = mensaje_inicial(material, contexto)
         # con el prompt de vuelta aunque falle Gemini: si no, el material se pierde y no hay como reintentar
         try:
-            return {"prompt": prompt, "respuesta": _responder(a["cliente"], [], prompt)}
+            return {"prompt": prompt, **_responder(a["cliente"], [], prompt)}
         except Exception as e:
             return {"prompt": prompt, "error": str(e)}
     elif tipo == "chat":
-        return {"respuesta": _responder(a["cliente"], a["historia"], a["prompt"])}
+        return _responder(a["cliente"], a["historia"], a["prompt"])
     elif tipo == "guardar_alerta":
         historial.agregar(a["cliente"], historial.entrada(a["titulo"], a["texto"], a["pais"], a["url"] or None, a["linea"] or None), autor=usuario)
         if a.get("borrador"):
