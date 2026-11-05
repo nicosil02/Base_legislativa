@@ -284,5 +284,21 @@
       },
       "tipo": "noticia"
     }
+  },
+  "n2369795": {
+    "estado": "descartar",
+    "fecha": "2026-11-05T17:30:28+00:00",
+    "por": "nicolas.silva@valiconsultores.com",
+    "titulo": "Medifarma denuncia a vocales de Indecopi tras multa de S/2,4 millones por suero defectuoso vinculado a siete muertes",
+    "item": {
+      "titulo": "Medifarma denuncia a vocales de Indecopi tras multa de S/2,4 millones por suero defectuoso vinculado a siete muertes",
+      "url": "https://www.infobae.com/peru/2026/11/05/medifarma-denuncia-a-vocales-de-indecopi-tras-multa-de-s24-millones-por-suero-defectuoso-vinculado-a-siete-muertes/",
+      "pais": "PE",
+      "resumen": null,
+      "porque": {
+        "bayer": "Conflicto legal de Indecopi y laboratorio competidor por sanciones de salud publica."
+      },
+      "tipo": "noticia"
+    }
   }
 }
