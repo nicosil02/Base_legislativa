@@ -20,7 +20,7 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  CLIENTES_CLAVE: ${{ secrets.GEMINI_API_KEY }}
+  CLIENTES_CLAVE: ${{ secrets.CLIENTES_CLAVE }}
 
 jobs:
   recibir:
