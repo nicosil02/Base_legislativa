@@ -1947,47 +1947,257 @@
     "fecha": "2026-11-02",
     "organo": "Comisión de Desarrollo Económico",
     "pais": "EC",
-    "v": 3,
+    "v": 4,
     "dichos": [
       {
-        "orador": "Mabel Mendes Rojas",
+        "orador": "Miguel Hernández",
+        "cargo": "ministro o autoridad",
+        "sobre": "Proforma Presupuestaria 2027",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Explicó la estructura y ejecución del presupuesto para el ejercicio fiscal 2027.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Edwin Zumba",
+        "cargo": "ministro o autoridad",
+        "sobre": "Plan Anual de Inversión 2027",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Presentó la programación del Plan Anual de Inversiones para el ejercicio 2027.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Diego Franco",
         "cargo": "legislador",
-        "sobre": "el crecimiento de la recaudación tributaria",
+        "sobre": "Recursos para educación",
+        "postura": "pregunta",
+        "tema": "Educación",
+        "dijo": "Preguntó sobre la asignación de recursos para infraestructura y contratación docente.",
+        "proyecto": "",
+        "id": "EC:franco hanze"
+      },
+      {
+        "orador": "Miguel Hernández",
+        "cargo": "ministro o autoridad",
+        "sobre": "Recursos para educación",
+        "postura": "comenta",
+        "tema": "Educación",
+        "dijo": "Informó que los recursos se asignan según la codificación presupuestaria institucional.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Jimmy Blasio",
+        "cargo": "legislador",
+        "sobre": "Presupuesto para seguridad",
+        "postura": "pregunta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Consultó cuánto se destinará a las fuerzas armadas y policía nacional.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Miguel Hernández",
+        "cargo": "ministro o autoridad",
+        "sobre": "Presupuesto para seguridad",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Indicó que se destinarán 612 millones de dólares para inversión en seguridad.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Edwin Zumba",
+        "cargo": "ministro o autoridad",
+        "sobre": "Presupuesto para seguridad",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Complementó que existe un incremento del 53.16 por ciento en inversión de seguridad.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Estefanía López",
+        "cargo": "legislador",
+        "sobre": "Criterios de inversión pública",
+        "postura": "pregunta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Preguntó sobre los criterios técnicos y económicos para priorizar los proyectos de inversión.",
+        "proyecto": "",
+        "id": "EC:lopez pico"
+      },
+      {
+        "orador": "Miguel Hernández",
+        "cargo": "ministro o autoridad",
+        "sobre": "Criterios de inversión pública",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Explicó que la priorización fue un trabajo conjunto con la planificación nacional.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Mabel Méndez Rojas",
+        "cargo": "legislador",
+        "sobre": "Proforma Presupuestaria 2027",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Denunció la falta de transparencia y el déficit permanente del Estado.",
+        "proyecto": "",
+        "id": "EC:mendez rojas"
+      },
+      {
+        "orador": "Miguel Hernández",
+        "cargo": "ministro o autoridad",
+        "sobre": "Competencia de la comisión",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Aclaró que la comisión es competente para conocer la proforma presupuestaria.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Mabel Méndez Rojas",
+        "cargo": "legislador",
+        "sobre": "Incremento de recaudación tributaria",
         "postura": "pregunta",
         "tema": "Tributos",
-        "dijo": "Pregunto qué parte del incremento tributario proviene del crecimiento económico y qué parte de medidas de administración o control.",
+        "dijo": "Preguntó sobre el origen del incremento proyectado en la recaudación tributaria.",
+        "proyecto": "",
+        "id": "EC:mendez rojas"
+      },
+      {
+        "orador": "Hernández",
+        "cargo": "ministro o autoridad",
+        "sobre": "Incremento de la recaudación tributaria",
+        "postura": "comenta",
+        "tema": "Tributos",
+        "dijo": "Explicó que la recaudación proviene de medidas de control.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Hernández",
+        "cargo": "ministro o autoridad",
+        "sobre": "Asignación para seguridad",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Informó sobre la asignación para la seguridad.",
         "proyecto": "",
         "id": null
       },
       {
         "orador": "Sergio Peña",
         "cargo": "legislador",
-        "sobre": "la asignación a la seguridad social",
-        "postura": "comenta",
+        "sobre": "Asignaciones para la seguridad social",
+        "postura": "pregunta",
         "tema": "Pensiones",
-        "dijo": "Señaló que el Estado está cumpliendo con la regla de asignación del 40 por ciento para el IESS y las demás instituciones.",
+        "dijo": "Consultó sobre el efecto en los pensionistas.",
         "proyecto": "",
         "id": "EC:pena veloz"
       },
       {
-        "orador": "Liliana Durán Aguilar",
+        "orador": "Durán",
         "cargo": "legislador",
-        "sobre": "el decreto 527 y el gasto permanente",
-        "postura": "pregunta",
-        "tema": "Presupuesto y gasto público",
-        "dijo": "Preguntó a cuánto asciende el monto del decreto 527 para pagar gasto permanente con ingresos no permanentes en 2027.",
+        "sobre": "Legalidad del proceso presupuestario",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció posibles vicios de legalidad en el presupuesto.",
         "proyecto": "",
         "id": "EC:duran aguilar"
       },
       {
-        "orador": "Luigi García Velázquez",
+        "orador": "Durán",
         "cargo": "legislador",
-        "sobre": "el porcentaje de inversión en nuevos proyectos",
+        "sobre": "Presupuesto para salud y educación",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Cuestionó la reducción de presupuesto en salud.",
+        "proyecto": "",
+        "id": "EC:duran aguilar"
+      },
+      {
+        "orador": "Durán",
+        "cargo": "legislador",
+        "sobre": "Inversión social y universitaria",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Denunció recortes en inversión social y universitaria.",
+        "proyecto": "",
+        "id": "EC:duran aguilar"
+      },
+      {
+        "orador": "Hernández",
+        "cargo": "ministro o autoridad",
+        "sobre": "Cumplimiento de la regla fiscal",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Explicó el incumplimiento de la regla fiscal.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Hernández",
+        "cargo": "ministro o autoridad",
+        "sobre": "Uso de la deuda externa",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Detalló el financiamiento mediante deuda externa.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Hernández",
+        "cargo": "ministro o autoridad",
+        "sobre": "Ejecución del plan de inversiones",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Explicó la ejecución de los proyectos de inversión.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Luigi García",
+        "cargo": "legislador",
+        "sobre": "Inversión en proyectos nuevos",
         "postura": "pregunta",
         "tema": "Presupuesto y gasto público",
-        "dijo": "Preguntó qué porcentaje de la inversión corresponde a proyectos nuevos frente a los que ya están en curso.",
+        "dijo": "Preguntó sobre el porcentaje de nuevos proyectos.",
         "proyecto": "",
         "id": "EC:garcia velasquez"
+      },
+      {
+        "orador": "Luigi García",
+        "cargo": "legislador",
+        "sobre": "Transferencias a gobiernos autónomos",
+        "postura": "pregunta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Solicitó información sobre las transferencias a GAD.",
+        "proyecto": "",
+        "id": "EC:garcia velasquez"
+      },
+      {
+        "orador": "Hernández",
+        "cargo": "ministro o autoridad",
+        "sobre": "Transferencias a los gobiernos autónomos",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Detalló la distribución de recursos a los GAD.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Hernández",
+        "cargo": "ministro o autoridad",
+        "sobre": "Nuevos proyectos de inversión",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Informó sobre veintitrés nuevos proyectos de inversión.",
+        "proyecto": "",
+        "id": null
       }
     ],
     "url": "https://www.facebook.com/watch/?v=1125238246659838"
