@@ -8,7 +8,11 @@ from __future__ import annotations
 
 import sqlite3
 
-import streamlit as st
+try:
+    import streamlit as st
+except ImportError:  # en los workflows sin Streamlit (votos de comisiones, cargos): el cache no hace falta
+    import types
+    st = types.SimpleNamespace(cache_data=lambda *a, **k: (lambda f: f))
 
 from core.db import db_path
 
