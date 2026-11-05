@@ -26,7 +26,6 @@ def test_cerrar_y_abrir(monkeypatch, tmp_path):
     notas.unlink()
     assert privado.abrir(carpeta=tmp_path) == 1 and notas.read_text(encoding="utf-8") == "perfil"
     monkeypatch.delenv("CLIENTES_CLAVE")
-    monkeypatch.delenv("GEMINI_API_KEY", raising=False)
     notas.unlink()
     assert privado.abrir(carpeta=tmp_path) == 0  # sin clave no hace nada
 

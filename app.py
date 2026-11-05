@@ -2,8 +2,8 @@
 
 Antes de cualquier dashboard:
   - Si [auth] esta en Secrets → exige login con Google (st.user.is_logged_in),
-    restringido a @valiconsultores.com. Sin [auth] configurado, la app queda
-    publica (sin gate) - ver el bloque AUTH GATE mas abajo.
+    restringido a @valiconsultores.com. Sin [auth] la app no abre (salvo
+    VALI_SIN_LOGIN=1 en el .env de la PC).
   - Monta pages/0_Hoy.py, la unica pagina.
 
 Corre con:
@@ -335,10 +335,8 @@ _bootstrap_dbs()
 # de Streamlit (firmada server-side via Authlib), asi que no depende de
 # ese hack y no deberia repetir esa clase de bug.
 #
-# Se activa SOLO si [auth] esta configurado en Secrets (Streamlit Cloud:
-# Manage app > Settings > Secrets) - mientras no este configurado, la app
-# sigue publica como hasta ahora. Deploy seguro: este commit no le rompe
-# el acceso a nadie hasta que se agreguen las credenciales de Google.
+# Credenciales en [auth] de los Secrets (Streamlit Cloud: Manage app >
+# Settings > Secrets). Sin ellas la app no abre (ver mas abajo).
 ALLOWED_DOMAIN = "@valiconsultores.com"
 
 
@@ -348,6 +346,13 @@ def _google_auth_configured() -> bool:
     except Exception:
         return False
 
+
+if not _google_auth_configured() and os.environ.get("VALI_SIN_LOGIN") != "1":
+    # Sin login la app escribe al repo y abre datos de clientes a cualquiera
+    # con la URL: cerrada salvo en la PC (VALI_SIN_LOGIN=1 en el .env local).
+    st.error("Falta configurar el inicio de sesión con Google ([auth] en los "
+             "Secrets de Streamlit). La app queda cerrada hasta entonces.")
+    st.stop()
 
 if _google_auth_configured():
     if not st.user.is_logged_in:

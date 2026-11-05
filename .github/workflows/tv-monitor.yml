@@ -24,7 +24,7 @@ concurrency:
 
 env:
   # Abre los datos cifrados de clientes (clientes/privado.py).
-  CLIENTES_CLAVE: ${{ secrets.GEMINI_API_KEY }}
+  CLIENTES_CLAVE: ${{ secrets.CLIENTES_CLAVE }}
   VUELTAS: 10  # una cada 30 min, ~5 h por corrida
 
 jobs:

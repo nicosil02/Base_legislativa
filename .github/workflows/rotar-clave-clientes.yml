@@ -1,0 +1,88 @@
+name: Rotar clave de clientes
+
+# Vuelve a cifrar todos los *.cifrado con CLIENTES_CLAVE (la nueva), abriendolos
+# con el secreto `vieja`. Si `rama` viene, primero la une a main, asi el codigo
+# que espera la clave nueva y los datos recifrados llegan en el MISMO commit.
+# Tambien cifra los JSON de core/store.CIFRADOS que sigan en claro y los saca
+# de git. Antes de correrlo, CLIENTES_CLAVE nueva tiene que estar en GitHub,
+# en los Secrets de Streamlit y en el .env de la PC.
+
+on:
+  workflow_dispatch:
+    inputs:
+      vieja:
+        description: Nombre del secreto con la clave anterior
+        default: GEMINI_API_KEY
+      rama:
+        description: Rama a unir antes de recifrar (vacio = ninguna)
+        default: ""
+
+permissions:
+  contents: write
+
+concurrency:
+  group: rotar-clave-clientes
+  cancel-in-progress: false
+
+jobs:
+  rotar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Unir, recifrar y subir (reintenta si main avanzo)
+        env:
+          VIEJA: ${{ secrets[inputs.vieja] }}
+          NUEVA: ${{ secrets.CLIENTES_CLAVE }}
+          RAMA: ${{ inputs.rama }}
+        run: |
+          set -e
+          test -n "$VIEJA" && test -n "$NUEVA" && test "$VIEJA" != "$NUEVA"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          for intento in 1 2 3 4 5; do
+            git fetch -q origin
+            git reset -q --hard origin/main
+            if [ -n "$RAMA" ]; then git merge -q --no-edit "origin/$RAMA"; fi
+            python -X utf8 - <<'EOF'
+          import os, subprocess
+          from pathlib import Path
+          from clientes import privado
+          from core.store import CIFRADOS
+
+          def claves(base):
+              os.environ["CLIENTES_CLAVE"] = base
+              return privado._claves()
+
+          vieja, nueva = claves(os.environ["VIEJA"]), claves(os.environ["NUEVA"])
+          n = 0
+          for c in Path(".").rglob("*" + privado.SUFIJO):
+              if ".git" in c.parts:
+                  continue
+              texto = c.read_text(encoding="ascii")
+              try:
+                  privado.descifrar(texto, nueva)
+                  continue  # ya esta con la nueva
+              except ValueError:
+                  pass
+              c.write_text(privado.cifrar(privado.descifrar(texto, vieja), nueva), encoding="ascii")
+              n += 1
+          for p in sorted(CIFRADOS):
+              if Path(p).exists():
+                  Path(p + privado.SUFIJO).write_text(privado.cifrar(Path(p).read_bytes(), nueva), encoding="ascii")
+                  subprocess.run(["git", "rm", "-q", "--cached", p], check=True)
+                  Path(p).unlink()
+                  n += 1
+          print(f"recifrados {n} archivos")
+          EOF
+            git add -A -- '*.cifrado'
+            git commit -q -m "clientes: datos recifrados con CLIENTES_CLAVE propia${RAMA:+ (+ $RAMA)}" || { echo "nada que cambiar"; exit 0; }
+            if git push -q origin HEAD:main; then echo "subido"; exit 0; fi
+            echo "main avanzo, reintento"; sleep 5
+          done
+          exit 1
