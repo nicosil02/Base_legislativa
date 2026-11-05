@@ -2,12 +2,14 @@ import base64
 import json
 from unittest.mock import patch
 
+from clientes import privado
 from core import store
 from noticias.feedback_store import deshacer_descarte, list_descartadas, registrar_descarte
 
 
 def test_descartes_locales(tmp_path, monkeypatch):
     monkeypatch.delenv("GH_TOKEN", raising=False)
+    monkeypatch.setenv("CLIENTES_CLAVE", "clave-de-prueba")
     monkeypatch.setattr(store, "ROOT", tmp_path)
     monkeypatch.setattr(store, "_cache", {})
 
@@ -21,7 +23,9 @@ def test_descartes_locales(tmp_path, monkeypatch):
     assert list_descartadas() == {202}
     assert deshacer_descarte(999)  # no estaba descartada: no falla
     assert list_descartadas() == {202}
-    guardado = json.loads((tmp_path / "data" / "noticias_feedback.json").read_text(encoding="utf-8"))
+    assert not (tmp_path / "data" / "noticias_feedback.json").exists(), "nunca en claro"
+    cifrado = (tmp_path / "data" / "noticias_feedback.json.cifrado").read_text(encoding="ascii")
+    guardado = json.loads(privado.descifrar(cifrado))
     assert [d["noticia_id"] for d in guardado] == [202]
 
 
@@ -30,9 +34,11 @@ def test_descartar_con_github_no_relee(monkeypatch):
     dejo el PUT, sin un 3er round-trip."""
     monkeypatch.setenv("GH_TOKEN", "fake-token")
     monkeypatch.setenv("GH_REPO", "fake/repo")
+    monkeypatch.setenv("CLIENTES_CLAVE", "clave-de-prueba")
     monkeypatch.setattr(store, "_cache", {})
     llamadas = []
-    body = json.dumps({"content": base64.b64encode(b"[]").decode("ascii"), "sha": "abc123"}).encode()
+    body = json.dumps({"content": base64.b64encode(privado.cifrar(b"[]").encode()).decode("ascii"),
+                       "sha": "abc123"}).encode()
 
     def fake_urlopen(req, timeout=None):
         llamadas.append(req.get_method())

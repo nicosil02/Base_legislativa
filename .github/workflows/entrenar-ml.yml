@@ -23,9 +23,9 @@ concurrency:
 
 
 env:
-  # Abre los datos cifrados de clientes (clientes/privado.py). Otro nombre que
-  # GEMINI_API_KEY para no prender Gemini en pasos que no lo usan.
-  CLIENTES_CLAVE: ${{ secrets.GEMINI_API_KEY }}
+  # Abre los datos cifrados de clientes (clientes/privado.py). Secreto propio
+  # (no es la clave de Gemini).
+  CLIENTES_CLAVE: ${{ secrets.CLIENTES_CLAVE }}
 
 jobs:
   train:

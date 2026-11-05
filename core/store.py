@@ -18,6 +18,12 @@ from core.db import ROOT
 
 _cache: dict[str, tuple[float, Any]] = {}
 
+# Lo que marca el analista sobre clientes (borradores, PLs que sigue cada uno,
+# bandeja, descartes). El repo es publico: en git van como `<ruta>.cifrado`
+# (clientes/privado.py) y aca se abren y cierran solos.
+CIFRADOS = {"data/alertas_borradores.json", "data/pls_seguidos.json",
+            "data/noticias_feedback.json", "data/bandeja_analista.json"}
+
 
 def _cfg() -> tuple[str, str, str] | None:
     token, repo = os.environ.get("GH_TOKEN"), os.environ.get("GH_REPO")
@@ -53,6 +59,13 @@ def _leer_local(path: str, default: Any) -> Any:
 def leer_texto(path: str, default: str | None = None) -> tuple[str | None, str | None]:
     """(contenido, sha). Archivo que no existe en GitHub -> default. Si
     GitHub falla por otra razon, la copia local del repo."""
+    if path in CIFRADOS:
+        from clientes import privado
+        cifrado, sha = leer_texto(path + privado.SUFIJO, None)
+        try:
+            return (privado.descifrar(cifrado).decode("utf-8") if cifrado else default), sha
+        except RuntimeError:  # sin la clave (script local sin .env): la copia en texto
+            return _texto_local(path, default), None
     cfg = _cfg()
     if cfg:
         token, repo, branch = cfg
@@ -68,6 +81,9 @@ def leer_texto(path: str, default: str | None = None) -> tuple[str | None, str |
 
 
 def _escribir_texto(path: str, texto: str, mensaje: str, sha: str | None) -> None:
+    if path in CIFRADOS:  # sin la clave falla: nunca se escribe en claro
+        from clientes import privado
+        path, texto = path + privado.SUFIJO, privado.cifrar(texto.encode("utf-8"))
     cfg = _cfg()
     if cfg:
         token, repo, branch = cfg
