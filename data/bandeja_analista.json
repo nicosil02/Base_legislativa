@@ -398,5 +398,21 @@
       },
       "tipo": "noticia"
     }
+  },
+  "n2370724": {
+    "estado": "descartar",
+    "fecha": "2026-11-05T23:19:11+00:00",
+    "por": "nicolas.silva@valiconsultores.com",
+    "titulo": "El Gobierno del presidente Daniel Noboa adquiere microscopios para mejorar el diagnóstico de malaria en 15 provincias",
+    "item": {
+      "titulo": "El Gobierno del presidente Daniel Noboa adquiere microscopios para mejorar el diagnóstico de malaria en 15 provincias",
+      "url": "https://www.salud.gob.ec/el-gobierno-del-presidente-daniel-noboa-adquiere-microscopios-para-mejorar-el-diagnostico-de-malaria-en-15-provincias/",
+      "pais": "EC",
+      "resumen": null,
+      "porque": {
+        "bayer": "Compra publica de equipamiento medico por parte del MSP de Ecuador, relevante para el seguimiento del sector salud y abastecimiento."
+      },
+      "tipo": "noticia"
+    }
   }
 }
