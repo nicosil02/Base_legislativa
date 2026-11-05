@@ -6704,57 +6704,77 @@
     "fecha": "2026-10-27",
     "organo": "Comisión de Derecho al Trabajo",
     "pais": "EC",
-    "v": 3,
+    "v": 4,
     "dichos": [
       {
         "orador": "Juan Pablo Molina",
         "cargo": "legislador",
-        "sobre": "el informe de fiscalización municipal",
+        "sobre": "Informe sobre tercerización laboral",
         "postura": "en contra",
         "tema": "Trabajo",
-        "dijo": "Cuestiono que la Asamblea investigue temas municipales que corresponden fiscalizar a los concejales.",
-        "proyecto": "Resolución RL-2025-2029-090",
-        "id": null
+        "dijo": "Cuestionó la competencia de la Asamblea para fiscalizar asuntos municipales.",
+        "proyecto": "",
+        "id": "EC:molina saldana"
       },
       {
-        "orador": "Roberto Cuerromedina",
+        "orador": "Roberto Cuerro Medina",
         "cargo": "legislador",
-        "sobre": "el informe de fiscalización municipal",
+        "sobre": "Informe sobre tercerización laboral",
         "postura": "en contra",
         "tema": "Trabajo",
-        "dijo": "Argumento que los gobiernos autónomos descentralizados tienen autonomía administrativa y el control corresponde a los concejales.",
-        "proyecto": "Resolución RL-2025-2029-090",
-        "id": null
+        "dijo": "Defendió las funciones de fiscalizar y legislar de la Asamblea.",
+        "proyecto": "",
+        "id": "EC:cuero medina"
       },
       {
         "orador": "Humberto Alvarado",
         "cargo": "legislador",
-        "sobre": "el informe de fiscalización municipal",
+        "sobre": "Informe sobre tercerización laboral",
         "postura": "en contra",
         "tema": "Trabajo",
-        "dijo": "Señalo que el informe carece de solidez e incluye aspectos ajenos a la resolución inicial.",
-        "proyecto": "Resolución RL-2025-2029-090",
+        "dijo": "Denunció la falta de solidez en el informe de fiscalización.",
+        "proyecto": "",
         "id": "EC:alvarado espinel"
       },
       {
         "orador": "Egnerey de Recalde Álava",
         "cargo": "legislador",
-        "sobre": "el informe de fiscalización municipal",
+        "sobre": "Informe sobre tercerización laboral",
         "postura": "a favor",
         "tema": "Trabajo",
-        "dijo": "Defendio la necesidad de fiscalizar los abusos laborales y la tercerización en los municipios.",
-        "proyecto": "Resolución RL-2025-2029-090",
+        "dijo": "Defendió la fiscalización para proteger los derechos de los trabajadores.",
+        "proyecto": "",
         "id": "EC:recalde alava"
       },
       {
-        "orador": "Nalia Quintana",
+        "orador": "Nayara Quintana",
         "cargo": "legislador",
-        "sobre": "el informe de fiscalización municipal",
+        "sobre": "Informe sobre tercerización laboral",
         "postura": "propone",
         "tema": "Trabajo",
-        "dijo": "Propuso la moción para aprobar el informe sobre tercerización e intermediación laboral en empresas públicas.",
-        "proyecto": "Resolución RL-2025-2029-090",
+        "dijo": "Propuso la aprobación del informe de fiscalización laboral.",
+        "proyecto": "",
         "id": "EC:quintana tapia"
+      },
+      {
+        "orador": "Victoria Quintanápia",
+        "cargo": "legislador",
+        "sobre": "la tercerización laboral",
+        "postura": "propone",
+        "tema": "Trabajo",
+        "dijo": "Presentó una moción sobre la tercerización laboral.",
+        "proyecto": "",
+        "id": "EC:quintana tapia"
+      },
+      {
+        "orador": "Juan Pablo Molina",
+        "cargo": "legislador",
+        "sobre": "la tercerización laboral",
+        "postura": "en contra",
+        "tema": "Trabajo",
+        "dijo": "Cuestionó la tercerización y la fiscalización municipal.",
+        "proyecto": "",
+        "id": "EC:molina saldana"
       }
     ],
     "url": "https://www.facebook.com/watch/?v=2834144213646590"
@@ -7129,115 +7149,405 @@
     "fecha": "2026-10-26",
     "organo": "Comisión de Inclusión Social",
     "pais": "PE",
-    "v": 3,
+    "v": 4,
     "dichos": [
       {
-        "orador": "Marleni Arminta",
+        "orador": "Romina Uribe",
         "cargo": "legislador",
-        "sobre": "la alta exposición de niños a metales pesados",
+        "sobre": "Seguimiento de la Convención Belém do Pará",
         "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Informó sobre hallazgos de violencia sexual en Condorcanqui.",
+        "proyecto": "",
+        "id": "diputados:uribe saenz"
+      },
+      {
+        "orador": "Romina Uribe",
+        "cargo": "legislador",
+        "sobre": "Presupuesto para la provincia de Condorcanqui",
+        "postura": "propone",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Solicitó 22 millones de soles para la provincia de Condorcanqui.",
+        "proyecto": "",
+        "id": "diputados:uribe saenz"
+      },
+      {
+        "orador": "Romina Uribe",
+        "cargo": "legislador",
+        "sobre": "Recomendación de la Convención CEDAW",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Informó sobre la recomendación general del comité CEDAW.",
+        "proyecto": "",
+        "id": "diputados:uribe saenz"
+      },
+      {
+        "orador": "Romina Uribe",
+        "cargo": "legislador",
+        "sobre": "Discriminación contra personas LGTBI",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Denunció casos de discriminación contra personas LGTBI en Lima.",
+        "proyecto": "",
+        "id": "diputados:uribe saenz"
+      },
+      {
+        "orador": "Romina Uribe",
+        "cargo": "legislador",
+        "sobre": "Consulta Mi voz importa",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Promovió la participación de niños en la consulta pública.",
+        "proyecto": "",
+        "id": "diputados:uribe saenz"
+      },
+      {
+        "orador": "Jones Núñez",
+        "cargo": "legislador",
+        "sobre": "Convenio de Cuna Más en Ica",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Informó sobre el convenio de atención infantil en Ica.",
+        "proyecto": "",
+        "id": "diputados:yonz nunez"
+      },
+      {
+        "orador": "Jones Núñez",
+        "cargo": "legislador",
+        "sobre": "Proyecto de hogar refugio para mujeres",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Reportó el estado del proyecto de hogar para mujeres.",
+        "proyecto": "",
+        "id": "diputados:yonz nunez"
+      },
+      {
+        "orador": "Arminta Valencia",
+        "cargo": "legislador",
+        "sobre": "Exposición de niños a metales pesados",
+        "postura": "en contra",
         "tema": "Salud",
-        "dijo": "Cuestiono el informe epidemiologico del Minsa por registrar mas de veintiun mil personas expuestas a metales pesados.",
+        "dijo": "Denunció la alta exposición de niños a metales pesados.",
         "proyecto": "",
         "id": "diputados:arminta valencia"
       },
       {
-        "orador": "Yolanda Benitez",
+        "orador": "Benítez Barrionuevo",
         "cargo": "legislador",
-        "sobre": "el plan de trabajo para personas con discapacidad",
+        "sobre": "Plan de trabajo para la discapacidad",
         "postura": "propone",
         "tema": "Otros",
-        "dijo": "Presento el plan de trabajo para el cierre de brechas que afectan a las personas con discapacidad.",
+        "dijo": "Presentó el plan de trabajo para cerrar brechas de discapacidad.",
         "proyecto": "",
         "id": "diputados:benitez barrionuevo"
       },
       {
-        "orador": "Milagros Silupu",
+        "orador": "Benítez Barrionuevo",
         "cargo": "legislador",
-        "sobre": "el encuentro cultural afroperuano en Yapatera",
+        "sobre": "Atención y diagnóstico de cáncer de mama",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Informó sobre las barreras de las pacientes con cáncer.",
+        "proyecto": "",
+        "id": "diputados:benitez barrionuevo"
+      },
+      {
+        "orador": "Benítez Barrionuevo",
+        "cargo": "legislador",
+        "sobre": "Mesa de concertación de salud mental",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Participó en la mesa de concertación de salud mental.",
+        "proyecto": "",
+        "id": "diputados:benitez barrionuevo"
+      },
+      {
+        "orador": "Benítez Barrionuevo",
+        "cargo": "legislador",
+        "sobre": "Terapias para niños con fisura labial",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Informó sobre terapias de canto para niños con fisura.",
+        "proyecto": "",
+        "id": "diputados:benitez barrionuevo"
+      },
+      {
+        "orador": "Silupu Inga",
+        "cargo": "legislador",
+        "sobre": "Cultura afroperuana en la región Piura",
         "postura": "comenta",
         "tema": "Otros",
-        "dijo": "Participo en el encuentro historico cultural Angola y Yapatera organizado por la asociacion ecoafroperuana.",
+        "dijo": "Participó en un encuentro cultural afroperuano en Piura.",
         "proyecto": "",
         "id": "diputados:silupu inga"
       },
       {
-        "orador": "Kerglek Torres",
+        "orador": "Silupu Inga",
         "cargo": "legislador",
-        "sobre": "la restitucion del Dia de la Familia",
+        "sobre": "Protección de niños en situación de vulnerabilidad",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Visitó un hogar de protección para niños vulnerables.",
+        "proyecto": "",
+        "id": "diputados:silupu inga"
+      },
+      {
+        "orador": "Clerker Torres",
+        "cargo": "legislador",
+        "sobre": "Restitución del Día de la Familia",
         "postura": "propone",
         "tema": "Otros",
-        "dijo": "Propuso la aprobacion de la proposicion legislativa quinientos dos para restituir oficialmente el Dia de la Familia.",
+        "dijo": "Propuso restituir la celebración del Día de la Familia.",
         "proyecto": "PL 502",
         "id": null
       },
       {
         "orador": "Maritza Canales",
         "cargo": "ministro o autoridad",
-        "sobre": "la politica general del sector y el fenomeno del Nino",
+        "sobre": "Gestión de desarrollo e inclusión social",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Expuso la política del sector y riesgos del Niño.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Maritza Canales",
+        "cargo": "ministro o autoridad",
+        "sobre": "optimización de programas sociales",
         "postura": "comenta",
         "tema": "Presupuesto y gasto público",
-        "dijo": "Detallo las acciones de preparacion ante el fenomeno del Nino y la ejecucion presupuestal del ministerio.",
+        "dijo": "Explicó la gestión y optimización de programas del MIDIS.",
         "proyecto": "",
         "id": null
       },
       {
         "orador": "Poma",
         "cargo": "legislador",
-        "sobre": "la medicion de pobreza en Madre de Dios",
-        "postura": "pregunta",
-        "tema": "Presupuesto y gasto público",
-        "dijo": "Pregunto sobre la implementacion de un sistema de medicion de pobreza multidimensional con enfoque amazonico.",
+        "sobre": "pobreza y anemia en Madre de Dios",
+        "postura": "en contra",
+        "tema": "Otros",
+        "dijo": "Denunció la falsa riqueza estadística en Madre de Dios.",
         "proyecto": "",
         "id": "diputados:poma huamani"
       },
       {
-        "orador": "Hanco",
+        "orador": "Janco",
         "cargo": "legislador",
-        "sobre": "la gestion del programa Cunamas en Puno",
-        "postura": "pregunta",
+        "sobre": "gestión del programa Cunamás",
+        "postura": "en contra",
         "tema": "Otros",
-        "dijo": "Cuestiono la presencia de un militar como jefe del programa Cunamas en la region Puno.",
+        "dijo": "Cuestionó la gestión de Cunamás y sus estipendios.",
         "proyecto": "",
         "id": null
       },
       {
+        "orador": "Arminta",
+        "cargo": "legislador",
+        "sobre": "metas de cobertura y Tambos",
+        "postura": "pregunta",
+        "tema": "Otros",
+        "dijo": "Consultó sobre las metas de cobertura y los Tambos.",
+        "proyecto": "",
+        "id": "diputados:arminta valencia"
+      },
+      {
+        "orador": "Benítez",
+        "cargo": "legislador",
+        "sobre": "riesgos climáticos y programa Contigo",
+        "postura": "pregunta",
+        "tema": "Otros",
+        "dijo": "Preguntó por la atención ante riesgos y Contigo.",
+        "proyecto": "",
+        "id": "diputados:benitez barrionuevo"
+      },
+      {
         "orador": "Uribe",
         "cargo": "legislador",
-        "sobre": "el acceso al programa Contigo y la politica de cuidados",
+        "sobre": "programa Contigo y medición de pobreza",
         "postura": "pregunta",
-        "tema": "Salud",
-        "dijo": "Pregunto por las metas para reducir los periodos de espera de personas con carnet de Conadis.",
+        "tema": "Otros",
+        "dijo": "Solicitó información sobre Contigo y la medición de pobreza.",
         "proyecto": "",
         "id": "diputados:uribe saenz"
       },
       {
         "orador": "Yufra",
         "cargo": "legislador",
-        "sobre": "la transitabilidad de las Pias en Loreto",
-        "postura": "pregunta",
-        "tema": "Transporte",
-        "dijo": "Pregunto si las plataformas itinerantes tendran transitabilidad fluvial ante la sequia en Loreto.",
+        "sobre": "programas sociales en Loreto",
+        "postura": "en contra",
+        "tema": "Otros",
+        "dijo": "Denunció la situación de anemia en Loreto.",
+        "proyecto": "",
+        "id": "diputados:yuffra lugo"
+      },
+      {
+        "orador": "Zulca",
+        "cargo": "legislador",
+        "sobre": "calidad de alimentos escolares",
+        "postura": "en contra",
+        "tema": "Educación",
+        "dijo": "Cuestionó la calidad de los alimentos en las escuelas.",
         "proyecto": "",
         "id": null
       },
       {
         "orador": "Zulca",
         "cargo": "legislador",
-        "sobre": "la seleccion de proveedores del programa de alimentacion escolar",
-        "postura": "pregunta",
-        "tema": "Consumo masivo",
-        "dijo": "Pregunto por el procedimiento de seleccion de proveedores y la calidad de los productos alimentarios entregados.",
+        "sobre": "Selección de proveedores de alimentos",
+        "postura": "en contra",
+        "tema": "Educación",
+        "dijo": "Cuestionó la calidad de los productos y el proceso de selección de proveedores.",
         "proyecto": "",
         "id": null
       },
       {
-        "orador": "Espinoza",
+        "orador": "Espinosa",
         "cargo": "legislador",
-        "sobre": "los indices de anemia y desnutricion infantil",
+        "sobre": "Índices de anemia y desnutrición infantil",
+        "postura": "pregunta",
+        "tema": "Salud",
+        "dijo": "Preguntó sobre la situación actual de la anemia y la desnutrición infantil.",
+        "proyecto": "",
+        "id": "diputados:espinoza huillca"
+      },
+      {
+        "orador": "Ministra",
+        "cargo": "ministro o autoridad",
+        "sobre": "Gestión de la anemia y programas sociales",
         "postura": "comenta",
         "tema": "Salud",
-        "dijo": "Comento la persistencia de los indices de anemia a pesar del incremento presupuestal en los programas sociales.",
+        "dijo": "Explicó el rol articulador del MIDIS en la lucha contra la anemia.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ulises Cabanel García",
+        "cargo": "invitado",
+        "sobre": "Funcionamiento de tambos y plataformas Pías",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Informó sobre el funcionamiento de los tambos y las plataformas móviles.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministra",
+        "cargo": "ministro o autoridad",
+        "sobre": "Distribución de servicios en zonas de inundación",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Explicó las estrategias de distribución de las plataformas Pías ante inundaciones.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministra",
+        "cargo": "ministro o autoridad",
+        "sobre": "Apoyo a madres cuidadoras de Cuna Más",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Mencionó que no habrá incremento de estipendios para las madres cuidadoras.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Claudia",
+        "cargo": "invitado",
+        "sobre": "Gestión y cobertura del programa Contigo",
+        "postura": "comenta",
+        "tema": "Pensiones",
+        "dijo": "Detalló la articulación y el incremento de beneficiarios del programa Contigo.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Benítez",
+        "cargo": "legislador",
+        "sobre": "Cobertura presupuestal del programa Contigo",
+        "postura": "pregunta",
+        "tema": "Pensiones",
+        "dijo": "Preguntó por la cobertura de los usuarios que no alcancen el presupuesto.",
+        "proyecto": "",
+        "id": "diputados:benitez barrionuevo"
+      },
+      {
+        "orador": "Claudia",
+        "cargo": "invitado",
+        "sobre": "Reevaluación de beneficiarios de Contigo",
+        "postura": "comenta",
+        "tema": "Pensiones",
+        "dijo": "Explicó que se reevaluaría el padrón según la disponibilidad presupuestal.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministra",
+        "cargo": "ministro o autoridad",
+        "sobre": "Estrategias para ampliar la cobertura social",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Informó sobre la limpieza de bases de datos para mejorar la cobertura.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Zulka",
+        "cargo": "legislador",
+        "sobre": "Transparencia en la selección de proveedores",
+        "postura": "en contra",
+        "tema": "Educación",
+        "dijo": "Cuestionó la transparencia en la selección de proveedores del programa PAE.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Director del programa de alimentación escolar",
+        "cargo": "invitado",
+        "sobre": "Proceso de contrataciones del PAE",
+        "postura": "comenta",
+        "tema": "Educación",
+        "dijo": "Explicó el procedimiento de selección y capacitación de los comités de compra.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministra",
+        "cargo": "ministro o autoridad",
+        "sobre": "Medición de pobreza y nuevas cunas",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Informó sobre la construcción de nuevas cunas y la medición de pobreza.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Benítez",
+        "cargo": "legislador",
+        "sobre": "Cumplimiento de la cuota laboral",
+        "postura": "pregunta",
+        "tema": "Trabajo",
+        "dijo": "Preguntó sobre el cumplimiento de la cuota de inclusión laboral.",
+        "proyecto": "",
+        "id": "diputados:benitez barrionuevo"
+      },
+      {
+        "orador": "Ministra",
+        "cargo": "ministro o autoridad",
+        "sobre": "Evaluación de la cuota laboral",
+        "postura": "comenta",
+        "tema": "Trabajo",
+        "dijo": "Aseguró que trabajan para cerrar las brechas de la cuota laboral.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Espinosa",
+        "cargo": "legislador",
+        "sobre": "Eficacia de la inversión en programas sociales",
+        "postura": "en contra",
+        "tema": "Otros",
+        "dijo": "Cuestionó que el aumento presupuestal no reduzca la anemia y desnutrición.",
         "proyecto": "",
         "id": "diputados:espinoza huillca"
       }
@@ -10285,5 +10595,174 @@
       }
     ],
     "url": "https://www.youtube.com/watch?v=_SU9vwpIvLs"
+  },
+  "CXC0rWjtjTI": {
+    "fecha": "2026-10-27",
+    "organo": "Comisión de Ciencia",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Cipriani Torne",
+        "cargo": "legislador",
+        "sobre": "Incorporación de profesionales al Consejo Consultivo",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Informó la incorporación de tres nuevos profesionales al Consejo Consultivo.",
+        "proyecto": "",
+        "id": "diputados:cipriani thorne"
+      },
+      {
+        "orador": "Cipriani Torne",
+        "cargo": "legislador",
+        "sobre": "Priorización de un proyecto de ley",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Comunicó el pedido de priorización de un proyecto de ley legislativo.",
+        "proyecto": "",
+        "id": "diputados:cipriani thorne"
+      },
+      {
+        "orador": "Ayse",
+        "cargo": "legislador",
+        "sobre": "Sala de investigación en Cusco",
+        "postura": "propone",
+        "tema": "Educación",
+        "dijo": "Solicitó la creación de una sala de investigación universitaria.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ricardo Cristopher Zapata",
+        "cargo": "ministro o autoridad",
+        "sobre": "Transformación digital del Estado",
+        "postura": "comenta",
+        "tema": "Tecnología",
+        "dijo": "Expuso los avances de la Política Nacional de Transformación Digital.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Jair Marrique",
+        "cargo": "legislador",
+        "sobre": "Interoperabilidad y gobernanza de datos",
+        "postura": "en contra",
+        "tema": "Tecnología",
+        "dijo": "Cuestionó la deficiente interoperabilidad y la falta de gobernanza de datos.",
+        "proyecto": "",
+        "id": "diputados:manrique olivera"
+      },
+      {
+        "orador": "Jair Marrique",
+        "cargo": "legislador",
+        "sobre": "Brechas de conectividad nacional",
+        "postura": "pregunta",
+        "tema": "Telecomunicaciones",
+        "dijo": "Preguntó sobre la coordinación para aprovechar la red dorsal de fibra óptica.",
+        "proyecto": "",
+        "id": "diputados:manrique olivera"
+      },
+      {
+        "orador": "Ricardo Cristopher Zapata",
+        "cargo": "ministro o autoridad",
+        "sobre": "Respuesta sobre conectividad y seguridad",
+        "postura": "comenta",
+        "tema": "Tecnología",
+        "dijo": "Aclaró que la conectividad es competencia del Ministerio de Transportes.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Indepichon",
+        "cargo": "ministro o autoridad",
+        "sobre": "Funcionamiento de la plataforma GeoPerú",
+        "postura": "comenta",
+        "tema": "Tecnología",
+        "dijo": "Explicó la interconexión de la plataforma GeoPerú mediante el uso de APIs.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ricardo Zapata",
+        "cargo": "ministro o autoridad",
+        "sobre": "Gestión del Centro Nacional de Seguridad Digital",
+        "postura": "comenta",
+        "tema": "Tecnología",
+        "dijo": "Explicó que el Centro Nacional de Seguridad Digital brinda asistencia técnica constante.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Diputada Patiño",
+        "cargo": "legislador",
+        "sobre": "Prótesis económicas e inteligencia artificial escolar",
+        "postura": "propone",
+        "tema": "Tecnología",
+        "dijo": "Propuso implementar la enseñanza de inteligencia artificial en colegios peruanos.",
+        "proyecto": "",
+        "id": "diputados:patino urco"
+      },
+      {
+        "orador": "Diputado Jair",
+        "cargo": "legislador",
+        "sobre": "Modernización tecnológica y estándares de software",
+        "postura": "en contra",
+        "tema": "Tecnología",
+        "dijo": "Cuestionó la falta de un stack tecnológico único para las instituciones estatales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Diputado Kerkik",
+        "cargo": "legislador",
+        "sobre": "Aplicación de la Ley de Inteligencia Artificial",
+        "postura": "pregunta",
+        "tema": "Tecnología",
+        "dijo": "Consultó sobre la naturaleza vinculante de las recomendaciones de seguridad digital.",
+        "proyecto": "Ley de Inteligencia Artificial",
+        "id": null
+      },
+      {
+        "orador": "Ricardo Zapata",
+        "cargo": "ministro o autoridad",
+        "sobre": "Implementación de inteligencia artificial regional",
+        "postura": "comenta",
+        "tema": "Tecnología",
+        "dijo": "Informó sobre la ordenanza de inteligencia artificial en la región de Apurímac.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Diputada Patiño",
+        "cargo": "legislador",
+        "sobre": "Talento digital y presupuesto para Junín",
+        "postura": "pregunta",
+        "tema": "Tecnología",
+        "dijo": "Preguntó por las estrategias de talento digital para el año 2027.",
+        "proyecto": "",
+        "id": "diputados:patino urco"
+      },
+      {
+        "orador": "Diputada Peri",
+        "cargo": "legislador",
+        "sobre": "Conectividad y electricidad en la selva",
+        "postura": "en contra",
+        "tema": "Telecomunicaciones",
+        "dijo": "Denunció la falta de conectividad y servicios eléctricos en la selva.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Vicepresidenta",
+        "cargo": "legislador",
+        "sobre": "Colaboración con la Universidad San Antonio Abad",
+        "postura": "comenta",
+        "tema": "Educación",
+        "dijo": "Manifestó su disposición para trabajar con la Universidad San Antonio Abad.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=CXC0rWjtjTI"
   }
 }
