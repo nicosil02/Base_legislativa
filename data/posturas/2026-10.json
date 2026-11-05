@@ -2823,77 +2823,337 @@
     "fecha": "2026-10-28",
     "organo": "Comisión de Gestión del Estado",
     "pais": "PE",
-    "v": 3,
+    "v": 4,
     "dichos": [
       {
-        "orador": "Abraham Lescano Salazar",
-        "cargo": "ministro o autoridad",
-        "sobre": "el estado situacional del INPE",
+        "orador": "Pery Osorio",
+        "cargo": "legislador",
+        "sobre": "Obra del Hospital Santiago Apóstol",
         "postura": "comenta",
-        "tema": "Otros",
-        "dijo": "Detallo que el sistema penitenciario cuenta con sesenta y nueve establecimientos y una sobrepoblación del ciento cincuenta y seis por ciento.",
+        "tema": "Salud",
+        "dijo": "Informó la inasistencia del gobernador de Amazonas.",
+        "proyecto": "",
+        "id": "senado:osorio palpan"
+      },
+      {
+        "orador": "Abraham Lescano Salazar",
+        "cargo": "invitado",
+        "sobre": "Estado de la población penitenciaria",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Informó sobre la sobrepoblación de internos.",
         "proyecto": "",
         "id": null
       },
       {
-        "orador": "Catherine Ampuero",
-        "cargo": "legislador",
-        "sobre": "los negocios internos y la seguridad en penales",
-        "postura": "con observaciones",
-        "tema": "Otros",
-        "dijo": "Cuestiono la proliferación de restaurantes clandestinos y el bajo ratio de agentes penitenciarios por cada interno.",
+        "orador": "Abraham Lescano Salazar",
+        "cargo": "invitado",
+        "sobre": "Población extranjera en penales",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Indicó la alta presencia de ciudadanos venezolanos.",
         "proyecto": "",
-        "id": "senado:ampuero meza"
+        "id": null
+      },
+      {
+        "orador": "Abraham Lescano Salazar",
+        "cargo": "invitado",
+        "sobre": "Delitos más comunes en penales",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Expuso los delitos más frecuentes en el sistema.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Abraham Lescano Salazar",
+        "cargo": "invitado",
+        "sobre": "Déficit de agentes penitenciarios",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Denunció la escasez de personal de seguridad.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Abraham Lescano Salazar",
+        "cargo": "invitado",
+        "sobre": "Programas educativos y talleres",
+        "postura": "comenta",
+        "tema": "Educación",
+        "dijo": "Detalló la oferta educativa y talleres productivos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Abraham Lescano Salazar",
+        "cargo": "invitado",
+        "sobre": "Resultados de operativos de control",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Informó la incautación de celulares y otros objetos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Abraham Lescano Salazar",
+        "cargo": "invitado",
+        "sobre": "Distribución del presupuesto del INPE",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Criticó que el presupuesto prioriza planillas y alimentación.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Abraham Lescano Salazar",
+        "cargo": "invitado",
+        "sobre": "Falta de equipamiento tecnológico",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Denunció la carencia de tecnología y equipamiento.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Abraham Lescano Salazar",
+        "cargo": "invitado",
+        "sobre": "Bloqueo de señales de telefonía",
+        "postura": "en contra",
+        "tema": "Telecomunicaciones",
+        "dijo": "Cuestionó la eficacia del bloqueo de señales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Abraham Lescano Salazar",
+        "cargo": "invitado",
+        "sobre": "Plan de fortalecimiento del INPE",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso ejes estratégicos para mejorar la gestión.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Abraham Carlos",
+        "cargo": "ministro o autoridad",
+        "sobre": "Gestión del INPE",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Informó sobre las nuevas líneas de acción para la seguridad penitenciaria.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Canterino",
+        "cargo": "legislador",
+        "sobre": "Negocios en penales",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Cuestionó la proliferación de restaurantes dentro de los establecimientos penitenciarios.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Canterino",
+        "cargo": "legislador",
+        "sobre": "Salarios de agentes",
+        "postura": "pregunta",
+        "tema": "Trabajo",
+        "dijo": "Preguntó si el presupuesto contempla aumentos para los agentes penitenciarios.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Canterino",
+        "cargo": "legislador",
+        "sobre": "Condiciones de pabellones",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Denunció la desigualdad en las condiciones de los pabellones según el delito.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Canterino",
+        "cargo": "legislador",
+        "sobre": "Uso de teléfonos azules",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso cortar el servicio de telefonía pública después de las seis de la tarde.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Canterino",
+        "cargo": "legislador",
+        "sobre": "Contrato con Prisontec",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Cuestionó el incumplimiento de las condiciones contractuales del servicio de telefonía.",
+        "proyecto": "",
+        "id": null
       },
       {
         "orador": "Mirta Vázquez",
         "cargo": "legislador",
-        "sobre": "la corrupción y la presencia de extranjeros",
+        "sobre": "Corrupción de funcionarios",
         "postura": "pregunta",
-        "tema": "Otros",
-        "dijo": "Pregunto por el número de funcionarios investigados por corrupción y la relación entre internos peruanos y extranjeros.",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Preguntó por la cantidad de funcionarios investigados por corrupción.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Mirta Vázquez",
+        "cargo": "legislador",
+        "sobre": "Ley de carrera penitenciaria",
+        "postura": "pregunta",
+        "tema": "Justicia",
+        "dijo": "Preguntó por el estado de implementación de la carrera penitenciaria.",
+        "proyecto": "Ley 31657",
+        "id": null
+      },
+      {
+        "orador": "Jorge Velázquez",
+        "cargo": "legislador",
+        "sobre": "Obra del penal Pucallpa",
+        "postura": "en contra",
+        "tema": "Construcción",
+        "dijo": "Denunció la paralización de la construcción del penal de Pucallpa.",
         "proyecto": "",
         "id": null
       },
       {
         "orador": "Jorge Velázquez",
         "cargo": "legislador",
-        "sobre": "la obra del penal de Pucallpa",
-        "postura": "con observaciones",
-        "tema": "Infraestructura",
-        "dijo": "Denuncie el retraso de once años en la conclusión del establecimiento penitenciario de Pucallpa.",
+        "sobre": "Descentralización de la unidad",
+        "postura": "propone",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Propuso descentralizar la unidad ejecutora del establecimiento penal de Pucallpa.",
         "proyecto": "",
         "id": null
       },
       {
         "orador": "Nora Bonifaz",
         "cargo": "legislador",
-        "sobre": "la penetración del crimen organizado",
+        "sobre": "Crimen organizado en penales",
         "postura": "pregunta",
         "tema": "Seguridad y orden interno",
-        "dijo": "Pregunto sobre el nivel de penetración de las organizaciones criminales dentro de los establecimientos penitenciarios.",
+        "dijo": "Preguntó sobre el nivel de penetración de bandas criminales en penales.",
         "proyecto": "",
         "id": "senado:bonifaz carmona"
       },
       {
-        "orador": "Joaquín Yauri",
+        "orador": "Joaquín Hahuana",
         "cargo": "legislador",
-        "sobre": "la gestión y la base de datos del INPE",
-        "postura": "con observaciones",
-        "tema": "Tecnología",
-        "dijo": "Critico que la base de datos de los internos sea manejada en una hoja de cálculo vulnerable.",
+        "sobre": "Implementación de cárceles productivas",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso fortalecer las cárceles productivas para mejorar la resocialización.",
         "proyecto": "",
-        "id": "senado:yauri tunque"
+        "id": null
+      },
+      {
+        "orador": "Joaquín Yori",
+        "cargo": "legislador",
+        "sobre": "Construcción de más cárceles",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Cuestionó el enfoque de construir más cárceles para combatir la delincuencia.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Hugo Cahuana",
+        "cargo": "legislador",
+        "sobre": "Cárceles productivas y resocialización",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso la implementación de cárceles productivas para lograr la resocialización de los internos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Joaquín Yori",
+        "cargo": "legislador",
+        "sobre": "Gestión tecnológica del INPE",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Cuestionó que el INPE gestione la base de datos de internos mediante hojas Excel.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Mirta Vásquez",
+        "cargo": "legislador",
+        "sobre": "Corrupción en el sistema penitenciario",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Denunció la existencia de redes de corrupción y cobros ilegales dentro de los penales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Autoridad del INPE",
+        "cargo": "ministro o autoridad",
+        "sobre": "Gestión y seguridad penitenciaria",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Explicó las medidas para combatir la corrupción y mejorar el control en los penales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Abraham Vásquez",
+        "cargo": "ministro o autoridad",
+        "sobre": "Gestión del sistema penitenciario",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Defendió el funcionamiento de las cárceles productivas y la seguridad interna.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Joaquín Yauril",
+        "cargo": "legislador",
+        "sobre": "Control de suministros en penales",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso implementar barreras tecnológicas para el control de alimentos.",
+        "proyecto": "",
+        "id": null
       },
       {
         "orador": "Segundo Tapia",
         "cargo": "legislador",
-        "sobre": "la situación del penal de Cajamarca",
+        "sobre": "Reforma del INPE y la SUNI",
         "postura": "propone",
-        "tema": "Infraestructura",
-        "dijo": "Señale que el penal de Huacarí en Cajamarca alberga dos mil doscientos internos pese a tener una capacidad muy inferior.",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso la creación de la Superintendencia Nacional de Internamiento y Resocialización.",
+        "proyecto": "SUNI",
+        "id": "senado:tapia bernal"
+      },
+      {
+        "orador": "Segundo Tapia",
+        "cargo": "legislador",
+        "sobre": "Situación de los penales de Cajamarca",
+        "postura": "pregunta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Preguntó por el nivel de hacinamiento en los penales de Cajamarca.",
         "proyecto": "",
         "id": "senado:tapia bernal"
+      },
+      {
+        "orador": "Abraham Vásquez",
+        "cargo": "ministro o autoridad",
+        "sobre": "Gestión de alimentos y personal en Cajamarca",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Defendió las medidas de control de alimentos y personal en Cajamarca.",
+        "proyecto": "",
+        "id": null
       }
     ],
     "url": "https://www.youtube.com/watch?v=xXEnAuZm7tE"
@@ -3338,26 +3598,46 @@
     "fecha": "2026-10-28",
     "organo": "Comisión de Biodiversidad",
     "pais": "EC",
-    "v": 3,
+    "v": 4,
     "dichos": [
       {
         "orador": "Tarsicio Granizo Tamayo",
         "cargo": "invitado",
-        "sobre": "Proyecto de Ley Orgánica de Fomento a la Bioeconomía",
+        "sobre": "Proyecto de Ley de Bioeconomía",
         "postura": "con observaciones",
         "tema": "Ambiente",
-        "dijo": "Presentó observaciones técnicas orientadas a incorporar salvaguardas ambientales y participación social en el proyecto.",
-        "proyecto": "Ley Orgánica de Fomento a la Bioeconomía",
+        "dijo": "Propuso ajustes técnicos y salvaguardas para el proyecto de Ley de Bioeconomía.",
+        "proyecto": "Ley de Bioeconomía",
         "id": null
       },
       {
         "orador": "Franklin Samañego",
         "cargo": "legislador",
-        "sobre": "Concepto y termodinámica de la bioeconomía",
+        "sobre": "Concepto de la bioeconomía",
+        "postura": "en contra",
+        "tema": "Ambiente",
+        "dijo": "Cuestionó la definición y el enfoque de la bioeconomía en el proyecto.",
+        "proyecto": "Ley de Bioeconomía",
+        "id": null
+      },
+      {
+        "orador": "Tarsicio Granizo Tamayo",
+        "cargo": "invitado",
+        "sobre": "Monitoreo de la bioeconomía",
         "postura": "comenta",
         "tema": "Ambiente",
-        "dijo": "Cuestionó que el proyecto reduce la bioeconomía a una agenda exportadora sin regular la termodinámica.",
-        "proyecto": "Ley Orgánica de Fomento a la Bioeconomía",
+        "dijo": "Explicó la necesidad de monitorear el impacto ambiental de la bioeconomía.",
+        "proyecto": "Ley de Bioeconomía",
+        "id": null
+      },
+      {
+        "orador": "Tarsicio Granizo Tamayo",
+        "cargo": "invitado",
+        "sobre": "Apoyo a pequeños productores",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Recomendó asistencia técnica y créditos para los pequeños productores.",
+        "proyecto": "Ley de Bioeconomía",
         "id": null
       }
     ],
@@ -6831,5 +7111,434 @@
     "v": 3,
     "dichos": [],
     "url": "https://www.youtube.com/watch?v=ggJwf-DFHPU"
+  },
+  "tuKAqDIrWGI": {
+    "fecha": "2026-10-28",
+    "organo": "Comisión de Salud",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Ana Yufra",
+        "cargo": "legislador",
+        "sobre": "Monitoreo de anemia en Loreto",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Informó sobre la evaluación del plan regional de lucha contra la anemia en Loreto.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ana Yufra",
+        "cargo": "legislador",
+        "sobre": "Gestión de riesgos del Fenómeno del Niño",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Saludó la inclusión del Ministerio de Salud en la comisión de gestión de riesgos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Aldo Bravo",
+        "cargo": "legislador",
+        "sobre": "Reconocimiento al Instituto Daniel Alcides Carrión",
+        "postura": "comenta",
+        "tema": "Educación",
+        "dijo": "Invitó a la comisión al reconocimiento del instituto de enfermería Daniel Alcides Carrión.",
+        "proyecto": "",
+        "id": "diputados:bravo quispe"
+      },
+      {
+        "orador": "Marleni Arminta",
+        "cargo": "legislador",
+        "sobre": "Mesas de trabajo para proyectos de ley",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Solicitó mesas de trabajo para los proyectos de ley 537 y 245.",
+        "proyecto": "PL 537 y PL 245",
+        "id": "diputados:arminta valencia"
+      },
+      {
+        "orador": "Mary Infantes",
+        "cargo": "legislador",
+        "sobre": "Construcción del Hospital Santiago Apóstol",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Pidió mayor presión para iniciar la construcción del hospital en Huaura.",
+        "proyecto": "",
+        "id": "diputados:infantes castaneda"
+      },
+      {
+        "orador": "Basán",
+        "cargo": "legislador",
+        "sobre": "Traspaso de la iniciativa legislativa 430",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Solicitó que el proyecto de ley 430 sea derivado a la comisión de salud.",
+        "proyecto": "PL 430",
+        "id": null
+      },
+      {
+        "orador": "Aldo Bravo",
+        "cargo": "legislador",
+        "sobre": "Caso gemelos en Hospital Daniel Alcides Carrión",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Pidió citar al director del hospital para esclarecer lo ocurrido con una gestante.",
+        "proyecto": "",
+        "id": "diputados:bravo quispe"
+      },
+      {
+        "orador": "Leo de Paz",
+        "cargo": "legislador",
+        "sobre": "Capacidad hospitalaria frente al fenómeno El Niño",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Requirió un informe situacional de los hospitales ante el fenómeno El Niño.",
+        "proyecto": "",
+        "id": "diputados:de paz lancho"
+      },
+      {
+        "orador": "Leo de Paz",
+        "cargo": "legislador",
+        "sobre": "Investigación de caso en Hospital Daniel Alcides Carrión",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Solicitó un informe urgente sobre el examen anatomopatológico de la placenta.",
+        "proyecto": "",
+        "id": "diputados:de paz lancho"
+      },
+      {
+        "orador": "Jessica",
+        "cargo": "legislador",
+        "sobre": "Registro de medicamentos en salud mental",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Pidió citar a la jefa del SIS por problemas en el registro de diagnósticos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Carlos Domínguez",
+        "cargo": "legislador",
+        "sobre": "Fiscalización de infraestructura hospitalaria en Áncash",
+        "postura": "propone",
+        "tema": "Infraestructura",
+        "dijo": "Propuso conformar un grupo de trabajo para fiscalizar hospitales en Áncash.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Yanina Avengaño",
+        "cargo": "legislador",
+        "sobre": "Contingencia sanitaria en el departamento de Áncash",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Solicitó información sobre establecimientos de salud en riesgo por las lluvias.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Liliana Tacayama",
+        "cargo": "legislador",
+        "sobre": "Obras hospitalarias paralizadas por la ANI",
+        "postura": "propone",
+        "tema": "Infraestructura",
+        "dijo": "Pidió citar al jefe de la ANI para informar sobre obras hospitalarias paralizadas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "César Revilla",
+        "cargo": "legislador",
+        "sobre": "Vacunación contra el dengue en Piura",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Informó sobre la jornada de vacunación contra el dengue en Castilla.",
+        "proyecto": "",
+        "id": "diputados:revilla villanueva"
+      },
+      {
+        "orador": "Gustavo Andrés Meri Baldominos",
+        "cargo": "invitado",
+        "sobre": "Cooperación técnica ante el fenómeno del Niño",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Explicó los riesgos climáticos y la necesidad de infraestructura hospitalaria resiliente.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "María Sofía Cuba Fuentes",
+        "cargo": "ministro o autoridad",
+        "sobre": "Gestión de salud ante el fenómeno del Niño",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Informó sobre el monitoreo de riesgos y el control del dengue.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Viceministra de Salud Pública",
+        "cargo": "ministro o autoridad",
+        "sobre": "Preparación ante el fenómeno del niño",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Informó sobre la preparación ante el fenómeno del niño.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Magalla",
+        "cargo": "invitado",
+        "sobre": "Acciones del Colegio Médico",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Informó sobre las acciones del Colegio Médico.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Aníbal Velázquez",
+        "cargo": "invitado",
+        "sobre": "Gestión sanitaria ante el fenómeno del niño",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Pidió más recursos para el sistema de salud.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Marlenia Hermad",
+        "cargo": "legislador",
+        "sobre": "Interoperabilidad de sistemas de salud",
+        "postura": "pregunta",
+        "tema": "Salud",
+        "dijo": "Preguntó sobre el cronograma de interoperabilidad de sistemas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Viceministra de Salud Pública",
+        "cargo": "ministro o autoridad",
+        "sobre": "Interoperabilidad de historias clínicas",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Explicó el plan de interoperabilidad de historias clínicas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Jessica Caballes",
+        "cargo": "legislador",
+        "sobre": "Planes de contingencia sanitaria",
+        "postura": "pregunta",
+        "tema": "Salud",
+        "dijo": "Preguntó sobre los planes de contingencia sanitaria.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Viceministra",
+        "cargo": "ministro o autoridad",
+        "sobre": "Interoperabilidad de datos y puestos médicos",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Informó sobre la interoperabilidad de datos y los puestos médicos de avanzada.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Jessica Caballes",
+        "cargo": "legislador",
+        "sobre": "Plan de contingencia y puestos médicos",
+        "postura": "pregunta",
+        "tema": "Salud",
+        "dijo": "Preguntó sobre los mecanismos de contingencia y la descripción de los puestos médicos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Viceministra",
+        "cargo": "ministro o autoridad",
+        "sobre": "Articulación intersectorial y uso de IPRES",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Explicó la articulación intersectorial y el avance en el intercambio prestacional.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "María Lisa Silupú",
+        "cargo": "legislador",
+        "sobre": "Colapso de puestos de salud",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Denunció el colapso de los puestos de salud en zonas afectadas.",
+        "proyecto": "",
+        "id": "diputados:silupu inga"
+      },
+      {
+        "orador": "Viceministra",
+        "cargo": "ministro o autoridad",
+        "sobre": "Atención a centros de salud críticos",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Aseguró que tomarán nota para verificar la situación en la región.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Yataco",
+        "cargo": "legislador",
+        "sobre": "Gestión de salud en la región Ica",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Cuestionó la inoperancia del Estado en la gestión de salud de Ica.",
+        "proyecto": "",
+        "id": "diputados:yataco torrealva"
+      },
+      {
+        "orador": "Viceministra",
+        "cargo": "ministro o autoridad",
+        "sobre": "Gestión de salud en gobiernos regionales",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Comentó la necesidad de contar con personal técnico en las regiones.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Mirieliana Fantes Castañeda",
+        "cargo": "legislador",
+        "sobre": "Desatención de las regiones amazónicas",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Denunció la falta de recursos y especialistas en la selva.",
+        "proyecto": "",
+        "id": "diputados:infantes castaneda"
+      },
+      {
+        "orador": "Viceministra",
+        "cargo": "ministro o autoridad",
+        "sobre": "Vacunación y diagnóstico en Bagua",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Informó sobre la vacunación de dengue y equipos en Bagua.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Representante de la OPS",
+        "cargo": "invitado",
+        "sobre": "Recomendaciones de la OPS para emergencias",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Explicó la importancia de fortalecer la atención primaria y la transformación digital.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Domínguez",
+        "cargo": "legislador",
+        "sobre": "Preparación ante el fenómeno del niño",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Propuso fiscalizar la ejecución del presupuesto en los gobiernos regionales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Viceministra",
+        "cargo": "ministro o autoridad",
+        "sobre": "Implementación de servicios por impuestos",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Propuso utilizar servicios por impuestos para proteger la infraestructura de salud.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Luis Miguel de Pat Lancho",
+        "cargo": "legislador",
+        "sobre": "Brecha de conectividad en salud",
+        "postura": "pregunta",
+        "tema": "Salud",
+        "dijo": "Preguntó sobre la diferencia de distritos en riesgo y la conectividad.",
+        "proyecto": "",
+        "id": "diputados:de paz lancho"
+      },
+      {
+        "orador": "Viceministra",
+        "cargo": "ministro o autoridad",
+        "sobre": "Telemedicina en zonas de riesgo",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Informó que la telemedicina se priorizará en capitales de provincia.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Fernández",
+        "cargo": "legislador",
+        "sobre": "Abastecimiento de insumos y contingencia",
+        "postura": "pregunta",
+        "tema": "Salud",
+        "dijo": "Preguntó sobre el abastecimiento de medicamentos y planes de contingencia.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Viceministra",
+        "cargo": "ministro o autoridad",
+        "sobre": "Distribución de medicamentos estratégicos",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Informó que los medicamentos estratégicos ya han sido distribuidos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Wia Huercaya Calle",
+        "cargo": "invitado",
+        "sobre": "Abastecimiento de medicamentos e insumos sanitarios",
+        "postura": "propone",
+        "tema": "Farma",
+        "dijo": "Propuso fortalecer la vigilancia epidemiológica y sanitaria.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Representante de la OPS OMS",
+        "cargo": "invitado",
+        "sobre": "Importancia del agua para la salud",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Respaldó la importancia del agua para la salud.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Natalie",
+        "cargo": "legislador",
+        "sobre": "Propuestas de ley y pedidos",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Respaldó las propuestas de ley y pedidos.",
+        "proyecto": "Propuesta de ley del diputado Basán",
+        "id": null
+      },
+      {
+        "orador": "Fernández",
+        "cargo": "legislador",
+        "sobre": "Pedidos realizados en la sesión",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Respaldó los tres pedidos realizados en la sesión.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=tuKAqDIrWGI"
   }
 }
