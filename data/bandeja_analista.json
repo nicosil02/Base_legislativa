@@ -14,5 +14,21 @@
       },
       "tipo": "noticia"
     }
+  },
+  "n2368646": {
+    "estado": "interesante",
+    "fecha": "2026-11-05T16:51:16+00:00",
+    "por": "nicolas.silva@valiconsultores.com",
+    "titulo": "Asamblea debatirá el Presupuesto 2027: Estas son las principales asignaciones - El Diario Ecuador",
+    "item": {
+      "titulo": "Asamblea debatirá el Presupuesto 2027: Estas son las principales asignaciones - El Diario Ecuador",
+      "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxQM0o2SEk1cEJ5MF9LYzhwOTBIblAtWmd1NEhYdUI0VWlxSFRuRXY5c2ZORElJLUJvT3ZzQ3dXNFM0V2sxWUpNUkZwLU5oeDRDcURfSXBBb0hZbzVVSE5OM3lNTnVtM1BTOW9GMWRuUEViS09aUF9LM1pfN1kybWZJZ0ZSc0xEOUtOaGE3TmFWS1dPeGRXZTBHeGw5Uk5MV0ZuVkVaeEFwYXdtZExGZ09BNVpxSDZZWjF2ZkE?oc=5",
+      "pais": "EC",
+      "resumen": null,
+      "porque": {
+        "bayer": "El debate del presupuesto en Ecuador determina los fondos para salud y agricultura, ejes críticos para abastecimiento y subsidios."
+      },
+      "tipo": "noticia"
+    }
   }
 }
