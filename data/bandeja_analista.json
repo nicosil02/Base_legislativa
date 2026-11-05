@@ -72,5 +72,21 @@
       "porque": {},
       "tipo": "norma"
     }
+  },
+  "n2369437": {
+    "estado": "descartar",
+    "fecha": "2026-11-05T16:51:39+00:00",
+    "por": "nicolas.silva@valiconsultores.com",
+    "titulo": "Establecen requisitos fitosanitarios de cumplimiento obligatorio para la importación de fibra de algodón sin cardar ni peinar, de origen y procedencia del Estado Plurinacional de Bolivia",
+    "item": {
+      "titulo": "Establecen requisitos fitosanitarios de cumplimiento obligatorio para la importación de fibra de algodón sin cardar ni peinar, de origen y procedencia del Estado Plurinacional de Bolivia",
+      "url": "https://busquedas.elperuano.pe/dispositivo/NL/2571964-1",
+      "pais": "PE",
+      "resumen": null,
+      "porque": {
+        "syngenta": "Establece requisitos fitosanitarios de SENASA para importacion, impactando directamente la vigilancia fitosanitaria."
+      },
+      "tipo": "norma"
+    }
   }
 }
