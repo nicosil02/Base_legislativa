@@ -2135,25 +2135,25 @@
     "fecha": "2026-11-02",
     "organo": "Comisión de Desarrollo Económico",
     "pais": "EC",
-    "v": 3,
+    "v": 4,
     "dichos": [
       {
         "orador": "Yuri Colorado Marquez",
         "cargo": "invitado",
-        "sobre": "presupuesto general del estado 2027",
+        "sobre": "Incremento presupuestario para municipios",
         "postura": "a favor",
         "tema": "Presupuesto y gasto público",
-        "dijo": "Saludo el incremento considerable de seiscientos diez millones de dólares adicionales para los gobiernos autónomos descentralizados.",
+        "dijo": "Resaltó el incremento de 610 millones de dólares para municipios.",
         "proyecto": "",
         "id": null
       },
       {
         "orador": "Fredy Gallardo",
         "cargo": "invitado",
-        "sobre": "asignaciones presupuestarias a prefecturas",
+        "sobre": "Asignaciones presupuestarias para prefecturas",
         "postura": "a favor",
         "tema": "Presupuesto y gasto público",
-        "dijo": "Aplaudió el espacio y la entrega de asignaciones a tiempo por parte del gobierno central para las prefecturas.",
+        "dijo": "Respaldó la gestión del Gobierno para las asignaciones provinciales.",
         "proyecto": "",
         "id": null
       }
