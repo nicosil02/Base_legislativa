@@ -701,5 +701,21 @@
       },
       "tipo": "noticia"
     }
+  },
+  "n2369447": {
+    "estado": "descartar",
+    "fecha": "2026-11-05T13:28:00+00:00",
+    "por": "nicolas.silva@valiconsultores.com",
+    "titulo": "Designan Jefe de Gestión de Gobierno Digital de la Oficina de Gestión de Gobierno Digital de la Oficina General de Tecnologías de la Información y Comunicaciones",
+    "item": {
+      "titulo": "Designan Jefe de Gestión de Gobierno Digital de la Oficina de Gestión de Gobierno Digital de la Oficina General de Tecnologías de la Información y Comunicaciones",
+      "url": "https://busquedas.elperuano.pe/dispositivo/NL/2571641-1",
+      "pais": "PE",
+      "resumen": null,
+      "porque": {
+        "incode": "Designación de autoridad en el área de Gobierno Digital, eje de monitoreo para el cliente."
+      },
+      "tipo": "norma"
+    }
   }
 }
