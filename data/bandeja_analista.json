@@ -251,5 +251,21 @@
       },
       "tipo": "noticia"
     }
+  },
+  "n2369932": {
+    "estado": "descartar",
+    "fecha": "2026-11-05T17:30:16+00:00",
+    "por": "nicolas.silva@valiconsultores.com",
+    "titulo": "Dar por concluida la designación del señor LUIS MELCHOR LORO CHERO como representante del Ministerio de Salud en el Directorio del Fondo de Aseguramiento en Salud de la Policia Nacional del Perú - SALUDPOL, dándose ...",
+    "item": {
+      "titulo": "Dar por concluida la designación del señor LUIS MELCHOR LORO CHERO como representante del Ministerio de Salud en el Directorio del Fondo de Aseguramiento en Salud de la Policia Nacional del Perú - SALUDPOL, dándose ...",
+      "url": "https://www.gob.pe/institucion/minsa/normas-legales/8793873-979-2026-minsa",
+      "pais": "PE",
+      "resumen": null,
+      "porque": {
+        "bayer": "Designacion y cambios en representacion del MINSA ante el directorio de SALUDPOL en Peru."
+      },
+      "tipo": "norma"
+    }
   }
 }
