@@ -204,7 +204,7 @@ def _leer_wav(path) -> "np.ndarray":
         return np.frombuffer(w.readframes(w.getnframes()), dtype=np.int16).astype(np.float32) / 32768
 
 
-def pendientes(max_min: float = 150, dias: int = 3, db_path=None) -> int:
+def pendientes(max_min: float = 150, dias: int = 7, db_path=None) -> int:
     """Sesiones de los ultimos `dias` sin turnos (las transcritas en vivo): baja el audio,
     transcribe con hora y procesa, hasta `max_min` minutos. Las mas nuevas primero."""
     from congreso_live.facebook_ec import url_video
