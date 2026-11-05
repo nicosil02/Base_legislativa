@@ -153,5 +153,21 @@
       },
       "tipo": "noticia"
     }
+  },
+  "n2369012": {
+    "estado": "interesante",
+    "fecha": "2026-11-05T16:51:56+00:00",
+    "por": "nicolas.silva@valiconsultores.com",
+    "titulo": "BCR evalúa exigir más ciberseguridad a bancos en Perú - ATV.pe",
+    "item": {
+      "titulo": "BCR evalúa exigir más ciberseguridad a bancos en Perú - ATV.pe",
+      "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE12SDlfSDlBV0ZsMVBLalFnMXNXUkVTem5kRjRuYXZmN3BIV2pDTm1zdjJoVWctbmxqZ3lEbmJDcDc4b1Z1MVF2TTdBNGtCZHE4N0hualZvdEdiWlpGc1hKZGNHcmNWUm0xeW44TQ?oc=5",
+      "pais": "PE",
+      "resumen": null,
+      "porque": {
+        "incode": "El BCRP evalúa exigir mayores estándares de ciberseguridad a bancos, impactando directamente en la gestión de riesgos digitales y validación de clientes del sector financiero."
+      },
+      "tipo": "noticia"
+    }
   }
 }
