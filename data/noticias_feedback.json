@@ -25,5 +25,14 @@
     "clientes": [
       "syngenta"
     ]
+  },
+  {
+    "noticia_id": 20,
+    "created_at": "2026-11-05T16:51:52Z",
+    "descartado_por": "nicolas.silva@valiconsultores.com",
+    "titulo": "🔴🔵 El embajador Bernie Navarro se refirió a la visita de Keiko Fujimori a El Salvador, y señaló que Estados Unidos podría brindar tecnología para implementar nuevos establecimientos penitenciarios en Perú. 🌐Más información en: https://www.exitosanoticias - Facebook",
+    "clientes": [
+      "google"
+    ]
   }
 ]
