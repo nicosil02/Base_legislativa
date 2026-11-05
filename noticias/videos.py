@@ -20,6 +20,7 @@ from __future__ import annotations
 
 import base64
 import json
+import re
 import logging
 import os
 import sqlite3
@@ -157,6 +158,9 @@ def pedir_transcripcion(video_id: str, autoridad: str, pais: str, titulo: str) -
     backfill-auto.yml. Un archivo por pedido: no hay que leer ni mezclar
     nada, y pedir dos veces el mismo video da 422 (ya existe), que se
     toma como exito. Por eso no usa core.store (que lee y reescribe)."""
+    # llega del navegador y arma una ruta del repo: nada de "../"
+    if not re.fullmatch(r"[\w-]{6,40}", video_id or ""):
+        raise ValueError(f"video_id invalido: {video_id!r}")
     token, repo = os.environ.get("GH_TOKEN"), os.environ.get("GH_REPO")
     if not token or not repo:
         raise RuntimeError("Faltan GH_TOKEN/GH_REPO para pedir la transcripción")
