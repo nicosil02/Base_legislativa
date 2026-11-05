@@ -749,5 +749,21 @@
       },
       "tipo": "noticia"
     }
+  },
+  "n2368103": {
+    "estado": "descartar",
+    "fecha": "2026-11-05T13:56:23+00:00",
+    "por": "nicolas.silva@valiconsultores.com",
+    "titulo": "Asamblea Nacional confirma ataque informático a su página web y anuncia investigaciones - El Telégrafo (por eliminar)",
+    "item": {
+      "titulo": "Asamblea Nacional confirma ataque informático a su página web y anuncia investigaciones - El Telégrafo (por eliminar)",
+      "url": "https://news.google.com/rss/articles/CBMi2gFBVV95cUxNYVpMTENZSDFjQ0l4S3NpdDBfWEpEN2txWjZGQlN0QnpvWjdHNTRZdUJhOVV1VXBqVzAzWV85VFNiQnVmM1hxb1RSZlRsa1ZOQ0lEVXNlNVpWaGFIanQ4VVd0cUNYbXU4c29ZeHNoUVpLemE4dXlEN1ZfUjdaVlNzWExTMy1oOFB5QS1xYjFJX2VfclljSDkyY0ZNNnRuYlV1aDVUZTVaUzR3VGtUS0tuSVhLSWJ2NGNvbXROS3FfaU1FSGdxcU5zRXFseWxieEx4bkFLQU5LOU1VUQ?oc=5",
+      "pais": "EC",
+      "resumen": null,
+      "porque": {
+        "incode": "Reporta un ataque informático a un actor monitoreado en Ecuador, afectando el eje de ciberseguridad."
+      },
+      "tipo": "noticia"
+    }
   }
 }
