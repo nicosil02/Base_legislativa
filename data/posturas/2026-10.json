@@ -4004,45 +4004,45 @@
     "fecha": "2026-10-28",
     "organo": "Pleno del Congreso",
     "pais": "PE",
-    "v": 3,
+    "v": 4,
     "dichos": [
       {
         "orador": "Luis Hibaja",
         "cargo": "legislador",
-        "sobre": "Obras del aeropuerto de Jaén Cajamarca",
+        "sobre": "obras del aeropuerto de Jaén",
         "postura": "propone",
         "tema": "Infraestructura",
-        "dijo": "Propuso incluir y priorizar la ejecución de las obras del aeropuerto de Jaén Cajamarca en el proyecto.",
+        "dijo": "Pidió priorizar la ejecución de obras en el aeropuerto de Jaén.",
         "proyecto": "PL 5",
         "id": null
       },
       {
         "orador": "Absalom Vázquez",
         "cargo": "legislador",
-        "sobre": "Crédito suplementario y presupuesto público",
+        "sobre": "naturaleza del crédito suplementario",
         "postura": "comenta",
         "tema": "Presupuesto y gasto público",
-        "dijo": "Explicó que se debate un crédito suplementario de 8228 millones de soles y no la ley de presupuesto.",
+        "dijo": "Informó que se debate el crédito suplementario y no el presupuesto.",
         "proyecto": "PL 5",
         "id": null
       },
       {
         "orador": "César Revilla",
         "cargo": "legislador",
-        "sobre": "Inversiones para gobiernos locales",
+        "sobre": "anexo de inversiones locales",
         "postura": "propone",
         "tema": "Presupuesto y gasto público",
-        "dijo": "Propuso agregar el anexo 3 para detallar inversiones destinadas a los gobiernos locales.",
+        "dijo": "Propuso agregar un anexo con inversiones para gobiernos locales.",
         "proyecto": "PL 5",
         "id": "diputados:revilla villanueva"
       },
       {
         "orador": "José Arista",
         "cargo": "legislador",
-        "sobre": "Cuarto intermedio para texto sustitutorio",
+        "sobre": "elaboración de texto sustitutorio",
         "postura": "propone",
         "tema": "Presupuesto y gasto público",
-        "dijo": "Solicitó un cuarto intermedio para elaborar un texto sustitutorio con el Ministerio de Economía.",
+        "dijo": "Pidió un cuarto intermedio para elaborar un texto sustitutorio.",
         "proyecto": "PL 5",
         "id": "senado:arista arbildo"
       }
@@ -4053,36 +4053,56 @@
     "fecha": "2026-10-28",
     "organo": "Comisión de Seguridad Integral",
     "pais": "EC",
-    "v": 3,
+    "v": 4,
     "dichos": [
       {
-        "orador": "Daisy Teran",
+        "orador": "Daisy Terán",
         "cargo": "ministro o autoridad",
-        "sobre": "Ley Orgánica de Personal y Disciplina de las Fuerzas Armadas",
+        "sobre": "viabilidad de la ley de fuerzas armadas",
         "postura": "a favor",
         "tema": "Presupuesto y gasto público",
-        "dijo": "Aseguro que existe factibilidad económica en el presupuesto del ministerio de defensa para aplicar la normativa.",
+        "dijo": "Respaldó la viabilidad financiera del proyecto de ley de las Fuerzas Armadas.",
         "proyecto": "Ley Orgánica de Personal y Disciplina de las Fuerzas Armadas",
         "id": null
       },
       {
         "orador": "Guillermo Pabón",
         "cargo": "invitado",
-        "sobre": "proyecto de ley antimafias",
-        "postura": "propone",
-        "tema": "Comercio",
-        "dijo": "Propuso incluir modificaciones en el Código Orgánico Integral Penal para combatir el contrabando dentro de la ley antimafias.",
-        "proyecto": "ley antimafias",
+        "sobre": "inclusión del contrabando en ley antimafias",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Apoyó la inclusión del contrabando en la ley para proteger la industria.",
+        "proyecto": "Ley Antimafias",
         "id": null
+      },
+      {
+        "orador": "Gerardo Machado",
+        "cargo": "legislador",
+        "sobre": "enriquecimiento de la ley antimafias",
+        "postura": "pregunta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Preguntó cómo mejorar la ley para combatir el lavado de activos.",
+        "proyecto": "Ley Antimafias",
+        "id": "EC:machado clavijo"
       },
       {
         "orador": "Mauricio Nágera",
         "cargo": "invitado",
-        "sobre": "proyecto de ley antimafias",
+        "sobre": "observaciones a la ley antimafias",
         "postura": "con observaciones",
         "tema": "Justicia",
-        "dijo": "Cuestiono la desproporcionalidad en sanciones y el debilitamiento de garantías procesales dentro de la propuesta legal.",
-        "proyecto": "ley antimafias",
+        "dijo": "Advirtió sobre la desproporcionalidad de penas y las garantías procesales.",
+        "proyecto": "Ley Antimafias",
+        "id": null
+      },
+      {
+        "orador": "Mario Asambrán",
+        "cargo": "legislador",
+        "sobre": "penas en delitos hidrocarburíferos",
+        "postura": "pregunta",
+        "tema": "Energía",
+        "dijo": "Consultó sobre una propuesta de penas coherentes para delitos hidrocarburíferos.",
+        "proyecto": "Ley Antimafias",
         "id": null
       }
     ],
@@ -4230,16 +4250,16 @@
     "fecha": "2026-10-28",
     "organo": "Comisión de Educación",
     "pais": "EC",
-    "v": 3,
+    "v": 4,
     "dichos": [
       {
-        "orador": "Ulvar Alexander Zapata Carpio",
+        "orador": "Hugo Alexander Zapata Carpio",
         "cargo": "invitado",
-        "sobre": "proyecto de reforma al Código Orgánico de la Economía Social de los Conocimientos",
+        "sobre": "Reforma al Código de la Economía Social",
         "postura": "con observaciones",
-        "tema": "Educación",
-        "dijo": "Analizo las disposiciones del Código Orgánico de la Economía Social de los Conocimientos sobre la propiedad intelectual y los pequeños productores.",
-        "proyecto": "Ley Orgánica Reformatoria al Código Orgánico de la Economía Social de los Conocimientos, Creatividad e Innovación para a la Defensa de los Pequeños y Medianos Productores",
+        "tema": "Otros",
+        "dijo": "Señaló inconsistencias en el COESCI respecto a la propiedad intelectual y los derechos colectivos.",
+        "proyecto": "Reforma al COESCI",
         "id": null
       }
     ],
