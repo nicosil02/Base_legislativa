@@ -382,5 +382,21 @@
       },
       "tipo": "noticia"
     }
+  },
+  "n2370983": {
+    "estado": "descartar",
+    "fecha": "2026-11-05T23:19:07+00:00",
+    "por": "nicolas.silva@valiconsultores.com",
+    "titulo": "Pitahaya peruana conquista un nuevo mercado: Bolivia autoriza su ingreso",
+    "item": {
+      "titulo": "Pitahaya peruana conquista un nuevo mercado: Bolivia autoriza su ingreso",
+      "url": "https://www.agroperu.pe/pitahaya-peruana-conquista-un-nuevo-mercado-bolivia-autoriza-su-ingreso/",
+      "pais": "PE",
+      "resumen": null,
+      "porque": {
+        "bayer": "Apertura de nuevo mercado de exportacion para la agroexportacion peruana, de interes para Bayer Crop."
+      },
+      "tipo": "noticia"
+    }
   }
 }
