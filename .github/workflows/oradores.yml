@@ -1,0 +1,75 @@
+name: Quien habla (transcripciones por turnos)
+
+# Las sesiones transcritas en vivo quedan como un solo texto. Este workflow baja
+# el audio de las sesiones de los ultimos 3 dias que aun no tienen turnos, separa
+# voces y Gemma dice quien habla (congreso_live/oradores.py). Las que se bajan
+# completas (backfill, comisiones EC de Facebook) ya salen con turnos.
+#
+# El cron nativo no dispara confiable: tambien corre con el push de
+# data/.backfill_trigger (rutina en la nube cada 6 h), como backfill-auto.
+
+on:
+  push:
+    paths:
+      - 'data/.backfill_trigger'
+  schedule:
+    - cron: '40 */3 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: oradores
+  cancel-in-progress: false
+
+env:
+  CLIENTES_CLAVE: ${{ secrets.CLIENTES_CLAVE }}
+
+jobs:
+  oradores:
+    runs-on: ubuntu-latest
+    timeout-minutes: 175
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Cache pip + modelos (persiste entre runs)
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/pip
+            ~/.cache/huggingface
+            ~/.cache/vali_oradores
+          key: oradores-deps-${{ hashFiles('.github/workflows/oradores.yml', 'constraints.txt') }}
+
+      - name: Instalar deps
+        run: |
+          pip install -c constraints.txt -q yt-dlp requests faster-whisper sherpa-onnx "av<19" imageio-ffmpeg google-genai
+          sudo apt-get install -y -qq ffmpeg
+
+      - name: Instalar Cloudflare WARP en modo proxy (SOCKS5 :40000)
+        continue-on-error: true
+        run: bash scripts/warp.sh
+
+      - name: Bootstrap DB Peru desde la rama datos
+        run: bash scripts/bajar_db.sh proyectos.db.gz proyectos.db || true
+
+      - name: Turnos de las sesiones recientes
+        env:
+          PYTHONIOENCODING: utf-8
+          YT_DLP_PROXY: socks5://127.0.0.1:40000
+          FFMPEG_BIN: /usr/bin/ffmpeg
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          timeout 9000 python -X utf8 -u -m congreso_live.oradores pendientes --max-min 140 \
+              || echo "[warn] oradores termino con error, sigo al commit igual"
+
+      - name: Publicar base en la rama datos
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          bash scripts/publicar_db.sh proyectos.db transcripciones

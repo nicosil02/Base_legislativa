@@ -205,6 +205,11 @@ def transcribir_vod(video_id: str, tipo: str, titulo: str, modelo=None, db_path=
     guardar_transcripcion(conn, video_id, tipo, titulo,
                           fecha or datetime.now(timezone.utc).date().isoformat(),
                           duracion, texto, temas)
+    try:  # quien habla: si falla, la transcripcion ya quedo guardada
+        from congreso_live.oradores import procesar
+        print(f"[oradores] {video_id}: {procesar(conn, video_id, tipo, wav, segs)} turnos")
+    except Exception as e:
+        print(f"[oradores] {video_id}: fallo ({str(e)[:200]})")
     conn.close()
     return {"ok": True, "chars": len(texto), "duracion_seg": duracion}
 

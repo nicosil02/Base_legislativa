@@ -572,6 +572,13 @@ def _votos_ec_de_pl(ec, pl: str, titulo: str) -> list[dict]:
 
 def _texto_video(video_id: str) -> str:
     conn = connect_ro("proyectos.db")
+    try:  # ordenada por turnos (congreso_live/oradores.py) si ya esta
+        f = conn.execute("SELECT turnos FROM sesiones_turnos WHERE video_id = ?", (video_id,)).fetchone()
+        if f:
+            from congreso_live.oradores import como_texto
+            return como_texto(json.loads(f[0]))
+    except sqlite3.OperationalError:
+        pass
     for tabla in ("sesiones_transcripciones", "tv_vistos"):
         try:
             f = conn.execute(f"SELECT texto FROM {tabla} WHERE video_id = ?", (video_id,)).fetchone()

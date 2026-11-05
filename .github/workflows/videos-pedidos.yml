@@ -24,6 +24,8 @@ env:
   # Abre los datos cifrados de clientes (clientes/privado.py). Secreto propio
   # (no es la clave de Gemini).
   CLIENTES_CLAVE: ${{ secrets.CLIENTES_CLAVE }}
+  # Gemma dice quien habla en cada turno (congreso_live/oradores.py)
+  GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
 
 jobs:
   transcribir:
@@ -42,11 +44,12 @@ jobs:
           path: |
             ~/.cache/pip
             ~/.cache/huggingface
+            ~/.cache/vali_oradores
           key: vigilar-congreso-deps-${{ hashFiles('.github/workflows/vigilar-congreso.yml') }}
 
       - name: Instalar deps
         run: |
-          pip install -c constraints.txt -q yt-dlp requests faster-whisper "av<19" imageio-ffmpeg
+          pip install -c constraints.txt -q yt-dlp requests faster-whisper sherpa-onnx "av<19" imageio-ffmpeg google-genai
           sudo apt-get install -y -qq ffmpeg
 
       - name: Instalar Cloudflare WARP en modo proxy (SOCKS5 :40000)

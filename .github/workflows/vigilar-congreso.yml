@@ -29,6 +29,8 @@ env:
   # Abre los datos cifrados de clientes (clientes/privado.py). Secreto propio
   # (no es la clave de Gemini).
   CLIENTES_CLAVE: ${{ secrets.CLIENTES_CLAVE }}
+  # Gemma dice quien habla en cada turno (congreso_live/oradores.py)
+  GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
 
 jobs:
   vigilar:
@@ -47,11 +49,12 @@ jobs:
           path: |
             ~/.cache/pip
             ~/.cache/huggingface
+            ~/.cache/vali_oradores
           key: vigilar-congreso-deps-${{ hashFiles('.github/workflows/vigilar-congreso.yml') }}
 
       - name: Instalar deps
         run: |
-          pip install -c constraints.txt -q yt-dlp requests faster-whisper "av<19" imageio-ffmpeg playwright google-genai
+          pip install -c constraints.txt -q yt-dlp requests faster-whisper sherpa-onnx "av<19" imageio-ffmpeg playwright google-genai
           # Chromium para ver que comisiones EC estan en vivo en Facebook
           # (congreso_live/facebook_ec.py). Facebook va sin WARP.
           python -m playwright install --with-deps chromium > /dev/null
