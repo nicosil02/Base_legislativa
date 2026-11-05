@@ -63,5 +63,14 @@
     "clientes": [
       "incode"
     ]
+  },
+  {
+    "noticia_id": 10,
+    "created_at": "2026-11-05T17:30:19Z",
+    "descartado_por": "nicolas.silva@valiconsultores.com",
+    "titulo": "Dar por concluida la designación del señor LUIS MELCHOR LORO CHERO como representante del Ministerio de Salud en el Directorio del Fondo de Aseguramiento en Salud de la Policia Nacional del Perú - SALUDPOL, dándose ...",
+    "clientes": [
+      "bayer"
+    ]
   }
 ]
