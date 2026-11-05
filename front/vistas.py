@@ -11,6 +11,7 @@ import datetime as dt
 import html
 import importlib
 import json
+import math
 import re
 import sqlite3
 import threading
@@ -490,14 +491,21 @@ def ficha_pl(pais: str, pl: str) -> dict:
             """SELECT DISTINCT s.fecha, s.nombre_comision, r.contexto FROM sesion_pl_referenciado r
                JOIN sesiones s ON s.id_sesion = r.id_sesion WHERE r.pley_num = ? AND r.per_par_id = ?
                ORDER BY s.fecha DESC LIMIT 20""", (num, per))]
+        from consultas.integrantes import integrantes
+        from consultas.votaciones import clave_congresista
+        por_id = {p["id"]: p for p in integrantes()}
         votos = []
-        for vid, f, asunto, si, no, ab in pe.execute(
-                """SELECT id, fecha, asunto, si, no, abst FROM votacion_pleno
+        for vid, cam, f, asunto, si, no, ab, pdf in pe.execute(
+                """SELECT id, camara, fecha, asunto, si, no, abst, pdf_url FROM votacion_pleno
                    WHERE pley_num = ? AND pl_cod_tipo_parl = ? ORDER BY fecha DESC""", (num, tipo)):
-            bancadas: dict[str, dict] = {}
-            for b, v, k in pe.execute("SELECT bancada, voto, count(*) FROM voto_pleno_nominal WHERE votacion_id = ? GROUP BY 1, 2", (vid,)):
-                bancadas.setdefault(b or "Sin bancada", {})[v] = k
-            votos.append({"fecha": f, "asunto": (asunto or "")[:260], "si": si, "no": no, "abst": ab, "bancadas": bancadas})
+            nominal = []
+            for cong, b, v in pe.execute("SELECT congresista, bancada, voto FROM voto_pleno_nominal WHERE votacion_id = ?", (vid,)):
+                p = por_id.get(clave_congresista(cam, cong))
+                nominal.append({"id": p["id"] if p else None, "nombre": p["nombre"] if p else cong,
+                                "bancada": p["bancada"] if p else (b or "Sin bancada"), "voto": v})
+            votos.append({"fecha": f, "asunto": (asunto or "")[:260], "si": si, "no": no, "abst": ab, "url": pdf,
+                          "donde": {"senado": "Pleno del Senado", "diputados": "Pleno de Diputados"}.get(cam, "Pleno"),
+                          "nominal": nominal})
         noticias = _noticias_de_pl(pe, "PE", num, "")
     else:
         ec = connect_ro("proyectos_ec.db")
@@ -510,11 +518,48 @@ def ficha_pl(pais: str, pl: str) -> dict:
         sesiones = [{"fecha": (f or "")[:10], "organo": o, "que": (s or "")[:220]} for f, o, s in ec.execute(
             """SELECT DISTINCT s.fecha, s.nombre_comision, s.summary FROM sesion_ec_pl_referenciado r
                JOIN sesiones_ec s ON s.uid = r.uid WHERE r.n_tramite = ? ORDER BY s.fecha DESC LIMIT 20""", (pl,))]
-        votos = []
+        votos = _votos_ec_de_pl(ec, pl, fila[0])
         noticias = _noticias_de_pl(pe, "EC", None, fila[0])
     from alerts import pls_seguidos
     return {"tramite": tramite, "sesiones": sesiones, "votos": votos, "noticias": noticias,
             "seguido": pls_seguidos.clave(pais, pl) in pls_seguidos.lista()}
+
+
+_GENERICAS_EC = {"proyecto", "organica", "organico", "reformatoria", "reformatorio", "reforma", "reformas", "codigo",
+                 "varias", "leyes", "sobre", "para", "garantizar", "derecho", "derechos", "nacional", "republica",
+                 "ecuador", "ley", "articulo", "articulos", "creacion", "funcionamiento", "desarrollo", "fortalecer",
+                 "fortalecimiento", "integral", "sistema", "publico", "publica", "general", "segundo", "primer",
+                 "debate", "informe", "aprobar", "texto", "final", "votacion", "mocion", "personas", "entre", "otras"}
+
+
+def _votos_ec_de_pl(ec, pl: str, titulo: str) -> list[dict]:
+    """Votaciones nominales de un PL de Ecuador, en el Pleno (Observatorio) y en comision
+    (PDF de la Asamblea), cuyo texto nombra la ley. ponytail: por palabras del titulo; las
+    mociones que no nombran la ley ("Que esta Comision...") no entran."""
+    from consultas.integrantes import integrantes
+    from consultas.votos_ec import votaciones as del_pleno
+    from consultas.votos_ec_comisiones import votaciones as de_comisiones
+    from core.text import norm
+    por_id = {p["id"]: p for p in integrantes() if p["pais"] == "EC"}
+
+    def fila(v: dict, donde: str) -> dict:
+        n = {k: 0 for k in ("SI", "NO", "ABST")}
+        for x in v["votos"].values():
+            n[x] = n.get(x, 0) + 1
+        return {"fecha": v["fecha"], "asunto": v["asunto"][:260], "si": n["SI"], "no": n["NO"], "abst": n["ABST"],
+                "url": v.get("url"), "donde": donde,
+                "nominal": [{"id": i, "nombre": por_id[i]["nombre"] if i in por_id else i.split(":", 1)[-1].title(),
+                             "bancada": por_id[i]["bancada"] if i in por_id else "Sin bancada", "voto": x}
+                            for i, x in v["votos"].items()]}
+    # palabras propias del titulo (sin las que llevan todos: "ley organica reformatoria...")
+    propias = {w for w in norm(titulo).split() if len(w) >= 5 and w not in _GENERICAS_EC}
+    def nombra(asunto: str) -> bool:
+        # lo que va despues de "proyecto": antes suele ir la base legal ("de conformidad con la Ley...")
+        _, hay, resto = norm(asunto).partition("proyecto")
+        return bool(hay) and len(propias) >= 2 and len(propias & set(resto.split())) >= max(2, math.ceil(0.7 * len(propias)))
+    out = [fila(v, "Pleno de la Asamblea") for v in del_pleno() if nombra(v["asunto"])]
+    out += [fila(v, v["comision"]) for v in de_comisiones() if nombra(v["asunto"])]
+    return sorted(out, key=lambda x: x["fecha"], reverse=True)
 
 
 def _texto_video(video_id: str) -> str:
