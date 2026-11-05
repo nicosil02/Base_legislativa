@@ -1,7 +1,7 @@
 name: Quien habla (transcripciones por turnos)
 
 # Las sesiones transcritas en vivo quedan como un solo texto. Este workflow baja
-# el audio de las sesiones de los ultimos 3 dias que aun no tienen turnos, separa
+# el audio de las sesiones de los ultimos 7 dias que aun no tienen turnos, separa
 # voces y Gemma dice quien habla (congreso_live/oradores.py). Las que se bajan
 # completas (backfill, comisiones EC de Facebook) ya salen con turnos.
 #
