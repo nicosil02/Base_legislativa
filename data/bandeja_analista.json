@@ -414,5 +414,21 @@
       },
       "tipo": "noticia"
     }
+  },
+  "n2370463": {
+    "estado": "descartar",
+    "fecha": "2026-11-05T23:19:15+00:00",
+    "por": "nicolas.silva@valiconsultores.com",
+    "titulo": "Julio Velarde alerta que los ataques cibernéticos contra los bancos serán cada vez más poderosos - Perú Retail",
+    "item": {
+      "titulo": "Julio Velarde alerta que los ataques cibernéticos contra los bancos serán cada vez más poderosos - Perú Retail",
+      "url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxPQW9JUVJzeTNlVVM2NXFGUFhrOVY2X0ZkR285M3V4VXNxSUlZTFVUbXJPT0ZKT05ZNXJHeG5BTng2azZrNXhFclg0RTNOLVhMcDJHOWluWV80WnM0V1RiaDhFb2NZTkVSLUxXMVcwMFdxOFpUTGltZ0NLTVJXZFh5bm9fSW91Rkc0dXUxQ1llZkUwRVppVHNPX3RPRHk0Q29aQUx4THFBbFpwM2VoZFdSdTFnZGNydWswZUhjLUd2OVM5cmc?oc=5",
+      "pais": "PE",
+      "resumen": null,
+      "porque": {
+        "incode": "Alerta de la máxima autoridad monetaria sobre riesgos de ciberseguridad en banca digital, sector clave para el cliente."
+      },
+      "tipo": "noticia"
+    }
   }
 }
