@@ -717,5 +717,21 @@
       },
       "tipo": "norma"
     }
+  },
+  "n2368443": {
+    "estado": "descartar",
+    "fecha": "2026-11-05T13:46:08+00:00",
+    "por": "nicolas.silva@valiconsultores.com",
+    "titulo": "Julio Velarde alerta sobre riesgos de ciberseguridad para la banca digital en Perú - Revista Economía",
+    "item": {
+      "titulo": "Julio Velarde alerta sobre riesgos de ciberseguridad para la banca digital en Perú - Revista Economía",
+      "url": "https://news.google.com/rss/articles/CBMieEFVX3lxTE9lSmpyWjJkSnJja01LQjdtaVVrT2ZWOHo2eHdBeXREanFYbFJBYWo4c1RQRm5XZkhKTlU4NDNSZF9rWGVxd092TkFjRlZJQXVWY1IwVVd3VW1nS2FueVJBcUFPMG5GcEhrMW9xT0JEVTN6UWZlQjR0Sg?oc=5",
+      "pais": "PE",
+      "resumen": null,
+      "porque": {
+        "incode": "Alerta de la máxima autoridad monetaria sobre riesgos de ciberseguridad en banca digital, sector clave para el cliente."
+      },
+      "tipo": "noticia"
+    }
   }
 }
