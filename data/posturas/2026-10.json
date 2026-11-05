@@ -6423,16 +6423,16 @@
     "fecha": "2026-10-27",
     "organo": "Comisión de Relaciones Internacionales",
     "pais": "EC",
-    "v": 3,
+    "v": 4,
     "dichos": [
       {
-        "orador": "Estefania Martínez",
+        "orador": "Estefanía Martínez",
         "cargo": "invitado",
-        "sobre": "Proyecto de ley orgánica del servicio exterior",
+        "sobre": "Reforma a la Ley del Servicio Exterior",
         "postura": "con observaciones",
-        "tema": "Otros",
-        "dijo": "Analizo cinco consideraciones técnicas sobre el ingreso, comisiones, derechos familiares, régimen disciplinario y técnica legislativa del proyecto.",
-        "proyecto": "Ley Orgánica del Servicio Exterior",
+        "tema": "Política y control político",
+        "dijo": "Propuso ajustes técnicos para fortalecer la reforma del servicio exterior.",
+        "proyecto": "Ley del Servicio Exterior",
         "id": null
       }
     ],
@@ -6442,15 +6442,15 @@
     "fecha": "2026-10-27",
     "organo": "Comisión de Soberanía Alimentaria",
     "pais": "EC",
-    "v": 3,
+    "v": 4,
     "dichos": [
       {
-        "orador": "Jorge Hugo Tituaña Calapiña",
+        "orador": "Jorge Hugo Tituánea Calapiña",
         "cargo": "invitado",
         "sobre": "Reforma a la Ley de Acuicultura y Pesca",
         "postura": "propone",
         "tema": "Pesca",
-        "dijo": "Propuso reformas técnicas a la Ley de Acuicultura y Pesca para fortalecer el sector.",
+        "dijo": "Propuso la reforma a la Ley Orgánica para el Desarrollo de la Acuicultura y Pesca.",
         "proyecto": "Ley de Acuicultura y Pesca",
         "id": null
       }
@@ -9169,5 +9169,54 @@
       }
     ],
     "url": "https://www.youtube.com/watch?v=Lixnv2MfVpY"
+  },
+  "VSF1rifH-j4": {
+    "fecha": "2026-10-27",
+    "organo": "Comisión de Defensa Nacional",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Amalia Palomino",
+        "cargo": "legislador",
+        "sobre": "participación de fuerzas armadas en infraestructura",
+        "postura": "en contra",
+        "tema": "Infraestructura",
+        "dijo": "Denunció riesgos en la contratación y el presupuesto.",
+        "proyecto": "PL 00067-2031-CD",
+        "id": null
+      },
+      {
+        "orador": "Andrea Medina Stein",
+        "cargo": "legislador",
+        "sobre": "participación de fuerzas armadas en infraestructura",
+        "postura": "a favor",
+        "tema": "Infraestructura",
+        "dijo": "Defendió el uso de la ingeniería militar en infraestructura.",
+        "proyecto": "PL 00067-2031-CD",
+        "id": "diputados:medina stein"
+      },
+      {
+        "orador": "Javier Colchado",
+        "cargo": "legislador",
+        "sobre": "participación de fuerzas armadas en infraestructura",
+        "postura": "propone",
+        "tema": "Infraestructura",
+        "dijo": "Pidió opiniones técnicas del Ministerio de Economía.",
+        "proyecto": "PL 00067-2031-CD",
+        "id": "diputados:colchado huamani"
+      },
+      {
+        "orador": "José Bahía",
+        "cargo": "legislador",
+        "sobre": "gestión del riesgo de desastres",
+        "postura": "con observaciones",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso estandarizar la redacción de los artículos.",
+        "proyecto": "PL 29664",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=VSF1rifH-j4"
   }
 }
