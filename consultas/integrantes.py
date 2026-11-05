@@ -44,7 +44,9 @@ _PROV_EC = {"A": "Azuay", "B": "Bolívar", "C": "Carchi", "D": "Orellana", "E": 
 
 
 def _texto(h: str) -> str:
-    return re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", " ", h or ""))).strip()
+    # algunas fichas traen su propio <style> o <script>: eso no es la reseña
+    h = re.sub(r"(?is)<(style|script)\b.*?</\1\s*>", " ", h or "")
+    return re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", " ", h))).strip()
 
 
 def _tax(x: dict, pref: str) -> str | None:

@@ -96,7 +96,7 @@ def leer(texto: str, gente: list[dict]) -> list[dict]:
             j += 1
         fin = min(anclas[j + 1] if j + 1 < len(anclas) else len(t), a + 2500)
         fin_previo = fin
-        corte = re.search(r"•|-{5,}|[IVX]+\.\s+[A-ZÁÉÍÓÚ]{4,}", t[a + 20:fin])  # sigue otro acuerdo o seccion
+        corte = re.search(r"•|-{5,}|\b[IVX]+\.\s+[A-ZÁÉÍÓÚ]{4,}", t[a + 20:fin])  # sigue otro acuerdo o seccion
         fin = a + 20 + corte.start() if corte else fin
         contexto = t[max(0, a - 1200):a]
         corte = list(_SECCION.finditer(contexto))
