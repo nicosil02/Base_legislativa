@@ -149,5 +149,14 @@
     "clientes": [
       "syngenta"
     ]
+  },
+  {
+    "noticia_id": 13,
+    "created_at": "2026-11-05T13:25:18Z",
+    "descartado_por": "nicolas.silva@valiconsultores.com",
+    "titulo": "Modifican la R.J. N° D000071-2026-MIDAGRI-SENASA-JN, que aprobó los “Lineamientos generales para autorizar a personas naturales y jurídicas la prestación de servicios oficiales del Servicio Nacional de Sanidad Agraria”, y dictan otras disposiciones",
+    "clientes": [
+      "syngenta"
+    ]
   }
 ]
