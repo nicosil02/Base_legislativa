@@ -40,6 +40,9 @@ VISTAS.alertas = (() => {
   const FALLO = "No se pudo conectar con Gemini: ";
   const validos = () => c.historia.filter(([r, t]) => r === "user" || !t.startsWith(FALLO));
   const respuestas = () => validos().filter(([r]) => r === "assistant");
+  // el modelo bueno es gemini-3.6-flash; sin cupo pasa a lite o gemma y escribe peor
+  const MODELO = { "gemini-3.5-flash-lite": "Flash-Lite", "gemma-4-26b-a4b-it": "Gemma" };
+  const flojo = (m) => MODELO[m[2]] ? ` · ${MODELO[m[2]]}` : "";
 
   function mensajes() {
     const caja = raiz.querySelector(".chat");
@@ -53,7 +56,7 @@ VISTAS.alertas = (() => {
       if (t.startsWith(FALLO)) return `<div class="msg assistant">${esc(t)}</div>`;
       n += 1;
       return `<button type="button" class="msg assistant version${m === ultima ? " actual" : ""}" data-v="${n}">
-        <b>Versión ${n}${m === ultima ? ", a la derecha" : ""}</b><span>${esc(t.replace(/\*/g, "").replace(/\s*\n+\s*/g, " · "))}</span></button>`;
+        <b>Versión ${n}${m === ultima ? ", a la derecha" : ""}${flojo(m)}</b><span>${esc(t.replace(/\*/g, "").replace(/\s*\n+\s*/g, " · "))}</span></button>`;
     }).join("") + (c.ocupado ? `<div class="msg assistant pensando">${esc(c.ocupado)}</div>` : "");
     caja.onclick = (e) => {  // volver a una version anterior: pasa a la derecha para editarla
       const v = e.target.closest("[data-v]");
@@ -80,6 +83,7 @@ VISTAS.alertas = (() => {
     const p = c.material?.items?.[0] ?? {};
     caja.innerHTML = `<div class="f-cab"><h2>La alerta</h2><span class="nota">${(i => i < 0 ? "Con tus cambios" : `Versión ${i + 1}`)(respuestas().findLastIndex(([, t]) => t === (c.final ?? ult[1])))}</span>
         <button type="button" class="btn g-editar">Editar</button><button type="button" class="btn pri g-copiar">Copiar</button></div>
+      ${(m => MODELO[m?.[2]] ? `<div class="aviso">La escribió ${MODELO[m[2]]} porque se acabó el cupo de Gemini Flash. Escribe peor, revísala con más cuidado.</div>` : "")(respuestas().find(([, t]) => t === (c.final ?? ult[1])) ?? ult)}
       <div class="previa wa"></div><textarea class="g-texto" rows="14" hidden aria-label="Texto de la alerta">${esc(c.final ?? ult[1])}</textarea>
       <h3 class="f-sub">Guardar en el historial</h3>
       <div class="barra"><input class="buscar g-titulo" placeholder="Título para el historial" aria-label="Título" value="${esc(p.titulo ?? "")}">
@@ -149,7 +153,7 @@ VISTAS.alertas = (() => {
     mensajes();
     try {
       const r = await App.pedir("chat", { cliente: c.cliente, historia: validos().slice(0, -1), prompt });
-      c.historia.push(["assistant", r.respuesta]);
+      c.historia.push(["assistant", r.respuesta, r.modelo]);
       c.final = null;
     } catch (e) { c.historia.push(["assistant", FALLO + e.message]); }
     persistir();
@@ -164,7 +168,7 @@ VISTAS.alertas = (() => {
     material(); mensajes();
     try {
       const r = await App.pedir("chat_inicio", { cliente: c.cliente, material: semilla });
-      c.historia.push(["user", r.prompt], ["assistant", r.error ? `${FALLO}${r.error}. Escribe "sigue" para reintentar.` : r.respuesta]);
+      c.historia.push(["user", r.prompt], ["assistant", r.error ? `${FALLO}${r.error}. Escribe "sigue" para reintentar.` : r.respuesta, r.modelo]);
     } catch (e) { c.historia.push(["user", ""], ["assistant", FALLO + e.message]); }
     c.ocupado = false;
     persistir();
