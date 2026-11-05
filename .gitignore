@@ -62,3 +62,21 @@ data/grafo.tar.gz
 data/mismo_hecho_modelo/
 data/mismo_hecho_modelo.tar.gz
 data/proyectos.*.db.gz
+
+# Datos de clientes que marca el analista: en git solo su `.cifrado`
+# (core/store.py CIFRADOS). El texto en claro queda local.
+data/alertas_borradores.json
+data/pls_seguidos.json
+data/noticias_feedback.json
+data/bandeja_analista.json
+
+# Archivos sueltos de trabajo en la raiz (matrices y documentos de clientes)
+/*.xlsx
+/*.pdf
+/*.jpg
+/*.png
+/*.lnk
+*.db.danada
+*.db.graftest-*
+.playwright-mcp/
+.codex/

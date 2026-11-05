@@ -3,8 +3,8 @@
 Plataforma de monitoreo legislativo. Hoy cubre **Perú** (Congreso de la República —
 período vigente 2026–2031, Congreso bicameral: Senado + Cámara de Diputados, instalado
 2026-07-27; más el período histórico 2021–2026, Congreso unicameral). Diseñada como app
-multi-país: cada país vive en su propia página bajo `pages/`. Frontend en Streamlit con
-estética editorial-data (similar a datadaf.com), backend en SQLite alimentado por
+multi-país (Perú y Ecuador). Frontend: un componente propio (`front/`) montado en
+Streamlit, backend en SQLite alimentado por
 scraping del API oficial.
 
 ## Setup inicial
@@ -37,18 +37,13 @@ No commitear `data/*.db.gz` en `main`: la base va solo en la rama `datos`.
 python -m streamlit run app.py
 ```
 
-App multi-página con estética editorial-data (tipografía Inter, peso 900, acentos azules `#2563EB`).
+Toda la interfaz es el Panel: `pages/0_Hoy.py` monta el componente de `front/`
+(JS + CSS) y `front/vistas.py` atiende lo que pide el navegador (panel,
+transcripciones, proyectos, agenda, noticias, personas, redacción de alertas,
+resumen del día, espacio por cliente y búsqueda). `app.py` exige el login de
+Google (`[auth]` en Secrets; en la PC, `VALI_SIN_LOGIN=1` en `.env`) y baja las
+bases de la rama `datos`.
 
-- **Home (`/`)** — `app.py`. Title "Radar Legislativo" + grid de países: 🇵🇪 Perú operativo, 🇨🇴 Colombia y 🇪🇨 Ecuador como placeholders. Cards con bordes sutiles que en hover destacan en azul.
-- **Perú (`/Peru`)** — `pages/1_Peru.py`. Dashboard con:
-  - **KPIs**: Total, Presentados, En comisión, Con dictamen, Autógrafas, Ley publicada (matchea `PUBLIC...PERUANO` y variantes).
-  - **Filtros**: PL (text), Tema, Estado, Comisión, Partido, Proponente (todos selectbox single-select con "Todos" por defecto) + búsqueda libre por título / autor.
-  - **Tabla `st.dataframe` con 6 columnas** que entran sin scroll horizontal: PL, Título, Presentado, Estado, Tema, Comisión (princ.). Click en headers para ordenar.
-  - **Panel de detalle** al hacer click en una fila: PL + título completo, metadata grid (Estado, Tema, Partido, Proponente, Presentado, Último cambio), todas las comisiones asignadas, sumilla, autores completos, historial de cambios, links Portal y PDF.
-  - **Sidebar**: rango de fechas (date range picker) + panel Sync con último run y botón "Actualizar ahora".
-- **Comisiones**: el filtro muestra solo las **24 ordinarias** + un grupo único **"Comisiones Especiales"** que agrupa el resto (especiales, subcomisiones, typos del catálogo). El mapeo está en `scraper/comisiones_ordinarias.py`.
-
-Caching de queries 60s. Para refrescar manualmente: `C` o `R` en la página.
 
 ## Actualización automática cada 2 horas (Windows)
 
