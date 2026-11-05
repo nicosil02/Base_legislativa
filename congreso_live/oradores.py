@@ -114,36 +114,64 @@ _ESQ = {"type": "array", "items": {"type": "object", "properties": {
     "turno": {"type": "integer"}, "quien": {"type": "string"}}, "required": ["turno", "quien"]}}
 
 
-def nombrar(ts: list[dict], tipo: str, generar=None) -> list[dict]:
-    """Agrega "quien" a cada turno ("" = sin identificar)."""
+def nombrar(ts: list[dict], tipo: str, generar=None, espera: int = 65) -> list[dict]:
+    """Agrega "quien" a cada turno ("" = sin identificar). Nunca falla: si Gemma no
+    responde, esos turnos quedan con "pendiente" y renombrar() los retoma despues.
+    Solo pide los bloques que tienen turnos sin nombre o pendientes."""
     from core import llm
     generar = generar or (lambda p: llm.generar(p, modelo=llm.GEMMA, json=True, schema=_ESQ, respaldo=False))
     gente = _gente(tipo)
     lista = set(gente)
-    quien: dict[int, str] = {}
-    leidas = 0
     for i in range(0, len(ts), POR_LLAMADA):
+        bloque = ts[i:i + POR_LLAMADA]
+        if all("quien" in t and not t.get("pendiente") for t in bloque):
+            continue
         desde = max(0, i - 2)  # dos turnos de antes: ahi suelen dar la palabra
-        try:
-            for x in json.loads(generar(_prompt(ts[desde:i + POR_LLAMADA], desde, gente, tipo))):
-                if isinstance(x, dict) and isinstance(x.get("turno"), int) and x["turno"] >= i:
-                    quien[x["turno"]] = str(x.get("quien") or "").strip()
-            leidas += 1
-        except Exception as e:  # sin cupo o JSON roto: esos turnos quedan sin nombre
-            print(f"[oradores] Gemma fallo en turnos {i}+: {str(e)[:150]}")
-    if ts and not leidas:  # sin ninguna lectura no se guarda: se reintenta en la proxima corrida
-        raise RuntimeError("Gemma no respondio")
-    for n, t in enumerate(ts):
-        q = quien.get(n, "")
-        legislador = q in lista
-        if q.lower() in ("desconocido", "") or ("," in q and not legislador):
-            q = ""  # vacio o nombre que no esta en la lista: inventado
-        elif legislador and len(t["texto"].split()) < 6:
-            q = ""  # "a favor" suelto: el voto ya sale de las actas
-        elif not legislador and not any(c in q.lower() for c in CARGOS):
-            q = ""  # ni de la lista ni un cargo: no se confia
-        t["quien"] = q
+        quien = None
+        for intento in (1, 2):  # el cupo de Gemma es por minuto: esperar uno y reintentar
+            try:
+                quien = {x["turno"]: str(x.get("quien") or "").strip()
+                         for x in json.loads(generar(_prompt(ts[desde:i + POR_LLAMADA], desde, gente, tipo)))
+                         if isinstance(x, dict) and isinstance(x.get("turno"), int) and x["turno"] >= i}
+                break
+            except Exception as e:
+                print(f"[oradores] Gemma fallo en turnos {i}+ (intento {intento}): {str(e)[:150]}")
+                if intento == 1 and espera:
+                    time.sleep(espera)
+        for n, t in enumerate(bloque, start=i):
+            if quien is None:
+                t.setdefault("quien", "")
+                t["pendiente"] = True
+                continue
+            t.pop("pendiente", None)
+            q = quien.get(n, "")
+            legislador = q in lista
+            if q.lower() in ("desconocido", "") or ("," in q and not legislador):
+                q = ""  # vacio o nombre que no esta en la lista: inventado
+            elif legislador and len(t["texto"].split()) < 6:
+                q = ""  # "a favor" suelto: el voto ya sale de las actas
+            elif not legislador and not any(c in q.lower() for c in CARGOS):
+                q = ""  # ni de la lista ni un cargo: no se confia
+            t["quien"] = q
     return ts
+
+
+def renombrar(conn: sqlite3.Connection) -> int:
+    """Nombra los turnos que quedaron pendientes (Gemma sin cupo). No baja audio."""
+    init_schema(conn)
+    hechas = 0
+    for vid, turnos_json, tipo in conn.execute(
+            """SELECT u.video_id, u.turnos, t.tipo FROM sesiones_turnos u
+               JOIN sesiones_transcripciones t USING (video_id)
+               WHERE u.turnos LIKE '%"pendiente": true%'""").fetchall():
+        ts = nombrar(json.loads(turnos_json), tipo)
+        conn.execute("UPDATE sesiones_turnos SET turnos = ? WHERE video_id = ?",
+                     (json.dumps(ts, ensure_ascii=False), vid))
+        conn.commit()
+        faltan = sum(1 for t in ts if t.get("pendiente"))
+        hechas += not faltan
+        print(f"[oradores] {vid}: renombrado, {faltan} turnos siguen pendientes")
+    return hechas
 
 
 def hora(s: int) -> str:
@@ -184,6 +212,7 @@ def pendientes(max_min: float = 150, dias: int = 3, db_path=None) -> int:
     from congreso_live.transcripciones import _find_db_path
     conn = sqlite3.connect(str(db_path or _find_db_path()), timeout=30)
     init_schema(conn)
+    renombrar(conn)
     filas = conn.execute(
         """SELECT video_id, tipo FROM sesiones_transcripciones t
            WHERE fecha >= date('now', ?) AND duracion_seg >= 600 AND tipo NOT LIKE 'Entrevista%'
