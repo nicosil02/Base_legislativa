@@ -219,5 +219,21 @@
       },
       "tipo": "noticia"
     }
+  },
+  "n2364550": {
+    "estado": "interesante",
+    "fecha": "2026-11-05T16:58:25+00:00",
+    "por": "nicolas.silva@valiconsultores.com",
+    "titulo": "Perú y Estados Unidos refuerzan coordinación en seguridad y defensa",
+    "item": {
+      "titulo": "Perú y Estados Unidos refuerzan coordinación en seguridad y defensa",
+      "url": "https://andina.pe/agencia/noticia-peru-y-estados-unidos-refuerzan-coordinacion-seguridad-y-defensa-1098408.aspx",
+      "pais": "PE",
+      "resumen": null,
+      "porque": {
+        "google": "Trata sobre reuniones bilaterales oficiales entre el gobierno peruano y el de EE.UU., relevante para el eje de cooperación y relación bilateral."
+      },
+      "tipo": "noticia"
+    }
   }
 }
