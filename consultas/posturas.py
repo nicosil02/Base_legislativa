@@ -16,6 +16,7 @@ que ningun archivo pase el limite de 1 MB de la API de GitHub.
 """
 from __future__ import annotations
 
+import difflib
 import json
 import re
 import sqlite3
@@ -91,13 +92,79 @@ def organo(tipo: str) -> str:
 
 def _miembro(orador: str, gente: list[tuple[str, dict]]) -> dict | None:
     """Miembro (de pares (apellidos, miembro)) cuyos apellidos se dicen; None si no hay uno
-    solo (ministro, invitado, apellido repetido)."""
+    solo (ministro, invitado, apellido repetido). Si no calza exacto, por parecido: la
+    transcripcion cambia letras ("Basan" por Bazan, "Yarro" por Yarrow)."""
     pal = set(norm(orador).split())
     for minimo in (2, 1):
         c = [p for ap, p in gente if len(pal & set(ap.split())) >= minimo]
         if len(c) == 1:
             return c[0]
+    return _parecido(orador, [p for _, p in gente if "nombre" in p])
+
+
+_VACIAS = {"de", "la", "del", "los", "las", "y", "san"}
+_CARGOS = {"congresista", "diputado", "diputada", "senador", "senadora", "asambleista", "legislador",
+           "legisladora", "colega", "presidente", "presidenta", "doctor", "doctora", "senor", "senora",
+           "ingeniero", "comision", "el"}
+
+
+def _palabras(s: str) -> list[str]:
+    return [t for t in re.split(r"[\s,\-]+", norm(s)) if t and t not in _VACIAS]
+
+
+def _nombre_partes(p: dict) -> tuple[list[str], list[str]]:
+    """(apellidos, nombres). Los apellidos van tambien juntos: "Jauriduayo" es como
+    suena "Jauregui de Aguayo" dicho de corrido."""
+    if p.get("pais") == "EC":
+        w = _palabras(p["nombre"])
+        ap, nom = w[:2], w[2:]
+        crudo = ap
+    else:
+        a, _, n = p["nombre"].partition(",")
+        ap, nom = _palabras(a), _palabras(n)
+        crudo = [t for t in re.split(r"[\s\-]+", norm(a)) if t]
+    juntos = {crudo[0] + "".join(crudo[i:]) for i in range(1, len(crudo))} if len(crudo) > 1 else set()
+    return ap + sorted(juntos), nom
+
+
+def _parecido(orador: str, gente: list[dict]) -> dict | None:
+    """Por parecido de letras. Cada palabra dicha tiene que ser de esa persona (nombre o
+    apellido) y al menos un apellido largo tiene que calzar; con una sola palabra, casi
+    exacta. Si dos quedan cerca, ninguno."""
+    toks = [t for t in _palabras(orador) if t not in _CARGOS]
+    largos = [t for t in toks if len(t) >= 4]
+    if not largos:
+        return None
+    umbral = 0.85 if len(toks) == 1 else 0.75
+    r = lambda a, b: difflib.SequenceMatcher(None, a, b).ratio()
+    puntos = []
+    for p in gente:
+        ap, nom = _nombre_partes(p)
+        if any(max(r(t, a) for a in ap + nom) < 0.7 for t in toks if len(t) >= 3):
+            continue
+        sa = sum(m for m in (max(r(t, a) for a in ap) for t in largos) if m >= umbral)
+        if sa:
+            puntos.append((sa + 0.5 * sum(1 for t in toks if nom and max(r(t, a) for a in nom) >= 0.85), p))
+    puntos.sort(key=lambda x: -x[0])
+    if puntos and (len(puntos) == 1 or puntos[0][0] - puntos[1][0] >= 0.3):
+        return puntos[0][1]
     return None
+
+
+_duenos: dict = {}
+
+
+def _dueno(s: dict, x: dict, gente: list[dict] | None) -> str | None:
+    """id de quien dijo `x` en la sesion `s`. Lo guardado al leer, o (si quedo sin dueno)
+    se busca de nuevo con el parecido, sin volver a leer la sesion con IA."""
+    if x.get("id") or not gente or x.get("cargo") != "legislador":
+        return x.get("id")
+    camara = {"Pleno del Senado": "senado", "Pleno de Diputados": "diputados"}.get(s["organo"])
+    k = (s["pais"], camara, x["orador"])
+    if k not in _duenos:
+        m = _miembro(x["orador"], _pares(gente, s["pais"], camara)) or (camara and _miembro(x["orador"], _pares(gente, s["pais"])))
+        _duenos[k] = m["id"] if m else None
+    return _duenos[k]
 
 
 def _pares(gente: list[dict], pais: str, camara: str | None = None) -> list[tuple[str, dict]]:
@@ -235,12 +302,13 @@ def precalcular(db: str, gente: list[dict], hilos: int = 3, maximo: int | None =
 
 
 # ---- consultas (sin Gemini) ----
-def dijo(pe: sqlite3.Connection, pais: str, ident: str, nombre: str = "") -> dict:
-    """{sesiones: [{fecha, organo, url, sobre, postura, tema, piensa}], mesas: [...]}, de la mas nueva."""
+def dijo(pe: sqlite3.Connection, pais: str, ident: str, nombre: str = "", gente: list[dict] | None = None) -> dict:
+    """{sesiones: [{fecha, organo, url, sobre, postura, tema, piensa}], mesas: [...]}, de la mas nueva.
+    Con `gente` (integrantes()) tambien cuenta lo que quedo sin dueno al leer."""
     sesiones = []
     for vid, s in guardado().items():
         for x in s["dichos"]:
-            if x.get("id") == ident:
+            if _dueno(s, x, gente) == ident:
                 sesiones.append({"video_id": vid, "fecha": s["fecha"], "organo": s["organo"], "url": s["url"], "sobre": x["sobre"],
                                  "postura": x["postura"], "tema": x["tema"], "piensa": x["dijo"], "proyecto": x["proyecto"]})
     sesiones.sort(key=lambda x: x["fecha"], reverse=True)
@@ -281,7 +349,7 @@ def debate(pe: sqlite3.Connection, ec: sqlite3.Connection, pais: str, pl: str, g
             continue
         for x in s["dichos"]:
             if _es_el_proyecto(x["proyecto"], num, titulo):
-                m = por_id.get(x["id"])
+                m = por_id.get(_dueno(s, x, gente))
                 out.append({"fecha": s["fecha"], "organo": s["organo"], "url": s["url"], "orador": x["orador"],
                             "rol": x["cargo"] if not m else "", "postura": x["postura"], "dijo": x["dijo"],
                             "bancada": m["bancada"] if m else None, "id": m["id"] if m else None, "nombre": m["nombre"] if m else None})
@@ -292,6 +360,11 @@ if __name__ == "__main__":
     import sys
     g = [("flores ruiz", {"id": "a"}), ("flores vilchez", {"id": "b"}), ("matute charun", {"id": "c"})]
     assert _miembro("congresista Matute", g)["id"] == "c" and _miembro("Flores", g) is None and _miembro("Víctor Flores Ruiz", g)["id"] == "a"
+    gp = [{"pais": "PE", "id": "j", "nombre": "Jauregui Martínez de Aguayo, María de los Milagros Jackeline"},
+          {"pais": "PE", "id": "b", "nombre": "Bazán Calderón, Diego Alonso Fernando"},
+          {"pais": "PE", "id": "c", "nombre": "Caballero León, Carlos David"}]
+    assert _parecido("Milagro Jauriduayo", gp)["id"] == "j" and _parecido("Diego Basán Calderón", gp)["id"] == "b"
+    assert _parecido("Jessica Caballes", gp) is None and _parecido("Leo", gp) is None  # el nombre no es de el
     assert organo("Comision: Energia Y Minas") == "Comisión de Energía y Minas" and organo("Pleno: Senado") == "Pleno del Senado"
     assert organo("Comision: Derecho a la Salud (EC)") == "Comisión de Derecho a la Salud"
     assert _es_el_proyecto("PL 230", "230", "") and _es_el_proyecto("PL 00230-2026", "230", "") and not _es_el_proyecto("PL 2301", "230", "") and not _es_el_proyecto("", "230", "")

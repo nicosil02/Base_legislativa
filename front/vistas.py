@@ -708,7 +708,12 @@ def atender(a: dict, usuario: str | None) -> dict | list | str | None:
         return [{**p, "cargos": c.get(p["id"], [])} for p in integrantes()]
     elif tipo == "dijo_persona":
         from consultas import posturas
-        return posturas.dijo(connect_ro("proyectos.db"), a["pais"], a["persona"], a["nombre"])
+        from consultas.integrantes import integrantes
+        from consultas.personas import en_medios
+        gente, pe = integrantes(), connect_ro("proyectos.db")
+        p = next((x for x in gente if x["id"] == a["persona"]), None)
+        return {**posturas.dijo(pe, a["pais"], a["persona"], a["nombre"], gente),
+                "medios": en_medios(pe, p, gente) if p else []}
     elif tipo == "debate_pl":
         from consultas import posturas
         from consultas.integrantes import integrantes
