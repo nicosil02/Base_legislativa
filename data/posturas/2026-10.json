@@ -898,46 +898,66 @@
     "fecha": "2026-10-30",
     "organo": "Comisión de Derecho a la Salud",
     "pais": "EC",
-    "v": 3,
+    "v": 4,
     "dichos": [
       {
         "orador": "Gabriel Santana Mera",
         "cargo": "invitado",
-        "sobre": "proyecto de ley para la obesidad",
-        "postura": "con observaciones",
+        "sobre": "proyecto de ley sobre obesidad",
+        "postura": "a favor",
         "tema": "Salud",
-        "dijo": "Señaló que casi el cincuenta por ciento de niños y adolescentes en Ecuador ya presentan problemas de peso.",
-        "proyecto": "proyecto de ley orgánica para la atención integral de las personas con obesidad",
+        "dijo": "Respaldó el proyecto de ley para la atención integral de personas con obesidad.",
+        "proyecto": "Proyecto de ley orgánica para la atención integral de las personas con obesidad",
         "id": null
       },
       {
         "orador": "Ana Cristina",
         "cargo": "legislador",
-        "sobre": "proyecto de ley para la obesidad",
+        "sobre": "alimentos saludables en supermercados",
         "postura": "pregunta",
+        "tema": "Consumo masivo",
+        "dijo": "Preguntó por la disponibilidad de opciones saludables en los supermercados.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Gabriel Santana Mera",
+        "cargo": "invitado",
+        "sobre": "costo de alimentos procesados",
+        "postura": "comenta",
+        "tema": "Consumo masivo",
+        "dijo": "Denunció que los alimentos procesados son más económicos que la fruta natural.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ana Cristina",
+        "cargo": "legislador",
+        "sobre": "enfoque preventivo del proyecto",
+        "postura": "comenta",
         "tema": "Salud",
-        "dijo": "Preguntó por qué no hay suficientes opciones saludables en los supermercados para el refrigerio escolar.",
-        "proyecto": "proyecto de ley orgánica para la atención integral de las personas con obesidad",
+        "dijo": "Respaldó el enfoque preventivo que tiene el proyecto de ley.",
+        "proyecto": "Proyecto de ley orgánica para la atención integral de las personas con obesidad",
         "id": null
       },
       {
         "orador": "Yedid Balcarcel Pérez",
         "cargo": "invitado",
-        "sobre": "proyecto de ley para la obesidad",
+        "sobre": "mejoras al proyecto de ley",
         "postura": "con observaciones",
         "tema": "Salud",
-        "dijo": "Propuso incluir medidas como la circunferencia de cintura y evaluar la funcionalidad en la atención primaria.",
-        "proyecto": "proyecto de ley orgánica para la atención integral de las personas con obesidad",
+        "dijo": "Propuso incluir el sedentarismo y mejorar los criterios de diagnóstico.",
+        "proyecto": "Proyecto de ley orgánica para la atención integral de las personas con obesidad",
         "id": null
       },
       {
         "orador": "María Fernanda Rosales Medina",
         "cargo": "invitado",
-        "sobre": "proyecto de ley para la obesidad",
+        "sobre": "etiquetado y calidad alimentaria",
         "postura": "con observaciones",
-        "tema": "Salud",
-        "dijo": "Sugirió precisar en el artículo once las categorías de alimentos y los parámetros de reformulación con metas medibles.",
-        "proyecto": "proyecto de ley orgánica para la atención integral de las personas con obesidad",
+        "tema": "Consumo masivo",
+        "dijo": "Propuso revisar la calidad proteica y el sistema de etiquetado nutricional.",
+        "proyecto": "Proyecto de ley orgánica para la atención integral de las personas con obesidad",
         "id": null
       }
     ],
@@ -947,37 +967,57 @@
     "fecha": "2026-10-30",
     "organo": "Comisión de Educación",
     "pais": "EC",
-    "v": 3,
+    "v": 4,
     "dichos": [
       {
-        "orador": "Majista Cecilia Baltasadio-Caya",
+        "orador": "Janet Paola Cabezas Castillo",
         "cargo": "legislador",
-        "sobre": "Protección de la voz humana frente a IA",
+        "sobre": "protección de la voz humana ante IA",
+        "postura": "comenta",
+        "tema": "Tecnología",
+        "dijo": "Explicó el proyecto de protección de la voz humana.",
+        "proyecto": "Ley de protección de la voz humana",
+        "id": "EC:cabezas castillo"
+      },
+      {
+        "orador": "John Polanco",
+        "cargo": "legislador",
+        "sobre": "unificación de proyectos de inteligencia artificial",
+        "postura": "propone",
+        "tema": "Tecnología",
+        "dijo": "Propuso la unificación de proyectos de inteligencia artificial.",
+        "proyecto": "",
+        "id": "EC:polanco lara"
+      },
+      {
+        "orador": "María Paula Villacresa Herrera",
+        "cargo": "legislador",
+        "sobre": "regulación de simulaciones por inteligencia artificial",
+        "postura": "comenta",
+        "tema": "Tecnología",
+        "dijo": "Detalló el proyecto de regulación de contenidos por IA.",
+        "proyecto": "Ley de regulación de simulaciones de IA",
+        "id": null
+      },
+      {
+        "orador": "María Paula Villacreses",
+        "cargo": "legislador",
+        "sobre": "Regulación de simulaciones por inteligencia artificial",
         "postura": "a favor",
         "tema": "Tecnología",
-        "dijo": "Propuso avocar conocimiento y unificar el proyecto de ley orgánica para la protección de la voz humana.",
-        "proyecto": "PL para la protección de la voz humana frente al uso de tecnologías de inteligencia artificial",
-        "id": null
-      },
-      {
-        "orador": "Magista Janet Paola Cabezas",
-        "cargo": "legislador",
-        "sobre": "Protección de la voz humana frente a IA",
-        "postura": "propone",
-        "tema": "Tecnología",
-        "dijo": "Defendió la iniciativa legislativa para proteger la identidad y el trabajo profesional frente a la clonación de voces.",
-        "proyecto": "PL para la protección de la voz humana frente al uso de tecnologías de inteligencia artificial",
-        "id": null
-      },
-      {
-        "orador": "Maria Paula Villacreses Herrera",
-        "cargo": "legislador",
-        "sobre": "Uso de simulaciones de IA y deepfakes",
-        "postura": "propone",
-        "tema": "Tecnología",
-        "dijo": "Propuso regular el uso de simulaciones de imágenes, voces y videos generados por inteligencia artificial para sancionar la violencia digital.",
-        "proyecto": "PL que regula el uso de las simulaciones de imágenes, voces, audio y video de personas generadas por inteligencia artificial",
+        "dijo": "Defendió la regulación de contenidos generados mediante inteligencia artificial.",
+        "proyecto": "Ley de simulaciones de IA",
         "id": "EC:villacreses herrera"
+      },
+      {
+        "orador": "Secretario",
+        "cargo": "ministro o autoridad",
+        "sobre": "Unificación de proyectos de inteligencia artificial",
+        "postura": "comenta",
+        "tema": "Tecnología",
+        "dijo": "Informó sobre la moción para unificar proyectos de inteligencia artificial.",
+        "proyecto": "",
+        "id": null
       }
     ],
     "url": "https://www.facebook.com/watch/?v=1628798448691134"
@@ -986,16 +1026,16 @@
     "fecha": "2026-10-29",
     "organo": "Pleno del Congreso",
     "pais": "PE",
-    "v": 3,
+    "v": 4,
     "dichos": [
       {
         "orador": "José Arista Arbildo",
         "cargo": "legislador",
-        "sobre": "créditos suplementarios frente al fenómeno El Niño",
+        "sobre": "Créditos suplementarios fenómeno El Niño",
         "postura": "propone",
         "tema": "Presupuesto y gasto público",
-        "dijo": "Propuso la incorporación de 14 artículos en el texto sustitutorio sobre créditos suplementarios.",
-        "proyecto": "PL 5",
+        "dijo": "Propuso un texto sustitutorio para los créditos suplementarios de 2026.",
+        "proyecto": "Créditos suplementarios",
         "id": "senado:arista arbildo"
       }
     ],
