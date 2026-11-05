@@ -430,5 +430,21 @@
       },
       "tipo": "noticia"
     }
+  },
+  "n2370338": {
+    "estado": "descartar",
+    "fecha": "2026-11-05T23:19:19+00:00",
+    "por": "nicolas.silva@valiconsultores.com",
+    "titulo": "CC analiza demanda de inconstitucionalidad a la Ley del IESS: \"Hay errores de forma y fondo\", advierte abogada - FM Mundo",
+    "item": {
+      "titulo": "CC analiza demanda de inconstitucionalidad a la Ley del IESS: \"Hay errores de forma y fondo\", advierte abogada - FM Mundo",
+      "url": "https://news.google.com/rss/articles/CBMi0AFBVV95cUxNeXZDdldzajgwcjd0NE13YmN0WGtHWnhtUEVqMWRwRGhCSFh6Xzk1d1RqM1hFSFlpNEdQOGgwemlxTnU0b3Yxc293VmFuQ3p5N0lhMVBORk4yQ2tZMVRUQnIwUTNfbjVpT3AzdkIxREdzdnZNSGpxMll1aHVHdDhlZlV6Si11V0lGTV9TbktHa2VZVVBrZlFwNVZfc29rNXNGbHJRZW5Ta283em9JYURIZ00wN1BQTjAyTEY2TjRUR085cXNPbEo2UGF6OEhDZnF6?oc=5",
+      "pais": "EC",
+      "resumen": null,
+      "porque": {
+        "bayer": "Debate jurídico sobre la inconstitucionalidad de la Ley del IESS, actor clave para Farma en Ecuador."
+      },
+      "tipo": "noticia"
+    }
   }
 }
