@@ -24,9 +24,9 @@ concurrency:
 
 
 env:
-  # Abre los datos cifrados de clientes (clientes/privado.py). Otro nombre que
-  # GEMINI_API_KEY para no prender Gemini en pasos que no lo usan.
-  CLIENTES_CLAVE: ${{ secrets.GEMINI_API_KEY }}
+  # Abre los datos cifrados de clientes (clientes/privado.py). Secreto propio
+  # (no es la clave de Gemini).
+  CLIENTES_CLAVE: ${{ secrets.CLIENTES_CLAVE }}
 
 jobs:
   refresh:
@@ -190,7 +190,7 @@ jobs:
               || echo "[warn] noticias sync fallo, sigo"
           # PLs seguidos de Ecuador: los boletines de la Asamblea cuentan el
           # avance dias antes que el portal. Gemini (LITE) solo con notas nuevas.
-          GH_TOKEN="$GH_TOKEN_STORE" GH_REPO="${{ github.repository }}" GEMINI_API_KEY="$CLIENTES_CLAVE" \
+          GH_TOKEN="$GH_TOKEN_STORE" GH_REPO="${{ github.repository }}" GEMINI_API_KEY="${{ secrets.GEMINI_API_KEY }}" \
             timeout 180 python -X utf8 -m alerts.pls_seguidos noticias_ec \
               || echo "[warn] pls_seguidos noticias_ec fallo, sigo"
           # Digest de WhatsApp en 2 horarios fijos (9-10am y 2-3pm Lima). Ventana
@@ -198,13 +198,13 @@ jobs:
           # digest.run no manda otro si ya salio uno hace menos de 3 h. Gemini
           # (LITE) solo en este paso: deja los 5 hechos de peso por pais.
           if [ "$HOUR" -ge 14 ] && [ "$HOUR" -le 15 ]; then
-            GEMINI_API_KEY="$CLIENTES_CLAVE" timeout 180 python -X utf8 -m noticias.cli avisar \
+            GEMINI_API_KEY="${{ secrets.GEMINI_API_KEY }}" timeout 180 python -X utf8 -m noticias.cli avisar \
                 || echo "[warn] noticias avisar fallo, sigo"
           elif [ "$HOUR" -ge 19 ] && [ "$HOUR" -le 20 ]; then
-            GEMINI_API_KEY="$CLIENTES_CLAVE" timeout 180 python -X utf8 -m noticias.cli avisar \
+            GEMINI_API_KEY="${{ secrets.GEMINI_API_KEY }}" timeout 180 python -X utf8 -m noticias.cli avisar \
                 || echo "[warn] noticias avisar fallo, sigo"
           elif [ "$IS_DISPATCH" = "true" ]; then
-            GEMINI_API_KEY="$CLIENTES_CLAVE" timeout 180 python -X utf8 -m noticias.cli avisar \
+            GEMINI_API_KEY="${{ secrets.GEMINI_API_KEY }}" timeout 180 python -X utf8 -m noticias.cli avisar \
                 || echo "[warn] noticias avisar fallo, sigo"
           else
             echo "[avisar] fuera de los horarios fijos (9-10am/2-3pm Lima) - skip"

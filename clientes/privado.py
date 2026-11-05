@@ -2,9 +2,9 @@
 
 En git solo van los `*.cifrado` (perfiles, historial de alertas, matrices);
 el texto plano queda fuera (.gitignore). La web y los workflows los abren al
-arrancar con la clave que ya tienen (GEMINI_API_KEY, o CLIENTES_CLAVE si se
-define): no hace falta ningun secreto nuevo. Si se cambia la clave de
-Gemini, primero `abrir` con la vieja y despues `cerrar` con la nueva.
+arrancar con CLIENTES_CLAVE (secreto propio, aleatorio; en Streamlit, en
+GitHub y en el .env de la PC). Desde 2026-11-05 ya no sale de GEMINI_API_KEY.
+Para cambiarla, ver .github/workflows/rotar-clave-clientes.yml.
 
 Cifrado solo con la libreria estandar (corre igual en Streamlit, en cada
 workflow y en Windows): flujo HMAC-SHA256 en modo contador + etiqueta
@@ -37,7 +37,7 @@ _MAGIA = b"VALI1"
 
 
 def _claves() -> tuple[bytes, bytes] | None:
-    base = os.environ.get("CLIENTES_CLAVE") or os.environ.get("GEMINI_API_KEY")
+    base = os.environ.get("CLIENTES_CLAVE")
     if not base:
         return None
     raiz = hashlib.sha256(b"vali-clientes|" + base.encode()).digest()
@@ -71,7 +71,7 @@ def descifrar(texto: str, claves: tuple[bytes, bytes] | None = None) -> bytes:
 
 
 def _sin_clave():
-    raise RuntimeError("falta GEMINI_API_KEY (o CLIENTES_CLAVE) para abrir los datos de clientes")
+    raise RuntimeError("falta CLIENTES_CLAVE para abrir los datos de clientes")
 
 
 # Lo que la plataforma necesita (lo mismo que antes se versionaba en claro).
