@@ -113,6 +113,45 @@ def _votos_ec(ident: str, votaciones: list[dict] | None = None, bancadas: dict[s
                    "pct_alineado": round(100 * iguales / con_postura) if con_postura else None, "bancada": b}
 
 
+_TITULOS_MEDIOS = r"congresista|senador[a]?|diputad[oa]|asambleista|legislador[a]?|parlamentari[oa]"
+
+
+def en_medios(pe: sqlite3.Connection, p: dict, gente: list[dict], dias: int = 120) -> list[dict]:
+    """Noticias y entrevistas donde se nombra a `p` (de integrantes()), de la mas nueva.
+    Tiene que ir el nombre y el primer apellido ("Milagros Jauregui") o el cargo y el
+    apellido ("la congresista Yarrow"); con el cargo solo si nadie mas del pais lleva ese
+    apellido. [{fecha, titulo, url, fuente, tipo}]"""
+    from consultas.posturas import _nombre_partes
+    ap, nom = _nombre_partes(p)
+    primero = ap[0]
+    nombres = [n for n in nom if len(n) >= 4]
+    otros = sum(1 for q in gente if q["pais"] == p["pais"] and q["id"] != p["id"] and _nombre_partes(q)[0][:1] == [primero])
+    quien = "|".join(map(re.escape, nombres)) + ("" if otros or not nombres else "|") + ("" if otros else _TITULOS_MEDIOS)
+    if not quien:
+        return []
+    rx = re.compile(rf"\b(?:{quien})\s+(?:\w+\s+){{0,2}}?{re.escape(primero)}\b")
+    out, vistos = [], set()
+    filas = pe.execute(
+        """SELECT n.fecha_pub, n.titulo, n.resumen, n.url, f.nombre FROM noticias n
+           JOIN noticias_fuentes f ON f.id = n.fuente_id
+           WHERE f.pais = ? AND n.fecha_pub >= date('now', ?) ORDER BY n.fecha_pub DESC""",
+        (p["pais"], f"-{dias} day")).fetchall()
+    for fecha, titulo, resumen, url, fuente in filas:
+        clave = norm(titulo or "")[:60]
+        if clave not in vistos and rx.search(norm(f"{titulo} {resumen or ''}")):
+            vistos.add(clave)
+            out.append({"fecha": (fecha or "")[:10], "titulo": titulo, "url": url, "fuente": fuente, "tipo": "noticia"})
+    try:
+        for vid, tipo, titulo, fecha in pe.execute(
+                "SELECT video_id, tipo, titulo, fecha FROM sesiones_transcripciones WHERE tipo LIKE 'Entrevista:%'"):
+            if primero in norm(tipo) and (not nombres or any(n in norm(tipo) for n in nombres)):
+                out.append({"fecha": (fecha or "")[:10], "titulo": titulo or tipo, "fuente": "Entrevista transcrita",
+                            "url": f"https://www.youtube.com/watch?v={vid}", "tipo": "entrevista"})
+    except sqlite3.OperationalError:  # base sin transcripciones
+        pass
+    return sorted(out, key=lambda x: x["fecha"], reverse=True)[:25]
+
+
 def ficha(pe: sqlite3.Connection, ec: sqlite3.Connection, pais: str, ident: str, seguidos: set[str]) -> dict:
     """ident: el id de personas(). seguidos: claves 'PAIS:pl' de alerts.pls_seguidos."""
     if pais == "PE":

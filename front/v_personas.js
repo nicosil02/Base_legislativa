@@ -233,7 +233,10 @@ VISTAS.personas = (() => {
       + (mencion && libre ? `<p class="nota">En ${mencion} ${mencion === 1 ? "sesión más solo lo nombran" : "sesiones más solo lo nombran"}, sin que hable.</p>` : "")
       + (r.dijo.mesas.length && libre ? `<h3 class="p-sub">Mesas técnicas que organizó</h3>${r.dijo.mesas.map((m) => `<div class="pv"><div><p>${esc(m.titulo ?? "")}</p>
         <small>${esc(fechaCorta(m.fecha))} ${enlaceIcono(m.url, "Abrir")}</small></div></div>`).join("")}` : "")
-      + (habla.some((x) => x.piensa) ? `<p class="nota">Resumido con IA a partir de la transcripción. Abre la sesión para el texto exacto.</p>` : "");
+      + (habla.some((x) => x.piensa) ? `<p class="nota">Resumido con IA a partir de la transcripción. Abre la sesión para el texto exacto.</p>` : "")
+      + (libre ? `<h3 class="p-sub">En medios</h3>` + ((r.dijo.medios ?? []).map((m) => `<div class="pv"><div><p>${esc(m.titulo ?? "")}</p>
+        <small>${esc(m.fuente ?? "")} · ${esc(fechaCorta(m.fecha))} ${enlaceIcono(m.url, m.tipo === "entrevista" ? "Ver la entrevista" : "Abrir la nota")}</small></div></div>`).join("")
+        || `<div class="vacio">No aparece en las noticias de los últimos 4 meses.</div>`) : "");
     barra(caja.querySelector(".f-caja"), defs, sel, () => dijo(caja, r, sel, p));
   }
   const pedirDijo = (r, p) => (r.pidiendo ??= App.pedir("dijo_persona", { pais: p.pais, persona: p.id, nombre: nombre(p) })
