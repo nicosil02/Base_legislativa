@@ -120,5 +120,22 @@
       },
       "tipo": "norma"
     }
+  },
+  "pl:https://wb2server.congreso.gob.pe/spley-portal/#/diputados/expediente/2026/723": {
+    "estado": "interesante",
+    "fecha": "2026-11-05T16:51:50+00:00",
+    "por": "nicolas.silva@valiconsultores.com",
+    "titulo": "Proyecto 00723-2026-2031-CD: PROPOSICIÓN LEGISLATIVA QUE FORTALECE LA LEY 30024 PARA GARANTIZAR LA CONTINUIDAD DE LA ATENCIÓN MEDIANTE HISTORIAS CLÍNICAS ELECTRÓNICAS INTEROPERABLES, ACCESIBLES Y SEGURAS.",
+    "item": {
+      "titulo": "Proyecto 00723-2026-2031-CD: PROPOSICIÓN LEGISLATIVA QUE FORTALECE LA LEY 30024 PARA GARANTIZAR LA CONTINUIDAD DE LA ATENCIÓN MEDIANTE HISTORIAS CLÍNICAS ELECTRÓNICAS INTEROPERABLES, ACCESIBLES Y SEGURAS.",
+      "url": "https://wb2server.congreso.gob.pe/spley-portal/#/diputados/expediente/2026/723",
+      "pais": "PE",
+      "resumen": "EN COMISIÓN Salud",
+      "porque": {
+        "google": "Pasó a EN COMISIÓN Salud",
+        "incode": "Pasó a EN COMISIÓN Salud"
+      },
+      "tipo": "pl"
+    }
   }
 }
