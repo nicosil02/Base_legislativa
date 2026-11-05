@@ -350,5 +350,21 @@
       },
       "tipo": "noticia"
     }
+  },
+  "n2370962": {
+    "estado": "descartar",
+    "fecha": "2026-11-05T23:19:03+00:00",
+    "por": "nicolas.silva@valiconsultores.com",
+    "titulo": "Perú reglamenta el derecho al olvido oncológico y fija obligaciones para aseguradoras - consultorsalud",
+    "item": {
+      "titulo": "Perú reglamenta el derecho al olvido oncológico y fija obligaciones para aseguradoras - consultorsalud",
+      "url": "https://news.google.com/rss/articles/CBMieEFVX3lxTE9PTDdnT3UxVmFXQmd5dGRwN0tGMzhnSFRaa0NWbTdGbkZpY3NBOVY2NE0zUk9iTFE5amVyZ0dVa0NJTDA3SVMtRHdhQlVyRjh2bXozRjNXQXJiUmY0eERlOUNiQzlhd0JQTFc4MlFiYTdjaHJpWjJ4RQ?oc=5",
+      "pais": "PE",
+      "resumen": null,
+      "porque": {
+        "bayer": "Reglamentacion del derecho al olvido oncologico en Peru, afectando directamente a la division Farma y su area oncologica."
+      },
+      "tipo": "noticia"
+    }
   }
 }
