@@ -2977,5 +2977,243 @@
     "v": 4,
     "dichos": [],
     "url": "https://www.facebook.com/watch/?v=1473685954676095"
+  },
+  "lLmAkQ6fXlg": {
+    "fecha": "2026-11-05",
+    "organo": "Pleno de la Asamblea",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Inés Alarcón",
+        "cargo": "legislador",
+        "sobre": "Ley de Personal y Disciplina Militar",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Defendió la Ley de Personal y Disciplina de las Fuerzas Armadas.",
+        "proyecto": "Ley de Personal y Disciplina de las Fuerzas Armadas",
+        "id": "EC:alarcon bueno"
+      },
+      {
+        "orador": "Isaac Solano",
+        "cargo": "legislador",
+        "sobre": "Ley de Personal y Disciplina Militar",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Respaldó la Ley de Personal y Disciplina de las Fuerzas Armadas.",
+        "proyecto": "Ley de Personal y Disciplina de las Fuerzas Armadas",
+        "id": "EC:solano calle"
+      },
+      {
+        "orador": "Alfredo Serrano",
+        "cargo": "legislador",
+        "sobre": "Ley de Personal y Disciplina Militar",
+        "postura": "con observaciones",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Cuestionó la Ley de Personal y Disciplina de las Fuerzas Armadas.",
+        "proyecto": "Ley de Personal y Disciplina de las Fuerzas Armadas",
+        "id": "EC:serrano valladares"
+      },
+      {
+        "orador": "Mario Amado Zambrano",
+        "cargo": "legislador",
+        "sobre": "Ley de Personal y Disciplina Militar",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Respaldó la Ley de Personal y Disciplina de las Fuerzas Armadas.",
+        "proyecto": "Ley de Personal y Disciplina de las Fuerzas Armadas",
+        "id": "EC:zambrano vera"
+      },
+      {
+        "orador": "Maite Lady",
+        "cargo": "legislador",
+        "sobre": "Ley de Personal y Disciplina Militar",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Respaldó la Ley de Personal y Disciplina de las Fuerzas Armadas.",
+        "proyecto": "Ley de Personal y Disciplina de las Fuerzas Armadas",
+        "id": null
+      },
+      {
+        "orador": "Andrés Castillo",
+        "cargo": "legislador",
+        "sobre": "Disciplina de las Fuerzas Armadas",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Argumentó la importancia de la disciplina militar.",
+        "proyecto": "",
+        "id": "EC:castillo maldonado"
+      },
+      {
+        "orador": "Michael Levy",
+        "cargo": "legislador",
+        "sobre": "Reforma de personal y disciplina militar",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Respaldó el informe de la reforma de las Fuerzas Armadas.",
+        "proyecto": "Ley Orgánica de Personal y Disciplina de las Fuerzas Armadas",
+        "id": null
+      },
+      {
+        "orador": "Andrés Castillo",
+        "cargo": "legislador",
+        "sobre": "Disciplina de las Fuerzas Armadas",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Defendió la necesidad de nuevas reglas de disciplina militar.",
+        "proyecto": "Ley Orgánica de Personal y Disciplina de las Fuerzas Armadas",
+        "id": "EC:castillo maldonado"
+      },
+      {
+        "orador": "Yajaira Urresta",
+        "cargo": "legislador",
+        "sobre": "Reforma a la Ley de Fuerzas Armadas",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Defendió la reforma para fortalecer la soberanía y disciplina.",
+        "proyecto": "Ley Orgánica Reformatoria a la Ley Orgánica de Personal y Disciplina de las Fuerzas Armadas",
+        "id": "EC:urresta guzman"
+      },
+      {
+        "orador": "Pablo Jurado",
+        "cargo": "legislador",
+        "sobre": "Apoyo a la reforma militar",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Pidió el respaldo unánime a la reforma de fuerzas armadas.",
+        "proyecto": "Ley Orgánica Reformatoria a la Ley Orgánica de Personal y Disciplina de las Fuerzas Armadas",
+        "id": "EC:jurado moreno"
+      },
+      {
+        "orador": "Kevin Gallardo",
+        "cargo": "legislador",
+        "sobre": "Responsabilidad penal en conflictos armados",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso la extinción de responsabilidad para militares en combate.",
+        "proyecto": "Ley Orgánica de Personal y Disciplina de las Fuerzas Armadas",
+        "id": "EC:gallardo ruiz"
+      },
+      {
+        "orador": "Javier Ordoñez",
+        "cargo": "legislador",
+        "sobre": "Programa de transición para militares",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso un programa de transición para militares retirados.",
+        "proyecto": "Ley Orgánica de Personal y Disciplina de las Fuerzas Armadas",
+        "id": "EC:ordonez fuentes"
+      },
+      {
+        "orador": "Luis García",
+        "cargo": "legislador",
+        "sobre": "Viabilidad económica de la reforma militar",
+        "postura": "a favor",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Explicó la viabilidad de los pagos por desvinculación militar.",
+        "proyecto": "Ley Orgánica de Personal y Disciplina de las Fuerzas Armadas",
+        "id": "EC:garcia velasquez"
+      },
+      {
+        "orador": "Diana Jacome",
+        "cargo": "legislador",
+        "sobre": "Contrataciones públicas en Pichincha",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Planteó una resolución para investigar contrataciones públicas.",
+        "proyecto": "",
+        "id": "EC:jacome silva"
+      },
+      {
+        "orador": "Diana Hakome",
+        "cargo": "legislador",
+        "sobre": "Fiscalización de contratos de Alexandro Tonelo",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso una resolución para investigar los contratos públicos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Mónica LeMán",
+        "cargo": "legislador",
+        "sobre": "Acusaciones contra Alexandro Tonelo",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Defendió la legalidad de los procesos de contratación.",
+        "proyecto": "",
+        "id": "EC:aleman marmol"
+      },
+      {
+        "orador": "Sergio Peña",
+        "cargo": "legislador",
+        "sobre": "Facultad de fiscalización de la Asamblea",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Respaldó la capacidad de la Asamblea para fiscalizar.",
+        "proyecto": "",
+        "id": "EC:pena veloz"
+      },
+      {
+        "orador": "Yajaira Urresta",
+        "cargo": "legislador",
+        "sobre": "Corrupción en la provincia de Pichincha",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció la corrupción en la administración de Pichincha.",
+        "proyecto": "",
+        "id": "EC:urresta guzman"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=lLmAkQ6fXlg"
+  },
+  "fb_2938241266538863": {
+    "fecha": "2026-11-05",
+    "organo": "Comisión de Régimen Económico",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Liliana Elizabeth Durán Aguilar",
+        "cargo": "legislador",
+        "sobre": "Cambio del orden del día",
+        "postura": "propone",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Propuso el rechazo al tratamiento de la proforma 2027.",
+        "proyecto": "",
+        "id": "EC:duran aguilar"
+      },
+      {
+        "orador": "José Luis Vallejo Ayala",
+        "cargo": "legislador",
+        "sobre": "Competencia de la comisión",
+        "postura": "a favor",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Respaldó la competencia de la comisión sobre el presupuesto.",
+        "proyecto": "",
+        "id": "EC:vallejo ayala"
+      },
+      {
+        "orador": "Mónica Rocío Le Mang Marmón",
+        "cargo": "legislador",
+        "sobre": "Defensa de las competencias económicas",
+        "postura": "a favor",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Denunció el traslado de temas económicos a otras comisiones.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Adrián Ernesto Castro Piedra",
+        "cargo": "legislador",
+        "sobre": "Cambio del orden del día",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Rechazó la moción de cambio del orden del día.",
+        "proyecto": "",
+        "id": "EC:castro piedra"
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=2938241266538863"
   }
 }
