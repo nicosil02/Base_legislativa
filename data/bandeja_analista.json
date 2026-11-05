@@ -267,5 +267,22 @@
       },
       "tipo": "norma"
     }
+  },
+  "n2369935": {
+    "estado": "interesante",
+    "fecha": "2026-11-05T17:30:22+00:00",
+    "por": "nicolas.silva@valiconsultores.com",
+    "titulo": "Ecuador avanza con el proyecto de HCE para conectar más de 1700 establecimientos de salud - Ehealth Reporter",
+    "item": {
+      "titulo": "Ecuador avanza con el proyecto de HCE para conectar más de 1700 establecimientos de salud - Ehealth Reporter",
+      "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxNNWdHYmtvaHN4UjdQVUdZcXlLcm1vc214ZWVvdnV3a0M4RkFwZFl1ZWE4ZGoyT0ZKdlRRQWlQZmxWYTYycHZOQl9sem85NlBMVkFQNERkd2R5VUg2WDVoYTBqQUJEREdUUVFwQTBYM3N6NzByZDFBZ1JmbGw1N3cxaHExV2U3ZG1uSGJvVkdsNVphMXF1aEhEQkNGUmFKQlR1ZzMzNklRUDlBVWtuTmNQUzNBUUVpNHowVEE?oc=5",
+      "pais": "EC",
+      "resumen": null,
+      "porque": {
+        "incode": "Avance oficial de la Historia Clinica Electronica en Ecuador, conectando establecimientos de salud donde opera la identidad digital y onboarding.",
+        "bayer": "Avance en la historia clinica electronica en Ecuador impacta la digitalizacion y gestion del sector salud de Farma."
+      },
+      "tipo": "noticia"
+    }
   }
 }
