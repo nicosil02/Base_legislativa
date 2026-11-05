@@ -54,5 +54,14 @@
       "google",
       "incode"
     ]
+  },
+  {
+    "noticia_id": 21,
+    "created_at": "2026-11-05T16:58:29Z",
+    "descartado_por": "nicolas.silva@valiconsultores.com",
+    "titulo": "Más de 200 personas salieron irregularmente de Perú mediante trama detectada en red de funcionarios de Migraciones",
+    "clientes": [
+      "incode"
+    ]
   }
 ]
