@@ -366,5 +366,21 @@
       },
       "tipo": "noticia"
     }
+  },
+  "n2370892": {
+    "estado": "descartar",
+    "fecha": "2026-11-05T23:19:05+00:00",
+    "por": "nicolas.silva@valiconsultores.com",
+    "titulo": "Cinco claves para entender la proforma presupuestaria 2027 de Ecuador",
+    "item": {
+      "titulo": "Cinco claves para entender la proforma presupuestaria 2027 de Ecuador",
+      "url": "https://www.elcomercio.com/actualidad/negocios/cinco-claves-para-entender-la-proforma-presupuestaria-2027-de-ecuador/",
+      "pais": "EC",
+      "resumen": null,
+      "porque": {
+        "bayer": "Presentacion de la proforma presupuestaria 2027 de Ecuador con afectaciones a salud e inversion agraria."
+      },
+      "tipo": "noticia"
+    }
   }
 }
