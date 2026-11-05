@@ -5,7 +5,7 @@ publicada solo las tablas de una lista fija: una tabla nueva fuera de la
 lista se perdia sin aviso. Ahora cada workflow publica solo las partes que
 escribe y quien necesita la base la arma de nuevo, igual que siempre:
 
-  transcripciones  sesiones_transcripciones (vigilante, backfills, refrescar-pe)
+  transcripciones  sesiones_transcripciones y sesiones_turnos (vigilante, backfills, oradores, refrescar-pe)
   tv               tv_* y videos_autoridades (workflows de TV)
   votaciones       votaciones nominales del Pleno (refrescar-pe: PDF de texto;
                    votaciones-ocr-bicameral: los escaneados)
@@ -26,7 +26,7 @@ import sys
 from pathlib import Path
 
 PARTES = {
-    "transcripciones": ["sesiones_transcripciones"],
+    "transcripciones": ["sesiones_transcripciones", "sesiones_turnos"],
     "tv": ["tv_vistos", "tv_menciones", "tv_avisos", "videos_autoridades"],
     "votaciones": ["votacion_pleno", "voto_pleno_nominal", "pleno_votacion_pdf", "pleno_votacion_ocr"],
 }
