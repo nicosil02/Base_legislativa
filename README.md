@@ -1,11 +1,10 @@
-# Radar Legislativo
+# Vali Intelligence
 
-Plataforma de monitoreo legislativo. Hoy cubre **Perú** (Congreso de la República —
-período vigente 2026–2031, Congreso bicameral: Senado + Cámara de Diputados, instalado
-2026-07-27; más el período histórico 2021–2026, Congreso unicameral). Diseñada como app
-multi-país: cada país vive en su propia página bajo `pages/`. Frontend en Streamlit con
-estética editorial-data (similar a datadaf.com), backend en SQLite alimentado por
-scraping del API oficial.
+Plataforma de seguimiento regulatorio y asuntos públicos para Perú y Ecuador.
+
+Congreso (proyectos, agenda, sesiones transcritas, votaciones), normas, noticias y
+alertas por cliente. Frontend propio (`front/`) montado en Streamlit; las bases se
+publican en la rama `datos`.
 
 ## Setup inicial
 
