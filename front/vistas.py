@@ -506,6 +506,14 @@ def ficha_pl(pais: str, pl: str) -> dict:
             votos.append({"fecha": f, "asunto": (asunto or "")[:260], "si": si, "no": no, "abst": ab, "url": pdf,
                           "donde": {"senado": "Pleno del Senado", "diputados": "Pleno de Diputados"}.get(cam, "Pleno"),
                           "nominal": nominal})
+        from consultas.votos_pe_comisiones import votaciones as de_comisiones
+        for v in de_comisiones():
+            if v["pl"] == str(int(num)) and (v["camara_pl"] or v["camara"][0].upper()) == tipo:
+                votos.append({"fecha": v["fecha"], "asunto": v["asunto"][-260:], "si": v["si"], "no": v["no"], "abst": v["abst"],
+                              "url": v["url"], "donde": f"Comisión de {v['comision']}",
+                              "nominal": [{"id": i, "nombre": por_id[i]["nombre"] if i in por_id else i, "voto": x,
+                                           "bancada": por_id[i]["bancada"] if i in por_id else "Sin bancada"} for i, x in v["votos"].items()]})
+        votos.sort(key=lambda x: x["fecha"], reverse=True)
         noticias = _noticias_de_pl(pe, "PE", num, "")
     else:
         ec = connect_ro("proyectos_ec.db")

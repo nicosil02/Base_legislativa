@@ -288,7 +288,7 @@ jobs:
             python -X utf8 -m congreso_live.reclasificar_temas run || echo "[warn] reclasificar_temas fallo, sigo"
           fi
 
-      - name: Cargos en comisiones (PE) y votos nominales de comisiones (EC)
+      - name: Cargos en comisiones (PE) y votos nominales de comisiones (EC y PE)
         # Sin IA. Las posturas se leen aparte en posturas.yml.
         if: steps.hora.outputs.hour == '14' || github.event_name == 'workflow_dispatch'
         env:
@@ -299,6 +299,7 @@ jobs:
           timeout 300 python -X utf8 -m consultas.cargos || echo "[warn] cargos fallo, sigo"
           pip install -q -c constraints.txt pymupdf
           timeout 900 python -X utf8 -m consultas.votos_ec_comisiones || echo "[warn] votos de comisiones EC fallo, sigo"
+          timeout 900 python -X utf8 -c "from consultas.votos_pe_comisiones import bajar; print(bajar())" || echo "[warn] votos de comisiones PE fallo, sigo"
 
       - name: Envio de alerta diaria (am/pm)
         env:
