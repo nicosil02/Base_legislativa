@@ -3603,5 +3603,321 @@
       }
     ],
     "url": "https://www.facebook.com/watch/?v=1834528574246412"
+  },
+  "fb_1032091379900355": {
+    "fecha": "2026-11-06",
+    "organo": "Comisión de Transparencia y Participación Ciudadana",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Diana Hakome Silva",
+        "cargo": "legislador",
+        "sobre": "Ley Infancia Segura",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Informó sobre la naturaleza transnacional del delito de abuso sexual infantil.",
+        "proyecto": "Ley Infancia Segura",
+        "id": "EC:jacome silva"
+      },
+      {
+        "orador": "Solano",
+        "cargo": "legislador",
+        "sobre": "Declaración de sesión reservada",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso declarar la sesión como reservada por motivos de seguridad nacional.",
+        "proyecto": "Ley Infancia Segura",
+        "id": "EC:solano calle"
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1032091379900355"
+  },
+  "fb_4841030082891022": {
+    "fecha": "2026-11-06",
+    "organo": "Comisión de Seguridad Integral",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Andorriga",
+        "cargo": "legislador",
+        "sobre": "Justificación de incrementos penales",
+        "postura": "con observaciones",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Solicitó justificación técnica para el incremento de las penas.",
+        "proyecto": "Ley anti mafias",
+        "id": null
+      },
+      {
+        "orador": "Asesora de la comisión",
+        "cargo": "autoridad",
+        "sobre": "Vínculo con economías ilícitas",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Explicó la conexión entre delitos hidrocarburíferos y economías ilícitas.",
+        "proyecto": "Ley anti mafias",
+        "id": null
+      },
+      {
+        "orador": "Noriega",
+        "cargo": "legislador",
+        "sobre": "Porcentaje de delitos hidrocarburíferos",
+        "postura": "pregunta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Preguntó qué porcentaje representan los delitos hidrocarburíferos en el crimen organizado.",
+        "proyecto": "Ley anti mafias",
+        "id": "EC:noriega donoso"
+      },
+      {
+        "orador": "Inés Alarcón",
+        "cargo": "legislador",
+        "sobre": "Tipificación de delitos hidrocarburíferos",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Informó sobre el perjuicio económico del caso AAA.",
+        "proyecto": "Ley anti mafias",
+        "id": "EC:alarcon bueno"
+      },
+      {
+        "orador": "Vicepresidente",
+        "cargo": "legislador",
+        "sobre": "Especialización del derecho penal",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Argumentó sobre la especialización penal de la ley.",
+        "proyecto": "Ley anti mafias",
+        "id": null
+      },
+      {
+        "orador": "Orresta",
+        "cargo": "legislador",
+        "sobre": "Tráfico de combustible y minería",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Denunció que el combustible facilita la minería ilegal.",
+        "proyecto": "Ley anti mafias",
+        "id": "EC:urresta guzman"
+      },
+      {
+        "orador": "Asesora de la comisión",
+        "cargo": "autoridad",
+        "sobre": "Protección de delitos hidrocarburíferos",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Reiteró la necesidad de la protección de delitos hidrocarburíferos.",
+        "proyecto": "Ley anti mafias",
+        "id": null
+      },
+      {
+        "orador": "Asesora de la comisión",
+        "cargo": "ministro o autoridad",
+        "sobre": "aumento de penas por delitos hidrocarburíferos",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Defendió el incremento de penas para combatir la minería ilegal",
+        "proyecto": "Ley Antimafias",
+        "id": null
+      },
+      {
+        "orador": "Asesora de la comisión",
+        "cargo": "ministro o autoridad",
+        "sobre": "pérdidas por perforaciones de poliductos",
+        "postura": "comenta",
+        "tema": "Energía",
+        "dijo": "Respaldó la necesidad de proteger los hidrocarburos nacionales",
+        "proyecto": "Ley Antimafias",
+        "id": null
+      },
+      {
+        "orador": "Noriega",
+        "cargo": "legislador",
+        "sobre": "justificación técnica del aumento de penas",
+        "postura": "con observaciones",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Cuestionó la efectividad del aumento de penas mediante datos",
+        "proyecto": "Ley Antimafias",
+        "id": "EC:noriega donoso"
+      },
+      {
+        "orador": "Vicepresidente",
+        "cargo": "legislador",
+        "sobre": "protección de sectores estratégicos",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Defendió la protección de los sectores estratégicos del Estado",
+        "proyecto": "Ley Antimafias",
+        "id": null
+      },
+      {
+        "orador": "Samuel Steinberg",
+        "cargo": "legislador",
+        "sobre": "excepción para organizaciones sociales",
+        "postura": "con observaciones",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso una excepción para proteger a las organizaciones sociales",
+        "proyecto": "Ley Antimafias",
+        "id": null
+      },
+      {
+        "orador": "Noriega",
+        "cargo": "legislador",
+        "sobre": "reducción de penas para colaboradores",
+        "postura": "pregunta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Preguntó por la reducción de la pena para colaboradores externos",
+        "proyecto": "Ley Antimafias",
+        "id": "EC:noriega donoso"
+      },
+      {
+        "orador": "Asesora de la comisión",
+        "cargo": "ministro o autoridad",
+        "sobre": "escalas penales de la reforma",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Respaldó las escalas penales propuestas en la reforma",
+        "proyecto": "Ley Antimafias",
+        "id": null
+      },
+      {
+        "orador": "Mariana Yumba",
+        "cargo": "legislador",
+        "sobre": "Delito de pertenencia funcional",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso sustituir la pertenencia funcional por participación activa.",
+        "proyecto": "",
+        "id": "EC:yumbay yallico"
+      },
+      {
+        "orador": "Ayuma",
+        "cargo": "legislador",
+        "sobre": "Pertenencia funcional y reincidencia",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Defendió la pertinencia de la pertenencia funcional por la rotación delictiva.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Mariana Yumba",
+        "cargo": "legislador",
+        "sobre": "Tipificación de delitos",
+        "postura": "pregunta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Preguntó si la soberanía permite tipificar delitos autónomamente.",
+        "proyecto": "",
+        "id": "EC:yumbay yallico"
+      },
+      {
+        "orador": "Resta",
+        "cargo": "legislador",
+        "sobre": "Límite de acumulación de penas",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Cuestionó el aumento del límite de acumulación de penas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Levi",
+        "cargo": "legislador",
+        "sobre": "Acumulación de penas por reincidencia",
+        "postura": "a favor",
+        "tema": "Justicia",
+        "dijo": "Respaldó el límite de sesenta años para reincidentes.",
+        "proyecto": "",
+        "id": "EC:levi cabello"
+      },
+      {
+        "orador": "Oresta",
+        "cargo": "legislador",
+        "sobre": "Estudios técnicos de la comisión",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Defendió la realización de estudios técnicos para la ley.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Aurresta",
+        "cargo": "legislador",
+        "sobre": "Seguridad en su provincia",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Denunció la violencia y criminalidad en su provincia.",
+        "proyecto": "",
+        "id": "EC:urresta guzman"
+      },
+      {
+        "orador": "Oresta",
+        "cargo": "legislador",
+        "sobre": "Contravención de hidrocarburos",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso tipificar el almacenamiento ilegal de hidrocarburos como contravención.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Secretario",
+        "cargo": "ministro o autoridad",
+        "sobre": "Reformas al Código Orgánico Integral Penal",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Expuso las reformas propuestas al Código Orgánico Integral Penal.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Asesora de la comisión",
+        "cargo": "invitado",
+        "sobre": "Artículo 24 sobre cooperación eficaz",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Explicó la justificación técnica del artículo 24.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Secretario",
+        "cargo": "ministro o autoridad",
+        "sobre": "Reformas al Código Orgánico Integral Penal",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Continuó con la lectura de los artículos propuestos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Mariana Yunbi",
+        "cargo": "legislador",
+        "sobre": "Inhabilitación de abogados y contadores",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Cuestionó la inhabilitación profesional de abogados y contadores.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Secretario",
+        "cargo": "ministro o autoridad",
+        "sobre": "Propuesta de Mariana Yunbi",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Leyó el texto de la propuesta de la legisladora.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=4841030082891022"
+  },
+  "fb_1144582734724066": {
+    "fecha": "2026-11-06",
+    "organo": "Comisión de Relaciones Internacionales",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [],
+    "url": "https://www.facebook.com/watch/?v=1144582734724066"
   }
 }
