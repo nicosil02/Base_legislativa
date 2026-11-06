@@ -190,6 +190,19 @@ def con_enlaces(texto: str) -> str:
             + "\n\n".join(bloques))
 
 
+REVISION = """Antes de darla por buena, revisa la alerta contra el texto de la fuente y contesta para ti estas preguntas:
+1. Que cambia frente a la version anterior de la norma o la situacion previa. Pon lado a lado lo de antes y lo de
+   ahora: un plazo que se acorta, un requisito que se agrega o algo que ya existia no se presenta como novedad.
+2. Desde cuando rige. OBLIGATORIO si es una norma: la alerta debe decir la fecha de publicacion y desde cuando rige
+   segun el texto; si el texto no lo fija, decirlo asi.
+3. Por que le importa a este cliente segun su perfil. OBLIGATORIO: explica en palabras simples que regula y a que
+   actividad concreta del cliente toca (sin nombrar al cliente). Si de verdad no hay relacion, dilo en tu respuesta
+   en vez de rellenar.
+4. Que vineta no le aporta nada al cliente (contexto de relleno, motivos internos de la entidad). Quitala.
+5. Que fecha, cifra o dato no sale de la fuente. Quitalo.
+Despues entrega SOLO la alerta corregida, lista para WhatsApp, sin explicar los cambios."""
+
+
 def responder(slug: str, historia: list, prompt: str) -> tuple[str, str]:
     """Un turno del chat: (texto, modelo que lo escribio). Lee los enlaces de todos
     los mensajes del usuario y reintenta/cambia de modelo si Gemini esta saturado

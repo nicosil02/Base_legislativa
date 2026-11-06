@@ -82,7 +82,7 @@ VISTAS.alertas = (() => {
     }
     const p = c.material?.items?.[0] ?? {};
     caja.innerHTML = `<div class="f-cab"><h2>La alerta</h2><span class="nota">${(i => i < 0 ? "Con tus cambios" : `Versión ${i + 1}`)(respuestas().findLastIndex(([, t]) => t === (c.final ?? ult[1])))}</span>
-        <button type="button" class="btn g-editar">Editar</button><button type="button" class="btn pri g-copiar">Copiar</button></div>
+        <button type="button" class="btn g-revisar" title="Gemini la revisa contra la fuente: qué cambia, vigencia, relación con el cliente, relleno y datos sin fuente. Gasta un pedido.">Revisar</button><button type="button" class="btn g-editar">Editar</button><button type="button" class="btn pri g-copiar">Copiar</button></div>
       ${(m => MODELO[m?.[2]] ? `<div class="aviso">La escribió ${MODELO[m[2]]} porque se acabó el cupo de Gemini Flash. Escribe peor, revísala con más cuidado.</div>` : "")(respuestas().find(([, t]) => t === (c.final ?? ult[1])) ?? ult)}
       <div class="previa wa"></div><textarea class="g-texto" rows="14" hidden aria-label="Texto de la alerta">${esc(c.final ?? ult[1])}</textarea>
       <h3 class="f-sub">Guardar en el historial</h3>
@@ -101,6 +101,7 @@ VISTAS.alertas = (() => {
       e.target.textContent = texto.hidden ? "Editar" : "Ver como queda";
       if (!texto.hidden) texto.focus();
     };
+    caja.querySelector(".g-revisar").onclick = () => { if (!c.ocupado) enviar("Revisar contra la fuente", { revisar: true, actual: texto.value }); };
     caja.querySelector(".g-copiar").onclick = async () => { await navigator.clipboard.writeText(texto.value); App.aviso("Texto copiado"); };
     caja.querySelector(".g-guardar").onclick = async (e) => {
       const titulo = caja.querySelector(".g-titulo").value.trim();
@@ -147,12 +148,12 @@ VISTAS.alertas = (() => {
     } catch (e) { caja.innerHTML = `<p class="nota">No se pudieron traer los borradores: ${esc(e.message)}</p>`; }
   }
 
-  async function enviar(prompt) {
+  async function enviar(prompt, extra = {}) {
     c.historia.push(["user", prompt]);
-    c.ocupado = "Redactando…";
+    c.ocupado = extra.revisar ? "Revisando contra la fuente…" : "Redactando…";
     mensajes();
     try {
-      const r = await App.pedir("chat", { cliente: c.cliente, historia: validos().slice(0, -1), prompt });
+      const r = await App.pedir("chat", { cliente: c.cliente, historia: validos().slice(0, -1), prompt, ...extra });
       c.historia.push(["assistant", r.respuesta, r.modelo]);
       c.final = null;
     } catch (e) { c.historia.push(["assistant", FALLO + e.message]); }
