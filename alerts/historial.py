@@ -54,11 +54,11 @@ def agregar(slug: str, entrada_md: str, autor: str | None = None) -> None:
 
 
 def entradas(slug: str, texto: str | None = None) -> list[dict]:
-    """[{fecha, encabezado, cuerpo}] en orden. Lee el archivo local del repo
-    salvo que se pase `texto`."""
+    """[{fecha, encabezado, cuerpo}] en orden. Lee el historial publicado
+    (cifrado) salvo que se pase `texto`: en la nube y en CI no existe la copia
+    en texto, y el filtro del Panel lo veia vacio y repetia temas ya alertados."""
     if texto is None:
-        p = ROOT / ruta(slug)
-        texto = p.read_text(encoding="utf-8") if p.exists() else ""
+        texto = leer(slug)
     marcas = list(_ENCABEZADO.finditer(texto))
     out = []
     for i, m in enumerate(marcas):
