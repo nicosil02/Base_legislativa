@@ -10812,106 +10812,176 @@
     "fecha": "2026-10-22",
     "organo": "Pleno de la Asamblea",
     "pais": "EC",
-    "v": 3,
+    "v": 4,
     "dichos": [
       {
         "orador": "Yanina Rizo",
         "cargo": "legislador",
-        "sobre": "proyecto de ley para reducir desperdicio de alimentos",
-        "postura": "con observaciones",
+        "sobre": "Reducción del desperdicio de alimentos",
+        "postura": "a favor",
         "tema": "Agricultura",
-        "dijo": "Defendio la iniciativa para cerrar brechas alimentarias y mitigar el hambre.",
-        "proyecto": "Ley para prevenir y reducir la pérdida y desperdicio de alimentos",
-        "id": null
-      },
-      {
-        "orador": "Andrés Castillo",
-        "cargo": "legislador",
-        "sobre": "presuntos diezmos en el Municipio de Quito",
-        "postura": "propone",
-        "tema": "Política y control político",
-        "dijo": "Propuso solicitar a la Contraloria y al Ministerio de Trabajo investigar cobros indebidos.",
-        "proyecto": "",
-        "id": null
+        "dijo": "Explicó que el proyecto busca cerrar brechas alimentarias para personas vulnerables.",
+        "proyecto": "Ley de prevención de desperdicio de alimentos",
+        "id": "EC:rizzo alvear"
       },
       {
         "orador": "Carlos Gavilanes",
         "cargo": "legislador",
-        "sobre": "proyecto de ley sobre desperdicio de alimentos",
+        "sobre": "Reducción del desperdicio de alimentos",
         "postura": "a favor",
         "tema": "Agricultura",
-        "dijo": "Apoyo el informe destacando su vision profundamente humana y los controles sanitarios.",
-        "proyecto": "Ley para prevenir y reducir la pérdida y desperdicio de alimentos",
+        "dijo": "Afirmó que el proyecto ayudará a adultos mayores y fundaciones sociales.",
+        "proyecto": "Ley de prevención de desperdicio de alimentos",
+        "id": "EC:gavilanez munoz"
+      },
+      {
+        "orador": "Andrés Castillo",
+        "cargo": "legislador",
+        "sobre": "Investigación de cobros indebidos en Quito",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso investigar presuntos cobros indebidos de servidores en el municipio de Quito.",
+        "proyecto": "",
+        "id": "EC:castillo maldonado"
+      },
+      {
+        "orador": "Gabriela Rivadeneira",
+        "cargo": "invitado",
+        "sobre": "Concienciación sobre el cáncer de mama",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Relató su difícil proceso tras recibir un diagnóstico de cáncer de mama.",
+        "proyecto": "",
         "id": null
+      },
+      {
+        "orador": "Gabriela Riva de Neira",
+        "cargo": "invitado",
+        "sobre": "el cáncer de mama y su ley",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Compartió su experiencia con el cáncer y agradeció la nueva ley integral.",
+        "proyecto": "Ley de atención integral al cáncer de mama",
+        "id": null
+      },
+      {
+        "orador": "Nora Mejía",
+        "cargo": "invitado",
+        "sobre": "el desperdicio de alimentos",
+        "postura": "comenta",
+        "tema": "Agricultura",
+        "dijo": "Expuso criterios técnicos sobre el proyecto de desperdicio de alimentos.",
+        "proyecto": "Proyecto de ley para reducir la pérdida y desperdicio de alimentos",
+        "id": null
+      },
+      {
+        "orador": "Yanina Rizo",
+        "cargo": "legislador",
+        "sobre": "reforma de desperdicio de alimentos",
+        "postura": "comenta",
+        "tema": "Agricultura",
+        "dijo": "Presentó el informe de la comisión sobre el proyecto de alimentos.",
+        "proyecto": "Proyecto de ley para reducir la pérdida y desperdicio de alimentos",
+        "id": "EC:rizzo alvear"
+      },
+      {
+        "orador": "Carlos Gavilanes",
+        "cargo": "legislador",
+        "sobre": "donación de alimentos",
+        "postura": "a favor",
+        "tema": "Agricultura",
+        "dijo": "Respaldó el informe de la comisión sobre donación de alimentos.",
+        "proyecto": "Proyecto de ley para reducir la pérdida y desperdicio de alimentos",
+        "id": "EC:gavilanez munoz"
       },
       {
         "orador": "Becibel Mendoza",
         "cargo": "legislador",
-        "sobre": "proyecto de ley contra el desperdicio de alimentos",
-        "postura": "con observaciones",
+        "sobre": "donación de alimentos",
+        "postura": "a favor",
         "tema": "Agricultura",
-        "dijo": "Detallo que la propuesta protege la salud y garantiza la gratuidad de donaciones.",
-        "proyecto": "Ley para prevenir y reducir la pérdida y desperdicio de alimentos",
-        "id": null
+        "dijo": "Defendió la reforma para garantizar la donación de alimentos.",
+        "proyecto": "Proyecto de ley para reducir la pérdida y desperdicio de alimentos",
+        "id": "EC:mendoza ibarra"
       },
       {
-        "orador": "Anagui",
+        "orador": "Becibel Mendoza",
         "cargo": "legislador",
-        "sobre": "proyecto de ley sobre alimentos",
+        "sobre": "Proyecto de ley de alimentos",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Defendió el proyecto para garantizar la gratuidad de las donaciones.",
+        "proyecto": "Ley de desperdicio de alimentos",
+        "id": "EC:mendoza ibarra"
+      },
+      {
+        "orador": "Anaguín",
+        "cargo": "legislador",
+        "sobre": "Reforma a la ley de alimentos",
         "postura": "con observaciones",
-        "tema": "Agricultura",
-        "dijo": "Planteo observaciones sobre la caducidad y la inclusion de actividades pesqueras.",
-        "proyecto": "Ley para prevenir y reducir la pérdida y desperdicio de alimentos",
+        "tema": "Otros",
+        "dijo": "Pidió aclarar la diferencia entre caducidad y expiración en el artículo 14.",
+        "proyecto": "Ley de desperdicio de alimentos",
         "id": null
       },
       {
         "orador": "Camila Cueva",
         "cargo": "legislador",
-        "sobre": "proyecto de ley para reducir desperdicio de alimentos",
+        "sobre": "Prevención del desperdicio de alimentos",
         "postura": "a favor",
-        "tema": "Agricultura",
-        "dijo": "Respaldo la reforma indicando que combate la desnutricion cronica infantil.",
-        "proyecto": "Ley para prevenir y reducir la pérdida y desperdicio de alimentos",
+        "tema": "Otros",
+        "dijo": "Respaldó el proyecto para fortalecer las redes de apoyo social.",
+        "proyecto": "Ley de desperdicio de alimentos",
         "id": null
       },
       {
         "orador": "Andrés Castillo",
         "cargo": "legislador",
-        "sobre": "proyecto de ley sobre donacion de alimentos",
-        "postura": "con observaciones",
-        "tema": "Agricultura",
-        "dijo": "Cuestiono a los intermediarios que lucran y cobran por los alimentos donados.",
-        "proyecto": "Ley para prevenir y reducir la pérdida y desperdicio de alimentos",
-        "id": null
+        "sobre": "Monopolio en bancos de alimentos",
+        "postura": "propone",
+        "tema": "Comercio",
+        "dijo": "Denunció el lucro de intermediarios en los bancos de alimentos.",
+        "proyecto": "Ley de desperdicio de alimentos",
+        "id": "EC:castillo maldonado"
       },
       {
         "orador": "Mariana Yumbai",
         "cargo": "legislador",
-        "sobre": "proyecto de ley de desperdicio de alimentos",
+        "sobre": "Observaciones a la ley de alimentos",
         "postura": "con observaciones",
-        "tema": "Agricultura",
-        "dijo": "Propuso correcciones sobre la prohibicion de alimentos expirados y las multas.",
-        "proyecto": "Ley para prevenir y reducir la pérdida y desperdicio de alimentos",
-        "id": null
+        "tema": "Otros",
+        "dijo": "Propuso mantener multas y permitir el uso de donaciones en comedores.",
+        "proyecto": "Ley de desperdicio de alimentos",
+        "id": "EC:yumbay yallico"
       },
       {
         "orador": "Guadalupe Vélez",
         "cargo": "legislador",
-        "sobre": "proyecto de ley contra desperdicio de alimentos",
+        "sobre": "Gratuidad en la donación de alimentos",
         "postura": "a favor",
-        "tema": "Agricultura",
-        "dijo": "Destaco que las reformas garantizan que los alimentos lleguen gratuitamente.",
-        "proyecto": "Ley para prevenir y reducir la pérdida y desperdicio de alimentos",
+        "tema": "Otros",
+        "dijo": "Respaldó la reforma para garantizar la gratuidad de alimentos donados.",
+        "proyecto": "Ley de desperdicio de alimentos",
         "id": "EC:velez velez"
       },
       {
         "orador": "Natalie Farinango",
         "cargo": "legislador",
-        "sobre": "ley de lavado de activos",
-        "postura": "a favor",
-        "tema": "Presupuesto y gasto público",
-        "dijo": "Recomendo el archivo del proyecto por riesgos de inconstitucionalidad e impacto presupuestario.",
-        "proyecto": "Ley Orgánica de Prevención, Detección y Combate del Delito de Lavado de Activos",
+        "sobre": "proyecto de ley de lavado de activos",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Recomendó archivar el proyecto de ley de lavado de activos por su inconstitucionalidad.",
+        "proyecto": "Ley de lavado de activos",
+        "id": "EC:farinango delgado"
+      },
+      {
+        "orador": "Maritza",
+        "cargo": "invitado",
+        "sobre": "resumen de la sesión legislativa",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Informó la aprobación del archivo del proyecto de ley de lavado de activos.",
+        "proyecto": "Ley de lavado de activos",
         "id": null
       }
     ],
@@ -10979,7 +11049,7 @@
     "fecha": "2026-10-22",
     "organo": "Comisión de Presupuesto",
     "pais": "PE",
-    "v": 3,
+    "v": 4,
     "dichos": [],
     "url": "https://www.youtube.com/watch?v=ggJwf-DFHPU"
   },
@@ -13682,5 +13752,454 @@
       }
     ],
     "url": "https://www.youtube.com/watch?v=mJXvZAjW9To"
+  },
+  "ubmnWklg9n4": {
+    "fecha": "2026-10-22",
+    "organo": "Pleno de Diputados",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Juan Castrejón Fernández",
+        "cargo": "legislador",
+        "sobre": "derogación de la ley del Colegio de Artistas",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Sustentó la derogación de la ley para evitar la exclusión de artistas autodidactas.",
+        "proyecto": "Ley 32645",
+        "id": "diputados:castrejon fernandez"
+      },
+      {
+        "orador": "Rosana Ala Macera",
+        "cargo": "legislador",
+        "sobre": "derogación de la ley del Colegio de Artistas",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Defendió que el arte no requiere de un título profesional.",
+        "proyecto": "PL 12",
+        "id": null
+      },
+      {
+        "orador": "Indira Wilca Flores",
+        "cargo": "legislador",
+        "sobre": "derogación de la ley del Colegio de Artistas",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Denunció que la ley se aprobó sin consultar a los gremios culturales.",
+        "proyecto": "PL 24",
+        "id": "diputados:huilca flores"
+      },
+      {
+        "orador": "Neri Fernández Nina",
+        "cargo": "legislador",
+        "sobre": "derogación de la ley del Colegio de Artistas",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Defendió la importancia de la formación tradicional y comunitaria.",
+        "proyecto": "Ley 32645",
+        "id": "diputados:fernandez nina"
+      },
+      {
+        "orador": "Muñoz Yuribilca Kim Tami",
+        "cargo": "legislador",
+        "sobre": "derogación de la ley del Colegio de Artistas",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Respaldó la derogatoria para eliminar barreras burocráticas.",
+        "proyecto": "Ley 32645",
+        "id": "diputados:munoz yurivilca"
+      },
+      {
+        "orador": "Norma Yarrow",
+        "cargo": "legislador",
+        "sobre": "derogación de la ley del Colegio de Artistas",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Pidió la derogación para evitar que la cultura sea politizada.",
+        "proyecto": "Ley 32645",
+        "id": "diputados:yarrow lumbreras"
+      },
+      {
+        "orador": "Analí Márquez",
+        "cargo": "legislador",
+        "sobre": "derogación de la ley del Colegio de Artistas",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Cuestionó que la ley buscara desplazar a una autoridad.",
+        "proyecto": "Ley 32645",
+        "id": "diputados:marquez huanca"
+      },
+      {
+        "orador": "Analí Márquez",
+        "cargo": "legislador",
+        "sobre": "derogación de la Ley 32645",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Pidió la derogación de la Ley 32645.",
+        "proyecto": "Ley 32645",
+        "id": "diputados:marquez huanca"
+      },
+      {
+        "orador": "Luis Quispecandia",
+        "cargo": "legislador",
+        "sobre": "derogación de la ley de artistas",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Respaldó la derogación de la ley consensuada.",
+        "proyecto": "",
+        "id": "diputados:quispe candia"
+      },
+      {
+        "orador": "Amalia Palomino",
+        "cargo": "legislador",
+        "sobre": "derogación de la ley de artistas",
+        "postura": "a favor",
+        "tema": "Educación",
+        "dijo": "Denunció el uso político de la ley.",
+        "proyecto": "",
+        "id": "diputados:palomino pacheco"
+      },
+      {
+        "orador": "James Olguín",
+        "cargo": "legislador",
+        "sobre": "derogación de la ley de artistas",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Respaldó la derogación de la ley.",
+        "proyecto": "",
+        "id": "diputados:holguin aguirre"
+      },
+      {
+        "orador": "Tito Rojas",
+        "cargo": "legislador",
+        "sobre": "inconstitucionalidad de la ley de artistas",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Denunció la inconstitucionalidad de la ley.",
+        "proyecto": "",
+        "id": "diputados:tito rojas"
+      },
+      {
+        "orador": "Pacheco Quispe Marco Antonio",
+        "cargo": "legislador",
+        "sobre": "derogación del Colegio de Artistas",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Respaldó la derogación del Colegio de Artistas.",
+        "proyecto": "",
+        "id": "diputados:pacheco quispe"
+      },
+      {
+        "orador": "Dina Janco",
+        "cargo": "legislador",
+        "sobre": "apoyo a la creación artística",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Pidió proteger la libertad de creación artística.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Marlenia Arminta",
+        "cargo": "legislador",
+        "sobre": "derogación de la ley de artistas",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Respaldó la derogación de la ley.",
+        "proyecto": "",
+        "id": "diputados:arminta valencia"
+      },
+      {
+        "orador": "Rafael Aldo Céis Castillo",
+        "cargo": "legislador",
+        "sobre": "apoyo a la iniciativa de derogación",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Respaldó la iniciativa de derogación.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Víctor Piñán",
+        "cargo": "legislador",
+        "sobre": "derogación de la ley de artistas",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Denunció que la ley perjudica a artistas.",
+        "proyecto": "",
+        "id": "diputados:pinan mamani"
+      },
+      {
+        "orador": "Ernesto Sunini",
+        "cargo": "legislador",
+        "sobre": "derogación de la ley de artistas",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Pidió legislar con mayor participación ciudadana.",
+        "proyecto": "",
+        "id": "diputados:zunini yerren"
+      },
+      {
+        "orador": "César Olguín",
+        "cargo": "legislador",
+        "sobre": "inconstitucionalidad de la ley de artistas",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Denunció la inconstitucionalidad de la norma.",
+        "proyecto": "",
+        "id": "diputados:holguin loaiza"
+      },
+      {
+        "orador": "Frank Kerk",
+        "cargo": "legislador",
+        "sobre": "derogación de la colegiatura obligatoria",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Cuestionó la obligatoriedad de la colegiatura.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Luis Arturo Alegría García",
+        "cargo": "legislador",
+        "sobre": "rectificación de la aprobación de la ley",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Respaldó la derogación de la ley.",
+        "proyecto": "",
+        "id": "diputados:alegria garcia"
+      },
+      {
+        "orador": "Gina Duarte Patiño",
+        "cargo": "legislador",
+        "sobre": "importancia del arte en la educación",
+        "postura": "a favor",
+        "tema": "Educación",
+        "dijo": "Defendió la importancia del arte en educación.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Adrián Álvarez",
+        "cargo": "legislador",
+        "sobre": "derogación de la ley de artistas",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Denunció la naturaleza discriminatoria de la ley.",
+        "proyecto": "",
+        "id": "diputados:andrade salguero de alvarez"
+      },
+      {
+        "orador": "Juan Castrejón Fernández",
+        "cargo": "legislador",
+        "sobre": "solicitud de votación",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Propuso al pleno ir al voto.",
+        "proyecto": "",
+        "id": "diputados:castrejon fernandez"
+      },
+      {
+        "orador": "Flor de María Mesa Rivera",
+        "cargo": "legislador",
+        "sobre": "Protección de niños en orfandad",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Explicó los ejes de protección para niños en orfandad.",
+        "proyecto": "PL 178",
+        "id": null
+      },
+      {
+        "orador": "Leo Miguel de Paz Lancho",
+        "cargo": "legislador",
+        "sobre": "Protección de niños en orfandad",
+        "postura": "con observaciones",
+        "tema": "Otros",
+        "dijo": "Propuso cambios técnicos al texto del dictamen.",
+        "proyecto": "PL 178",
+        "id": "diputados:de paz lancho"
+      },
+      {
+        "orador": "Baella",
+        "cargo": "legislador",
+        "sobre": "Aniversario de la Dirección Nacional de Seguridad",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Saludó a la Dirección Nacional de Seguridad del Estado.",
+        "proyecto": "",
+        "id": "diputados:baella malca"
+      },
+      {
+        "orador": "Paola Martínez",
+        "cargo": "legislador",
+        "sobre": "Protección de niños en orfandad",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Respaldó la protección y rendición de cuentas para huérfanos.",
+        "proyecto": "PL 178",
+        "id": "diputados:martinez paitan"
+      },
+      {
+        "orador": "Neri Fernández Nina",
+        "cargo": "legislador",
+        "sobre": "Protección de niños en orfandad",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Defendió la importancia de proteger a la infancia desprotegida.",
+        "proyecto": "PL 178",
+        "id": "diputados:fernandez nina"
+      },
+      {
+        "orador": "Pirangeli Daniela Dodero Jovich",
+        "cargo": "legislador",
+        "sobre": "Protección de niños en orfandad",
+        "postura": "con observaciones",
+        "tema": "Otros",
+        "dijo": "Sugirió cambios en el título y articulado del dictamen.",
+        "proyecto": "PL 178",
+        "id": "diputados:dodero jovich"
+      },
+      {
+        "orador": "Barbarán Reyes Rosángela Andrea",
+        "cargo": "legislador",
+        "sobre": "Protección de niños en orfandad",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Denunció las trabas en procesos de adopción de menores.",
+        "proyecto": "PL 178",
+        "id": "diputados:barbaran reyes"
+      },
+      {
+        "orador": "Marleni Arminta",
+        "cargo": "legislador",
+        "sobre": "Protección de niños en orfandad",
+        "postura": "con observaciones",
+        "tema": "Otros",
+        "dijo": "Propuso corregir errores técnicos en el dictamen legislativo.",
+        "proyecto": "PL 178",
+        "id": "diputados:arminta valencia"
+      },
+      {
+        "orador": "Amalia Palomino",
+        "cargo": "legislador",
+        "sobre": "Atención y presupuesto para niños huérfanos",
+        "postura": "a favor",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Pidió asignar presupuesto para la salud de niños huérfanos.",
+        "proyecto": "PL 178",
+        "id": "diputados:palomino pacheco"
+      },
+      {
+        "orador": "Diego Basán",
+        "cargo": "legislador",
+        "sobre": "Saludo al invitado José Félix Díaz",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Saludó al invitado José Félix Díaz en el hemiciclo.",
+        "proyecto": "",
+        "id": "diputados:bazan calderon"
+      },
+      {
+        "orador": "Ana Luisa Yufra Lugo",
+        "cargo": "legislador",
+        "sobre": "Protección de niños en orfandad",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Respaldó la creación del día nacional de la orfandad.",
+        "proyecto": "PL 178",
+        "id": "diputados:yuffra lugo"
+      },
+      {
+        "orador": "Dina Hango",
+        "cargo": "legislador",
+        "sobre": "Protección de niños en orfandad",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Expresó su apoyo a la protección de la niñez.",
+        "proyecto": "PL 178",
+        "id": null
+      },
+      {
+        "orador": "Carlos Alberto Domínguez Herrera",
+        "cargo": "legislador",
+        "sobre": "Brecha de centros de acogida para menores",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Informó sobre la falta de albergues acreditados para menores.",
+        "proyecto": "PL 178",
+        "id": "diputados:dominguez herrera"
+      },
+      {
+        "orador": "Indira Hilca",
+        "cargo": "legislador",
+        "sobre": "Protección de niños en orfandad",
+        "postura": "con observaciones",
+        "tema": "Otros",
+        "dijo": "Propuso cambiar el término abandono por desprotección familiar.",
+        "proyecto": "PL 178",
+        "id": "diputados:huilca flores"
+      },
+      {
+        "orador": "Luis Quispecandia",
+        "cargo": "legislador",
+        "sobre": "Protección de niños en orfandad",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Respaldó la propuesta de sensibilización para menores desprotegidos.",
+        "proyecto": "PL 178",
+        "id": "diputados:quispe candia"
+      },
+      {
+        "orador": "Luis Quispecandia",
+        "cargo": "legislador",
+        "sobre": "Protección de niños en abandono",
+        "postura": "con observaciones",
+        "tema": "Otros",
+        "dijo": "Cuestionó que la propuesta sea insuficiente ante la vulnerabilidad infantil.",
+        "proyecto": "",
+        "id": "diputados:quispe candia"
+      },
+      {
+        "orador": "Infantes Castañeda",
+        "cargo": "legislador",
+        "sobre": "Protección de la niñez y trata",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Propuso la coordinación entre gobiernos locales y el Ejecutivo.",
+        "proyecto": "",
+        "id": "diputados:infantes castaneda"
+      },
+      {
+        "orador": "Rosana Rocha",
+        "cargo": "legislador",
+        "sobre": "Protección de la orfandad infantil",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Respaldó la necesidad de agilizar los procesos de adopción.",
+        "proyecto": "",
+        "id": "diputados:rocha gallegos"
+      },
+      {
+        "orador": "Fernando García Ubi",
+        "cargo": "legislador",
+        "sobre": "Situación de abandono de niños",
+        "postura": "con observaciones",
+        "tema": "Otros",
+        "dijo": "Denunció el deterioro de la estructura familiar y estatal.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Flor de Jesús Mesa Rivera",
+        "cargo": "legislador",
+        "sobre": "Texto sustitutorio de la comisión",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Informó sobre la presentación de un texto sustitutorio consensuado.",
+        "proyecto": "",
+        "id": "diputados:meza rivera"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=ubmnWklg9n4"
   }
 }
