@@ -17092,5 +17092,582 @@
     "v": 4,
     "dichos": [],
     "url": "https://www.youtube.com/watch?v=7xb1vH1EPfQ"
+  },
+  "gD1ekqBA_Xs": {
+    "fecha": "2026-10-21",
+    "organo": "Pleno del Senado",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Mesías Ramírez",
+        "cargo": "legislador",
+        "sobre": "Dictamen de delegación de facultades",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Defendió el dictamen de delegación de facultades.",
+        "proyecto": "PL 13",
+        "id": "senado:mesia ramirez"
+      },
+      {
+        "orador": "Nora Bonifaz Carmona",
+        "cargo": "legislador",
+        "sobre": "Modificación del dictamen en el Senado",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó la incorporación de materias rechazadas.",
+        "proyecto": "PL 13",
+        "id": "senado:bonifaz carmona"
+      },
+      {
+        "orador": "Mirtha Vásquez Chuquilín",
+        "cargo": "legislador",
+        "sobre": "Concentración de poder en el Senado",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció la manipulación de las facultades legislativas.",
+        "proyecto": "PL 13",
+        "id": "senado:vasquez chuquilin"
+      },
+      {
+        "orador": "Iber Maraví",
+        "cargo": "legislador",
+        "sobre": "Violación de la Constitución en el dictamen",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció la violación de la Constitución y reglamentos.",
+        "proyecto": "PL 13",
+        "id": "senado:maravi olarte"
+      },
+      {
+        "orador": "Urrego",
+        "cargo": "legislador",
+        "sobre": "Límites de la revisión senatorial",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó la modificación de materias aprobadas.",
+        "proyecto": "PL 13",
+        "id": null
+      },
+      {
+        "orador": "Iber Maraví",
+        "cargo": "legislador",
+        "sobre": "Necesidad de facultades para el Ejecutivo",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Rechazó la solicitud de facultades al Ejecutivo.",
+        "proyecto": "PL 13",
+        "id": "senado:maravi olarte"
+      },
+      {
+        "orador": "Iber Maraví",
+        "cargo": "legislador",
+        "sobre": "facultades legislativas del Ejecutivo",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó la ampliación de facultades para la criminalidad.",
+        "proyecto": "",
+        "id": "senado:maravi olarte"
+      },
+      {
+        "orador": "Hugo Cabana",
+        "cargo": "legislador",
+        "sobre": "sistema bicameral y facultades legislativas",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció la violación de la Constitución y el reglamento.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Jack Rodrich",
+        "cargo": "legislador",
+        "sobre": "facultades para la seguridad ciudadana",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Defendió las facultades para la seguridad ciudadana.",
+        "proyecto": "",
+        "id": "senado:rodrich ackerman"
+      },
+      {
+        "orador": "Silvana Robles",
+        "cargo": "legislador",
+        "sobre": "delegación de facultades al Ejecutivo",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Rechazó la delegación de facultades contra el crimen.",
+        "proyecto": "",
+        "id": "senado:robles araujo"
+      },
+      {
+        "orador": "Carlos Caballero",
+        "cargo": "legislador",
+        "sobre": "delegación de facultades para emergencias",
+        "postura": "con observaciones",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Respaldó las veinte materias y pidió revisar las adicionales.",
+        "proyecto": "",
+        "id": "senado:caballero leon"
+      },
+      {
+        "orador": "Saúl Armacanqui",
+        "cargo": "legislador",
+        "sobre": "ampliación de facultades legislativas",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció que la ampliación de facultades daña al pueblo.",
+        "proyecto": "",
+        "id": "senado:armacanqui morales"
+      },
+      {
+        "orador": "Carla Shaffer",
+        "cargo": "legislador",
+        "sobre": "herramientas ante el fenómeno del Niño",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Defendió el uso de herramientas para el fenómeno del Niño.",
+        "proyecto": "",
+        "id": "senado:schaefer cuculiza"
+      },
+      {
+        "orador": "Carlos Caballero",
+        "cargo": "legislador",
+        "sobre": "respuesta ante fenómenos climáticos",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Comentó que fenómenos climáticos se enfrentaron sin facultades.",
+        "proyecto": "",
+        "id": "senado:caballero leon"
+      },
+      {
+        "orador": "José Chipana",
+        "cargo": "legislador",
+        "sobre": "dinámica de la Comisión de Constitución",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó la dinámica de la Comisión de Constitución.",
+        "proyecto": "",
+        "id": "senado:chipana chipana"
+      },
+      {
+        "orador": "Ruth Luque",
+        "cargo": "legislador",
+        "sobre": "enfoque preventivo en el presupuesto",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Denunció la falta de presupuesto para la prevención.",
+        "proyecto": "",
+        "id": "senado:luque ibarra"
+      },
+      {
+        "orador": "José Chipana",
+        "cargo": "legislador",
+        "sobre": "pedido de facultades legislativas",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció intereses encubiertos en el pedido de facultades.",
+        "proyecto": "",
+        "id": "senado:chipana chipana"
+      },
+      {
+        "orador": "Ruth Luque",
+        "cargo": "legislador",
+        "sobre": "límites de la modificación legislativa",
+        "postura": "con observaciones",
+        "tema": "Política y control político",
+        "dijo": "Propuso una cuestión de orden sobre los límites reglamentarios.",
+        "proyecto": "",
+        "id": "senado:luque ibarra"
+      },
+      {
+        "orador": "José Castillo Terrones",
+        "cargo": "legislador",
+        "sobre": "compromiso con los derechos ciudadanos",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Defendió los derechos de los agricultores y ronderos.",
+        "proyecto": "",
+        "id": "senado:castillo terrones"
+      },
+      {
+        "orador": "Roger Astucuri",
+        "cargo": "legislador",
+        "sobre": "legitimidad de la Comisión de Constitución",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Defendió la actuación de la Comisión de Constitución.",
+        "proyecto": "",
+        "id": "senado:astucuri laura"
+      },
+      {
+        "orador": "Rafael Yamashiro",
+        "cargo": "legislador",
+        "sobre": "gestión de la presidenta Keiko Fujimori",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Respaldó la gestión de la presidenta Keiko Fujimori.",
+        "proyecto": "",
+        "id": "senado:yamashiro ore"
+      },
+      {
+        "orador": "Jaime Delgado",
+        "cargo": "legislador",
+        "sobre": "Gestión de la presidenta Keiko Fujimori",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Defendió la gestión de la presidenta Keiko Fujimori.",
+        "proyecto": "",
+        "id": "senado:delgado zegarra"
+      },
+      {
+        "orador": "Jaime Delgado",
+        "cargo": "legislador",
+        "sobre": "Modificación de facultades delegadas",
+        "postura": "con observaciones",
+        "tema": "Política y control político",
+        "dijo": "Lamentó la falta de consenso para respetar las facultades delegadas.",
+        "proyecto": "",
+        "id": "senado:delgado zegarra"
+      },
+      {
+        "orador": "Juana Ticona",
+        "cargo": "legislador",
+        "sobre": "Análisis del tema en debate",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Manifestó que su bancada se encuentra reflexionando sobre el tema.",
+        "proyecto": "",
+        "id": "senado:ticona cohaila"
+      },
+      {
+        "orador": "Serafín Andrés",
+        "cargo": "legislador",
+        "sobre": "Desnaturalización de facultades aprobadas",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció la desnaturalización de lo aprobado por la Cámara de Diputados.",
+        "proyecto": "",
+        "id": "senado:andres lujan"
+      },
+      {
+        "orador": "Percy Osorio",
+        "cargo": "legislador",
+        "sobre": "Incorporación de puntos no aprobados",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Criticó la inclusión de siete puntos no aprobados previamente.",
+        "proyecto": "",
+        "id": "senado:osorio palpan"
+      },
+      {
+        "orador": "Flavio Fígalo",
+        "cargo": "legislador",
+        "sobre": "Relación entre las dos cámaras",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso un diálogo institucional de treinta días entre las cámaras.",
+        "proyecto": "",
+        "id": "senado:figallo rivadeneyra"
+      },
+      {
+        "orador": "Bernardo Jaime Quito",
+        "cargo": "legislador",
+        "sobre": "Golpe parlamentario y control político",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció un golpe parlamentario contra la Cámara de Diputados.",
+        "proyecto": "",
+        "id": "senado:quito sarmiento"
+      },
+      {
+        "orador": "Lourdes Alcorta",
+        "cargo": "legislador",
+        "sobre": "Conducta de las bancadas en comisión",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó la falta de seriedad de los otros legisladores.",
+        "proyecto": "",
+        "id": "senado:alcorta suero"
+      },
+      {
+        "orador": "Héctor Ventura",
+        "cargo": "legislador",
+        "sobre": "Seguridad ciudadana y apoyo militar",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Instó a proteger al país frente a la criminalidad.",
+        "proyecto": "",
+        "id": "senado:ventura angel"
+      },
+      {
+        "orador": "Segundo Tapia",
+        "cargo": "legislador",
+        "sobre": "Facultades de seguridad y fenómenos naturales",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Defendió las modificaciones realizadas por el Senado.",
+        "proyecto": "",
+        "id": "senado:tapia bernal"
+      },
+      {
+        "orador": "Wilfredo Verano",
+        "cargo": "legislador",
+        "sobre": "Riesgos de las nuevas facultades",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Cuestionó el riesgo de crear un poder de inteligencia excesivo.",
+        "proyecto": "",
+        "id": "senado:verano saravia"
+      },
+      {
+        "orador": "Francisco Galisto",
+        "cargo": "legislador",
+        "sobre": "Fortalecimiento de la capacidad de defensa",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Defendió la necesidad de dar herramientas de defensa al Estado.",
+        "proyecto": "",
+        "id": "senado:calisto giampietri"
+      },
+      {
+        "orador": "Víctor Cutipa",
+        "cargo": "legislador",
+        "sobre": "Desconfianza hacia el fujimorismo",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció la desconfianza que genera el fujimorismo.",
+        "proyecto": "",
+        "id": "senado:cutipa ccama"
+      },
+      {
+        "orador": "Francisco Galisto",
+        "cargo": "legislador",
+        "sobre": "Reorganización de la Policía Nacional",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Defendió la necesidad de dotar de herramientas a la Policía Nacional.",
+        "proyecto": "",
+        "id": "senado:calisto giampietri"
+      },
+      {
+        "orador": "Víctor Cutipa",
+        "cargo": "legislador",
+        "sobre": "Implementación de la suspensión perfecta laboral",
+        "postura": "en contra",
+        "tema": "Trabajo",
+        "dijo": "Denunció la intención del gobierno de implementar la suspensión perfecta laboral.",
+        "proyecto": "",
+        "id": "senado:cutipa ccama"
+      },
+      {
+        "orador": "Mancha",
+        "cargo": "legislador",
+        "sobre": "Modificación de facultades legislativas",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Explicó la diferencia entre modificar y desnaturalizar las facultades legislativas.",
+        "proyecto": "",
+        "id": "senado:mancha pineda"
+      },
+      {
+        "orador": "Víctor Noriega",
+        "cargo": "legislador",
+        "sobre": "Enfrentar el fenómeno del Niño",
+        "postura": "a favor",
+        "tema": "Ambiente",
+        "dijo": "Pidió unir esfuerzos para enfrentar el fenómeno del Niño.",
+        "proyecto": "",
+        "id": "senado:noriega reategui"
+      },
+      {
+        "orador": "Walter Gago",
+        "cargo": "legislador",
+        "sobre": "Seguridad para los micro y pequeños empresarios",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Respaldó la delegación de facultades para apoyar a los emprendedores.",
+        "proyecto": "",
+        "id": "senado:gago rodriguez"
+      },
+      {
+        "orador": "Fernando Ropilios",
+        "cargo": "legislador",
+        "sobre": "Restitución de facultades operativas a la DINI",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Defendió la restitución de facultades operativas a la Dirección Nacional de Inteligencia.",
+        "proyecto": "",
+        "id": "senado:rospigliosi capurro"
+      },
+      {
+        "orador": "Alejandro Muñante",
+        "cargo": "legislador",
+        "sobre": "Delegación de facultades al Ejecutivo",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Criticó la actitud obstructiva de las bancadas de izquierda.",
+        "proyecto": "",
+        "id": "senado:munante barrios"
+      },
+      {
+        "orador": "Alfonso López Chau",
+        "cargo": "legislador",
+        "sobre": "Derecho de iniciativa legislativa en el Senado",
+        "postura": "con observaciones",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó la interpretación sobre la iniciativa legislativa en el Senado.",
+        "proyecto": "",
+        "id": "senado:lopez chau nava"
+      },
+      {
+        "orador": "Daniel Barrada",
+        "cargo": "legislador",
+        "sobre": "Evaluación de facultades al gobierno",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Propuso otorgar facultades para evaluar la gestión del gobierno.",
+        "proyecto": "",
+        "id": "senado:barragan coloma"
+      },
+      {
+        "orador": "Víctor Flores",
+        "cargo": "legislador",
+        "sobre": "Fortalecimiento de la seguridad y el crecimiento",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Cuestionó la falta de propuestas de las bancadas de izquierda.",
+        "proyecto": "",
+        "id": "senado:flores ruiz"
+      },
+      {
+        "orador": "Joaquín Yauri",
+        "cargo": "legislador",
+        "sobre": "Forma de delegar facultades al Ejecutivo",
+        "postura": "con observaciones",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó si la delegación de facultades es la mejor solución.",
+        "proyecto": "",
+        "id": "senado:yauri tunque"
+      },
+      {
+        "orador": "Alejandra Guillena",
+        "cargo": "legislador",
+        "sobre": "Aprobación de facultades contra la delincuencia",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Exigió la aprobación de facultades para combatir la delincuencia.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Andrés Ramos Wilcas",
+        "cargo": "legislador",
+        "sobre": "Uso de fuerzas armadas contra el pueblo",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Denunció que las facultades podrían usarse para la represión.",
+        "proyecto": "",
+        "id": "senado:ramos huillcas"
+      },
+      {
+        "orador": "Absalón Vásquez",
+        "cargo": "legislador",
+        "sobre": "Fortalecimiento del sistema de inteligencia nacional",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Respaldó el fortalecimiento de la inteligencia y la seguridad.",
+        "proyecto": "",
+        "id": "senado:vasquez villanueva"
+      },
+      {
+        "orador": "Patricia Juárez",
+        "cargo": "legislador",
+        "sobre": "Facultad de modificación de los senadores",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Defendió la facultad del Senado para modificar proyectos legislativos.",
+        "proyecto": "",
+        "id": "senado:juarez gallegos"
+      },
+      {
+        "orador": "Meza Ramírez",
+        "cargo": "legislador",
+        "sobre": "Defensa del trabajo de la comisión",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Rechazó las acusaciones de haber alterado el dictamen de la comisión.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Meza Ramírez",
+        "cargo": "legislador",
+        "sobre": "Dictamen sobre seguridad y fenómeno El Niño",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Defendió la labor de la comisión y el modelo bicameral.",
+        "proyecto": "Texto sustitutorio de la Comisión de Constitución",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=gD1ekqBA_Xs"
+  },
+  "fb_1764340731931385": {
+    "fecha": "2026-10-21",
+    "organo": "Comisión de Niñez y Adolescencia",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Jonathan Rosero Rosero",
+        "cargo": "invitado",
+        "sobre": "Informe de fiscalización hospital Baca Ortiz",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Informó sobre el desabastecimiento de medicamentos en el hospital Baca Ortiz.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Mireya Pazmiño",
+        "cargo": "legislador",
+        "sobre": "Aprobación del informe de fiscalización",
+        "postura": "a favor",
+        "tema": "Salud",
+        "dijo": "Defendió la aprobación del informe sobre el hospital Baca Ortiz.",
+        "proyecto": "",
+        "id": "EC:pazmino arregui"
+      },
+      {
+        "orador": "Ricardo Patiño",
+        "cargo": "legislador",
+        "sobre": "Aprobación del informe de fiscalización",
+        "postura": "a favor",
+        "tema": "Salud",
+        "dijo": "Respaldó el informe de fiscalización y una reforma al Código de la Niñez.",
+        "proyecto": "Proyecto de reforma al Código de la Niñez",
+        "id": "EC:patino aroca"
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1764340731931385"
+  },
+  "Nh1WjPVTzjE": {
+    "fecha": "2026-10-20",
+    "organo": "Comisión de Ética Parlamentaria",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Secretaria técnica",
+        "cargo": "autoridad",
+        "sobre": "Denuncia contra Julián Pérez Malky",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso la suspensión de ciento veinte días para Julián Pérez Malky.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=Nh1WjPVTzjE"
   }
 }
