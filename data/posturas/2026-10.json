@@ -16649,5 +16649,132 @@
       }
     ],
     "url": "https://www.youtube.com/watch?v=l-2b95G29Zw"
+  },
+  "fb_29083195037986270": {
+    "fecha": "2026-10-21",
+    "organo": "Comisión de Biodiversidad",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Andrea Gómez Arias",
+        "cargo": "invitado",
+        "sobre": "Proyecto de la ley de bioeconomía",
+        "postura": "con observaciones",
+        "tema": "Ambiente",
+        "dijo": "Propuso cambios operativos y mecanismos de financiamiento para la ley.",
+        "proyecto": "Ley de Fomento de la Bioeconomía",
+        "id": null
+      },
+      {
+        "orador": "Andrea Gómez Arias",
+        "cargo": "invitado",
+        "sobre": "Articulación con la mesa de finanzas",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Sugirió establecer un mecanismo de articulación en el reglamento.",
+        "proyecto": "Ley de Fomento de la Bioeconomía",
+        "id": null
+      },
+      {
+        "orador": "Casanova",
+        "cargo": "legislador",
+        "sobre": "Sobreexplotación de la biodiversidad",
+        "postura": "pregunta",
+        "tema": "Ambiente",
+        "dijo": "Preguntó cómo evitar la sobreexplotación durante el aprovechamiento económico.",
+        "proyecto": "Ley de Fomento de la Bioeconomía",
+        "id": "EC:casanova montesino"
+      },
+      {
+        "orador": "Andrea Gómez Arias",
+        "cargo": "invitado",
+        "sobre": "Salvaguardas y conservación ambiental",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Explicó que la normativa debe asegurar la conservación ambiental.",
+        "proyecto": "Ley de Fomento de la Bioeconomía",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=29083195037986270"
+  },
+  "fb_1362073759338536": {
+    "fecha": "2026-10-21",
+    "organo": "Comisión de Educación",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Ana Belén",
+        "cargo": "legislador",
+        "sobre": "Unidades educativas en riesgo por fenómeno del Niño",
+        "postura": "en contra",
+        "tema": "Educación",
+        "dijo": "Cuestionó la falta de autoridades para tratar la mitigación del fenómeno del Niño.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Adriana Rodríguez",
+        "cargo": "invitado",
+        "sobre": "Monitoreo del fenómeno del Niño",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Informó sobre la provisión de datos técnicos y el monitoreo hidrometeorológico.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ana María Rafa",
+        "cargo": "legislador",
+        "sobre": "Inasistencia de autoridades",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció la constante inasistencia de autoridades y la falta de resultados.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Sofía Estefanía León Sánchez",
+        "cargo": "invitado",
+        "sobre": "Resultados de la evaluación PISA 2025",
+        "postura": "comenta",
+        "tema": "Educación",
+        "dijo": "Expuso los resultados de la evaluación PISA 2025 en Ecuador.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Anna María Ron",
+        "cargo": "legislador",
+        "sobre": "resultados de la evaluación PISA",
+        "postura": "en contra",
+        "tema": "Educación",
+        "dijo": "Denunció el bajo rendimiento estudiantil y el retraso en la entrega del informe.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1362073759338536"
+  },
+  "fb_28957761680521250": {
+    "fecha": "2026-10-21",
+    "organo": "Comisión de Biodiversidad",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Carlos Miguel Cuesta Álvarez",
+        "cargo": "legislador",
+        "sobre": "Reforma al Código Orgánico del Ambiente",
+        "postura": "a favor",
+        "tema": "Ambiente",
+        "dijo": "Propuso la reforma ambiental para brindar apoyo a las comunidades rurales.",
+        "proyecto": "Ley Orgánica Reformatoria al Código Orgánico del Ambiente",
+        "id": "EC:cuesta alvarez"
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=28957761680521250"
   }
 }
