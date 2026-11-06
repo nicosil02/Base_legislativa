@@ -24,7 +24,7 @@ import pandas as pd
 
 from alerts import historial
 from alerts import que_paso_hoy as q
-from alerts.chat import contexto_relacionado, mensaje_inicial, responder
+from alerts.chat import REVISION, contexto_relacionado, mensaje_inicial, responder
 from cerebro.ui import afinidad_claves, afinidad_noticias, afinidad_tema_noticias, conexion, historias_noticias, le_interesa
 from consultas import agenda_ec, agenda_pe, camara_pe, ecuador, hora_a_minutos, matriz_pls, peru
 from core import legislativo, store
@@ -841,7 +841,10 @@ def atender(a: dict, usuario: str | None) -> dict | list | str | None:
         except Exception as e:
             return {"prompt": prompt, "error": str(e)}
     elif tipo == "chat":
-        return _responder(a["cliente"], a["historia"], a["prompt"])
+        prompt = a["prompt"]
+        if a.get("revisar"):  # boton Revisar: la version a la derecha (puede estar editada a mano) contra la fuente
+            prompt = f"{REVISION}\n\nAlerta a revisar:\n{a['actual']}"
+        return _responder(a["cliente"], a["historia"], prompt)
     elif tipo == "guardar_alerta":
         historial.agregar(a["cliente"], historial.entrada(a["titulo"], a["texto"], a["pais"], a["url"] or None, a["linea"] or None), autor=usuario)
         if a.get("borrador"):
