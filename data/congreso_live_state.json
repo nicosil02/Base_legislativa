@@ -229,7 +229,9 @@
   "fb_1834528574246412",
   "fb_1727470988959402",
   "fb_1032091379900355",
-  "fb_1144582734724066"
+  "fb_1144582734724066",
+  "fb_2117123748914196",
+  "fb_1810084346782319"
  ],
  "sesiones": [
   {
@@ -2042,6 +2044,22 @@
    "pais": "EC",
    "url": "https://www.facebook.com/watch/?v=1144582734724066",
    "visto_at": "2026-11-06T19:24:27Z"
+  },
+  {
+   "id": "fb_2117123748914196",
+   "titulo": "Sesión No. 134-2025-2027 de la Comisión de Soberanía Alimentaria y Desarrollo del Sector Agropecuario y Pesquero",
+   "tipo": "Comision: Soberanía Alimentaria (EC)",
+   "pais": "EC",
+   "url": "https://www.facebook.com/watch/?v=2117123748914196",
+   "visto_at": "2026-11-06T20:10:39Z"
+  },
+  {
+   "id": "fb_1810084346782319",
+   "titulo": "SESIÓN No.138 COMISIÓN ESPECIALIZADA PERMANENTE DE RELACIONES INTERNACIONALES Y MOVILIDAD HUMANA",
+   "tipo": "Comision: Relaciones Internacionales (EC)",
+   "pais": "EC",
+   "url": "https://www.facebook.com/watch/?v=1810084346782319",
+   "visto_at": "2026-11-06T20:10:39Z"
   }
  ],
  "avisado": {
