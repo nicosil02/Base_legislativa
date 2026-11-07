@@ -25162,5 +25162,1392 @@
       }
     ],
     "url": "https://www.youtube.com/watch?v=pFd4J9ugLUc"
+  },
+  "2EIYKlqJBT8": {
+    "fecha": "2026-10-20",
+    "organo": "Comisión de Energía y Minas",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Nari Pinasco",
+        "cargo": "legislador",
+        "sobre": "coordinación de sistemas eléctricos aislados",
+        "postura": "comenta",
+        "tema": "Energía",
+        "dijo": "Informó sobre la coordinación de sistemas aislados en Iquitos.",
+        "proyecto": "",
+        "id": "diputados:pinasco montenegro"
+      },
+      {
+        "orador": "Frank Licker",
+        "cargo": "legislador",
+        "sobre": "creación de grupo de trabajo energético",
+        "postura": "propone",
+        "tema": "Energía",
+        "dijo": "Propuso crear un grupo de trabajo sobre seguridad energética.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Raúl Camargo",
+        "cargo": "legislador",
+        "sobre": "potencial petrolero en Talara y Piura",
+        "postura": "comenta",
+        "tema": "Energía",
+        "dijo": "Respaldó la necesidad de fortalecer las políticas energéticas.",
+        "proyecto": "",
+        "id": "diputados:camargo porta"
+      },
+      {
+        "orador": "Nari Pinasco",
+        "cargo": "legislador",
+        "sobre": "gestión de documentos para sistema de Iquitos",
+        "postura": "propone",
+        "tema": "Energía",
+        "dijo": "Pidió trasladar documentos a Electro Oriente sobre Iquitos.",
+        "proyecto": "",
+        "id": "diputados:pinasco montenegro"
+      },
+      {
+        "orador": "Muñoz",
+        "cargo": "legislador",
+        "sobre": "fiscalización de Osinergmin en Pasco",
+        "postura": "propone",
+        "tema": "Energía",
+        "dijo": "Pidió la presencia de Osinergmin en la región Pasco.",
+        "proyecto": "",
+        "id": "diputados:munoz yurivilca"
+      },
+      {
+        "orador": "Malki",
+        "cargo": "legislador",
+        "sobre": "vigilancia de petróleo en fronteras costeras",
+        "postura": "propone",
+        "tema": "Energía",
+        "dijo": "Propuso reforzar el seguimiento en las fronteras costeras.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Raúl Camargo",
+        "cargo": "legislador",
+        "sobre": "decreto sobre alumbrado público",
+        "postura": "en contra",
+        "tema": "Energía",
+        "dijo": "Cuestionó el impacto económico del decreto de alumbrado.",
+        "proyecto": "",
+        "id": "diputados:camargo porta"
+      },
+      {
+        "orador": "Anna Yufra",
+        "cargo": "legislador",
+        "sobre": "lucha contra la minería ilegal",
+        "postura": "propone",
+        "tema": "Minería",
+        "dijo": "Pidió intervenir contra la minería ilegal en Cajamarca.",
+        "proyecto": "",
+        "id": "diputados:yuffra lugo"
+      },
+      {
+        "orador": "Jesús Pérez Alcahuamán",
+        "cargo": "legislador",
+        "sobre": "citación del presidente de INGEMMET",
+        "postura": "propone",
+        "tema": "Minería",
+        "dijo": "Pidió la comparecencia del presidente de INGEMMET.",
+        "proyecto": "",
+        "id": "diputados:perez alccahuaman"
+      },
+      {
+        "orador": "Frank Licker",
+        "cargo": "legislador",
+        "sobre": "declaración de posibles conflictos de intereses",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso transparentar los vínculos con el sector privado.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Kim Muñoz",
+        "cargo": "legislador",
+        "sobre": "definición de vínculos amicales",
+        "postura": "con observaciones",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó la ambigüedad del término de amistad.",
+        "proyecto": "",
+        "id": "diputados:munoz yurivilca"
+      },
+      {
+        "orador": "Jaime Abenzur",
+        "cargo": "legislador",
+        "sobre": "declaración de intereses por escrito",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso realizar las declaraciones de intereses por escrito.",
+        "proyecto": "",
+        "id": "diputados:abensur pinasco"
+      },
+      {
+        "orador": "Frank Licker",
+        "cargo": "legislador",
+        "sobre": "modificación de propuesta de ética",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso eliminar el concepto de vínculos amicales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Jaime Abenzur",
+        "cargo": "legislador",
+        "sobre": "importancia de la abstención parlamentaria",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Comentó la naturaleza de la abstención por conflictos.",
+        "proyecto": "",
+        "id": "diputados:abensur pinasco"
+      },
+      {
+        "orador": "Mayra Mercedes Elizabeth Figuero Figueredo Valderrama, Viuda de Sánchez",
+        "cargo": "ministro o autoridad",
+        "sobre": "nuevo marco legal de la pequeña minería",
+        "postura": "comenta",
+        "tema": "Minería",
+        "dijo": "Informó sobre el nuevo marco legal de la pequeña minería.",
+        "proyecto": "Ley MAPE",
+        "id": null
+      },
+      {
+        "orador": "Ben Sur",
+        "cargo": "legislador",
+        "sobre": "suspensión de la sesión",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso suspender la sesión mediante una cuestión previa.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ben Sur",
+        "cargo": "legislador",
+        "sobre": "votación de la cuestión previa",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Pidió que se sometiera a votación la cuestión previa.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=2EIYKlqJBT8"
+  },
+  "vl4EjrTtzIQ": {
+    "fecha": "2026-10-19",
+    "organo": "Comisión de Constitución",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Abensur Pinazco",
+        "cargo": "legislador",
+        "sobre": "incorporación en la liga de Italia",
+        "postura": "pregunta",
+        "tema": "Política y control político",
+        "dijo": "Preguntó por la falta de incorporación de una diputada en la liga de Italia.",
+        "proyecto": "",
+        "id": "diputados:abensur pinasco"
+      },
+      {
+        "orador": "Beteta Rubín",
+        "cargo": "legislador",
+        "sobre": "criterios de las ligas parlamentarias",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó el criterio de la comisión para la conformación de ligas.",
+        "proyecto": "",
+        "id": "diputados:beteta rubin"
+      },
+      {
+        "orador": "Beteta Rubín",
+        "cargo": "legislador",
+        "sobre": "asignación de coordinadores en ligas",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció la repetición de coordinadores en diversas ligas de amistad.",
+        "proyecto": "",
+        "id": "diputados:beteta rubin"
+      },
+      {
+        "orador": "Creckle Torres",
+        "cargo": "legislador",
+        "sobre": "aprobación de las ligas parlamentarias",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso aprobar las ligas con cargo a la redacción de cambios.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Abensur Pinazco",
+        "cargo": "legislador",
+        "sobre": "incorporación de diputada en liga",
+        "postura": "pregunta",
+        "tema": "Política y control político",
+        "dijo": "Preguntó si se consideró la solicitud de una diputada específica.",
+        "proyecto": "",
+        "id": "diputados:abensur pinasco"
+      },
+      {
+        "orador": "Ventura",
+        "cargo": "legislador",
+        "sobre": "criterio de asignación de coordinadores",
+        "postura": "pregunta",
+        "tema": "Política y control político",
+        "dijo": "Pidió un reporte detallado para verificar el orden de llegada de documentos.",
+        "proyecto": "",
+        "id": "senado:ventura angel"
+      },
+      {
+        "orador": "Uribe Saenz",
+        "cargo": "legislador",
+        "sobre": "plazo de instalación de ligas",
+        "postura": "pregunta",
+        "tema": "Política y control político",
+        "dijo": "Preguntó sobre el cómputo del plazo para la instalación de las ligas.",
+        "proyecto": "",
+        "id": "diputados:uribe saenz"
+      },
+      {
+        "orador": "Manaya",
+        "cargo": "legislador",
+        "sobre": "incorporación en la liga de México",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Pidió su incorporación en la liga parlamentaria de México.",
+        "proyecto": "",
+        "id": "diputados:manay pillaca"
+      },
+      {
+        "orador": "Kawasa",
+        "cargo": "legislador",
+        "sobre": "incorporación en diversas ligas",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Pidió su incorporación en las ligas de México, Brasil y Francia.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Carlos Domínguez Herrera",
+        "cargo": "legislador",
+        "sobre": "reforma constitucional del diario oficial",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Defendió la incorporación de El Peruano en la Constitución Política.",
+        "proyecto": "PL 212/2026-2031",
+        "id": "diputados:dominguez herrera"
+      },
+      {
+        "orador": "Carca",
+        "cargo": "legislador",
+        "sobre": "publicación de ingresos de funcionarios",
+        "postura": "pregunta",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó la utilidad de publicar ingresos ya disponibles en la web.",
+        "proyecto": "PL 212/2026-2031",
+        "id": null
+      },
+      {
+        "orador": "Carlos Domínguez Herrera",
+        "cargo": "legislador",
+        "sobre": "modificación de artículos constitucionales",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Aclaró que el proyecto solo añade el nombre del diario oficial.",
+        "proyecto": "PL 212/2026-2031",
+        "id": "diputados:dominguez herrera"
+      },
+      {
+        "orador": "López",
+        "cargo": "legislador",
+        "sobre": "utilidad de la reforma constitucional",
+        "postura": "pregunta",
+        "tema": "Política y control político",
+        "dijo": "Preguntó si la reforma resolvería alguna ambigüedad existente actualmente.",
+        "proyecto": "PL 212/2026-2031",
+        "id": null
+      },
+      {
+        "orador": "Carlos Domínguez Herrera",
+        "cargo": "legislador",
+        "sobre": "identidad del diario oficial",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Defendió la necesidad de dar identidad institucional al diario oficial.",
+        "proyecto": "PL 212/2026-2031",
+        "id": "diputados:dominguez herrera"
+      },
+      {
+        "orador": "López",
+        "cargo": "legislador",
+        "sobre": "sustento de la reforma constitucional",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Rechazó la propuesta por carecer de un sustento fáctico.",
+        "proyecto": "PL 212/2026-2031",
+        "id": null
+      },
+      {
+        "orador": "Ventura",
+        "cargo": "legislador",
+        "sobre": "precisión del nombre del diario",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Respaldó la precisión del nombre para otorgar mayor predictibilidad jurídica.",
+        "proyecto": "PL 212/2026-2031",
+        "id": "senado:ventura angel"
+      },
+      {
+        "orador": "Márquez",
+        "cargo": "legislador",
+        "sobre": "necesidad de la reforma constitucional",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó la necesidad de modificar la Constitución para tal fin.",
+        "proyecto": "PL 212/2026-2031",
+        "id": "diputados:marquez huanca"
+      },
+      {
+        "orador": "Manaya",
+        "cargo": "legislador",
+        "sobre": "impacto en Editora Perú",
+        "postura": "con observaciones",
+        "tema": "Política y control político",
+        "dijo": "Pidió investigar el impacto de la reforma en Editora Perú.",
+        "proyecto": "PL 212/2026-2031",
+        "id": "diputados:manay pillaca"
+      },
+      {
+        "orador": "Beteta Rubín",
+        "cargo": "legislador",
+        "sobre": "beneficios de la reforma constitucional",
+        "postura": "pregunta",
+        "tema": "Política y control político",
+        "dijo": "Preguntó qué beneficios sociales recibiría la población con la reforma.",
+        "proyecto": "PL 212/2026-2031",
+        "id": "diputados:beteta rubin"
+      },
+      {
+        "orador": "Wilca",
+        "cargo": "legislador",
+        "sobre": "creación de diario del Congreso",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Rechazó la intención de crear un diario oficial para el Congreso.",
+        "proyecto": "PL 212/2026-2031",
+        "id": null
+      },
+      {
+        "orador": "Marco López",
+        "cargo": "legislador",
+        "sobre": "Respeto en la comisión",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Pidió respeto mutuo entre los diputados durante el debate.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Márquez",
+        "cargo": "legislador",
+        "sobre": "Función del Diario Oficial",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Respaldó la función del Diario Oficial en la Constitución.",
+        "proyecto": "",
+        "id": "diputados:marquez huanca"
+      },
+      {
+        "orador": "Ventura",
+        "cargo": "legislador",
+        "sobre": "Proyecto de Alejandro Cavero",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Defendió el contexto histórico de la iniciativa de Cavero.",
+        "proyecto": "",
+        "id": "senado:ventura angel"
+      },
+      {
+        "orador": "Beteta",
+        "cargo": "legislador",
+        "sobre": "Cierre del Congreso anterior",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció la complicidad de legisladores ante el cierre del Parlamento.",
+        "proyecto": "",
+        "id": "diputados:beteta rubin"
+      },
+      {
+        "orador": "Domínguez",
+        "cargo": "legislador",
+        "sobre": "Seguridad jurídica del diario oficial",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Defendió la necesidad de reconocer al diario El Peruano.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Alfonso Carlos Espá",
+        "cargo": "ministro o autoridad",
+        "sobre": "Escudo de las Américas",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Defendió la participación en el Escudo de las Américas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Alfonso Carlos Espá",
+        "cargo": "ministro o autoridad",
+        "sobre": "Peruanos en Rusia",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Denunció la situación de los connacionales en Rusia.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Alfonso Carlos Espá",
+        "cargo": "ministro o autoridad",
+        "sobre": "Visita del Papa al Perú",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Defendió las acciones para la visita del Papa.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Carlos Espá",
+        "cargo": "ministro o autoridad",
+        "sobre": "Naturaleza del Escudo de las Américas",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Defendió la legalidad del Escudo de las Américas ante el Senado.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Carlos Espá",
+        "cargo": "ministro o autoridad",
+        "sobre": "Connacionales en Rusia y Ucrania",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Defendió las gestiones de la Cancillería ante el conflicto ruso.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Carlos Espá",
+        "cargo": "ministro o autoridad",
+        "sobre": "Visita del Papa León XIV",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Defendió los preparativos para la visita del Papa.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Uribe",
+        "cargo": "legislador",
+        "sobre": "Escudo de las Américas",
+        "postura": "pregunta",
+        "tema": "Política y control político",
+        "dijo": "Preguntó sobre los mecanismos de rendición de cuentas del Escudo.",
+        "proyecto": "",
+        "id": "diputados:uribe saenz"
+      },
+      {
+        "orador": "Uribe",
+        "cargo": "legislador",
+        "sobre": "Trata de personas en Rusia",
+        "postura": "pregunta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Preguntó sobre las medidas para prevenir la trata en Rusia.",
+        "proyecto": "",
+        "id": "diputados:uribe saenz"
+      },
+      {
+        "orador": "López",
+        "cargo": "legislador",
+        "sobre": "Escudo de las Américas",
+        "postura": "pregunta",
+        "tema": "Política y control político",
+        "dijo": "Preguntó sobre los compromisos de seguridad del Escudo.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "López",
+        "cargo": "legislador",
+        "sobre": "Visita del Papa",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Cuestionó el gasto de 63 millones de soles por la visita.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Duarte",
+        "cargo": "legislador",
+        "sobre": "Escudo de las Américas",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció la subordinación política ante Estados Unidos.",
+        "proyecto": "",
+        "id": "diputados:duarte"
+      },
+      {
+        "orador": "Márquez",
+        "cargo": "legislador",
+        "sobre": "Escudo de las Américas",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó las contradicciones sobre la coalición militar.",
+        "proyecto": "",
+        "id": "diputados:marquez huanca"
+      },
+      {
+        "orador": "Márquez",
+        "cargo": "legislador",
+        "sobre": "Intervención en Bolivia",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció la irregular intervención diplomática en Bolivia.",
+        "proyecto": "",
+        "id": "diputados:marquez huanca"
+      },
+      {
+        "orador": "Rocha",
+        "cargo": "legislador",
+        "sobre": "Escudo de las Américas",
+        "postura": "pregunta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Preguntó por los beneficios del Escudo de las Américas.",
+        "proyecto": "",
+        "id": "diputados:rocha gallegos"
+      },
+      {
+        "orador": "Rocha",
+        "cargo": "legislador",
+        "sobre": "Peruanos en Rusia",
+        "postura": "pregunta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Preguntó sobre las gestiones para los peruanos en Rusia.",
+        "proyecto": "",
+        "id": "diputados:rocha gallegos"
+      },
+      {
+        "orador": "Rocha",
+        "cargo": "legislador",
+        "sobre": "El Escudo de las Américas",
+        "postura": "pregunta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Preguntó sobre los resultados del Escudo de las Américas.",
+        "proyecto": "",
+        "id": "diputados:rocha gallegos"
+      },
+      {
+        "orador": "Rocha",
+        "cargo": "legislador",
+        "sobre": "Peruanos en Rusia",
+        "postura": "pregunta",
+        "tema": "Política y control político",
+        "dijo": "Preguntó sobre las gestiones para localizar peruanos en Rusia.",
+        "proyecto": "",
+        "id": "diputados:rocha gallegos"
+      },
+      {
+        "orador": "Rocha",
+        "cargo": "legislador",
+        "sobre": "Visita del Papa León XIV",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Felicitó la organización de la visita del Papa.",
+        "proyecto": "",
+        "id": "diputados:rocha gallegos"
+      },
+      {
+        "orador": "Moedas",
+        "cargo": "legislador",
+        "sobre": "Soberanía en el Escudo de las Américas",
+        "postura": "pregunta",
+        "tema": "Política y control político",
+        "dijo": "Preguntó cómo asegurar que no se vulnere la soberanía.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Moedas",
+        "cargo": "legislador",
+        "sobre": "Inversiones y minerales críticos",
+        "postura": "pregunta",
+        "tema": "Minería",
+        "dijo": "Preguntó sobre la inversión y el abastecimiento de minerales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Carlos Espá",
+        "cargo": "ministro o autoridad",
+        "sobre": "Derechos humanos en el Escudo",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Explicó que se garantizará el respeto a los derechos humanos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Carlos Espá",
+        "cargo": "ministro o autoridad",
+        "sobre": "Compromisos en el Escudo de las Américas",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Informó que el Perú no ha asumido compromisos vinculantes.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Carlos Espá",
+        "cargo": "ministro o autoridad",
+        "sobre": "Misiones de avanzada del Vaticano",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Informó sobre el éxito de las misiones del Vaticano.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Carlos Espá",
+        "cargo": "ministro o autoridad",
+        "sobre": "Memorándum sobre minerales críticos",
+        "postura": "comenta",
+        "tema": "Minería",
+        "dijo": "Explicó que el memorándum sobre minerales no es vinculante.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Carlos Espá",
+        "cargo": "ministro o autoridad",
+        "sobre": "Diferencia entre mecanismos de cooperación",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Diferenció la coalición contra cárteles del Escudo de las Américas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Carlos Espá",
+        "cargo": "ministro o autoridad",
+        "sobre": "Presencia de tropas extranjeras",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Descartó la desinformación sobre la presencia de tropas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Carlos Espá",
+        "cargo": "ministro o autoridad",
+        "sobre": "Relaciones diplomáticas con Bolivia",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Defendió la labor de los diplomáticos en Bolivia.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Carlos Espá",
+        "cargo": "ministro o autoridad",
+        "sobre": "Operativos contra el crimen organizado",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Detalló operativos contra organizaciones como el Tren de Aragua.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Carlos Espá",
+        "cargo": "ministro o autoridad",
+        "sobre": "Peruanos en Rusia y Ucrania",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Informó sobre la situación de connacionales en Rusia.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Kreekt",
+        "cargo": "legislador",
+        "sobre": "Facultad presidencial en política exterior",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Defendió la facultad de la presidenta para firmar convenios.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Kreekt",
+        "cargo": "legislador",
+        "sobre": "Puerto de Chancay y China",
+        "postura": "en contra",
+        "tema": "Infraestructura",
+        "dijo": "Rechazó los discursos alarmistas sobre el puerto de Chancay.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Manay",
+        "cargo": "legislador",
+        "sobre": "la Escuela de las Américas y soberanía",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó la adhesión al Escudo de las Américas sin documentos.",
+        "proyecto": "",
+        "id": "diputados:manay pillaca"
+      },
+      {
+        "orador": "Beteta",
+        "cargo": "legislador",
+        "sobre": "el Escudo de las Américas y seguridad",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Respaldó el Escudo de las Américas para la seguridad.",
+        "proyecto": "",
+        "id": "diputados:beteta rubin"
+      },
+      {
+        "orador": "Kawasa",
+        "cargo": "legislador",
+        "sobre": "la integración de la provincia de Purús",
+        "postura": "pregunta",
+        "tema": "Otros",
+        "dijo": "Preguntó por proyectos de integración en la provincia de Purús.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Kawasa",
+        "cargo": "legislador",
+        "sobre": "el presupuesto para la visita papal",
+        "postura": "con observaciones",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Cuestionó el presupuesto para la visita del Papa.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Patiño",
+        "cargo": "legislador",
+        "sobre": "el Escudo de las Américas y seguridad",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Defendió la búsqueda de alianzas contra el crimen.",
+        "proyecto": "",
+        "id": "diputados:patino urco"
+      },
+      {
+        "orador": "Abensur",
+        "cargo": "legislador",
+        "sobre": "la diplomacia presidencial y el Escudo",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Defendió la diplomacia presidencial de la presidenta.",
+        "proyecto": "",
+        "id": "diputados:abensur pinasco"
+      },
+      {
+        "orador": "Márquez",
+        "cargo": "legislador",
+        "sobre": "la gestión de Cancillería y el Escudo",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció la informalidad en el manejo de la Cancillería.",
+        "proyecto": "",
+        "id": "diputados:marquez huanca"
+      },
+      {
+        "orador": "López",
+        "cargo": "legislador",
+        "sobre": "el comportamiento de los diputados",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Instó a los parlamentarios a respetar sus límites.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Duarte",
+        "cargo": "legislador",
+        "sobre": "la visita del Papa y USAID",
+        "postura": "con observaciones",
+        "tema": "Otros",
+        "dijo": "Pidió que el gobierno gestione el regreso de USAID.",
+        "proyecto": "",
+        "id": "diputados:duarte"
+      },
+      {
+        "orador": "Yoryina Duarte",
+        "cargo": "legislador",
+        "sobre": "El retorno de USAID al Perú",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Pidió al canciller que gestione el retorno de USAID al país.",
+        "proyecto": "",
+        "id": "diputados:duarte"
+      },
+      {
+        "orador": "Presidenta de la Comisión",
+        "cargo": "legislador",
+        "sobre": "Control político del Escudo de las Américas",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Precisó el marco de control político sobre el Escudo de las Américas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Espa",
+        "cargo": "ministro o autoridad",
+        "sobre": "Definición de terrorismo",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Explicó la definición de terrorismo bajo el derecho internacional.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Espa",
+        "cargo": "ministro o autoridad",
+        "sobre": "El Escudo de las Américas",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Aclaró que el Escudo de las Américas no es vinculante.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Espa",
+        "cargo": "ministro o autoridad",
+        "sobre": "La visita del Papa",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Mencionó los beneficios económicos de la visita del Papa.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Espa",
+        "cargo": "ministro o autoridad",
+        "sobre": "Desarrollo de la provincia de Purús",
+        "postura": "comenta",
+        "tema": "Infraestructura",
+        "dijo": "Detalló las acciones de integración para la provincia de Purús.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Espa",
+        "cargo": "ministro o autoridad",
+        "sobre": "Ayuda humanitaria para comunidades nativas",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Destacó el envío de ayuda humanitaria a comunidades nativas.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=vl4EjrTtzIQ"
+  },
+  "pqwft33Sgok": {
+    "fecha": "2026-10-13",
+    "organo": "Comisión de Constitución",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Luque",
+        "cargo": "legislador",
+        "sobre": "presencia de invitados y agenda",
+        "postura": "pregunta",
+        "tema": "Política y control político",
+        "dijo": "Preguntó sobre la presencia de los invitados y la secuencia de sesiones.",
+        "proyecto": "",
+        "id": "senado:luque ibarra"
+      },
+      {
+        "orador": "Fígado",
+        "cargo": "legislador",
+        "sobre": "límites de la comisión consultiva",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso consultar a expertos en derecho penal sobre la propuesta.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Carlos Mesías Ramírez",
+        "cargo": "legislador",
+        "sobre": "gestión de la sesión y asesores",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Informó sobre los criterios para la convocatoria de asesores.",
+        "proyecto": "",
+        "id": "senado:mesia ramirez"
+      },
+      {
+        "orador": "Javier Vargas-Rimaray",
+        "cargo": "invitado",
+        "sobre": "fomento de la gastronomía peruana",
+        "postura": "a favor",
+        "tema": "Horeca",
+        "dijo": "Pidió facultades legislativas con medidas de protección para las mipes.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Rebeca Antesana Adías",
+        "cargo": "invitado",
+        "sobre": "reforma tributaria para mipes",
+        "postura": "a favor",
+        "tema": "Mype",
+        "dijo": "Pidió que la reforma tributaria considere a las pequeñas empresas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Andrés Choyli",
+        "cargo": "invitado",
+        "sobre": "inseguridad y apoyo a bodegueros",
+        "postura": "a favor",
+        "tema": "Mype",
+        "dijo": "Pidió leyes para combatir la delincuencia y proteger a las bodegas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Julio Surco Achiri",
+        "cargo": "invitado",
+        "sobre": "apoyo al sector manufacturero",
+        "postura": "a favor",
+        "tema": "Mype",
+        "dijo": "Pidió facultades para proteger la manufactura nacional frente a la informalidad.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Marisol Guillén Quintanilla",
+        "cargo": "invitado",
+        "sobre": "facultades para las mipes",
+        "postura": "a favor",
+        "tema": "Mype",
+        "dijo": "Respaldó la delegación de facultades para fortalecer el tejido empresarial.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Luque",
+        "cargo": "legislador",
+        "sobre": "urgencia de apoyo estatal",
+        "postura": "con observaciones",
+        "tema": "Otros",
+        "dijo": "Cuestionó que no se considere la urgencia ante crisis actuales.",
+        "proyecto": "",
+        "id": "senado:luque ibarra"
+      },
+      {
+        "orador": "López Chau",
+        "cargo": "legislador",
+        "sobre": "facultades para legislar urgentemente",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Defendió la entrega de facultades para legislar ante la urgencia.",
+        "proyecto": "",
+        "id": "senado:lopez chau nava"
+      },
+      {
+        "orador": "Heredia",
+        "cargo": "invitado",
+        "sobre": "apoyo al sector panadero",
+        "postura": "a favor",
+        "tema": "Horeca",
+        "dijo": "Respaldó la aprobación de facultades para abordar problemas prioritarios.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Edgar Sainz",
+        "cargo": "invitado",
+        "sobre": "protección a trabajadores emolienteros",
+        "postura": "a favor",
+        "tema": "Mype",
+        "dijo": "Pidió la aprobación de facultades para ayudar a los trabajadores.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Víctor García Toma",
+        "cargo": "invitado",
+        "sobre": "supremacía constitucional en el Senado",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Explicó que la Constitución prevalece sobre cualquier reglamento.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Víctor García Toma",
+        "cargo": "invitado",
+        "sobre": "función revisora del Senado",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Explicó la naturaleza jurídica de la función revisora del Senado.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ventura",
+        "cargo": "legislador",
+        "sobre": "seguridad ciudadana y reactivación económica",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso fortalecer la seguridad y la reactivación económica en Tumbes.",
+        "proyecto": "",
+        "id": "senado:ventura angel"
+      },
+      {
+        "orador": "Yturregui",
+        "cargo": "legislador",
+        "sobre": "límites de las modificaciones legislativas",
+        "postura": "pregunta",
+        "tema": "Política y control político",
+        "dijo": "Preguntó sobre la interpretación del reglamento respecto a las modificaciones.",
+        "proyecto": "",
+        "id": "senado:iturregui byrne"
+      },
+      {
+        "orador": "Víctor García Toma",
+        "cargo": "invitado",
+        "sobre": "límites de la facultad modificatoria",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Aclaró que las modificaciones no deben desconocer lo acordado.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Guinaga",
+        "cargo": "legislador",
+        "sobre": "protección del sector pesca",
+        "postura": "a favor",
+        "tema": "Pesca",
+        "dijo": "Pidió incluir medidas para proteger el sector pesca ante el fenómeno del niño.",
+        "proyecto": "",
+        "id": "senado:aguinaga recuenco"
+      },
+      {
+        "orador": "Víctor García Toma",
+        "cargo": "invitado",
+        "sobre": "alcances de la revisión legislativa",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Indicó que la carpeta permite ampliar o reducir materias.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "López Chávez",
+        "cargo": "legislador",
+        "sobre": "relación entre las cámaras legislativas",
+        "postura": "con observaciones",
+        "tema": "Política y control político",
+        "dijo": "Advirtió sobre el riesgo de generar conflictos entre ambas cámaras.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Víctor García Toma",
+        "cargo": "invitado",
+        "sobre": "ejercicio de la potestad revisora",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Defendió el ejercicio de las competencias constitucionales del Senado.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Yamashiro",
+        "cargo": "legislador",
+        "sobre": "efectividad de la función revisora",
+        "postura": "con observaciones",
+        "tema": "Política y control político",
+        "dijo": "Señaló que limitar la modificación pone en peligro la gobernabilidad.",
+        "proyecto": "",
+        "id": "senado:yamashiro ore"
+      },
+      {
+        "orador": "Matute",
+        "cargo": "legislador",
+        "sobre": "modelos de bicameralidad",
+        "postura": "pregunta",
+        "tema": "Política y control político",
+        "dijo": "Preguntó sobre ejemplos históricos de sistemas bicamerales con funciones asimétricas.",
+        "proyecto": "",
+        "id": "senado:matute charun"
+      },
+      {
+        "orador": "Víctor García Toma",
+        "cargo": "invitado",
+        "sobre": "validez de las modificaciones legislativas",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Aseguró que las modificaciones son válidas si respetan la identidad temática.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Juárez",
+        "cargo": "legislador",
+        "sobre": "delegación de facultades al Ejecutivo",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció que la Cámara de Diputados resolvió sobre temas no solicitados.",
+        "proyecto": "",
+        "id": "senado:juarez gallegos"
+      },
+      {
+        "orador": "Víctor García Toma",
+        "cargo": "invitado",
+        "sobre": "Facultades delegadas al Parlamento",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Informó sobre la naturaleza de las facultades delegadas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Yamashiro",
+        "cargo": "legislador",
+        "sobre": "Conceptos jurídicos indeterminados",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Comentó la indeterminación de los conceptos jurídicos.",
+        "proyecto": "",
+        "id": "senado:yamashiro ore"
+      },
+      {
+        "orador": "Yamashiro",
+        "cargo": "legislador",
+        "sobre": "Funciones del Senado",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Defendió la coordinación parlamentaria entre las cámaras.",
+        "proyecto": "",
+        "id": "senado:yamashiro ore"
+      },
+      {
+        "orador": "Daniel Barragán Coloma",
+        "cargo": "legislador",
+        "sobre": "Consensos en el gobierno",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso el consenso entre los líderes políticos.",
+        "proyecto": "",
+        "id": "senado:barragan coloma"
+      },
+      {
+        "orador": "Maraví",
+        "cargo": "legislador",
+        "sobre": "Votación de facultades delegadas",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Pidió la votación de las facultades delegadas.",
+        "proyecto": "",
+        "id": "senado:maravi olarte"
+      },
+      {
+        "orador": "Víctor Arciatoma",
+        "cargo": "invitado",
+        "sobre": "Facultades delegadas del Ejecutivo",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Denunció la inclusión de materias no solicitadas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Maraví",
+        "cargo": "legislador",
+        "sobre": "Resultados de las votaciones",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Comentó que los votos definirán los resultados.",
+        "proyecto": "",
+        "id": "senado:maravi olarte"
+      },
+      {
+        "orador": "Víctor García Toma",
+        "cargo": "invitado",
+        "sobre": "Interpretación de la Constitución",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Denunció la falta de facultades interpretativas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Maraví",
+        "cargo": "legislador",
+        "sobre": "Límites de la capacidad de modificar",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Pidió definir los límites de modificación del Senado.",
+        "proyecto": "",
+        "id": "senado:maravi olarte"
+      },
+      {
+        "orador": "Calixto",
+        "cargo": "legislador",
+        "sobre": "Uso de las fuerzas armadas",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso modificar el decreto sobre el uso de la fuerza.",
+        "proyecto": "DL 1095",
+        "id": "senado:calisto giampietri"
+      },
+      {
+        "orador": "Susana Flor de María Matute Charun",
+        "cargo": "legislador",
+        "sobre": "Modificación de propuestas de diputados",
+        "postura": "pregunta",
+        "tema": "Política y control político",
+        "dijo": "Preguntó sobre la legalidad de modificar propuestas.",
+        "proyecto": "",
+        "id": "senado:matute charun"
+      },
+      {
+        "orador": "Alfonso López Chau",
+        "cargo": "legislador",
+        "sobre": "Colisión entre comisiones",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Pidió una conferencia con la Cámara de Diputados.",
+        "proyecto": "",
+        "id": "senado:lopez chau nava"
+      },
+      {
+        "orador": "Daniel Barragán Coloma",
+        "cargo": "legislador",
+        "sobre": "Aportes para las facultades",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Informó que enviará aportes por escrito.",
+        "proyecto": "",
+        "id": "senado:barragan coloma"
+      },
+      {
+        "orador": "Alfonso López Chau",
+        "cargo": "legislador",
+        "sobre": "invitación a conferenciar con Diputados",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso invitar a conferenciar con la Comisión de Constitución de Diputados.",
+        "proyecto": "",
+        "id": "senado:lopez chau nava"
+      },
+      {
+        "orador": "Daniel Barragán Coloma",
+        "cargo": "legislador",
+        "sobre": "aporte para las facultades",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Informó que enviará por escrito su aporte para las facultades.",
+        "proyecto": "",
+        "id": "senado:barragan coloma"
+      },
+      {
+        "orador": "Luque Ibarra",
+        "cargo": "legislador",
+        "sobre": "integrantes del Consejo Consultivo",
+        "postura": "pregunta",
+        "tema": "Política y control político",
+        "dijo": "Preguntó sobre el criterio de invitación para los miembros del consejo.",
+        "proyecto": "",
+        "id": "senado:luque ibarra"
+      },
+      {
+        "orador": "Fabio Figalo",
+        "cargo": "legislador",
+        "sobre": "consultas sobre derecho penal",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Propuso consultar a expertos en derecho penal sobre la propuesta.",
+        "proyecto": "",
+        "id": "senado:figallo rivadeneyra"
+      },
+      {
+        "orador": "Maravío Larte",
+        "cargo": "legislador",
+        "sobre": "variación de fecha de sesión",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Cuestionó el cambio de fecha de la sesión no ordinaria.",
+        "proyecto": "",
+        "id": "senado:maravi olarte"
+      },
+      {
+        "orador": "Yturregui",
+        "cargo": "legislador",
+        "sobre": "límites a la modificación legislativa",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Pidió que se considere su opinión consultiva sobre límites legislativos.",
+        "proyecto": "",
+        "id": "senado:iturregui byrne"
+      },
+      {
+        "orador": "Carlos Mezías Ramírez",
+        "cargo": "legislador",
+        "sobre": "gestión de la sesión y asesores",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Informó la imposibilidad de citar a todos los asesores consultivos.",
+        "proyecto": "",
+        "id": "senado:mesia ramirez"
+      },
+      {
+        "orador": "Javier Vargas-Rimaray",
+        "cargo": "invitado",
+        "sobre": "reactivación del sector gastronómico",
+        "postura": "propone",
+        "tema": "Horeca",
+        "dijo": "Propuso una ley de fomento para la gastronomía peruana.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Rebeca Antesana Adías",
+        "cargo": "invitado",
+        "sobre": "situación de las pequeñas empresas",
+        "postura": "comenta",
+        "tema": "Mype",
+        "dijo": "Denunció la falta de apoyo a las pequeñas empresas.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=pqwft33Sgok"
   }
 }
