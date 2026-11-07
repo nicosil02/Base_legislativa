@@ -26549,5 +26549,422 @@
       }
     ],
     "url": "https://www.youtube.com/watch?v=pqwft33Sgok"
+  },
+  "iyEO8b-JAwQ": {
+    "fecha": "2026-10-13",
+    "organo": "Comisión de Energía y Minas",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Iris Marlene Carrenas Pino",
+        "cargo": "ministro o autoridad",
+        "sobre": "Transporte de gas y adenda Cálida",
+        "postura": "comenta",
+        "tema": "Energía",
+        "dijo": "Informó sobre el estado del gasoducto y SITGAS.",
+        "proyecto": "adenda Cálida",
+        "id": null
+      },
+      {
+        "orador": "Reynoso Rojas Jiménez",
+        "cargo": "ministro o autoridad",
+        "sobre": "Situación de SITGAS y adenda Cálida",
+        "postura": "comenta",
+        "tema": "Energía",
+        "dijo": "Explicó el estado técnico actual del proyecto SITGAS.",
+        "proyecto": "SITGAS",
+        "id": null
+      },
+      {
+        "orador": "Alejandro Narváez",
+        "cargo": "invitado",
+        "sobre": "Análisis de la adenda Cálida y TGP",
+        "postura": "en contra",
+        "tema": "Energía",
+        "dijo": "Denunció la desproporción entre inversión y rentabilidad social.",
+        "proyecto": "adenda Cálida",
+        "id": null
+      },
+      {
+        "orador": "Raúl Camargo Porta",
+        "cargo": "legislador",
+        "sobre": "Adenda de Cálida y desarrollo industrial",
+        "postura": "con observaciones",
+        "tema": "Energía",
+        "dijo": "Cuestionó la adenda de Cálida y la falta de industrialización.",
+        "proyecto": "",
+        "id": "diputados:camargo porta"
+      },
+      {
+        "orador": "Jesús Pérez",
+        "cargo": "legislador",
+        "sobre": "Adenda de Cálida y licitaciones",
+        "postura": "en contra",
+        "tema": "Energía",
+        "dijo": "Cuestionó la aplicación de la adenda de Cálida sin licitación.",
+        "proyecto": "",
+        "id": "diputados:perez alccahuaman"
+      },
+      {
+        "orador": "Eber López",
+        "cargo": "legislador",
+        "sobre": "Adenda de la empresa Cálida",
+        "postura": "en contra",
+        "tema": "Energía",
+        "dijo": "Rechazó la adenda de diez años sin concluir obras.",
+        "proyecto": "",
+        "id": "diputados:lopez letona"
+      },
+      {
+        "orador": "Edwin Espinosa",
+        "cargo": "legislador",
+        "sobre": "Claridad técnica en el contrato de gas",
+        "postura": "con observaciones",
+        "tema": "Energía",
+        "dijo": "Pidió mayor claridad técnica en el contrato de gas.",
+        "proyecto": "",
+        "id": "diputados:espinoza huillca"
+      },
+      {
+        "orador": "Julián Pérez Malqui",
+        "cargo": "legislador",
+        "sobre": "El Gasoducto del Sur y desarrollo",
+        "postura": "comenta",
+        "tema": "Energía",
+        "dijo": "Defendió el proyecto del Gasoducto del Sur.",
+        "proyecto": "",
+        "id": "diputados:perez mallqui"
+      },
+      {
+        "orador": "Colombo Murata",
+        "cargo": "legislador",
+        "sobre": "Modificación de la ley de masificación",
+        "postura": "propone",
+        "tema": "Energía",
+        "dijo": "Propuso modificar la ley para subsidiar el gas.",
+        "proyecto": "",
+        "id": "diputados:columbus murata"
+      },
+      {
+        "orador": "Susena Isla Rojas",
+        "cargo": "invitado",
+        "sobre": "Costo del gas en Loreto",
+        "postura": "en contra",
+        "tema": "Energía",
+        "dijo": "Denunció los altos costos del gas en Loreto.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Nari Pinasco",
+        "cargo": "legislador",
+        "sobre": "Soluciones para el sector hidrocarburos",
+        "postura": "propone",
+        "tema": "Energía",
+        "dijo": "Propuso soluciones técnicas para los hidrocarburos.",
+        "proyecto": "",
+        "id": "diputados:pinasco montenegro"
+      },
+      {
+        "orador": "Amilcar Romero de Randon",
+        "cargo": "invitado",
+        "sobre": "Alternativas de industrialización para el Cusco",
+        "postura": "en contra",
+        "tema": "Energía",
+        "dijo": "Rechazó la falta de alternativas para el Cusco.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Andrés Olivares Muñoz",
+        "cargo": "invitado",
+        "sobre": "Continuidad del Gasoducto Surperuano",
+        "postura": "en contra",
+        "tema": "Energía",
+        "dijo": "Pidió la conclusión del Gasoducto Surperuano.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Luisa Lóbregón",
+        "cargo": "invitado",
+        "sobre": "Justicia energética para la región Cusco",
+        "postura": "en contra",
+        "tema": "Energía",
+        "dijo": "Exigió justicia energética y la conclusión del gasoducto sur peruano.",
+        "proyecto": "Gasoducto Sur Peruano",
+        "id": null
+      },
+      {
+        "orador": "Jorge Pizfánio Pacheco",
+        "cargo": "invitado",
+        "sobre": "Situación del gasoducto sur peruano",
+        "postura": "en contra",
+        "tema": "Energía",
+        "dijo": "Denunció el alto costo del gas en la provincia de Calca.",
+        "proyecto": "Gasoducto Sur Peruano",
+        "id": null
+      },
+      {
+        "orador": "Jesús Córsio Milnoviza",
+        "cargo": "invitado",
+        "sobre": "Investigación de presupuesto asignado",
+        "postura": "propone",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Pidió investigar la asignación de mil seiscientos millones de soles.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Boris Tomás",
+        "cargo": "invitado",
+        "sobre": "Conclusión del gasoducto sur peruano",
+        "postura": "a favor",
+        "tema": "Energía",
+        "dijo": "Respaldó la conclusión del gasoducto sur peruano.",
+        "proyecto": "Gasoducto Sur Peruano",
+        "id": null
+      },
+      {
+        "orador": "Jennifer Paredes",
+        "cargo": "legislador",
+        "sobre": "Fiscalización de arbitrajes de GCP y CENEAS",
+        "postura": "propone",
+        "tema": "Energía",
+        "dijo": "Anunció la fiscalización de arbitrajes de GCP y CENEAS.",
+        "proyecto": "",
+        "id": "diputados:paredes navarro"
+      },
+      {
+        "orador": "Jennifer Paredes",
+        "cargo": "legislador",
+        "sobre": "Cierre de la audiencia pública",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Concluyó la audiencia pública descentralizada en Cusco.",
+        "proyecto": "",
+        "id": "diputados:paredes navarro"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=iyEO8b-JAwQ"
+  },
+  "fb_1278063438733508": {
+    "fecha": "2026-10-12",
+    "organo": "Comisión de Educación",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Fanny Alicia Salgado Macías",
+        "cargo": "invitado",
+        "sobre": "Reforma al código de conocimientos e innovación",
+        "postura": "con observaciones",
+        "tema": "Tecnología",
+        "dijo": "Propuso mejorar la transparencia de las bases de datos del Senadi.",
+        "proyecto": "COESCI",
+        "id": null
+      },
+      {
+        "orador": "Paul Alexander Guaranga Rochina",
+        "cargo": "invitado",
+        "sobre": "Ley de inteligencia artificial en Ecuador",
+        "postura": "con observaciones",
+        "tema": "Tecnología",
+        "dijo": "Propuso que la regulación sea según el nivel de riesgo.",
+        "proyecto": "Ley de inteligencia artificial",
+        "id": null
+      },
+      {
+        "orador": "Cristian René Benítez Moraíra",
+        "cargo": "invitado",
+        "sobre": "Ley de inteligencia artificial en Ecuador",
+        "postura": "con observaciones",
+        "tema": "Tecnología",
+        "dijo": "Denunció el riesgo de pérdida de empleos por la tecnología.",
+        "proyecto": "Ley de inteligencia artificial",
+        "id": null
+      },
+      {
+        "orador": "Ingeniero Paul",
+        "cargo": "invitado",
+        "sobre": "regulación de la inteligencia artificial",
+        "postura": "propone",
+        "tema": "Tecnología",
+        "dijo": "Propuso un proyecto de ley para regular la inteligencia artificial y proteger empleos.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1278063438733508"
+  },
+  "9FlcWcokKBc": {
+    "fecha": "2026-10-09",
+    "organo": "Comisión de Presupuesto",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Sejismundo Cruzes-Ordinola",
+        "cargo": "ministro o autoridad",
+        "sobre": "Presupuesto institucional 2027 de Tumbes",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Propuso el presupuesto del Gobierno Regional de Tumbes.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Absalom Vázquez",
+        "cargo": "legislador",
+        "sobre": "Ejecución presupuestal y prevención de inundaciones",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Cuestionó la baja ejecución presupuestal en Tumbes.",
+        "proyecto": "",
+        "id": "senado:vasquez villanueva"
+      },
+      {
+        "orador": "Javier Castro",
+        "cargo": "legislador",
+        "sobre": "Disminución de presupuesto para inversiones",
+        "postura": "pregunta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Preguntó por la reducción de gastos de capital.",
+        "proyecto": "",
+        "id": "diputados:castro cruz"
+      },
+      {
+        "orador": "Sejismundo Cruzes-Ordinola",
+        "cargo": "ministro o autoridad",
+        "sobre": "Gestión financiera de Tumbes",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Defendió la gestión de los recursos en Tumbes.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Héctor Ventura",
+        "cargo": "legislador",
+        "sobre": "Corrupción en obras regionales",
+        "postura": "en contra",
+        "tema": "Polítca y control político",
+        "dijo": "Denunció actos de corrupción en la región.",
+        "proyecto": "",
+        "id": "senado:ventura angel"
+      },
+      {
+        "orador": "Sejismundo Cruzes-Ordinola",
+        "cargo": "ministro o autoridad",
+        "sobre": "Ejecución del hospital de apoyo",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Defendió la continuidad de la obra del hospital.",
+        "proyecto": "Hospital Saúl",
+        "id": null
+      },
+      {
+        "orador": "Jorge Luis Pérez Flores",
+        "cargo": "ministro o autoridad",
+        "sobre": "Presupuesto institucional de Lambayeque 2027",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Sustentó el presupuesto institucional de Lambayeque para el año fiscal 2027.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Absalom Vázquez",
+        "cargo": "legislador",
+        "sobre": "Presupuesto para la presa Limón",
+        "postura": "en contra",
+        "tema": "Agricultura",
+        "dijo": "Cuestionó la insuficiencia del presupuesto para la presa Limón.",
+        "proyecto": "",
+        "id": "senado:vasquez villanueva"
+      },
+      {
+        "orador": "Segundo Tapia Bernal",
+        "cargo": "legislador",
+        "sobre": "Presupuesto e inversiones en Lambayeque",
+        "postura": "con observaciones",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Expresó preocupación por la reducción del presupuesto de inversión regional.",
+        "proyecto": "",
+        "id": "senado:tapia bernal"
+      },
+      {
+        "orador": "Carlos Segarra Sánchez",
+        "cargo": "legislador",
+        "sobre": "Gestión del agua en Chiclayo",
+        "postura": "pregunta",
+        "tema": "Saneamiento",
+        "dijo": "Preguntó sobre las acciones para solucionar la falta de agua en Chiclayo.",
+        "proyecto": "",
+        "id": "diputados:zegarra sanchez"
+      },
+      {
+        "orador": "Héctor Guillén Valencia",
+        "cargo": "legislador",
+        "sobre": "Debilitamiento de la descentralización",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció el debilitamiento del proceso de descentralización económica.",
+        "proyecto": "",
+        "id": "diputados:guillen valencia"
+      },
+      {
+        "orador": "Javier Castro Cruz",
+        "cargo": "legislador",
+        "sobre": "Gasto en la presa Limón",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Cuestionó el gasto de ocho millones en el dragado de la presa.",
+        "proyecto": "",
+        "id": "diputados:castro cruz"
+      },
+      {
+        "orador": "Díaz Caradena Coronel",
+        "cargo": "ministro o autoridad",
+        "sobre": "Presupuesto de La Libertad para 2027",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Propuso un presupuesto de cuatro mil doscientos treinta y nueve millones.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ana Rosa Ramos de la Cruz",
+        "cargo": "ministro o autoridad",
+        "sobre": "Detalle del presupuesto 2027",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Defendió la distribución del gasto para el año 2027.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Catherine Ampueron",
+        "cargo": "legislador",
+        "sobre": "Gestión del gobierno regional de La Libertad",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Denunció la baja ejecución de obras en la región de La Libertad.",
+        "proyecto": "",
+        "id": "senado:ampuero meza"
+      },
+      {
+        "orador": "Díaz Caradena Coronel",
+        "cargo": "ministro o autoridad",
+        "sobre": "Seguridad ciudadana en La Libertad",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Defendió la inversión en tecnología para la seguridad regional.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=9FlcWcokKBc"
   }
 }
