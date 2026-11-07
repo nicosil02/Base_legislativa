@@ -77,3 +77,18 @@ def test_votaciones_va_en_su_parte_y_se_une_por_fila(tmp_path):
     P.unir(tmp_path / "l_v.db", tmp_path / "r_v.db", "votaciones")
     c = sqlite3.connect(tmp_path / "l_v.db")
     assert c.execute("SELECT COUNT(*) FROM voto_pleno_nominal").fetchone()[0] == 2
+
+
+def test_armar_para_web_recorta_tv_viejo_y_consume_partes(tmp_path):
+    orig = tmp_path / "orig.db"
+    _base(orig, [("nuevo", "a"), ("viejo", "b")], [], """CREATE TABLE tv_menciones (video_id TEXT, first_seen_at TEXT)""")
+    c = sqlite3.connect(orig)
+    c.executemany("INSERT INTO tv_menciones VALUES (?, ?)", [("nuevo", "2999-01-01"), ("viejo", "2000-01-01")])
+    c.commit()
+    c.close()
+    partes = {p: tmp_path / f"{p}.db" for p in P.NOMBRES}
+    for p, path in partes.items():
+        P.extraer(orig, p, path)
+    P.armar(tmp_path / "web.db", partes, para_web=True)
+    assert [r[0] for r in sqlite3.connect(tmp_path / "web.db").execute("SELECT video_id FROM tv_vistos")] == ["nuevo"]
+    assert not any(p.exists() for p in partes.values())
