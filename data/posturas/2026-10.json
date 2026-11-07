@@ -5684,5 +5684,362 @@
       }
     ],
     "url": "https://www.youtube.com/watch?v=_PVFlHwcNtc"
+  },
+  "fb_1325990186228080": {
+    "fecha": "2026-10-28",
+    "organo": "Comisión de Seguridad Integral",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Daisy Terán",
+        "cargo": "invitado",
+        "sobre": "Ley de Personal y Disciplina FF.AA.",
+        "postura": "a favor",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Respaldó la viabilidad financiera del proyecto de ley.",
+        "proyecto": "Ley Orgánica de Personal y Disciplina de las Fuerzas Armadas",
+        "id": null
+      },
+      {
+        "orador": "Guillermo Pabón",
+        "cargo": "invitado",
+        "sobre": "Contrabando en la ley antimafia",
+        "postura": "a favor",
+        "tema": "Tributos",
+        "dijo": "Denunció la evasión tributaria por contrabando de acero.",
+        "proyecto": "Ley Antimafias",
+        "id": null
+      },
+      {
+        "orador": "Gerardo Machado",
+        "cargo": "legislador",
+        "sobre": "Impacto de la ley en la industria",
+        "postura": "pregunta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Preguntó sobre el impacto del crimen en la industria.",
+        "proyecto": "Ley Antimafias",
+        "id": "EC:machado clavijo"
+      },
+      {
+        "orador": "Guillermo Pabón",
+        "cargo": "invitado",
+        "sobre": "Modificación de artículos del CoIP",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso modificar artículos del CoIP para proteger la industria.",
+        "proyecto": "Ley Antimafias",
+        "id": null
+      },
+      {
+        "orador": "Mauricio Nágera",
+        "cargo": "invitado",
+        "sobre": "Observaciones a la ley antimafia",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Cuestionó la proporcionalidad de penas y garantías procesales.",
+        "proyecto": "Ley Antimafias",
+        "id": null
+      },
+      {
+        "orador": "Mario Asambrán",
+        "cargo": "legislador",
+        "sobre": "Sanciones en delitos hidrocarburíferos",
+        "postura": "pregunta",
+        "tema": "Energía",
+        "dijo": "Preguntó por una propuesta para delitos hidrocarburíferos.",
+        "proyecto": "Ley Antimafias",
+        "id": "EC:zambrano vera"
+      },
+      {
+        "orador": "Mauricio Nágera",
+        "cargo": "invitado",
+        "sobre": "Reajuste de la sanción penal",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Propuso diferenciar el sabotaje de la criminalidad organizada.",
+        "proyecto": "Ley Antimafias",
+        "id": null
+      },
+      {
+        "orador": "Gerardo Machado",
+        "cargo": "legislador",
+        "sobre": "Mejora de la ley antimafia",
+        "postura": "pregunta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Preguntó cómo fortalecer la ley sin extremos jurídicos.",
+        "proyecto": "Ley Antimafias",
+        "id": "EC:machado clavijo"
+      },
+      {
+        "orador": "Mauricio Nágera",
+        "cargo": "invitado",
+        "sobre": "Inteligencia financiera y patrimonial",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso fortalecer la inteligencia financiera y patrimonial.",
+        "proyecto": "Ley Antimafias",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1325990186228080"
+  },
+  "fb_4531164340505760": {
+    "fecha": "2026-10-28",
+    "organo": "Comisión de Derecho a la Salud",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Pamela Indira Uyawri Solorzano",
+        "cargo": "invitado",
+        "sobre": "Perspectiva bioética en la atención",
+        "postura": "con observaciones",
+        "tema": "Salud",
+        "dijo": "Defendió la integración de la bioética en el proyecto.",
+        "proyecto": "Ley de atención integral para personas con obesidad",
+        "id": null
+      },
+      {
+        "orador": "Ana Holacio",
+        "cargo": "legislador",
+        "sobre": "Detección de obesidad en menores",
+        "postura": "pregunta",
+        "tema": "Salud",
+        "dijo": "Preguntó sobre la detección de obesidad en niños.",
+        "proyecto": "Ley de atención integral para personas con obesidad",
+        "id": "EC:blacio carrion"
+      },
+      {
+        "orador": "Pamela Indira Uyawri Solorzano",
+        "cargo": "invitado",
+        "sobre": "Importancia del entorno en la salud",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Respaldó la importancia de la atención en entornos familiares.",
+        "proyecto": "Ley de atención integral para personas con obesidad",
+        "id": null
+      },
+      {
+        "orador": "Tana Cristina",
+        "cargo": "legislador",
+        "sobre": "Formación profesional en bioética",
+        "postura": "pregunta",
+        "tema": "Salud",
+        "dijo": "Preguntó sobre la capacitación de psicólogos en bioética.",
+        "proyecto": "Ley de atención integral para personas con obesidad",
+        "id": null
+      },
+      {
+        "orador": "Pamela Indira Uyawri Solorzano",
+        "cargo": "invitado",
+        "sobre": "Uso de la bioética clínica",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Defendió la aplicación de la bioética en salud.",
+        "proyecto": "Ley de atención integral para personas con obesidad",
+        "id": null
+      },
+      {
+        "orador": "Tabatali-Cettino Cortiz",
+        "cargo": "invitado",
+        "sobre": "Cobertura y guías de práctica",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Propuso cobertura efectiva y guías de práctica clínica.",
+        "proyecto": "Ley de atención integral para personas con obesidad",
+        "id": null
+      },
+      {
+        "orador": "Carla Joana Garay García",
+        "cargo": "invitado",
+        "sobre": "Impacto de obesidad en el hígado",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Denunció la relación entre obesidad y daño hepático.",
+        "proyecto": "Ley de atención integral para personas con obesidad",
+        "id": null
+      },
+      {
+        "orador": "Carla Garag",
+        "cargo": "invitado",
+        "sobre": "Prevención y diagnóstico de la enfermedad MASH",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Propuso implementar estrategias de diagnóstico y políticas de prevención para la enfermedad MASH.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=4531164340505760"
+  },
+  "fb_1371732874992866": {
+    "fecha": "2026-10-28",
+    "organo": "Comisión de Régimen Económico",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Andrea Pamela Saúd",
+        "cargo": "invitado",
+        "sobre": "Proyecto de Ley de Contratación Pública",
+        "postura": "con observaciones",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Propuso cambiar el verbo podrán por deberán en el proyecto.",
+        "proyecto": "Ley de Contratación Pública",
+        "id": null
+      },
+      {
+        "orador": "Vallejo",
+        "cargo": "legislador",
+        "sobre": "Dinamismo de la economía local",
+        "postura": "pregunta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Cuestionó la efectividad del gasto en la economía local.",
+        "proyecto": "",
+        "id": "EC:vallejo ayala"
+      },
+      {
+        "orador": "Dura",
+        "cargo": "legislador",
+        "sobre": "Intermediación en la contratación pública",
+        "postura": "pregunta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Preguntó sobre la metodología de verificación del empleo.",
+        "proyecto": "Ley de Contratación Pública",
+        "id": "EC:duran aguilar"
+      },
+      {
+        "orador": "Andrea Pamela Saúd",
+        "cargo": "invitado",
+        "sobre": "Metodología de verificación de trabajadores",
+        "postura": "propone",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Sugerió verificar el domicilio para garantizar el empleo.",
+        "proyecto": "Ley de Contratación Pública",
+        "id": null
+      },
+      {
+        "orador": "Invitada experta",
+        "cargo": "invitado",
+        "sobre": "Metodologías de verificación contractual",
+        "postura": "propone",
+        "tema": "Trabajo",
+        "dijo": "Propuso metodologías técnicas para verificar la ejecución contractual.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Asambleísta",
+        "cargo": "legislador",
+        "sobre": "Precarización de la mano de obra",
+        "postura": "en contra",
+        "tema": "Trabajo",
+        "dijo": "Denunció la precarización laboral en empresas de limpieza.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Asambleísta",
+        "cargo": "legislador",
+        "sobre": "Fortalecimiento de los pliegos de contratación",
+        "postura": "propone",
+        "tema": "Trabajo",
+        "dijo": "Propuso fortalecer los modelos de pliegos para proteger derechos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Asambleísta",
+        "cargo": "legislador",
+        "sobre": "Confiabilidad de las estadísticas del INEC",
+        "postura": "pregunta",
+        "tema": "Otros",
+        "dijo": "Preguntó sobre la confiabilidad de los datos del INEC.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Invitada experta",
+        "cargo": "invitado",
+        "sobre": "Actualización de índices de rezago",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Explicó la necesidad de actualizar los índices territoriales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Asambleísta",
+        "cargo": "legislador",
+        "sobre": "Límites de contratación de mano de obra",
+        "postura": "con observaciones",
+        "tema": "Trabajo",
+        "dijo": "Cuestionó la limitación del sesenta por ciento de mano de obra.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Asambleísta de Pastaza",
+        "cargo": "legislador",
+        "sobre": "Porcentajes de contratación en la Amazonía",
+        "postura": "pregunta",
+        "tema": "Trabajo",
+        "dijo": "Consultó sobre los riesgos de los porcentajes para amazónicos.",
+        "proyecto": "",
+        "id": "EC:de la"
+      },
+      {
+        "orador": "Invitada experta",
+        "cargo": "invitado",
+        "sobre": "Capacidades técnicas en territorios rezagados",
+        "postura": "comenta",
+        "tema": "Trabajo",
+        "dijo": "Explicó que la falta de capacitación afecta la ejecución.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Asambleísta Maldonado",
+        "cargo": "legislador",
+        "sobre": "Barreras para la participación de mipymes",
+        "postura": "pregunta",
+        "tema": "Mype",
+        "dijo": "Preguntó sobre mecanismos para la participación de mipymes.",
+        "proyecto": "",
+        "id": "EC:castillo maldonado"
+      },
+      {
+        "orador": "Invitada experta",
+        "cargo": "invitado",
+        "sobre": "Socialización para proveedores de territorios rezagados",
+        "postura": "propone",
+        "tema": "Mype",
+        "dijo": "Sugirió usar ferias inclusivas para socializar procesos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Karen Anahí Chihuahua",
+        "cargo": "invitado",
+        "sobre": "Reforma de contratación pública",
+        "postura": "a favor",
+        "tema": "Trabajo",
+        "dijo": "Respaldó el proyecto de reforma de contratación pública.",
+        "proyecto": "Reforma del Sistema Nacional de Contratación Pública",
+        "id": null
+      },
+      {
+        "orador": "Natalia Farinango",
+        "cargo": "legislador",
+        "sobre": "Observaciones al proyecto de ley",
+        "postura": "propone",
+        "tema": "Trabajo",
+        "dijo": "Pidió que las observaciones se entreguen por escrito.",
+        "proyecto": "Reforma del Sistema Nacional de Contratación Pública",
+        "id": "EC:farinango delgado"
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1371732874992866"
   }
 }
