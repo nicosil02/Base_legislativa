@@ -2232,5 +2232,102 @@
       }
     ],
     "url": "https://www.youtube.com/watch?v=5sgiZ9XT0NE"
+  },
+  "LL2GxtowMAA": {
+    "fecha": "2026-10-29",
+    "organo": "Comisión de Control Político",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Muñante",
+        "cargo": "legislador",
+        "sobre": "Error material en el dictamen",
+        "postura": "con observaciones",
+        "tema": "Política y control político",
+        "dijo": "Advirtió un error material en la conclusión del dictamen.",
+        "proyecto": "TIE 001-2026",
+        "id": "senado:munante barrios"
+      },
+      {
+        "orador": "Guido",
+        "cargo": "legislador",
+        "sobre": "Estado de emergencia en Ático",
+        "postura": "con observaciones",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Cuestionó la pertinencia de las medidas para la conectividad.",
+        "proyecto": "DS 118-2026",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=LL2GxtowMAA"
+  },
+  "fb_1776864057373287": {
+    "fecha": "2026-10-29",
+    "organo": "Comisión de Relaciones Internacionales",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "David Fernando Carrón",
+        "cargo": "invitado",
+        "sobre": "Reforma a la Ley del Servicio Exterior",
+        "postura": "con observaciones",
+        "tema": "Política y control político",
+        "dijo": "Pidió incluir fundamentos constitucionales y asegurar la sostenibilidad presupuestaria en la reforma del Servicio Exterior.",
+        "proyecto": "Ley del Servicio Exterior",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1776864057373287"
+  },
+  "fb_1689813039378836": {
+    "fecha": "2026-10-29",
+    "organo": "Comisión de Soberanía Alimentaria",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Lizarro Mauricio Reina-Bowen",
+        "cargo": "invitado",
+        "sobre": "Proyecto de ley de investigación agropecuaria",
+        "postura": "con observaciones",
+        "tema": "Agricultura",
+        "dijo": "Propuso cambios técnicos para la articulación con las universidades.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Baez",
+        "cargo": "legislador",
+        "sobre": "Viabilidad financiera del proyecto",
+        "postura": "pregunta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Preguntó sobre la viabilidad del proyecto ante recortes presupuestarios.",
+        "proyecto": "",
+        "id": "EC:baez mera"
+      },
+      {
+        "orador": "Lizarro Mauricio Reina-Bowen",
+        "cargo": "invitado",
+        "sobre": "Gestión eficiente de recursos mediante alianzas",
+        "postura": "a favor",
+        "tema": "Agricultura",
+        "dijo": "Defendió la gestión eficiente de recursos mediante alianzas académicas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Lizarro Mauricio Reina-Bowen",
+        "cargo": "invitado",
+        "sobre": "Mecanismos de financiamiento con fondos FIASAs",
+        "postura": "comenta",
+        "tema": "Agricultura",
+        "dijo": "Explicó el funcionamiento de los fondos concursables para la investigación.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1689813039378836"
   }
 }
