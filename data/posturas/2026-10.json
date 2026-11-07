@@ -6041,5 +6041,232 @@
       }
     ],
     "url": "https://www.facebook.com/watch/?v=1371732874992866"
+  },
+  "fb_1131318009859036": {
+    "fecha": "2026-10-28",
+    "organo": "Comisión de Educación",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Hugo Alexander Zapata Carpio",
+        "cargo": "invitado",
+        "sobre": "Reforma al Código de Conocimientos",
+        "postura": "con observaciones",
+        "tema": "Tecnología",
+        "dijo": "Cuestionó la consistencia de la normativa actual frente a los derechos colectivos.",
+        "proyecto": "Reforma al Código de Conocimientos",
+        "id": null
+      },
+      {
+        "orador": "Cecilia Baltazar y Ucaya",
+        "cargo": "legislador",
+        "sobre": "Alcance de la propuesta de reforma",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Pidió que las observaciones se centren en los artículos de la propuesta.",
+        "proyecto": "Reforma al Código de Conocimientos",
+        "id": "EC:baltazar yucailla"
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1131318009859036"
+  },
+  "fb_4548848318763525": {
+    "fecha": "2026-10-28",
+    "organo": "Comisión de Derecho al Trabajo",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Cristian Marcelo Balceca Narvaz",
+        "cargo": "invitado",
+        "sobre": "reforma de la LOSEP para primer empleo",
+        "postura": "con observaciones",
+        "tema": "Trabajo",
+        "dijo": "Defendió la necesidad de la reforma pero criticó su técnica legislativa.",
+        "proyecto": "LOSEP",
+        "id": null
+      },
+      {
+        "orador": "Roberto Cuero",
+        "cargo": "legislador",
+        "sobre": "inclusión de acciones afirmativas",
+        "postura": "propone",
+        "tema": "Trabajo",
+        "dijo": "Propuso incluir acciones afirmativas para sectores históricamente excluidos.",
+        "proyecto": "LOSEP",
+        "id": "EC:cuero medina"
+      },
+      {
+        "orador": "Cristian Marcelo Balceca Narvaz",
+        "cargo": "invitado",
+        "sobre": "riesgos de las acciones afirmativas",
+        "postura": "con observaciones",
+        "tema": "Trabajo",
+        "dijo": "Advirtió sobre los riesgos de declarar inconstitucionales las acciones afirmativas.",
+        "proyecto": "LOSEP",
+        "id": null
+      },
+      {
+        "orador": "Humberto Alvarado",
+        "cargo": "legislador",
+        "sobre": "falta de plazas presupuestarias",
+        "postura": "en contra",
+        "tema": "Trabajo",
+        "dijo": "Cuestionó la viabilidad del proyecto por la falta de partidas presupuestarias.",
+        "proyecto": "LOSEP",
+        "id": "EC:alvarado espinel"
+      },
+      {
+        "orador": "Roberto Emilio Puerta",
+        "cargo": "legislador",
+        "sobre": "importancia de acciones afirmativas",
+        "postura": "a favor",
+        "tema": "Trabajo",
+        "dijo": "Defendió la incorporación de acciones afirmativas para mitigar la inequidad.",
+        "proyecto": "LOSEP",
+        "id": null
+      },
+      {
+        "orador": "Cristian Marcelo Balceca Narvaz",
+        "cargo": "invitado",
+        "sobre": "falta de plazas de trabajo",
+        "postura": "comenta",
+        "tema": "Trabajo",
+        "dijo": "Reconoció la validez de la preocupación sobre la ausencia de plazas.",
+        "proyecto": "LOSEP",
+        "id": null
+      },
+      {
+        "orador": "Alvarado",
+        "cargo": "legislador",
+        "sobre": "Acción afirmativa en la reforma laboral",
+        "postura": "con observaciones",
+        "tema": "Trabajo",
+        "dijo": "Defendió la inclusión de sectores vulnerables mediante acciones afirmativas en la norma.",
+        "proyecto": "",
+        "id": "EC:alvarado espinel"
+      },
+      {
+        "orador": "Christian Marcelo Balseca Narváez",
+        "cargo": "invitado",
+        "sobre": "Simplificación de requisitos de la reforma",
+        "postura": "propone",
+        "tema": "Trabajo",
+        "dijo": "Propuso simplificar los requisitos de la reforma para facilitar el empleo juvenil.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "De la Torre",
+        "cargo": "legislador",
+        "sobre": "Límites de edad y presupuesto laboral",
+        "postura": "con observaciones",
+        "tema": "Trabajo",
+        "dijo": "Cuestionó la restricción de edad y las limitaciones presupuestarias de la ley.",
+        "proyecto": "",
+        "id": "EC:de la"
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=4548848318763525"
+  },
+  "fb_1427972262201492": {
+    "fecha": "2026-10-28",
+    "organo": "Comisión de Educación",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Pablo Nieto",
+        "cargo": "invitado",
+        "sobre": "regulación de la inteligencia artificial",
+        "postura": "en contra",
+        "tema": "Tecnología",
+        "dijo": "Criticó las restricciones al entrenamiento de sistemas de inteligencia artificial.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Diego Urbina",
+        "cargo": "invitado",
+        "sobre": "situación de la inteligencia artificial en Ecuador",
+        "postura": "comenta",
+        "tema": "Tecnología",
+        "dijo": "Informó que Ecuador ocupa el noveno lugar en gobernanza.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Patricia Acosta Vargas",
+        "cargo": "invitado",
+        "sobre": "fomento de la investigación en IA",
+        "postura": "con observaciones",
+        "tema": "Tecnología",
+        "dijo": "Propuso crear incentivos para alianzas público-privadas en investigación.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Rafael Melgarrejo Heredia",
+        "cargo": "invitado",
+        "sobre": "articulación legal de la inteligencia artificial",
+        "postura": "con observaciones",
+        "tema": "Tecnología",
+        "dijo": "Sugirió coordinar la ley con el código Ingenios.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Anavela Aguile",
+        "cargo": "legislador",
+        "sobre": "barreras para la innovación tecnológica",
+        "postura": "pregunta",
+        "tema": "Tecnología",
+        "dijo": "Preguntó sobre las mayores barreras regulatorias regionales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Diego Urbina",
+        "cargo": "invitado",
+        "sobre": "fortalecimiento de la regulación tecnológica",
+        "postura": "propone",
+        "tema": "Tecnología",
+        "dijo": "Propuso fomentar alianzas entre el Estado y empresas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Anavela Aguile",
+        "cargo": "legislador",
+        "sobre": "financiamiento para la investigación tecnológica",
+        "postura": "comenta",
+        "tema": "Tecnología",
+        "dijo": "Señaló la necesidad de presupuesto para la investigación.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Anavela Aguiela",
+        "cargo": "legislador",
+        "sobre": "responsabilidad de la comisión en la regulación",
+        "postura": "propone",
+        "tema": "Tecnología",
+        "dijo": "Propuso que los asambleístas procesen la información técnica para adaptarla al articulado.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Urbina",
+        "cargo": "invitado",
+        "sobre": "definiciones en la regulación de IA",
+        "postura": "en contra",
+        "tema": "Tecnología",
+        "dijo": "Cuestionó las definiciones amplias del proyecto por riesgo de desincentivar la inversión.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1427972262201492"
   }
 }
