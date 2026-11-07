@@ -21102,5 +21102,432 @@
       }
     ],
     "url": "https://www.facebook.com/watch/?v=1874572143904977"
+  },
+  "Gk2Nok9Chtw": {
+    "fecha": "2026-10-20",
+    "organo": "Comisión de Defensa del Consumidor",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Carlos Yalta",
+        "cargo": "legislador",
+        "sobre": "Estado del puente Chancay",
+        "postura": "propone",
+        "tema": "Transporte",
+        "dijo": "Pidió información sobre los puentes y la presencia del ministro.",
+        "proyecto": "",
+        "id": "diputados:yalta sotelo"
+      },
+      {
+        "orador": "Oswar",
+        "cargo": "legislador",
+        "sobre": "Desabastecimiento de medicinas en Ucayali",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Pidió citar al director de salud de Ucayali por falta de medicinas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Luis Quispe",
+        "cargo": "legislador",
+        "sobre": "Concesiones de puentes y carreteras",
+        "postura": "comenta",
+        "tema": "Transporte",
+        "dijo": "Explicó la necesidad de incluir puentes en las concesiones de carreteras.",
+        "proyecto": "",
+        "id": "diputados:quispe candia"
+      },
+      {
+        "orador": "Columbus",
+        "cargo": "legislador",
+        "sobre": "Proyecto de medicamentos justos",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Pidió que el proyecto de medicamentos justos sea derivado a la comisión.",
+        "proyecto": "Medicamentos justos",
+        "id": "diputados:columbus murata"
+      },
+      {
+        "orador": "Gladis",
+        "cargo": "legislador",
+        "sobre": "Falta de agua en comisaría de Jicamarca",
+        "postura": "propone",
+        "tema": "Saneamiento",
+        "dijo": "Solicitó que la comisión haga seguimiento al servicio de agua en Jicamarca.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ángel Bodilla",
+        "cargo": "legislador",
+        "sobre": "Gestión de quejas de Sedapal",
+        "postura": "propone",
+        "tema": "Saneamiento",
+        "dijo": "Propuso solicitar información sobre la efectividad de las inspecciones de Sedapal.",
+        "proyecto": "",
+        "id": "senado:ventura angel"
+      },
+      {
+        "orador": "Barbán",
+        "cargo": "legislador",
+        "sobre": "Cobros de tasas en el aeropuerto",
+        "postura": "propone",
+        "tema": "Transporte",
+        "dijo": "Pidió retomar la fiscalización de los cobros en el aeropuerto Jorge Chávez.",
+        "proyecto": "",
+        "id": "diputados:barbaran reyes"
+      },
+      {
+        "orador": "Gladis",
+        "cargo": "legislador",
+        "sobre": "Cobros de Emapa Guaral",
+        "postura": "propone",
+        "tema": "Saneamiento",
+        "dijo": "Requirió información sobre los cobros de Emapa Guaral al hospital.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Orá",
+        "cargo": "legislador",
+        "sobre": "Procedimiento para pedidos de información",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Sugirió realizar pedidos de información antes de citar a ministros.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "R",
+        "cargo": "legislador",
+        "sobre": "Infraestructura de colegios en Madre de Dios",
+        "postura": "comenta",
+        "tema": "Educación",
+        "dijo": "Informó sobre las deficientes condiciones de un colegio en Madre de Dios.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Gladis",
+        "cargo": "legislador",
+        "sobre": "Responsabilidad de los gobiernos regionales",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso llamar a los gobernadores regionales para atender problemas locales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Albañín",
+        "cargo": "legislador",
+        "sobre": "Registro satelital para pescadores artesanales",
+        "postura": "pregunta",
+        "tema": "Pesca",
+        "dijo": "Consultó sobre la aplicación del registro satelital para pescadores artesanales.",
+        "proyecto": "",
+        "id": "diputados:albanil carmona"
+      },
+      {
+        "orador": "César Golgisa",
+        "cargo": "invitado",
+        "sobre": "Inocuidad de los alimentos",
+        "postura": "comenta",
+        "tema": "Consumo masivo",
+        "dijo": "Presentó la proposición sobre la inocuidad de los alimentos.",
+        "proyecto": "001126-2031 CD",
+        "id": null
+      },
+      {
+        "orador": "César Olguín",
+        "cargo": "legislador",
+        "sobre": "Ley de inocuidad de alimentos",
+        "postura": "a favor",
+        "tema": "Salud",
+        "dijo": "Sustentó la modificación del decreto legislativo 1062 para fortalecer la inocuidad alimentaria.",
+        "proyecto": "PL 1126",
+        "id": "diputados:holguin loaiza"
+      },
+      {
+        "orador": "Columbus",
+        "cargo": "legislador",
+        "sobre": "Implementación del proyecto de inocuidad",
+        "postura": "con observaciones",
+        "tema": "Salud",
+        "dijo": "Sugirió ajustar el planteamiento sobre el costo de ejecución del proyecto.",
+        "proyecto": "PL 1126",
+        "id": "diputados:columbus murata"
+      },
+      {
+        "orador": "Gladis",
+        "cargo": "legislador",
+        "sobre": "Proyecto de ley de inocuidad alimentaria",
+        "postura": "con observaciones",
+        "tema": "Salud",
+        "dijo": "Planteó dudas sobre la fiscalización y el impacto en los pequeños agricultores.",
+        "proyecto": "PL 1126",
+        "id": null
+      },
+      {
+        "orador": "Aguirre",
+        "cargo": "legislador",
+        "sobre": "Deficiencias técnicas en la propuesta de inocuidad",
+        "postura": "con observaciones",
+        "tema": "Salud",
+        "dijo": "Señaló la falta de precisión en la trazabilidad y la asistencia técnica.",
+        "proyecto": "PL 1126",
+        "id": null
+      },
+      {
+        "orador": "César Olguín",
+        "cargo": "legislador",
+        "sobre": "Respuesta a observaciones técnicas",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Explicó que la norma busca mejorar la articulación institucional sin generar gastos.",
+        "proyecto": "PL 1126",
+        "id": "diputados:holguin loaiza"
+      },
+      {
+        "orador": "Rafael Eduardo Mueschaz",
+        "cargo": "invitado",
+        "sobre": "Plan de trabajo de OSIPTEL 2026-2027",
+        "postura": "comenta",
+        "tema": "Telecomunicaciones",
+        "dijo": "Informó sobre la expansión del acceso a internet y la competencia de mercado.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ovarias",
+        "cargo": "ministro o autoridad",
+        "sobre": "Contratos cortos y reclamos de usuarios",
+        "postura": "comenta",
+        "tema": "Telecomunicaciones",
+        "dijo": "Informó sobre la reducción de reclamos y el uso de contratos cortos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ovarias",
+        "cargo": "ministro o autoridad",
+        "sobre": "Lucha contra la venta de chips",
+        "postura": "comenta",
+        "tema": "Telecomunicaciones",
+        "dijo": "Relató la historia de la lucha contra la venta de chips callejeros.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ovarias",
+        "cargo": "ministro o autoridad",
+        "sobre": "Medidas ante el fenómeno del niño",
+        "postura": "comenta",
+        "tema": "Telecomunicaciones",
+        "dijo": "Explicó las medidas para asegurar las comunicaciones ante el fenómeno del niño.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Aguirre",
+        "cargo": "legislador",
+        "sobre": "Cobertura y calidad en Junín",
+        "postura": "pregunta",
+        "tema": "Telecomunicaciones",
+        "dijo": "Preguntó sobre la cobertura, calidad del internet y reclamos en Junín.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Luis Quispe",
+        "cargo": "legislador",
+        "sobre": "Venta de chips y presencia de Meta",
+        "postura": "pregunta",
+        "tema": "Telecomunicaciones",
+        "dijo": "Preguntó sobre la penalización de chips y la presencia de Meta.",
+        "proyecto": "",
+        "id": "diputados:quispe candia"
+      },
+      {
+        "orador": "Ovarias",
+        "cargo": "ministro o autoridad",
+        "sobre": "Factores de la calidad del servicio",
+        "postura": "comenta",
+        "tema": "Telecomunicaciones",
+        "dijo": "Explicó los factores que afectan la calidad del servicio de telecomunicaciones.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Presidente Ejecutivo de OSIPTEL",
+        "cargo": "ministro o autoridad",
+        "sobre": "Reducción de ingresos de OSIPTEL",
+        "postura": "en contra",
+        "tema": "Telecomunicaciones",
+        "dijo": "Denunció la reducción de los ingresos por aporte regulatorio.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Gerente General de OSIPTEL",
+        "cargo": "ministro o autoridad",
+        "sobre": "Uso de Rentec en seguridad",
+        "postura": "comenta",
+        "tema": "Telecomunicaciones",
+        "dijo": "Informó sobre la utilidad de Rentec para las autoridades.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Congresista",
+        "cargo": "legislador",
+        "sobre": "Venta de chips en la calle",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Cuestionó la falta de intervenciones contra vendedores de chips.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Presidente de la Comisión",
+        "cargo": "legislador",
+        "sobre": "Entrega de informe de OSIPTEL",
+        "postura": "con observaciones",
+        "tema": "Otros",
+        "dijo": "Pidió que el próximo informe sea entregado completo.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Funcionario de OSIPTEL",
+        "cargo": "ministro o autoridad",
+        "sobre": "Invitación a visitar la institución",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Invitó a los congresistas a visitar las oficinas.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=Gk2Nok9Chtw"
+  },
+  "9noKK1K5ybU": {
+    "fecha": "2026-10-20",
+    "organo": "Comisión de Comercio Exterior",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "De Paz Lancho",
+        "cargo": "legislador",
+        "sobre": "Sistema de búsqueda y rescate turístico",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Propuso implementar un sistema nacional de búsqueda y rescate.",
+        "proyecto": "",
+        "id": "diputados:de paz lancho"
+      },
+      {
+        "orador": "Valquí",
+        "cargo": "legislador",
+        "sobre": "Situación de los pescadores artesanales",
+        "postura": "comenta",
+        "tema": "Pesca",
+        "dijo": "Informó sobre la preocupación de los pescadores artesanales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "De Paz Lancho",
+        "cargo": "legislador",
+        "sobre": "Citación del ministro de Comercio Exterior",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Pidió agendar la reunión con el ministro de Comercio Exterior.",
+        "proyecto": "",
+        "id": "diputados:de paz lancho"
+      },
+      {
+        "orador": "Eloy Barriento Ruiz",
+        "cargo": "ministro o autoridad",
+        "sobre": "Gestión de pesca y acuicultura",
+        "postura": "comenta",
+        "tema": "Pesca",
+        "dijo": "Explicó los avances y ejes estratégicos del sector pesquero.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=9noKK1K5ybU"
+  },
+  "fb_1788678658920501": {
+    "fecha": "2026-10-19",
+    "organo": "Comisión de Seguridad Integral",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Edwin Patricio Cañizárez Cisneros",
+        "cargo": "ministro o autoridad",
+        "sobre": "Respaldo al proyecto de ley anti-mafias",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Respaldó el proyecto y recomendó incluir todos los espacios acuáticos nacionales.",
+        "proyecto": "Ley anti-mafias",
+        "id": null
+      },
+      {
+        "orador": "Marta Cecilia Lugo",
+        "cargo": "ministro o autoridad",
+        "sobre": "Observaciones técnicas al proyecto de ley",
+        "postura": "con observaciones",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso incluir la expresión espacios acuáticos nacionales en el texto.",
+        "proyecto": "Ley anti-mafias",
+        "id": null
+      },
+      {
+        "orador": "Daniela Arazo",
+        "cargo": "invitado",
+        "sobre": "Observaciones de la Cámara de Minería",
+        "postura": "con observaciones",
+        "tema": "Minería",
+        "dijo": "Pidió precisiones técnicas para proteger la seguridad jurídica del sector.",
+        "proyecto": "Ley anti-mafias",
+        "id": null
+      },
+      {
+        "orador": "Luis G. García",
+        "cargo": "legislador",
+        "sobre": "Reforma a la ley de las FF.AA.",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Defendió la actualización de la carrera y la disciplina militar.",
+        "proyecto": "Ley de personal y disciplina de las FF.AA.",
+        "id": "EC:garcia velasquez"
+      },
+      {
+        "orador": "Luigi García",
+        "cargo": "legislador",
+        "sobre": "beneficios económicos para militares",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso actualizar la tasa a 3.7 salarios básicos unificados.",
+        "proyecto": "",
+        "id": "EC:garcia velasquez"
+      },
+      {
+        "orador": "Urreste",
+        "cargo": "legislador",
+        "sobre": "reforma de beneficios militares",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Respaldó la iniciativa y planteó analizar las acciones de protección.",
+        "proyecto": "",
+        "id": "EC:urresta guzman"
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1788678658920501"
   }
 }
