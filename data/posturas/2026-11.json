@@ -4045,5 +4045,384 @@
       }
     ],
     "url": "https://www.facebook.com/watch/?v=1870674547416936"
+  },
+  "UlYF5A7ZlGE": {
+    "fecha": "2026-11-07",
+    "organo": "Pleno de la Asamblea",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Jimmy Blacio",
+        "cargo": "legislador",
+        "sobre": "proforma del presupuesto general 2027",
+        "postura": "a favor",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Destacó el aumento de presupuesto para seguridad, salud y educación en 2027.",
+        "proyecto": "",
+        "id": "EC:blacio ochoa"
+      },
+      {
+        "orador": "Natalie Farinango",
+        "cargo": "legislador",
+        "sobre": "proforma del presupuesto general 2027",
+        "postura": "a favor",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Explicó que la proforma cumple con los supuestos macroeconómicos y asignaciones constitucionales.",
+        "proyecto": "",
+        "id": "EC:farinango delgado"
+      },
+      {
+        "orador": "Milton Aguas",
+        "cargo": "legislador",
+        "sobre": "reformas al COTAD unificado",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Indicó que las reformas exigen mayor inversión y transparencia en los municipios.",
+        "proyecto": "COTAD unificado",
+        "id": "EC:aguas flores"
+      },
+      {
+        "orador": "Yajaira Urresta",
+        "cargo": "legislador",
+        "sobre": "caso Asfalto de Oro",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso incluir la fiscalización de contrataciones del EMOP en el orden del día.",
+        "proyecto": "",
+        "id": "EC:urresta guzman"
+      },
+      {
+        "orador": "Valentina Centeno",
+        "cargo": "legislador",
+        "sobre": "Proforma Presupuestaria 2027",
+        "postura": "a favor",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Defendió la proforma 2027 por su compromiso con las familias.",
+        "proyecto": "Proforma 2027",
+        "id": "EC:centeno arteaga"
+      },
+      {
+        "orador": "Diego Salas",
+        "cargo": "legislador",
+        "sobre": "Proforma Presupuestaria 2027",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Rechazó la proforma 2027 por considerarla una ficción contable.",
+        "proyecto": "Proforma 2027",
+        "id": "EC:salas barriga"
+      },
+      {
+        "orador": "Jorge Chamba",
+        "cargo": "legislador",
+        "sobre": "Mitigación del fenómeno del Niño",
+        "postura": "a favor",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Defendió la asignación de 650 millones para el fenómeno del Niño.",
+        "proyecto": "",
+        "id": "EC:chamba cabanilla"
+      },
+      {
+        "orador": "Jorge Chamba",
+        "cargo": "legislador",
+        "sobre": "Proforma Presupuestaria 2027",
+        "postura": "a favor",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Respaldó la proforma 2027 y la estabilidad económica nacional.",
+        "proyecto": "Proforma 2027",
+        "id": "EC:chamba cabanilla"
+      },
+      {
+        "orador": "Noemí Cabrera",
+        "cargo": "legislador",
+        "sobre": "Proforma Presupuestaria 2027",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Denunció que la proforma 2027 usa ingresos variables para gastos permanentes.",
+        "proyecto": "Proforma 2027",
+        "id": "EC:cabrera chacon"
+      },
+      {
+        "orador": "Sergio Peña",
+        "cargo": "legislador",
+        "sobre": "Proforma Presupuestaria 2027",
+        "postura": "a favor",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Defendió la proforma 2027 y aclaró la deuda por jubilaciones.",
+        "proyecto": "Proforma 2027",
+        "id": "EC:pena veloz"
+      },
+      {
+        "orador": "Sergio Peña",
+        "cargo": "legislador",
+        "sobre": "Presupuesto General del Estado 2027",
+        "postura": "a favor",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Defendió el presupuesto destacando la reducción del déficit fiscal.",
+        "proyecto": "",
+        "id": "EC:pena veloz"
+      },
+      {
+        "orador": "Cristina Jacob",
+        "cargo": "legislador",
+        "sobre": "Presupuesto para el sector salud",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Cuestionó el incumplimiento del incremento constitucional para la salud.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Milton Aguas",
+        "cargo": "legislador",
+        "sobre": "Presupuesto para gobiernos autónomos descentralizados",
+        "postura": "a favor",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Resaltó el incremento del 17% presupuestario para los GAD.",
+        "proyecto": "Ley 7030",
+        "id": "EC:aguas flores"
+      },
+      {
+        "orador": "Mabel Méndez",
+        "cargo": "legislador",
+        "sobre": "Análisis de la proforma presupuestaria",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Rechazó la proforma por los recortes en educación superior.",
+        "proyecto": "",
+        "id": "EC:mendez rojas"
+      },
+      {
+        "orador": "Adrián Castro",
+        "cargo": "legislador",
+        "sobre": "Presupuesto para la Universidad de Cuenca",
+        "postura": "a favor",
+        "tema": "Educación",
+        "dijo": "Defendió el aumento presupuestario para la Universidad de Cuenca.",
+        "proyecto": "",
+        "id": "EC:castro piedra"
+      },
+      {
+        "orador": "Alfredo Serrano",
+        "cargo": "legislador",
+        "sobre": "Deuda con la seguridad social",
+        "postura": "en contra",
+        "tema": "Pensiones",
+        "dijo": "Denunció el déficit de fondos para pensiones jubilares.",
+        "proyecto": "",
+        "id": "EC:serrano valladares"
+      },
+      {
+        "orador": "Alfredo Serrano",
+        "cargo": "legislador",
+        "sobre": "el presupuesto general del Estado",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Cuestionó la deuda con la seguridad social y los recortes sectoriales.",
+        "proyecto": "",
+        "id": "EC:serrano valladares"
+      },
+      {
+        "orador": "Manuel Tapia",
+        "cargo": "legislador",
+        "sobre": "la proforma presupuestaria 2027",
+        "postura": "a favor",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Respaldó la proforma presupuestaria para el ejercicio fiscal 2027.",
+        "proyecto": "",
+        "id": "EC:quintana tapia"
+      },
+      {
+        "orador": "Andrés Castillo",
+        "cargo": "legislador",
+        "sobre": "la gestión del presupuesto y deudas",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Rechazó las críticas sobre los presupuestos de universidades y seguridad social.",
+        "proyecto": "",
+        "id": "EC:castillo maldonado"
+      },
+      {
+        "orador": "Valentina Centeno",
+        "cargo": "legislador",
+        "sobre": "la aprobación de la proforma 2027",
+        "postura": "propone",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Propuso la aprobación de la proforma presupuestaria del Estado.",
+        "proyecto": "",
+        "id": "EC:centeno arteaga"
+      },
+      {
+        "orador": "Cristian Benavides",
+        "cargo": "legislador",
+        "sobre": "la reforma al COTA",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Inició su ponencia sobre la reforma al COTA.",
+        "proyecto": "Ley Reformatoria al COTA",
+        "id": "EC:benavides fuentes"
+      },
+      {
+        "orador": "Cristian Benavides",
+        "cargo": "legislador",
+        "sobre": "reforma al COTAD",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Defendió la propuesta para fortalecer la gobernanza de los gobiernos autónomos descentralizados.",
+        "proyecto": "proyecto de ley reformatorio al COTAD",
+        "id": "EC:benavides fuentes"
+      },
+      {
+        "orador": "Samuel Celerías",
+        "cargo": "legislador",
+        "sobre": "reformas al COTAD",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Respaldó las reformas para mejorar la transparencia y la gestión local.",
+        "proyecto": "proyecto de ley reformatorio al COTAD",
+        "id": "EC:celleri gomez"
+      },
+      {
+        "orador": "Carlos Gavilanes",
+        "cargo": "legislador",
+        "sobre": "modernización de gobiernos locales",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Apoyó la modernización de los gobiernos locales mediante trámites digitales.",
+        "proyecto": "proyecto de ley reformatorio al COTAD",
+        "id": "EC:gavilanez munoz"
+      },
+      {
+        "orador": "Franklin Zamaniego",
+        "cargo": "legislador",
+        "sobre": "regularización de tierras",
+        "postura": "en contra",
+        "tema": "Inmobiliario",
+        "dijo": "Denunció la supresión de artículos sobre regularización de tierras.",
+        "proyecto": "proyecto de ley reformatorio al COTAD",
+        "id": "EC:samaniego maigua"
+      },
+      {
+        "orador": "Jennifer Guillén",
+        "cargo": "legislador",
+        "sobre": "reforma al COTAD",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Respaldó la reforma para mejorar la conectividad y seguridad territorial.",
+        "proyecto": "proyecto de ley reformatorio al COTAD",
+        "id": "EC:guillen rodriguez"
+      },
+      {
+        "orador": "Patricia Núñez",
+        "cargo": "legislador",
+        "sobre": "artículos de regularización",
+        "postura": "en contra",
+        "tema": "Inmobiliario",
+        "dijo": "Expresó preocupación por la retirada de artículos para barrios populares.",
+        "proyecto": "proyecto de ley reformatorio al COTAD",
+        "id": "EC:nunez ramos"
+      },
+      {
+        "orador": "Jennifer Guillén",
+        "cargo": "legislador",
+        "sobre": "Reforma al COTAR",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Respaldó la reforma al COTAR para fortalecer territorios.",
+        "proyecto": "COTAR",
+        "id": "EC:guillen rodriguez"
+      },
+      {
+        "orador": "Patricia Núñez",
+        "cargo": "legislador",
+        "sobre": "Reforma al COTAR",
+        "postura": "en contra",
+        "tema": "Otros",
+        "dijo": "Cuestionó la eliminación de artículos clave en la reforma.",
+        "proyecto": "COTAR",
+        "id": "EC:nunez ramos"
+      },
+      {
+        "orador": "Javier Lazo",
+        "cargo": "legislador",
+        "sobre": "Reforma al COTAR",
+        "postura": "en contra",
+        "tema": "Otros",
+        "dijo": "Denunció la falta de transparencia en el trámite.",
+        "proyecto": "COTAR",
+        "id": null
+      },
+      {
+        "orador": "Milton Aguas",
+        "cargo": "legislador",
+        "sobre": "Reforma al COTAR",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Defendió la modernización tecnológica de los gobiernos locales.",
+        "proyecto": "COTAR",
+        "id": "EC:aguas flores"
+      },
+      {
+        "orador": "Pablo Jurado",
+        "cargo": "legislador",
+        "sobre": "Reforma al COTAR",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Respaldó el trabajo realizado por la comisión.",
+        "proyecto": "COTAR",
+        "id": "EC:jurado moreno"
+      },
+      {
+        "orador": "Gustavo Mateus",
+        "cargo": "legislador",
+        "sobre": "Reforma al COTAR",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció riesgos de persecución política en la reforma.",
+        "proyecto": "COTAR",
+        "id": "EC:mateus acosta"
+      },
+      {
+        "orador": "Sergio Peña",
+        "cargo": "legislador",
+        "sobre": "Reforma al COTAR",
+        "postura": "a favor",
+        "tema": "Trabajo",
+        "dijo": "Respaldó la contratación de mano de obra local.",
+        "proyecto": "COTAR",
+        "id": "EC:pena veloz"
+      },
+      {
+        "orador": "Sergio Peña",
+        "cargo": "legislador",
+        "sobre": "Reforma al COAT",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Defendió la reforma al COAT para regular la ausencia de autoridades.",
+        "proyecto": "COAT",
+        "id": "EC:pena veloz"
+      },
+      {
+        "orador": "Cristian Benavides",
+        "cargo": "legislador",
+        "sobre": "Aprobación de la reforma al COAT",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso la aprobación íntegra del proyecto COAT.",
+        "proyecto": "COAT",
+        "id": "EC:benavides fuentes"
+      },
+      {
+        "orador": "Yahaira Urresta",
+        "cargo": "legislador",
+        "sobre": "Fiscalización del caso asfalto de oro",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso fiscalizar la contratación pública de la EMOP.",
+        "proyecto": "",
+        "id": "EC:urresta guzman"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=UlYF5A7ZlGE"
   }
 }
