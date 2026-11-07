@@ -3966,5 +3966,84 @@
       }
     ],
     "url": "https://www.facebook.com/watch/?v=2117123748914196"
+  },
+  "fb_1870674547416936": {
+    "fecha": "2026-11-06",
+    "organo": "Comisión de Seguridad Integral",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Machado",
+        "cargo": "legislador",
+        "sobre": "Informe de minoría sobre extorsión",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Pidió que el pleno conozca el informe de minoría.",
+        "proyecto": "",
+        "id": "EC:machado clavijo"
+      },
+      {
+        "orador": "Levy",
+        "cargo": "legislador",
+        "sobre": "Reforma de penas en la Ley Antimafias",
+        "postura": "con observaciones",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso actualizar las penas en la Ley Antimafias.",
+        "proyecto": "Ley Antimafias",
+        "id": null
+      },
+      {
+        "orador": "Noriega",
+        "cargo": "legislador",
+        "sobre": "Informe de minoría sobre crimen organizado",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso un informe de minoría para combatir el crimen organizado.",
+        "proyecto": "Ley Antimafias",
+        "id": "EC:noriega donoso"
+      },
+      {
+        "orador": "Liliana Duran",
+        "cargo": "legislador",
+        "sobre": "Informe de la minoría",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Respaldó el informe de la minoría contra las mafias.",
+        "proyecto": "Ley Antimafias",
+        "id": "EC:duran aguilar"
+      },
+      {
+        "orador": "Carolina Duñas",
+        "cargo": "legislador",
+        "sobre": "Moción para aprobar el informe",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso aprobar el informe con diversas observaciones.",
+        "proyecto": "Ley Antimafias",
+        "id": "EC:duenas palma"
+      },
+      {
+        "orador": "Noriega",
+        "cargo": "legislador",
+        "sobre": "Observaciones de la legisladora Yumbay",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Informó que su informe no incluye las observaciones de Yumbay.",
+        "proyecto": "Ley Antimafias",
+        "id": "EC:noriega donoso"
+      },
+      {
+        "orador": "Yumbay",
+        "cargo": "legislador",
+        "sobre": "Inconstitucionalidad del proyecto de ley",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Denunció que no se consideraron sus observaciones constitucionales.",
+        "proyecto": "Ley Antimafias",
+        "id": "EC:yumbay yallico"
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1870674547416936"
   }
 }
