@@ -3919,5 +3919,52 @@
     "v": 4,
     "dichos": [],
     "url": "https://www.facebook.com/watch/?v=1144582734724066"
+  },
+  "fb_1810084346782319": {
+    "fecha": "2026-11-06",
+    "organo": "Comisión de Relaciones Internacionales",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [],
+    "url": "https://www.facebook.com/watch/?v=1810084346782319"
+  },
+  "fb_2117123748914196": {
+    "fecha": "2026-11-06",
+    "organo": "Comisión de Soberanía Alimentaria",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "María Auxiliadora Briones",
+        "cargo": "invitado",
+        "sobre": "Proyecto de Ley de Extensión Rural",
+        "postura": "comenta",
+        "tema": "Agricultura",
+        "dijo": "Explicó la importancia de la investigación para la seguridad alimentaria.",
+        "proyecto": "Proyecto de Ley Reformatoria de la Red Latinoamericana de Servicios de Extensión Rural",
+        "id": null
+      },
+      {
+        "orador": "Baes",
+        "cargo": "legislador",
+        "sobre": "Propuestas ante el cambio climático",
+        "postura": "pregunta",
+        "tema": "Ambiente",
+        "dijo": "Preguntó por las propuestas para enfrentar el cambio climático.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "María Auxiliadora Briones",
+        "cargo": "invitado",
+        "sobre": "Adaptación de cultivos al cambio climático",
+        "postura": "comenta",
+        "tema": "Agricultura",
+        "dijo": "Mencionó el uso de variedades de secano ante la sequía.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=2117123748914196"
   }
 }
