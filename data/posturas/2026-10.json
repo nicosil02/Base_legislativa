@@ -361,5 +361,282 @@
     "v": 4,
     "dichos": [],
     "url": "https://www.youtube.com/watch?v=cEnzueyjs5Q"
+  },
+  "fb_1106171578790944": {
+    "fecha": "2026-10-31",
+    "organo": "Comisión de Seguridad Integral",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Albresta",
+        "cargo": "legislador",
+        "sobre": "Reforma a la ley de fuerzas armadas",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Respaldó la reforma para fortalecer la seguridad jurídica militar.",
+        "proyecto": "Ley de personal y disciplina de las fuerzas armadas",
+        "id": null
+      },
+      {
+        "orador": "Gerardo Machado",
+        "cargo": "legislador",
+        "sobre": "Observaciones al proyecto de ley militar",
+        "postura": "con observaciones",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Cuestionó los criterios de ascensos y el régimen disciplinario.",
+        "proyecto": "Ley de personal y disciplina de las fuerzas armadas",
+        "id": "EC:machado clavijo"
+      },
+      {
+        "orador": "Inés Dalarcon",
+        "cargo": "legislador",
+        "sobre": "Consulta sobre las observaciones del legislador",
+        "postura": "pregunta",
+        "tema": "Otros",
+        "dijo": "Preguntó si las observaciones fueron enviadas por escrito.",
+        "proyecto": "Ley de personal y disciplina de las fuerzas armadas",
+        "id": "EC:alarcon bueno"
+      },
+      {
+        "orador": "Asesora de la comisión",
+        "cargo": "invitado",
+        "sobre": "Explicación técnica sobre el artículo 3",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Informó sobre las observaciones técnicas al artículo 3.",
+        "proyecto": "Ley de personal y disciplina de las fuerzas armadas",
+        "id": null
+      },
+      {
+        "orador": "Gerardo Machado",
+        "cargo": "legislador",
+        "sobre": "Comparecencias de especialistas en la reforma",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso invitar a especialistas para ampliar la discusión legislativa.",
+        "proyecto": "Ley de personal y disciplina de las FF.AA.",
+        "id": "EC:machado clavijo"
+      },
+      {
+        "orador": "Gerardo Machado",
+        "cargo": "legislador",
+        "sobre": "Observaciones a los artículos 3 y 19",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Informó que sus observaciones fueron para los artículos 3 y 19.",
+        "proyecto": "Ley de personal y disciplina de las FF.AA.",
+        "id": "EC:machado clavijo"
+      },
+      {
+        "orador": "Asesora de la comisión",
+        "cargo": "invitado",
+        "sobre": "Criterios de ascensos y responsabilidad militar",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Informó sobre los cambios en ascensos y responsabilidad disciplinaria.",
+        "proyecto": "Ley de personal y disciplina de las FF.AA.",
+        "id": null
+      },
+      {
+        "orador": "Gerardo Machado",
+        "cargo": "legislador",
+        "sobre": "Explicación de la asesora",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Respaldó la claridad de la explicación técnica recibida.",
+        "proyecto": "",
+        "id": "EC:machado clavijo"
+      },
+      {
+        "orador": "Yahair Estefanía Urresta Guzmán",
+        "cargo": "legislador",
+        "sobre": "Reconsideración de la votación del informe",
+        "postura": "propone",
+        "tema": "Políticay control político",
+        "dijo": "Pidió la reconsideración de la votación del informe.",
+        "proyecto": "Ley de personal y disciplina de las FF.AA.",
+        "id": "EC:urresta guzman"
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1106171578790944"
+  },
+  "8lRpH6p4htU": {
+    "fecha": "2026-10-30",
+    "organo": "Comisión de Salud",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Lady Sine",
+        "cargo": "ministro o autoridad",
+        "sobre": "actualización de registros de sustancias",
+        "postura": "comenta",
+        "tema": "Farma",
+        "dijo": "Informó sobre la actualización de los registros sanitarios de sustancias.",
+        "proyecto": "Ley 31014",
+        "id": null
+      },
+      {
+        "orador": "Juan Rosario",
+        "cargo": "invitado",
+        "sobre": "proyecto de ley de medicina estética",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Rechazó la propuesta por vulnerar el derecho a la salud.",
+        "proyecto": "Ley 31014",
+        "id": null
+      },
+      {
+        "orador": "Emerson Chávez",
+        "cargo": "invitado",
+        "sobre": "alternativas para la propuesta legislativa",
+        "postura": "pregunta",
+        "tema": "Salud",
+        "dijo": "Preguntó qué alternativas existen para resolver el problema público.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Osvino Maraví",
+        "cargo": "invitado",
+        "sobre": "riesgos de procedimientos estéticos",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Denunció el aumento de complicaciones por tratamientos estéticos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Fernando Neira",
+        "cargo": "invitado",
+        "sobre": "peligros de las sustancias de relleno",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Denunció los riesgos que generan las sustancias de relleno.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Rosana Girón",
+        "cargo": "invitado",
+        "sobre": "Complicaciones por sustancias modelantes",
+        "postura": "a favor",
+        "tema": "Salud",
+        "dijo": "Expuso las complicaciones médicas causadas por el uso de biopolímeros.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "María Luiz Yauri Rimachi",
+        "cargo": "legislador",
+        "sobre": "Normativa de sustancias modelantes",
+        "postura": "a favor",
+        "tema": "Salud",
+        "dijo": "Respaldó la revisión de la normativa para evitar la mala praxis.",
+        "proyecto": "",
+        "id": "senado:yauri tunque"
+      },
+      {
+        "orador": "Mervi Benavides Mendoza",
+        "cargo": "invitado",
+        "sobre": "Impacto en la Ley Universitaria",
+        "postura": "con observaciones",
+        "tema": "Educación",
+        "dijo": "Advirtió sobre el impacto en la categoría de estudios universitarios.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Joana Bernedo",
+        "cargo": "invitado",
+        "sobre": "Certificación en sustancias modelantes",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Propuso una certificación para procedimientos no quirúrgicos con sustancias reabsorbibles.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Vladimir Medina Victorio",
+        "cargo": "invitado",
+        "sobre": "Regulación de la medicina estética",
+        "postura": "a favor",
+        "tema": "Salud",
+        "dijo": "Defendió la necesidad de regular la medicina estética para evitar la informalidad.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=8lRpH6p4htU"
+  },
+  "W6-prMhAZNc": {
+    "fecha": "2026-10-30",
+    "organo": "Comisión de Seguimiento Legislativo",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Meneses Crespin",
+        "cargo": "legislador",
+        "sobre": "Informe de gestión de la comisión",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Presentó el informe de gestión del primer trimestre de la comisión.",
+        "proyecto": "",
+        "id": "diputados:meneses crispin"
+      },
+      {
+        "orador": "Kerke",
+        "cargo": "legislador",
+        "sobre": "Estado de la reglamentación de las leyes",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Solicitó información sobre el estado de reglamentación de las leyes.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Camargo Porta",
+        "cargo": "legislador",
+        "sobre": "Informe de gestión de la comisión",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Felicitó a la comisión por haber cumplido sus metas.",
+        "proyecto": "",
+        "id": "diputados:camargo porta"
+      },
+      {
+        "orador": "Pinoza",
+        "cargo": "legislador",
+        "sobre": "Leyes pendientes de reglamentación",
+        "postura": "pregunta",
+        "tema": "Justicia",
+        "dijo": "Consultó sobre el compromiso de las instituciones con las leyes.",
+        "proyecto": "",
+        "id": "diputados:espinoza huillca"
+      },
+      {
+        "orador": "Meneses Crespin",
+        "cargo": "legislador",
+        "sobre": "Distribución de leyes por sectores",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Detalló la cantidad de leyes pendientes por cada sector ministerial.",
+        "proyecto": "",
+        "id": "diputados:meneses crispin"
+      },
+      {
+        "orador": "Kerke",
+        "cargo": "legislador",
+        "sobre": "Citación de responsables de reglamentación",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Propuso citar a los responsables para explicar el retraso reglamentario.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=W6-prMhAZNc"
   }
 }
