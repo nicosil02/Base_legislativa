@@ -43,13 +43,14 @@ def _tablas(conn: sqlite3.Connection, esquema: str = "main") -> list[str]:
         f"SELECT name FROM {esquema}.sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'")]
 
 
-def _copiar_tabla(conn: sqlite3.Connection, desde: str, tabla: str) -> None:
-    """Crea `tabla` (con indices) en main a partir del esquema `desde` y copia las filas."""
+def _copiar_tabla(conn: sqlite3.Connection, desde: str, tabla: str, donde: str = "") -> None:
+    """Crea `tabla` (con indices) en main a partir del esquema `desde` y copia
+    las filas (solo las que cumplen `donde`, si se da)."""
     for (sql,) in conn.execute(
             f"SELECT sql FROM {desde}.sqlite_master WHERE tbl_name=? AND sql IS NOT NULL "
             f"ORDER BY type='index'", (tabla,)):
         conn.execute(sql)
-    conn.execute(f'INSERT INTO main."{tabla}" SELECT * FROM {desde}."{tabla}"')
+    conn.execute(f'INSERT INTO main."{tabla}" SELECT * FROM {desde}."{tabla}"' + (f" WHERE {donde}" if donde else ""))
 
 
 def extraer(origen: Path, parte: str, salida: Path) -> None:
@@ -77,11 +78,21 @@ def extraer(origen: Path, parte: str, salida: Path) -> None:
     conn.close()
 
 
-def armar(destino: Path, partes: dict[str, Path]) -> None:
+# La web solo lee el texto de TV de las menciones recientes (vistas.py, 14
+# dias) y tv_vistos.texto ya pasa los 200 MB: la app arma sin el resto, que
+# en Streamlit Cloud la llevaba a "over resource limits" (2026-11-07).
+SOLO_WEB = {"tv_vistos": "video_id IN (SELECT video_id FROM p.tv_menciones "
+                         "WHERE first_seen_at >= datetime('now', '-30 days'))"}
+
+
+def armar(destino: Path, partes: dict[str, Path], para_web: bool = False) -> None:
     """Base completa en `destino` = base + las otras partes. Atomico: se
-    escribe al lado y se reemplaza (la app puede estar leyendo)."""
+    escribe al lado y se reemplaza (la app puede estar leyendo).
+    para_web: copia solo las filas de SOLO_WEB y consume las partes (mueve la
+    base y borra cada parte al usarla) para no tener todo dos veces en disco."""
+    donde = SOLO_WEB if para_web else {}
     tmp = destino.with_name(destino.name + ".armando")
-    shutil.copyfile(partes["base"], tmp)
+    (shutil.move if para_web else shutil.copyfile)(partes["base"], tmp)
     conn = sqlite3.connect(tmp)
     for parte, path in partes.items():
         if parte == "base" or not path.exists():
@@ -89,9 +100,11 @@ def armar(destino: Path, partes: dict[str, Path]) -> None:
         conn.execute("ATTACH DATABASE ? AS p", (str(path),))
         for t in _tablas(conn, "p"):
             conn.execute(f'DROP TABLE IF EXISTS main."{t}"')
-            _copiar_tabla(conn, "p", t)
+            _copiar_tabla(conn, "p", t, donde.get(t, ""))
         conn.commit()
         conn.execute("DETACH DATABASE p")
+        if para_web:
+            path.unlink()
     conn.close()
     tmp.replace(destino)
 

@@ -268,7 +268,7 @@ def _bootstrap_dbs_impl():
                         if gz.exists():
                             sueltas[p] = Path(tmpdir) / gz.with_suffix("").name
                             _descomprimir_atomico(gz, sueltas[p])
-                    partes.armar(pe_db, sueltas)
+                    partes.armar(pe_db, sueltas, para_web=True)
                 print(f"[bootstrap] proyectos.db armada desde {list(sueltas)} ({motivos[0]})")
             except Exception as e:
                 print(f"[bootstrap] error armando PE DB: {e}")
