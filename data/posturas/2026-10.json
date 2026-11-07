@@ -21529,5 +21529,462 @@
       }
     ],
     "url": "https://www.facebook.com/watch/?v=1788678658920501"
+  },
+  "fb_2308694766598677": {
+    "fecha": "2026-10-16",
+    "organo": "Comisión de Régimen Económico",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Gustavo Pérez",
+        "cargo": "invitado",
+        "sobre": "Explicación del informe presupuestario",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Informó sobre el proceso de elaboración del informe presupuestario.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Liliana Durán",
+        "cargo": "legislador",
+        "sobre": "Informe de ejecución presupuestaria",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Denunció la falta de ministros y la inconsistencia de datos.",
+        "proyecto": "",
+        "id": "EC:duran aguilar"
+      },
+      {
+        "orador": "Alemán",
+        "cargo": "legislador",
+        "sobre": "Ejecución del presupuesto estatal",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Cuestionó la veracidad de la ejecución presupuestaria reportada.",
+        "proyecto": "",
+        "id": "EC:aleman marmol"
+      },
+      {
+        "orador": "María del Cisna Molina Coro",
+        "cargo": "legislador",
+        "sobre": "Aprobación del informe presupuestario",
+        "postura": "propone",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Propuso la aprobación del informe de ejecución presupuestaria.",
+        "proyecto": "",
+        "id": "EC:molina coro"
+      },
+      {
+        "orador": "Boye",
+        "cargo": "legislador",
+        "sobre": "Análisis técnico del informe",
+        "postura": "con observaciones",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Cuestionó la metodología y la consistencia de las cifras.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=2308694766598677"
+  },
+  "F_GAByuRCYY": {
+    "fecha": "2026-10-15",
+    "organo": "Comisión de Agraria",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Walkeys",
+        "cargo": "legislador",
+        "sobre": "prevención de incendios forestales",
+        "postura": "propone",
+        "tema": "Ambiente",
+        "dijo": "Propuso un proyecto institucional para evitar los incendios forestales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Milagros Andalus",
+        "cargo": "legislador",
+        "sobre": "mitigación del cambio climático",
+        "postura": "propone",
+        "tema": "Ambiente",
+        "dijo": "Propuso trabajar en conjunto para enfrentar el cambio climático.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Miguel Guamón",
+        "cargo": "legislador",
+        "sobre": "licitaciones de puntos críticos",
+        "postura": "pregunta",
+        "tema": "Infraestructura",
+        "dijo": "Preguntó sobre la combinación de licitaciones para puntos críticos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Vera",
+        "cargo": "legislador",
+        "sobre": "gestión de puntos críticos",
+        "postura": "propone",
+        "tema": "Infraestructura",
+        "dijo": "Pidió realizar recomendaciones sobre los puntos críticos de lluvia.",
+        "proyecto": "",
+        "id": "diputados:santana vera"
+      },
+      {
+        "orador": "Saúl Durán",
+        "cargo": "invitado",
+        "sobre": "gestión de las juntas de usuarios",
+        "postura": "en contra",
+        "tema": "Agricultura",
+        "dijo": "Denunció la mala comunicación con la Autoridad Nacional del Agua.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Carlos Serrano Sánchez",
+        "cargo": "legislador",
+        "sobre": "titulación de tierras",
+        "postura": "comenta",
+        "tema": "Agricultura",
+        "dijo": "Comentó la importancia de la titulación para pequeños agricultores.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "López Gancho",
+        "cargo": "legislador",
+        "sobre": "financiamiento de infraestructura",
+        "postura": "pregunta",
+        "tema": "Infraestructura",
+        "dijo": "Preguntó sobre el financiamiento para las brechas de infraestructura.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "María Silvonín",
+        "cargo": "legislador",
+        "sobre": "consumo de agua",
+        "postura": "pregunta",
+        "tema": "Agricultura",
+        "dijo": "Preguntó sobre el consumo de agua de las grandes empresas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Víctor Raúl Chundratá",
+        "cargo": "invitado",
+        "sobre": "Protección de pequeños productores",
+        "postura": "pregunta",
+        "tema": "Agricultura",
+        "dijo": "Pidió información sobre las medidas para proteger a los productores.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Presidente de la Junta Nacional de Usuarios",
+        "cargo": "invitado",
+        "sobre": "Situación de Agrobanco",
+        "postura": "comenta",
+        "tema": "Banca",
+        "dijo": "Informó sobre la situación de los recursos de Agrobanco.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Percil Medina",
+        "cargo": "autoridad",
+        "sobre": "Gestión financiera de Agrobanco",
+        "postura": "comenta",
+        "tema": "Banca",
+        "dijo": "Informó sobre el récord de utilidades y la baja mora.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Rafael Célez",
+        "cargo": "legislador",
+        "sobre": "Apoyo presupuestal para agricultores",
+        "postura": "pregunta",
+        "tema": "Banca",
+        "dijo": "Preguntó sobre las acciones presupuestales ante la falta de capital.",
+        "proyecto": "",
+        "id": "diputados:ticlla rafael"
+      },
+      {
+        "orador": "Diputado",
+        "cargo": "legislador",
+        "sobre": "Administración de recursos de Agrobanco",
+        "postura": "propone",
+        "tema": "Banca",
+        "dijo": "Propuso que la administración de recursos sea gestionada por Agrobanco.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Diputado",
+        "cargo": "legislador",
+        "sobre": "Reducción de tasas de interés",
+        "postura": "propone",
+        "tema": "Banca",
+        "dijo": "Propuso reducir la tasa de interés para los productores.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Diputado",
+        "cargo": "legislador",
+        "sobre": "Proyecto multipartidario para Agrobanco",
+        "postura": "propone",
+        "tema": "Banca",
+        "dijo": "Propuso la creación de un proyecto multipartidario para Agrobanco.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Diputado",
+        "cargo": "legislador",
+        "sobre": "Ley de seguridad alimentaria",
+        "postura": "propone",
+        "tema": "Comercio",
+        "dijo": "Propuso crear una ley de seguridad alimentaria frente a importaciones.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=F_GAByuRCYY"
+  },
+  "R5cUYC-e7dk": {
+    "fecha": "2026-10-15",
+    "organo": "Pleno de la Asamblea",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Jorge Chamba",
+        "cargo": "legislador",
+        "sobre": "Ley infancia segura",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Defendió la Ley Infancia Segura en su primer debate.",
+        "proyecto": "Ley infancia segura",
+        "id": "EC:chamba cabanilla"
+      },
+      {
+        "orador": "Luis García",
+        "cargo": "legislador",
+        "sobre": "proyecto Quito Páia",
+        "postura": "propone",
+        "tema": "Construcción",
+        "dijo": "Propuso incluir el análisis del proyecto Quito Páia en la agenda.",
+        "proyecto": "",
+        "id": "EC:garcia velasquez"
+      },
+      {
+        "orador": "Nátaly Farinango",
+        "cargo": "legislador",
+        "sobre": "programas de apoyo estudiantil",
+        "postura": "propone",
+        "tema": "Educación",
+        "dijo": "Propuso analizar los resultados de los programas de becas.",
+        "proyecto": "",
+        "id": "EC:farinango delgado"
+      },
+      {
+        "orador": "Milton Aguas",
+        "cargo": "legislador",
+        "sobre": "programa de crédito 7x7",
+        "postura": "propone",
+        "tema": "Agricultura",
+        "dijo": "Pidió conocer las acciones del programa de crédito 7x7.",
+        "proyecto": "",
+        "id": "EC:aguas flores"
+      },
+      {
+        "orador": "Rosa María Cisalima",
+        "cargo": "invitado",
+        "sobre": "reconocimiento a mujeres rurales",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Respaldó la importancia del trabajo de las mujeres rurales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "José Betjaramillo",
+        "cargo": "legislador",
+        "sobre": "condecoración Vicente Rocafuerte",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Respaldó la importancia de la literatura para la nación.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Gerardo Machado",
+        "cargo": "legislador",
+        "sobre": "Día Nacional de la Literatura",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Propuso crear el Día Nacional de la Literatura.",
+        "proyecto": "",
+        "id": "EC:machado clavijo"
+      },
+      {
+        "orador": "Gerardo Machado",
+        "cargo": "legislador",
+        "sobre": "Resolución del Día de la Literatura",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Propuso reformar la ley orgánica para crear días nacionales.",
+        "proyecto": "",
+        "id": "EC:machado clavijo"
+      },
+      {
+        "orador": "Yosefe de Jaramillo",
+        "cargo": "legislador",
+        "sobre": "Resolución del Día de la Literatura",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Defendió la resolución del Día de la Literatura.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Miguel Salazar",
+        "cargo": "invitado",
+        "sobre": "Ley de Infancia Segura",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Denunció la explotación de menores mediante inteligencia artificial.",
+        "proyecto": "Ley de Infancia Segura",
+        "id": null
+      },
+      {
+        "orador": "Francisco Larrea",
+        "cargo": "ministro o autoridad",
+        "sobre": "Ley de Infancia Segura",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Informó sobre el análisis técnico de la ley.",
+        "proyecto": "Ley de Infancia Segura",
+        "id": null
+      },
+      {
+        "orador": "Diana Hakome",
+        "cargo": "legislador",
+        "sobre": "Ley de Infancia Segura",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso medidas para combatir el abuso sexual infantil.",
+        "proyecto": "Ley de Infancia Segura",
+        "id": null
+      },
+      {
+        "orador": "Jorge Chamba",
+        "cargo": "legislador",
+        "sobre": "Ley de Infancia Segura",
+        "postura": "con observaciones",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Pidió que la ley sea una política pública.",
+        "proyecto": "Ley de Infancia Segura",
+        "id": "EC:chamba cabanilla"
+      },
+      {
+        "orador": "Noemí Cabrera",
+        "cargo": "legislador",
+        "sobre": "Proyecto Ley Infancia Segura",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Propuso establecer indicadores verificables y mecanismos de corrección en la ley.",
+        "proyecto": "Ley Infancia Segura",
+        "id": "EC:cabrera chacon"
+      },
+      {
+        "orador": "Diana Hakome",
+        "cargo": "legislador",
+        "sobre": "Sanciones en el COIP",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Cuestionó que el COIP no defina sanciones para delitos sexuales.",
+        "proyecto": "Ley Infancia Segura",
+        "id": null
+      },
+      {
+        "orador": "Ricardo Patiño",
+        "cargo": "legislador",
+        "sobre": "Proyecto Ley Infancia Segura",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Denunció la falta de garantías operativas en el proyecto.",
+        "proyecto": "Ley Infancia Segura",
+        "id": "EC:patino aroca"
+      },
+      {
+        "orador": "Dina Farinango",
+        "cargo": "legislador",
+        "sobre": "Proyecto de protección infantil",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Pidió revisar la unidad de materia y crear procedimientos judiciales.",
+        "proyecto": "Ley Infancia Segura",
+        "id": "EC:farinango quilumbaquin"
+      },
+      {
+        "orador": "Luigye García",
+        "cargo": "legislador",
+        "sobre": "Obra Quito Pía",
+        "postura": "en contra",
+        "tema": "Infraestructura",
+        "dijo": "Denunció la falta de planificación en el proyecto Quito Pía.",
+        "proyecto": "Quito Pía",
+        "id": "EC:garcia velasquez"
+      },
+      {
+        "orador": "Viviana Veloz",
+        "cargo": "legislador",
+        "sobre": "Fiscalización de Quito Pía",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Señaló que la fiscalización actual no es efectiva para Quito.",
+        "proyecto": "Quito Pía",
+        "id": "EC:veloz ramirez"
+      },
+      {
+        "orador": "Javier Ordoñez",
+        "cargo": "legislador",
+        "sobre": "Contratación de Quito Pía",
+        "postura": "en contra",
+        "tema": "Infraestructura",
+        "dijo": "Denunció irregularidades en la contratación de la obra Quito Pía.",
+        "proyecto": "Quito Pía",
+        "id": "EC:ordonez fuentes"
+      },
+      {
+        "orador": "Andrés Castillo",
+        "cargo": "legislador",
+        "sobre": "Gestión de la ciudad de Quito",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Lamentó el deterioro y la falta de identidad en Quito.",
+        "proyecto": "",
+        "id": "EC:castillo maldonado"
+      },
+      {
+        "orador": "Jorge Chamba",
+        "cargo": "legislador",
+        "sobre": "Proyecto de Ley Infancia Segura",
+        "postura": "a favor",
+        "tema": "Justicia",
+        "dijo": "Defendió el proyecto señalando que el 80% de abusos ocurre en el hogar.",
+        "proyecto": "Ley Infancia Segura",
+        "id": "EC:chamba cabanilla"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=R5cUYC-e7dk"
   }
 }
