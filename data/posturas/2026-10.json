@@ -27293,5 +27293,493 @@
       }
     ],
     "url": "https://www.youtube.com/watch?v=KqEnB2t2Kts"
+  },
+  "uAeYokHjLzA": {
+    "fecha": "2026-10-20",
+    "organo": "Comisión de Educación",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "José Chipana",
+        "cargo": "legislador",
+        "sobre": "Presupuesto para institutos tecnológicos",
+        "postura": "propone",
+        "tema": "Educación",
+        "dijo": "Pidió que el ministro de Educación atienda a institutos de Puno.",
+        "proyecto": "",
+        "id": "senado:chipana chipana"
+      },
+      {
+        "orador": "María Magdalena Seminario Marón",
+        "cargo": "ministro o autoridad",
+        "sobre": "Gestión y objetivos del Ministerio de la Mujer",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Explicó los objetivos estratégicos del Ministerio de la Mujer.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "María Magdalena Seminario Marón",
+        "cargo": "ministro o autoridad",
+        "sobre": "Ejecución presupuestal del Ministerio de la Mujer",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Informó que el noventa y ocho por ciento es gasto corriente.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "María Magdalena Seminario Marón",
+        "cargo": "ministro o autoridad",
+        "sobre": "Riesgos climáticos en centros de atención",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Identificó treinta centros de atención en riesgo por lluvias.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "María Magdalena Seminario Marón",
+        "cargo": "ministro o autoridad",
+        "sobre": "Cifras de feminicidios en el año 2026",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Reportó noventa y seis feminicidios entre enero y agosto.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "María Magdalena Seminario Marón",
+        "cargo": "ministro o autoridad",
+        "sobre": "Gestión y protocolos de protección",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Propuso nuevos protocolos de atención para proteger a la niñez.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Edgar Mancha",
+        "cargo": "legislador",
+        "sobre": "Plazos y presupuesto de la gestión",
+        "postura": "pregunta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Preguntó por los plazos de ejecución y el presupuesto disponible.",
+        "proyecto": "",
+        "id": "senado:mancha pineda"
+      },
+      {
+        "orador": "Delgado",
+        "cargo": "legislador",
+        "sobre": "Causas de la violencia sexual",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Denunció que la violencia es un problema cultural y estructural.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Unifas",
+        "cargo": "legislador",
+        "sobre": "Violencia sexual y hostigamiento universitario",
+        "postura": "pregunta",
+        "tema": "Educación",
+        "dijo": "Preguntó sobre los factores que causan la violencia sexual.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Noriega",
+        "cargo": "legislador",
+        "sobre": "Violencia sexual en el Perú",
+        "postura": "pregunta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Preguntó sobre los factores detrás de la violencia sexual.",
+        "proyecto": "",
+        "id": "senado:noriega reategui"
+      },
+      {
+        "orador": "Noriega",
+        "cargo": "legislador",
+        "sobre": "Hostigamiento sexual en universidades",
+        "postura": "propone",
+        "tema": "Educación",
+        "dijo": "Propuso protección para las comisiones de hostigamiento sexual.",
+        "proyecto": "Ley 30220",
+        "id": "senado:noriega reategui"
+      },
+      {
+        "orador": "Chipana",
+        "cargo": "legislador",
+        "sobre": "Protección de mujeres y niñas en Puno",
+        "postura": "pregunta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Cuestionó la desprotección de mujeres en Puno.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Chipana",
+        "cargo": "legislador",
+        "sobre": "Visita de la ministra a Puno",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Invitó a la ministra a realizar una visita.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ticona",
+        "cargo": "legislador",
+        "sobre": "Prevención de violencia sexual",
+        "postura": "pregunta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Preguntó sobre las acciones de prevención de violencia.",
+        "proyecto": "",
+        "id": "senado:ticona cohaila"
+      },
+      {
+        "orador": "Ticona",
+        "cargo": "legislador",
+        "sobre": "Implementación del programa Gratitud",
+        "postura": "pregunta",
+        "tema": "Otros",
+        "dijo": "Preguntó sobre la implementación del programa Gratitud.",
+        "proyecto": "",
+        "id": "senado:ticona cohaila"
+      },
+      {
+        "orador": "Tapia",
+        "cargo": "legislador",
+        "sobre": "Lucha contra la violencia sexual",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Respaldó la lucha contra la violencia sexual.",
+        "proyecto": "",
+        "id": "senado:tapia bernal"
+      },
+      {
+        "orador": "Bonifaz",
+        "cargo": "legislador",
+        "sobre": "Prohibición del enfoque de género",
+        "postura": "con observaciones",
+        "tema": "Otros",
+        "dijo": "Cuestionó la prohibición del enfoque de género.",
+        "proyecto": "",
+        "id": "senado:bonifaz carmona"
+      },
+      {
+        "orador": "Bonifaz",
+        "cargo": "legislador",
+        "sobre": "Presupuesto para el sistema de justicia",
+        "postura": "con observaciones",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Cuestionó la asignación presupuestal para la justicia.",
+        "proyecto": "",
+        "id": "senado:bonifaz carmona"
+      },
+      {
+        "orador": "Bonifaz",
+        "cargo": "legislador",
+        "sobre": "Educación sexual integral",
+        "postura": "propone",
+        "tema": "Educación",
+        "dijo": "Propuso implementar la educación sexual integral.",
+        "proyecto": "",
+        "id": "senado:bonifaz carmona"
+      },
+      {
+        "orador": "María Magdalena Seminario Marón",
+        "cargo": "ministro o autoridad",
+        "sobre": "Gestión del Ministerio de la Mujer",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Explicó las dificultades de la gestión ministerial.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "María Magdalena Seminario Marón",
+        "cargo": "ministro o autoridad",
+        "sobre": "Transversalidad de la Ley 30364",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Confirmó la transversalidad de la Ley 30364.",
+        "proyecto": "Ley 30364",
+        "id": null
+      },
+      {
+        "orador": "María Magdalena Seminario Marón",
+        "cargo": "ministro o autoridad",
+        "sobre": "Disponibilidad de la línea 100",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Informó sobre la disponibilidad de la línea 100.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "María Magdalena Seminario Marón",
+        "cargo": "ministro o autoridad",
+        "sobre": "Rediseño de centros de atención",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Anunció el rediseño de los centros de atención.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "María Magdalena Seminario Marón",
+        "cargo": "ministro o autoridad",
+        "sobre": "Cumplimiento de la ley de igualdad",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Aclaró que se cumple la ley de igualdad.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "María Magdalena Seminario Marón",
+        "cargo": "ministro o autoridad",
+        "sobre": "Educación sexual integral",
+        "postura": "comenta",
+        "tema": "Educación",
+        "dijo": "Comentó sobre la educación sexual integral.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "María Magdalena Seminario Marón",
+        "cargo": "ministro o autoridad",
+        "sobre": "Servicios de atención en regiones",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Explicó los criterios técnicos para los servicios.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "María Magdalena Seminario Marón",
+        "cargo": "ministro o autoridad",
+        "sobre": "Proyectos de autonomía económica",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Mencionó proyectos para la autonomía económica.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=uAeYokHjLzA"
+  },
+  "EBD0GhqBXhg": {
+    "fecha": "2026-10-20",
+    "organo": "Pleno de la Asamblea",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Lucía Jaramillo",
+        "cargo": "legislador",
+        "sobre": "reforma contra la trata de personas",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Defendió el aumento de penas en la reforma contra la trata.",
+        "proyecto": "Ley contra la trata de personas",
+        "id": "EC:jaramillo zurita lucia"
+      },
+      {
+        "orador": "Edwin Jarrín",
+        "cargo": "legislador",
+        "sobre": "reforma contra la trata de personas",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Respaldó la reforma y pidió fortalecer la Fiscalía General.",
+        "proyecto": "Ley contra la trata de personas",
+        "id": "EC:jarrin rivadeneira"
+      },
+      {
+        "orador": "Adrián Castro",
+        "cargo": "legislador",
+        "sobre": "contratación de conciertos en Azuay",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso fiscalizar la contratación de conciertos en la provincia de Azuay.",
+        "proyecto": "",
+        "id": "EC:castro piedra"
+      },
+      {
+        "orador": "Valentina Centeno",
+        "cargo": "legislador",
+        "sobre": "gestión de agua en Manabí",
+        "postura": "propone",
+        "tema": "Saneamiento",
+        "dijo": "Pidió auditorías por la deficiente gestión del agua en Manabí.",
+        "proyecto": "",
+        "id": "EC:centeno arteaga"
+      },
+      {
+        "orador": "Fernando Jaramillo",
+        "cargo": "legislador",
+        "sobre": "compra de camiones en Quito",
+        "postura": "propone",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Denunció irregularidades en la compra de camiones para Quito.",
+        "proyecto": "",
+        "id": "EC:jaramillo martinez"
+      },
+      {
+        "orador": "Fernando Jaramillo",
+        "cargo": "legislador",
+        "sobre": "adquisición de camiones de basura de Ecopo EP",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Propuso investigar la compra de camiones de basura de Ecopo EP.",
+        "proyecto": "",
+        "id": "EC:jaramillo martinez"
+      },
+      {
+        "orador": "Marco Tapia",
+        "cargo": "invitado",
+        "sobre": "promoción de artesanías de La Suay",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Pidió apoyo para la difusión de las artesanías de su ciudad.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Lucía Jaramillo",
+        "cargo": "legislador",
+        "sobre": "reforma contra la trata de personas",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Defendió la reforma para combatir la trata de personas y el tráfico de migrantes.",
+        "proyecto": "Ley contra la trata de personas",
+        "id": "EC:jaramillo zurita lucia"
+      },
+      {
+        "orador": "Gustavo Mateus",
+        "cargo": "legislador",
+        "sobre": "reforma contra la trata de personas",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Denunció la falta de recursos del gobierno para proteger a las víctimas.",
+        "proyecto": "Ley contra la trata de personas",
+        "id": "EC:mateus acosta"
+      },
+      {
+        "orador": "Graciela Ramírez",
+        "cargo": "legislador",
+        "sobre": "protección de ecuatorianos en el exterior",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso proteger a los ecuatorianos que viven en el extranjero.",
+        "proyecto": "Ley contra la trata de personas",
+        "id": "EC:ramirez chalen"
+      },
+      {
+        "orador": "Paola Cabezas",
+        "cargo": "legislador",
+        "sobre": "reparación para víctimas de Furucagua",
+        "postura": "a favor",
+        "tema": "Justicia",
+        "dijo": "Pidió justicia y reparación para las víctimas de explotación laboral.",
+        "proyecto": "",
+        "id": "EC:cabezas castillo"
+      },
+      {
+        "orador": "Paola Cabezas",
+        "cargo": "legislador",
+        "sobre": "Ley contra la trata de personas",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Defendió la ley pero pidió fortalecer el control laboral.",
+        "proyecto": "Ley contra la trata de personas",
+        "id": "EC:cabezas castillo"
+      },
+      {
+        "orador": "Edwin Jarrín",
+        "cargo": "legislador",
+        "sobre": "Aumento de penas por trata de personas",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Respaldó el aumento de penas por delitos de trata.",
+        "proyecto": "Ley contra la trata de personas",
+        "id": "EC:jarrin rivadeneira"
+      },
+      {
+        "orador": "Javier Ordóñez",
+        "cargo": "legislador",
+        "sobre": "Ley contra la trata de personas",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Defendió la redacción técnica de la ley propuesta.",
+        "proyecto": "Ley contra la trata de personas",
+        "id": "EC:ordonez fuentes"
+      },
+      {
+        "orador": "Lucía Jaramillo",
+        "cargo": "legislador",
+        "sobre": "Aprobación del proyecto de ley unificado",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso aprobar el informe para el segundo debate.",
+        "proyecto": "Ley contra la trata de personas",
+        "id": "EC:jaramillo zurita lucia"
+      },
+      {
+        "orador": "Adrián Castro",
+        "cargo": "legislador",
+        "sobre": "Contrataciones de artistas en Cuenca",
+        "postura": "propone",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Denunció irregularidades en la contratación de artistas locales.",
+        "proyecto": "",
+        "id": "EC:castro piedra"
+      },
+      {
+        "orador": "Adrián Castro",
+        "cargo": "legislador",
+        "sobre": "Irregularidades en contratos de Cuenca",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso investigar irregularidades en contratos de Cuenca.",
+        "proyecto": "",
+        "id": "EC:castro piedra"
+      },
+      {
+        "orador": "Javier Lazo",
+        "cargo": "legislador",
+        "sobre": "Comportamiento de otros asambleístas",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó el comportamiento de otros asambleístas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Jorge Chamba",
+        "cargo": "legislador",
+        "sobre": "Insultos en la sesión",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció los insultos recibidos de un colega.",
+        "proyecto": "",
+        "id": "EC:chamba cabanilla"
+      },
+      {
+        "orador": "Javier Ordóñez",
+        "cargo": "legislador",
+        "sobre": "Compra de camiones para EMCEO",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Denunció procesos amañados en la compra de camiones.",
+        "proyecto": "",
+        "id": "EC:ordonez fuentes"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=EBD0GhqBXhg"
   }
 }
