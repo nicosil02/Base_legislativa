@@ -285,5 +285,81 @@
       }
     ],
     "url": "https://www.youtube.com/watch?v=l1zNB5Gj-a8"
+  },
+  "Eg1EgY1LI20": {
+    "fecha": "2026-10-06",
+    "organo": "Pleno de la Asamblea",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Verónica Iniguez",
+        "cargo": "legislador",
+        "sobre": "Empoderamiento de mujeres rurales",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Defendió la aprobación del proyecto de ley para mujeres rurales.",
+        "proyecto": "Ley de mujeres rurales",
+        "id": "EC:iniguez gallardo"
+      },
+      {
+        "orador": "Mónica Salazar",
+        "cargo": "legislador",
+        "sobre": "Empoderamiento de mujeres rurales",
+        "postura": "en contra",
+        "tema": "Otros",
+        "dijo": "Rechazó el proyecto por ser inconstitucional e inexecutable.",
+        "proyecto": "Ley de mujeres rurales",
+        "id": "EC:salazar hidalgo"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=Eg1EgY1LI20"
+  },
+  "fLpsqihx33U": {
+    "fecha": "2026-10-06",
+    "organo": "Pleno de la Asamblea",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Natalia Farinango",
+        "cargo": "legislador",
+        "sobre": "reforma al código tributario",
+        "postura": "a favor",
+        "tema": "Tributos",
+        "dijo": "Defendió la reforma al código tributario para actualizar normas desde mil novecientos setenta y cinco.",
+        "proyecto": "Ley orgánica reformatoria al código tributario",
+        "id": "EC:farinango delgado"
+      },
+      {
+        "orador": "Mónica Salazar",
+        "cargo": "legislador",
+        "sobre": "derechos de mujeres rurales",
+        "postura": "en contra",
+        "tema": "Otros",
+        "dijo": "Rechazó el proyecto de mujeres rurales por presentar treinta y nueve alertas rojas.",
+        "proyecto": "Ley orgánica para garantizar los derechos y promover el empoderamiento de las mujeres rurales",
+        "id": "EC:salazar hidalgo"
+      },
+      {
+        "orador": "Natalia Farinango",
+        "cargo": "legislador",
+        "sobre": "aprobación de reforma tributaria",
+        "postura": "a favor",
+        "tema": "Tributos",
+        "dijo": "Defendió la aprobación del texto final de la reforma tributaria con veintiuna observaciones.",
+        "proyecto": "Ley orgánica reformatoria al código tributario",
+        "id": "EC:farinango delgado"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=fLpsqihx33U"
+  },
+  "cEnzueyjs5Q": {
+    "fecha": "2026-10-06",
+    "organo": "Comisión de Ética Parlamentaria",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [],
+    "url": "https://www.youtube.com/watch?v=cEnzueyjs5Q"
   }
 }
