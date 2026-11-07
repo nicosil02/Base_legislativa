@@ -22133,5 +22133,562 @@
       }
     ],
     "url": "https://www.facebook.com/watch/?v=1668464268128474"
+  },
+  "fb_1920790218901453": {
+    "fecha": "2026-10-14",
+    "organo": "Comisión de Derecho a la Salud",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Verónica Quintana",
+        "cargo": "invitado",
+        "sobre": "Neurodesarrollo y capacidad de decisión en menores",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Informó sobre la relación entre neurodesarrollo y toma de decisiones.",
+        "proyecto": "Proyecto de la orgánica de la eutanasia",
+        "id": null
+      },
+      {
+        "orador": "Greyshores",
+        "cargo": "legislador",
+        "sobre": "Parámetros de edad para decidir la eutanasia",
+        "postura": "pregunta",
+        "tema": "Salud",
+        "dijo": "Preguntó sobre los parámetros biológicos para la decisión de eutanasia.",
+        "proyecto": "Proyecto de la orgánica de la eutanasia",
+        "id": null
+      },
+      {
+        "orador": "Ani Muñoz",
+        "cargo": "legislador",
+        "sobre": "Requisito de mayoría de edad en la eutanasia",
+        "postura": "pregunta",
+        "tema": "Salud",
+        "dijo": "Cuestionó si la mayoría de edad contraviene derechos constitucionales.",
+        "proyecto": "Proyecto de la orgánica de la eutanasia",
+        "id": "EC:munoz aroca"
+      },
+      {
+        "orador": "Lorena Gutiérrez",
+        "cargo": "invitado",
+        "sobre": "Salvaguardas y definiciones de la eutanasia",
+        "postura": "con observaciones",
+        "tema": "Salud",
+        "dijo": "Propuso mejorar las definiciones de enfermedad y sufrimiento.",
+        "proyecto": "Proyecto de la orgánica de la eutanasia",
+        "id": null
+      },
+      {
+        "orador": "Lorena Gutiérrez",
+        "cargo": "invitado",
+        "sobre": "Requisitos de la ley de eutanasia",
+        "postura": "con observaciones",
+        "tema": "Salud",
+        "dijo": "Sugirió incluir una segunda opinión médica independiente y voluntades anticipadas.",
+        "proyecto": "Ley de eutanasia",
+        "id": null
+      },
+      {
+        "orador": "Lorena Gutiérrez",
+        "cargo": "invitado",
+        "sobre": "Informes psicológicos y psiquiátricos",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Explicó la necesidad de distinguir entre informes psicológicos y psiquiátricos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Boris Andrade",
+        "cargo": "legislador",
+        "sobre": "Situación económica y eutanasia",
+        "postura": "pregunta",
+        "tema": "Salud",
+        "dijo": "Preguntó sobre el impacto de la situación económica en la eutanasia.",
+        "proyecto": "",
+        "id": "EC:mendoza andrade"
+      },
+      {
+        "orador": "Lorena Gutiérrez",
+        "cargo": "invitado",
+        "sobre": "Vulnerabilidad socioeconómica y eutanasia",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Afirmó que la pobreza no debe ser un criterio de elegibilidad.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Eduardo Cahuana",
+        "cargo": "invitado",
+        "sobre": "Competencias de los subsistemas de salud",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Propuso que cada subsistema de salud pueda conformar sus propios comités.",
+        "proyecto": "Ley de eutanasia",
+        "id": null
+      },
+      {
+        "orador": "Boris Andrade",
+        "cargo": "legislador",
+        "sobre": "Rectoría del Ministerio de Salud",
+        "postura": "pregunta",
+        "tema": "Salud",
+        "dijo": "Consultó si la descentralización afectaría la rectoría del Ministerio de Salud.",
+        "proyecto": "",
+        "id": "EC:mendoza andrade"
+      },
+      {
+        "orador": "Eduardo Cahuana",
+        "cargo": "invitado",
+        "sobre": "Rectoría y subsistemas de salud",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Explicó que la rectoría se mantiene mediante la emisión de normativas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Cristina Jácome",
+        "cargo": "legislador",
+        "sobre": "Reglamento de cuidados paliativos",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Denunció la falta de reglamento para la Ley de Cuidados Paliativos.",
+        "proyecto": "",
+        "id": "EC:jacome benitez"
+      },
+      {
+        "orador": "Eduardo Cahuana",
+        "cargo": "invitado",
+        "sobre": "Atención en cuidados paliativos",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Indicó que actualmente existen protocolos para la atención paliativa.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Cristina Agaco May",
+        "cargo": "legislador",
+        "sobre": "Competencia del reglamento de cuidados paliativos",
+        "postura": "pregunta",
+        "tema": "Salud",
+        "dijo": "Preguntó si la competencia del reglamento es de otra instancia.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Eduardo Cahuana",
+        "cargo": "invitado",
+        "sobre": "Necesidad del reglamento de cuidados paliativos",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Confirmó que el reglamento es necesario por disposición legal.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Cristina Agaco May",
+        "cargo": "legislador",
+        "sobre": "Fiscalización de los comités de salud",
+        "postura": "pregunta",
+        "tema": "Salud",
+        "dijo": "Preguntó cómo se fiscalizaría a los comités de los subsistemas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Eduardo Cahuana",
+        "cargo": "invitado",
+        "sobre": "Control de los comités de salud",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Explicó que el Ministerio de Salud puede vigilar mediante la ACESS.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1920790218901453"
+  },
+  "s3EGAcpYP4s": {
+    "fecha": "2026-10-13",
+    "organo": "Comisión de Presupuesto",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Ángel Meneses",
+        "cargo": "legislador",
+        "sobre": "Cuenta General de la República 2025",
+        "postura": "con observaciones",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Propuso agregar precisiones técnicas en las disposiciones complementarias.",
+        "proyecto": "001-2026-2031-CR",
+        "id": "diputados:meneses crispin"
+      },
+      {
+        "orador": "Gustavo Núñez del Arco Mendoza",
+        "cargo": "ministro o autoridad",
+        "sobre": "Cuenta General de la República",
+        "postura": "a favor",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Respaldó la aprobación de la cuenta y el trabajo técnico.",
+        "proyecto": "001-2026-2031-CR",
+        "id": null
+      },
+      {
+        "orador": "Fabián Coquino Riega-Briton",
+        "cargo": "ministro o autoridad",
+        "sobre": "Presupuesto de la región Pasco",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Defendió la gestión y el presupuesto de Pasco.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Juan Luis Chombo",
+        "cargo": "ministro o autoridad",
+        "sobre": "Gestión presupuestal de la región Pasco",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Detalló la evolución del presupuesto de la región Pasco.",
+        "proyecto": "Ley 32732",
+        "id": null
+      },
+      {
+        "orador": "Equipo técnico del Gobierno Regional de Pasco",
+        "cargo": "invitado",
+        "sobre": "Evolución presupuestal de Pasco",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Presentó la distribución presupuestal de la región Pasco.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Funcionario de la fiscalía",
+        "cargo": "invitado",
+        "sobre": "Gestión del Hospital Carrión",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Solicitó mayores inversiones para proyectos de salud.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Afsalón Vázquez Villanueva",
+        "cargo": "legislador",
+        "sobre": "Capacidad de gasto en Pasco",
+        "postura": "pregunta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Cuestionó la baja capacidad de ejecución de Pasco.",
+        "proyecto": "",
+        "id": "senado:vasquez villanueva"
+      },
+      {
+        "orador": "Juan Luis Chombo",
+        "cargo": "ministro o autoridad",
+        "sobre": "Capacidad de gasto en Pasco",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Explicó la gestión del crédito suplementario regional.",
+        "proyecto": "Ley 32732",
+        "id": null
+      },
+      {
+        "orador": "Sosimo Cárdenas Mujica",
+        "cargo": "ministro o autoridad",
+        "sobre": "Recortes presupuestales en Junín",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Denunció los recortes de presupuesto para Junín.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Héctor Guillén Valencia",
+        "cargo": "legislador",
+        "sobre": "Obra de la institución Tupacamarú",
+        "postura": "pregunta",
+        "tema": "Educación",
+        "dijo": "Consultó sobre los retrasos en la obra educativa.",
+        "proyecto": "",
+        "id": "diputados:guillen valencia"
+      },
+      {
+        "orador": "Sosimo Cárdenas Mujica",
+        "cargo": "ministro o autoridad",
+        "sobre": "Gestión de obras en Junín",
+        "postura": "comenta",
+        "tema": "Educación",
+        "dijo": "Aseguró la culminación de diversas obras regionales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Pérsigo Doi Medina",
+        "cargo": "ministro o autoridad",
+        "sobre": "Presupuesto de la región Apurímac",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Sustentó el presupuesto para el año 2027.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Legislador",
+        "cargo": "legislador",
+        "sobre": "Desarrollo de la región Apurímac",
+        "postura": "pregunta",
+        "tema": "Agricultura",
+        "dijo": "Preguntó por el potencial de la región.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Pérsigo Doi Medina",
+        "cargo": "ministro o autoridad",
+        "sobre": "Proyectos en la región Apurímac",
+        "postura": "comenta",
+        "tema": "Agricultura",
+        "dijo": "Informó sobre proyectos de riego y carreteras.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Legislador",
+        "cargo": "legislador",
+        "sobre": "Turismo en la región Apurímac",
+        "postura": "pregunta",
+        "tema": "Otros",
+        "dijo": "Consultó sobre la implementación del turismo regional.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Pérsigo Doi Medina",
+        "cargo": "ministro o autoridad",
+        "sobre": "Turismo en Apurímac",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Detalló los proyectos turísticos de la región.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=s3EGAcpYP4s"
+  },
+  "GTShjieQP9Q": {
+    "fecha": "2026-10-13",
+    "organo": "Pleno de la Asamblea",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Sergio Jesús Peñabelos",
+        "cargo": "legislador",
+        "sobre": "Enjuiciamiento político de David Rosero Minda",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Defendió la validez de las pericias en el juicio político contra David Rosero.",
+        "proyecto": "",
+        "id": "EC:pena veloz"
+      },
+      {
+        "orador": "Sergio Peña",
+        "cargo": "legislador",
+        "sobre": "juicio político contra David Rosero",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Respaldó la existencia de la reunión mediante peritajes especializados.",
+        "proyecto": "",
+        "id": "EC:pena veloz"
+      },
+      {
+        "orador": "David Rosero",
+        "cargo": "ministro o autoridad",
+        "sobre": "juicio político en su contra",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Rechazó las acusaciones por falta de nexo causal.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Carlos Pobel",
+        "cargo": "legislador",
+        "sobre": "veracidad de la metapericia",
+        "postura": "pregunta",
+        "tema": "Justicia",
+        "dijo": "Preguntó sobre la veracidad de la metapericia presentada.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Perito",
+        "cargo": "invitado",
+        "sobre": "cadena de custodia de evidencias",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Denunció la ruptura de la cadena de custodia digital.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "David Rosero",
+        "cargo": "ministro o autoridad",
+        "sobre": "Acusaciones de la asambleísta Peña",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció la falsedad de las acusaciones de la asambleísta Peña.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Edwin Guevara",
+        "cargo": "invitado",
+        "sobre": "Veracidad de las imágenes",
+        "postura": "comenta",
+        "tema": "Tecnología",
+        "dijo": "Explicó que la información descargada no garantiza la integridad de las imágenes.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "David Rosero",
+        "cargo": "ministro o autoridad",
+        "sobre": "Identificación en imágenes",
+        "postura": "en contra",
+        "tema": "Tecnología",
+        "dijo": "Cuestionó la capacidad técnica para identificar personas mediante imágenes.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Edwin Guevara",
+        "cargo": "invitado",
+        "sobre": "Compatibilidad de las imágenes",
+        "postura": "comenta",
+        "tema": "Tecnología",
+        "dijo": "Confirmó que las imágenes son compatibles morfológicamente entre sí.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "David Rosero",
+        "cargo": "ministro o autoridad",
+        "sobre": "Trazabilidad de la evidencia",
+        "postura": "en contra",
+        "tema": "Tecnología",
+        "dijo": "Señaló la falta de metadatos y archivos fuente en la evidencia.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "David Rosero",
+        "cargo": "ministro o autoridad",
+        "sobre": "Itinerario y pruebas de descargo",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Presentó pruebas de GPS y testimonios para corroborar su itinerario.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "David Rosero",
+        "cargo": "ministro o autoridad",
+        "sobre": "Negativa de la postulante Romero",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Informó que la doctora Inés Romero negó haber mantenido reuniones.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Carlos Poveda",
+        "cargo": "invitado",
+        "sobre": "Validez del informe de fiscalización",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Sostuvo que el informe de la comisión carece de eficacia probatoria.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "David Rosero Minda",
+        "cargo": "ministro o autoridad",
+        "sobre": "Juicio político contra el consejero Rosero",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Rechazó las acusaciones por falta de pruebas y de nexo causal.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Sergio Peña",
+        "cargo": "legislador",
+        "sobre": "Juicio político contra el consejero Rosero",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Denunció la existencia de un conflicto de interés del consejero.",
+        "proyecto": "",
+        "id": "EC:pena veloz"
+      },
+      {
+        "orador": "Luigi García",
+        "cargo": "legislador",
+        "sobre": "Informe de fiscalización del juicio político",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Respaldó el informe de la comisión y la censura del funcionario.",
+        "proyecto": "",
+        "id": "EC:garcia velasquez"
+      },
+      {
+        "orador": "María Paula Villacresa",
+        "cargo": "legislador",
+        "sobre": "Juicio político contra el consejero Rosero",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó la transparencia en la selección del fiscal general.",
+        "proyecto": "",
+        "id": "EC:villacreses herrera"
+      },
+      {
+        "orador": "Amable Chica",
+        "cargo": "legislador",
+        "sobre": "Juicio político contra el consejero Rosero",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Calificó de amorfo el informe de la comisión de fiscalización.",
+        "proyecto": "",
+        "id": "EC:chica valencia"
+      },
+      {
+        "orador": "Victoria Desintonio",
+        "cargo": "legislador",
+        "sobre": "Juicio político a David Rosero",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó la motivación política del juicio contra David Rosero.",
+        "proyecto": "",
+        "id": "EC:desintonio malave"
+      },
+      {
+        "orador": "Andrés Castillo",
+        "cargo": "legislador",
+        "sobre": "Juicio político a David Rosero",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Impulsó la aprobación de la destitución de David Rosero.",
+        "proyecto": "",
+        "id": "EC:castillo maldonado"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=GTShjieQP9Q"
   }
 }
