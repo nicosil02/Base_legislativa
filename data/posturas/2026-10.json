@@ -8263,5 +8263,822 @@
       }
     ],
     "url": "https://www.facebook.com/watch/?v=917802611270919"
+  },
+  "fb_1691327106041298": {
+    "fecha": "2026-10-26",
+    "organo": "Comisión de Biodiversidad",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Gina María Andrade García",
+        "cargo": "invitado",
+        "sobre": "Proyecto de Gestión Costera",
+        "postura": "con observaciones",
+        "tema": "Ambiente",
+        "dijo": "Analizó la fragmentación normativa del proyecto de ley.",
+        "proyecto": "Ley de Gestión Costera Integrada",
+        "id": null
+      },
+      {
+        "orador": "Camila León",
+        "cargo": "legislador",
+        "sobre": "Aspectos esenciales de la ley",
+        "postura": "pregunta",
+        "tema": "Ambiente",
+        "dijo": "Preguntó sobre los elementos indispensables para la ley.",
+        "proyecto": "Ley de Gestión Costera Integrada",
+        "id": "EC:leon cueva"
+      },
+      {
+        "orador": "Gina María Andrade García",
+        "cargo": "invitado",
+        "sobre": "Contenido esencial de la ley",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Recomendó mantener definiciones claras y control sancionatorio.",
+        "proyecto": "Ley de Gestión Costera Integrada",
+        "id": null
+      },
+      {
+        "orador": "Casanado",
+        "cargo": "legislador",
+        "sobre": "Plazos de retiros costeros",
+        "postura": "pregunta",
+        "tema": "Ambiente",
+        "dijo": "Cuestionó la aplicación de plazos en zonas habitadas.",
+        "proyecto": "Ley de Gestión Costera Integrada",
+        "id": null
+      },
+      {
+        "orador": "Gina María Andrade García",
+        "cargo": "invitado",
+        "sobre": "Gestión técnica de la costa",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Explicó la importancia de la capacidad técnica municipal.",
+        "proyecto": "Ley de Gestión Costera Integrada",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1691327106041298"
+  },
+  "l8UbrJtD6oQ": {
+    "fecha": "2026-10-24",
+    "organo": "Comisión de Presupuesto",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "José Angelo Sangelin Casay",
+        "cargo": "ministro o autoridad",
+        "sobre": "Presupuesto 2027 del sector transporte",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Presentó el presupuesto 2027 y la ejecución del sector transporte.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Absalón Vázquez Villanueva",
+        "cargo": "legislador",
+        "sobre": "Gestión de alianzas en la ATU",
+        "postura": "en contra",
+        "tema": "Transporte",
+        "dijo": "Denunció irregularidades en las alianzas público-privadas de la ATU.",
+        "proyecto": "",
+        "id": "senado:vasquez villanueva"
+      },
+      {
+        "orador": "Héctor Guillén Valencia",
+        "cargo": "legislador",
+        "sobre": "Estado de carreteras en Huancavelica",
+        "postura": "en contra",
+        "tema": "Transporte",
+        "dijo": "Lamentó el abandono de las vías de comunicación en Huancavelica.",
+        "proyecto": "",
+        "id": "diputados:guillen valencia"
+      },
+      {
+        "orador": "Gloriache Pizarro",
+        "cargo": "legislador",
+        "sobre": "Presupuesto de la vía Arequipa-La Joya",
+        "postura": "pregunta",
+        "tema": "Infraestructura",
+        "dijo": "Consultó sobre el presupuesto para la vía Arequipa-La Joya.",
+        "proyecto": "Vía Arequipa-La Joya",
+        "id": "diputados:hirache pizarro"
+      },
+      {
+        "orador": "Pablo Alfonso López Chaonava",
+        "cargo": "legislador",
+        "sobre": "Riesgos en alianzas público-privadas",
+        "postura": "en contra",
+        "tema": "Transporte",
+        "dijo": "Respaldó la denuncia sobre la gestión de alianzas público-privadas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Héctor Guillén Valencia",
+        "cargo": "legislador",
+        "sobre": "Carretera paralizada en Tallacaja",
+        "postura": "en contra",
+        "tema": "Transporte",
+        "dijo": "Pidió atención para la carretera paralizada en la provincia de Tallacaja.",
+        "proyecto": "Carretera 231",
+        "id": "diputados:guillen valencia"
+      },
+      {
+        "orador": "Karina Beteta",
+        "cargo": "legislador",
+        "sobre": "Estado de la carretera central",
+        "postura": "en contra",
+        "tema": "Transporte",
+        "dijo": "Denunció el colapso y mal estado de la carretera central.",
+        "proyecto": "Carretera Central",
+        "id": "diputados:beteta rubin"
+      },
+      {
+        "orador": "Carlos Alber",
+        "cargo": "legislador",
+        "sobre": "Conectividad vial en Áncash",
+        "postura": "a favor",
+        "tema": "Transporte",
+        "dijo": "Solicitó presupuesto para mejorar la conectividad en la región Áncash.",
+        "proyecto": "Aeropuerto de Chimbote",
+        "id": null
+      },
+      {
+        "orador": "Fernández González",
+        "cargo": "legislador",
+        "sobre": "Reactivación de la vía férrea tacneña",
+        "postura": "propone",
+        "tema": "Transporte",
+        "dijo": "Exhortó la reactivación de la vía férrea en la región Tacna.",
+        "proyecto": "Vía férrea de Tacna",
+        "id": "diputados:fernandez gonzalez"
+      },
+      {
+        "orador": "Absalón Vázquez Villanueva",
+        "cargo": "legislador",
+        "sobre": "Ejecución de carretera en Cajamarca",
+        "postura": "en contra",
+        "tema": "Transporte",
+        "dijo": "Cuestionó la demora en la ejecución de una carretera cajamarquina.",
+        "proyecto": "Carretera Cuterbo a Chiple",
+        "id": "senado:vasquez villanueva"
+      },
+      {
+        "orador": "Absalón Vázquez",
+        "cargo": "legislador",
+        "sobre": "Carretera Cuterbo a Chiple",
+        "postura": "propone",
+        "tema": "Transporte",
+        "dijo": "Pidió que el Ministerio de Transportes culmine la carretera Cuterbo a Chiple.",
+        "proyecto": "",
+        "id": "senado:vasquez villanueva"
+      },
+      {
+        "orador": "Absalón Vázquez",
+        "cargo": "legislador",
+        "sobre": "Carretera Bambamarca - Santa Cruz",
+        "postura": "en contra",
+        "tema": "Transporte",
+        "dijo": "Denunció sobrecostos y falta de conclusión en la carretera Bambamarca-Santa Cruz.",
+        "proyecto": "",
+        "id": "senado:vasquez villanueva"
+      },
+      {
+        "orador": "Absalón Vázquez",
+        "cargo": "legislador",
+        "sobre": "Aeropuerto de Jaén",
+        "postura": "propone",
+        "tema": "Transporte",
+        "dijo": "Solicitó dar importancia al aeropuerto de Jaén para el desarrollo regional.",
+        "proyecto": "",
+        "id": "senado:vasquez villanueva"
+      },
+      {
+        "orador": "Absalón Vázquez",
+        "cargo": "legislador",
+        "sobre": "Carretera Santiago Chuco",
+        "postura": "propone",
+        "tema": "Transporte",
+        "dijo": "Pidió la ejecución del proyecto de mejoramiento de la carretera Santiago Chuco.",
+        "proyecto": "CUI 2234988",
+        "id": "senado:vasquez villanueva"
+      },
+      {
+        "orador": "Segundo Tapia",
+        "cargo": "legislador",
+        "sobre": "Presupuesto del sector transportes",
+        "postura": "con observaciones",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Observó la reducción de 629 millones de soles en el presupuesto sectorial.",
+        "proyecto": "",
+        "id": "senado:tapia bernal"
+      },
+      {
+        "orador": "Segundo Tapia",
+        "cargo": "legislador",
+        "sobre": "Mejoramiento del aeropuerto de Jaén",
+        "postura": "propone",
+        "tema": "Transporte",
+        "dijo": "Solicitó incorporar presupuesto para el mejoramiento del aeropuerto de Jaén en 2027.",
+        "proyecto": "",
+        "id": "senado:tapia bernal"
+      },
+      {
+        "orador": "Analí Márquez Huanca",
+        "cargo": "legislador",
+        "sobre": "Aeropuerto internacional Chinchero",
+        "postura": "propone",
+        "tema": "Transporte",
+        "dijo": "Pidió garantizar el presupuesto de 740 millones para el aeropuerto de Chinchero.",
+        "proyecto": "Aeropuerto internacional Chinchero",
+        "id": "diputados:marquez huanca"
+      },
+      {
+        "orador": "Analí Márquez Huanca",
+        "cargo": "legislador",
+        "sobre": "Corredor vial Quechua Chanca Aimara",
+        "postura": "propone",
+        "tema": "Transporte",
+        "dijo": "Solicitó que avance el proyecto del corredor vial Quechua Chanca Aimara.",
+        "proyecto": "Quechua Chanca Aimara",
+        "id": "diputados:marquez huanca"
+      },
+      {
+        "orador": "Carlos Alberto Domínguez Herrera",
+        "cargo": "legislador",
+        "sobre": "Vía de evitamiento de Chimbote",
+        "postura": "en contra",
+        "tema": "Transporte",
+        "dijo": "Denunció problemas con la concesionaria y el cobro de peajes en Chimbote.",
+        "proyecto": "",
+        "id": "diputados:dominguez herrera"
+      },
+      {
+        "orador": "José Angelo Tangerlini Casal",
+        "cargo": "ministro o autoridad",
+        "sobre": "Reducción del presupuesto de inversión",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Explicó que el aumento del gasto corriente redujo el espacio de inversión.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "José Angelo Tangerlini Casal",
+        "cargo": "ministro o autoridad",
+        "sobre": "Operación del Metropolitano",
+        "postura": "comenta",
+        "tema": "Transporte",
+        "dijo": "Informó sobre la nueva fecha de inicio para la operación del Metropolitano.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "José Angelo Tangerlini Casal",
+        "cargo": "ministro o autoridad",
+        "sobre": "Asociaciones público-privadas",
+        "postura": "comenta",
+        "tema": "Transporte",
+        "dijo": "Resaltó el uso de asociaciones público-privadas para cerrar brechas de infraestructura.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "José Angelo Tangerlini Casal",
+        "cargo": "ministro o autoridad",
+        "sobre": "Túnel Pariachi en la carretera central",
+        "postura": "comenta",
+        "tema": "Transporte",
+        "dijo": "Confirmó que se busca iniciar la ejecución del túnel Pariachi en 2027.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "José Angelo Tangerlini Casal",
+        "cargo": "ministro o autoridad",
+        "sobre": "Vía Arequipa a La Joya",
+        "postura": "comenta",
+        "tema": "Transporte",
+        "dijo": "Informó que la vía Arequipa-La Joya se ejecutará mediante obras por impuestos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "José Angelo Tangerlini Casal",
+        "cargo": "ministro o autoridad",
+        "sobre": "Carretera Negromayo",
+        "postura": "comenta",
+        "tema": "Transporte",
+        "dijo": "Indicó que el presupuesto para la carretera Negromayo será priorizado en 2027.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "José Angelo Tangerlini Casal",
+        "cargo": "ministro o autoridad",
+        "sobre": "Aeropuerto de Chinchero",
+        "postura": "comenta",
+        "tema": "Transporte",
+        "dijo": "Informó que se ejecutan contratos para la terminal del aeropuerto de Chinchero.",
+        "proyecto": "Aeropuerto internacional Chinchero",
+        "id": null
+      },
+      {
+        "orador": "José Angelo Tangerlini Casal",
+        "cargo": "ministro o autoridad",
+        "sobre": "Aeropuerto de Jaén",
+        "postura": "comenta",
+        "tema": "Transporte",
+        "dijo": "Propuso integrar el aeropuerto de Jaén a concesiones de inversión privada.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "José Angelo Tangerlini Casal",
+        "cargo": "ministro o autoridad",
+        "sobre": "Carretera Santa Chuquicare",
+        "postura": "comenta",
+        "tema": "Transporte",
+        "dijo": "Mencionó que el saldo de obra de Santa Chuquicare asciende a 50 millones.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "José Angelo Tangerlini Casal",
+        "cargo": "ministro o autoridad",
+        "sobre": "Tren Macho de Huancayo-Huancavelica",
+        "postura": "comenta",
+        "tema": "Transporte",
+        "dijo": "Anunció el reinicio de operaciones gratuitas del tren Macho de Huancayo.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Héctor Guillén Valencia",
+        "cargo": "legislador",
+        "sobre": "Obras de carreteras 2027",
+        "postura": "pregunta",
+        "tema": "Transporte",
+        "dijo": "Preguntó qué obras de carreteras se culminarán durante el año 2027.",
+        "proyecto": "",
+        "id": "diputados:guillen valencia"
+      },
+      {
+        "orador": "Janes Edgardo Rodríguez López",
+        "cargo": "ministro o autoridad",
+        "sobre": "Plan Estratégico Institucional",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Presentó el plan estratégico de la Contraloría para el periodo 2025-2030.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Janes Edgardo Rodríguez López",
+        "cargo": "ministro o autoridad",
+        "sobre": "Acompañamiento en procesos electorales",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Informó sobre el acompañamiento de la Contraloría en las elecciones 2026.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Janes Edgardo Rodríguez López",
+        "cargo": "ministro o autoridad",
+        "sobre": "Reactivación de obras públicas",
+        "postura": "comenta",
+        "tema": "Infraestructura",
+        "dijo": "Explicó que el control preventivo reactivó 109 obras públicas paralizadas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Janes Edgardo Rodríguez López",
+        "cargo": "ministro o autoridad",
+        "sobre": "Presupuesto de la Contraloría",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Expuso la necesidad de presupuesto para la capacidad operativa de la Contraloría.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "James Rodríguez López",
+        "cargo": "ministro o autoridad",
+        "sobre": "Presupuesto 2027 de la Contraloría",
+        "postura": "propone",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Solicitó 163.4 millones de soles adicionales para la Contraloría.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Héctor Guill Valencia",
+        "cargo": "legislador",
+        "sobre": "Eficacia del control gubernamental",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó la falta de control de oficio en las regiones.",
+        "proyecto": "",
+        "id": "diputados:guillen valencia"
+      },
+      {
+        "orador": "Gloriache Pizarro",
+        "cargo": "legislador",
+        "sobre": "Riesgos en municipalidades de Arequipa",
+        "postura": "pregunta",
+        "tema": "Política y control político",
+        "dijo": "Preguntó sobre riesgos de irregularidades en Arequipa.",
+        "proyecto": "MAGES Iguas 2",
+        "id": "diputados:hirache pizarro"
+      },
+      {
+        "orador": "Carlos Alberto Domínguez Herrera",
+        "cargo": "legislador",
+        "sobre": "Obras paralizadas en Ancash",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció el alto número de obras paralizadas en Ancash.",
+        "proyecto": "",
+        "id": "diputados:dominguez herrera"
+      },
+      {
+        "orador": "Absalón Vázquez Villanueva",
+        "cargo": "legislador",
+        "sobre": "Control electoral y autonomía",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó la autonomía de la Contraloría ante la ONPE.",
+        "proyecto": "",
+        "id": "senado:vasquez villanueva"
+      },
+      {
+        "orador": "Karina Beteta",
+        "cargo": "legislador",
+        "sobre": "Reactivación de obras públicas",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Criticó la detección tardía de irregularidades en obras.",
+        "proyecto": "Ley 31589",
+        "id": "diputados:beteta rubin"
+      },
+      {
+        "orador": "James Rodríguez López",
+        "cargo": "ministro o autoridad",
+        "sobre": "Respuesta sobre la gestión de la Contraloría",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Aclaró la situación de las obras en Ancash.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Rodríguez López",
+        "cargo": "ministro o autoridad",
+        "sobre": "Auditoría del proceso electoral",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Informó sobre 601 alertas emitidas a la ONPE durante las elecciones.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Luis Ramón Torres Robledo",
+        "cargo": "ministro o autoridad",
+        "sobre": "Presupuesto del Gobierno Regional de Tacna",
+        "postura": "propone",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Solicitó apoyo para el presupuesto institucional de Tacna 2027.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ticona Coalia Juana Gisela",
+        "cargo": "legislador",
+        "sobre": "Prioridades de saneamiento y educación",
+        "postura": "propone",
+        "tema": "Saneamiento",
+        "dijo": "Propuso priorizar la inversión en saneamiento y educación regional.",
+        "proyecto": "",
+        "id": "senado:ticona cohaila"
+      },
+      {
+        "orador": "Juan César Cabrera Nieto",
+        "cargo": "legislador",
+        "sobre": "Inconsistencias en el presupuesto de Tacna",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Cuestionó las discrepancias de cifras en el presupuesto de Tacna.",
+        "proyecto": "",
+        "id": "diputados:cabrera nieto"
+      },
+      {
+        "orador": "Vieta Fernández González",
+        "cargo": "legislador",
+        "sobre": "Gestión y presupuesto de Tacna",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Denunció la falta de transparencia en la gestión de Tacna.",
+        "proyecto": "Hospital Hipólito Unanue",
+        "id": "diputados:fernandez gonzalez"
+      },
+      {
+        "orador": "Absalón Vázquez Villanueva",
+        "cargo": "legislador",
+        "sobre": "Control de la mosca de la fruta",
+        "postura": "propone",
+        "tema": "Agricultura",
+        "dijo": "Sugirió reorganizar el SENASA para controlar la mosca de la fruta.",
+        "proyecto": "",
+        "id": "senado:vasquez villanueva"
+      },
+      {
+        "orador": "Absalón Vázquez Villanueva",
+        "cargo": "legislador",
+        "sobre": "Control de la mosca de la fruta",
+        "postura": "propone",
+        "tema": "Agricultura",
+        "dijo": "Sugirió reorganizar el SENASA para combatir la mosca.",
+        "proyecto": "",
+        "id": "senado:vasquez villanueva"
+      },
+      {
+        "orador": "Absalón Vázquez Villanueva",
+        "cargo": "legislador",
+        "sobre": "Captación de agua del río Sama",
+        "postura": "propone",
+        "tema": "Saneamiento",
+        "dijo": "Propuso realizar ingeniería para captar agua del río Sama.",
+        "proyecto": "",
+        "id": "senado:vasquez villanueva"
+      },
+      {
+        "orador": "Absalón Vázquez Villanueva",
+        "cargo": "legislador",
+        "sobre": "Presupuesto del Proyecto Especial Tacna",
+        "postura": "con observaciones",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Pidió replantear el presupuesto del Proyecto Especial Tacna.",
+        "proyecto": "",
+        "id": "senado:vasquez villanueva"
+      },
+      {
+        "orador": "Luis Torres Robledo",
+        "cargo": "ministro o autoridad",
+        "sobre": "Financiamiento para la mosca de la fruta",
+        "postura": "propone",
+        "tema": "Agricultura",
+        "dijo": "Pidió una cuenta en el MEF para la mosca.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Luis Torres Robledo",
+        "cargo": "ministro o autoridad",
+        "sobre": "Ampliación de la carretera Tarata-Mazucruz",
+        "postura": "propone",
+        "tema": "Transporte",
+        "dijo": "Propuso ampliar la carretera Tarata-Mazucruz.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Luis Torres Robledo",
+        "cargo": "ministro o autoridad",
+        "sobre": "Estado de obras por impuesto",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Negó que existan obras paralizadas en la región.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Luis Torres Robledo",
+        "cargo": "ministro o autoridad",
+        "sobre": "Gestión del Gobierno Regional de Tacna",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Defendió su trayectoria política y su gestión.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Guillén Valencia",
+        "cargo": "legislador",
+        "sobre": "Coherencia de información regional",
+        "postura": "con observaciones",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó la falta de coherencia de la información.",
+        "proyecto": "",
+        "id": "diputados:guillen valencia"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=l8UbrJtD6oQ"
+  },
+  "-A7NPORWCx8": {
+    "fecha": "2026-10-24",
+    "organo": "Mesa de trabajo Salud",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Cristian Tomás Ojeda Noriga",
+        "cargo": "autoridad",
+        "sobre": "Sistema de referencias en Tumbes",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Denunció la falta de especialistas y las deficiencias en el sistema de referencias en Tumbes.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Sandra García Figueroa",
+        "cargo": "autoridad",
+        "sobre": "Plan de apoyo para Tumbes",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Propuso implementar teleconsultas y un comité para atender pacientes de Tumbes.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Manuel Alberto Díaz de los Santos",
+        "cargo": "autoridad",
+        "sobre": "Filtros en la red de referencias",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Propuso establecer filtros por distancia para descongestionar los hospitales de Lima.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Manuel Díaz",
+        "cargo": "invitado",
+        "sobre": "Coordinación de traslados y filtros de atención",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Propuso implementar filtros por distancia para mejorar traslados.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Óscar Uchúa Maurtua",
+        "cargo": "invitado",
+        "sobre": "Situación del Hospital Sergio Bernales",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Propuso utilizar la telemedicina para mitigar carencias.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Víctor González Ruiz",
+        "cargo": "invitado",
+        "sobre": "Gestión de referencias y dispositivos médicos",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Pidió agilizar el trámite de dispositivos de alto costo.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "José Manuel Luicho Sobrado",
+        "cargo": "ministro o autoridad",
+        "sobre": "Implementación de telesalud y servicios por impuestos",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Propuso usar la ficha de servicios por impuestos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Edgar Roy Aguilera Becerril",
+        "cargo": "ministro o autoridad",
+        "sobre": "Gestión de infraestructura en Tumbes",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Denunció la falta de priorización política en Tumbes.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Jaime Nombrera Cornejo",
+        "cargo": "ministro o autoridad",
+        "sobre": "Capacidad hospitalaria en Tumbes",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Informó sobre la alta ocupación de camas críticas en Tumbes.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Cristian Tomás Ojeda Noriega",
+        "cargo": "invitado",
+        "sobre": "Agilización de comunicación y referencias",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Propuso crear un grupo de contactos para agilizar referencias.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Jaime Nombrera Cornejo",
+        "cargo": "ministro o autoridad",
+        "sobre": "Monitoreo de referencias hospitalarias",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Informó sobre el proceso de monitoreo para las referencias.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Suvenia Ramos Rosales",
+        "cargo": "legislador",
+        "sobre": "Gestión de traslados de pacientes",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Comentó sobre la gestión para conseguir camas en Lima.",
+        "proyecto": "",
+        "id": "diputados:ramos rosales"
+      },
+      {
+        "orador": "Suvenia Ramos Rosales",
+        "cargo": "legislador",
+        "sobre": "Construcción del nuevo hospital de Tumbes",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Denunció la falta de servicios básicos en el hospital.",
+        "proyecto": "",
+        "id": "diputados:ramos rosales"
+      },
+      {
+        "orador": "Suvenia Ramos Rosales",
+        "cargo": "legislador",
+        "sobre": "Escasez de especialistas en Tumbes",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Cuestionó la falta de médicos especialistas en la región.",
+        "proyecto": "",
+        "id": "diputados:ramos rosales"
+      },
+      {
+        "orador": "Suvenia Ramos Rosales",
+        "cargo": "legislador",
+        "sobre": "Inversiones para combatir el dengue",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Informó sobre las inversiones para atender el dengue.",
+        "proyecto": "",
+        "id": "diputados:ramos rosales"
+      },
+      {
+        "orador": "Jaime Nombrera Cornejo",
+        "cargo": "ministro o autoridad",
+        "sobre": "Facilitación de referencias hospitalarias",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Propuso coordinar directamente con el jefe de referencias.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Cristian Tomás Ojeda Noriega",
+        "cargo": "invitado",
+        "sobre": "UCI dinámico para dengue",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Pidió la aprobación de un UCI dinámico para atender pacientes con dengue.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Cristian Tomás Ojeda Noriega",
+        "cargo": "invitado",
+        "sobre": "política de retención de residentes",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Propuso generar una política de retención para médicos residentes en los hospitales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Cristian Tomás Ojeda Noriega",
+        "cargo": "invitado",
+        "sobre": "extensión de la carrera profesional",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Sugerió promover la extensión de la carrera médica en las regiones.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=-A7NPORWCx8"
   }
 }
