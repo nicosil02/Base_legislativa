@@ -12835,5 +12835,1212 @@
       }
     ],
     "url": "https://www.youtube.com/watch?v=zIgPORESkkQ"
+  },
+  "idj5rUvns_g": {
+    "fecha": "2026-10-29",
+    "organo": "Pleno de la Asamblea",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Anthony Becerra",
+        "cargo": "legislador",
+        "sobre": "tercerización laboral en la empresa EMAC",
+        "postura": "a favor",
+        "tema": "Trabajo",
+        "dijo": "Denunció la tercerización laboral de las trabajadoras en Cuenca.",
+        "proyecto": "",
+        "id": "EC:becerra contreras"
+      },
+      {
+        "orador": "Adrián Castro",
+        "cargo": "legislador",
+        "sobre": "fiscalización de tercerización laboral en Cuenca",
+        "postura": "a favor",
+        "tema": "Trabajo",
+        "dijo": "Respaldó la fiscalización por la precarización laboral en Cuenca.",
+        "proyecto": "",
+        "id": "EC:castro piedra"
+      },
+      {
+        "orador": "Javier Ordóñez",
+        "cargo": "legislador",
+        "sobre": "explotación de áridos y pétreos en Quito",
+        "postura": "propone",
+        "tema": "Minería",
+        "dijo": "Propuso analizar la explotación de áridos y pétreos en Quito.",
+        "proyecto": "",
+        "id": "EC:ordonez fuentes"
+      },
+      {
+        "orador": "Jorge Machumbra",
+        "cargo": "invitado",
+        "sobre": "Trayectoria musical amazónica",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Agradeció el reconocimiento por su trayectoria musical amazónica.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "María Palacios González",
+        "cargo": "ministro o autoridad",
+        "sobre": "Informe de fiscalización laboral",
+        "postura": "comenta",
+        "tema": "Trabajo",
+        "dijo": "Informó sobre la parte resolutiva del informe de fiscalización.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Recalde",
+        "cargo": "legislador",
+        "sobre": "Fiscalización de la empresa EMAC EP",
+        "postura": "a favor",
+        "tema": "Trabajo",
+        "dijo": "Defendió el informe de fiscalización sobre la empresa EMAC EP.",
+        "proyecto": "",
+        "id": "EC:recalde alava"
+      },
+      {
+        "orador": "Anthony Becerra",
+        "cargo": "legislador",
+        "sobre": "Tercerización en la empresa EMAC EP",
+        "postura": "a favor",
+        "tema": "Trabajo",
+        "dijo": "Denunció la tercerización laboral en la empresa EMAC EP.",
+        "proyecto": "",
+        "id": "EC:becerra contreras"
+      },
+      {
+        "orador": "Humberto Alvarado",
+        "cargo": "legislador",
+        "sobre": "Informe de fiscalización de EMAC EP",
+        "postura": "con observaciones",
+        "tema": "Trabajo",
+        "dijo": "Cuestionó el informe por falta de pruebas suficientes.",
+        "proyecto": "",
+        "id": "EC:alvarado espinel"
+      },
+      {
+        "orador": "Naila Quintana",
+        "cargo": "legislador",
+        "sobre": "Derechos de los trabajadores de aseo",
+        "postura": "a favor",
+        "tema": "Trabajo",
+        "dijo": "Respaldó el informe de la comisión de trabajo.",
+        "proyecto": "",
+        "id": "EC:quintana tapia"
+      },
+      {
+        "orador": "Humberto Alvarado",
+        "cargo": "legislador",
+        "sobre": "derechos laborales de trabajadores de limpieza",
+        "postura": "a favor",
+        "tema": "Trabajo",
+        "dijo": "Defendió la estabilidad de los trabajadores de limpieza.",
+        "proyecto": "",
+        "id": "EC:alvarado espinel"
+      },
+      {
+        "orador": "Naila Quintana",
+        "cargo": "legislador",
+        "sobre": "tercerización de servicios de limpieza en Cuenca",
+        "postura": "a favor",
+        "tema": "Trabajo",
+        "dijo": "Respaldó el informe sobre derechos laborales municipales.",
+        "proyecto": "",
+        "id": "EC:quintana tapia"
+      },
+      {
+        "orador": "Adrián Castro",
+        "cargo": "legislador",
+        "sobre": "fiscalización de servicios de aseo en Cuenca",
+        "postura": "a favor",
+        "tema": "Trabajo",
+        "dijo": "Pidió la aprobación del informe de fiscalización.",
+        "proyecto": "",
+        "id": "EC:castro piedra"
+      },
+      {
+        "orador": "Roque Ordóñez",
+        "cargo": "legislador",
+        "sobre": "reforma a la Ley Orgánica de Juventudes",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Defendió las reformas para el bienestar juvenil.",
+        "proyecto": "Ley Orgánica de Juventudes",
+        "id": "EC:ordonez quezada"
+      },
+      {
+        "orador": "Roque Ordóñez",
+        "cargo": "legislador",
+        "sobre": "Políticas de bienestar para la juventud",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Defendió la creación de políticas para el bienestar juvenil.",
+        "proyecto": "Ley de Juventudes",
+        "id": "EC:ordonez quezada"
+      },
+      {
+        "orador": "Natalie Farinango",
+        "cargo": "legislador",
+        "sobre": "Reforma de la Ley de Juventudes",
+        "postura": "con observaciones",
+        "tema": "Trabajo",
+        "dijo": "Propuso una cuota de empleo progresiva por tamaño de empresa.",
+        "proyecto": "Ley de Juventudes",
+        "id": "EC:farinango delgado"
+      },
+      {
+        "orador": "Eliana Correa",
+        "cargo": "legislador",
+        "sobre": "Derechos de jóvenes migrantes",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Pidió incorporar garantías para jóvenes en movilidad humana.",
+        "proyecto": "Ley de Juventudes",
+        "id": "EC:correa gonzalez"
+      },
+      {
+        "orador": "Dominic Serrano",
+        "cargo": "legislador",
+        "sobre": "Salud mental y entorno digital",
+        "postura": "con observaciones",
+        "tema": "Salud",
+        "dijo": "Propuso vincular la salud mental con el ámbito laboral.",
+        "proyecto": "Ley de Juventudes",
+        "id": "EC:serrano molina"
+      },
+      {
+        "orador": "Noemí Cabrera",
+        "cargo": "legislador",
+        "sobre": "Desafíos de la juventud ecuatoriana",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Defendió la necesidad de inversión estatal en educación.",
+        "proyecto": "Ley de Juventudes",
+        "id": "EC:cabrera chacon"
+      },
+      {
+        "orador": "Carlos Gavilanes",
+        "cargo": "legislador",
+        "sobre": "Cuotas de empleo y prácticas",
+        "postura": "con observaciones",
+        "tema": "Trabajo",
+        "dijo": "Propuso aplicar la cuota de empleo en vacantes disponibles.",
+        "proyecto": "Ley de Juventudes",
+        "id": "EC:gavilanez munoz"
+      },
+      {
+        "orador": "Cristina Jácome",
+        "cargo": "legislador",
+        "sobre": "Salud mental y oportunidades juveniles",
+        "postura": "a favor",
+        "tema": "Salud",
+        "dijo": "Respaldó la importancia de garantizar la atención en salud.",
+        "proyecto": "Ley de Juventudes",
+        "id": "EC:jacome benitez"
+      },
+      {
+        "orador": "Cristiana Jacome",
+        "cargo": "legislador",
+        "sobre": "Proyecto de Ley de Juventudes",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Defendió el proyecto de ley para la juventud.",
+        "proyecto": "PL de Juventudes",
+        "id": "EC:jacome benitez"
+      },
+      {
+        "orador": "Mariana Yumbai",
+        "cargo": "legislador",
+        "sobre": "Proyecto de Ley de Juventudes",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Respaldó la aprobación de la iniciativa de juventudes.",
+        "proyecto": "PL de Juventudes",
+        "id": "EC:yumbay yallico"
+      },
+      {
+        "orador": "María Palacios",
+        "cargo": "legislador",
+        "sobre": "Derechos de jóvenes migrantes",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Propuso proteger los derechos de los jóvenes migrantes.",
+        "proyecto": "PL de Juventudes",
+        "id": null
+      },
+      {
+        "orador": "Naila Quintana",
+        "cargo": "legislador",
+        "sobre": "Ley de Juventudes reformatoria",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Respaldó el proyecto de reforma a la ley de juventudes.",
+        "proyecto": "PL de Juventudes",
+        "id": "EC:quintana tapia"
+      },
+      {
+        "orador": "Franklin Zamaniejo",
+        "cargo": "legislador",
+        "sobre": "Reforma a la Ley de Juventudes",
+        "postura": "con observaciones",
+        "tema": "Trabajo",
+        "dijo": "Propuso limitar las pasantías y establecer cuotas de empleo.",
+        "proyecto": "PL de Juventudes",
+        "id": "EC:samaniego maigua"
+      },
+      {
+        "orador": "Adrián Castro",
+        "cargo": "legislador",
+        "sobre": "Ley de Juventudes",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Respaldó las propuestas para la reforma de la ley.",
+        "proyecto": "PL de Juventudes",
+        "id": "EC:castro piedra"
+      },
+      {
+        "orador": "Javier Ordóñez",
+        "cargo": "legislador",
+        "sobre": "Minería ilegal en Quito",
+        "postura": "propone",
+        "tema": "Minería",
+        "dijo": "Pidió fiscalizar la minería ilegal en el distrito de Quito.",
+        "proyecto": "",
+        "id": "EC:ordonez fuentes"
+      },
+      {
+        "orador": "Javier Ordóñez",
+        "cargo": "legislador",
+        "sobre": "fiscalización de minería ilegal en Quito",
+        "postura": "propone",
+        "tema": "Minería",
+        "dijo": "Propuso que la Comisión de Seguridad fiscalice la minería ilegal en Quito.",
+        "proyecto": "",
+        "id": "EC:ordonez fuentes"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=idj5rUvns_g"
+  },
+  "TQTihXaQo7A": {
+    "fecha": "2026-10-28",
+    "organo": "Comisión de Comercio Exterior",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Medina Stein Andrea Daina",
+        "cargo": "legislador",
+        "sobre": "Visita del Papa y turismo",
+        "postura": "comenta",
+        "tema": "Comercio",
+        "dijo": "Informó sobre la visita del Papa y la promoción turística.",
+        "proyecto": "",
+        "id": "diputados:medina stein"
+      },
+      {
+        "orador": "Jessica Guevara",
+        "cargo": "legislador",
+        "sobre": "Informe sobre la visita del Papa",
+        "postura": "propone",
+        "tema": "Comercio",
+        "dijo": "Solicitó un informe escrito sobre la visita del Papa.",
+        "proyecto": "",
+        "id": "diputados:guevara ramirez"
+      },
+      {
+        "orador": "Andrea Medina",
+        "cargo": "legislador",
+        "sobre": "Apoyo al sector de Gamarra",
+        "postura": "comenta",
+        "tema": "Mype",
+        "dijo": "Informó sobre una reunión para apoyar al sector textil.",
+        "proyecto": "Gamarra Fashion Week",
+        "id": "diputados:medina stein"
+      },
+      {
+        "orador": "Juan Carlos Requejo Aleman",
+        "cargo": "ministro o autoridad",
+        "sobre": "Gestión del sector pesca y acuicultura",
+        "postura": "comenta",
+        "tema": "Pesca",
+        "dijo": "Detalló las estrategias para el desarrollo productivo nacional.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Juan Carlos Requejo Aleman",
+        "cargo": "ministro o autoridad",
+        "sobre": "Renovación de la flota científica",
+        "postura": "comenta",
+        "tema": "Pesca",
+        "dijo": "Explicó el proyecto para renovar la flota científica pesquera.",
+        "proyecto": "VIPO 1",
+        "id": null
+      },
+      {
+        "orador": "Juan Carlos Requejo Aleman",
+        "cargo": "ministro o autoridad",
+        "sobre": "Reglamentación de la pesca artesanal",
+        "postura": "comenta",
+        "tema": "Pesca",
+        "dijo": "Informó sobre la reglamentación de la pesca artesanal.",
+        "proyecto": "Ley 31749",
+        "id": null
+      },
+      {
+        "orador": "Juan Carlos Requejo Aleman",
+        "cargo": "ministro o autoridad",
+        "sobre": "Créditos de Fondep",
+        "postura": "comenta",
+        "tema": "Pesca",
+        "dijo": "Describió el sistema de créditos asistidos de Fondep.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Juan Carlos Requejo Aleman",
+        "cargo": "ministro o autoridad",
+        "sobre": "Programa de consumo de pescado",
+        "postura": "comenta",
+        "tema": "Pesca",
+        "dijo": "Destacó los avances en el consumo de pescado.",
+        "proyecto": "Programa Nacional a Comer Pescado",
+        "id": null
+      },
+      {
+        "orador": "Juan Carlos Requejo Aleman",
+        "cargo": "ministro o autoridad",
+        "sobre": "Innovación contra la anemia",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Presentó el desarrollo de un hidrolizado de anchoveta.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Juan Carlos Requejo Aleman",
+        "cargo": "ministro o autoridad",
+        "sobre": "Incentivos para la acuicultura",
+        "postura": "propone",
+        "tema": "Pesca",
+        "dijo": "Planteó la necesidad de incentivos para la acuicultura.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro de la Producción",
+        "cargo": "ministro o autoridad",
+        "sobre": "Fortificación de alimentos con anchoveta",
+        "postura": "propone",
+        "tema": "Pesca",
+        "dijo": "Propuso utilizar el hidrolizado de anchoveta para la fortificación de alimentos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro de la Producción",
+        "cargo": "ministro o autoridad",
+        "sobre": "Incentivos para la acuicultura en altura",
+        "postura": "propone",
+        "tema": "Pesca",
+        "dijo": "Planteó implementar incentivos económicos y tributarios para la acuicultura.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro de la Producción",
+        "cargo": "ministro o autoridad",
+        "sobre": "Mejora de infraestructura en desembarcaderos",
+        "postura": "comenta",
+        "tema": "Pesca",
+        "dijo": "Informó sobre la ejecución de obras en los desembarcaderos pesqueros.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro de la Producción",
+        "cargo": "ministro o autoridad",
+        "sobre": "Control satelital de flotas extranjeras",
+        "postura": "comenta",
+        "tema": "Pesca",
+        "dijo": "Explicó la creación de una zona de amortiguamiento de 20 millas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro de la Producción",
+        "cargo": "ministro o autoridad",
+        "sobre": "Control satelital para pesca artesanal",
+        "postura": "propone",
+        "tema": "Pesca",
+        "dijo": "Propuso financiar sistemas de control satelital para la pesca artesanal.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro de la Producción",
+        "cargo": "ministro o autoridad",
+        "sobre": "Impacto del fenómeno El Niño",
+        "postura": "comenta",
+        "tema": "Pesca",
+        "dijo": "Informó sobre pérdidas de 14,000 millones de soles por el fenómeno.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro de la Producción",
+        "cargo": "ministro o autoridad",
+        "sobre": "Medidas para el sector pesquero",
+        "postura": "propone",
+        "tema": "Pesca",
+        "dijo": "Solicitó un paquete de medidas focalizado para el sector pesquero.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro de la Producción",
+        "cargo": "ministro o autoridad",
+        "sobre": "Diversificación de la actividad pesquera",
+        "postura": "propone",
+        "tema": "Pesca",
+        "dijo": "Propuso el uso dual de desembarcaderos para pesca y turismo.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro de la Producción",
+        "cargo": "ministro o autoridad",
+        "sobre": "Acceso a mercados para la MYPE",
+        "postura": "comenta",
+        "tema": "Mype",
+        "dijo": "Destacó la importancia de facilitar ferias y mercados para emprendedores.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro de la Producción",
+        "cargo": "ministro o autoridad",
+        "sobre": "Trámites automáticos para emprendedores",
+        "postura": "propone",
+        "tema": "Mype",
+        "dijo": "Propuso implementar un sistema de trámites automáticos basados en riesgo.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro de la Producción",
+        "cargo": "ministro o autoridad",
+        "sobre": "Nuevas categorías de parques industriales",
+        "postura": "propone",
+        "tema": "Mype",
+        "dijo": "Planteó regular nuevas categorías para los parques industriales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro de la Producción",
+        "cargo": "ministro o autoridad",
+        "sobre": "el desarrollo de parques industriales",
+        "postura": "comenta",
+        "tema": "Infraestructura",
+        "dijo": "Comentó el acompañamiento técnico en los parques industriales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro de la Producción",
+        "cargo": "ministro o autoridad",
+        "sobre": "la comisión de desarrollo productivo",
+        "postura": "comenta",
+        "tema": "Mype",
+        "dijo": "Comentó la implementación de la comisión multisectorial.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro de la Producción",
+        "cargo": "ministro o autoridad",
+        "sobre": "la industria de alta tecnología",
+        "postura": "comenta",
+        "tema": "Tecnología",
+        "dijo": "Respaldó la competitividad de la industria tecnológica nacional.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro de la Producción",
+        "cargo": "ministro o autoridad",
+        "sobre": "el uso del factoring",
+        "postura": "propone",
+        "tema": "Banca",
+        "dijo": "Propuso extender el uso del factoring al sector público.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro de la Producción",
+        "cargo": "ministro o autoridad",
+        "sobre": "la ejecución de Procompite",
+        "postura": "en contra",
+        "tema": "Mype",
+        "dijo": "Cuestionó la baja ejecución de los recursos de Procompite.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro de la Producción",
+        "cargo": "ministro o autoridad",
+        "sobre": "la extensión de Proinóvate",
+        "postura": "comenta",
+        "tema": "Tecnología",
+        "dijo": "Respaldó la extensión de Proinóvate por cinco años más.",
+        "proyecto": "Proinóvate",
+        "id": null
+      },
+      {
+        "orador": "Ministro de la Producción",
+        "cargo": "ministro o autoridad",
+        "sobre": "el programa Compras Perú",
+        "postura": "comenta",
+        "tema": "Mype",
+        "dijo": "Respaldó el uso de Compras Perú para kits escolares.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro de la Producción",
+        "cargo": "ministro o autoridad",
+        "sobre": "la promoción mediante ferias",
+        "postura": "comenta",
+        "tema": "Comercio",
+        "dijo": "Respaldó la importancia de las ferias para los emprendedores.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro de la Producción",
+        "cargo": "ministro o autoridad",
+        "sobre": "la defensa de la industria nacional",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Pidió fortalecer los mecanismos de defensa contra la competencia desleal.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro de la Producción",
+        "cargo": "ministro o autoridad",
+        "sobre": "la plataforma Produce Más",
+        "postura": "comenta",
+        "tema": "Tecnología",
+        "dijo": "Comentó la disponibilidad de la web Produce Más.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro de la Producción",
+        "cargo": "ministro o autoridad",
+        "sobre": "la red de centros CITE",
+        "postura": "propone",
+        "tema": "Tecnología",
+        "dijo": "Propuso articular los centros tecnológicos con la academia.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro de la Producción",
+        "cargo": "ministro o autoridad",
+        "sobre": "la modernización de mercados",
+        "postura": "comenta",
+        "tema": "Infraestructura",
+        "dijo": "Comentó la ejecución de proyectos para modernizar mercados.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro de la Producción",
+        "cargo": "ministro o autoridad",
+        "sobre": "la cadena de fibra de alpaca",
+        "postura": "comenta",
+        "tema": "Mype",
+        "dijo": "Respaldó el proyecto para fortalecer la fibra de alpaca.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro de la Producción",
+        "cargo": "ministro o autoridad",
+        "sobre": "la emergencia del sector textil",
+        "postura": "en contra",
+        "tema": "Mype",
+        "dijo": "Denunció la caída de la producción en confecciones.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro de la Producción",
+        "cargo": "ministro o autoridad",
+        "sobre": "los kits para mercados",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Pidió la adquisición de kits de emergencia para mercados.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro de la Producción",
+        "cargo": "ministro o autoridad",
+        "sobre": "la ejecución del presupuesto",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Comentó el estado de la ejecución presupuestal ministerial.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Juan Carlos Requejo Alemán",
+        "cargo": "ministro o autoridad",
+        "sobre": "Gestión y presupuesto del sector producción",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Informó sobre la situación textil y ejecución presupuestal.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Fernández",
+        "cargo": "legislador",
+        "sobre": "Acciones ante el fenómeno El Niño",
+        "postura": "pregunta",
+        "tema": "Pesca",
+        "dijo": "Preguntó sobre las acciones ante el fenómeno El Niño.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Domínguez",
+        "cargo": "legislador",
+        "sobre": "Situación del sector pesquero",
+        "postura": "comenta",
+        "tema": "Pesca",
+        "dijo": "Comentó la difícil situación del sector pesquero.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Paz Lancho",
+        "cargo": "legislador",
+        "sobre": "Implementación de la ley 31749",
+        "postura": "pregunta",
+        "tema": "Pesca",
+        "dijo": "Preguntó sobre la implementación de la ley 31749.",
+        "proyecto": "Ley 31749",
+        "id": "diputados:de paz lancho"
+      },
+      {
+        "orador": "Paz Lancho",
+        "cargo": "legislador",
+        "sobre": "Financiamiento para emprendedores en Lima",
+        "postura": "pregunta",
+        "tema": "Mype",
+        "dijo": "Consultó sobre el financiamiento para emprendedores en Lima.",
+        "proyecto": "",
+        "id": "diputados:de paz lancho"
+      },
+      {
+        "orador": "Mendoza",
+        "cargo": "legislador",
+        "sobre": "Apoyo a pymes y pesca industrial",
+        "postura": "comenta",
+        "tema": "Mype",
+        "dijo": "Destacó las medidas para las pymes y la pesca.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Wión",
+        "cargo": "legislador",
+        "sobre": "Soporte para empresarios en el exterior",
+        "postura": "propone",
+        "tema": "Mype",
+        "dijo": "Propuso brindar soporte a emprendedores en el exterior.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Tapullima",
+        "cargo": "legislador",
+        "sobre": "Irregularidades en Compras a mi Perú",
+        "postura": "en contra",
+        "tema": "Mype",
+        "dijo": "Denunció irregularidades en el programa Compras a mi Perú.",
+        "proyecto": "Compras a mi Perú",
+        "id": "diputados:tapullima insapillo"
+      },
+      {
+        "orador": "Vida",
+        "cargo": "legislador",
+        "sobre": "Formalización pesquera y mercados",
+        "postura": "comenta",
+        "tema": "Pesca",
+        "dijo": "Mencionó la necesidad de formalizar a los pescadores.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Paarapaxi",
+        "cargo": "legislador",
+        "sobre": "Apoyo a emprendedores y mercados",
+        "postura": "propone",
+        "tema": "Mype",
+        "dijo": "Pidió la culminación de obras en mercados regionales.",
+        "proyecto": "",
+        "id": "diputados:paucara paxi"
+      },
+      {
+        "orador": "Guevara Ramírez",
+        "cargo": "legislador",
+        "sobre": "Proyectos para la región Cajamarca",
+        "postura": "pregunta",
+        "tema": "Otros",
+        "dijo": "Preguntó por las actividades para Cajamarca.",
+        "proyecto": "",
+        "id": "diputados:guevara ramirez"
+      },
+      {
+        "orador": "Mendoza",
+        "cargo": "legislador",
+        "sobre": "Diagnóstico de obras en ministerios",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Explicó la necesidad de realizar un diagnóstico ministerial.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Juan Carlos Requejo Alemán",
+        "cargo": "ministro o autoridad",
+        "sobre": "Presentación de proyectos de ley",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Anunció la preparación de diecisiete proyectos de ley.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=TQTihXaQo7A"
+  },
+  "BHoc8DNfK10": {
+    "fecha": "2026-10-27",
+    "organo": "Pleno de la Asamblea",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Edwin Jarrín",
+        "cargo": "legislador",
+        "sobre": "Reforma a la Ley de Movilidad Humana",
+        "postura": "a favor",
+        "tema": "Justicia",
+        "dijo": "Defendió la reforma a la Ley de Movilidad Humana.",
+        "proyecto": "Ley de Movilidad Humana",
+        "id": "EC:jarrin rivadeneira"
+      },
+      {
+        "orador": "Milton Aguas",
+        "cargo": "legislador",
+        "sobre": "Informe de fiscalización de patrimonios",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso que el informe de fiscalización sea vinculante.",
+        "proyecto": "",
+        "id": "EC:aguas flores"
+      },
+      {
+        "orador": "Isabela Elisa Álvarez Miranda",
+        "cargo": "invitado",
+        "sobre": "Reconocimiento al mérito deportivo",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Comentó su agradecimiento a la Asamblea Nacional.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Johnny Laballén",
+        "cargo": "legislador",
+        "sobre": "Reforma a la Ley de Movilidad Humana",
+        "postura": "a favor",
+        "tema": "Justicia",
+        "dijo": "Defendió el proyecto de Ley de Movilidad Humana.",
+        "proyecto": "Ley de Movilidad Humana",
+        "id": null
+      },
+      {
+        "orador": "Johnny Labayén",
+        "cargo": "legislador",
+        "sobre": "Reforma a la Ley de Movilidad Humana",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Defendió la reforma para garantizar la protección de personas retornadas.",
+        "proyecto": "Ley de Movilidad Humana",
+        "id": "EC:lavayen tamayo"
+      },
+      {
+        "orador": "Eliana Correr",
+        "cargo": "legislador",
+        "sobre": "Reforma a la Ley de Movilidad Humana",
+        "postura": "con observaciones",
+        "tema": "Otros",
+        "dijo": "Cuestionó la imprecisión de la reforma en términos de deportación masiva.",
+        "proyecto": "Ley de Movilidad Humana",
+        "id": "EC:correa gonzalez"
+      },
+      {
+        "orador": "Carolina Escobar",
+        "cargo": "legislador",
+        "sobre": "Reforma a la Ley de Movilidad Humana",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Respaldó la ley para facilitar trámites y atención consular.",
+        "proyecto": "Ley de Movilidad Humana",
+        "id": "EC:escobar galarza"
+      },
+      {
+        "orador": "Gustavo Mateus",
+        "cargo": "legislador",
+        "sobre": "Reforma a la Ley de Movilidad Humana",
+        "postura": "con observaciones",
+        "tema": "Otros",
+        "dijo": "Solicitó mecanismos de asistencia consular y evaluación de presupuesto.",
+        "proyecto": "Ley de Movilidad Humana",
+        "id": "EC:mateus acosta"
+      },
+      {
+        "orador": "Edwin Jarrín",
+        "cargo": "legislador",
+        "sobre": "Reforma a la Ley de Movilidad Humana",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Afirmó que la comisión aplicó criterios técnicos para proteger migrantes.",
+        "proyecto": "Ley de Movilidad Humana",
+        "id": "EC:jarrin rivadeneira"
+      },
+      {
+        "orador": "Lady Zúñiga",
+        "cargo": "legislador",
+        "sobre": "Reforma a la Ley de Movilidad Humana",
+        "postura": "con observaciones",
+        "tema": "Otros",
+        "dijo": "Propuso incluir el desplazamiento forzado interno en la normativa.",
+        "proyecto": "Ley de Movilidad Humana",
+        "id": "EC:zuniga rocha"
+      },
+      {
+        "orador": "Kevin Gallardo",
+        "cargo": "legislador",
+        "sobre": "Desplazamiento forzado interno",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Informó que 300.000 ecuatorianos son víctimas de desplazamiento interno.",
+        "proyecto": "",
+        "id": "EC:gallardo ruiz"
+      },
+      {
+        "orador": "Lady Zúñiga",
+        "cargo": "legislador",
+        "sobre": "Proyecto de desplazamiento forzado interno",
+        "postura": "a favor",
+        "tema": "Justicia",
+        "dijo": "Defendió el proyecto de desplazamiento forzado para proteger a los ciudadanos.",
+        "proyecto": "Ley de Movilidad Humana",
+        "id": "EC:zuniga rocha"
+      },
+      {
+        "orador": "Marco Olmedo",
+        "cargo": "legislador",
+        "sobre": "Reforma a la Ley de Movilidad Humana",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Propuso incluir un capítulo de inclusión financiera para migrantes retornados.",
+        "proyecto": "Ley de Movilidad Humana",
+        "id": "EC:olmedo arias"
+      },
+      {
+        "orador": "Arisdeli Parrales",
+        "cargo": "legislador",
+        "sobre": "Reformas a la Ley de Movilidad Humana",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Propuso la tutela consular urgente para proteger a los niños retornados.",
+        "proyecto": "Ley de Movilidad Humana",
+        "id": "EC:parrales yagual"
+      },
+      {
+        "orador": "Javier Ordóñez",
+        "cargo": "legislador",
+        "sobre": "Debate de la Ley de Movilidad Humana",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Defendió la aplicación de criterios técnicos en la reforma legislativa.",
+        "proyecto": "Ley de Movilidad Humana",
+        "id": "EC:ordonez fuentes"
+      },
+      {
+        "orador": "Cristian Benavides",
+        "cargo": "legislador",
+        "sobre": "Informe de incrementos patrimoniales de autoridades",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Presentó el informe de fiscalización sobre los presuntos incrementos patrimoniales.",
+        "proyecto": "",
+        "id": "EC:benavides fuentes"
+      },
+      {
+        "orador": "Cristian Benavides",
+        "cargo": "legislador",
+        "sobre": "Informe de autoridades seccionales",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Defendió el informe de la Comisión de Gobiernos Autónomos.",
+        "proyecto": "",
+        "id": "EC:benavides fuentes"
+      },
+      {
+        "orador": "Samuel Cellerí",
+        "cargo": "legislador",
+        "sobre": "Informe de autoridades seccionales",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Respaldó el informe de la Comisión de Gobiernos Autónomos.",
+        "proyecto": "",
+        "id": "EC:celleri gomez"
+      },
+      {
+        "orador": "Jennifer Guillén",
+        "cargo": "legislador",
+        "sobre": "Informe de autoridades seccionales",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Respaldó el informe de la Comisión de Gobiernos Autónomos.",
+        "proyecto": "",
+        "id": "EC:guillen rodriguez"
+      },
+      {
+        "orador": "Patricia Núñez",
+        "cargo": "legislador",
+        "sobre": "Informe de autoridades seccionales",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó la metodología del informe de la comisión.",
+        "proyecto": "",
+        "id": "EC:nunez ramos"
+      },
+      {
+        "orador": "Jorge Chamba",
+        "cargo": "legislador",
+        "sobre": "Informe de autoridades seccionales",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Respaldó el informe de la Comisión de Gobiernos Autónomos.",
+        "proyecto": "",
+        "id": "EC:chamba cabanilla"
+      },
+      {
+        "orador": "Adrián Castro",
+        "cargo": "legislador",
+        "sobre": "Informe de autoridades seccionales",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Respaldó el trabajo de la Comisión de Gobiernos Autónomos.",
+        "proyecto": "",
+        "id": "EC:castro piedra"
+      },
+      {
+        "orador": "Adrián Castro",
+        "cargo": "legislador",
+        "sobre": "informe de fiscalización de autoridades",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Respaldó el informe de fiscalización de autoridades locales.",
+        "proyecto": "",
+        "id": "EC:castro piedra"
+      },
+      {
+        "orador": "Milton Aguas",
+        "cargo": "legislador",
+        "sobre": "proceso de fiscalización de autoridades",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Pidió que el informe de fiscalización sea vinculante.",
+        "proyecto": "",
+        "id": "EC:aguas flores"
+      },
+      {
+        "orador": "Carlos Cuesta",
+        "cargo": "legislador",
+        "sobre": "incremento patrimonial de autoridades",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó la responsabilidad de las autoridades en sus declaraciones.",
+        "proyecto": "",
+        "id": "EC:cuesta alvarez"
+      },
+      {
+        "orador": "Gabriela Aguilar",
+        "cargo": "legislador",
+        "sobre": "crisis energética por apagones",
+        "postura": "en contra",
+        "tema": "Energía",
+        "dijo": "Denunció los apagones causados por la gestión gubernamental.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Edwin Jarrín",
+        "cargo": "legislador",
+        "sobre": "enriquecimiento ilícito de autoridades",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Denunció el enriquecimiento de alcaldes y prefectos.",
+        "proyecto": "",
+        "id": "EC:jarrin rivadeneira"
+      },
+      {
+        "orador": "Pablo Jurado",
+        "cargo": "legislador",
+        "sobre": "facultad de fiscalización de la Asamblea",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Defendió la facultad constitucional de fiscalizar autoridades.",
+        "proyecto": "",
+        "id": "EC:jurado moreno"
+      },
+      {
+        "orador": "Pablo Jurado",
+        "cargo": "legislador",
+        "sobre": "Fiscalización de incrementos patrimoniales",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Defendió la facultad de fiscalizar incrementos patrimoniales de funcionarios.",
+        "proyecto": "",
+        "id": "EC:jurado moreno"
+      },
+      {
+        "orador": "Paola Cabezas",
+        "cargo": "legislador",
+        "sobre": "Alcances legales de la resolución",
+        "postura": "con observaciones",
+        "tema": "Política y control político",
+        "dijo": "Advirtió sobre posibles acciones de repetición ante la resolución.",
+        "proyecto": "",
+        "id": "EC:cabezas castillo"
+      },
+      {
+        "orador": "María Paula Villacrez",
+        "cargo": "legislador",
+        "sobre": "Informe de alertas en autoridades",
+        "postura": "a favor",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Respaldó el informe de alertas por corrupción detectada.",
+        "proyecto": "",
+        "id": "EC:villacreses herrera"
+      },
+      {
+        "orador": "Javier Lazo",
+        "cargo": "legislador",
+        "sobre": "Falta de rigor en el informe",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Rechazó el informe por carecer de rigor técnico.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Isaac Solano",
+        "cargo": "legislador",
+        "sobre": "Investigación de variaciones patrimoniales",
+        "postura": "a favor",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Pidió investigar las alertas patrimoniales detectadas.",
+        "proyecto": "",
+        "id": "EC:solano calle"
+      },
+      {
+        "orador": "Ana Belén Yela",
+        "cargo": "legislador",
+        "sobre": "Situación del municipio de Guayaquil",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció el asedio del gobierno contra Guayaquil.",
+        "proyecto": "",
+        "id": "EC:yela duarte"
+      },
+      {
+        "orador": "Mónica Salazar",
+        "cargo": "legislador",
+        "sobre": "Legitimidad de la fiscalización institucional",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Defendió el trabajo de la comisión de fiscalización.",
+        "proyecto": "",
+        "id": "EC:salazar hidalgo"
+      },
+      {
+        "orador": "Jorge Chamba",
+        "cargo": "legislador",
+        "sobre": "Fiscalización de actos de corrupción",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Defendió la fiscalización de autoridades locales.",
+        "proyecto": "",
+        "id": "EC:chamba cabanilla"
+      },
+      {
+        "orador": "Ricardo Patiño",
+        "cargo": "legislador",
+        "sobre": "Competencias de la Asamblea Nacional",
+        "postura": "con observaciones",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó la competencia de la Asamblea en fiscalización.",
+        "proyecto": "",
+        "id": "EC:patino aroca"
+      },
+      {
+        "orador": "Ricardo Patiño",
+        "cargo": "legislador",
+        "sobre": "Gestión de la alcaldía de Guayaquil",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Defendió la gestión y las obras realizadas por el municipio de Guayaquil.",
+        "proyecto": "",
+        "id": "EC:patino aroca"
+      },
+      {
+        "orador": "Marco Olmedo",
+        "cargo": "legislador",
+        "sobre": "Informe de fiscalización de patrimonios",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Respaldó el análisis técnico sobre incrementos patrimoniales no justificados.",
+        "proyecto": "",
+        "id": "EC:olmedo arias"
+      },
+      {
+        "orador": "Cristian Benavides",
+        "cargo": "legislador",
+        "sobre": "Informe de fiscalización de patrimonios",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Propuso la aprobación de la resolución sobre el informe de fiscalización.",
+        "proyecto": "",
+        "id": "EC:benavides fuentes"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=BHoc8DNfK10"
   }
 }
