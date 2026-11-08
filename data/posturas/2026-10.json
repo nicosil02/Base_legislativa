@@ -16459,5 +16459,842 @@
     "v": 4,
     "dichos": [],
     "url": "https://www.youtube.com/watch?v=ggJwf-DFHPU"
+  },
+  "3F0hJn2PZBY": {
+    "fecha": "2026-10-21",
+    "organo": "Comisión de Energía y Minas",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Renato Carol Guevara Carrasco",
+        "cargo": "invitado",
+        "sobre": "El fenómeno del Niño",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Informó sobre las conclusiones técnicas del comité FEN.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Luis Enrique Vázquez Guerrero",
+        "cargo": "invitado",
+        "sobre": "Gestión de riesgos ante El Niño",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Explicó la gestión reactiva de INDECI ante desastres.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Óscar Aguirre Gonzalo",
+        "cargo": "invitado",
+        "sobre": "Escenarios de riesgo climáticos",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Detalló los escenarios de riesgo del CENPRE.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Renato Carol Guevara Carrasco",
+        "cargo": "invitado",
+        "sobre": "Gestión de riesgos y prevención",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Detalló las acciones de prevención y gestión de riesgos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Barragán Coloma",
+        "cargo": "legislador",
+        "sobre": "Inasistencia del ministro de Energía y Minas",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso reiterar la invitación sin someter a votación.",
+        "proyecto": "",
+        "id": "senado:barragan coloma"
+      },
+      {
+        "orador": "Ruta Luk",
+        "cargo": "legislador",
+        "sobre": "Prevención ante el Fenómeno El Niño",
+        "postura": "pregunta",
+        "tema": "Ambiente",
+        "dijo": "Preguntó sobre las medidas de prevención de gobiernos anteriores.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Castillo Terrones",
+        "cargo": "legislador",
+        "sobre": "Presupuesto para puntos críticos",
+        "postura": "pregunta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Consultó sobre el presupuesto para puntos críticos.",
+        "proyecto": "",
+        "id": "senado:castillo terrones"
+      },
+      {
+        "orador": "Joaquín",
+        "cargo": "legislador",
+        "sobre": "Sistemas de alerta temprana",
+        "postura": "pregunta",
+        "tema": "Ambiente",
+        "dijo": "Preguntó sobre la efectividad de los sistemas de alerta.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Jaime Quito",
+        "cargo": "legislador",
+        "sobre": "Planes de prevención e incendios",
+        "postura": "pregunta",
+        "tema": "Ambiente",
+        "dijo": "Consultó por la falta de planes de prevención.",
+        "proyecto": "",
+        "id": "senado:quito sarmiento"
+      },
+      {
+        "orador": "Absalón Vázquez",
+        "cargo": "legislador",
+        "sobre": "Cultura de prevención ante desastres",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Explicó la importancia de la prevención y la inversión.",
+        "proyecto": "",
+        "id": "senado:vasquez villanueva"
+      },
+      {
+        "orador": "Renato Carol Guevara Carrasco",
+        "cargo": "invitado",
+        "sobre": "Pronóstico e intensidad de El Niño",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Informó sobre la dificultad de pronosticar la intensidad.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Pasalón Vázquez",
+        "cargo": "legislador",
+        "sobre": "Monitoreo del fenómeno El Niño",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Informó sobre la necesidad de equipamiento para monitorear el mar.",
+        "proyecto": "",
+        "id": "senado:vasquez villanueva"
+      },
+      {
+        "orador": "Luis Enrique Vázquez Guerrero",
+        "cargo": "invitado",
+        "sobre": "Gestión de riesgos y presupuesto",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Cuestionó la falta de presupuesto para la prevención de desastres.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Miguel Yamasaki Coisumi",
+        "cargo": "invitado",
+        "sobre": "Planificación urbana y riesgos",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Informó sobre el déficit de instrumentos de planificación urbana.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Luis Enrique Vázquez Guerrero",
+        "cargo": "invitado",
+        "sobre": "Cumplimiento del plan contra incendios",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Informó que no se cumplieron las metas del plan contra incendios.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=3F0hJn2PZBY"
+  },
+  "CVI6JYhpN4I": {
+    "fecha": "2026-10-21",
+    "organo": "Comisión de Ciencia",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Ana Patiño Urco",
+        "cargo": "legislador",
+        "sobre": "Hackatón en la Universidad Continental",
+        "postura": "comenta",
+        "tema": "Tecnología",
+        "dijo": "Informó sobre un hackatón de tecnología realizado en la Universidad Continental.",
+        "proyecto": "",
+        "id": "diputados:patino urco"
+      },
+      {
+        "orador": "Amalia Palomino Pacheco",
+        "cargo": "legislador",
+        "sobre": "Proyecto de hidrógeno verde en Arequipa",
+        "postura": "comenta",
+        "tema": "Energía",
+        "dijo": "Informó sobre las preocupaciones de los pescadores ante el hidrógeno verde.",
+        "proyecto": "",
+        "id": "diputados:palomino pacheco"
+      },
+      {
+        "orador": "Máximo Peralta",
+        "cargo": "legislador",
+        "sobre": "Audiencia pública descentralizada en Junín",
+        "postura": "comenta",
+        "tema": "Tecnología",
+        "dijo": "Informó sobre la realización de una audiencia pública en la región Junín.",
+        "proyecto": "",
+        "id": "diputados:peralta jorpa"
+      },
+      {
+        "orador": "Yair",
+        "cargo": "legislador",
+        "sobre": "Red de fibra óptica de Pronatel",
+        "postura": "comenta",
+        "tema": "Telecomunicaciones",
+        "dijo": "Comentó que la red de fibra óptica de Pronatel se encuentra subutilizada.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Yair",
+        "cargo": "legislador",
+        "sobre": "Reunión con el gobierno digital",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció dificultades para concretar una reunión con el sector de gobierno digital.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Judit",
+        "cargo": "legislador",
+        "sobre": "Uso de drones contra incendios",
+        "postura": "propone",
+        "tema": "Ambiente",
+        "dijo": "Propuso el uso de drones para mitigar los incendios forestales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Frank",
+        "cargo": "legislador",
+        "sobre": "Audiencia pública en Quilca",
+        "postura": "propone",
+        "tema": "Energía",
+        "dijo": "Solicitó que la próxima audiencia pública descentralizada se realice en Quilca.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Frank",
+        "cargo": "legislador",
+        "sobre": "Convenios del proyecto en Arequipa",
+        "postura": "propone",
+        "tema": "Energía",
+        "dijo": "Pidió solicitar información sobre los convenios del proyecto en Arequipa.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Frank",
+        "cargo": "legislador",
+        "sobre": "Reglamentación de la Ley 3199",
+        "postura": "propone",
+        "tema": "Energía",
+        "dijo": "Solicitó al Ministerio de Energía y Minas la reglamentación de la Ley 3199.",
+        "proyecto": "Ley 3199",
+        "id": null
+      },
+      {
+        "orador": "Amalia Palomino Pacheco",
+        "cargo": "legislador",
+        "sobre": "Estudio de impacto ambiental",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Comentó que el estudio de impacto ambiental fue realizado por Produce.",
+        "proyecto": "",
+        "id": "diputados:palomino pacheco"
+      },
+      {
+        "orador": "Roel Sánchez Sánchez",
+        "cargo": "invitado",
+        "sobre": "Proyecto de hidrógeno verde en Arequipa",
+        "postura": "comenta",
+        "tema": "Energía",
+        "dijo": "Presentó el plan para desarrollar un hub de hidrógeno verde en Arequipa.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Amalia Palomino Pacheco",
+        "cargo": "legislador",
+        "sobre": "Impacto de la salmuera en el mar",
+        "postura": "en contra",
+        "tema": "Ambiente",
+        "dijo": "Cuestionó el impacto que el vertido de salmuera tendría en el mar.",
+        "proyecto": "",
+        "id": "diputados:palomino pacheco"
+      },
+      {
+        "orador": "Rojas",
+        "cargo": "ministro o autoridad",
+        "sobre": "Proyectos de hidrógeno verde y amoníaco",
+        "postura": "comenta",
+        "tema": "Energía",
+        "dijo": "Explicó el potencial económico del hidrógeno verde y amoníaco.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Palomino",
+        "cargo": "legislador",
+        "sobre": "Manejo de salmuera e impacto ambiental",
+        "postura": "con observaciones",
+        "tema": "Ambiente",
+        "dijo": "Cuestionó el impacto de la salmuera en el mar peruano.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Yair",
+        "cargo": "legislador",
+        "sobre": "Demanda de oferta energética regional",
+        "postura": "pregunta",
+        "tema": "Energía",
+        "dijo": "Preguntó sobre la articulación de un corredor tecnológico.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ana",
+        "cargo": "legislador",
+        "sobre": "Alcance de tecnología e innovación",
+        "postura": "pregunta",
+        "tema": "Tecnología",
+        "dijo": "Consultó sobre el alcance de la tecnología e innovación.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "María",
+        "cargo": "legislador",
+        "sobre": "Desarrollo tecnológico en Arequipa",
+        "postura": "comenta",
+        "tema": "Tecnología",
+        "dijo": "Destacó el avance tecnológico y las obras en Arequipa.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Rojas",
+        "cargo": "ministro o autoridad",
+        "sobre": "Gestión ambiental y seguridad energética",
+        "postura": "comenta",
+        "tema": "Energía",
+        "dijo": "Aclaró que los estudios ambientales fueron aprobados por Produce.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=CVI6JYhpN4I"
+  },
+  "5xxUrBBfdCY": {
+    "fecha": "2026-10-21",
+    "organo": "Comisión de Salud",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Liliana Milagros Tacayama",
+        "cargo": "legislador",
+        "sobre": "Contaminación por arsénico en Eureca",
+        "postura": "en contra",
+        "tema": "Saneamiento",
+        "dijo": "Denunció la contaminación de agua con arsénico en el caserío Eureca.",
+        "proyecto": "",
+        "id": "diputados:takayama jimenez"
+      },
+      {
+        "orador": "María Luisa Silupoinga",
+        "cargo": "legislador",
+        "sobre": "Deficiencias en puestos de salud de Piura",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Denunció la precaria situación de los centros de salud en Piura.",
+        "proyecto": "",
+        "id": "diputados:silupu inga"
+      },
+      {
+        "orador": "Yufra",
+        "cargo": "legislador",
+        "sobre": "Construcción del Hospital de Bellavista",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Propuso agilizar la ejecución del Hospital de Bellavista en Cajamarca.",
+        "proyecto": "QI265461",
+        "id": "diputados:yuffra lugo"
+      },
+      {
+        "orador": "Aldo Gravo",
+        "cargo": "legislador",
+        "sobre": "Problemas en Hospital Víctor Larco Herrera",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Denunció las deficiencias de infraestructura en el hospital Víctor Larco Herrera.",
+        "proyecto": "",
+        "id": "diputados:bravo quispe"
+      },
+      {
+        "orador": "Arminta",
+        "cargo": "legislador",
+        "sobre": "Falta de equipos de hemodiálisis en Camaná",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Denunció la falta de equipos de hemodiálisis en la provincia de Camaná.",
+        "proyecto": "",
+        "id": "diputados:arminta valencia"
+      },
+      {
+        "orador": "Elvita Fernández",
+        "cargo": "legislador",
+        "sobre": "Situación del Hospital Hipólito Unano",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Denunció las condiciones precarias del Hospital Hipólito Unano en Tacna.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Balizán",
+        "cargo": "legislador",
+        "sobre": "Mal estado de hospitales en Leoncio Prado",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Denunció el mal estado de la construcción del hospital en Leoncio Prado.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ambrosio",
+        "cargo": "legislador",
+        "sobre": "Precariedad del puesto de salud de Yicua",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Denunció la falta de infraestructura adecuada en el puesto de Yicua.",
+        "proyecto": "",
+        "id": "diputados:ambrosio dominguez"
+      },
+      {
+        "orador": "Jessica Benítez",
+        "cargo": "legislador",
+        "sobre": "Registro de diagnósticos en hospitales psiquiátricos",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Denunció irregularidades en el registro de diagnósticos para la cobertura del SIS.",
+        "proyecto": "",
+        "id": "diputados:benitez barrionuevo"
+      },
+      {
+        "orador": "Ambrosio",
+        "cargo": "legislador",
+        "sobre": "situación del centro de salud Yicua",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Denunció las precarias condiciones del centro de salud en Yicua.",
+        "proyecto": "",
+        "id": "diputados:ambrosio dominguez"
+      },
+      {
+        "orador": "Jessica Benítez",
+        "cargo": "legislador",
+        "sobre": "diagnósticos falsos para medicamentos del SIS",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Cuestionó el uso de diagnósticos falsos para obtener medicamentos.",
+        "proyecto": "",
+        "id": "diputados:benitez barrionuevo"
+      },
+      {
+        "orador": "Alvarón",
+        "cargo": "legislador",
+        "sobre": "falta de atención del ministro de salud",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Criticó la falta de atención del ministro de salud hacia los diputados.",
+        "proyecto": "",
+        "id": "diputados:alvaron de la cruz"
+      },
+      {
+        "orador": "Alvarón",
+        "cargo": "legislador",
+        "sobre": "deficiencias sanitarias en la región Ancash",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Denunció la falta de equipos médicos y brotes de dengue en Ancash.",
+        "proyecto": "",
+        "id": "diputados:alvaron de la cruz"
+      },
+      {
+        "orador": "Avendaño",
+        "cargo": "legislador",
+        "sobre": "infraestructura precaria en centros de salud",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Informó sobre el mal estado de diversos centros de salud en Lima.",
+        "proyecto": "",
+        "id": "diputados:avendano vilca"
+      },
+      {
+        "orador": "Mary Infantes",
+        "cargo": "legislador",
+        "sobre": "crisis sanitaria y de infraestructura en Amazonas",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Denunció la inoperatividad de centros oncológicos y falta de agua en Amazonas.",
+        "proyecto": "",
+        "id": "diputados:infantes castaneda"
+      },
+      {
+        "orador": "Tacayama",
+        "cargo": "legislador",
+        "sobre": "sesión descentralizada en Lambayeque por agua",
+        "postura": "propone",
+        "tema": "Saneamiento",
+        "dijo": "Propuso una sesión descentralizada en Lambayeque para tratar el tema del agua.",
+        "proyecto": "",
+        "id": "diputados:takayama jimenez"
+      },
+      {
+        "orador": "Ambrosio",
+        "cargo": "legislador",
+        "sobre": "información sobre el puesto de salud Yicua",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Pidió investigar la situación actual del puesto de salud Yicua.",
+        "proyecto": "",
+        "id": "diputados:ambrosio dominguez"
+      },
+      {
+        "orador": "Yufra",
+        "cargo": "legislador",
+        "sobre": "obras de salud en Cajamarca y Loreto",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Solicitó la conclusión de obras de salud en varias regiones.",
+        "proyecto": "",
+        "id": "diputados:yuffra lugo"
+      },
+      {
+        "orador": "Fernández",
+        "cargo": "legislador",
+        "sobre": "crisis de salud en la región Tacna",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Propuso una sesión descentralizada para atender la crisis en Tacna.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Jessica Benítez",
+        "cargo": "legislador",
+        "sobre": "medicamentos psiquiátricos y cobertura del SIS",
+        "postura": "propone",
+        "tema": "Farma",
+        "dijo": "Solicitó la presencia de autoridades para discutir la prescripción de medicamentos.",
+        "proyecto": "",
+        "id": "diputados:benitez barrionuevo"
+      },
+      {
+        "orador": "Ambrosio",
+        "cargo": "legislador",
+        "sobre": "proyectos de ley de Columbos y Poma",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Expresó su voto a favor de los proyectos de ley presentados.",
+        "proyecto": "PL de Columbos y Poma",
+        "id": "diputados:ambrosio dominguez"
+      },
+      {
+        "orador": "Domínguez",
+        "cargo": "legislador",
+        "sobre": "paralización de hospitales por Pronis y ANI",
+        "postura": "en contra",
+        "tema": "Infraestructura",
+        "dijo": "Exigió un diagnóstico sobre la paralización de obras de salud.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Infantes",
+        "cargo": "legislador",
+        "sobre": "sesión descentralizada en Amazonas",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso realizar la primera sesión descentralizada en la región Amazonas.",
+        "proyecto": "",
+        "id": "diputados:infantes castaneda"
+      },
+      {
+        "orador": "Carlos Alberto Domínguez Herrera",
+        "cargo": "legislador",
+        "sobre": "Gestión de hospitales en Arequipa",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Pidió la presencia de autoridades para tratar los hospitales en Arequipa.",
+        "proyecto": "",
+        "id": "diputados:dominguez herrera"
+      },
+      {
+        "orador": "Marlenia Armita Valencia",
+        "cargo": "legislador",
+        "sobre": "Gestión de hospitales en Arequipa",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Solicitó la presencia de autoridades de salud para temas de hospitales.",
+        "proyecto": "",
+        "id": "diputados:arminta valencia"
+      },
+      {
+        "orador": "Marlenia Armita Valencia",
+        "cargo": "legislador",
+        "sobre": "Educación para niños con cáncer",
+        "postura": "propone",
+        "tema": "Educación",
+        "dijo": "Pidió explicar la instrucción pedagógica para niños con cáncer.",
+        "proyecto": "",
+        "id": "diputados:arminta valencia"
+      },
+      {
+        "orador": "Edgar Alvarón de la Cruz",
+        "cargo": "legislador",
+        "sobre": "Citación al gobernador de Ancash",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Pidió citar al gobernador de Ancash y al superintendente de SUSALUD.",
+        "proyecto": "",
+        "id": "diputados:alvaron de la cruz"
+      },
+      {
+        "orador": "Leo de Paz Lancho",
+        "cargo": "legislador",
+        "sobre": "Contaminación de agua en Ureca",
+        "postura": "propone",
+        "tema": "Saneamiento",
+        "dijo": "Denunció la falta de respuesta ante la contaminación en Ureca.",
+        "proyecto": "",
+        "id": "diputados:de paz lancho"
+      },
+      {
+        "orador": "Diputado Columbus",
+        "cargo": "legislador",
+        "sobre": "Predictamen de precios de medicamentos",
+        "postura": "en contra",
+        "tema": "Farma",
+        "dijo": "Rechazó el predictamen por no regular los precios de medicamentos.",
+        "proyecto": "",
+        "id": "diputados:columbus murata"
+      },
+      {
+        "orador": "Yanina Avendaño Virca",
+        "cargo": "legislador",
+        "sobre": "Centro Materno Infantil Taguantinuyo",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Solicitó presupuesto para el Centro Materno Infantil Taguantinuyo Bajo.",
+        "proyecto": "",
+        "id": "diputados:avendano vilca"
+      },
+      {
+        "orador": "Yanina Avendaño Virca",
+        "cargo": "legislador",
+        "sobre": "Mitigación del fenómeno de El Niño",
+        "postura": "propone",
+        "tema": "Saneamiento",
+        "dijo": "Pidió medidas para mitigar los efectos del fenómeno de El Niño.",
+        "proyecto": "",
+        "id": "diputados:avendano vilca"
+      },
+      {
+        "orador": "Aldo Bravo Quispe",
+        "cargo": "legislador",
+        "sobre": "Cuestión previa al predictamen farmacéutico",
+        "postura": "propone",
+        "tema": "Farma",
+        "dijo": "Propuso que el predictamen de farmacia retorne a la comisión.",
+        "proyecto": "",
+        "id": "diputados:bravo quispe"
+      },
+      {
+        "orador": "Liliana Tacayama Jiménez",
+        "cargo": "legislador",
+        "sobre": "Cuestión previa al predictamen farmacéutico",
+        "postura": "en contra",
+        "tema": "Farma",
+        "dijo": "Respaldó la cuestión previa para revisar el predictamen farmacéutico.",
+        "proyecto": "",
+        "id": "diputados:takayama jimenez"
+      },
+      {
+        "orador": "Aida Poma",
+        "cargo": "legislador",
+        "sobre": "Vigilancia epidemiológica por contaminación",
+        "postura": "a favor",
+        "tema": "Salud",
+        "dijo": "Defendió el predictamen para notificar focos de contaminación ambiental.",
+        "proyecto": "PL 00230",
+        "id": "diputados:poma huamani"
+      },
+      {
+        "orador": "Aldo Bravo Quispe",
+        "cargo": "legislador",
+        "sobre": "Vigilancia epidemiológica y salud",
+        "postura": "con observaciones",
+        "tema": "Salud",
+        "dijo": "Propuso fortalecer el proyecto para evitar respuestas dilatorias.",
+        "proyecto": "PL 00230",
+        "id": "diputados:bravo quispe"
+      },
+      {
+        "orador": "Mary Infantes Castañeda",
+        "cargo": "legislador",
+        "sobre": "Vigilancia epidemiológica y salud",
+        "postura": "a favor",
+        "tema": "Salud",
+        "dijo": "Respaldó la vigilancia epidemiológica ante la minería ilegal.",
+        "proyecto": "PL 00230",
+        "id": "diputados:infantes castaneda"
+      },
+      {
+        "orador": "Leo de Paz Lancho",
+        "cargo": "legislador",
+        "sobre": "Vigilancia epidemiológica y salud",
+        "postura": "a favor",
+        "tema": "Salud",
+        "dijo": "Ratificó su voto para atender la contaminación de agua.",
+        "proyecto": "PL 00230",
+        "id": "diputados:de paz lancho"
+      },
+      {
+        "orador": "Jessica Benítez Barrian Nuevo",
+        "cargo": "legislador",
+        "sobre": "Vigilancia epidemiológica y salud",
+        "postura": "a favor",
+        "tema": "Salud",
+        "dijo": "Apoyó el proyecto para asegurar la atención oportuna.",
+        "proyecto": "PL 00230",
+        "id": "diputados:benitez barrionuevo"
+      },
+      {
+        "orador": "Leo de Paz Lancho",
+        "cargo": "legislador",
+        "sobre": "predictamen de la diputada Poma",
+        "postura": "a favor",
+        "tema": "Salud",
+        "dijo": "Defendió el predictamen para mejorar la respuesta ante la contaminación.",
+        "proyecto": "PL 00230-2026-301-CD",
+        "id": "diputados:de paz lancho"
+      },
+      {
+        "orador": "Jessica Benítez Barrionuevo",
+        "cargo": "legislador",
+        "sobre": "predictamen de la diputada Poma",
+        "postura": "a favor",
+        "tema": "Salud",
+        "dijo": "Respaldó la propuesta para establecer plazos y responsabilidades en la atención médica.",
+        "proyecto": "PL 00230-2026-301-CD",
+        "id": "diputados:benitez barrionuevo"
+      },
+      {
+        "orador": "Ana Luisa Yufra",
+        "cargo": "legislador",
+        "sobre": "propuesta legislativa de la diputada Poma",
+        "postura": "a favor",
+        "tema": "Salud",
+        "dijo": "Saludó la propuesta y pidió presupuesto para laboratorios especializados en Loreto.",
+        "proyecto": "PL 00230-2026-301-CD",
+        "id": "diputados:yuffra lugo"
+      },
+      {
+        "orador": "Wils Hilmer Orna",
+        "cargo": "ministro o autoridad",
+        "sobre": "gestión del hospital de Utcubamba",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Informó sobre las medidas tomadas para blindar el proyecto contra la corrupción.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Aldo Bravo Quispe",
+        "cargo": "legislador",
+        "sobre": "gestión del hospital de Utcubamba",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Cuestionó la veracidad de la información presentada por el gobernador regional.",
+        "proyecto": "",
+        "id": "diputados:bravo quispe"
+      },
+      {
+        "orador": "Mary Infantes Castañeda",
+        "cargo": "legislador",
+        "sobre": "fiscalización del hospital de Utcubamba",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Denunció la falta de avances reales y las trabas para fiscalizar la obra.",
+        "proyecto": "",
+        "id": "diputados:infantes castaneda"
+      },
+      {
+        "orador": "Edgar Alvarón de la Cruz",
+        "cargo": "legislador",
+        "sobre": "salud en la región Amazonas",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Lamentó la deficiente gestión de salud en la región Amazonas.",
+        "proyecto": "",
+        "id": "diputados:alvaron de la cruz"
+      },
+      {
+        "orador": "Jessica Benítez Barrionuevo",
+        "cargo": "legislador",
+        "sobre": "pedido de informe a la Contraloría",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso solicitar un informe formal a la Contraloría sobre la obra.",
+        "proyecto": "",
+        "id": "diputados:benitez barrionuevo"
+      },
+      {
+        "orador": "Mary Infantes",
+        "cargo": "legislador",
+        "sobre": "fiscalización de la obra de Bahuarde",
+        "postura": "en contra",
+        "tema": "Infraestructura",
+        "dijo": "Denunció la falta de acceso y el bajo avance de la obra de Bahuarde.",
+        "proyecto": "",
+        "id": "diputados:infantes castaneda"
+      },
+      {
+        "orador": "Aldo",
+        "cargo": "legislador",
+        "sobre": "solicitud de información a la Contraloría",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso solicitar información detallada a la Contraloría General de la República.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=5xxUrBBfdCY"
   }
 }
