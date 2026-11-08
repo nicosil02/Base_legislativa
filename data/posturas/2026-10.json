@@ -6385,5 +6385,292 @@
       }
     ],
     "url": "https://www.facebook.com/watch/?v=1732346264494942"
+  },
+  "fb_2834144213646590": {
+    "fecha": "2026-10-27",
+    "organo": "Comisión de Derecho al Trabajo",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Juan Pablo Molina",
+        "cargo": "legislador",
+        "sobre": "competencia de fiscalización municipal",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Manifestó que la Asamblea no tiene competencia sobre asuntos municipales.",
+        "proyecto": "",
+        "id": "EC:molina saldana"
+      },
+      {
+        "orador": "Roberto Cuerro Medina",
+        "cargo": "legislador",
+        "sobre": "fiscalización de la tercerización laboral",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Afirmó que su voto será en contra por principios legales.",
+        "proyecto": "",
+        "id": "EC:cuero medina"
+      },
+      {
+        "orador": "Humberto Alvarado",
+        "cargo": "legislador",
+        "sobre": "solidez del informe de fiscalización",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó la falta de solidez del informe presentado.",
+        "proyecto": "",
+        "id": "EC:alvarado espinel"
+      },
+      {
+        "orador": "Egnerey de Recalde Álava",
+        "cargo": "legislador",
+        "sobre": "derechos de los trabajadores",
+        "postura": "a favor",
+        "tema": "Trabajo",
+        "dijo": "Defendió la fiscalización contra la tercerización laboral prohibida.",
+        "proyecto": "",
+        "id": "EC:recalde alava"
+      },
+      {
+        "orador": "Nayeli Quintana",
+        "cargo": "legislador",
+        "sobre": "aprobación del informe de fiscalización",
+        "postura": "propone",
+        "tema": "Trabajo",
+        "dijo": "Propuso aprobar el informe de fiscalización sobre la tercerización.",
+        "proyecto": "Resolución RL-2025-2029-090",
+        "id": "EC:quintana tapia"
+      },
+      {
+        "orador": "Elizabeth Vega",
+        "cargo": "legislador",
+        "sobre": "aprobación del informe de fiscalización",
+        "postura": "a favor",
+        "tema": "Trabajo",
+        "dijo": "Respaldó la moción para aprobar el informe de fiscalización.",
+        "proyecto": "Resolución RL-2025-2029-090",
+        "id": "EC:vega segura"
+      },
+      {
+        "orador": "Juan Pablo Molina",
+        "cargo": "legislador",
+        "sobre": "competencia de la Asamblea Nacional",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Reiteró que la fiscalización municipal no es competencia legislativa.",
+        "proyecto": "",
+        "id": "EC:molina saldana"
+      },
+      {
+        "orador": "Juan Pablo Molina",
+        "cargo": "legislador",
+        "sobre": "la tercerización laboral",
+        "postura": "en contra",
+        "tema": "Trabajo",
+        "dijo": "Rechazó la tercerización y cuestionó la fiscalización de temas ajenos a su competencia.",
+        "proyecto": "",
+        "id": "EC:molina saldana"
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=2834144213646590"
+  },
+  "fb_1694348782203358": {
+    "fecha": "2026-10-27",
+    "organo": "Comisión de Relaciones Internacionales",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Estefanía Martínez",
+        "cargo": "invitado",
+        "sobre": "Reforma de la Ley del Servicio Exterior",
+        "postura": "con observaciones",
+        "tema": "Otros",
+        "dijo": "Expuso observaciones técnicas para fortalecer la reforma de la Ley del Servicio Exterior.",
+        "proyecto": "Ley del Servicio Exterior",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1694348782203358"
+  },
+  "CXC0rWjtjTI": {
+    "fecha": "2026-10-27",
+    "organo": "Comisión de Ciencia",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Ayse",
+        "cargo": "legislador",
+        "sobre": "sala de investigación en Cusco",
+        "postura": "comenta",
+        "tema": "Educación",
+        "dijo": "Informó sobre el pedido de la Universidad San Antonio Abad.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ricardo Cristopher Zapata",
+        "cargo": "ministro o autoridad",
+        "sobre": "transformación digital del Estado",
+        "postura": "comenta",
+        "tema": "Tecnología",
+        "dijo": "Presentó los avances de la transformación digital estatal.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Jair Marrique",
+        "cargo": "legislador",
+        "sobre": "interoperabilidad y seguridad de datos",
+        "postura": "en contra",
+        "tema": "Tecnología",
+        "dijo": "Cuestionó la efectividad de la transformación digital estatal.",
+        "proyecto": "",
+        "id": "diputados:manrique olivera"
+      },
+      {
+        "orador": "Ricardo Cristopher Zapata",
+        "cargo": "ministro o autoridad",
+        "sobre": "respuestas sobre conectividad y datos",
+        "postura": "comenta",
+        "tema": "Tecnología",
+        "dijo": "Respondió dudas sobre la estrategia de datos estatales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Indepichon",
+        "cargo": "ministro o autoridad",
+        "sobre": "plataforma GeoPerú y seguridad digital",
+        "postura": "comenta",
+        "tema": "Tecnología",
+        "dijo": "Explicó la interconectividad de la plataforma GeoPerú.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ricardo Zapata",
+        "cargo": "ministro o autoridad",
+        "sobre": "Seguridad digital",
+        "postura": "comenta",
+        "tema": "Tecnología",
+        "dijo": "Informó sobre la asistencia técnica del Centro Nacional de Seguridad Digital.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "La vicepresidenta",
+        "cargo": "legislador",
+        "sobre": "Prótesis en Curawasi",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Propuso replicar el modelo de prótesis de bajo costo en hospitales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "La vicepresidenta",
+        "cargo": "legislador",
+        "sobre": "Inteligencia artificial en colegios",
+        "postura": "propone",
+        "tema": "Educación",
+        "dijo": "Propuso implementar cursos de inteligencia artificial en colegios peruanos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "La vicepresidenta",
+        "cargo": "legislador",
+        "sobre": "Idiomas en plataformas digitales",
+        "postura": "propone",
+        "tema": "Tecnología",
+        "dijo": "Pidió traducir las plataformas digitales al español para mejorar el acceso.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Jair",
+        "cargo": "legislador",
+        "sobre": "Estandarización tecnológica estatal",
+        "postura": "en contra",
+        "tema": "Tecnología",
+        "dijo": "Cuestionó la falta de un stack tecnológico único para las instituciones.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Kerkik",
+        "cargo": "legislador",
+        "sobre": "Aplicación de la Ley de IA",
+        "postura": "pregunta",
+        "tema": "Tecnología",
+        "dijo": "Preguntó si las recomendaciones de seguridad digital son de cumplimiento obligatorio.",
+        "proyecto": "Ley de Inteligencia Artificial",
+        "id": null
+      },
+      {
+        "orador": "Ricardo Zapata",
+        "cargo": "ministro o autoridad",
+        "sobre": "Inteligencia artificial regional",
+        "postura": "comenta",
+        "tema": "Tecnología",
+        "dijo": "Informó sobre la ordenanza de inteligencia artificial en regiones.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ricardo Zapata",
+        "cargo": "ministro o autoridad",
+        "sobre": "Reglamento de inteligencia artificial",
+        "postura": "comenta",
+        "tema": "Tecnología",
+        "dijo": "Informó sobre la supervisión humana en el reglamento de inteligencia artificial.",
+        "proyecto": "Ley de Inteligencia Artificial",
+        "id": null
+      },
+      {
+        "orador": "Patiño",
+        "cargo": "legislador",
+        "sobre": "Talento digital regional",
+        "postura": "pregunta",
+        "tema": "Tecnología",
+        "dijo": "Preguntó por las estrategias para desarrollar el talento digital regional.",
+        "proyecto": "",
+        "id": "diputados:patino urco"
+      },
+      {
+        "orador": "Patiño",
+        "cargo": "legislador",
+        "sobre": "Regulación de la IA",
+        "postura": "pregunta",
+        "tema": "Tecnología",
+        "dijo": "Consultó sobre la articulación regulatoria de la inteligencia artificial.",
+        "proyecto": "",
+        "id": "diputados:patino urco"
+      },
+      {
+        "orador": "Patiño",
+        "cargo": "legislador",
+        "sobre": "Presupuesto para Junín",
+        "postura": "pregunta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Pidió información sobre el presupuesto de transformación digital para Junín.",
+        "proyecto": "",
+        "id": "diputados:patino urco"
+      },
+      {
+        "orador": "Peri",
+        "cargo": "legislador",
+        "sobre": "Conectividad en la selva",
+        "postura": "en contra",
+        "tema": "Telecomunicaciones",
+        "dijo": "Denunció la falta de conectividad y electricidad en la selva.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=CXC0rWjtjTI"
   }
 }
