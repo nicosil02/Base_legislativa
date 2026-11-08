@@ -11658,5 +11658,142 @@
       }
     ],
     "url": "https://www.youtube.com/watch?v=l-2b95G29Zw"
+  },
+  "fb_29083195037986270": {
+    "fecha": "2026-10-21",
+    "organo": "Comisión de Biodiversidad",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Andrea Gómez Arias",
+        "cargo": "invitado",
+        "sobre": "Proyecto de la Orgánica de Bioeconomía",
+        "postura": "con observaciones",
+        "tema": "Ambiente",
+        "dijo": "Propuso cambios para mejorar la implementación de la ley.",
+        "proyecto": "Orgánica de Fomento de la Bioeconomía",
+        "id": null
+      },
+      {
+        "orador": "Andrea Gómez Arias",
+        "cargo": "invitado",
+        "sobre": "Articulación con finanzas sostenibles",
+        "postura": "propone",
+        "tema": "Ambiente",
+        "dijo": "Propuso establecer mecanismos de articulación en el reglamento.",
+        "proyecto": "Orgánica de Fomento de la Bioeconomía",
+        "id": null
+      },
+      {
+        "orador": "Casanova",
+        "cargo": "legislador",
+        "sobre": "Aprovechamiento económico y biodiversidad",
+        "postura": "pregunta",
+        "tema": "Ambiente",
+        "dijo": "Preguntó cómo evitar la sobreexplotación de la biodiversidad.",
+        "proyecto": "",
+        "id": "EC:casanova montesino"
+      },
+      {
+        "orador": "Andrea Gómez Arias",
+        "cargo": "invitado",
+        "sobre": "Salvaguardas ambientales del proyecto",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Comentó que la ley ya contempla requisitos de conservación.",
+        "proyecto": "Orgánica de Fomento de la Bioeconomía",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=29083195037986270"
+  },
+  "fb_1362073759338536": {
+    "fecha": "2026-10-21",
+    "organo": "Comisión de Educación",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Ana Belén",
+        "cargo": "legislador",
+        "sobre": "Ausencia de ministerios en la sesión",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó la falta de presencia de las instituciones encargadas de la educación.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Erika Mora",
+        "cargo": "invitado",
+        "sobre": "Monitoreo del fenómeno del niño",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Informó sobre las acciones de monitoreo realizadas por el Inami.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Adriana Rodríguez",
+        "cargo": "invitado",
+        "sobre": "Funciones técnicas del Inami",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Explicó la labor de suministro de información técnica y científica.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ana María Rafa",
+        "cargo": "legislador",
+        "sobre": "Inasistencia de autoridades educativas",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció la falta de compromiso de las autoridades con la comisión.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Sofía Estefanía León Sánchez",
+        "cargo": "invitado",
+        "sobre": "Resultados de la evaluación PISA 2025",
+        "postura": "comenta",
+        "tema": "Educación",
+        "dijo": "Presentó los resultados de Ecuador en las pruebas PISA.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Anna María Ron",
+        "cargo": "legislador",
+        "sobre": "Resultados de PISA y presupuesto educativo",
+        "postura": "en contra",
+        "tema": "Educación",
+        "dijo": "Denunció los bajos resultados de PISA y el insuficiente presupuesto educativo.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1362073759338536"
+  },
+  "fb_28957761680521250": {
+    "fecha": "2026-10-21",
+    "organo": "Comisión de Biodiversidad",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Carlos Miguel Cuesta Álvarez",
+        "cargo": "legislador",
+        "sobre": "Reforma al Código Orgánico del Ambiente",
+        "postura": "a favor",
+        "tema": "Ambiente",
+        "dijo": "Defendió la reforma al Código Orgánico del Ambiente para apoyar a familias rurales.",
+        "proyecto": "Ley Orgánica Reformatoria al Código Orgánico del Ambiente",
+        "id": "EC:cuesta alvarez"
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=28957761680521250"
   }
 }
