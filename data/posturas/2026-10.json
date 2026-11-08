@@ -8026,5 +8026,242 @@
       }
     ],
     "url": "https://www.youtube.com/watch?v=wQd0OUYZOeA"
+  },
+  "fb_2175791466623740": {
+    "fecha": "2026-10-26",
+    "organo": "Comisión de Seguridad Integral",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Gabriela Amelo",
+        "cargo": "invitado",
+        "sobre": "Proyecto de ley antimafias",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso la definición de persona desplazada en la ley antimafias.",
+        "proyecto": "Ley antimafias",
+        "id": null
+      },
+      {
+        "orador": "Marco Morales Andrade",
+        "cargo": "invitado",
+        "sobre": "Reforma ley de las fuerzas armadas",
+        "postura": "con observaciones",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Respaldó la reforma de la ley de las fuerzas armadas.",
+        "proyecto": "Ley de personal de las fuerzas armadas",
+        "id": null
+      },
+      {
+        "orador": "Rafael Rodas",
+        "cargo": "invitado",
+        "sobre": "Reforma ley de las fuerzas armadas",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Respaldó la reforma de la ley de las fuerzas armadas.",
+        "proyecto": "Ley de personal de las fuerzas armadas",
+        "id": null
+      },
+      {
+        "orador": "Rodas",
+        "cargo": "invitado",
+        "sobre": "Reforma del régimen de las fuerzas armadas",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Respaldó la reforma de las fuerzas armadas por su coherencia constitucional.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=2175791466623740"
+  },
+  "7kTc4kZQrxU": {
+    "fecha": "2026-10-26",
+    "organo": "Comisión de Defensa del Consumidor",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Yamashiro",
+        "cargo": "legislador",
+        "sobre": "Carga administrativa tributaria",
+        "postura": "pregunta",
+        "tema": "Tributos",
+        "dijo": "Consultó sobre la excesiva carga administrativa para los contribuyentes.",
+        "proyecto": "",
+        "id": "senado:yamashiro ore"
+      },
+      {
+        "orador": "Yamashiro",
+        "cargo": "legislador",
+        "sobre": "Transparencia de la SUNAT",
+        "postura": "propone",
+        "tema": "Tributos",
+        "dijo": "Propuso la publicación de un tablero de resultados de la SUNAT.",
+        "proyecto": "",
+        "id": "senado:yamashiro ore"
+      },
+      {
+        "orador": "Patricia Iturrey",
+        "cargo": "legislador",
+        "sobre": "Régimen de renta progresivo",
+        "postura": "pregunta",
+        "tema": "Tributos",
+        "dijo": "Preguntó sobre la viabilidad del nuevo régimen de renta progresiva.",
+        "proyecto": "",
+        "id": "senado:iturregui byrne"
+      },
+      {
+        "orador": "Patricia Iturrey",
+        "cargo": "legislador",
+        "sobre": "Beneficios tributarios en Amazonía",
+        "postura": "pregunta",
+        "tema": "Tributos",
+        "dijo": "Consultó sobre la eficacia de los beneficios en la Amazonía.",
+        "proyecto": "",
+        "id": "senado:iturregui byrne"
+      },
+      {
+        "orador": "Rosorio",
+        "cargo": "legislador",
+        "sobre": "Deudores en licitaciones",
+        "postura": "propone",
+        "tema": "Tributos",
+        "dijo": "Propuso prohibir la participación de deudores en licitaciones públicas.",
+        "proyecto": "",
+        "id": "senado:osorio palpan"
+      },
+      {
+        "orador": "Luna Victoria",
+        "cargo": "ministro o autoridad",
+        "sobre": "Gestión de deudores tributarios",
+        "postura": "comenta",
+        "tema": "Tributos",
+        "dijo": "Explicó que la SUNAT aplica las normas vigentes a deudores.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Luna Victoria",
+        "cargo": "ministro o autoridad",
+        "sobre": "Minería informal",
+        "postura": "comenta",
+        "tema": "Minería",
+        "dijo": "Informó sobre el incremento de recaudación mediante las detracciones.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Luna Victoria",
+        "cargo": "ministro o autoridad",
+        "sobre": "Brecha de recaudación tributaria",
+        "postura": "comenta",
+        "tema": "Tributos",
+        "dijo": "Detalló la magnitud del incumplimiento tributario en el país.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=7kTc4kZQrxU"
+  },
+  "fb_917802611270919": {
+    "fecha": "2026-10-26",
+    "organo": "Comisión de Niñez y Adolescencia",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Sara María Maridueña Orellana",
+        "cargo": "invitado",
+        "sobre": "Proyecto de protección infantil digital",
+        "postura": "con observaciones",
+        "tema": "Tecnología",
+        "dijo": "Propuso cambios técnicos y umbrales económicos para el proyecto de protección infantil.",
+        "proyecto": "Ley de protección integral de niños y adolescentes en entornos digitales",
+        "id": null
+      },
+      {
+        "orador": "Ricardo Patincha",
+        "cargo": "legislador",
+        "sobre": "Cumplimiento y salvaguardas en plataformas",
+        "postura": "pregunta",
+        "tema": "Tecnología",
+        "dijo": "Preguntó sobre la efectividad de la ley y salvaguardas en inteligencia artificial.",
+        "proyecto": "Ley de protección integral de niños y adolescentes en entornos digitales",
+        "id": null
+      },
+      {
+        "orador": "Sara María Maridueña Orellana",
+        "cargo": "invitado",
+        "sobre": "Representación legal de plataformas",
+        "postura": "propone",
+        "tema": "Tecnología",
+        "dijo": "Propuso designar representantes legales en el país para notificaciones de plataformas.",
+        "proyecto": "Ley de protección integral de niños y adolescentes en entornos digitales",
+        "id": null
+      },
+      {
+        "orador": "Ricardo Patincha",
+        "cargo": "legislador",
+        "sobre": "Suspensión de plataformas sin representante",
+        "postura": "comenta",
+        "tema": "Tecnología",
+        "dijo": "Comentó la posibilidad de suspender plataformas sin un representante legal.",
+        "proyecto": "Ley de protección integral de niños y adolescentes en entornos digitales",
+        "id": null
+      },
+      {
+        "orador": "Sara María Maridueña Orellana",
+        "cargo": "invitado",
+        "sobre": "Salvaguardas en inteligencia artificial",
+        "postura": "propone",
+        "tema": "Tecnología",
+        "dijo": "Sugirió realizar evaluaciones de impacto para proteger datos biométricos en inteligencia artificial.",
+        "proyecto": "Ley de protección integral de niños y adolescentes en entornos digitales",
+        "id": null
+      },
+      {
+        "orador": "Paola Cabezas",
+        "cargo": "legislador",
+        "sobre": "Riesgo de datos en países asiáticos",
+        "postura": "pregunta",
+        "tema": "Tecnología",
+        "dijo": "Preguntó sobre el nivel de riesgo en la protección de datos asiática.",
+        "proyecto": "Ley de protección integral de niños y adolescentes en entornos digitales",
+        "id": "EC:cabezas castillo"
+      },
+      {
+        "orador": "Sara María Maridueña Orellana",
+        "cargo": "invitado",
+        "sobre": "Regulación de protección de datos",
+        "postura": "comenta",
+        "tema": "Tecnología",
+        "dijo": "Explicó las diferencias en la regulación de protección de datos por región.",
+        "proyecto": "Ley de protección integral de niños y adolescentes en entornos digitales",
+        "id": null
+      },
+      {
+        "orador": "Paola Cabezas",
+        "cargo": "legislador",
+        "sobre": "Salud mental y redes sociales",
+        "postura": "en contra",
+        "tema": "Tecnología",
+        "dijo": "Denunció el contenido adictivo de las redes sociales en la salud mental.",
+        "proyecto": "Ley de protección integral de niños y adolescentes en entornos digitales",
+        "id": "EC:cabezas castillo"
+      },
+      {
+        "orador": "Sara María Maridueña Orellana",
+        "cargo": "invitado",
+        "sobre": "Enfoque preventivo tecnológico",
+        "postura": "comenta",
+        "tema": "Tecnología",
+        "dijo": "Enfatizó la necesidad de un enfoque preventivo en las nuevas tecnologías.",
+        "proyecto": "Ley de protección integral de niños y adolescentes en entornos digitales",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=917802611270919"
   }
 }
