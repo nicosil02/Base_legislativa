@@ -7039,5 +7039,992 @@
       }
     ],
     "url": "https://www.facebook.com/watch/?v=1606171874587229"
+  },
+  "K-XTVHHAWTI": {
+    "fecha": "2026-10-26",
+    "organo": "Comisión de Educación",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Yamchito",
+        "cargo": "legislador",
+        "sobre": "Incorporación al grupo de trabajo",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso su incorporación al grupo de trabajo.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Fabrí",
+        "cargo": "legislador",
+        "sobre": "Cambio en el orden del día",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Pidió cambiar el orden del día de la sesión.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Juana Anticona Coaila",
+        "cargo": "legislador",
+        "sobre": "Ampliación de plazo del grupo de trabajo",
+        "postura": "propone",
+        "tema": "Educación",
+        "dijo": "Pidió ampliar el plazo del grupo de trabajo.",
+        "proyecto": "",
+        "id": "senado:ticona cohaila"
+      },
+      {
+        "orador": "Silvana Robles Araujo",
+        "cargo": "legislador",
+        "sobre": "Modificación del reglamento de la Cámara",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso modificar el reglamento de la Cámara Alta.",
+        "proyecto": "Proyecto de resolución legislativa",
+        "id": "senado:robles araujo"
+      },
+      {
+        "orador": "Alberto Ismael Bingolea Delgado",
+        "cargo": "ministro o autoridad",
+        "sobre": "Gestión cultural y fenómeno del niño",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Defendió la gestión cultural y el fenómeno del niño.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro de Cultura",
+        "cargo": "ministro o autoridad",
+        "sobre": "metas de patrimonio e industrias",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Informó sobre el cumplimiento de metas en patrimonio e industrias culturales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro de Cultura",
+        "cargo": "ministro o autoridad",
+        "sobre": "presupuesto de cultura",
+        "postura": "propone",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Propuso elevar el presupuesto del sector en un 14 por ciento.",
+        "proyecto": "Ley de Presupuestos",
+        "id": null
+      },
+      {
+        "orador": "Ministro de Cultura",
+        "cargo": "ministro o autoridad",
+        "sobre": "cantidad de museos",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Informó que el sector administra 56 de los 387 museos registrados.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro de Cultura",
+        "cargo": "ministro o autoridad",
+        "sobre": "uso social del patrimonio",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Propuso poner el Intihuatana al servicio de los visitantes.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro de Cultura",
+        "cargo": "ministro o autoridad",
+        "sobre": "repatriación de bienes culturales",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Informó la reciente repatriación de importantes obras de arte peruanas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro de Cultura",
+        "cargo": "ministro o autoridad",
+        "sobre": "invasiones en sitios arqueológicos",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Denunció las invasiones en centros arqueológicos como Mateo Salado.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro de Cultura",
+        "cargo": "ministro o autoridad",
+        "sobre": "inscripción de la marinera",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Propuso inscribir la marinera como patrimonio de la humanidad.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro de Cultura",
+        "cargo": "ministro o autoridad",
+        "sobre": "ejecución de inversiones",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Informó que pretenden aumentar la ejecución de inversiones al 73 por ciento.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro de Cultura",
+        "cargo": "ministro o autoridad",
+        "sobre": "nueva sede del Archivo Nacional",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Propuso construir una nueva sede en Pueblo Libre.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro de Cultura",
+        "cargo": "ministro o autoridad",
+        "sobre": "elenco de teatro nacional",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Propuso crear un elenco de teatro para el Gran Teatro Nacional.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro de Cultura",
+        "cargo": "ministro o autoridad",
+        "sobre": "trabajo de la Red Mía",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Informó sobre el trabajo de la Red Mía con mujeres indígenas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro de Cultura",
+        "cargo": "ministro o autoridad",
+        "sobre": "modificación de la ley del ministerio",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Pidió modificar la ley del Ministerio de Cultura para modernizarlo.",
+        "proyecto": "Ley del Ministerio de Cultura",
+        "id": null
+      },
+      {
+        "orador": "Ministro de Cultura",
+        "cargo": "ministro o autoridad",
+        "sobre": "ley de la televisión estatal",
+        "postura": "propone",
+        "tema": "Telecomunicaciones",
+        "dijo": "Propuso cambiar la ley del IRTP para generar recursos propios.",
+        "proyecto": "Ley de la televisión del Estado",
+        "id": null
+      },
+      {
+        "orador": "Ministro de Cultura",
+        "cargo": "ministro o autoridad",
+        "sobre": "hallazgo arqueológico en Chan Chan",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Informó sobre un importante hallazgo funerario intacto en Chan Chan.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Bengolea",
+        "cargo": "ministro o autoridad",
+        "sobre": "Accidente en Chan Chan",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Explicó las medidas de seguridad aplicadas durante el accidente en Chan Chan.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Bengolea",
+        "cargo": "ministro o autoridad",
+        "sobre": "Gestión del teatro en Tacna",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Informó sobre la reactivación del teatro municipal de Tacna.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Bengolea",
+        "cargo": "ministro o autoridad",
+        "sobre": "Premios de CONADIS",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Mencionó los reconocimientos de CONADIS por la inclusión.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Bengolea",
+        "cargo": "ministro o autoridad",
+        "sobre": "Reconocimiento de Kuelap",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Destacó el reconocimiento de Kuelap por National Geographic.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Bengolea",
+        "cargo": "ministro o autoridad",
+        "sobre": "Boletos de Machu Picchu",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Informó sobre el éxito en la venta de boletos en Machu Picchu.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Jorge",
+        "cargo": "legislador",
+        "sobre": "Imágenes eróticas en Trujillo",
+        "postura": "en contra",
+        "tema": "Otros",
+        "dijo": "Denunció el daño de las imágenes eróticas en la niñez.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Canachiro",
+        "cargo": "legislador",
+        "sobre": "Acceso a Machu Picchu",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Saludó la mejora en el acceso de visitantes a Machu Picchu.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Canachiro",
+        "cargo": "legislador",
+        "sobre": "Personal técnico en regiones",
+        "postura": "pregunta",
+        "tema": "Otros",
+        "dijo": "Preguntó sobre la contratación de especialistas en arqueología y antropología.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Canachiro",
+        "cargo": "legislador",
+        "sobre": "Invasión minera en Nazca",
+        "postura": "en contra",
+        "tema": "Otros",
+        "dijo": "Denunció la invasión de mineros artesanales en Nazca.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Canachiro",
+        "cargo": "legislador",
+        "sobre": "Programa Roquito Roquín",
+        "postura": "pregunta",
+        "tema": "Otros",
+        "dijo": "Preguntó por la estructura y mensaje del programa Roquito Roquín.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Canachiro",
+        "cargo": "legislador",
+        "sobre": "Elenco del Teatro Nacional",
+        "postura": "en contra",
+        "tema": "Otros",
+        "dijo": "Cuestionó el monopolio artístico del elenco del Teatro Nacional.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Canachiro",
+        "cargo": "legislador",
+        "sobre": "Desarrollo de mujeres indígenas",
+        "postura": "pregunta",
+        "tema": "Otros",
+        "dijo": "Preguntó sobre la estrategia para emprendimientos de mujeres indígenas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Canachiro",
+        "cargo": "legislador",
+        "sobre": "Definición de comunidades indígenas",
+        "postura": "pregunta",
+        "tema": "Otros",
+        "dijo": "Preguntó si se depurará la definición de comunidades indígenas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Canachiro",
+        "cargo": "legislador",
+        "sobre": "Gestión del IRTP",
+        "postura": "pregunta",
+        "tema": "Otros",
+        "dijo": "Preguntó si se evaluará un modelo de concesión para el IRTP.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Robles",
+        "cargo": "legislador",
+        "sobre": "Inseguridad territorial indígena",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Denunció la afectación de territorios por economías ilegales.",
+        "proyecto": "",
+        "id": "senado:robles araujo"
+      },
+      {
+        "orador": "Robles",
+        "cargo": "legislador",
+        "sobre": "Protección de líderes indígenas",
+        "postura": "pregunta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Pidió medidas para proteger a los líderes indígenas asesinados.",
+        "proyecto": "",
+        "id": "senado:robles araujo"
+      },
+      {
+        "orador": "Verano",
+        "cargo": "legislador",
+        "sobre": "Presupuesto del sector cultural",
+        "postura": "con observaciones",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Cuestionó las discrepancias en las cifras del presupuesto cultural.",
+        "proyecto": "",
+        "id": "senado:verano saravia"
+      },
+      {
+        "orador": "Ticona",
+        "cargo": "legislador",
+        "sobre": "Presupuesto para Tacna",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Lamentó la falta de presupuesto para proteger el patrimonio tacneño.",
+        "proyecto": "",
+        "id": "senado:ticona cohaila"
+      },
+      {
+        "orador": "Chipana",
+        "cargo": "legislador",
+        "sobre": "Incendios en el Lago Titicaca",
+        "postura": "pregunta",
+        "tema": "Ambiente",
+        "dijo": "Consultó sobre el impacto de los incendios en el patrimonio.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ticona",
+        "cargo": "legislador",
+        "sobre": "Presupuesto para patrimonio en Tacna",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Cuestionó la falta de presupuesto para proteger el patrimonio en Tacna.",
+        "proyecto": "",
+        "id": "senado:ticona cohaila"
+      },
+      {
+        "orador": "Chipana",
+        "cargo": "legislador",
+        "sobre": "Incendios en el lago Titicaca",
+        "postura": "pregunta",
+        "tema": "Ambiente",
+        "dijo": "Preguntó por el impacto de los incendios en el pueblo Uros.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Chipana",
+        "cargo": "legislador",
+        "sobre": "Protección de expresiones culturales en Puno",
+        "postura": "pregunta",
+        "tema": "Otros",
+        "dijo": "Pidió acciones para proteger las expresiones culturales en Puno.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Chipana",
+        "cargo": "legislador",
+        "sobre": "Proyección del Lugar de la Memoria",
+        "postura": "pregunta",
+        "tema": "Otros",
+        "dijo": "Consultó sobre la proyección nacional del Lugar de la Memoria.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Tapia",
+        "cargo": "legislador",
+        "sobre": "Inversiones para Cajamarca",
+        "postura": "con observaciones",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Denunció la falta de inversiones para Cajamarca en el presupuesto.",
+        "proyecto": "",
+        "id": "senado:tapia bernal"
+      },
+      {
+        "orador": "Tapia",
+        "cargo": "legislador",
+        "sobre": "Patrimonio de Cajamarca ante la UNESCO",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Pidió reactivar los trámites para declarar a Cajamarca patrimonio mundial.",
+        "proyecto": "",
+        "id": "senado:tapia bernal"
+      },
+      {
+        "orador": "Bonifaz",
+        "cargo": "legislador",
+        "sobre": "Presupuesto para la cultura",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Criticó el presupuesto asignado para el sector de cultura.",
+        "proyecto": "",
+        "id": "senado:bonifaz carmona"
+      },
+      {
+        "orador": "Bonifaz",
+        "cargo": "legislador",
+        "sobre": "Gestión de hoteles en Machu Picchu",
+        "postura": "en contra",
+        "tema": "Otros",
+        "dijo": "Cuestionó la administración privada de hoteles en Machu Picchu.",
+        "proyecto": "",
+        "id": "senado:bonifaz carmona"
+      },
+      {
+        "orador": "Bonifaz",
+        "cargo": "legislador",
+        "sobre": "Situación laboral del IRTP",
+        "postura": "pregunta",
+        "tema": "Trabajo",
+        "dijo": "Pidió un balance laboral sobre los trabajadores del IRTP.",
+        "proyecto": "",
+        "id": "senado:bonifaz carmona"
+      },
+      {
+        "orador": "Bonifaz",
+        "cargo": "legislador",
+        "sobre": "Protección del sitio Caral",
+        "postura": "en contra",
+        "tema": "Otros",
+        "dijo": "Denunció la falta de seguridad y afectaciones en Caral.",
+        "proyecto": "",
+        "id": "senado:bonifaz carmona"
+      },
+      {
+        "orador": "Mancha",
+        "cargo": "legislador",
+        "sobre": "Restauración de templos en Puno",
+        "postura": "pregunta",
+        "tema": "Otros",
+        "dijo": "Preguntó por la restauración de templos en la región Puno.",
+        "proyecto": "",
+        "id": "senado:mancha pineda"
+      },
+      {
+        "orador": "Jaurey",
+        "cargo": "legislador",
+        "sobre": "Uso de datos en gestión cultural",
+        "postura": "con observaciones",
+        "tema": "Otros",
+        "dijo": "Exigió el uso de datos para la toma de decisiones.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Jaurey",
+        "cargo": "legislador",
+        "sobre": "Brecha de atención en museos",
+        "postura": "pregunta",
+        "tema": "Otros",
+        "dijo": "Consultó sobre la brecha de atención en los museos nacionales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Jaurey",
+        "cargo": "legislador",
+        "sobre": "Titulación de comunidades indígenas",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Mencionó la necesidad de articular la titulación de tierras.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Jaurey",
+        "cargo": "legislador",
+        "sobre": "Apoyo a la Biblioteca Nacional",
+        "postura": "pregunta",
+        "tema": "Otros",
+        "dijo": "Pidió fortalecer la atención a la Biblioteca Nacional.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Jaurey",
+        "cargo": "legislador",
+        "sobre": "Seguridad en Chanchan",
+        "postura": "en contra",
+        "tema": "Otros",
+        "dijo": "Denunció la situación de seguridad en el sitio Chanchan.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Alberto Bingolea Delgado",
+        "cargo": "ministro o autoridad",
+        "sobre": "Gestión del Ministerio de Cultura",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Respondió a las diversas interrogantes planteadas por los legisladores.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Viceministra",
+        "cargo": "ministro o autoridad",
+        "sobre": "Acceso a sitios arqueológicos",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Explicó las dificultades de acceso a los sitios arqueológicos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Viceministra",
+        "cargo": "ministro o autoridad",
+        "sobre": "Aforo en Machu Picchu",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Informó sobre el control de aforo en Machu Picchu.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Verano",
+        "cargo": "legislador",
+        "sobre": "Acceso a sitios arqueológicos",
+        "postura": "en contra",
+        "tema": "Otros",
+        "dijo": "Denunció el mal estado de acceso a sitios arqueológicos.",
+        "proyecto": "",
+        "id": "senado:verano saravia"
+      },
+      {
+        "orador": "Ticona",
+        "cargo": "legislador",
+        "sobre": "Documental por centenario de Tacna",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Solicitó un documental oficial por el centenario de Tacna.",
+        "proyecto": "",
+        "id": "senado:ticona cohaila"
+      },
+      {
+        "orador": "Ministro de Cultura",
+        "cargo": "ministro o autoridad",
+        "sobre": "Presupuesto para Cajamarca",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Informó sobre el presupuesto destinado a Cajamarca para los próximos años.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro de Cultura",
+        "cargo": "ministro o autoridad",
+        "sobre": "Restauración de iglesias en Puno",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Detalló la existencia de 107 inmuebles declarados como iglesias en Puno.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro de Cultura",
+        "cargo": "ministro o autoridad",
+        "sobre": "Asignación a las DDC",
+        "postura": "a favor",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Explicó que la asignación de recursos responde a la gestión territorial.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Viceministro",
+        "cargo": "ministro o autoridad",
+        "sobre": "Gestión de bienes recuperados",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Reportó la entrega de piezas artísticas mediante convenios bilaterales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro de Cultura",
+        "cargo": "ministro o autoridad",
+        "sobre": "Incendios en Titicaca",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Coordinó brigadas para controlar incendios en la reserva de Titicaca.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Diputada",
+        "cargo": "legislador",
+        "sobre": "Autopista en Chanchan",
+        "postura": "en contra",
+        "tema": "Infraestructura",
+        "dijo": "Denunció el grave riesgo de la autopista sobre la ciudadela de Chanchan.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=K-XTVHHAWTI"
+  },
+  "C9L24osaBhw": {
+    "fecha": "2026-10-26",
+    "organo": "Comisión de Defensa del Consumidor",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Secretaría Técnica",
+        "cargo": "ministro o autoridad",
+        "sobre": "Proyecto de ley de precios de medicamentos",
+        "postura": "comenta",
+        "tema": "Farma",
+        "dijo": "Informó sobre el ingreso de la proposición legislativa para garantizar precios de medicamentos.",
+        "proyecto": "PL 184-2026-2031",
+        "id": null
+      },
+      {
+        "orador": "Gladys",
+        "cargo": "legislador",
+        "sobre": "Cobros de agua en Hospital de Guaral",
+        "postura": "en contra",
+        "tema": "Saneamiento",
+        "dijo": "Denunció cobros de agua y alcantarillado al Hospital San Juan Bautista de Guaral.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Holguín",
+        "cargo": "legislador",
+        "sobre": "Cierre de botica regional en Madre de Dios",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Denunció el cierre de una botica regional en Madre de Dios.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Columbus",
+        "cargo": "legislador",
+        "sobre": "Proyecto de ley de precios de medicamentos",
+        "postura": "a favor",
+        "tema": "Farma",
+        "dijo": "Entregó opiniones técnicas sobre el proyecto de ley de precios de medicamentos.",
+        "proyecto": "PL 184",
+        "id": "diputados:columbus murata"
+      },
+      {
+        "orador": "Guillén",
+        "cargo": "legislador",
+        "sobre": "Condicionamiento de atención médica por SOAT",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Denunció que una clínica condicionó la atención de un menor al pago de gastos.",
+        "proyecto": "",
+        "id": "diputados:guillen valencia"
+      },
+      {
+        "orador": "Rosangela",
+        "cargo": "legislador",
+        "sobre": "Información sobre el pedido del diputado Yalta",
+        "postura": "pregunta",
+        "tema": "Transporte",
+        "dijo": "Preguntó por la dirección y los funcionarios encargados del pedido de Yalta.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Carlos Yalta",
+        "cargo": "legislador",
+        "sobre": "Situación de puentes en estado crítico",
+        "postura": "propone",
+        "tema": "Transporte",
+        "dijo": "Solicitó la presencia del Ministro de Transportes para informar sobre puentes críticos.",
+        "proyecto": "",
+        "id": "diputados:yalta sotelo"
+      },
+      {
+        "orador": "Columbus",
+        "cargo": "legislador",
+        "sobre": "Invitación al Ministro de Transportes",
+        "postura": "propone",
+        "tema": "Transporte",
+        "dijo": "Propuso que se cite a viceministros si el ministro de transportes no puede asistir.",
+        "proyecto": "",
+        "id": "diputados:columbus murata"
+      },
+      {
+        "orador": "Basán",
+        "cargo": "legislador",
+        "sobre": "Presencia del Ministro de Transportes",
+        "postura": "propone",
+        "tema": "Transporte",
+        "dijo": "Exigió la presencia del ministro para recibir respuestas sobre puentes críticos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Milagros Pozo",
+        "cargo": "invitado",
+        "sobre": "Gestión y planes de Indecopi",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Informó sobre el estado situacional y las competencias de la gestión de Indecopi.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Autoridad de Indecopi",
+        "cargo": "ministro o autoridad",
+        "sobre": "gestión y ejes de Indecopi",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Informó sobre los ejes de gestión de la institución.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Columbus",
+        "cargo": "legislador",
+        "sobre": "eliminación de barreras burocráticas",
+        "postura": "pregunta",
+        "tema": "Otros",
+        "dijo": "Preguntó sobre la efectividad del sistema de barreras.",
+        "proyecto": "",
+        "id": "diputados:columbus murata"
+      },
+      {
+        "orador": "Kawasa",
+        "cargo": "legislador",
+        "sobre": "atención en zonas alejadas",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Pidió que se mejore la atención en provincias.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Autoridad de Indecopi",
+        "cargo": "ministro o autoridad",
+        "sobre": "respuesta a las consultas de los diputados",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Informó que remitirán la información solicitada por la comisión.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ángel Meneses",
+        "cargo": "legislador",
+        "sobre": "ingreso de alimentos a eventos masivos",
+        "postura": "propone",
+        "tema": "Consumo masivo",
+        "dijo": "Propuso permitir el ingreso de alimentos en eventos.",
+        "proyecto": "00116-2026-2031-CD",
+        "id": "diputados:meneses crispin"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=C9L24osaBhw"
+  },
+  "wQd0OUYZOeA": {
+    "fecha": "2026-10-26",
+    "organo": "Comisión de Constitución",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Mesa Rivera",
+        "cargo": "legislador",
+        "sobre": "Modificación del reglamento de la Cámara",
+        "postura": "propone",
+        "tema": "Políticay control político",
+        "dijo": "Propuso crear la Comisión de Inteligencia para fortalecer el control político.",
+        "proyecto": "",
+        "id": "diputados:meza rivera"
+      },
+      {
+        "orador": "Uribe",
+        "cargo": "legislador",
+        "sobre": "Instalación de ligas parlamentarias de amistad",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Informó sobre la convocatoria para la instalación de diversas ligas parlamentarias.",
+        "proyecto": "",
+        "id": "diputados:uribe saenz"
+      },
+      {
+        "orador": "Rocha",
+        "cargo": "legislador",
+        "sobre": "Incorporación a la Liga de Singapur",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Solicitó su incorporación en la Liga Parlamentaria de Singapur.",
+        "proyecto": "",
+        "id": "diputados:rocha gallegos"
+      },
+      {
+        "orador": "Anónimo",
+        "cargo": "legislador",
+        "sobre": "Ingreso a la Liga Perú Brasil",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Reiteró su pedido para ingresar a la Liga Parlamentaria Perú Brasil.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Duarte",
+        "cargo": "legislador",
+        "sobre": "Ingreso a la Liga de Japón",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Solicitó su incorporación a la Liga de Japón.",
+        "proyecto": "",
+        "id": "diputados:duarte"
+      },
+      {
+        "orador": "Leticia Leyva-Bailón",
+        "cargo": "legislador",
+        "sobre": "Incorporación a la Liga Perú Estados Unidos",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Pidió ser incluida en la Liga de Perú Estados Unidos.",
+        "proyecto": "",
+        "id": "diputados:leiva baylon"
+      },
+      {
+        "orador": "Anónimo",
+        "cargo": "legislador",
+        "sobre": "Incorporación a la Liga de Alemania",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Solicitó ser incorporada en la Liga de Alemania.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Huitrón",
+        "cargo": "legislador",
+        "sobre": "Incorporación a la Liga con Estados Unidos",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Solicitó que se le incorpore a la liga con Estados Unidos.",
+        "proyecto": "",
+        "id": "diputados:buitron martinez"
+      },
+      {
+        "orador": "Mueda",
+        "cargo": "legislador",
+        "sobre": "Inclusión de países en ligas",
+        "postura": "pregunta",
+        "tema": "Otros",
+        "dijo": "Preguntó si se tomarán en cuenta sus pedidos de inclusión.",
+        "proyecto": "",
+        "id": "diputados:muedas balbiese"
+      },
+      {
+        "orador": "García Huby",
+        "cargo": "legislador",
+        "sobre": "Derogación de la Ley 31810",
+        "postura": "propone",
+        "tema": "Políticay control político",
+        "dijo": "Propuso derogar la Ley 31810 por ser inconstitucional.",
+        "proyecto": "PL 00474-2031-CD",
+        "id": "diputados:garcia huby"
+      },
+      {
+        "orador": "Chacón",
+        "cargo": "legislador",
+        "sobre": "Derogación de la Ley 31810",
+        "postura": "pregunta",
+        "tema": "Políticay control político",
+        "dijo": "Preguntó sobre la solución para evitar futuros vacíos legales.",
+        "proyecto": "PL 00474-2031-CD",
+        "id": null
+      },
+      {
+        "orador": "García Huby",
+        "cargo": "legislador",
+        "sobre": "Derogación de la Ley 31810",
+        "postura": "comenta",
+        "tema": "Políticay control político",
+        "dijo": "Aclaró que solo busca derogar el artículo 8A de la ley.",
+        "proyecto": "PL 00474-2031-CD",
+        "id": "diputados:garcia huby"
+      },
+      {
+        "orador": "Rocha",
+        "cargo": "legislador",
+        "sobre": "Derogación de la Ley 31810",
+        "postura": "con observaciones",
+        "tema": "Políticay control político",
+        "dijo": "Pidió precisar si la derogación es total o parcial.",
+        "proyecto": "PL 00474-2031-CD",
+        "id": "diputados:rocha gallegos"
+      },
+      {
+        "orador": "López",
+        "cargo": "legislador",
+        "sobre": "Derogación de la Ley 31810",
+        "postura": "a favor",
+        "tema": "Políticay control político",
+        "dijo": "Respaldó la propuesta por su incompatibilidad con la Constitución.",
+        "proyecto": "PL 00474-2031-CD",
+        "id": null
+      },
+      {
+        "orador": "Amuedo",
+        "cargo": "legislador",
+        "sobre": "Derogación de la Ley 31810",
+        "postura": "comenta",
+        "tema": "Políticay control político",
+        "dijo": "Saludó la iniciativa y recomendó seguir el conducto regular.",
+        "proyecto": "PL 00474-2031-CD",
+        "id": null
+      },
+      {
+        "orador": "Beteta",
+        "cargo": "legislador",
+        "sobre": "Derogación de la Ley 31810",
+        "postura": "comenta",
+        "tema": "Políticay control político",
+        "dijo": "Comentó sobre las irregularidades en la inscripción de listas.",
+        "proyecto": "PL 00474-2031-CD",
+        "id": "diputados:beteta rubin"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=wQd0OUYZOeA"
   }
 }
