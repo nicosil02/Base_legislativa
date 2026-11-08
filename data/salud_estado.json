@@ -1,6 +1,4 @@
 {
   "sin_correr:Actualizar Ecuador (CSV + documentos)": "Actualizar Ecuador (CSV + documentos): no corre desde 07/11 19:11 (tocaba 07/11 22:00)",
-  "sin_correr:Re-entrenar clasificador ML (weekly)": "Re-entrenar clasificador ML (weekly): no corre desde 01/11 04:16 (tocaba 07/11 21:00)",
-  "sin_correr:Quien habla (transcripciones por turnos)": "Quien habla (transcripciones por turnos): no corre desde 07/11 19:38 (tocaba 07/11 22:40)",
-  "sin_correr:Posturas de congresistas (Gemma)": "Posturas de congresistas (Gemma): no corre desde 07/11 17:00 (tocaba 07/11 22:20)"
+  "sin_correr:Re-entrenar clasificador ML (weekly)": "Re-entrenar clasificador ML (weekly): no corre desde 01/11 04:16 (tocaba 07/11 21:00)"
 }
