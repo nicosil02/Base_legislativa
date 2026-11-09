@@ -25589,5 +25589,682 @@
       }
     ],
     "url": "https://www.facebook.com/watch/?v=2149920189253836"
+  },
+  "fb_1423770282549207": {
+    "fecha": "2026-10-13",
+    "organo": "Comisión de Relaciones Internacionales",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Johnny Alfredo Lavayenta Mayo",
+        "cargo": "legislador",
+        "sobre": "Reforma a la ley de movilidad humana",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Respaldó la reforma para 57.000 compatriotas retornados.",
+        "proyecto": "Ley de Movilidad Humana",
+        "id": "EC:lavayen tamayo"
+      },
+      {
+        "orador": "Dominica Carolina Escobar Galarza",
+        "cargo": "legislador",
+        "sobre": "Aprobación del informe de primer debate",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Propuso aprobar el informe de primer debate.",
+        "proyecto": "Ley de Movilidad Humana",
+        "id": "EC:escobar galarza"
+      },
+      {
+        "orador": "Edwin Jarrín",
+        "cargo": "legislador",
+        "sobre": "Protección de ecuatorianos en el exterior",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Respaldó la reforma para fortalecer la protección migratoria.",
+        "proyecto": "Ley de Movilidad Humana",
+        "id": "EC:jarrin rivadeneira"
+      },
+      {
+        "orador": "Zúñiga",
+        "cargo": "legislador",
+        "sobre": "Proyecto de ley de movilidad humana",
+        "postura": "con observaciones",
+        "tema": "Otros",
+        "dijo": "Pidió incluir el desplazamiento interno en la ley.",
+        "proyecto": "Ley de Movilidad Humana",
+        "id": "EC:zuniga rocha"
+      },
+      {
+        "orador": "Parrales",
+        "cargo": "legislador",
+        "sobre": "Implementación de la ley de movilidad humana",
+        "postura": "con observaciones",
+        "tema": "Otros",
+        "dijo": "Cuestionó la disponibilidad de recursos para la ley.",
+        "proyecto": "Ley de Movilidad Humana",
+        "id": "EC:parrales yagual"
+      },
+      {
+        "orador": "Cabrera",
+        "cargo": "legislador",
+        "sobre": "Aplicación de la reforma migratoria",
+        "postura": "con observaciones",
+        "tema": "Otros",
+        "dijo": "Pidió aclarar la vía de acceso a beneficios.",
+        "proyecto": "Ley de Movilidad Humana",
+        "id": "EC:cabrera chacon"
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1423770282549207"
+  },
+  "9FlcWcokKBc": {
+    "fecha": "2026-10-09",
+    "organo": "Comisión de Presupuesto",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Sejismundo Cruzes-Ordinola",
+        "cargo": "ministro o autoridad",
+        "sobre": "Presupuesto de Tumbes 2027",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Informó sobre el presupuesto institucional del Gobierno Regional de Tumbes para 2027.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Absalom Vázquez",
+        "cargo": "legislador",
+        "sobre": "Ejecución presupuestal y riesgo climático",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Cuestionó la baja ejecución presupuestal y la falta de prevención hídrica.",
+        "proyecto": "",
+        "id": "senado:vasquez villanueva"
+      },
+      {
+        "orador": "Javier Castro",
+        "cargo": "legislador",
+        "sobre": "Reducción de presupuesto de capital",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Cuestionó la disminución de inversión frente al aumento del gasto corriente.",
+        "proyecto": "",
+        "id": "diputados:castro cruz"
+      },
+      {
+        "orador": "Sejismundo Cruzes-Ordinola",
+        "cargo": "ministro o autoridad",
+        "sobre": "Gestión del gasto regional",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Defendió la gestión financiera y la ejecución del gasto público regional.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Héctor Ventura",
+        "cargo": "legislador",
+        "sobre": "Corrupción en obras de Tumbes",
+        "postura": "en contra",
+        "tema": "Otros",
+        "dijo": "Denunció actos de corrupción en la ejecución de obras emblemáticas.",
+        "proyecto": "Hospital Saúl",
+        "id": "senado:ventura angel"
+      },
+      {
+        "orador": "Sejismundo Cruzes-Ordinola",
+        "cargo": "ministro o autoridad",
+        "sobre": "Gestión de riesgos y fondo FUR",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Informó sobre la gestión de riesgos y los proyectos de inversión.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Jorge Luis Pérez Flores",
+        "cargo": "ministro o autoridad",
+        "sobre": "Presupuesto de Lambayeque para 2027",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Expuso el presupuesto de Lambayeque para 2027.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Absalom Vázquez",
+        "cargo": "legislador",
+        "sobre": "Presupuesto del proyecto Olmos",
+        "postura": "con observaciones",
+        "tema": "Agricultura",
+        "dijo": "Cuestionó la baja ejecución del proyecto Olmos.",
+        "proyecto": "Proyecto Especial Olmos Tinajones",
+        "id": "senado:vasquez villanueva"
+      },
+      {
+        "orador": "Segundo Tapia Bernal",
+        "cargo": "legislador",
+        "sobre": "Reducción del presupuesto regional",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Denunció la reducción del presupuesto de Lambayeque.",
+        "proyecto": "",
+        "id": "senado:tapia bernal"
+      },
+      {
+        "orador": "Carlos Segarra Sánchez",
+        "cargo": "legislador",
+        "sobre": "Gestión hídrica en Chiclayo",
+        "postura": "pregunta",
+        "tema": "Saneamiento",
+        "dijo": "Preguntó sobre la gestión hídrica en Chiclayo.",
+        "proyecto": "",
+        "id": "diputados:zegarra sanchez"
+      },
+      {
+        "orador": "Héctor Guillén Valencia",
+        "cargo": "legislador",
+        "sobre": "Debilitamiento de la descentralización",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció el debilitamiento de la descentralización económica.",
+        "proyecto": "",
+        "id": "diputados:guillen valencia"
+      },
+      {
+        "orador": "Javier Castro Cruz",
+        "cargo": "legislador",
+        "sobre": "Gasto en la presa Limón",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Cuestionó el gasto en la presa Limón.",
+        "proyecto": "Presa Limón",
+        "id": "diputados:castro cruz"
+      },
+      {
+        "orador": "Javier Castro Cruz",
+        "cargo": "legislador",
+        "sobre": "Presupuesto de Lambayeque y la presa Limón",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Cuestionó la reducción presupuestal de Lambayeque y el gasto en la presa Limón.",
+        "proyecto": "",
+        "id": "diputados:castro cruz"
+      },
+      {
+        "orador": "Carlos Segarra",
+        "cargo": "legislador",
+        "sobre": "Gestión del Ministerio de Vivienda",
+        "postura": "propone",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Pidió claridad sobre la responsabilidad del Ministerio de Vivienda en proyectos de irrigación.",
+        "proyecto": "",
+        "id": "diputados:zegarra sanchez"
+      },
+      {
+        "orador": "Díaz Caradena Coronel",
+        "cargo": "autoridad",
+        "sobre": "Presupuesto 2027 de La Libertad",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Presentó la propuesta de presupuesto de la región La Libertad para el año 2027.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ana Rosa Ramos de la Cruz",
+        "cargo": "autoridad",
+        "sobre": "Detalle presupuestal 2027 de La Libertad",
+        "postura": "con observaciones",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Advirtió sobre la eliminación de plazas y la reducción de presupuesto para inversiones.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Catherine Ampueron",
+        "cargo": "legislador",
+        "sobre": "Gestión del gobierno de La Libertad",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Criticó la baja ejecución presupuestal y las obras paralizadas en La Libertad.",
+        "proyecto": "",
+        "id": "senado:ampuero meza"
+      },
+      {
+        "orador": "Díaz Caradena Coronel",
+        "cargo": "autoridad",
+        "sobre": "Seguridad y obras en La Libertad",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Defendió la inversión en seguridad y explicó la situación de las obras denunciadas.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=9FlcWcokKBc"
+  },
+  "0ptcJPKAH8U": {
+    "fecha": "2026-10-09",
+    "organo": "Comisión de Constitución",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Lourdes Alcorta",
+        "cargo": "legislador",
+        "sobre": "Metodología de las exposiciones",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso que los ministros expongan para organizar la sesión.",
+        "proyecto": "",
+        "id": "senado:alcorta suero"
+      },
+      {
+        "orador": "Luis Fernando Galarreta",
+        "cargo": "ministro o autoridad",
+        "sobre": "Delegación de facultades legislativas",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Defendió la delegación de facultades para seguridad y fenómeno del niño.",
+        "proyecto": "PL 00003-2023-CD",
+        "id": null
+      },
+      {
+        "orador": "Marco Antonio Vinelli Ruiz",
+        "cargo": "ministro o autoridad",
+        "sobre": "Gestión del fenómeno del niño",
+        "postura": "propone",
+        "tema": "Agricultura",
+        "dijo": "Pidió la modificación de leyes para atender el fenómeno del niño.",
+        "proyecto": "PL 00003-2023-CD",
+        "id": null
+      },
+      {
+        "orador": "Juan Carlos Requejo Alemán",
+        "cargo": "ministro o autoridad",
+        "sobre": "Impacto del fenómeno del niño en mype",
+        "postura": "en contra",
+        "tema": "Mype",
+        "dijo": "Denunció el impacto del fenómeno del niño en las mype.",
+        "proyecto": "PL 00003-2023-CD",
+        "id": null
+      },
+      {
+        "orador": "Galarretá",
+        "cargo": "ministro o autoridad",
+        "sobre": "gestión de la pesca artesanal",
+        "postura": "comenta",
+        "tema": "Pesca",
+        "dijo": "Informó sobre la necesidad de incluir a los comercializadores en la pesca.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Alcorta",
+        "cargo": "legislador",
+        "sobre": "límites de las facultades legislativas",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso establecer límites para no desnaturalizar la propuesta legislativa.",
+        "proyecto": "",
+        "id": "senado:alcorta suero"
+      },
+      {
+        "orador": "Boniface",
+        "cargo": "legislador",
+        "sobre": "límites del debate legislativo",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Respaldó la propuesta de la senadora Alcorta sobre los límites.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Alucke",
+        "cargo": "legislador",
+        "sobre": "agenda de la sesión extraordinaria",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó la pertinencia de tratar temas fuera de la agenda.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Morales",
+        "cargo": "legislador",
+        "sobre": "cumplimiento del dictamen legislativo",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció la intención de incluir temas no dictaminados.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Guinaga",
+        "cargo": "legislador",
+        "sobre": "facultades deliberativas del Senado",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Defendió el rol deliberativo del Senado ante el Ejecutivo.",
+        "proyecto": "",
+        "id": "senado:aguinaga recuenco"
+      },
+      {
+        "orador": "Ampuero",
+        "cargo": "legislador",
+        "sobre": "medidas para el fenómeno del niño",
+        "postura": "pregunta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Preguntó sobre las medidas adicionales y la rendición de cuentas.",
+        "proyecto": "",
+        "id": "senado:ampuero meza"
+      },
+      {
+        "orador": "Maraví",
+        "cargo": "legislador",
+        "sobre": "ampliación de facultades delegadas",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció una trampa para ampliar las facultades delegadas.",
+        "proyecto": "",
+        "id": "senado:maravi olarte"
+      },
+      {
+        "orador": "Jean Pietro",
+        "cargo": "legislador",
+        "sobre": "facultades de modificación del Senado",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Defendió la facultad del Senado para modificar leyes.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Maraví",
+        "cargo": "legislador",
+        "sobre": "reestructuración del Estado mediante facultades",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció que se buscan facultades para beneficiar a grandes empresarios.",
+        "proyecto": "",
+        "id": "senado:maravi olarte"
+      },
+      {
+        "orador": "Jean Pietro",
+        "cargo": "legislador",
+        "sobre": "integridad de la propuesta legislativa",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Defendió la integridad de Renovación Popular ante acusaciones de trampas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Caballero",
+        "cargo": "legislador",
+        "sobre": "delegación de facultades para el gobierno",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Propuso aprobar las facultades según lo enviado por diputados.",
+        "proyecto": "",
+        "id": "senado:caballero leon"
+      },
+      {
+        "orador": "Fígado",
+        "cargo": "legislador",
+        "sobre": "límites de las facultades del Senado",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Pidió que los ministros presenten sus propios proyectos de ley.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Quito",
+        "cargo": "legislador",
+        "sobre": "uso de facultades como pretexto",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó que el Ejecutivo use el fenómeno del niño como pretexto.",
+        "proyecto": "",
+        "id": "senado:quito sarmiento"
+      },
+      {
+        "orador": "Juárez",
+        "cargo": "legislador",
+        "sobre": "facultades para la gestión del gobierno",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Defendió la necesidad de facultades para el partido de gobierno.",
+        "proyecto": "",
+        "id": "senado:juarez gallegos"
+      },
+      {
+        "orador": "Amatute",
+        "cargo": "legislador",
+        "sobre": "metodología de las facultades delegadas",
+        "postura": "pregunta",
+        "tema": "Política y control político",
+        "dijo": "Preguntó al Premier sobre la naturaleza de las facultades solicitadas.",
+        "proyecto": "",
+        "id": "senado:matute charun"
+      },
+      {
+        "orador": "Yamashiro",
+        "cargo": "legislador",
+        "sobre": "naturaleza de la delegación de facultades",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Respaldó la delegación de facultades como una práctica democrática.",
+        "proyecto": "",
+        "id": "senado:yamashiro ore"
+      },
+      {
+        "orador": "Delgado",
+        "cargo": "legislador",
+        "sobre": "delegación de facultades al Ejecutivo",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó que se pretenda aprobar sesenta y seis materias mediante la delegación.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Delgado",
+        "cargo": "legislador",
+        "sobre": "etiquetado de alimentos y octógonos",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Denunció la falta de aplicación de octógonos en fórmulas infantiles.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Juárez Flores",
+        "cargo": "legislador",
+        "sobre": "proceso de modificación legislativa",
+        "postura": "pregunta",
+        "tema": "Política y control político",
+        "dijo": "Pidió madurez política para resolver el punto controvertido de la modificación legislativa.",
+        "proyecto": "",
+        "id": "senado:flores suarez"
+      },
+      {
+        "orador": "Eti Rai",
+        "cargo": "legislador",
+        "sobre": "reforma de la Ley Orgánica del Ejecutivo",
+        "postura": "con observaciones",
+        "tema": "Política y control político",
+        "dijo": "Propuso presentar una ley modificatoria en lugar de una delegación.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Tapia",
+        "cargo": "legislador",
+        "sobre": "seguridad en establecimientos penitenciarios",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso el uso excepcional de las fuerzas armadas en los penales.",
+        "proyecto": "",
+        "id": "senado:tapia bernal"
+      },
+      {
+        "orador": "Tapia",
+        "cargo": "legislador",
+        "sobre": "criminalidad transnacional",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Sugirió clasificar a las organizaciones criminales transnacionales.",
+        "proyecto": "",
+        "id": "senado:tapia bernal"
+      },
+      {
+        "orador": "Maraví",
+        "cargo": "legislador",
+        "sobre": "debate de la delegación de facultades",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció la intención del Ejecutivo de legislar sin debate parlamentario.",
+        "proyecto": "",
+        "id": "senado:maravi olarte"
+      },
+      {
+        "orador": "Juárez",
+        "cargo": "legislador",
+        "sobre": "políticas de inversión y progreso",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Defendió las políticas de inversión privada impulsadas por el gobierno.",
+        "proyecto": "",
+        "id": "senado:juarez gallegos"
+      },
+      {
+        "orador": "Castillo",
+        "cargo": "legislador",
+        "sobre": "distribución de presupuestos públicos",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Explicó la necesidad de que los presupuestos lleguen a las zonas alejadas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Luque",
+        "cargo": "legislador",
+        "sobre": "revisión de leyes y facultades delegadas",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó la aprobación de leyes que favorecen a organizaciones criminales.",
+        "proyecto": "",
+        "id": "senado:luque ibarra"
+      },
+      {
+        "orador": "Osorio",
+        "cargo": "legislador",
+        "sobre": "terrorismo transnacional",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Coincidió en declarar como terroristas a las organizaciones transnacionales.",
+        "proyecto": "",
+        "id": "senado:osorio palpan"
+      },
+      {
+        "orador": "Osorio",
+        "cargo": "legislador",
+        "sobre": "extensión de las facultades delegadas",
+        "postura": "con observaciones",
+        "tema": "Política y control político",
+        "dijo": "Advirtió que el pedido de facultades es demasiado extenso y poco estudiado.",
+        "proyecto": "",
+        "id": "senado:osorio palpan"
+      },
+      {
+        "orador": "Premier",
+        "cargo": "ministro o autoridad",
+        "sobre": "organización de la sesión legislativa",
+        "postura": "pregunta",
+        "tema": "Otros",
+        "dijo": "Preguntó sobre la organización y la duración de la reunión.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Maravillo Larte",
+        "cargo": "legislador",
+        "sobre": "Debate de senadores con ministros",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó las reglas de debate con ministros.",
+        "proyecto": "",
+        "id": "senado:maravi olarte"
+      },
+      {
+        "orador": "Luis Fernando Galarretta Velarde",
+        "cargo": "ministro o autoridad",
+        "sobre": "Delegación de facultades al Ejecutivo",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Defendió la delegación de facultades al Ejecutivo.",
+        "proyecto": "delegación de facultades",
+        "id": null
+      },
+      {
+        "orador": "Antonio Vinelli",
+        "cargo": "ministro o autoridad",
+        "sobre": "Herramientas para seguridad y fenómeno del niño",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Respaldó las facultades necesarias para el Ejecutivo.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Juárez Gallegos",
+        "cargo": "legislador",
+        "sobre": "Participación de ministros en el debate",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció una transgresión constitucional en el debate.",
+        "proyecto": "",
+        "id": "senado:juarez gallegos"
+      },
+      {
+        "orador": "Alcorta Suero",
+        "cargo": "legislador",
+        "sobre": "Conducción de la sesión parlamentaria",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Criticó la conducción de la sesión.",
+        "proyecto": "",
+        "id": "senado:alcorta suero"
+      },
+      {
+        "orador": "Antonio Vinelli",
+        "cargo": "ministro o autoridad",
+        "sobre": "Pedidos de facultades en ocho materias",
+        "postura": "a favor",
+        "tema": "Agricultura",
+        "dijo": "Detalló los pedidos de facultades por materia.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Luis Fernando Galarretta Velarde",
+        "cargo": "ministro o autoridad",
+        "sobre": "Ejecución de políticas sin facultades",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Aseguró que el Ejecutivo resolverá los problemas.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=0ptcJPKAH8U"
   }
 }
