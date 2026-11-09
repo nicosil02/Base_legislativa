@@ -5105,5 +5105,94 @@
       }
     ],
     "url": "https://www.youtube.com/watch?v=MsoScpGc9_E"
+  },
+  "L5ezW_bnaKM": {
+    "fecha": "2026-11-09",
+    "organo": "Comisión de Inclusión Social",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Poma Guamaní",
+        "cargo": "legislador",
+        "sobre": "Situación en Condor Canqui",
+        "postura": "en contra",
+        "tema": "Otros",
+        "dijo": "Denunció el abandono estatal en Condor Canqui.",
+        "proyecto": "",
+        "id": "diputados:poma huamani"
+      },
+      {
+        "orador": "Pieran Jelly Dodero",
+        "cargo": "legislador",
+        "sobre": "Brechas en Condor Canqui",
+        "postura": "en contra",
+        "tema": "Otros",
+        "dijo": "Denunció las deficiencias de servicios en Condor Canqui.",
+        "proyecto": "",
+        "id": "diputados:dodero jovich"
+      },
+      {
+        "orador": "Jones Núñez",
+        "cargo": "legislador",
+        "sobre": "Deficiencias en instituciones de Ica",
+        "postura": "en contra",
+        "tema": "Otros",
+        "dijo": "Informó sobre carencias en instituciones de Ica.",
+        "proyecto": "",
+        "id": "diputados:yonz nunez"
+      },
+      {
+        "orador": "Hanco",
+        "cargo": "legislador",
+        "sobre": "Necesidades en la región de Puno",
+        "postura": "en contra",
+        "tema": "Otros",
+        "dijo": "Denunció la falta de infraestructura en Puno.",
+        "proyecto": "",
+        "id": "diputados:hancco hancco"
+      },
+      {
+        "orador": "Paola Martínez",
+        "cargo": "legislador",
+        "sobre": "Opinión sobre la Ley MAPE",
+        "postura": "con observaciones",
+        "tema": "Minería",
+        "dijo": "Propuso tratar a las payaqueras por separado.",
+        "proyecto": "PL 00608",
+        "id": "diputados:martinez paitan"
+      },
+      {
+        "orador": "Yufral Hugo",
+        "cargo": "legislador",
+        "sobre": "Formalización de mujeres mineras",
+        "postura": "a favor",
+        "tema": "Minería",
+        "dijo": "Respaldó la formalización de las mujeres.",
+        "proyecto": "PL 00608",
+        "id": "diputados:yuffra lugo"
+      },
+      {
+        "orador": "Esor",
+        "cargo": "legislador",
+        "sobre": "Inclusión de payaqueras en la ley",
+        "postura": "con observaciones",
+        "tema": "Minería",
+        "dijo": "Pidió la inclusión de las payaqueras.",
+        "proyecto": "PL 00608",
+        "id": null
+      },
+      {
+        "orador": "Benzur Pinasco",
+        "cargo": "legislador",
+        "sobre": "Alcance de la Ley MAPE",
+        "postura": "con observaciones",
+        "tema": "Minería",
+        "dijo": "Cuestionó la creación de categorías específicas.",
+        "proyecto": "PL 00608",
+        "id": "diputados:abensur pinasco"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=L5ezW_bnaKM"
   }
 }
