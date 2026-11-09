@@ -234,7 +234,9 @@
   "fb_1810084346782319",
   "UlYF5A7ZlGE",
   "s17AFWpFTUA",
-  "XlAKPUYLHIE"
+  "XlAKPUYLHIE",
+  "Xpwvf3FbKvU",
+  "h-eDHBxZikM"
  ],
  "sesiones": [
   {
@@ -2087,6 +2089,22 @@
    "pais": "EC",
    "url": "https://www.youtube.com/watch?v=XlAKPUYLHIE",
    "visto_at": "2026-11-09T14:11:45Z"
+  },
+  {
+   "id": "Xpwvf3FbKvU",
+   "titulo": "🔴EN VIVO: Comisión en asuntos de Salud, Educación, Mujer y Desarrollo Social y Digital | 09/11/2026",
+   "tipo": "Comision: Educacion",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=Xpwvf3FbKvU",
+   "visto_at": "2026-11-09T16:08:28Z"
+  },
+  {
+   "id": "h-eDHBxZikM",
+   "titulo": "🔴EN VIVO: Comisión de Defensa del Consumidor y Regulación de los Servicios Públicos | 09/11/2026",
+   "tipo": "Comision: Defensa Del Consumidor",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=h-eDHBxZikM",
+   "visto_at": "2026-11-09T16:12:35Z"
   }
  ],
  "avisado": {
