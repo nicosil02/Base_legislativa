@@ -21241,5 +21241,402 @@
       }
     ],
     "url": "https://www.youtube.com/watch?v=pFd4J9ugLUc"
+  },
+  "EBD0GhqBXhg": {
+    "fecha": "2026-10-20",
+    "organo": "Pleno de la Asamblea",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Lucía Jaramillo",
+        "cargo": "legislador",
+        "sobre": "reformas contra la trata de personas",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Defendió el proyecto de ley contra la trata de personas.",
+        "proyecto": "Ley contra la trata de personas",
+        "id": "EC:jaramillo zurita lucia"
+      },
+      {
+        "orador": "Edwin Jarrín",
+        "cargo": "legislador",
+        "sobre": "reforma contra la trata de personas",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Respaldó el proyecto de ley contra la trata de personas.",
+        "proyecto": "Ley contra la trata de personas",
+        "id": "EC:jarrin rivadeneira"
+      },
+      {
+        "orador": "Adrián Castro",
+        "cargo": "legislador",
+        "sobre": "contratación de conciertos en Azuay",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso investigar contratos de conciertos en la provincia de Azuay.",
+        "proyecto": "",
+        "id": "EC:castro piedra"
+      },
+      {
+        "orador": "Valentina Centeno",
+        "cargo": "legislador",
+        "sobre": "gestión de agua en Manabí",
+        "postura": "propone",
+        "tema": "Saneamiento",
+        "dijo": "Pidió auditorías para la planta de agua en Manabí.",
+        "proyecto": "",
+        "id": "EC:centeno arteaga"
+      },
+      {
+        "orador": "Fernando Jaramillo",
+        "cargo": "legislador",
+        "sobre": "compra de camiones para EMACEO",
+        "postura": "propone",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Denunció irregularidades en la compra de camiones para EMACEO.",
+        "proyecto": "",
+        "id": "EC:jaramillo martinez"
+      },
+      {
+        "orador": "Marco Tapia",
+        "cargo": "invitado",
+        "sobre": "Promoción de las artesanías de Halaceo",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Pidió apoyo para la difusión y salvaguardias de las artesanías locales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Lucía Jaramillo",
+        "cargo": "legislador",
+        "sobre": "Reforma contra la trata de personas",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso aumentar las penas y fortalecer la investigación financiera contra la trata.",
+        "proyecto": "Ley contra la trata de personas",
+        "id": "EC:jaramillo zurita lucia"
+      },
+      {
+        "orador": "Gustavo Mateus",
+        "cargo": "legislador",
+        "sobre": "Reforma contra trata y tráfico de migrantes",
+        "postura": "con observaciones",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Exigió que el gobierno garantice recursos para la protección de las víctimas.",
+        "proyecto": "Ley contra la trata de personas",
+        "id": "EC:mateus acosta"
+      },
+      {
+        "orador": "Graciela Ramírez",
+        "cargo": "legislador",
+        "sobre": "Reforma contra la trata de personas",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Defendió la reforma para prevenir la esclavitud moderna en el país.",
+        "proyecto": "Ley contra la trata de personas",
+        "id": "EC:ramirez chalen"
+      },
+      {
+        "orador": "Paola Cabezas",
+        "cargo": "legislador",
+        "sobre": "Proyecto de ley contra la trata",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Defendió el proyecto con observaciones al control laboral.",
+        "proyecto": "Proyecto de Ley contra la trata de personas",
+        "id": "EC:cabezas castillo"
+      },
+      {
+        "orador": "Edwin Jarrín",
+        "cargo": "legislador",
+        "sobre": "Proyecto de ley contra la trata",
+        "postura": "a favor",
+        "tema": "Justicia",
+        "dijo": "Respaldó el aumento de penas por trata.",
+        "proyecto": "Proyecto de Ley contra la trata de personas",
+        "id": "EC:jarrin rivadeneira"
+      },
+      {
+        "orador": "Javier Ordóñez",
+        "cargo": "legislador",
+        "sobre": "Proyecto de ley contra la trata",
+        "postura": "a favor",
+        "tema": "Justicia",
+        "dijo": "Defendió la naturaleza general de la ley.",
+        "proyecto": "Proyecto de Ley contra la trata de personas",
+        "id": "EC:ordonez fuentes"
+      },
+      {
+        "orador": "Lucía Jaramillo",
+        "cargo": "legislador",
+        "sobre": "Moción de aprobación del proyecto",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Propuso aprobar el proyecto unificado.",
+        "proyecto": "Proyecto de Ley contra la trata de personas",
+        "id": "EC:jaramillo zurita lucia"
+      },
+      {
+        "orador": "Adrián Castro",
+        "cargo": "legislador",
+        "sobre": "Contratos de conciertos en Azuay",
+        "postura": "propone",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Denunció irregularidades en contratos de eventos culturales.",
+        "proyecto": "",
+        "id": "EC:castro piedra"
+      },
+      {
+        "orador": "Adrián Castro",
+        "cargo": "legislador",
+        "sobre": "Irregularidades en contratos de artistas en Cuenca",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso investigar irregularidades en contratos de artistas cuencanos.",
+        "proyecto": "",
+        "id": "EC:castro piedra"
+      },
+      {
+        "orador": "Javier Lazo",
+        "cargo": "legislador",
+        "sobre": "Acusaciones de corrupción en la Asamblea",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó las acusaciones de corrupción de otros legisladores.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Jorge Chamba",
+        "cargo": "legislador",
+        "sobre": "Falta de respeto entre legisladores",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Protestó por los insultos recibidos de un colega.",
+        "proyecto": "",
+        "id": "EC:chamba cabanilla"
+      },
+      {
+        "orador": "Javier Ordóñez",
+        "cargo": "legislador",
+        "sobre": "Gestión de Pabel Muñoz en EMASEO",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Criticó la compra de camiones que resultaron ser chatarra.",
+        "proyecto": "",
+        "id": "EC:ordonez fuentes"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=EBD0GhqBXhg"
+  },
+  "fb_1443944621019762": {
+    "fecha": "2026-10-20",
+    "organo": "Comisión de Seguridad Integral",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Edwin Cañizares Isneros",
+        "cargo": "ministro o autoridad",
+        "sobre": "Reforma a la Ley de Personal y Disciplina",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Respaldó la reforma a la Ley de Personal y Disciplina de las Fuerzas Armadas.",
+        "proyecto": "Ley de Personal y Disciplina de las FF.AA.",
+        "id": null
+      },
+      {
+        "orador": "Machado",
+        "cargo": "legislador",
+        "sobre": "Disciplina de las Fuerzas Armadas",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Defendió la necesidad de reconfigurar la disciplina en las Fuerzas Armadas.",
+        "proyecto": "Ley de Personal y Disciplina de las FF.AA.",
+        "id": "EC:machado clavijo"
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1443944621019762"
+  },
+  "2EIYKlqJBT8": {
+    "fecha": "2026-10-20",
+    "organo": "Comisión de Energía y Minas",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Nari Pinasco",
+        "cargo": "legislador",
+        "sobre": "Decreto Supremo 021-2026-EM de hidrocarburos",
+        "postura": "en contra",
+        "tema": "Energía",
+        "dijo": "Cuestionó la modificación del contrato de hidrocarburos de Petroperú mediante un decreto supremo.",
+        "proyecto": "DS 021-2026-EM",
+        "id": "diputados:pinasco montenegro"
+      },
+      {
+        "orador": "Nari Pinasco",
+        "cargo": "legislador",
+        "sobre": "Servicio eléctrico en Iquitos",
+        "postura": "comenta",
+        "tema": "Energía",
+        "dijo": "Comentó la falta de coordinación entre Electroriente y el grupo generador en Iquitos.",
+        "proyecto": "",
+        "id": "diputados:pinasco montenegro"
+      },
+      {
+        "orador": "Frank Licker",
+        "cargo": "legislador",
+        "sobre": "Seguridad energética y gas natural",
+        "postura": "propone",
+        "tema": "Energía",
+        "dijo": "Propuso la creación de un grupo de trabajo sobre seguridad energética y gas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Raúl Camargo",
+        "cargo": "legislador",
+        "sobre": "Potencial petrolero en Talara",
+        "postura": "comenta",
+        "tema": "Energía",
+        "dijo": "Comentó la infraestructura y el potencial de exploración en la región de Piura.",
+        "proyecto": "",
+        "id": "diputados:camargo porta"
+      },
+      {
+        "orador": "Nari Pinasco",
+        "cargo": "legislador",
+        "sobre": "Coordinación de sistemas aislados",
+        "postura": "propone",
+        "tema": "Energía",
+        "dijo": "Pidió que el COES asuma la función de coordinador en Iquitos.",
+        "proyecto": "",
+        "id": "diputados:pinasco montenegro"
+      },
+      {
+        "orador": "Kim Muñoz",
+        "cargo": "legislador",
+        "sobre": "Servicio eléctrico en Pasco",
+        "postura": "propone",
+        "tema": "Energía",
+        "dijo": "Propuso que Osinergmin fiscalice la prestación de servicios eléctricos en Pasco.",
+        "proyecto": "",
+        "id": "diputados:munoz yurivilca"
+      },
+      {
+        "orador": "Malki",
+        "cargo": "legislador",
+        "sobre": "Petróleo en fronteras costeras",
+        "postura": "comenta",
+        "tema": "Energía",
+        "dijo": "Comentó la necesidad de vigilar los recursos en las fronteras costeras.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Raúl Camargo",
+        "cargo": "legislador",
+        "sobre": "Alumbrado público y decreto supremo",
+        "postura": "en contra",
+        "tema": "Energía",
+        "dijo": "Denunció el impacto económico del decreto sobre el costo del alumbrado público.",
+        "proyecto": "DS 019-2026-EM",
+        "id": "diputados:camargo porta"
+      },
+      {
+        "orador": "Anna Yufra",
+        "cargo": "legislador",
+        "sobre": "Minería ilegal en Cajamarca",
+        "postura": "propone",
+        "tema": "Minería",
+        "dijo": "Propuso la intervención del alto comisionado contra la minería ilegal en Jaén.",
+        "proyecto": "",
+        "id": "diputados:yuffra lugo"
+      },
+      {
+        "orador": "Jesús Pérez Alcahuaman",
+        "cargo": "legislador",
+        "sobre": "Informe del presidente de Ingemmet",
+        "postura": "propone",
+        "tema": "Minería",
+        "dijo": "Pidió la comparecencia del presidente de Ingemmet para brindar información técnica.",
+        "proyecto": "",
+        "id": "diputados:perez alccahuaman"
+      },
+      {
+        "orador": "Frank Licker",
+        "cargo": "legislador",
+        "sobre": "Transparencia y conflictos de interés",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso que los miembros declaren sus vínculos con empresas del sector.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Kim Muñoz",
+        "cargo": "legislador",
+        "sobre": "Definición de vínculos amicales",
+        "postura": "con observaciones",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó que el concepto de vínculo amical sea demasiado amplio y subjetivo.",
+        "proyecto": "",
+        "id": "diputados:munoz yurivilca"
+      },
+      {
+        "orador": "Jaime Abenzur",
+        "cargo": "legislador",
+        "sobre": "Deber de abstención parlamentaria",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Comentó la obligación de abstenerse de votar ante posibles conflictos de interés.",
+        "proyecto": "",
+        "id": "diputados:abensur pinasco"
+      },
+      {
+        "orador": "Mayra Mercedes Elizabeth Figueredo Valderrama",
+        "cargo": "ministro o autoridad",
+        "sobre": "Nuevo marco legal de pequeña minería",
+        "postura": "comenta",
+        "tema": "Minería",
+        "dijo": "Informó sobre las propuestas para el nuevo marco legal minero.",
+        "proyecto": "Ley MAPE",
+        "id": null
+      },
+      {
+        "orador": "Ben Sur",
+        "cargo": "legislador",
+        "sobre": "Dinámica de la sesión y citación ministerial",
+        "postura": "pregunta",
+        "tema": "Política y control político",
+        "dijo": "Preguntó sobre la dinámica de la reunión y la citación del ministro.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ben Sur",
+        "cargo": "legislador",
+        "sobre": "Suspensión de la sesión de la comisión",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso suspender la sesión para analizar la propuesta del Ejecutivo.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Benzur Pinago",
+        "cargo": "legislador",
+        "sobre": "Procedimiento de cuestiones previas en la comisión",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso aplicar el reglamento sobre las cuestiones previas para suspender la sesión.",
+        "proyecto": "",
+        "id": "diputados:abensur pinasco"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=2EIYKlqJBT8"
   }
 }
