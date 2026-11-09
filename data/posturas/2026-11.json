@@ -4681,5 +4681,142 @@
       }
     ],
     "url": "https://www.youtube.com/watch?v=Mcct_cJqHAU"
+  },
+  "fb_2335753127200768": {
+    "fecha": "2026-11-09",
+    "organo": "Comisión de Soberanía Alimentaria",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Eduardo Álava",
+        "cargo": "invitado",
+        "sobre": "reforma ley de desperdicio de alimentos",
+        "postura": "con observaciones",
+        "tema": "Agricultura",
+        "dijo": "Presentó veintiséis observaciones sobre la ley de desperdicio de alimentos.",
+        "proyecto": "Ley para prevenir y reducir la pérdida de desperdicio de alimentos",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=2335753127200768"
+  },
+  "fb_1451424687096068": {
+    "fecha": "2026-11-09",
+    "organo": "Comisión de Niñez y Adolescencia",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Jonathan Rosero",
+        "cargo": "invitado",
+        "sobre": "informe de fiscalización de muertes neonatales",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Explicó las conclusiones del informe sobre fallecimientos de neonatos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Villena Veloso",
+        "cargo": "legislador",
+        "sobre": "aprobación del informe de fiscalización",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Propuso la aprobación del informe de fiscalización de neonatos.",
+        "proyecto": "",
+        "id": "EC:bosquez villena"
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1451424687096068"
+  },
+  "_kpQAAgCp9w": {
+    "fecha": "2026-11-09",
+    "organo": "Comisión de Gestión del Estado",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Secretaria Técnica",
+        "cargo": "autoridad",
+        "sobre": "puntaje adicional para personal asistencial COVID-19",
+        "postura": "en contra",
+        "tema": "Trabajo",
+        "dijo": "Informó que la propuesta contraviene la Constitución por aumentar el gasto público.",
+        "proyecto": "PL 00076-2026-2031-CD",
+        "id": null
+      },
+      {
+        "orador": "Secretaria Técnica",
+        "cargo": "autoridad",
+        "sobre": "creación del Sistema Nacional de Becas",
+        "postura": "en contra",
+        "tema": "Educación",
+        "dijo": "Señaló que la propuesta de becas es incompatible con la Constitución.",
+        "proyecto": "PL 00079-2026-2031-CD",
+        "id": null
+      },
+      {
+        "orador": "Secretaria Técnica",
+        "cargo": "autoridad",
+        "sobre": "ley de integridad en saneamiento",
+        "postura": "comenta",
+        "tema": "Saneamiento",
+        "dijo": "Explicó la implementación de un sistema de gestión antisoborno en saneamiento.",
+        "proyecto": "PL 00076-2026-2031-CD",
+        "id": null
+      },
+      {
+        "orador": "Jibaja",
+        "cargo": "legislador",
+        "sobre": "ley de integridad en saneamiento",
+        "postura": "a favor",
+        "tema": "Saneamiento",
+        "dijo": "Respaldó la iniciativa para combatir la corrupción estructural en el país.",
+        "proyecto": "PL 00076-2026-2031-CD",
+        "id": "diputados:jibaja ramos"
+      },
+      {
+        "orador": "Secretaria Técnica",
+        "cargo": "autoridad",
+        "sobre": "creación del distrito de Tuyankuwas",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Sustentó la creación de un nuevo distrito en la provincia de Bagua.",
+        "proyecto": "PL 00020-2026-2031-CD",
+        "id": null
+      },
+      {
+        "orador": "Infantes",
+        "cargo": "legislador",
+        "sobre": "Creación del distrito de Tuyancuwas",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Explicó la problemática de las comunidades de Amazonas.",
+        "proyecto": "PL 00026-2026-2031-CD",
+        "id": "diputados:infantes castaneda"
+      },
+      {
+        "orador": "Poma",
+        "cargo": "legislador",
+        "sobre": "Creación del distrito de Tuyancuwas",
+        "postura": "con observaciones",
+        "tema": "Política y control político",
+        "dijo": "Pidió un plan de implementación para el nuevo distrito.",
+        "proyecto": "PL 00026-2026-2031-CD",
+        "id": "diputados:poma huamani"
+      },
+      {
+        "orador": "Andrés Tiwi, a King Tuí",
+        "cargo": "invitado",
+        "sobre": "Creación del distrito de Tuyancuwas",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Agradeció la voluntad política de los diputados.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=_kpQAAgCp9w"
   }
 }
