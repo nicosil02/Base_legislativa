@@ -17873,5 +17873,1262 @@
       }
     ],
     "url": "https://www.facebook.com/watch/?v=2376024616547641"
+  },
+  "fb_1717147663302606": {
+    "fecha": "2026-10-30",
+    "organo": "Comisión de Régimen Económico",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Carla María Ulloa Maldonado",
+        "cargo": "invitado",
+        "sobre": "Reforma a la Ley de Contratación Pública",
+        "postura": "con observaciones",
+        "tema": "Otros",
+        "dijo": "Propuso mejoras técnicas para el proyecto de ley de contratación.",
+        "proyecto": "Ley de Contratación Pública",
+        "id": null
+      },
+      {
+        "orador": "Antonella Getschel",
+        "cargo": "invitado",
+        "sobre": "Implementación de la reforma de contratación",
+        "postura": "con observaciones",
+        "tema": "Otros",
+        "dijo": "Propuso metodologías para verificar la mano de obra local.",
+        "proyecto": "Ley de Contratación Pública",
+        "id": null
+      },
+      {
+        "orador": "Juan Carlos Isnero Sánchez",
+        "cargo": "ministro o autoridad",
+        "sobre": "Liquidación de la Cooperativa Crea",
+        "postura": "comenta",
+        "tema": "Banca",
+        "dijo": "Informó sobre el proceso de liquidación de la cooperativa.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Fernando Meniz",
+        "cargo": "ministro o autoridad",
+        "sobre": "Liquidación de la Cooperativa Crea",
+        "postura": "comenta",
+        "tema": "Banca",
+        "dijo": "Detalló la recuperación de cartera y activos de la cooperativa.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Superintendente encargado",
+        "cargo": "ministro o autoridad",
+        "sobre": "Liquidación de la cooperativa",
+        "postura": "comenta",
+        "tema": "Banca",
+        "dijo": "Informó sobre la recuperación de activos y los procesos legales de la cooperativa.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Asambleísta Cuin",
+        "cargo": "legislador",
+        "sobre": "Perspectivas de pagos a socios",
+        "postura": "pregunta",
+        "tema": "Banca",
+        "dijo": "Preguntó sobre las perspectivas de pagos y dificultades en el orden de prelación.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Superintendente encargado",
+        "cargo": "ministro o autoridad",
+        "sobre": "Continuidad de fases de pago",
+        "postura": "comenta",
+        "tema": "Banca",
+        "dijo": "Explicó que los pagos dependen de la recuperación de activos y ventas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Julia Shukoshanai",
+        "cargo": "ministro o autoridad",
+        "sobre": "Cumplimiento del orden de prelación",
+        "postura": "comenta",
+        "tema": "Banca",
+        "dijo": "Informó que se cumple con la normativa y la proporcionalidad en los pagos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Asambleísta Castro",
+        "cargo": "legislador",
+        "sobre": "Venta de bienes inmuebles",
+        "postura": "pregunta",
+        "tema": "Banca",
+        "dijo": "Consultó sobre la metodología y transparencia en la venta de los inmuebles.",
+        "proyecto": "",
+        "id": "EC:castro piedra"
+      },
+      {
+        "orador": "Superintendente encargado",
+        "cargo": "ministro o autoridad",
+        "sobre": "Proceso de venta de bienes",
+        "postura": "comenta",
+        "tema": "Banca",
+        "dijo": "Aclaró que la venta de bienes se realiza conforme a la normativa vigente.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Julia Shukoshanai",
+        "cargo": "ministro o autoridad",
+        "sobre": "Canales de venta de activos",
+        "postura": "comenta",
+        "tema": "Banca",
+        "dijo": "Detalló el proceso de enajenación de bienes y los mecanismos de transparencia.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Asambleísta Castro",
+        "cargo": "legislador",
+        "sobre": "Acción de protección de socios",
+        "postura": "pregunta",
+        "tema": "Justicia",
+        "dijo": "Pidió pruebas de las publicaciones y consultó sobre la acción de protección.",
+        "proyecto": "",
+        "id": "EC:castro piedra"
+      },
+      {
+        "orador": "Superintendente encargado",
+        "cargo": "ministro o autoridad",
+        "sobre": "Ejecución de sentencia judicial",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Informó que esperan la notificación formal del juez para cumplir la sentencia.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Asambleísta Cunha",
+        "cargo": "legislador",
+        "sobre": "Acciones preventivas de supervisión",
+        "postura": "pregunta",
+        "tema": "Banca",
+        "dijo": "Preguntó sobre las medidas preventivas de la Superintendencia para proteger recursos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Superintendente encargado",
+        "cargo": "ministro o autoridad",
+        "sobre": "Supervisión de cooperativas",
+        "postura": "comenta",
+        "tema": "Banca",
+        "dijo": "Explicó los planes de supervisión para prevenir riesgos en las entidades.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Iván Guayaquil",
+        "cargo": "invitado",
+        "sobre": "Situación legal de Cooperativa INCOP",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Explicó la suspensión de la liquidación de la Cooperativa INCOP por mandato judicial.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Presidenta de la Comisión",
+        "cargo": "legislador",
+        "sobre": "Contratación de eventos en Cuenca",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Presentó la resolución para investigar contrataciones de eventos en el municipio de Cuenca.",
+        "proyecto": "",
+        "id": "EC:de la"
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1717147663302606"
+  },
+  "tuKAqDIrWGI": {
+    "fecha": "2026-10-28",
+    "organo": "Comisión de Salud",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Ana Yufra Lugo",
+        "cargo": "legislador",
+        "sobre": "Monitoreo de anemia en Loreto",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Informó sobre el monitoreo de la anemia en Loreto.",
+        "proyecto": "",
+        "id": "diputados:yuffra lugo"
+      },
+      {
+        "orador": "Ana Yufra Lugo",
+        "cargo": "legislador",
+        "sobre": "Gestión del fenómeno del Niño",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Comentó la modificación de la comisión de gestión de riesgos.",
+        "proyecto": "",
+        "id": "diputados:yuffra lugo"
+      },
+      {
+        "orador": "Aldo Bravo Quispe",
+        "cargo": "legislador",
+        "sobre": "Aniversario del Instituto Carrión",
+        "postura": "comenta",
+        "tema": "Educación",
+        "dijo": "Invitó a la comisión al aniversario del instituto.",
+        "proyecto": "",
+        "id": "diputados:bravo quispe"
+      },
+      {
+        "orador": "Marleni Arminta Valencia",
+        "cargo": "legislador",
+        "sobre": "Uso de sustancias modelantes",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Pidió una mesa técnica para el PL 537.",
+        "proyecto": "PL 537",
+        "id": "diputados:arminta valencia"
+      },
+      {
+        "orador": "Marleni Arminta Valencia",
+        "cargo": "legislador",
+        "sobre": "Cambio de línea de carrera",
+        "postura": "propone",
+        "tema": "Trabajo",
+        "dijo": "Propuso analizar el proyecto de ley 245.",
+        "proyecto": "PL 245",
+        "id": "diputados:arminta valencia"
+      },
+      {
+        "orador": "Mary Infantes Castañeda",
+        "cargo": "legislador",
+        "sobre": "Construcción del hospital en Huaura",
+        "postura": "propone",
+        "tema": "Infraestructura",
+        "dijo": "Pidió agilizar la construcción del hospital en Huaura.",
+        "proyecto": "",
+        "id": "diputados:infantes castaneda"
+      },
+      {
+        "orador": "Basán",
+        "cargo": "legislador",
+        "sobre": "Trámite de la ley cuatro patas",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Propuso derivar el proyecto 430 a la comisión.",
+        "proyecto": "PL 430",
+        "id": null
+      },
+      {
+        "orador": "Aldo",
+        "cargo": "legislador",
+        "sobre": "Caso de gestante en hospital Carrión",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Pidió citar al director del hospital Carrión.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Leo Miguel de Paz Lancho",
+        "cargo": "legislador",
+        "sobre": "Preparación ante el fenómeno El Niño",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Pidió un informe sobre los hospitales regionales.",
+        "proyecto": "",
+        "id": "diputados:de paz lancho"
+      },
+      {
+        "orador": "Leo Miguel de Paz Lancho",
+        "cargo": "legislador",
+        "sobre": "Caso de la madre en hospital Carrión",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Solicitó información sobre el examen de la placenta.",
+        "proyecto": "",
+        "id": "diputados:de paz lancho"
+      },
+      {
+        "orador": "Jessica Benítez Barriuevo",
+        "cargo": "legislador",
+        "sobre": "Registro de medicamentos en salud mental",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Pidió citar a las autoridades del SIS.",
+        "proyecto": "",
+        "id": "diputados:benitez barrionuevo"
+      },
+      {
+        "orador": "Carlos Alberto Domínguez Herrera",
+        "cargo": "legislador",
+        "sobre": "Fiscalización de infraestructura en Ancash",
+        "postura": "propone",
+        "tema": "Infraestructura",
+        "dijo": "Propuso conformar un grupo de fiscalización.",
+        "proyecto": "",
+        "id": "diputados:dominguez herrera"
+      },
+      {
+        "orador": "Yanina Avengaño Vilca",
+        "cargo": "legislador",
+        "sobre": "Riesgos sanitarios en Ancash",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Pidió información sobre salud en Ancash.",
+        "proyecto": "",
+        "id": "diputados:avendano vilca"
+      },
+      {
+        "orador": "Yanina Avengaño Vilca",
+        "cargo": "legislador",
+        "sobre": "Contingencia de agua en Ancash",
+        "postura": "propone",
+        "tema": "Saneamiento",
+        "dijo": "Solicitó el plan de contingencia de agua.",
+        "proyecto": "",
+        "id": "diputados:avendano vilca"
+      },
+      {
+        "orador": "Yanina Avengaño Vilca",
+        "cargo": "legislador",
+        "sobre": "Control en el gobierno de Ancash",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Pidió control en el gobierno regional.",
+        "proyecto": "",
+        "id": "diputados:avendano vilca"
+      },
+      {
+        "orador": "Liliana Tacayama Jiménez",
+        "cargo": "legislador",
+        "sobre": "Obras paralizadas de la ANI",
+        "postura": "propone",
+        "tema": "Infraestructura",
+        "dijo": "Pidió citar al jefe de la ANI.",
+        "proyecto": "",
+        "id": "diputados:takayama jimenez"
+      },
+      {
+        "orador": "Carlos Alberto Domínguez Herrera",
+        "cargo": "legislador",
+        "sobre": "Pedidos de información y control en Áncash",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Solicitó información y medidas de control en Áncash.",
+        "proyecto": "",
+        "id": "diputados:dominguez herrera"
+      },
+      {
+        "orador": "Gustavo Andrés Meri Valdominos",
+        "cargo": "invitado",
+        "sobre": "Preparación ante el fenómeno del Niño",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Explicó los riesgos climáticos y sanitarios esperados.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "María Sofía Cuba Fuentes",
+        "cargo": "ministro o autoridad",
+        "sobre": "Interoperabilidad de datos en salud",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Informó sobre los desafíos de interoperabilidad en salud.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "María Sofía Cuba Fuentes",
+        "cargo": "ministro o autoridad",
+        "sobre": "Situación del dengue y prevención",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Describió las acciones para prevenir el dengue.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "María Sofía Cuba Fuentes",
+        "cargo": "ministro o autoridad",
+        "sobre": "Monitoreo de lluvias y afectaciones",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Reportó el monitoreo de las lluvias y afectaciones.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "María Sofía Cuba Fuentes",
+        "cargo": "ministro o autoridad",
+        "sobre": "Movilización de brigadas de salud",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Detalló la movilización de brigadas de salud.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "María Sofía Cuba Fuentes",
+        "cargo": "ministro o autoridad",
+        "sobre": "Riesgos por altas temperaturas",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Alertó sobre los riesgos por altas temperaturas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "María Sofía Cuba Fuentes",
+        "cargo": "ministro o autoridad",
+        "sobre": "Operatividad de centros de salud",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Explicó los planes para asegurar la operatividad.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Viceministra de Salud Pública",
+        "cargo": "ministro o autoridad",
+        "sobre": "Preparación ante el fenómeno del Niño y dengue",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Informó sobre la preparación del Ministerio ante el fenómeno del Niño.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Magalla",
+        "cargo": "invitado",
+        "sobre": "Acciones del Colegio Médico ante emergencias",
+        "postura": "a favor",
+        "tema": "Salud",
+        "dijo": "Respaldó las acciones que el Ministerio de Salud viene desarrollando.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Aníbal Velázquez",
+        "cargo": "invitado",
+        "sobre": "Incremento de presupuesto para el sector salud",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Propuso asignar más recursos al Ministerio de Salud ante emergencias.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Marlenia Hermad",
+        "cargo": "legislador",
+        "sobre": "Cronograma de interoperabilidad de sistemas de salud",
+        "postura": "pregunta",
+        "tema": "Salud",
+        "dijo": "Preguntó sobre los plazos para la integración de los sistemas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Viceministra de Salud Pública",
+        "cargo": "ministro o autoridad",
+        "sobre": "Interoperabilidad de historias clínicas en el país",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Informó sobre el plan de interoperabilidad en hospitales de Lima.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Jessica Caballes",
+        "cargo": "legislador",
+        "sobre": "Planes de contingencia ante colapso de servicios",
+        "postura": "pregunta",
+        "tema": "Salud",
+        "dijo": "Preguntó sobre los planes de contingencia ante el colapso sanitario.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Viceministra",
+        "cargo": "ministro o autoridad",
+        "sobre": "interoperabilidad de la información de salud",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Informó sobre el plan de interoperabilidad de las historias clínicas de salud.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Jessica Caballes",
+        "cargo": "legislador",
+        "sobre": "plan de contingencia y atención de emergencias",
+        "postura": "pregunta",
+        "tema": "Salud",
+        "dijo": "Preguntó sobre el uso de clínicas privadas y los puestos médicos de avanzada.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Viceministra",
+        "cargo": "ministro o autoridad",
+        "sobre": "respuesta ante emergencias y uso de IPRES privadas",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Explicó la articulación intersectorial y el equipamiento de los puestos médicos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "María Lisa Silupú",
+        "cargo": "legislador",
+        "sobre": "situación de puestos de salud en zonas de riesgo",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Denunció el colapso de la infraestructura de salud ante el dengue.",
+        "proyecto": "",
+        "id": "diputados:silupu inga"
+      },
+      {
+        "orador": "Viceministra",
+        "cargo": "ministro o autoridad",
+        "sobre": "atención en puestos de salud colapsados",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Anotó la necesidad de verificar la situación de los centros de salud.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Yataco",
+        "cargo": "legislador",
+        "sobre": "deficiente gestión de salud en la región Ica",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Cuestionó la precaria situación sanitaria y la baja ejecución en Ica.",
+        "proyecto": "",
+        "id": "diputados:yataco torrealva"
+      },
+      {
+        "orador": "Viceministra",
+        "cargo": "ministro o autoridad",
+        "sobre": "gestión de salud en gobiernos regionales",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Reconoció la necesidad de mayor tecnocracia en los gobiernos regionales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Fantes Castañeda Mirieliana",
+        "cargo": "legislador",
+        "sobre": "desatención de la salud en regiones amazónicas",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Denunció la falta de recursos y atención sanitaria en la selva.",
+        "proyecto": "",
+        "id": "diputados:infantes castaneda"
+      },
+      {
+        "orador": "Viceministra",
+        "cargo": "ministro o autoridad",
+        "sobre": "vacunación y fortalecimiento de la salud amazónica",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Mencionó la vacunación contra el dengue y el fortalecimiento en Bagua.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Gustavo",
+        "cargo": "invitado",
+        "sobre": "fortalecimiento sanitario para responder a emergencias",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Explicó la importancia de fortalecer la atención primaria para las emergencias.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Domínguez",
+        "cargo": "legislador",
+        "sobre": "preparación ante el fenómeno del niño costero",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Propuso fiscalizar la preparación y ejecución presupuestal de los gobiernos regionales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Viceministra",
+        "cargo": "ministro o autoridad",
+        "sobre": "mejora de la respuesta ante el fenómeno del niño",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Sugirió incentivar la vacunación y el uso de servicios por impuestos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Luis Miguel de Pat Lancho",
+        "cargo": "legislador",
+        "sobre": "distritos en riesgo y conectividad digital",
+        "postura": "pregunta",
+        "tema": "Salud",
+        "dijo": "Preguntó por la diferencia de distritos en riesgo y la conectividad.",
+        "proyecto": "",
+        "id": "diputados:de paz lancho"
+      },
+      {
+        "orador": "Viceministra",
+        "cargo": "ministro o autoridad",
+        "sobre": "conectividad y telemedicina en zonas de riesgo",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Informó que se busca mejorar la conectividad para la telemedicina.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Fernández",
+        "cargo": "legislador",
+        "sobre": "abastecimiento de medicamentos y planes de contingencia",
+        "postura": "pregunta",
+        "tema": "Salud",
+        "dijo": "Preguntó sobre el abastecimiento de medicamentos y los planes de contingencia.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Viceministra",
+        "cargo": "ministro o autoridad",
+        "sobre": "abastecimiento de medicamentos y planes regionales",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Aseguró que los medicamentos básicos están abastecidos en la mayoría de establecimientos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Wia Huercaya Calle",
+        "cargo": "invitado",
+        "sobre": "abastecimiento de medicamentos y suministros",
+        "postura": "comenta",
+        "tema": "Farma",
+        "dijo": "Expresó la disposición de su colegio para colaborar en la contingencia.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Representante de la OPS OMS",
+        "cargo": "invitado",
+        "sobre": "compromiso de apoyo de la OPS OMS",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Reiteró el compromiso de su organización de apoyar iniciativas de salud.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Natalie",
+        "cargo": "legislador",
+        "sobre": "votos y solicitudes de la comisión",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Solicitó registrar su voto a favor de diversos pedidos de la comisión.",
+        "proyecto": "Propuesta de ley del diputado Basán",
+        "id": null
+      },
+      {
+        "orador": "Fernández",
+        "cargo": "legislador",
+        "sobre": "registro de su voto a favor",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Pidió que se registre su voto a favor de los tres pedidos.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=tuKAqDIrWGI"
+  },
+  "rIbHmJKuPIk": {
+    "fecha": "2026-10-27",
+    "organo": "Comisión de Energía y Minas",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Frank Lecker Torres",
+        "cargo": "legislador",
+        "sobre": "Creación de grupo de trabajo energético",
+        "postura": "propone",
+        "tema": "Energía",
+        "dijo": "Propuso crear un grupo de trabajo sobre seguridad energética.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Demetrio Valqui",
+        "cargo": "legislador",
+        "sobre": "Creación de grupo de trabajo energético",
+        "postura": "a favor",
+        "tema": "Energía",
+        "dijo": "Respaldó la conformación del grupo de trabajo.",
+        "proyecto": "",
+        "id": "diputados:valqui calderon"
+      },
+      {
+        "orador": "Columbus Murata",
+        "cargo": "legislador",
+        "sobre": "Plazo del grupo de trabajo",
+        "postura": "con observaciones",
+        "tema": "Energía",
+        "dijo": "Pidió precisión sobre el plazo de vigencia del grupo.",
+        "proyecto": "",
+        "id": "diputados:columbus murata"
+      },
+      {
+        "orador": "Jaime Abensur",
+        "cargo": "legislador",
+        "sobre": "Plazo del grupo de trabajo",
+        "postura": "comenta",
+        "tema": "Energía",
+        "dijo": "Comentó que el reglamento permite ampliar plazos de grupos.",
+        "proyecto": "",
+        "id": "diputados:abensur pinasco"
+      },
+      {
+        "orador": "Rosana Laisa",
+        "cargo": "legislador",
+        "sobre": "Creación de grupo de trabajo energético",
+        "postura": "a favor",
+        "tema": "Energía",
+        "dijo": "Respaldó la iniciativa de creación del grupo.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Raúl Camargo",
+        "cargo": "legislador",
+        "sobre": "Creación de grupo de trabajo energético",
+        "postura": "a favor",
+        "tema": "Energía",
+        "dijo": "Respaldó la propuesta de Frank Lecker Torres.",
+        "proyecto": "",
+        "id": "diputados:camargo porta"
+      },
+      {
+        "orador": "Frank Lecker Torres",
+        "cargo": "legislador",
+        "sobre": "Plazo del grupo de trabajo",
+        "postura": "comenta",
+        "tema": "Energía",
+        "dijo": "Aceptó el ajuste del plazo inicial según el reglamento.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Frank Lecker Torres",
+        "cargo": "legislador",
+        "sobre": "Plazo del grupo de Iquitos",
+        "postura": "pregunta",
+        "tema": "Energía",
+        "dijo": "Preguntó cuándo inicia el cómputo del plazo para Iquitos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Guillermo Shino Huamaní",
+        "cargo": "ministro o autoridad",
+        "sobre": "Ley de pequeña minería artesanal",
+        "postura": "comenta",
+        "tema": "Minería",
+        "dijo": "Defendió el proyecto de ley para la minería artesanal.",
+        "proyecto": "PL 608 2026 2031 CD",
+        "id": null
+      },
+      {
+        "orador": "Ministro de Energía y Minas",
+        "cargo": "ministro o autoridad",
+        "sobre": "Proyecto de formalización de pequeña minería",
+        "postura": "a favor",
+        "tema": "Minería",
+        "dijo": "Presentó las propuestas para el nuevo régimen de formalización minera.",
+        "proyecto": "Proyecto de ley MAPE",
+        "id": null
+      },
+      {
+        "orador": "Milagros Santana",
+        "cargo": "legislador",
+        "sobre": "Control y beneficios del nuevo régimen",
+        "postura": "pregunta",
+        "tema": "Minería",
+        "dijo": "Preguntó sobre la trazabilidad y los beneficios para concesionarios.",
+        "proyecto": "Proyecto de ley MAPE",
+        "id": "diputados:santana vera"
+      },
+      {
+        "orador": "Jean Marco Quesada",
+        "cargo": "legislador",
+        "sobre": "Marco jurídico contra la minería ilegal",
+        "postura": "a favor",
+        "tema": "Minería",
+        "dijo": "Saludó la iniciativa para ordenar la formalización minera.",
+        "proyecto": "Proyecto de ley MAPE",
+        "id": null
+      },
+      {
+        "orador": "Aid Poma",
+        "cargo": "legislador",
+        "sobre": "Viabilidad del régimen y presupuesto estatal",
+        "postura": "en contra",
+        "tema": "Minería",
+        "dijo": "Cuestionó si el régimen es una prórroga del REINFO.",
+        "proyecto": "Proyecto de ley MAPE",
+        "id": "diputados:poma huamani"
+      },
+      {
+        "orador": "Nari Pinasco Montenegro",
+        "cargo": "legislador",
+        "sobre": "Prohibición de mercurio en minería aluvial",
+        "postura": "propone",
+        "tema": "Ambiente",
+        "dijo": "Propuso prohibir el uso de mercurio en la minería aluvial.",
+        "proyecto": "Proyecto de ley MAPE",
+        "id": "diputados:pinasco montenegro"
+      },
+      {
+        "orador": "Jesús Pérez Alcahuaman",
+        "cargo": "legislador",
+        "sobre": "Limitaciones para la formalización sostenible",
+        "postura": "en contra",
+        "tema": "Minería",
+        "dijo": "Denunció que el proyecto no garantiza el acceso al recurso.",
+        "proyecto": "Proyecto de ley MAPE",
+        "id": "diputados:perez alccahuaman"
+      },
+      {
+        "orador": "Marco Antonio Flores Valdizán",
+        "cargo": "legislador",
+        "sobre": "Viabilidad de plazos y concesiones",
+        "postura": "pregunta",
+        "tema": "Minería",
+        "dijo": "Consultó sobre la viabilidad de plazos y concesiones irregulares.",
+        "proyecto": "Proyecto de ley MAPE",
+        "id": "diputados:flores valdizan"
+      },
+      {
+        "orador": "Columbos Murata",
+        "cargo": "legislador",
+        "sobre": "Consensos para la aprobación de la ley",
+        "postura": "a favor",
+        "tema": "Minería",
+        "dijo": "Propuso realizar mesas técnicas para mejorar la propuesta.",
+        "proyecto": "Proyecto de ley MAPE",
+        "id": "diputados:columbus murata"
+      },
+      {
+        "orador": "Frank Clequer",
+        "cargo": "legislador",
+        "sobre": "Riesgos de aprobar la ley apresuradamente",
+        "postura": "con observaciones",
+        "tema": "Minería",
+        "dijo": "Advirtió que aprobar la ley apresuradamente sería irresponsable.",
+        "proyecto": "Proyecto de ley MAPE",
+        "id": null
+      },
+      {
+        "orador": "Fran",
+        "cargo": "legislador",
+        "sobre": "Ley MAPE y plazos",
+        "postura": "con observaciones",
+        "tema": "Minería",
+        "dijo": "Cuestionó la viabilidad de aprobar la ley MAPE en el plazo establecido.",
+        "proyecto": "Ley MAPE",
+        "id": null
+      },
+      {
+        "orador": "Fran",
+        "cargo": "legislador",
+        "sobre": "Preguntas sobre la Ley MAPE",
+        "postura": "pregunta",
+        "tema": "Minería",
+        "dijo": "Consultó sobre la organización y funciones del nuevo organismo.",
+        "proyecto": "Ley MAPE",
+        "id": null
+      },
+      {
+        "orador": "Fran",
+        "cargo": "legislador",
+        "sobre": "Depuración del Reinfo",
+        "postura": "propone",
+        "tema": "Minería",
+        "dijo": "Propuso depurar los registros del Reinfo antes de otorgar una prórroga.",
+        "proyecto": "Reinfo",
+        "id": null
+      },
+      {
+        "orador": "Ana Yufra",
+        "cargo": "legislador",
+        "sobre": "Protección de comunidades indígenas",
+        "postura": "propone",
+        "tema": "Minería",
+        "dijo": "Sugirió proteger los terrenos de las comunidades durante la implementación.",
+        "proyecto": "",
+        "id": "diputados:yuffra lugo"
+      },
+      {
+        "orador": "Ana Yufra",
+        "cargo": "legislador",
+        "sobre": "Competencias de Formape",
+        "postura": "con observaciones",
+        "tema": "Minería",
+        "dijo": "Expresó preocupación por la transferencia de funciones a Formape.",
+        "proyecto": "",
+        "id": "diputados:yuffra lugo"
+      },
+      {
+        "orador": "Presidenta",
+        "cargo": "legislador",
+        "sobre": "Gestión de la formalización",
+        "postura": "en contra",
+        "tema": "Minería",
+        "dijo": "Exigió rendir cuentas sobre los resultados de la formalización.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Presidenta",
+        "cargo": "legislador",
+        "sobre": "Censo minero nacional",
+        "postura": "pregunta",
+        "tema": "Minería",
+        "dijo": "Preguntó sobre la ejecución del censo nacional de pequeña minería.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Presidenta",
+        "cargo": "legislador",
+        "sobre": "Sinceramiento de ubicación",
+        "postura": "pregunta",
+        "tema": "Minería",
+        "dijo": "Consultó sobre el cumplimiento del sinceramiento de las ubicaciones.",
+        "proyecto": "Reinfo",
+        "id": null
+      },
+      {
+        "orador": "Presidenta",
+        "cargo": "legislador",
+        "sobre": "Trabajadores en planilla",
+        "postura": "pregunta",
+        "tema": "Minería",
+        "dijo": "Pidió información sobre la verificación de trabajadores en planilla.",
+        "proyecto": "Reinfo",
+        "id": null
+      },
+      {
+        "orador": "Presidenta",
+        "cargo": "legislador",
+        "sobre": "Contratos de explotación",
+        "postura": "pregunta",
+        "tema": "Minería",
+        "dijo": "Cuestionó la efectividad de los incentivos para firmar contratos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro",
+        "cargo": "ministro o autoridad",
+        "sobre": "Control de minería ilegal",
+        "postura": "comenta",
+        "tema": "Minería",
+        "dijo": "Explicó que el control se realizará mediante plataformas tecnológicas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro",
+        "cargo": "ministro o autoridad",
+        "sobre": "Gestión de concesiones",
+        "postura": "comenta",
+        "tema": "Minería",
+        "dijo": "Detalló medidas para obligar a la explotación de concesiones.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro",
+        "cargo": "ministro o autoridad",
+        "sobre": "Régimen de formalización",
+        "postura": "comenta",
+        "tema": "Minería",
+        "dijo": "Aseguró que la nueva ley no es un Reinfo prolongado.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro",
+        "cargo": "ministro o autoridad",
+        "sobre": "Estándares ambientales",
+        "postura": "comenta",
+        "tema": "Minería",
+        "dijo": "Afirmó que no se reducirán los estándares ambientales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro",
+        "cargo": "ministro o autoridad",
+        "sobre": "Ejecución del censo",
+        "postura": "comenta",
+        "tema": "Minería",
+        "dijo": "Confirmó que el INEI realizará el censo minero solicitado.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro",
+        "cargo": "ministro o autoridad",
+        "sobre": "Situación del Reinfo",
+        "postura": "comenta",
+        "tema": "Minería",
+        "dijo": "Informó que actualmente quedan 30,000 mineros en el registro.",
+        "proyecto": "Reinfo",
+        "id": null
+      },
+      {
+        "orador": "Ministro",
+        "cargo": "ministro o autoridad",
+        "sobre": "Eliminación del mercurio",
+        "postura": "comenta",
+        "tema": "Minería",
+        "dijo": "Ratificó el compromiso de eliminar el uso de mercurio.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro",
+        "cargo": "ministro o autoridad",
+        "sobre": "Inclusión financiera",
+        "postura": "comenta",
+        "tema": "Minería",
+        "dijo": "Explicó que el Banco de la Nación facilitará cuentas corrientes.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro",
+        "cargo": "ministro o autoridad",
+        "sobre": "Diálogo con gremios",
+        "postura": "comenta",
+        "tema": "Minería",
+        "dijo": "Informó sobre la socialización del proyecto con diversos gremios.",
+        "proyecto": "Ley MAPE",
+        "id": null
+      },
+      {
+        "orador": "Frank Lecker",
+        "cargo": "legislador",
+        "sobre": "Casos de formalización",
+        "postura": "comenta",
+        "tema": "Minería",
+        "dijo": "Mencionó ejemplos de minería formalizada en diversas regiones.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Frank Lecker",
+        "cargo": "legislador",
+        "sobre": "Plazos de la ley",
+        "postura": "comenta",
+        "tema": "Minería",
+        "dijo": "Admitió que el tiempo para aprobar la ley es corto.",
+        "proyecto": "Ley MAPE",
+        "id": null
+      },
+      {
+        "orador": "Hermógenes Vera",
+        "cargo": "ministro o autoridad",
+        "sobre": "Plazos de Formape",
+        "postura": "comenta",
+        "tema": "Minería",
+        "dijo": "Explicó que el plazo de cinco años es para la transición.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Jaime Avenzur",
+        "cargo": "legislador",
+        "sobre": "Carácter de urgencia del proyecto",
+        "postura": "comenta",
+        "tema": "Minería",
+        "dijo": "Comentó que el proyecto MAPE es de carácter urgente.",
+        "proyecto": "Ley MAPE",
+        "id": null
+      },
+      {
+        "orador": "Guillermo Chino",
+        "cargo": "ministro o autoridad",
+        "sobre": "Restricción de combustible en Tambopata",
+        "postura": "comenta",
+        "tema": "Minería",
+        "dijo": "Explicó que la restricción de combustible afecta a Tambopata.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Guillermo Chino",
+        "cargo": "ministro o autoridad",
+        "sobre": "Titulación de tierras y concesiones",
+        "postura": "comenta",
+        "tema": "Minería",
+        "dijo": "Indicó que se requiere permiso para ejercer la minería.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Guillermo Chino",
+        "cargo": "ministro o autoridad",
+        "sobre": "Situación de las payaqueras",
+        "postura": "comenta",
+        "tema": "Minería",
+        "dijo": "Informó que se evalúa ampliar el decreto para payaqueras.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Guillermo Chino",
+        "cargo": "ministro o autoridad",
+        "sobre": "Gestión de la formalización minera",
+        "postura": "comenta",
+        "tema": "Minería",
+        "dijo": "Mencionó que se trabajará con el Ministerio de Trabajo.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Milagro Santana",
+        "cargo": "legislador",
+        "sobre": "Trabajo de las mujeres payaqueras",
+        "postura": "comenta",
+        "tema": "Minería",
+        "dijo": "Resaltó la labor de las mujeres payaqueras.",
+        "proyecto": "",
+        "id": "diputados:santana vera"
+      },
+      {
+        "orador": "Henry Giovanni Portugal",
+        "cargo": "invitado",
+        "sobre": "Fiscalización de plantas de beneficio",
+        "postura": "con observaciones",
+        "tema": "Minería",
+        "dijo": "Sugirió ajustar los umbrales para las plantas de beneficio.",
+        "proyecto": "Ley MAPE",
+        "id": null
+      },
+      {
+        "orador": "Iván Fernando Perea",
+        "cargo": "invitado",
+        "sobre": "Ámbito de fiscalización de Osinermín",
+        "postura": "comenta",
+        "tema": "Minería",
+        "dijo": "Precisó que Osinermín fiscaliza la mediana y gran minería.",
+        "proyecto": "Ley MAPE",
+        "id": null
+      },
+      {
+        "orador": "Hugo Guerra Artiaga",
+        "cargo": "invitado",
+        "sobre": "Análisis de la propuesta MAPE",
+        "postura": "comenta",
+        "tema": "Minería",
+        "dijo": "Presentó la posición de CONADEMI ante la comisión.",
+        "proyecto": "Ley MAPE",
+        "id": null
+      },
+      {
+        "orador": "Noelia Yanena",
+        "cargo": "invitado",
+        "sobre": "Deficiencias de la propuesta MAPE",
+        "postura": "en contra",
+        "tema": "Minería",
+        "dijo": "Criticó que la ley MAPE carece de estímulos.",
+        "proyecto": "Ley MAPE",
+        "id": null
+      },
+      {
+        "orador": "Jacqueline Villanueva",
+        "cargo": "invitado",
+        "sobre": "Análisis de la propuesta MAPE",
+        "postura": "con observaciones",
+        "tema": "Minería",
+        "dijo": "Señaló que la propuesta MAPE requiere mayor profundidad.",
+        "proyecto": "Ley MAPE",
+        "id": null
+      },
+      {
+        "orador": "Adolfo Franco Becker",
+        "cargo": "invitado",
+        "sobre": "el proyecto de ley MAPE",
+        "postura": "en contra",
+        "tema": "Minería",
+        "dijo": "Rechazó el proyecto de ley MAPE por su ineficiencia.",
+        "proyecto": "Ley MAPE",
+        "id": null
+      },
+      {
+        "orador": "José Torrealipar Aguirre",
+        "cargo": "invitado",
+        "sobre": "la nueva ley MAPE",
+        "postura": "en contra",
+        "tema": "Minería",
+        "dijo": "Cuestionó la falta de soluciones sobre contratos de explotación.",
+        "proyecto": "Ley MAPE",
+        "id": null
+      },
+      {
+        "orador": "Erica Lindo y Fansón",
+        "cargo": "invitado",
+        "sobre": "integración de las payaqueras",
+        "postura": "propone",
+        "tema": "Minería",
+        "dijo": "Pidió incluir a las seleccionadoras en la ley MAPE.",
+        "proyecto": "Ley MAPE",
+        "id": null
+      },
+      {
+        "orador": "Luis Maita Hueroto",
+        "cargo": "invitado",
+        "sobre": "comercialización de oro por payaqueras",
+        "postura": "propone",
+        "tema": "Minería",
+        "dijo": "Propuso extender la regulación de Puno a otras regiones.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Luis Alberto Núñez",
+        "cargo": "invitado",
+        "sobre": "contratos de explotación en Cajamarca",
+        "postura": "en contra",
+        "tema": "Minería",
+        "dijo": "Denunció la dificultad para obtener contratos de explotación.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=rIbHmJKuPIk"
   }
 }
