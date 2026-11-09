@@ -27638,5 +27638,422 @@
       }
     ],
     "url": "https://www.facebook.com/watch/?v=1421392376025337"
+  },
+  "pv-mz5znyFY": {
+    "fecha": "2026-10-07",
+    "organo": "Pleno de Diputados",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Ernesto Sunini",
+        "cargo": "legislador",
+        "sobre": "Requisitos para el texto sustitutorio",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Informó la necesidad de mayoría simple para el texto",
+        "proyecto": "",
+        "id": "diputados:zunini yerren"
+      },
+      {
+        "orador": "Jaime Abenzur",
+        "cargo": "legislador",
+        "sobre": "Naturaleza del dictamen en minoría",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Informó la singularidad del dictamen en minoría presentado",
+        "proyecto": "",
+        "id": "diputados:abensur pinasco"
+      },
+      {
+        "orador": "Neri Fernández Nina",
+        "cargo": "legislador",
+        "sobre": "Consenso en seguridad y fenómeno del niño",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Denunció el bloqueo de un acuerdo de consenso",
+        "proyecto": "",
+        "id": "diputados:fernandez nina"
+      },
+      {
+        "orador": "José Marcelo",
+        "cargo": "legislador",
+        "sobre": "Posición ante el consenso",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció que las posiciones extremas impiden consensos",
+        "proyecto": "",
+        "id": "diputados:marcelo salazar"
+      },
+      {
+        "orador": "Ángel Meneses",
+        "cargo": "legislador",
+        "sobre": "Búsqueda de consensos parlamentarios",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso la búsqueda de consensos parlamentarios",
+        "proyecto": "",
+        "id": "diputados:meneses crispin"
+      },
+      {
+        "orador": "Eber López",
+        "cargo": "legislador",
+        "sobre": "Militarización del país",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Cuestionó la propuesta de militarización del país",
+        "proyecto": "",
+        "id": "diputados:lopez letona"
+      },
+      {
+        "orador": "Cabrera Nieto",
+        "cargo": "legislador",
+        "sobre": "Necesidades de la población",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Preguntó por el boicot a las necesidades urgentes",
+        "proyecto": "",
+        "id": "diputados:cabrera nieto"
+      },
+      {
+        "orador": "Ernesto Sunini",
+        "cargo": "legislador",
+        "sobre": "Interpretación del reglamento",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció la mala interpretación reglamentaria de la Cámara",
+        "proyecto": "",
+        "id": "diputados:zunini yerren"
+      },
+      {
+        "orador": "Rosana Laisa",
+        "cargo": "legislador",
+        "sobre": "Falta de gestos políticos",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó la falta de palabra y gestos políticos",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Cristian Arana",
+        "cargo": "legislador",
+        "sobre": "Integración de dictámenes",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso utilizar el dictamen de mayoría como base",
+        "proyecto": "",
+        "id": "diputados:aranda vasquez"
+      },
+      {
+        "orador": "Arturo Alegría García",
+        "cargo": "legislador",
+        "sobre": "Nuevo dictamen sustitutorio en minoría",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso un nuevo texto con nueve materias adicionales",
+        "proyecto": "Dictamen en minoría",
+        "id": "diputados:alegria garcia"
+      },
+      {
+        "orador": "Ernesto Sunini",
+        "cargo": "legislador",
+        "sobre": "Cambio de la agenda",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó el cambio de la agenda de debate",
+        "proyecto": "",
+        "id": "diputados:zunini yerren"
+      },
+      {
+        "orador": "Neri Fernández",
+        "cargo": "legislador",
+        "sobre": "el nuevo dictamen en minoría",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Informó que buscaron un consenso con los ministros.",
+        "proyecto": "PL 98",
+        "id": "diputados:fernandez nina"
+      },
+      {
+        "orador": "Ángel Meneze",
+        "cargo": "legislador",
+        "sobre": "consensos sobre seguridad ciudadana",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Respaldó la reflexión de los diputados sobre seguridad.",
+        "proyecto": "",
+        "id": "diputados:meneses crispin"
+      },
+      {
+        "orador": "Ernesto Sunini",
+        "cargo": "legislador",
+        "sobre": "la cuestión previa y el reglamento",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció la aplicación de malas prácticas parlamentarias.",
+        "proyecto": "",
+        "id": "diputados:zunini yerren"
+      },
+      {
+        "orador": "Benzur",
+        "cargo": "legislador",
+        "sobre": "el procedimiento de cuestiones previas",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Defendió la legalidad del dictamen de Arturo Alegría.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Arturo Alegría",
+        "cargo": "legislador",
+        "sobre": "la validez de la votación",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó la validez de la votación del dictamen.",
+        "proyecto": "",
+        "id": "diputados:alegria garcia"
+      },
+      {
+        "orador": "Víctor Piña",
+        "cargo": "legislador",
+        "sobre": "reconsideración del dictamen de seguridad",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Pidió la reconsideración del dictamen de seguridad.",
+        "proyecto": "PL 98",
+        "id": "diputados:pinan mamani"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=pv-mz5znyFY"
+  },
+  "cFp-ypDtJAA": {
+    "fecha": "2026-10-07",
+    "organo": "Comisión de Constitución",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Aldo Bravo Quispe",
+        "cargo": "legislador",
+        "sobre": "rectificación de la senadora Ruth Luque",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Respaldó la rectificación de la senadora Ruth Luque.",
+        "proyecto": "",
+        "id": "diputados:bravo quispe"
+      },
+      {
+        "orador": "Columbus Murata",
+        "cargo": "legislador",
+        "sobre": "rectificación de pedidos de información",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Respaldó la rectificación para proteger el debido proceso.",
+        "proyecto": "",
+        "id": "diputados:columbus murata"
+      },
+      {
+        "orador": "Iván Rojas",
+        "cargo": "invitado",
+        "sobre": "caducidad de la denuncia 114",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Propuso declarar la caducidad de la denuncia 114.",
+        "proyecto": "denuncia 114",
+        "id": null
+      },
+      {
+        "orador": "Aldo Bravo Quispe",
+        "cargo": "legislador",
+        "sobre": "responsabilidad por demora en denuncia 114",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Pidió deslindar responsabilidades por la demora del trámite.",
+        "proyecto": "denuncia 114",
+        "id": "diputados:bravo quispe"
+      },
+      {
+        "orador": "Bahía Malca",
+        "cargo": "legislador",
+        "sobre": "retiro de generales de la Policía",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Cuestionó el retiro de generales de la Policía Nacional.",
+        "proyecto": "denuncia 36",
+        "id": "diputados:baella malca"
+      },
+      {
+        "orador": "Aldo Bravo Quispe",
+        "cargo": "legislador",
+        "sobre": "celeridad en trámites de la comisión",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Pidió mayor celeridad para evitar la caducidad.",
+        "proyecto": "denuncia 36",
+        "id": "diputados:bravo quispe"
+      },
+      {
+        "orador": "Catherine Palomino",
+        "cargo": "legislador",
+        "sobre": "evitar persecución política en denuncias",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Pidió actuar con justicia para evitar persecuciones.",
+        "proyecto": "",
+        "id": "diputados:palomino casavilca"
+      },
+      {
+        "orador": "Iván Rojas",
+        "cargo": "invitado",
+        "sobre": "improcedencia de la denuncia 72",
+        "postura": "comenta",
+        "tema": "Pensiones",
+        "dijo": "Propuso declarar improcedente la denuncia contra la ONP.",
+        "proyecto": "denuncia 72",
+        "id": null
+      },
+      {
+        "orador": "Fernando García Ubi",
+        "cargo": "legislador",
+        "sobre": "improcedencia de la denuncia 72",
+        "postura": "a favor",
+        "tema": "Pensiones",
+        "dijo": "Respaldó la improcedencia de la denuncia contra la ONP.",
+        "proyecto": "denuncia 72",
+        "id": null
+      },
+      {
+        "orador": "Georgina Duarte",
+        "cargo": "legislador",
+        "sobre": "agilización de votaciones en la comisión",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso agilizar las votaciones de casos evidentes.",
+        "proyecto": "",
+        "id": "diputados:duarte"
+      },
+      {
+        "orador": "Columbus Murata",
+        "cargo": "legislador",
+        "sobre": "trámite de denuncias del congreso anterior",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Pidió diligenciar los expedientes próximos a caducar.",
+        "proyecto": "",
+        "id": "diputados:columbus murata"
+      },
+      {
+        "orador": "Iván Rojas",
+        "cargo": "invitado",
+        "sobre": "improcedencia de la denuncia 75",
+        "postura": "comenta",
+        "tema": "Pensiones",
+        "dijo": "Propuso declarar la improcedencia de la denuncia 75.",
+        "proyecto": "denuncia 75",
+        "id": null
+      },
+      {
+        "orador": "Fernando García Ubi",
+        "cargo": "legislador",
+        "sobre": "denuncias repetitivas contra la ONP",
+        "postura": "comenta",
+        "tema": "Pensiones",
+        "dijo": "Cuestionó la repetición de denuncias contra la ONP.",
+        "proyecto": "denuncia 75",
+        "id": null
+      },
+      {
+        "orador": "Fernando Garciubi",
+        "cargo": "legislador",
+        "sobre": "Denuncia contra Gastón Rojas Remillax",
+        "postura": "con observaciones",
+        "tema": "Política y control político",
+        "dijo": "Pidió precisar la vía legal a los ciudadanos.",
+        "proyecto": "0075-2026-2031",
+        "id": "diputados:garcia huby"
+      },
+      {
+        "orador": "Richard Santillán",
+        "cargo": "invitado",
+        "sobre": "Denuncia constitucional 0077",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Propuso declarar improcedente la denuncia constitucional 0077.",
+        "proyecto": "0077-2026-2031",
+        "id": null
+      },
+      {
+        "orador": "Georgina Duarte",
+        "cargo": "legislador",
+        "sobre": "Denuncia constitucional 0012-X-403",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Pidió celeridad para evitar la caducidad del expediente.",
+        "proyecto": "0012-X-403",
+        "id": "diputados:duarte"
+      },
+      {
+        "orador": "Fernando García-Uvín",
+        "cargo": "legislador",
+        "sobre": "Denuncia constitucional 0012-X-403",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Propuso elevar el expediente al pleno de diputados.",
+        "proyecto": "0012-X-403",
+        "id": null
+      },
+      {
+        "orador": "Cecilia Chacón de Vitori",
+        "cargo": "legislador",
+        "sobre": "Denuncia constitucional 0012-X-403",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Propuso remitir el informe al pleno de diputados.",
+        "proyecto": "0012-X-403",
+        "id": "diputados:chacon de vettori"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=cFp-ypDtJAA"
+  },
+  "RPJniUD1mG8": {
+    "fecha": "2026-10-07",
+    "organo": "Pleno del Senado",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Miguel Ángel Torres Morales",
+        "cargo": "legislador",
+        "sobre": "Aniversario de la Marina de Guerra",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Resaltó el valor histórico y el honor de la Marina de Guerra.",
+        "proyecto": "",
+        "id": "senado:torres morales"
+      },
+      {
+        "orador": "Francisco Calisto Llampietri",
+        "cargo": "legislador",
+        "sobre": "Homenaje a la Marina y héroes caídos",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Rindió homenaje a la Marina y a los efectivos que fallecieron.",
+        "proyecto": "",
+        "id": "senado:calisto giampietri"
+      },
+      {
+        "orador": "Miguel Ángel Torres Morales",
+        "cargo": "legislador",
+        "sobre": "El legado de Miguel Grau",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Destacó la nobleza y el ejemplo de Miguel Grau para la nación.",
+        "proyecto": "",
+        "id": "senado:torres morales"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=RPJniUD1mG8"
   }
 }
