@@ -20,6 +20,7 @@ nunca se pisa una fila ajena, y en transcripciones gana el texto mas largo.
 """
 from __future__ import annotations
 
+import gzip
 import shutil
 import sqlite3
 import sys
@@ -78,32 +79,47 @@ def extraer(origen: Path, parte: str, salida: Path) -> None:
     conn.close()
 
 
-# La web solo lee el texto de TV de las menciones recientes (vistas.py, 14
-# dias) y tv_vistos.texto ya pasa los 200 MB: la app arma sin el resto, que
-# en Streamlit Cloud la llevaba a "over resource limits" (2026-11-07).
+# La web solo lee el texto de TV de las menciones de los ultimos 14 dias
+# (front/vistas.py) y tv_vistos.texto ya pasa los 200 MB: la app arma sin el
+# resto, que en Streamlit Cloud la llevaba a "over resource limits" (2026-11-07).
 SOLO_WEB = {"tv_vistos": "video_id IN (SELECT video_id FROM p.tv_menciones "
-                         "WHERE first_seen_at >= datetime('now', '-30 days'))"}
+                         "WHERE first_seen_at >= datetime('now', '-14 days'))"}
+
+
+def _descomprimir(gz: Path, destino: Path) -> Path:
+    with gzip.open(gz, "rb") as f_in, open(destino, "wb") as f_out:
+        shutil.copyfileobj(f_in, f_out)
+    return destino
 
 
 def armar(destino: Path, partes: dict[str, Path], para_web: bool = False) -> None:
     """Base completa en `destino` = base + las otras partes. Atomico: se
     escribe al lado y se reemplaza (la app puede estar leyendo).
-    para_web: copia solo las filas de SOLO_WEB y consume las partes (mueve la
-    base y borra cada parte al usarla) para no tener todo dos veces en disco."""
+    Las partes pueden venir en .gz: se descomprimen de a una al lado de
+    `destino` y se borra esa copia al usarla (el .gz queda).
+    para_web: copia solo las filas de SOLO_WEB y consume las partes sueltas
+    (mueve la base y borra cada parte al usarla) para no tener todo dos veces
+    en disco (en Streamlit Cloud el disco cuenta como memoria)."""
     donde = SOLO_WEB if para_web else {}
     tmp = destino.with_name(destino.name + ".armando")
-    (shutil.move if para_web else shutil.copyfile)(partes["base"], tmp)
+    if partes["base"].suffix == ".gz":
+        _descomprimir(partes["base"], tmp)
+    else:
+        (shutil.move if para_web else shutil.copyfile)(partes["base"], tmp)
     conn = sqlite3.connect(tmp)
     for parte, path in partes.items():
         if parte == "base" or not path.exists():
             continue
+        gz = path.suffix == ".gz"
+        if gz:
+            path = _descomprimir(path, destino.with_name(f"{destino.name}.{parte}.suelta"))
         conn.execute("ATTACH DATABASE ? AS p", (str(path),))
         for t in _tablas(conn, "p"):
             conn.execute(f'DROP TABLE IF EXISTS main."{t}"')
             _copiar_tabla(conn, "p", t, donde.get(t, ""))
         conn.commit()
         conn.execute("DETACH DATABASE p")
-        if para_web:
+        if gz or para_web:
             path.unlink()
     conn.close()
     tmp.replace(destino)

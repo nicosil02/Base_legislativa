@@ -92,3 +92,20 @@ def test_armar_para_web_recorta_tv_viejo_y_consume_partes(tmp_path):
     P.armar(tmp_path / "web.db", partes, para_web=True)
     assert [r[0] for r in sqlite3.connect(tmp_path / "web.db").execute("SELECT video_id FROM tv_vistos")] == ["nuevo"]
     assert not any(p.exists() for p in partes.values())
+
+
+def test_armar_desde_gz_deja_los_gz(tmp_path):
+    import gzip, shutil
+    orig = tmp_path / "orig.db"
+    _base(orig, [("v1", "hola")], [("s1", "texto")], "CREATE TABLE tv_menciones (video_id TEXT, first_seen_at TEXT)")
+    partes = {}
+    for p in P.NOMBRES:
+        P.extraer(orig, p, tmp_path / f"{p}.db")
+        with open(tmp_path / f"{p}.db", "rb") as f, gzip.open(tmp_path / f"{p}.db.gz", "wb") as g:
+            shutil.copyfileobj(f, g)
+        partes[p] = tmp_path / f"{p}.db.gz"
+    P.armar(tmp_path / "web.db", partes, para_web=True)
+    c = sqlite3.connect(tmp_path / "web.db")
+    assert c.execute("SELECT texto FROM sesiones_transcripciones").fetchone() == ("texto",)
+    assert all(p.exists() for p in partes.values())
+    assert not list(tmp_path.glob("*.suelta"))
