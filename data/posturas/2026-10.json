@@ -24511,5 +24511,272 @@
       }
     ],
     "url": "https://www.facebook.com/watch/?v=1791866098759820"
+  },
+  "fb_1920790218901453": {
+    "fecha": "2026-10-14",
+    "organo": "Comisión de Derecho a la Salud",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Verónica Quintana",
+        "cargo": "invitado",
+        "sobre": "Neurodesarrollo y capacidad de decisión",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Informó sobre el neurodesarrollo y la capacidad de decisión.",
+        "proyecto": "Orgánica de Eutanasia",
+        "id": null
+      },
+      {
+        "orador": "Greyshores",
+        "cargo": "legislador",
+        "sobre": "Parámetros de decisión para menores",
+        "postura": "pregunta",
+        "tema": "Salud",
+        "dijo": "Preguntó sobre la edad para decidir la eutanasia.",
+        "proyecto": "Orgánica de Eutanasia",
+        "id": null
+      },
+      {
+        "orador": "Ani Muñoz",
+        "cargo": "legislador",
+        "sobre": "Derechos constitucionales de menores",
+        "postura": "pregunta",
+        "tema": "Salud",
+        "dijo": "Preguntó sobre la posible restricción de derechos constitucionales.",
+        "proyecto": "Orgánica de Eutanasia",
+        "id": "EC:munoz aroca"
+      },
+      {
+        "orador": "Ana Cristina",
+        "cargo": "legislador",
+        "sobre": "Capacidad cognitiva y madurez psicosocial",
+        "postura": "pregunta",
+        "tema": "Salud",
+        "dijo": "Preguntó sobre la diferencia entre cognición y madurez.",
+        "proyecto": "Orgánica de Eutanasia",
+        "id": null
+      },
+      {
+        "orador": "Lorena Gutiérrez",
+        "cargo": "invitado",
+        "sobre": "Observaciones al proyecto de eutanasia",
+        "postura": "con observaciones",
+        "tema": "Salud",
+        "dijo": "Propuso nuevas definiciones de enfermedad y sufrimiento.",
+        "proyecto": "Orgánica de Eutanasia",
+        "id": null
+      },
+      {
+        "orador": "Lorena Gutiérrez",
+        "cargo": "invitado",
+        "sobre": "Requisitos y salvaguardas de la eutanasia",
+        "postura": "con observaciones",
+        "tema": "Salud",
+        "dijo": "Propuso incluir una segunda opinión médica y el documento DEBA.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Andrés Alvarez",
+        "cargo": "legislador",
+        "sobre": "Obligatoriedad de informes psicológicos y psiquiátricos",
+        "postura": "pregunta",
+        "tema": "Salud",
+        "dijo": "Preguntó si los informes psicológicos deberían ser obligatorios siempre.",
+        "proyecto": "",
+        "id": "EC:gonzalez alvear"
+      },
+      {
+        "orador": "Lorena Gutiérrez",
+        "cargo": "invitado",
+        "sobre": "Diferenciación de informes psicológicos y psiquiátricos",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Propuso que el informe psicológico sea obligatorio y el psiquiátrico variable.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Boris Andrade",
+        "cargo": "legislador",
+        "sobre": "Investigación de la situación socioeconómica",
+        "postura": "pregunta",
+        "tema": "Salud",
+        "dijo": "Preguntó sobre el proceso para investigar la situación socioeconómica.",
+        "proyecto": "",
+        "id": "EC:mendoza andrade"
+      },
+      {
+        "orador": "Lorena Gutiérrez",
+        "cargo": "invitado",
+        "sobre": "Evaluación de la vulnerabilidad del paciente",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Propuso que trabajadores sociales investiguen la vulnerabilidad del paciente.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Eduardo Cahuana",
+        "cargo": "invitado",
+        "sobre": "Competencia de los subsistemas de salud",
+        "postura": "con observaciones",
+        "tema": "Salud",
+        "dijo": "Cuestionó la competencia exclusiva del Ministerio de Salud Pública.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Boris Andrade",
+        "cargo": "legislador",
+        "sobre": "Rectoría del Ministerio de Salud Pública",
+        "postura": "pregunta",
+        "tema": "Salud",
+        "dijo": "Preguntó si otros subsistemas afectarían la rectoría del Ministerio.",
+        "proyecto": "",
+        "id": "EC:mendoza andrade"
+      },
+      {
+        "orador": "Eduardo Cahuana",
+        "cargo": "invitado",
+        "sobre": "Mantenimiento de la rectoría estatal",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Defendió la permanencia de la rectoría mediante la normativa.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Cristina Jácome",
+        "cargo": "legislador",
+        "sobre": "Reglamento de cuidados paliativos",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Denunció la falta de un reglamento de cuidados paliativos.",
+        "proyecto": "",
+        "id": "EC:jacome benitez"
+      },
+      {
+        "orador": "Eduardo Cahuana",
+        "cargo": "invitado",
+        "sobre": "Atención en cuidados paliativos",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Defendió la existencia de protocolos y directrices de atención.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Cristina Jácome",
+        "cargo": "legislador",
+        "sobre": "Necesidad de un reglamento",
+        "postura": "pregunta",
+        "tema": "Salud",
+        "dijo": "Preguntó si el doctor considera innecesario el reglamento.",
+        "proyecto": "",
+        "id": "EC:jacome benitez"
+      },
+      {
+        "orador": "Eduardo Cahuana",
+        "cargo": "invitado",
+        "sobre": "Obligatoriedad de un reglamento",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Defendió la necesidad de un reglamento por disposición legal.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Cristina Jácome",
+        "cargo": "legislador",
+        "sobre": "Fiscalización de los comités",
+        "postura": "pregunta",
+        "tema": "Salud",
+        "dijo": "Preguntó sobre la fiscalización de los comités de subsistemas.",
+        "proyecto": "",
+        "id": "EC:jacome benitez"
+      },
+      {
+        "orador": "Eduardo Cahuana",
+        "cargo": "invitado",
+        "sobre": "Mecanismos de control y vigilancia",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Defendió la capacidad de seguimiento mediante la ACESS.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1920790218901453"
+  },
+  "fb_1615415227048928": {
+    "fecha": "2026-10-14",
+    "organo": "Comisión de Desarrollo Económico",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Alejandra Molina Santillán",
+        "cargo": "ministro o autoridad",
+        "sobre": "Observaciones al proyecto de concurso preventivo",
+        "postura": "con observaciones",
+        "tema": "Banca",
+        "dijo": "Presentó observaciones técnicas para proteger la disciplina crediticia y la estabilidad financiera.",
+        "proyecto": "Proyecto de ley de concurso preventivo",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1615415227048928"
+  },
+  "fb_1113727501356429": {
+    "fecha": "2026-10-14",
+    "organo": "Comisión de Soberanía Alimentaria",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Carlos Romero",
+        "cargo": "invitado",
+        "sobre": "Explicación del informe para primer debate",
+        "postura": "comenta",
+        "tema": "Agricultura",
+        "dijo": "Informó sobre la construcción técnica del informe.",
+        "proyecto": "Ley para prevenir y reducir la pérdida de alimentos",
+        "id": null
+      },
+      {
+        "orador": "María Bécibel Mendoza Ibarra",
+        "cargo": "legislador",
+        "sobre": "Aprobación del informe para primer debate",
+        "postura": "propone",
+        "tema": "Agricultura",
+        "dijo": "Propuso aprobar el informe para primer debate.",
+        "proyecto": "Ley para prevenir y reducir la pérdida de alimentos",
+        "id": "EC:mendoza ibarra"
+      },
+      {
+        "orador": "Lorena Rosado",
+        "cargo": "legislador",
+        "sobre": "Apoyo a la moción de Mendoza",
+        "postura": "a favor",
+        "tema": "Agricultura",
+        "dijo": "Respaldó la moción presentada por la asambleísta Mendoza.",
+        "proyecto": "Ley para prevenir y reducir la pérdida de alimentos",
+        "id": "EC:rosado sanchez"
+      },
+      {
+        "orador": "María Bécibel Mendoza Ibarra",
+        "cargo": "legislador",
+        "sobre": "Reconsideración de la votación",
+        "postura": "propone",
+        "tema": "Agricultura",
+        "dijo": "Pidió la reconsideración de la votación realizada.",
+        "proyecto": "Ley para prevenir y reducir la pérdida de alimentos",
+        "id": "EC:mendoza ibarra"
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1113727501356429"
   }
 }
