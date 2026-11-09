@@ -27061,5 +27061,582 @@
       }
     ],
     "url": "https://www.facebook.com/watch/?v=936423472588680"
+  },
+  "fb_1278063438733508": {
+    "fecha": "2026-10-12",
+    "organo": "Comisión de Educación",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Fanny Alicia Salgado Macías",
+        "cargo": "invitado",
+        "sobre": "Reforma al Código de Economía Social",
+        "postura": "con observaciones",
+        "tema": "Mype",
+        "dijo": "Propuso que el Senadi emita certificaciones de vigencia de derechos.",
+        "proyecto": "Código Orgánico de la Economía Social",
+        "id": null
+      },
+      {
+        "orador": "Paul Alexander Guaranga Rochina",
+        "cargo": "invitado",
+        "sobre": "Proyecto de Ley de Inteligencia Artificial",
+        "postura": "con observaciones",
+        "tema": "Tecnología",
+        "dijo": "Propuso implementar entornos de pruebas para la innovación tecnológica.",
+        "proyecto": "Ley de Inteligencia Artificial",
+        "id": null
+      },
+      {
+        "orador": "Maquista Cecilia Baltazar y Ucaya",
+        "cargo": "legislador",
+        "sobre": "Aportes al proyecto de inteligencia artificial",
+        "postura": "comenta",
+        "tema": "Tecnología",
+        "dijo": "Pidió al ingeniero enviar su propuesta técnica por escrito.",
+        "proyecto": "Ley de Inteligencia Artificial",
+        "id": "EC:baltazar yucailla"
+      },
+      {
+        "orador": "Cristian René Benítez Moraíra",
+        "cargo": "invitado",
+        "sobre": "Regulación de la inteligencia artificial",
+        "postura": "con observaciones",
+        "tema": "Tecnología",
+        "dijo": "Denunció el riesgo de la inteligencia artificial para el empleo.",
+        "proyecto": "Ley de Inteligencia Artificial",
+        "id": null
+      },
+      {
+        "orador": "Ingeniero Paul",
+        "cargo": "invitado",
+        "sobre": "Regulación de la inteligencia artificial",
+        "postura": "propone",
+        "tema": "Tecnología",
+        "dijo": "Propuso un proyecto de ley para regular la inteligencia artificial.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1278063438733508"
+  },
+  "QwizHuL-mt4": {
+    "fecha": "2026-10-10",
+    "organo": "Comisión de Constitución",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "César Astudio",
+        "cargo": "ministro o autoridad",
+        "sobre": "Regulación de la ley de armas",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso regular la cantidad de armas de fuego.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "César Astudio",
+        "cargo": "ministro o autoridad",
+        "sobre": "Expulsión de extranjeros ilegales",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Defendió la expulsión de ciudadanos extranjeros ilegales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "César Astudio",
+        "cargo": "ministro o autoridad",
+        "sobre": "Tecnología para combatir la extorsión",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Pidió mayor capacidad tecnológica para la geolocalización.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "César Astudio",
+        "cargo": "ministro o autoridad",
+        "sobre": "Acceso policial a concesiones privadas",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso permitir el ingreso policial a concesiones.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Rafael Belagundi",
+        "cargo": "ministro o autoridad",
+        "sobre": "Atención de emergencias por INDECI",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Propuso que INDECI actúe rápido ante desastres.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Rafael Belagundi",
+        "cargo": "ministro o autoridad",
+        "sobre": "Definición de grupos hostiles",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso precisar los criterios de grupos hostiles.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Rafael Belagundi",
+        "cargo": "ministro o autoridad",
+        "sobre": "Control militar en los penales",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso el control permanente de militares en penales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Luque Ibarra",
+        "cargo": "legislador",
+        "sobre": "Carrera penitenciaria",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Cuestionó la implementación de la carrera pública penitenciaria.",
+        "proyecto": "",
+        "id": "senado:luque ibarra"
+      },
+      {
+        "orador": "Luque Ibarra",
+        "cargo": "legislador",
+        "sobre": "Cárceles productivas para mujeres",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Pidió estrategias diferenciadas para mujeres en cárceles productivas.",
+        "proyecto": "",
+        "id": "senado:luque ibarra"
+      },
+      {
+        "orador": "Luque Ibarra",
+        "cargo": "legislador",
+        "sobre": "Reglas de legítima defensa",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Rechazó la relativización de las reglas de legítima defensa.",
+        "proyecto": "",
+        "id": "senado:luque ibarra"
+      },
+      {
+        "orador": "Luque Ibarra",
+        "cargo": "legislador",
+        "sobre": "Redundancia de tipos penales",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Denunció la redundancia entre criminalidad sistemática y organización criminal.",
+        "proyecto": "",
+        "id": "senado:luque ibarra"
+      },
+      {
+        "orador": "Luque Ibarra",
+        "cargo": "legislador",
+        "sobre": "Reforma de la Policía Nacional",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso una reforma profunda de la Policía Nacional.",
+        "proyecto": "",
+        "id": "senado:luque ibarra"
+      },
+      {
+        "orador": "Aguinaga",
+        "cargo": "legislador",
+        "sobre": "Seguridad en establecimientos penitenciarios",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Respaldó la participación de las fuerzas armadas en penales.",
+        "proyecto": "",
+        "id": "senado:aguinaga recuenco"
+      },
+      {
+        "orador": "Aguinaga",
+        "cargo": "legislador",
+        "sobre": "Derecho a la legítima defensa",
+        "postura": "a favor",
+        "tema": "Justicia",
+        "dijo": "Respaldó la interpretación actual del derecho a la legítima defensa.",
+        "proyecto": "",
+        "id": "senado:aguinaga recuenco"
+      },
+      {
+        "orador": "Aguinaga",
+        "cargo": "legislador",
+        "sobre": "Combate al narcotráfico",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso intensificar el control sobre la producción de cocaína.",
+        "proyecto": "",
+        "id": "senado:aguinaga recuenco"
+      },
+      {
+        "orador": "Aguinaga",
+        "cargo": "legislador",
+        "sobre": "Reforma del sistema judicial",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Pidió una reforma para sancionar a malos jueces y fiscales.",
+        "proyecto": "",
+        "id": "senado:aguinaga recuenco"
+      },
+      {
+        "orador": "Ventura",
+        "cargo": "legislador",
+        "sobre": "Legalidad para las fuerzas armadas",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Defendió la legalidad para que las fuerzas armadas colaboren.",
+        "proyecto": "",
+        "id": "senado:ventura angel"
+      },
+      {
+        "orador": "Alcorta",
+        "cargo": "legislador",
+        "sobre": "Personal del INPE",
+        "postura": "pregunta",
+        "tema": "Justicia",
+        "dijo": "Preguntó por la cantidad de personal del INPE.",
+        "proyecto": "",
+        "id": "senado:alcorta suero"
+      },
+      {
+        "orador": "Alcorta",
+        "cargo": "legislador",
+        "sobre": "Normas de uso de la fuerza",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Cuestionó la falta de normas sobre el uso de la fuerza.",
+        "proyecto": "",
+        "id": "senado:alcorta suero"
+      },
+      {
+        "orador": "Alcorta",
+        "cargo": "legislador",
+        "sobre": "Compromiso social de mineras",
+        "postura": "comenta",
+        "tema": "Minería",
+        "dijo": "Informó sobre la importancia del compromiso social de las mineras.",
+        "proyecto": "",
+        "id": "senado:alcorta suero"
+      },
+      {
+        "orador": "Alcorta",
+        "cargo": "legislador",
+        "sobre": "Control de armas policiales",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Pidió aplicar exámenes psicológicos para el uso de armas.",
+        "proyecto": "",
+        "id": "senado:alcorta suero"
+      },
+      {
+        "orador": "Alcorta",
+        "cargo": "legislador",
+        "sobre": "Vigilancia en la frontera",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso reforzar la vigilancia en la frontera con Colombia.",
+        "proyecto": "",
+        "id": "senado:alcorta suero"
+      },
+      {
+        "orador": "Alcorta",
+        "cargo": "legislador",
+        "sobre": "Responsabilidad de empresas de telefonía",
+        "postura": "propone",
+        "tema": "Telecomunicaciones",
+        "dijo": "Pidió responsabilidad a las empresas de telefonía en extorsiones.",
+        "proyecto": "",
+        "id": "senado:alcorta suero"
+      },
+      {
+        "orador": "Alcorta",
+        "cargo": "legislador",
+        "sobre": "Gestión de desastres naturales",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Propuso establecer una cabeza de mando para desastres.",
+        "proyecto": "",
+        "id": "senado:alcorta suero"
+      },
+      {
+        "orador": "Ampuedo",
+        "cargo": "legislador",
+        "sobre": "Delito de organización terrorista",
+        "postura": "pregunta",
+        "tema": "Justicia",
+        "dijo": "Preguntó sobre la distinción con el delito de organización criminal.",
+        "proyecto": "",
+        "id": "senado:ampuero meza"
+      },
+      {
+        "orador": "Ampuedo",
+        "cargo": "legislador",
+        "sobre": "Inversión de carga probatoria",
+        "postura": "pregunta",
+        "tema": "Justicia",
+        "dijo": "Preguntó sobre la inversión de la carga de la prueba.",
+        "proyecto": "",
+        "id": "senado:ampuero meza"
+      },
+      {
+        "orador": "Ampuedo",
+        "cargo": "legislador",
+        "sobre": "Reformas en el sistema penitenciario",
+        "postura": "pregunta",
+        "tema": "Justicia",
+        "dijo": "Pidió precisiones sobre las modificaciones en el sistema penitenciario.",
+        "proyecto": "",
+        "id": "senado:ampuero meza"
+      },
+      {
+        "orador": "Ampuedo",
+        "cargo": "legislador",
+        "sobre": "Atribuciones del comando unificado",
+        "postura": "pregunta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Preguntó sobre las nuevas atribuciones del comando unificado.",
+        "proyecto": "",
+        "id": "senado:ampuero meza"
+      },
+      {
+        "orador": "Ampuedo",
+        "cargo": "legislador",
+        "sobre": "Libertad vigilada pospenitenciaria",
+        "postura": "pregunta",
+        "tema": "Justicia",
+        "dijo": "Preguntó sobre la libertad vigilada para delitos de alta peligrosidad.",
+        "proyecto": "",
+        "id": "senado:ampuero meza"
+      },
+      {
+        "orador": "Flores",
+        "cargo": "legislador",
+        "sobre": "Seguridad y reforma penitenciaria",
+        "postura": "con observaciones",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso mejorar el seguimiento en cárceles productivas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Noriega",
+        "cargo": "legislador",
+        "sobre": "Control político de facultades delegadas",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Pidió realizar el control político de las facultades.",
+        "proyecto": "",
+        "id": "senado:noriega reategui"
+      },
+      {
+        "orador": "Quito",
+        "cargo": "legislador",
+        "sobre": "Rol de las Fuerzas Armadas",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Cuestionó la efectividad de las Fuerzas Armadas.",
+        "proyecto": "",
+        "id": "senado:quito sarmiento"
+      },
+      {
+        "orador": "Maraví",
+        "cargo": "legislador",
+        "sobre": "Gestión de los gobiernos actuales",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció la falta de soluciones del gobierno.",
+        "proyecto": "",
+        "id": "senado:maravi olarte"
+      },
+      {
+        "orador": "Jean Pietri",
+        "cargo": "legislador",
+        "sobre": "Inteligencia y uso de la fuerza",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso armonizar la fuerza con la inteligencia.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Calisto",
+        "cargo": "legislador",
+        "sobre": "Control de inteligencia en penales",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Denunció la nula capacidad de inteligencia en los penales.",
+        "proyecto": "",
+        "id": "senado:calisto giampietri"
+      },
+      {
+        "orador": "César Astudio",
+        "cargo": "ministro o autoridad",
+        "sobre": "Delegación de facultades para seguridad",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Defendió las facultades para fortalecer la seguridad nacional.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro de Defensa",
+        "cargo": "ministro o autoridad",
+        "sobre": "Definición de grupos hostiles",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Informó sobre la definición técnica de los grupos hostiles.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro de Defensa",
+        "cargo": "ministro o autoridad",
+        "sobre": "Eficacia de los estados de emergencia",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Respaldó la efectividad de los estados de emergencia.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Mauricio Arnillas",
+        "cargo": "ministro o autoridad",
+        "sobre": "Destrabe de proyectos de saneamiento",
+        "postura": "a favor",
+        "tema": "Saneamiento",
+        "dijo": "Pidió aprobar facultades para destrabar proyectos de agua.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Quito",
+        "cargo": "legislador",
+        "sobre": "Gestión de obras de agua",
+        "postura": "en contra",
+        "tema": "Saneamiento",
+        "dijo": "Cuestionó la corrupción en la contratación de obras.",
+        "proyecto": "",
+        "id": "senado:quito sarmiento"
+      },
+      {
+        "orador": "Luque",
+        "cargo": "legislador",
+        "sobre": "Vigencia de la ley de armas",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Cuestionó la vigencia de la ley de armas.",
+        "proyecto": "",
+        "id": "senado:luque ibarra"
+      },
+      {
+        "orador": "Luque",
+        "cargo": "legislador",
+        "sobre": "Incidente en Colcabamba",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Cuestionó la situación legal de los militares.",
+        "proyecto": "",
+        "id": "senado:luque ibarra"
+      },
+      {
+        "orador": "Luque",
+        "cargo": "legislador",
+        "sobre": "Subsidios de vivienda social",
+        "postura": "con observaciones",
+        "tema": "Saneamiento",
+        "dijo": "Cuestionó la falta de claridad en los subsidios.",
+        "proyecto": "",
+        "id": "senado:luque ibarra"
+      },
+      {
+        "orador": "Luque",
+        "cargo": "legislador",
+        "sobre": "Reestructuración de CEDAPAL",
+        "postura": "con observaciones",
+        "tema": "Saneamiento",
+        "dijo": "Pidió sustentar la necesidad de reestructurar CEDAPAL.",
+        "proyecto": "",
+        "id": "senado:luque ibarra"
+      },
+      {
+        "orador": "Luque",
+        "cargo": "legislador",
+        "sobre": "Participación de SUNASS en juicios",
+        "postura": "con observaciones",
+        "tema": "Saneamiento",
+        "dijo": "Preguntó sobre la participación técnica de SUNASS.",
+        "proyecto": "",
+        "id": "senado:luque ibarra"
+      },
+      {
+        "orador": "Astucurín",
+        "cargo": "legislador",
+        "sobre": "Saneamiento físico legal",
+        "postura": "comenta",
+        "tema": "Saneamiento",
+        "dijo": "Informó sobre la importancia del saneamiento físico legal para ejecutar obras.",
+        "proyecto": "",
+        "id": "senado:astucuri laura"
+      },
+      {
+        "orador": "Calisto Yan Pietri",
+        "cargo": "legislador",
+        "sobre": "Responsabilidades del sector vivienda",
+        "postura": "comenta",
+        "tema": "Saneamiento",
+        "dijo": "Destacó la responsabilidad del sector en agua y saneamiento.",
+        "proyecto": "",
+        "id": "senado:calisto giampietri"
+      },
+      {
+        "orador": "Patricia Juárez",
+        "cargo": "legislador",
+        "sobre": "Delegación de facultades al Ejecutivo",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció inconsistencias en la delegación de facultades aprobada.",
+        "proyecto": "",
+        "id": "senado:juarez gallegos"
+      },
+      {
+        "orador": "Ministro",
+        "cargo": "ministro o autoridad",
+        "sobre": "Consultas de los senadores",
+        "postura": "comenta",
+        "tema": "Saneamiento",
+        "dijo": "Pidió enviar las respuestas de forma escrita.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=QwizHuL-mt4"
+  },
+  "fb_1421392376025337": {
+    "fecha": "2026-10-08",
+    "organo": "Comisión de Seguridad Integral",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Andrés Castillo",
+        "cargo": "legislador",
+        "sobre": "Reforma de la disciplina de las FF.AA.",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Respaldó la reforma al régimen disciplinario de las Fuerzas Armadas.",
+        "proyecto": "Ley orgánica reformatoria a la ley orgánica de personal y disciplina las fuerzas armadas",
+        "id": "EC:castillo maldonado"
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1421392376025337"
   }
 }
