@@ -4818,5 +4818,292 @@
       }
     ],
     "url": "https://www.youtube.com/watch?v=_kpQAAgCp9w"
+  },
+  "fb_1068292222939805": {
+    "fecha": "2026-11-09",
+    "organo": "Comisión de Régimen Económico",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Jorge Fernando Guadalupe Lana",
+        "cargo": "invitado",
+        "sobre": "Rentas por venta de energía eléctrica",
+        "postura": "a favor",
+        "tema": "Energía",
+        "dijo": "Defendió la reforma del Decreto Ley 047 para asegurar la transparencia.",
+        "proyecto": "Decreto Ley 047",
+        "id": null
+      },
+      {
+        "orador": "Liliana Durán",
+        "cargo": "legislador",
+        "sobre": "Necesidad de la reforma de rentas",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Cuestionó la necesidad de la reforma del Decreto Ley 047.",
+        "proyecto": "Decreto Ley 047",
+        "id": "EC:duran aguilar"
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1068292222939805"
+  },
+  "yhZhRCsW2gE": {
+    "fecha": "2026-11-09",
+    "organo": "Comisión de Defensa del Consumidor",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Marco Antonio Vinílez Ruiz",
+        "cargo": "ministro o autoridad",
+        "sobre": "Sentencia sobre prohibición de plaguicidas",
+        "postura": "comenta",
+        "tema": "Agricultura",
+        "dijo": "Explicó las medidas de fiscalización de plaguicidas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Marco Antonio Vinílez Ruiz",
+        "cargo": "ministro o autoridad",
+        "sobre": "Impacto del fenómeno del niño",
+        "postura": "comenta",
+        "tema": "Agricultura",
+        "dijo": "Informó sobre los seguros agrarios en Amazonía.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Marco Antonio Vinílez Ruiz",
+        "cargo": "ministro o autoridad",
+        "sobre": "Transitabilidad en la carretera de Pucallpa",
+        "postura": "comenta",
+        "tema": "Agricultura",
+        "dijo": "Detalló la recuperación de la transitabilidad vial.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Arista",
+        "cargo": "legislador",
+        "sobre": "Costo de prohibición de plaguicidas",
+        "postura": "en contra",
+        "tema": "Agricultura",
+        "dijo": "Cuestionó el impacto económico para los agricultores.",
+        "proyecto": "",
+        "id": "senado:arista arbildo"
+      },
+      {
+        "orador": "Arista",
+        "cargo": "legislador",
+        "sobre": "Alternativas de compensación al agricultor",
+        "postura": "propone",
+        "tema": "Agricultura",
+        "dijo": "Propuso fondos para maquinaria o semillas transgénicas.",
+        "proyecto": "",
+        "id": "senado:arista arbildo"
+      },
+      {
+        "orador": "Arista",
+        "cargo": "legislador",
+        "sobre": "Plaga de murciélagos en la Amazonía",
+        "postura": "en contra",
+        "tema": "Agricultura",
+        "dijo": "Denunció la falta de recursos contra plagas.",
+        "proyecto": "",
+        "id": "senado:arista arbildo"
+      },
+      {
+        "orador": "Chacon",
+        "cargo": "legislador",
+        "sobre": "Plan de contingencia económico",
+        "postura": "pregunta",
+        "tema": "Agricultura",
+        "dijo": "Preguntó por el plan de contingencia económico.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Osorio",
+        "cargo": "legislador",
+        "sobre": "Asistencia técnica e insumos químicos",
+        "postura": "en contra",
+        "tema": "Agricultura",
+        "dijo": "Denunció la falta de asistencia técnica estatal.",
+        "proyecto": "",
+        "id": "senado:osorio palpan"
+      },
+      {
+        "orador": "Osorio",
+        "cargo": "legislador",
+        "sobre": "Requisitos del fondo Agroperú",
+        "postura": "en contra",
+        "tema": "Agricultura",
+        "dijo": "Cuestionó los requisitos para acceder al fondo.",
+        "proyecto": "",
+        "id": "senado:osorio palpan"
+      },
+      {
+        "orador": "Osorio",
+        "cargo": "legislador",
+        "sobre": "Proyecto Especial Pichis-Cuzani",
+        "postura": "en contra",
+        "tema": "Agricultura",
+        "dijo": "Reclamó atención para el proyecto en Pasco.",
+        "proyecto": "",
+        "id": "senado:osorio palpan"
+      },
+      {
+        "orador": "Osorio",
+        "cargo": "legislador",
+        "sobre": "Incendios forestales en Pasco",
+        "postura": "en contra",
+        "tema": "Ambiente",
+        "dijo": "Denunció la falta de informes sobre incendios.",
+        "proyecto": "",
+        "id": "senado:osorio palpan"
+      },
+      {
+        "orador": "Iturrey",
+        "cargo": "legislador",
+        "sobre": "Financiamiento de evaluaciones ambientales",
+        "postura": "pregunta",
+        "tema": "Agricultura",
+        "dijo": "Preguntó por el presupuesto de evaluaciones ambientales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Iturrey",
+        "cargo": "legislador",
+        "sobre": "Pago del seguro agrario",
+        "postura": "pregunta",
+        "tema": "Seguros",
+        "dijo": "Preguntó sobre el pago por hectárea asegurada.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Jaime Delgado",
+        "cargo": "legislador",
+        "sobre": "Agroquímicos y salud pública",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Denunció la conexión agroquímicos y cáncer.",
+        "proyecto": "",
+        "id": "senado:delgado zegarra"
+      },
+      {
+        "orador": "Jaime Delgado",
+        "cargo": "legislador",
+        "sobre": "Modelo de fiscalización de SENASA",
+        "postura": "en contra",
+        "tema": "Agricultura",
+        "dijo": "Cuestionó el enfoque de fiscalización de SENASA.",
+        "proyecto": "",
+        "id": "senado:delgado zegarra"
+      },
+      {
+        "orador": "Jaime Delgado",
+        "cargo": "legislador",
+        "sobre": "Modificación de la ley de SENASA",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó la postura del ministro sobre la ley.",
+        "proyecto": "",
+        "id": "senado:delgado zegarra"
+      },
+      {
+        "orador": "Vázquez",
+        "cargo": "legislador",
+        "sobre": "Historia del control biológico",
+        "postura": "comenta",
+        "tema": "Agricultura",
+        "dijo": "Comentó la evolución del control biológico nacional.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Vázquez",
+        "cargo": "legislador",
+        "sobre": "Reorganización técnica de SENASA",
+        "postura": "propone",
+        "tema": "Agricultura",
+        "dijo": "Propuso una reorganización técnica de SENASA.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Delgado",
+        "cargo": "legislador",
+        "sobre": "Control biológico y cultivo de la quinoa",
+        "postura": "a favor",
+        "tema": "Agricultura",
+        "dijo": "Defendió el uso de control biológico para proteger la producción agrícola.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Garista",
+        "cargo": "legislador",
+        "sobre": "Falta de articulación en investigación agrícola",
+        "postura": "en contra",
+        "tema": "Agricultura",
+        "dijo": "Denunció la falta de articulación entre los centros de investigación y los agricultores.",
+        "proyecto": "",
+        "id": "senado:arista arbildo"
+      },
+      {
+        "orador": "Chacón",
+        "cargo": "legislador",
+        "sobre": "Respuesta a interrogantes en la sesión",
+        "postura": "pregunta",
+        "tema": "Otros",
+        "dijo": "Pidió al ministro que respondiera las preguntas planteadas durante la sesión.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Marco Minnelli",
+        "cargo": "ministro o autoridad",
+        "sobre": "Gestión de transgénicos y títulos de propiedad",
+        "postura": "comenta",
+        "tema": "Agricultura",
+        "dijo": "Explicó que la decisión sobre transgénicos se basará en estudios científicos.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=yhZhRCsW2gE"
+  },
+  "MsoScpGc9_E": {
+    "fecha": "2026-11-09",
+    "organo": "Comisión de Ética Parlamentaria",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Milagros Carina Santanavera",
+        "cargo": "legislador",
+        "sobre": "Denuncia por presunta infracción ética",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Rechazó las acusaciones de haber cometido una falta.",
+        "proyecto": "",
+        "id": "diputados:santana vera"
+      },
+      {
+        "orador": "Miriam Felicita Reyes-Julca",
+        "cargo": "invitado",
+        "sobre": "Hechos de la denuncia contra Santanavera",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Testificó sobre lo ocurrido con la diputada.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=MsoScpGc9_E"
   }
 }
