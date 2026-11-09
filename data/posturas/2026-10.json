@@ -22909,5 +22909,102 @@
       }
     ],
     "url": "https://www.facebook.com/watch/?v=1884021106100236"
+  },
+  "fb_1114888161124450": {
+    "fecha": "2026-10-19",
+    "organo": "Comisión de Niñez y Adolescencia",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Viviana Velós Ramírez",
+        "cargo": "legislador",
+        "sobre": "comparecencia de la ministra al proyecto",
+        "postura": "pregunta",
+        "tema": "Otros",
+        "dijo": "Preguntó por la comparecencia de la ministra al proyecto de ley.",
+        "proyecto": "Ley de protección integral de niños y adolescentes",
+        "id": "EC:veloz ramirez"
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1114888161124450"
+  },
+  "fb_2663522467415565": {
+    "fecha": "2026-10-16",
+    "organo": "Comisión de Justicia",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Camila Calle",
+        "cargo": "invitado",
+        "sobre": "Gestión de identidad y datos civiles",
+        "postura": "con observaciones",
+        "tema": "Tecnología",
+        "dijo": "Propuso vincular la identidad física con la digital en la ley de gestión de identidad.",
+        "proyecto": "Ley de Gestión de Identidad y Datos Civiles",
+        "id": null
+      },
+      {
+        "orador": "Luis Tamawong",
+        "cargo": "invitado",
+        "sobre": "Seguridad de la cédula digital",
+        "postura": "con observaciones",
+        "tema": "Tecnología",
+        "dijo": "Pidió establecer protocolos de seguridad para la ley de gestión de identidad.",
+        "proyecto": "Ley de Gestión de Identidad y Datos Civiles",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=2663522467415565"
+  },
+  "fb_1101448635579214": {
+    "fecha": "2026-10-16",
+    "organo": "Comisión de Régimen Económico",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Duran",
+        "cargo": "legislador",
+        "sobre": "El veto al Código Tributario",
+        "postura": "en contra",
+        "tema": "Tributos",
+        "dijo": "Denunció que el veto favorece a quienes ocultan activos.",
+        "proyecto": "Ley Orgánica Reformatoria al Código Tributario",
+        "id": "EC:duran aguilar"
+      },
+      {
+        "orador": "San Cristalema",
+        "cargo": "legislador",
+        "sobre": "El informe de la comisión",
+        "postura": "en contra",
+        "tema": "Tributos",
+        "dijo": "Cuestionó que el veto no corrige injusticias de fondo.",
+        "proyecto": "Ley Orgánica Reformatoria al Código Tributario",
+        "id": null
+      },
+      {
+        "orador": "Castro",
+        "cargo": "legislador",
+        "sobre": "El uso de paraísos fiscales",
+        "postura": "comenta",
+        "tema": "Tributos",
+        "dijo": "Recordó un decreto de 2015 para alertar sobre la corrupción.",
+        "proyecto": "",
+        "id": "EC:castro piedra"
+      },
+      {
+        "orador": "Zapata",
+        "cargo": "legislador",
+        "sobre": "El informe de la comisión",
+        "postura": "a favor",
+        "tema": "Tributos",
+        "dijo": "Respaldó el informe para corregir errores de la normativa.",
+        "proyecto": "Ley Orgánica Reformatoria al Código Tributario",
+        "id": "EC:zapata rojas"
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1101448635579214"
   }
 }
