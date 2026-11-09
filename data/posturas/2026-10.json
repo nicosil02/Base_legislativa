@@ -25262,5 +25262,332 @@
       }
     ],
     "url": "https://www.youtube.com/watch?v=s3EGAcpYP4s"
+  },
+  "GTShjieQP9Q": {
+    "fecha": "2026-10-13",
+    "organo": "Pleno de la Asamblea",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Sergio Peña",
+        "cargo": "legislador",
+        "sobre": "Juicio político contra David Rosero",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Defendió la validez de las pericias presentadas en el juicio político.",
+        "proyecto": "",
+        "id": "EC:pena veloz"
+      },
+      {
+        "orador": "Sergio Peña",
+        "cargo": "legislador",
+        "sobre": "Juicio político contra David Rosero",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció la reunión de Rosero utilizando peritajes técnicos de metadatos.",
+        "proyecto": "",
+        "id": "EC:pena veloz"
+      },
+      {
+        "orador": "David Rosero",
+        "cargo": "ministro o autoridad",
+        "sobre": "Juicio político en su contra",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó la falta de pruebas en el juicio político presentado.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Carlos Pobel",
+        "cargo": "invitado",
+        "sobre": "Validez de la metapericia",
+        "postura": "pregunta",
+        "tema": "Justicia",
+        "dijo": "Preguntó si el informe de metapericia detectó alteraciones en imágenes.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Perito",
+        "cargo": "invitado",
+        "sobre": "Cadena de custodia de evidencias",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Confirmó la ruptura de la cadena de custodia de las evidencias.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "David Rosero",
+        "cargo": "ministro o autoridad",
+        "sobre": "acusación de reunión con la Dra. Romero",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Negó haber mantenido reuniones con la doctora Romero.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Edwin Guevara",
+        "cargo": "invitado",
+        "sobre": "veracidad de las imágenes digitales",
+        "postura": "comenta",
+        "tema": "Tecnología",
+        "dijo": "Explicó la importancia del código hash en el análisis.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Edwin Guevara",
+        "cargo": "invitado",
+        "sobre": "identificación mediante puntos de comparación",
+        "postura": "comenta",
+        "tema": "Tecnología",
+        "dijo": "Explicó que se requieren 22 puntos para la identidad.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Edwin Guevara",
+        "cargo": "invitado",
+        "sobre": "pérdida de detalles anatómicos",
+        "postura": "comenta",
+        "tema": "Tecnología",
+        "dijo": "Confirmó la pérdida de rasgos identificativos en imágenes.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "David Rosero",
+        "cargo": "ministro o autoridad",
+        "sobre": "itinerario de traslado de la autoridad",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Detalló su recorrido desde el aeropuerto hacia Ibarra.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Carlos Poveda",
+        "cargo": "invitado",
+        "sobre": "falta de nexo causal probatorio",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó la falta de pruebas en el juicio.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Carlos Poveda",
+        "cargo": "invitado",
+        "sobre": "vulneración de datos biométricos",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció la exposición de datos de la testigo.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Carlos Poveda",
+        "cargo": "invitado",
+        "sobre": "doble rasero de la comisión",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Criticó la aplicación de criterios jurídicos desiguales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "David Rosero Minda",
+        "cargo": "ministro o autoridad",
+        "sobre": "Juicio político en su contra",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Defendió su gestión y negó las acusaciones presentadas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Sergio Peña",
+        "cargo": "legislador",
+        "sobre": "Juicio político a David Rosero",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció presuntos nexos familiares y falta de objetividad.",
+        "proyecto": "",
+        "id": "EC:pena veloz"
+      },
+      {
+        "orador": "David Rosero Minda",
+        "cargo": "ministro o autoridad",
+        "sobre": "Derecho a la réplica en juicio político",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó la validez técnica de las pruebas presentadas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Luigi García",
+        "cargo": "legislador",
+        "sobre": "Informe de fiscalización contra Rosero",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Respaldó el informe de la comisión y la censura.",
+        "proyecto": "",
+        "id": "EC:garcia velasquez"
+      },
+      {
+        "orador": "María Paula Villacresa",
+        "cargo": "legislador",
+        "sobre": "Juicio político a David Rosero",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Denunció el conflicto de intereses del consejero Rosero.",
+        "proyecto": "",
+        "id": "EC:villacreses herrera"
+      },
+      {
+        "orador": "Amable Chica",
+        "cargo": "legislador",
+        "sobre": "Juicio político a David Rosero",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó la falta de pruebas periciales contundentes.",
+        "proyecto": "",
+        "id": "EC:chica valencia"
+      },
+      {
+        "orador": "Victoria Desintonio",
+        "cargo": "legislador",
+        "sobre": "juicio político a David Rosero",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció la ineficiencia del gobierno y el uso político del juicio.",
+        "proyecto": "",
+        "id": "EC:desintonio malave"
+      },
+      {
+        "orador": "Andrés Castillo",
+        "cargo": "legislador",
+        "sobre": "juicio político a David Rosero",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó la ética de la oposición y su intención de abstenerse.",
+        "proyecto": "",
+        "id": "EC:castillo maldonado"
+      },
+      {
+        "orador": "Herrera",
+        "cargo": "legislador",
+        "sobre": "juicio político a David Rosero",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Defendió su trayectoria y anunció que su bancada votará en abstención.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Sergio Peña",
+        "cargo": "legislador",
+        "sobre": "juicio político a David Rosero",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso la censura y destitución del consejero David Rosero.",
+        "proyecto": "",
+        "id": "EC:pena veloz"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=GTShjieQP9Q"
+  },
+  "fb_2195924931313847": {
+    "fecha": "2026-10-13",
+    "organo": "Comisión de Biodiversidad",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Hugo Uveche Berriavázago",
+        "cargo": "invitado",
+        "sobre": "Proyecto de la Ley de Bioeconomía",
+        "postura": "con observaciones",
+        "tema": "Ambiente",
+        "dijo": "Propuso articular la propuesta con la autoridad de ciencia.",
+        "proyecto": "Ley de Fomento de la Bioeconomía",
+        "id": null
+      },
+      {
+        "orador": "Hugo Uveche Berriavázago",
+        "cargo": "invitado",
+        "sobre": "Prioridades de la ley",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Destacó la importancia de la certificación bioeconómica.",
+        "proyecto": "Ley de Fomento de la Bioeconomía",
+        "id": null
+      },
+      {
+        "orador": "Saboreza",
+        "cargo": "legislador",
+        "sobre": "Certificación para sectores rurales",
+        "postura": "pregunta",
+        "tema": "Ambiente",
+        "dijo": "Preguntó cómo evitar trámites tediosos para sectores rurales.",
+        "proyecto": "Ley de Fomento de la Bioeconomía",
+        "id": null
+      },
+      {
+        "orador": "Hugo Uveche Berriavázago",
+        "cargo": "invitado",
+        "sobre": "Simplificación de trámites",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Explicó que la ventanilla única busca simplificar trámites.",
+        "proyecto": "Ley de Fomento de la Bioeconomía",
+        "id": null
+      },
+      {
+        "orador": "Casanova",
+        "cargo": "legislador",
+        "sobre": "Mecanismos de control y sanción",
+        "postura": "pregunta",
+        "tema": "Ambiente",
+        "dijo": "Preguntó por los mecanismos de control y sanción.",
+        "proyecto": "Ley de Fomento de la Bioeconomía",
+        "id": "EC:casanova montesino"
+      },
+      {
+        "orador": "Hugo Uveche Berriavázago",
+        "cargo": "invitado",
+        "sobre": "Sanciones en el proyecto",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Confirmó que el proyecto incluye una parte sancionatoria.",
+        "proyecto": "Ley de Fomento de la Bioeconomía",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=2195924931313847"
+  },
+  "fb_2149920189253836": {
+    "fecha": "2026-10-13",
+    "organo": "Comisión de Relaciones Internacionales",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Lucia Lisbet Jaramillo Zurita",
+        "cargo": "legislador",
+        "sobre": "Reforma a la Ley del Servicio Exterior",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Explicó los objetivos de la reforma de la Ley Orgánica del Servicio Exterior.",
+        "proyecto": "Ley Orgánica del Servicio Exterior",
+        "id": "EC:jaramillo zurita lucia"
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=2149920189253836"
   }
 }
