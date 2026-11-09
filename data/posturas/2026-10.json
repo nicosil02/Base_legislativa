@@ -26266,5 +26266,433 @@
       }
     ],
     "url": "https://www.youtube.com/watch?v=0ptcJPKAH8U"
+  },
+  "1Xnv6hHYipQ": {
+    "fecha": "2026-10-15",
+    "organo": "Comisión de Constitución",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Rodrich",
+        "cargo": "legislador",
+        "sobre": "rectificación de la votación",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso aceptar la realidad de los hechos por errores tecnológicos.",
+        "proyecto": "",
+        "id": "senado:rodrich ackerman"
+      },
+      {
+        "orador": "Juárez",
+        "cargo": "legislador",
+        "sobre": "rectificación de la votación",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Pidió la reconsideración de la votación por falta de democracia.",
+        "proyecto": "",
+        "id": "senado:juarez gallegos"
+      },
+      {
+        "orador": "Cahuana",
+        "cargo": "legislador",
+        "sobre": "rectificación de la votación",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Rechazó la reconsideración argumentando que se cumplieron las formalidades.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Alcorta Suero",
+        "cargo": "legislador",
+        "sobre": "incorporación de senadores",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Defendió la incorporación de un senador por problemas técnicos.",
+        "proyecto": "",
+        "id": "senado:alcorta suero"
+      },
+      {
+        "orador": "Morales",
+        "cargo": "legislador",
+        "sobre": "utilidad del debate",
+        "postura": "con observaciones",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó la utilidad de un debate sin hechos delimitados.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Juárez",
+        "cargo": "legislador",
+        "sobre": "dictamen de seguridad ciudadana",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Respaldó la idea de que la seguridad es tarea compartida.",
+        "proyecto": "PL 003 2026-2031 S",
+        "id": "senado:juarez gallegos"
+      },
+      {
+        "orador": "Lourdes Alcorta",
+        "cargo": "legislador",
+        "sobre": "dictamen de seguridad ciudadana",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Denunció que la oposición obstaculiza la seguridad ciudadana.",
+        "proyecto": "PL 003 2026-2031 S",
+        "id": "senado:alcorta suero"
+      },
+      {
+        "orador": "Ventura",
+        "cargo": "legislador",
+        "sobre": "dictamen de seguridad ciudadana",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Denunció el entorpecimiento de la lucha contra la inseguridad.",
+        "proyecto": "PL 003 2026-2031 S",
+        "id": "senado:ventura angel"
+      },
+      {
+        "orador": "Moyano",
+        "cargo": "legislador",
+        "sobre": "dictamen de seguridad ciudadana",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso mejorar el dictamen para evitar errores.",
+        "proyecto": "PL 003 2026-2031 S",
+        "id": "senado:moyano delgado"
+      },
+      {
+        "orador": "Rodríguez",
+        "cargo": "legislador",
+        "sobre": "Obstruccionismo de la izquierda radical",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció el obstruccionismo de la izquierda radical en el Senado.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Juárez Gallegos",
+        "cargo": "legislador",
+        "sobre": "Garantía de votos de Fuerza Popular",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Garantizó la presencia de los senadores de Fuerza Popular durante la votación.",
+        "proyecto": "",
+        "id": "senado:juarez gallegos"
+      },
+      {
+        "orador": "Cavana",
+        "cargo": "legislador",
+        "sobre": "Reconsideración de la votación",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Sugirió presentar una reconsideración si no se cumplieron las formalidades.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Alcorta Suero",
+        "cargo": "legislador",
+        "sobre": "Senadores con problemas técnicos",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Defendió la incorporación inmediata de los senadores con problemas de conexión.",
+        "proyecto": "",
+        "id": "senado:alcorta suero"
+      },
+      {
+        "orador": "Rodríguez",
+        "cargo": "legislador",
+        "sobre": "Uso de tecnicismos en el debate",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Criticó que se utilicen tecnicismos para ganar las votaciones.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Aguinaga",
+        "cargo": "legislador",
+        "sobre": "Importancia del debate de fondo",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Resaltó la importancia de debatir el tema de fondo de la sesión.",
+        "proyecto": "",
+        "id": "senado:aguinaga recuenco"
+      },
+      {
+        "orador": "Juárez Gallegos",
+        "cargo": "legislador",
+        "sobre": "Rectificación de la votación",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Solicitó la rectificación de la votación mediante el artículo 91.",
+        "proyecto": "",
+        "id": "senado:juarez gallegos"
+      },
+      {
+        "orador": "Luque Ibarra",
+        "cargo": "legislador",
+        "sobre": "Interpretación del artículo 91",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Rechazó la interpretación de la rectificación de la votación propuesta.",
+        "proyecto": "",
+        "id": "senado:luque ibarra"
+      },
+      {
+        "orador": "Cabuendán",
+        "cargo": "legislador",
+        "sobre": "Postura de Juntos por el Perú",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Aclaró que su bancada está a favor de realizar el debate.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Alcorta Suero",
+        "cargo": "legislador",
+        "sobre": "Resolución amistosa del incidente",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Instó a los senadores a resolver el incidente de forma empática.",
+        "proyecto": "",
+        "id": "senado:alcorta suero"
+      },
+      {
+        "orador": "Kawana",
+        "cargo": "legislador",
+        "sobre": "Procedimiento de reconsideración",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Argumentó que la reconsideración debe presentarse obligatoriamente por escrito.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Juárez Gallegos",
+        "cargo": "legislador",
+        "sobre": "Repetición de la votación",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Insistió en repetir la votación por la existencia de errores graves.",
+        "proyecto": "",
+        "id": "senado:juarez gallegos"
+      },
+      {
+        "orador": "Morales Ramírez",
+        "cargo": "legislador",
+        "sobre": "Calidad del debate parlamentario",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó la falta de acuerdos en un ambiente coloquial.",
+        "proyecto": "",
+        "id": "senado:morales ramirez"
+      },
+      {
+        "orador": "Rodrich",
+        "cargo": "legislador",
+        "sobre": "La votación del dictamen",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso proceder con la votación del dictamen.",
+        "proyecto": "",
+        "id": "senado:rodrich ackerman"
+      },
+      {
+        "orador": "Juarez",
+        "cargo": "legislador",
+        "sobre": "El debate del dictamen de seguridad",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Defendió la necesidad de un debate amplio.",
+        "proyecto": "",
+        "id": "senado:juarez gallegos"
+      },
+      {
+        "orador": "Lourdes-Alcorza",
+        "cargo": "legislador",
+        "sobre": "La ausencia de la oposición",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció la actitud de las bancadas opositoras.",
+        "proyecto": "",
+        "id": "senado:alcorta suero"
+      },
+      {
+        "orador": "Ventura",
+        "cargo": "legislador",
+        "sobre": "Los actos dilatorios en la comisión",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció el entorpecimiento de las funciones legislativas.",
+        "proyecto": "",
+        "id": "senado:ventura angel"
+      },
+      {
+        "orador": "Moyano",
+        "cargo": "legislador",
+        "sobre": "El error técnico de votación",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Informó que hubo un error técnico procedimental.",
+        "proyecto": "",
+        "id": "senado:moyano delgado"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=1Xnv6hHYipQ"
+  },
+  "oRd4w7fIewo": {
+    "fecha": "2026-10-15",
+    "organo": "Mesa de trabajo Salud",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Representante de la Defensoría del Pueblo",
+        "cargo": "ministro o autoridad",
+        "sobre": "Financiamiento y ejecución de enfermedades raras",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Informó sobre la baja ejecución presupuestal en hospitales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Maritza Yarro",
+        "cargo": "legislador",
+        "sobre": "Problemas presupuestales en el Cenaris",
+        "postura": "pregunta",
+        "tema": "Salud",
+        "dijo": "Preguntó por las trabas presupuestales que enfrenta el Cenaris.",
+        "proyecto": "",
+        "id": "diputados:yarrow lumbreras"
+      },
+      {
+        "orador": "Representante del Cenaris",
+        "cargo": "ministro o autoridad",
+        "sobre": "Dificultades en la ejecución de contratos",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Explicó los problemas logísticos y de mercado en adquisiciones.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Maritza Yarro",
+        "cargo": "legislador",
+        "sobre": "Procesos de selección desiertos",
+        "postura": "pregunta",
+        "tema": "Salud",
+        "dijo": "Solicitó el detalle de los procesos declarados desiertos.",
+        "proyecto": "",
+        "id": "diputados:yarrow lumbreras"
+      },
+      {
+        "orador": "Representante de FEPER",
+        "cargo": "invitado",
+        "sobre": "Informe de seguimiento de enfermedades raras",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Propuso mejorar la trazabilidad y programación de medicamentos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Representante del FISAL",
+        "cargo": "ministro o autoridad",
+        "sobre": "Gestión y rol del FISAL",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Explicó la dependencia del FISAL respecto al presupuesto nacional.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Maritza Yarro",
+        "cargo": "legislador",
+        "sobre": "Creación de un fondo independiente",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Propuso la creación de una unidad independiente para fondos.",
+        "proyecto": "",
+        "id": "diputados:yarrow lumbreras"
+      },
+      {
+        "orador": "Pegui Martinez Esteban",
+        "cargo": "invitado",
+        "sobre": "Diagnóstico y tratamiento de pacientes",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Propuso crear centros especializados para mejorar diagnósticos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Representante de pacientes",
+        "cargo": "invitado",
+        "sobre": "Calidad y demora de medicamentos",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Denunció la mala calidad de ciertos medicamentos recibidos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Diana Mercedes Bolívar",
+        "cargo": "invitado",
+        "sobre": "Desabastecimiento en hospitales públicos",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Denunció la falta de equipos y medicamentos en hospitales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Diana Mercedes Bolívar",
+        "cargo": "legislador",
+        "sobre": "Colapso del sistema de salud",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Denunció la malversación de fondos y la falta de medicamentos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Angela Día",
+        "cargo": "ministro o autoridad",
+        "sobre": "Financiamiento de enfermedades raras en la Marina",
+        "postura": "en contra",
+        "tema": "Seguros",
+        "dijo": "Explicó la falta de presupuesto adicional para la Marina de Guerra.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Giancarlo González",
+        "cargo": "invitado",
+        "sobre": "Recomendaciones técnicas sobre el presupuesto de salud",
+        "postura": "propone",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Propuso asegurar presupuestos y agilizar procesos en Renetza.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Melisa Arana",
+        "cargo": "ministro o autoridad",
+        "sobre": "Financiamiento para enfermedades raras y dispositivos médicos",
+        "postura": "con observaciones",
+        "tema": "Salud",
+        "dijo": "Señaló vacíos en el DS 02-2025 respecto a dispositivos médicos.",
+        "proyecto": "DS 02-2025",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=oRd4w7fIewo"
   }
 }
