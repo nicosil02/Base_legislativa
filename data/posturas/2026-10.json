@@ -20324,5 +20324,922 @@
       }
     ],
     "url": "https://www.youtube.com/watch?v=Gk2Nok9Chtw"
+  },
+  "xYH34kbaFJ8": {
+    "fecha": "2026-10-20",
+    "organo": "Comisión de Medio Ambiente",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Poma Huamaní",
+        "cargo": "legislador",
+        "sobre": "quema de residuos en hospital",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Informó sobre la quema de residuos en un hospital de Puerto Maldonado.",
+        "proyecto": "",
+        "id": "diputados:poma huamani"
+      },
+      {
+        "orador": "Poma Huamaní",
+        "cargo": "legislador",
+        "sobre": "conservación en la Amazonía",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Destacó la labor de una joven conservacionista en Madre de Dios.",
+        "proyecto": "",
+        "id": "diputados:poma huamani"
+      },
+      {
+        "orador": "Silupú Inga",
+        "cargo": "legislador",
+        "sobre": "incendios forestales en Cusco",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Reportó los incendios forestales en Cusco y la presencia de la presidenta.",
+        "proyecto": "",
+        "id": "diputados:silupu inga"
+      },
+      {
+        "orador": "Silupú Inga",
+        "cargo": "legislador",
+        "sobre": "base del IGP en Piura",
+        "postura": "comenta",
+        "tema": "Tecnología",
+        "dijo": "Gestionó una base para el Instituto Geofísico del Perú en Piura.",
+        "proyecto": "",
+        "id": "diputados:silupu inga"
+      },
+      {
+        "orador": "Silupú Inga",
+        "cargo": "legislador",
+        "sobre": "tecnología del radar Sofi",
+        "postura": "propone",
+        "tema": "Tecnología",
+        "dijo": "Solicitó invitar al presidente del IGP para exponer sobre el radar Sofi.",
+        "proyecto": "",
+        "id": "diputados:silupu inga"
+      },
+      {
+        "orador": "Castro Cruz",
+        "cargo": "legislador",
+        "sobre": "contaminación de desagües en Chiclayo",
+        "postura": "en contra",
+        "tema": "Saneamiento",
+        "dijo": "Denunció la contaminación por desagües y la falta de agua en Chiclayo.",
+        "proyecto": "",
+        "id": "diputados:castro cruz"
+      },
+      {
+        "orador": "Zulca Castillo",
+        "cargo": "legislador",
+        "sobre": "incendios forestales en Ayacucho",
+        "postura": "propone",
+        "tema": "Ambiente",
+        "dijo": "Pidió seguimiento institucional ante los incendios forestales en Ayacucho.",
+        "proyecto": "",
+        "id": "diputados:sulca castillo"
+      },
+      {
+        "orador": "Gladis Andrade",
+        "cargo": "legislador",
+        "sobre": "pesca ilegal en Cerro Azul",
+        "postura": "propone",
+        "tema": "Pesca",
+        "dijo": "Solicitó inspecciones por pesca ilegal y bloqueos de acceso en Cerro Azul.",
+        "proyecto": "",
+        "id": "diputados:andrade salguero de alvarez"
+      },
+      {
+        "orador": "Gladis Andrade",
+        "cargo": "legislador",
+        "sobre": "riesgo sanitario en Jicamarca",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Denunció un silo peligroso en un colegio de Jicamarca.",
+        "proyecto": "",
+        "id": "diputados:andrade salguero de alvarez"
+      },
+      {
+        "orador": "Pérez Alcahuamán",
+        "cargo": "legislador",
+        "sobre": "incendios en el sur",
+        "postura": "en contra",
+        "tema": "Ambiente",
+        "dijo": "Denunció la falta de respuesta del Ejecutivo ante los incendios forestales.",
+        "proyecto": "",
+        "id": "diputados:perez alccahuaman"
+      },
+      {
+        "orador": "Guevara Ramírez",
+        "cargo": "legislador",
+        "sobre": "descolmatación del río Chaupe",
+        "postura": "propone",
+        "tema": "Saneamiento",
+        "dijo": "Solicitó la descolmatación del río Chaupe y atención en Cutervo.",
+        "proyecto": "",
+        "id": "diputados:guevara ramirez"
+      },
+      {
+        "orador": "Yalta Sotelo",
+        "cargo": "legislador",
+        "sobre": "humedales de Puerto Viejo",
+        "postura": "propone",
+        "tema": "Ambiente",
+        "dijo": "Solicitó información a SERFOR sobre la conservación de los humedales.",
+        "proyecto": "",
+        "id": "diputados:yalta sotelo"
+      },
+      {
+        "orador": "Jaque Linares",
+        "cargo": "legislador",
+        "sobre": "gas natural en Vacañas",
+        "postura": "propone",
+        "tema": "Energía",
+        "dijo": "Reiteró la solicitud de invitar a ministros por el gas en Vacañas.",
+        "proyecto": "",
+        "id": "diputados:llaque linares"
+      },
+      {
+        "orador": "Jaque Linares",
+        "cargo": "legislador",
+        "sobre": "contaminación en La Libertad",
+        "postura": "propone",
+        "tema": "Ambiente",
+        "dijo": "Pidió citar al Ministerio del Ambiente por la contaminación en La Libertad.",
+        "proyecto": "",
+        "id": "diputados:llaque linares"
+      },
+      {
+        "orador": "Jaque Linares",
+        "cargo": "legislador",
+        "sobre": "monitoreo ambiental en Salaverry",
+        "postura": "propone",
+        "tema": "Transporte",
+        "dijo": "Solicitó información al MTC sobre el monitoreo ambiental en Salaverry.",
+        "proyecto": "",
+        "id": "diputados:llaque linares"
+      },
+      {
+        "orador": "Sanés",
+        "cargo": "legislador",
+        "sobre": "Apoyo a los barrancos de Moyobamba",
+        "postura": "propone",
+        "tema": "Ambiente",
+        "dijo": "Pidió apoyo para los barrancos de Moyobamba.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Pam",
+        "cargo": "legislador",
+        "sobre": "Remediación de áreas degradadas",
+        "postura": "propone",
+        "tema": "Ambiente",
+        "dijo": "Solicitó información sobre remediación de áreas degradadas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Pam",
+        "cargo": "legislador",
+        "sobre": "Convenio de evaluación de gas",
+        "postura": "propone",
+        "tema": "Energía",
+        "dijo": "Pidió información sobre el convenio de gas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Pam",
+        "cargo": "legislador",
+        "sobre": "Reconocimiento a Querenda Zambrano",
+        "postura": "propone",
+        "tema": "Ambiente",
+        "dijo": "Propuso reconocer a la joven Querenda Zambrano.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Zulka",
+        "cargo": "legislador",
+        "sobre": "Prevención de incendios forestales",
+        "postura": "propone",
+        "tema": "Ambiente",
+        "dijo": "Solicitó citar al ministro por incendios forestales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Elio Tarazona",
+        "cargo": "invitado",
+        "sobre": "Sostenibilidad en el transporte terrestre",
+        "postura": "comenta",
+        "tema": "Transporte",
+        "dijo": "Expuso la situación ambiental del transporte terrestre.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ayaque",
+        "cargo": "legislador",
+        "sobre": "Gestión del sistema de chatarreo",
+        "postura": "pregunta",
+        "tema": "Transporte",
+        "dijo": "Preguntó sobre la gestión del chatarreo vehicular.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Cabrero",
+        "cargo": "legislador",
+        "sobre": "Importación de vehículos usados",
+        "postura": "propone",
+        "tema": "Transporte",
+        "dijo": "Propuso permitir la importación de vehículos usados.",
+        "proyecto": "",
+        "id": "diputados:cabrera nieto"
+      },
+      {
+        "orador": "Semanes",
+        "cargo": "legislador",
+        "sobre": "Fondos para el chatarreo vehicular",
+        "postura": "propone",
+        "tema": "Transporte",
+        "dijo": "Solicitó utilizar fondos para el chatarreo.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Elio Tarazón",
+        "cargo": "invitado",
+        "sobre": "Modelo de gestión de flotas de buses",
+        "postura": "comenta",
+        "tema": "Transporte",
+        "dijo": "Comentó el modelo de gestión de flotas en Chile y Colombia.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Semanes",
+        "cargo": "legislador",
+        "sobre": "Importación de vehículos usados",
+        "postura": "propone",
+        "tema": "Transporte",
+        "dijo": "Propuso permitir la importación de vehículos usados para romper monopolios.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Pérez",
+        "cargo": "legislador",
+        "sobre": "Uso de fondos para el chatarreo",
+        "postura": "propone",
+        "tema": "Ambiente",
+        "dijo": "Pidió utilizar fondos de ochenta millones para el chatarreo vehicular.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Pérez",
+        "cargo": "legislador",
+        "sobre": "Renovación del parque automotor",
+        "postura": "pregunta",
+        "tema": "Transporte",
+        "dijo": "Preguntó por la propuesta para mejorar el parque automotor nacional.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Elio Tarazón",
+        "cargo": "invitado",
+        "sobre": "Medidas para renovar el parque automotor",
+        "postura": "comenta",
+        "tema": "Transporte",
+        "dijo": "Mencionó medidas como el chatarreo y combustibles limpios.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Marlena Arminta Valencia",
+        "cargo": "legislador",
+        "sobre": "Ley de destrabe de proyectos de inversión",
+        "postura": "propone",
+        "tema": "Infraestructura",
+        "dijo": "Propuso regularizar obras ejecutadas sin certificación ambiental.",
+        "proyecto": "PL 584-2026-2031-CD",
+        "id": "diputados:arminta valencia"
+      },
+      {
+        "orador": "Andrade",
+        "cargo": "legislador",
+        "sobre": "Regularización de obras sin certificación",
+        "postura": "con observaciones",
+        "tema": "Infraestructura",
+        "dijo": "Cuestionó la falta de plazos en la propuesta legislativa.",
+        "proyecto": "PL 584-2026-2031-CD",
+        "id": "diputados:andrade salguero de alvarez"
+      },
+      {
+        "orador": "Marlena Arminta Valencia",
+        "cargo": "legislador",
+        "sobre": "Regularización de obras concluidas",
+        "postura": "a favor",
+        "tema": "Infraestructura",
+        "dijo": "Defendió la aplicación excepcional para obras concluidas recientemente.",
+        "proyecto": "PL 584-2026-2031-CD",
+        "id": "diputados:arminta valencia"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=xYH34kbaFJ8"
+  },
+  "wvYF_OCf-8M": {
+    "fecha": "2026-10-20",
+    "organo": "Pleno de la Asamblea",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Nathalie Fariñango",
+        "cargo": "legislador",
+        "sobre": "Objeción al Código Tributario",
+        "postura": "a favor",
+        "tema": "Tributos",
+        "dijo": "Defendió el allanamiento a la objeción para proteger la seguridad jurídica.",
+        "proyecto": "Proyecto de ley orgánica reformatoria al Código Tributario",
+        "id": "EC:farinango delgado"
+      },
+      {
+        "orador": "Nathalie Fariñango",
+        "cargo": "legislador",
+        "sobre": "Objeción al proyecto de reforma al Código Tributario",
+        "postura": "a favor",
+        "tema": "Tributos",
+        "dijo": "Defendió el texto alternativo del Ejecutivo sobre sanciones tributarias.",
+        "proyecto": "Proyecto de ley orgánica reformatoria al Código Tributario",
+        "id": "EC:farinango delgado"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=wvYF_OCf-8M"
+  },
+  "pFd4J9ugLUc": {
+    "fecha": "2026-10-20",
+    "organo": "Comisión de Presupuesto",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Guillermo Valdivieso Méndez",
+        "cargo": "ministro o autoridad",
+        "sobre": "presupuesto 2027 de Lima Metropolitana",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Denunció la drástica reducción del presupuesto para el año 2027.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Rosa Luisa Evenreich Aguilar",
+        "cargo": "ministro o autoridad",
+        "sobre": "objetivos y ejecución presupuestal institucional",
+        "postura": "a favor",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Defendió los objetivos estratégicos y la brecha presupuestal institucional.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Pablo Alfonso López Chao",
+        "cargo": "legislador",
+        "sobre": "objetivos estratégicos del gobierno regional",
+        "postura": "pregunta",
+        "tema": "Otros",
+        "dijo": "Pidió explicaciones detalladas sobre los objetivos estratégicos institucionales.",
+        "proyecto": "",
+        "id": "senado:lopez chau nava"
+      },
+      {
+        "orador": "Segundo Leucio Tapia Bernal",
+        "cargo": "legislador",
+        "sobre": "gestión de proyectos de inversión",
+        "postura": "en contra",
+        "tema": "Construcción",
+        "dijo": "Cuestionó la falta de expedientes técnicos para proyectos de inversión.",
+        "proyecto": "",
+        "id": "senado:tapia bernal"
+      },
+      {
+        "orador": "Carlos Alberto Yalta Sotelo",
+        "cargo": "legislador",
+        "sobre": "asignación presupuestal del pliego 465",
+        "postura": "propone",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Propuso revisar la asignación presupuestal del pliego 465.",
+        "proyecto": "",
+        "id": "diputados:yalta sotelo"
+      },
+      {
+        "orador": "Absalón Vázquez",
+        "cargo": "legislador",
+        "sobre": "eficiencia del gasto en Lima",
+        "postura": "a favor",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Respaldó la eficiencia en el manejo del gasto corriente.",
+        "proyecto": "",
+        "id": "senado:vasquez villanueva"
+      },
+      {
+        "orador": "Catherine Ampuero",
+        "cargo": "legislador",
+        "sobre": "ejecución de inversiones y prevención",
+        "postura": "pregunta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Preguntó sobre las acciones de prevención para el fenómeno Niño.",
+        "proyecto": "",
+        "id": "senado:ampuero meza"
+      },
+      {
+        "orador": "Rosa Luisa Evenreich Aguilar",
+        "cargo": "ministro o autoridad",
+        "sobre": "respuesta a consultas de parlamentarios",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Defendió la capacidad técnica y el estado de los expedientes.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ernesto Julio Álvarez Miranda",
+        "cargo": "ministro o autoridad",
+        "sobre": "Presupuesto del sector Justicia 2027",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Sustentó el presupuesto institucional del sector para el año 2027.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Carlos Alberto Segarra Sánchez",
+        "cargo": "legislador",
+        "sobre": "Inseguridad en penales de Ica y Chincha",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Denunció la inseguridad y el desborde en los penales de Ica y Chincha.",
+        "proyecto": "",
+        "id": "diputados:zegarra sanchez"
+      },
+      {
+        "orador": "Segundo Tapia Bernal",
+        "cargo": "legislador",
+        "sobre": "Fortalecimiento de la justicia y crisis penitenciaria",
+        "postura": "pregunta",
+        "tema": "Justicia",
+        "dijo": "Preguntó sobre el cronograma de ejecución de las inversiones penitenciarias.",
+        "proyecto": "",
+        "id": "senado:tapia bernal"
+      },
+      {
+        "orador": "Jorge Velázquez Portocarrero",
+        "cargo": "legislador",
+        "sobre": "Gestión de la unidad ejecutora en Pucalpa",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Cuestionó el traslado de la unidad ejecutora de Pucalpa a Huánuco.",
+        "proyecto": "",
+        "id": "senado:velasquez portocarrero"
+      },
+      {
+        "orador": "Héctor Guillén Valencia",
+        "cargo": "legislador",
+        "sobre": "Acceso a la justicia y defensa pública",
+        "postura": "pregunta",
+        "tema": "Justicia",
+        "dijo": "Preguntó sobre la cobertura de defensores y el presupuesto de defensa.",
+        "proyecto": "",
+        "id": "diputados:guillen valencia"
+      },
+      {
+        "orador": "Juber Flores Suárez",
+        "cargo": "legislador",
+        "sobre": "Títulos registrales fraudulentos y seguridad jurídica",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Denunció la existencia de títulos registrales fraudulentos en el país.",
+        "proyecto": "",
+        "id": "senado:flores suarez"
+      },
+      {
+        "orador": "Catherine Ampuero",
+        "cargo": "legislador",
+        "sobre": "Ejecución de inversiones y presupuesto",
+        "postura": "pregunta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Preguntó por el estancamiento de las inversiones en la sede central.",
+        "proyecto": "",
+        "id": "senado:ampuero meza"
+      },
+      {
+        "orador": "Juber Flores Suárez",
+        "cargo": "legislador",
+        "sobre": "Títulos fraudulentos en Registros Públicos",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Denunció el tráfico ilegal de terrenos mediante títulos fraudulentos.",
+        "proyecto": "",
+        "id": "senado:flores suarez"
+      },
+      {
+        "orador": "Catherine Ampuero",
+        "cargo": "legislador",
+        "sobre": "Ejecución presupuestal de inversiones",
+        "postura": "con observaciones",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Cuestionó la ejecución de inversiones en la sede central.",
+        "proyecto": "",
+        "id": "senado:ampuero meza"
+      },
+      {
+        "orador": "Catherine Ampuero",
+        "cargo": "legislador",
+        "sobre": "Construcción de establecimientos penitenciarios",
+        "postura": "pregunta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Preguntó por la paralización de obras en tres penales.",
+        "proyecto": "",
+        "id": "senado:ampuero meza"
+      },
+      {
+        "orador": "Catherine Ampuero",
+        "cargo": "legislador",
+        "sobre": "Contrato de telefonía en penales",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso modificar el contrato de telefonía en los penales.",
+        "proyecto": "",
+        "id": "senado:ampuero meza"
+      },
+      {
+        "orador": "Catherine Ampuero",
+        "cargo": "legislador",
+        "sobre": "Gestión de la Procuraduría General",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Criticó la gestión de la Procuraduría General del Estado.",
+        "proyecto": "",
+        "id": "senado:ampuero meza"
+      },
+      {
+        "orador": "Carla Shafer Cuculisa",
+        "cargo": "legislador",
+        "sobre": "Hacinamiento en penales de Piura",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Denunció el hacinamiento en los penales de Piura.",
+        "proyecto": "",
+        "id": "senado:schaefer cuculiza"
+      },
+      {
+        "orador": "Carla Shafer Cuculisa",
+        "cargo": "legislador",
+        "sobre": "Uso de bienes incautados en Piura",
+        "postura": "propone",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Solicitó usar bienes incautados para proyectos en Piura.",
+        "proyecto": "",
+        "id": "senado:schaefer cuculiza"
+      },
+      {
+        "orador": "Estanislavo Mancha Pineda",
+        "cargo": "legislador",
+        "sobre": "Expansión de unidades de flagrancia",
+        "postura": "pregunta",
+        "tema": "Justicia",
+        "dijo": "Preguntó por la expansión de las unidades de flagrancia.",
+        "proyecto": "",
+        "id": "senado:mancha pineda"
+      },
+      {
+        "orador": "Estanislavo Mancha Pineda",
+        "cargo": "legislador",
+        "sobre": "Hacinamiento en penales de Puno",
+        "postura": "pregunta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Consultó sobre el hacinamiento en los penales de Puno.",
+        "proyecto": "",
+        "id": "senado:mancha pineda"
+      },
+      {
+        "orador": "J M Jones Núñez",
+        "cargo": "legislador",
+        "sobre": "Obras penitenciarias en Ica y Chincha",
+        "postura": "pregunta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Exigió información sobre las obras en Ica y Chincha.",
+        "proyecto": "",
+        "id": "diputados:yonz nunez"
+      },
+      {
+        "orador": "Gloria Irache Pizarro",
+        "cargo": "legislador",
+        "sobre": "Inversión en penales de Arequipa",
+        "postura": "pregunta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Consultó sobre la inversión para penales en Arequipa.",
+        "proyecto": "",
+        "id": "diputados:hirache pizarro"
+      },
+      {
+        "orador": "César Hugo Tito Rojas",
+        "cargo": "legislador",
+        "sobre": "Presupuesto para víctimas de violencia",
+        "postura": "pregunta",
+        "tema": "Justicia",
+        "dijo": "Reclamó presupuesto para la atención de víctimas.",
+        "proyecto": "",
+        "id": "diputados:tito rojas"
+      },
+      {
+        "orador": "César Hugo Tito Rojas",
+        "cargo": "legislador",
+        "sobre": "Traslado de internos sentenciados",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso trasladar a los internos a sus regiones.",
+        "proyecto": "",
+        "id": "diputados:tito rojas"
+      },
+      {
+        "orador": "César Manuel Revilla Villanueva",
+        "cargo": "legislador",
+        "sobre": "Gestión del sector justicia",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Respaldó la gestión del ministro y el presupuesto.",
+        "proyecto": "",
+        "id": "diputados:revilla villanueva"
+      },
+      {
+        "orador": "Carlos Domínguez Herrera",
+        "cargo": "legislador",
+        "sobre": "Defensa pública e infraestructura en Áncash",
+        "postura": "pregunta",
+        "tema": "Justicia",
+        "dijo": "Consultó sobre la defensa pública en Áncash.",
+        "proyecto": "",
+        "id": "diputados:dominguez herrera"
+      },
+      {
+        "orador": "Carlos Domínguez Herrera",
+        "cargo": "legislador",
+        "sobre": "Gastos registrales entre entidades estatales",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Propuso exonerar gastos registrales entre entidades estatales.",
+        "proyecto": "",
+        "id": "diputados:dominguez herrera"
+      },
+      {
+        "orador": "Vieta Fernández González",
+        "cargo": "legislador",
+        "sobre": "Penal de alta peligrosidad en Tacna",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Rechazó el traslado de reos a Tacna.",
+        "proyecto": "",
+        "id": "diputados:fernandez gonzalez"
+      },
+      {
+        "orador": "Vieta Fernández González",
+        "cargo": "legislador",
+        "sobre": "Exoneración de restricciones para SUNARP",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Solicitó la implementación de la ley para SUNARP.",
+        "proyecto": "Ley 32489",
+        "id": "diputados:fernandez gonzalez"
+      },
+      {
+        "orador": "Karina Yulisa Beteta Rubín",
+        "cargo": "legislador",
+        "sobre": "Inseguridad ciudadana y crimen organizado",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Defendió la gestión gubernamental en seguridad ciudadana.",
+        "proyecto": "",
+        "id": "diputados:beteta rubin"
+      },
+      {
+        "orador": "Ernesto Álvarez",
+        "cargo": "ministro o autoridad",
+        "sobre": "Situación del sistema penitenciario nacional",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Informó sobre el estado crítico del sistema penitenciario.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Álvarez",
+        "cargo": "ministro o autoridad",
+        "sobre": "Gestión del sistema penitenciario",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Informó sobre la situación crítica de los penales en el país.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Mauricio Fernando Arnilla González",
+        "cargo": "ministro o autoridad",
+        "sobre": "Presupuesto del Ministerio de Vivienda",
+        "postura": "comenta",
+        "tema": "Construcción",
+        "dijo": "Presentó el presupuesto para reducir brechas de vivienda y saneamiento.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Juan Carlos del Águila Cárdenas",
+        "cargo": "legislador",
+        "sobre": "Respaldo a la ley de agua potable",
+        "postura": "a favor",
+        "tema": "Saneamiento",
+        "dijo": "Respaldó la modificación de la Ley 32065 sobre acceso al agua.",
+        "proyecto": "Ley 32065",
+        "id": "senado:del aguila cardenas"
+      },
+      {
+        "orador": "Juana Ticona",
+        "cargo": "legislador",
+        "sobre": "Financiamiento del PETAR en Tacna",
+        "postura": "propone",
+        "tema": "Saneamiento",
+        "dijo": "Solicitó la continuidad del financiamiento para el proyecto PETAR en Tacna.",
+        "proyecto": "",
+        "id": "senado:ticona cohaila"
+      },
+      {
+        "orador": "Uber Flores",
+        "cargo": "legislador",
+        "sobre": "Prevención ante el fenómeno del niño",
+        "postura": "pregunta",
+        "tema": "Infraestructura",
+        "dijo": "Preguntó sobre el presupuesto para las intervenciones preventivas contra el fenómeno del niño.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Madi Verónica Jones Núñez",
+        "cargo": "legislador",
+        "sobre": "Formalización de predios en Ica",
+        "postura": "pregunta",
+        "tema": "Saneamiento",
+        "dijo": "Consultó sobre la cantidad de predios a formalizar en la región Ica.",
+        "proyecto": "",
+        "id": "diputados:yonz nunez"
+      },
+      {
+        "orador": "Carlos Alberto Cegarra Sánchez",
+        "cargo": "legislador",
+        "sobre": "Ejecución de obras en Ica",
+        "postura": "pregunta",
+        "tema": "Infraestructura",
+        "dijo": "Pidió información sobre la ejecución de obras y puentes en Ica.",
+        "proyecto": "",
+        "id": "diputados:zegarra sanchez"
+      },
+      {
+        "orador": "Carlos Alberto Cegarra Sánchez",
+        "cargo": "legislador",
+        "sobre": "Ejecución de obras y riesgos en Ica",
+        "postura": "pregunta",
+        "tema": "Infraestructura",
+        "dijo": "Pidió información sobre obras y riesgos en Ica.",
+        "proyecto": "",
+        "id": "diputados:zegarra sanchez"
+      },
+      {
+        "orador": "Segundo Leo Leucadio Tapia Bernal",
+        "cargo": "legislador",
+        "sobre": "Presupuesto y metas de formalización",
+        "postura": "pregunta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Preguntó sobre el plan de contingencia y reducción presupuestal.",
+        "proyecto": "",
+        "id": "senado:tapia bernal"
+      },
+      {
+        "orador": "José Moisés Chipana Chipana",
+        "cargo": "legislador",
+        "sobre": "Proyectos de saneamiento en Puno",
+        "postura": "pregunta",
+        "tema": "Saneamiento",
+        "dijo": "Pidió detalles sobre proyectos de saneamiento en Puno.",
+        "proyecto": "Proyecto PA",
+        "id": "senado:chipana chipana"
+      },
+      {
+        "orador": "César Hugo Tito Rojas",
+        "cargo": "legislador",
+        "sobre": "Crisis hídrica en la región Puno",
+        "postura": "en contra",
+        "tema": "Saneamiento",
+        "dijo": "Denunció la crisis hídrica y reducción presupuestal en Puno.",
+        "proyecto": "Convenio 025",
+        "id": "diputados:tito rojas"
+      },
+      {
+        "orador": "Carla Melisa Shaffer Cuculisa",
+        "cargo": "legislador",
+        "sobre": "Drenajes pluviales y titulación en Piura",
+        "postura": "en contra",
+        "tema": "Infraestructura",
+        "dijo": "Cuestionó la falta de drenajes y demora en titulación.",
+        "proyecto": "",
+        "id": "senado:schaefer cuculiza"
+      },
+      {
+        "orador": "Héctor Guillén",
+        "cargo": "legislador",
+        "sobre": "Brechas de saneamiento en Huancavelica",
+        "postura": "pregunta",
+        "tema": "Saneamiento",
+        "dijo": "Preguntó por el financiamiento de viviendas en Huancavelica.",
+        "proyecto": "QI 2600979",
+        "id": "diputados:guillen valencia"
+      },
+      {
+        "orador": "Jessica Navas",
+        "cargo": "legislador",
+        "sobre": "Brechas de saneamiento en Ucayali",
+        "postura": "comenta",
+        "tema": "Saneamiento",
+        "dijo": "Comentó las brechas de saneamiento en la región Ucayali.",
+        "proyecto": "",
+        "id": "diputados:navas sanchez"
+      },
+      {
+        "orador": "Víctor Eduardo Piñán Mamani",
+        "cargo": "legislador",
+        "sobre": "Suspensión de obra en Independencia",
+        "postura": "pregunta",
+        "tema": "Saneamiento",
+        "dijo": "Pidió explicaciones sobre la obra de agua en Independencia.",
+        "proyecto": "",
+        "id": "diputados:pinan mamani"
+      },
+      {
+        "orador": "Nilsa Merl Chacón Trujillo",
+        "cargo": "legislador",
+        "sobre": "Programas de vivienda y titulación",
+        "postura": "pregunta",
+        "tema": "Inmobiliario",
+        "dijo": "Pidió información sobre las medidas para acceder a viviendas.",
+        "proyecto": "Techo Propio",
+        "id": "senado:chacon trujillo"
+      },
+      {
+        "orador": "Carlos Alberto Domínguez Herrera",
+        "cargo": "legislador",
+        "sobre": "Retrasos en saneamiento en Ancash",
+        "postura": "en contra",
+        "tema": "Saneamiento",
+        "dijo": "Denunció retrasos en proyectos de saneamiento en Ancash.",
+        "proyecto": "PETAR Chimbote",
+        "id": "diputados:dominguez herrera"
+      },
+      {
+        "orador": "Karina Beteta",
+        "cargo": "legislador",
+        "sobre": "Saneamiento en la región Huánuco",
+        "postura": "comenta",
+        "tema": "Saneamiento",
+        "dijo": "Respaldó la gestión de saneamiento en Huánuco.",
+        "proyecto": "PETAR Huánuco",
+        "id": "diputados:beteta rubin"
+      },
+      {
+        "orador": "Mauricio Arnillas",
+        "cargo": "ministro o autoridad",
+        "sobre": "Duplicación del presupuesto sectorial",
+        "postura": "propone",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Propuso duplicar el presupuesto sectorial para la emergencia.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Arnillas",
+        "cargo": "ministro o autoridad",
+        "sobre": "Presupuesto y leyes de saneamiento",
+        "postura": "propone",
+        "tema": "Saneamiento",
+        "dijo": "Propuso duplicar el presupuesto del sector y presentar leyes para destrabar proyectos.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=pFd4J9ugLUc"
   }
 }
