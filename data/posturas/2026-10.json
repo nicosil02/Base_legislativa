@@ -2426,5 +2426,122 @@
       }
     ],
     "url": "https://www.facebook.com/watch/?v=2069061627147448"
+  },
+  "_PVFlHwcNtc": {
+    "fecha": "2026-10-28",
+    "organo": "Pleno del Congreso",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "José Arista",
+        "cargo": "legislador",
+        "sobre": "Coordinación del crédito suplementario",
+        "postura": "propone",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Solicitó tiempo para coordinar con el Ministerio de Economía.",
+        "proyecto": "PL 5",
+        "id": "senado:arista arbildo"
+      },
+      {
+        "orador": "Luis Hibaja",
+        "cargo": "legislador",
+        "sobre": "Obras del aeropuerto de Jaén",
+        "postura": "propone",
+        "tema": "Infraestructura",
+        "dijo": "Propuso priorizar la ejecución de obras en el aeropuerto de Jaén.",
+        "proyecto": "PL 5",
+        "id": "diputados:jibaja ramos"
+      },
+      {
+        "orador": "Absalom Vázquez",
+        "cargo": "legislador",
+        "sobre": "Naturaleza del crédito suplementario",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Aclaró que se debate un crédito suplementario y no la ley de presupuesto.",
+        "proyecto": "PL 5",
+        "id": "senado:vasquez villanueva"
+      },
+      {
+        "orador": "César Revilla",
+        "cargo": "legislador",
+        "sobre": "Anexo de inversiones locales",
+        "postura": "propone",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Solicitó incluir un anexo detallando inversiones para gobiernos locales.",
+        "proyecto": "PL 5",
+        "id": "diputados:revilla villanueva"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=_PVFlHwcNtc"
+  },
+  "fb_1371732874992866": {
+    "fecha": "2026-10-28",
+    "organo": "Comisión de Régimen Económico",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Andrea Pamela Saúdendara",
+        "cargo": "invitado",
+        "sobre": "Reforma a la Ley de Contratación Pública",
+        "postura": "con observaciones",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Propuso incluir porcentajes mínimos y mecanismos de verificación técnica.",
+        "proyecto": "Ley de Contratación Pública",
+        "id": null
+      },
+      {
+        "orador": "Vallejo",
+        "cargo": "legislador",
+        "sobre": "Efectividad del valor por dinero territorial",
+        "postura": "con observaciones",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Cuestionó cómo asegurar que la riqueza permanezca en el territorio.",
+        "proyecto": "Ley de Contratación Pública",
+        "id": "EC:vallejo ayala"
+      },
+      {
+        "orador": "Maldonado",
+        "cargo": "legislador",
+        "sobre": "participación de las Mipymes",
+        "postura": "pregunta",
+        "tema": "Mype",
+        "dijo": "Preguntó sobre mecanismos para la participación de las Mipymes en la contratación pública.",
+        "proyecto": "",
+        "id": "EC:castillo maldonado"
+      },
+      {
+        "orador": "Anahí Chihuahua",
+        "cargo": "invitado",
+        "sobre": "Reforma del sistema de contratación pública",
+        "postura": "a favor",
+        "tema": "Trabajo",
+        "dijo": "Resaltó las oportunidades laborales de la reforma de contratación pública.",
+        "proyecto": "Reforma del sistema de contratación pública",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1371732874992866"
+  },
+  "fb_1131318009859036": {
+    "fecha": "2026-10-28",
+    "organo": "Comisión de Educación",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Hugo Alexander Zapata Carpio",
+        "cargo": "invitado",
+        "sobre": "Reforma al Código de la Economía Social",
+        "postura": "con observaciones",
+        "tema": "Otros",
+        "dijo": "Cuestionó la normativa del COESCI y la estructura institucional del Senadi.",
+        "proyecto": "Proyecto de Ley Reformatoria al COESCI",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1131318009859036"
   }
 }
