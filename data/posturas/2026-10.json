@@ -1288,5 +1288,102 @@
       }
     ],
     "url": "https://www.youtube.com/watch?v=LL2GxtowMAA"
+  },
+  "fb_1776864057373287": {
+    "fecha": "2026-10-29",
+    "organo": "Comisión de Relaciones Internacionales",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "David Fernando Carrón",
+        "cargo": "invitado",
+        "sobre": "Reforma a la Ley del Servicio Exterior",
+        "postura": "con observaciones",
+        "tema": "Política y control político",
+        "dijo": "Propuso incluir fundamentos constitucionales y garantizar el debido proceso en la reforma del Servicio Exterior.",
+        "proyecto": "Orgánica Reformatoria a la Ley Orgánica del Servicio Exterior",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1776864057373287"
+  },
+  "fb_1689813039378836": {
+    "fecha": "2026-10-29",
+    "organo": "Comisión de Soberanía Alimentaria",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Lizarro Mauricio Reina-Bowen",
+        "cargo": "invitado",
+        "sobre": "Proyecto de ley de investigación",
+        "postura": "con observaciones",
+        "tema": "Agricultura",
+        "dijo": "Propuso cambios para la articulación con las universidades.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Baez",
+        "cargo": "legislador",
+        "sobre": "Viabilidad presupuestaria del proyecto",
+        "postura": "pregunta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Preguntó sobre la viabilidad del proyecto ante recortes presupuestarios.",
+        "proyecto": "",
+        "id": "EC:baez mera"
+      },
+      {
+        "orador": "Lizarro Mauricio Reina-Bowen",
+        "cargo": "invitado",
+        "sobre": "Eficiencia mediante alianzas estratégicas",
+        "postura": "comenta",
+        "tema": "Agricultura",
+        "dijo": "Explicó que las alianzas estratégicas optimizarán la gestión de recursos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Vicepresidente",
+        "cargo": "legislador",
+        "sobre": "Reglamentación de prácticas estudiantiles",
+        "postura": "pregunta",
+        "tema": "Agricultura",
+        "dijo": "Preguntó sobre la reglamentación del aporte de estudiantes.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Lizarro Mauricio Reina-Bowen",
+        "cargo": "invitado",
+        "sobre": "Fortalecimiento mediante mesas regionales",
+        "postura": "comenta",
+        "tema": "Agricultura",
+        "dijo": "Indicó que las mesas regionales fortalecerán la vinculación universitaria.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1689813039378836"
+  },
+  "fb_1108545102158093": {
+    "fecha": "2026-10-29",
+    "organo": "Comisión de Fiscalización",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Luigi García Velázquez",
+        "cargo": "legislador",
+        "sobre": "Compra de camiones de MASEO EP",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso solicitar información a la Contraloría sobre la compra de camiones.",
+        "proyecto": "",
+        "id": "EC:garcia velasquez"
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1108545102158093"
   }
 }
