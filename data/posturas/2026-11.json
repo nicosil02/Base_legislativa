@@ -5194,5 +5194,313 @@
       }
     ],
     "url": "https://www.youtube.com/watch?v=L5ezW_bnaKM"
+  },
+  "i1I8olgNnQk": {
+    "fecha": "2026-11-09",
+    "organo": "Comisión de Constitución",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Rocha",
+        "cargo": "legislador",
+        "sobre": "Reforma del sistema de justicia",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Pidió incluir la reforma de justicia en la agenda.",
+        "proyecto": "",
+        "id": "diputados:rocha gallegos"
+      },
+      {
+        "orador": "Harvey",
+        "cargo": "legislador",
+        "sobre": "Ampliación de plazo reglamentos",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Solicitó ampliar el plazo para los reglamentos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Vensor Island",
+        "cargo": "legislador",
+        "sobre": "Informe sobre mociones de censura",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Pidió un informe sobre las mociones de censura.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Romina",
+        "cargo": "legislador",
+        "sobre": "Incorporación a la Liga de Estados Unidos",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Solicitó su incorporación a la Liga de Estados Unidos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Perez",
+        "cargo": "legislador",
+        "sobre": "Incorporación a la Liga de Corea del Sur",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Pidió su incorporación a la Liga de Corea del Sur.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Harvey Colchado Huamaní",
+        "cargo": "legislador",
+        "sobre": "Derogación de la Ley 32054",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Sustentó la derogación de la Ley 32054.",
+        "proyecto": "PL 005-2026-2031-CD",
+        "id": "diputados:colchado huamani"
+      },
+      {
+        "orador": "Rocha",
+        "cargo": "legislador",
+        "sobre": "Responsabilidad penal de partidos políticos",
+        "postura": "pregunta",
+        "tema": "Justicia",
+        "dijo": "Preguntó sobre la responsabilidad de los partidos políticos.",
+        "proyecto": "PL 005-2026-2031-CD",
+        "id": "diputados:rocha gallegos"
+      },
+      {
+        "orador": "Harvey Colchado Huamaní",
+        "cargo": "legislador",
+        "sobre": "Protección de la institución política",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Explicó que la ley actual sanciona a individuos.",
+        "proyecto": "PL 005-2026-2031-CD",
+        "id": "diputados:colchado huamani"
+      },
+      {
+        "orador": "Rocha",
+        "cargo": "legislador",
+        "sobre": "Garantías de responsabilidad institucional",
+        "postura": "pregunta",
+        "tema": "Justicia",
+        "dijo": "Preguntó por las garantías de responsabilidad institucional.",
+        "proyecto": "PL 005-2026-2031-CD",
+        "id": "diputados:rocha gallegos"
+      },
+      {
+        "orador": "Harvey Colchado Huamaní",
+        "cargo": "legislador",
+        "sobre": "Inclusión de partidos en el Código Penal",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Defendió la inclusión de partidos en el Código Penal.",
+        "proyecto": "PL 005-2026-2031-CD",
+        "id": "diputados:colchado huamani"
+      },
+      {
+        "orador": "Figaro",
+        "cargo": "legislador",
+        "sobre": "Funcionamiento de los partidos políticos",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Cuestionó el conocimiento del diputado sobre partidos.",
+        "proyecto": "PL 005-2026-2031-CD",
+        "id": null
+      },
+      {
+        "orador": "Harvey Colchado",
+        "cargo": "legislador",
+        "sobre": "Responsabilidad de los partidos políticos",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Defendió la igualdad de responsabilidad entre partidos y empresas.",
+        "proyecto": "PL 541-2026",
+        "id": "diputados:colchado huamani"
+      },
+      {
+        "orador": "Muéllas",
+        "cargo": "legislador",
+        "sobre": "Reflexión sobre la democracia",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Reflexionó sobre el comportamiento de los partidos políticos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Buitron",
+        "cargo": "legislador",
+        "sobre": "Sanciones a organizaciones políticas",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Propuso sancionar a organizaciones que cometan actos ilícitos.",
+        "proyecto": "",
+        "id": "diputados:buitron martinez"
+      },
+      {
+        "orador": "García",
+        "cargo": "legislador",
+        "sobre": "Responsabilidad penal de asociaciones",
+        "postura": "con observaciones",
+        "tema": "Política y control político",
+        "dijo": "Pidió perfeccionar el proyecto para evitar la criminalización.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Vete",
+        "cargo": "legislador",
+        "sobre": "Naturaleza de los partidos políticos",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Criticó la propuesta por desconocer el funcionamiento partidario.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Harvey Colchado",
+        "cargo": "legislador",
+        "sobre": "Igualdad ante la ley",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Argumentó que los partidos deben recibir trato igualitario.",
+        "proyecto": "PL 541-2026",
+        "id": "diputados:colchado huamani"
+      },
+      {
+        "orador": "Patiño",
+        "cargo": "legislador",
+        "sobre": "Consecuencias de disolver partidos",
+        "postura": "pregunta",
+        "tema": "Política y control político",
+        "dijo": "Preguntó por las consecuencias de disolver agrupaciones políticas.",
+        "proyecto": "",
+        "id": "diputados:patino urco"
+      },
+      {
+        "orador": "Harvey Colchado",
+        "cargo": "legislador",
+        "sobre": "Jurisprudencia sobre organización criminal",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Citó una casación sobre la organización criminal.",
+        "proyecto": "",
+        "id": "diputados:colchado huamani"
+      },
+      {
+        "orador": "Pierre Figari",
+        "cargo": "legislador",
+        "sobre": "Comportamiento en el debate",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó la actitud del diputado Colchado.",
+        "proyecto": "",
+        "id": "diputados:figari mendoza"
+      },
+      {
+        "orador": "Harvey Colchado",
+        "cargo": "legislador",
+        "sobre": "Garantías del debido proceso",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Reiteró que se debe respetar el debido proceso.",
+        "proyecto": "",
+        "id": "diputados:colchado huamani"
+      },
+      {
+        "orador": "Beteta",
+        "cargo": "legislador",
+        "sobre": "Conocimiento de la propuesta",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció la falta de conocimiento técnico del autor.",
+        "proyecto": "",
+        "id": "diputados:beteta rubin"
+      },
+      {
+        "orador": "Ernesto Zunini-Yerre",
+        "cargo": "legislador",
+        "sobre": "Derogación de la Ley 32054",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Sustentó la necesidad de restablecer la responsabilidad jurídica.",
+        "proyecto": "PL 0040-2026",
+        "id": "diputados:zunini yerren"
+      },
+      {
+        "orador": "Ernesto Sonini",
+        "cargo": "legislador",
+        "sobre": "norma sobre partidos políticos",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Defendió la aprobación de la norma argumentando la igualdad legal.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Aldo Bravo",
+        "cargo": "legislador",
+        "sobre": "disolución de partidos políticos",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó la posible aplicación extrema de la norma contra partidos.",
+        "proyecto": "",
+        "id": "diputados:bravo quispe"
+      },
+      {
+        "orador": "Beteta",
+        "cargo": "legislador",
+        "sobre": "modificación de normas de partidos",
+        "postura": "con observaciones",
+        "tema": "Política y control político",
+        "dijo": "Propuso convocar a especialistas para debatir la propuesta técnica.",
+        "proyecto": "",
+        "id": "diputados:beteta rubin"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=i1I8olgNnQk"
+  },
+  "fb_1674440954035237": {
+    "fecha": "2026-11-09",
+    "organo": "Comisión de Fiscalización",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Rommel Sedeño Rodríguez",
+        "cargo": "invitado",
+        "sobre": "la gestión de la empresa MAP-EP",
+        "postura": "comenta",
+        "tema": "Saneamiento",
+        "dijo": "Expresó su voluntad de colaborar con la comisión durante el proceso de fiscalización.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Nixon Sambrano Sedeño",
+        "cargo": "invitado",
+        "sobre": "la fiscalización de la empresa MAP-EP",
+        "postura": "comenta",
+        "tema": "Saneamiento",
+        "dijo": "Detalló las deficiencias operativas, la crisis financiera y la necesidad de actualizar las tarifas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Nixon Sambrano Sedeño",
+        "cargo": "invitado",
+        "sobre": "Gestión de la empresa de agua potable",
+        "postura": "comenta",
+        "tema": "Saneamiento",
+        "dijo": "Informó sobre la situación financiera y las deudas de los municipios con la empresa de agua.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1674440954035237"
   }
 }
