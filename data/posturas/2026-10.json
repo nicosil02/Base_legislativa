@@ -1702,5 +1702,412 @@
       }
     ],
     "url": "https://www.youtube.com/watch?v=Lixnv2MfVpY"
+  },
+  "_SU9vwpIvLs": {
+    "fecha": "2026-10-28",
+    "organo": "Pleno del Senado",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Calisto Jean Pietri",
+        "cargo": "legislador",
+        "sobre": "Ingreso de unidad naval chilena",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Defendió el ingreso de una unidad naval de Chile al Perú.",
+        "proyecto": "PL 14-2026-2031",
+        "id": "senado:calisto giampietri"
+      },
+      {
+        "orador": "Robles",
+        "cargo": "legislador",
+        "sobre": "Ingreso de militares chilenos",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Cuestionó el ingreso de militares chilenos al territorio nacional.",
+        "proyecto": "PL 14-2026-2031",
+        "id": "senado:robles araujo"
+      },
+      {
+        "orador": "Lourdes Alcorta",
+        "cargo": "legislador",
+        "sobre": "Procedimiento de ingreso de tropas",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Comentó el procedimiento para el ingreso de fuerzas armadas.",
+        "proyecto": "",
+        "id": "senado:alcorta suero"
+      },
+      {
+        "orador": "Calisto Jean Pietri",
+        "cargo": "legislador",
+        "sobre": "Votación del proyecto legislativo",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso someter a votación el proyecto de resolución legislativa.",
+        "proyecto": "PL 14-2026-2031",
+        "id": "senado:calisto giampietri"
+      },
+      {
+        "orador": "Chugi Ling",
+        "cargo": "legislador",
+        "sobre": "Archivo de moción de orden",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció el archivo de la moción sobre pueblos indígenas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Mesías Ramírez",
+        "cargo": "legislador",
+        "sobre": "Reglamento para elegir magistrados del TC",
+        "postura": "a favor",
+        "tema": "Justicia",
+        "dijo": "Defendió el reglamento para elegir magistrados del Tribunal Constitucional.",
+        "proyecto": "PL 11 y 16",
+        "id": "senado:mesia ramirez"
+      },
+      {
+        "orador": "Hugo Caguana",
+        "cargo": "legislador",
+        "sobre": "Evaluación de candidatos al TC",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Cuestionó la falta de control objetivo en la evaluación de candidatos.",
+        "proyecto": "",
+        "id": "senado:ccahuana aymachoque"
+      },
+      {
+        "orador": "Patricia Iturregui",
+        "cargo": "legislador",
+        "sobre": "Modelo de elección de magistrados",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Pidió una reforma constitucional al modelo de elección de magistrados.",
+        "proyecto": "",
+        "id": "senado:iturregui byrne"
+      },
+      {
+        "orador": "Milagros Vásquez Chukilín",
+        "cargo": "legislador",
+        "sobre": "Reglamento de elección del TC",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Propuso cambios al reglamento de elección del Tribunal Constitucional.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Fernando Quito",
+        "cargo": "legislador",
+        "sobre": "Autonomía del Tribunal Constitucional",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Denunció el control político sobre el Tribunal Constitucional.",
+        "proyecto": "",
+        "id": "senado:quito sarmiento"
+      },
+      {
+        "orador": "Iber Maraví",
+        "cargo": "legislador",
+        "sobre": "Puntaje de entrevista en reglamento",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Rechazó el alto puntaje de la entrevista en el reglamento.",
+        "proyecto": "",
+        "id": "senado:maravi olarte"
+      },
+      {
+        "orador": "Caterina Ampuedo",
+        "cargo": "legislador",
+        "sobre": "Reglamento de elección del TC",
+        "postura": "a favor",
+        "tema": "Justicia",
+        "dijo": "Respaldó el dictamen para elegir magistrados del Tribunal Constitucional.",
+        "proyecto": "",
+        "id": "senado:ampuero meza"
+      },
+      {
+        "orador": "Lourdes Alcorta",
+        "cargo": "legislador",
+        "sobre": "Selección de magistrados del TC",
+        "postura": "a favor",
+        "tema": "Justicia",
+        "dijo": "Comentó que la ciudadanía puede proponer candidatos al Tribunal.",
+        "proyecto": "",
+        "id": "senado:alcorta suero"
+      },
+      {
+        "orador": "Marta Mollano",
+        "cargo": "legislador",
+        "sobre": "Debate sobre el reglamento",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó la falta de coherencia en el debate parlamentario.",
+        "proyecto": "",
+        "id": "senado:moyano delgado"
+      },
+      {
+        "orador": "Marta Mollano",
+        "cargo": "legislador",
+        "sobre": "Elección de magistrados del Tribunal Constitucional",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Cuestionó el debate sobre la modificación de la Constitución.",
+        "proyecto": "",
+        "id": "senado:moyano delgado"
+      },
+      {
+        "orador": "Víctor Gutiper",
+        "cargo": "legislador",
+        "sobre": "Puntaje de la entrevista para magistrados",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Propuso reducir el puntaje de la entrevista personal.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Jack Roderich",
+        "cargo": "legislador",
+        "sobre": "Calidad universitaria en el concurso",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Sugirió establecer mecanismos para evaluar la calidad universitaria.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Mancha",
+        "cargo": "legislador",
+        "sobre": "Rúbrica para la entrevista personal",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Propuso elaborar una rúbrica para la entrevista personal.",
+        "proyecto": "",
+        "id": "senado:mancha pineda"
+      },
+      {
+        "orador": "Marta Mollano",
+        "cargo": "legislador",
+        "sobre": "Independencia del Tribunal Constitucional",
+        "postura": "a favor",
+        "tema": "Justicia",
+        "dijo": "Defendió la autonomía del Tribunal Constitucional.",
+        "proyecto": "",
+        "id": "senado:moyano delgado"
+      },
+      {
+        "orador": "Patricia Juárez",
+        "cargo": "legislador",
+        "sobre": "Perfil político del Tribunal Constitucional",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Desmintió que el Tribunal sea un órgano derechista.",
+        "proyecto": "",
+        "id": "senado:juarez gallegos"
+      },
+      {
+        "orador": "Messia Ramírez",
+        "cargo": "legislador",
+        "sobre": "Interpretación de los colegios profesionales",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Propuso una interpretación extensiva de los colegios profesionales.",
+        "proyecto": "",
+        "id": "senado:mesia ramirez"
+      },
+      {
+        "orador": "Messia Ramírez",
+        "cargo": "legislador",
+        "sobre": "Historia del Tribunal Constitucional",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Explicó la historia del Tribunal Constitucional.",
+        "proyecto": "",
+        "id": "senado:mesia ramirez"
+      },
+      {
+        "orador": "Messia Ramírez",
+        "cargo": "legislador",
+        "sobre": "Número de magistrados del Tribunal",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Sugirió aumentar el número de magistrados.",
+        "proyecto": "",
+        "id": "senado:mesia ramirez"
+      },
+      {
+        "orador": "Barragán",
+        "cargo": "legislador",
+        "sobre": "Participación de colegios profesionales",
+        "postura": "pregunta",
+        "tema": "Justicia",
+        "dijo": "Preguntó sobre la validez de los colegios profesionales.",
+        "proyecto": "",
+        "id": "senado:barragan coloma"
+      },
+      {
+        "orador": "Messia Ramírez",
+        "cargo": "legislador",
+        "sobre": "Inclusión de colegios regionales",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Sugirió permitir la participación de colegios regionales.",
+        "proyecto": "",
+        "id": "senado:mesia ramirez"
+      },
+      {
+        "orador": "Bajke Chukiling",
+        "cargo": "legislador",
+        "sobre": "Prórroga de los estados de emergencia",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Cuestionó la falta de resultados en emergencias.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=_SU9vwpIvLs"
+  },
+  "LvsY8hVx-ec": {
+    "fecha": "2026-10-28",
+    "organo": "Comisión de Economía",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Roger Marín Valencia Espinosa",
+        "cargo": "ministro o autoridad",
+        "sobre": "Zonas económicas especiales",
+        "postura": "comenta",
+        "tema": "Comercio",
+        "dijo": "Explicó el funcionamiento de las zonas económicas especiales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Martín Españitán",
+        "cargo": "legislador",
+        "sobre": "Avances de las zonas económicas",
+        "postura": "pregunta",
+        "tema": "Comercio",
+        "dijo": "Consultó sobre los avances específicos en este tema.",
+        "proyecto": "",
+        "id": "diputados:martinez paitan"
+      },
+      {
+        "orador": "Roger Marín Valencia Espinosa",
+        "cargo": "ministro o autoridad",
+        "sobre": "Avances de las zonas económicas",
+        "postura": "comenta",
+        "tema": "Comercio",
+        "dijo": "Informó sobre los próximos pasos de implementación.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Barbara Arán",
+        "cargo": "legislador",
+        "sobre": "Transferencia tecnológica en zonas",
+        "postura": "pregunta",
+        "tema": "Tecnología",
+        "dijo": "Cuestionó cómo garantizar la transferencia tecnológica.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Roger Marín Valencia Espinosa",
+        "cargo": "ministro o autoridad",
+        "sobre": "Inversión en zonas francas",
+        "postura": "comenta",
+        "tema": "Comercio",
+        "dijo": "Señaló que las zonas francas multiplican la inversión.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Fernández de la Torre",
+        "cargo": "legislador",
+        "sobre": "Situación de la zona de Tacna",
+        "postura": "comenta",
+        "tema": "Comercio",
+        "dijo": "Manifestó preocupación por la situación en Tacna.",
+        "proyecto": "",
+        "id": "diputados:fernandez de la torre"
+      },
+      {
+        "orador": "Roger Marín Valencia Espinosa",
+        "cargo": "ministro o autoridad",
+        "sobre": "Diferencia entre zonas económicas",
+        "postura": "comenta",
+        "tema": "Comercio",
+        "dijo": "Explicó la complementariedad de los modelos económicos.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=LvsY8hVx-ec"
+  },
+  "fb_1158945019806075": {
+    "fecha": "2026-10-28",
+    "organo": "Comisión de Biodiversidad",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Tarsicio Granizo Tamayo",
+        "cargo": "invitado",
+        "sobre": "Proyecto de Ley de Bioeconomía",
+        "postura": "con observaciones",
+        "tema": "Ambiente",
+        "dijo": "Propuso ajustes técnicos para la ley.",
+        "proyecto": "Ley de Bioeconomía",
+        "id": null
+      },
+      {
+        "orador": "Franklin Samañego",
+        "cargo": "legislador",
+        "sobre": "Concepto de bioeconomía en la ley",
+        "postura": "en contra",
+        "tema": "Ambiente",
+        "dijo": "Cuestionó el concepto de bioeconomía.",
+        "proyecto": "Ley de Bioeconomía",
+        "id": "EC:samaniego maigua"
+      },
+      {
+        "orador": "Tarsicio Granizo Tamayo",
+        "cargo": "invitado",
+        "sobre": "Pilares de la bioeconomía",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Explicó los pilares de la bioeconomía.",
+        "proyecto": "Ley de Bioeconomía",
+        "id": null
+      },
+      {
+        "orador": "Camila León",
+        "cargo": "legislador",
+        "sobre": "Innovación y apoyo a pequeños productores",
+        "postura": "pregunta",
+        "tema": "Ambiente",
+        "dijo": "Preguntó sobre innovación y apoyo sectorial.",
+        "proyecto": "Ley de Bioeconomía",
+        "id": "EC:leon cueva"
+      },
+      {
+        "orador": "Tarsicio Granizo Tamayo",
+        "cargo": "invitado",
+        "sobre": "Apoyo a pequeños productores y mercados",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Informó sobre los desafíos de los productores.",
+        "proyecto": "Ley de Bioeconomía",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1158945019806075"
   }
 }
