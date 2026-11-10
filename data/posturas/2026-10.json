@@ -295,5 +295,94 @@
       }
     ],
     "url": "https://www.facebook.com/watch/?v=1053603930990619"
+  },
+  "fb_1106171578790944": {
+    "fecha": "2026-10-31",
+    "organo": "Comisión de Seguridad Integral",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Albresta",
+        "cargo": "legislador",
+        "sobre": "Ley de personal y disciplina militar",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Defendió el proyecto de ley de personal y disciplina militar.",
+        "proyecto": "Ley de personal y disciplina de las fuerzas armadas",
+        "id": null
+      },
+      {
+        "orador": "Gerardo Machado",
+        "cargo": "legislador",
+        "sobre": "Reformas a la ley militar",
+        "postura": "con observaciones",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso modificaciones en los ascensos, la disciplina y beneficios.",
+        "proyecto": "Ley de personal y disciplina de las fuerzas armadas",
+        "id": "EC:machado clavijo"
+      },
+      {
+        "orador": "Asesora de la comisión",
+        "cargo": "invitado",
+        "sobre": "Articulado de la ley militar",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Explicó las modificaciones de los artículos tres y diecinueve.",
+        "proyecto": "Ley de personal y disciplina de las fuerzas armadas",
+        "id": null
+      },
+      {
+        "orador": "Gerardo Machado",
+        "cargo": "legislador",
+        "sobre": "Procedimiento y expertos para la reforma",
+        "postura": "con observaciones",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Cuestionó la falta de tiempo y expertos para la reforma.",
+        "proyecto": "Ley de personal y disciplina de las fuerzas armadas",
+        "id": "EC:machado clavijo"
+      },
+      {
+        "orador": "Asesora de la comisión",
+        "cargo": "invitado",
+        "sobre": "Ascensos y responsabilidad disciplinaria militar",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Informó sobre los nuevos criterios de ascenso militar.",
+        "proyecto": "Ley de personal y disciplina de las fuerzas armadas",
+        "id": null
+      },
+      {
+        "orador": "Gerardo Machado",
+        "cargo": "legislador",
+        "sobre": "Claridad de la explicación técnica",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Comentó que la explicación de la asesora fue clara.",
+        "proyecto": "Ley de personal y disciplina de las fuerzas armadas",
+        "id": "EC:machado clavijo"
+      },
+      {
+        "orador": "Yahair Estefanía Urresta Guzmán",
+        "cargo": "legislador",
+        "sobre": "Reconsideración de la votación del informe",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso reconsiderar la votación para pasar al pleno.",
+        "proyecto": "Ley de personal y disciplina de las fuerzas armadas",
+        "id": "EC:urresta guzman"
+      },
+      {
+        "orador": "Presidenta de la comisión",
+        "cargo": "legislador",
+        "sobre": "Aprobación del informe de la ley",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Respaldó la aprobación de la ley de personal militar.",
+        "proyecto": "Ley de personal y disciplina de las fuerzas armadas",
+        "id": "EC:de la"
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1106171578790944"
   }
 }
