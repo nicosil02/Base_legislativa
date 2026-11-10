@@ -2640,5 +2640,232 @@
       }
     ],
     "url": "https://www.facebook.com/watch/?v=1694348782203358"
+  },
+  "CXC0rWjtjTI": {
+    "fecha": "2026-10-27",
+    "organo": "Comisión de Ciencia",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Ayse",
+        "cargo": "legislador",
+        "sobre": "Sala de investigación en Cusco",
+        "postura": "comenta",
+        "tema": "Educación",
+        "dijo": "Informó sobre el pedido de la Universidad San Antonio Abad.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Presidenta de la comisión",
+        "cargo": "legislador",
+        "sobre": "Incorporación de profesionales al consejo",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Informó sobre la incorporación de tres profesionales al consejo.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Presidenta de la comisión",
+        "cargo": "legislador",
+        "sobre": "Atención de la PCM a diputados",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Pidió a la PCM mejorar la atención a los diputados.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ricardo Cristopher Zapata",
+        "cargo": "ministro o autoridad",
+        "sobre": "Transformación digital del Estado",
+        "postura": "comenta",
+        "tema": "Tecnología",
+        "dijo": "Informó sobre la transformación digital del Estado.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Jair Marrique",
+        "cargo": "legislador",
+        "sobre": "Interoperabilidad y estrategia de IA",
+        "postura": "en contra",
+        "tema": "Tecnología",
+        "dijo": "Cuestionó la interoperabilidad y la estrategia de IA.",
+        "proyecto": "",
+        "id": "diputados:manrique olivera"
+      },
+      {
+        "orador": "Presidenta de la comisión",
+        "cargo": "legislador",
+        "sobre": "Entrega de respuestas por escrito",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Pidió que se entreguen las respuestas por escrito.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ricardo Cristopher Zapata",
+        "cargo": "ministro o autoridad",
+        "sobre": "Respuesta sobre conectividad y datos",
+        "postura": "comenta",
+        "tema": "Tecnología",
+        "dijo": "Informó sobre la conectividad y el hackeo de PHP.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Indepichon",
+        "cargo": "ministro o autoridad",
+        "sobre": "Funcionamiento de GeoPerú",
+        "postura": "comenta",
+        "tema": "Tecnología",
+        "dijo": "Informó sobre la interconexión de datos en GeoPerú.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ricardo Zapata",
+        "cargo": "ministro o autoridad",
+        "sobre": "Gestión del Centro Nacional de Seguridad Digital",
+        "postura": "comenta",
+        "tema": "Tecnología",
+        "dijo": "Informó sobre la asistencia técnica del Centro Nacional de Seguridad Digital.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Jair",
+        "cargo": "legislador",
+        "sobre": "Modernización de servicios digitales estatales",
+        "postura": "en contra",
+        "tema": "Tecnología",
+        "dijo": "Cuestionó la falta de un stack tecnológico único para el Estado.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Kerkik",
+        "cargo": "legislador",
+        "sobre": "Vinculación de recomendaciones de seguridad digital",
+        "postura": "pregunta",
+        "tema": "Tecnología",
+        "dijo": "Preguntó si las recomendaciones de seguridad digital son vinculantes.",
+        "proyecto": "Ley de Inteligencia Artificial",
+        "id": null
+      },
+      {
+        "orador": "Ricardo Zapata",
+        "cargo": "ministro o autoridad",
+        "sobre": "Implementación de la inteligencia artificial",
+        "postura": "comenta",
+        "tema": "Tecnología",
+        "dijo": "Informó sobre la implementación de la inteligencia artificial en regiones.",
+        "proyecto": "Ley de Inteligencia Artificial",
+        "id": null
+      },
+      {
+        "orador": "Patiño",
+        "cargo": "legislador",
+        "sobre": "Talento digital y presupuesto regional",
+        "postura": "pregunta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Preguntó sobre estrategias de talento digital y presupuesto para Junín.",
+        "proyecto": "",
+        "id": "diputados:patino urco"
+      },
+      {
+        "orador": "Peri",
+        "cargo": "legislador",
+        "sobre": "Conectividad y electricidad en la selva",
+        "postura": "en contra",
+        "tema": "Telecomunicaciones",
+        "dijo": "Denunció la falta de conectividad y electricidad en la selva.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=CXC0rWjtjTI"
+  },
+  "fb_1801729931033388": {
+    "fecha": "2026-10-27",
+    "organo": "Comisión de Soberanía Alimentaria",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Jorge Hugo Tituánea Calapíñez",
+        "cargo": "invitado",
+        "sobre": "Reforma de la Ley de Acuicultura y Pesca",
+        "postura": "propone",
+        "tema": "Pesca",
+        "dijo": "Propuso reformas para fortalecer el marco legal de la acuicultura y la pesca.",
+        "proyecto": "Ley de Acuicultura y Pesca",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1801729931033388"
+  },
+  "fb_1606171874587229": {
+    "fecha": "2026-10-27",
+    "organo": "Comisión de Seguridad Integral",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Diego Villamarín",
+        "cargo": "invitado",
+        "sobre": "Acceso gestionado de comunicaciones en prisiones",
+        "postura": "con observaciones",
+        "tema": "Telecomunicaciones",
+        "dijo": "Propuso el uso de accesos gestionados mediante listas blancas en prisiones.",
+        "proyecto": "Ley de telecomunicaciones en prisiones",
+        "id": null
+      },
+      {
+        "orador": "Luis Camillo",
+        "cargo": "invitado",
+        "sobre": "Regulación de sistemas de videovigilancia",
+        "postura": "con observaciones",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Cuestionó la seguridad y las contradicciones del proyecto de videovigilancia.",
+        "proyecto": "Ley de regulación de sistemas de videovigilancia",
+        "id": null
+      },
+      {
+        "orador": "Luis Alberto Víneas Gadea",
+        "cargo": "invitado",
+        "sobre": "Prevención del reclutamiento de niños",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso fortalecer la reforma de personas desaparecidas con protocolos especializados.",
+        "proyecto": "Ley de personas desaparecidas",
+        "id": null
+      },
+      {
+        "orador": "Machá",
+        "cargo": "legislador",
+        "sobre": "Reclutamiento de niños por delincuencia",
+        "postura": "pregunta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Preguntó sobre la protección de derechos en la ley de desaparecidos.",
+        "proyecto": "Ley de personas desaparecidas",
+        "id": null
+      },
+      {
+        "orador": "Luis Alberto Víneas Gadea",
+        "cargo": "invitado",
+        "sobre": "Metodología de prevención de reclutamiento",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Defendió la metodología de prevención del instituto para niños.",
+        "proyecto": "Ley de personas desaparecidas",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1606171874587229"
   }
 }
