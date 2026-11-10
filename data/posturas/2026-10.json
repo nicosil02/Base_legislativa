@@ -2543,5 +2543,102 @@
       }
     ],
     "url": "https://www.facebook.com/watch/?v=1131318009859036"
+  },
+  "fb_1732346264494942": {
+    "fecha": "2026-10-27",
+    "organo": "Comisión de Relaciones Internacionales",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Daniel Narváez",
+        "cargo": "invitado",
+        "sobre": "la Ley Orgánica Reformatoria del Servicio Exterior",
+        "postura": "con observaciones",
+        "tema": "Otros",
+        "dijo": "Propuso modificaciones técnicas al proyecto de la Ley Orgánica del Servicio Exterior.",
+        "proyecto": "Ley Orgánica Reformatoria del Servicio Exterior",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1732346264494942"
+  },
+  "VSF1rifH-j4": {
+    "fecha": "2026-10-27",
+    "organo": "Comisión de Defensa Nacional",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Amalia Palomino",
+        "cargo": "legislador",
+        "sobre": "Riesgos de la participación militar en obras",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Denunció el riesgo de eludir procedimientos de contratación pública mediante convenios.",
+        "proyecto": "00067-2031-CD",
+        "id": "diputados:palomino pacheco"
+      },
+      {
+        "orador": "Pierre Figuarri",
+        "cargo": "legislador",
+        "sobre": "Infraestructura en zonas de frontera",
+        "postura": "a favor",
+        "tema": "Infraestructura",
+        "dijo": "Respaldó la iniciativa resaltando la importancia de la infraestructura fronteriza.",
+        "proyecto": "00067-2031-CD",
+        "id": "diputados:figari mendoza"
+      },
+      {
+        "orador": "Andrea Meina",
+        "cargo": "legislador",
+        "sobre": "Participación de la ingeniería militar",
+        "postura": "a favor",
+        "tema": "Infraestructura",
+        "dijo": "Defendió la capacidad técnica de la ingeniería militar para cerrar brechas.",
+        "proyecto": "00067-2031-CD",
+        "id": "diputados:medina stein"
+      },
+      {
+        "orador": "Pes Marquis",
+        "cargo": "legislador",
+        "sobre": "Nueva modalidad de intervención militar",
+        "postura": "comenta",
+        "tema": "Infraestructura",
+        "dijo": "Comentó que la nueva modalidad de intervención resulta interesante.",
+        "proyecto": "00067-2031-CD",
+        "id": null
+      },
+      {
+        "orador": "José Bahía",
+        "cargo": "legislador",
+        "sobre": "Gestión del riesgo de desastres",
+        "postura": "con observaciones",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso estandarizar la redacción de los artículos de la propuesta.",
+        "proyecto": "00067-2031-CD",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=VSF1rifH-j4"
+  },
+  "fb_1694348782203358": {
+    "fecha": "2026-10-27",
+    "organo": "Comisión de Relaciones Internacionales",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Estefania Martínez",
+        "cargo": "invitado",
+        "sobre": "Reforma a la Ley del Servicio Exterior",
+        "postura": "con observaciones",
+        "tema": "Otros",
+        "dijo": "Propuso ajustes técnicos para fortalecer la reforma del servicio exterior.",
+        "proyecto": "Ley Orgánica del Servicio Exterior",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1694348782203358"
   }
 }
