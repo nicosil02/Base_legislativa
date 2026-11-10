@@ -29625,5 +29625,462 @@
       }
     ],
     "url": "https://www.youtube.com/watch?v=2T6CGbrg-Ec"
+  },
+  "sb4adhQvgzI": {
+    "fecha": "2026-10-05",
+    "organo": "Comisión de Presupuesto",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Renzo Andrés Reyes Barreto",
+        "cargo": "autoridad",
+        "sobre": "presupuesto 2027 del Callao",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Informó el proyecto de presupuesto para el 2027.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Caterina Ampuedo",
+        "cargo": "legislador",
+        "sobre": "ejecución presupuestal del Callao",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Denunció la baja ejecución presupuestal y obras paralizadas.",
+        "proyecto": "",
+        "id": "senado:ampuero meza"
+      },
+      {
+        "orador": "Jones Núñez Madiverónica",
+        "cargo": "legislador",
+        "sobre": "presupuesto para seguridad ciudadana",
+        "postura": "pregunta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Preguntó por la falta de presupuesto para seguridad.",
+        "proyecto": "",
+        "id": "diputados:yonz nunez"
+      },
+      {
+        "orador": "Roger Miguel Astocuri",
+        "cargo": "legislador",
+        "sobre": "obras e infraestructura en el Callao",
+        "postura": "con observaciones",
+        "tema": "Infraestructura",
+        "dijo": "Cuestionó la falta de detalles sobre las obras.",
+        "proyecto": "",
+        "id": "senado:astucuri laura"
+      },
+      {
+        "orador": "Ciro Castillo Rojo",
+        "cargo": "autoridad",
+        "sobre": "defensa de la gestión regional",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Defendió su gestión frente a las críticas recibidas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Nicolás Oscar Barrera Morán",
+        "cargo": "ministro o autoridad",
+        "sobre": "Presupuesto regional de Lima 2027",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Informó sobre el proyecto de presupuesto para el año 2027.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Rojera Zocuri Laura",
+        "cargo": "legislador",
+        "sobre": "Participación en aduanas y mantenimiento",
+        "postura": "propone",
+        "tema": "Infraestructura",
+        "dijo": "Propuso una iniciativa legislativa para la gestión de aduanas.",
+        "proyecto": "",
+        "id": "senado:astucuri laura"
+      },
+      {
+        "orador": "Absalom Vázquez Villanueva",
+        "cargo": "legislador",
+        "sobre": "Baja ejecución y corrupción en obras",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Denunció la baja capacidad de ejecución y posible corrupción.",
+        "proyecto": "",
+        "id": "senado:vasquez villanueva"
+      },
+      {
+        "orador": "Nicolás Oscar Barrera Morán",
+        "cargo": "ministro o autoridad",
+        "sobre": "Limitaciones del presupuesto regional",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Informó que el presupuesto es insuficiente para cerrar brechas.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=sb4adhQvgzI"
+  },
+  "D0RiZFWp9QY": {
+    "fecha": "2026-10-05",
+    "organo": "Comisión de Defensa del Consumidor",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Palomino",
+        "cargo": "legislador",
+        "sobre": "Proyecto de hidrógeno verde en Arequipa",
+        "postura": "propone",
+        "tema": "Energía",
+        "dijo": "Pidió la presencia del puerto de Matarani en la reunión descentralizada.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Orguujo",
+        "cargo": "legislador",
+        "sobre": "Información de la Oficialía Mayor",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Solicitó información a la Oficialía Mayor sobre acuerdos de la mesa.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "María Gabriela Carrasco",
+        "cargo": "ministro o autoridad",
+        "sobre": "Autorización de la empresa Polominería y FlixBus",
+        "postura": "comenta",
+        "tema": "Transporte",
+        "dijo": "Explicó la autorización de la empresa Polominería y FlixBus.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Milero Esposo",
+        "cargo": "ministro o autoridad",
+        "sobre": "Fiscalización de transporte y comercio electrónico",
+        "postura": "comenta",
+        "tema": "Consumo masivo",
+        "dijo": "Detalló las obligaciones de fiscalización de las empresas de transporte.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Albañil",
+        "cargo": "legislador",
+        "sobre": "Investigación contra la plataforma FlixBus",
+        "postura": "pregunta",
+        "tema": "Consumo masivo",
+        "dijo": "Preguntó por el seguimiento del proceso de investigación contra FlixBus.",
+        "proyecto": "",
+        "id": "diputados:albanil carmona"
+      },
+      {
+        "orador": "Judith",
+        "cargo": "legislador",
+        "sobre": "Seguridad en buses de FlixBus",
+        "postura": "pregunta",
+        "tema": "Transporte",
+        "dijo": "Cuestionó la seguridad y el SOAT en buses FlixBus.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Gladys",
+        "cargo": "legislador",
+        "sobre": "Obligaciones de transportistas y plataformas",
+        "postura": "pregunta",
+        "tema": "Transporte",
+        "dijo": "Consultó sobre las obligaciones entre transportistas y plataformas digitales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Crisólogo Cáceres",
+        "cargo": "invitado",
+        "sobre": "Desafíos en la defensa del consumidor",
+        "postura": "comenta",
+        "tema": "Consumo masivo",
+        "dijo": "Expuso los desafíos actuales en la defensa del consumidor.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Crisólogo Cáceres",
+        "cargo": "invitado",
+        "sobre": "Enfoque de la defensa del consumidor",
+        "postura": "comenta",
+        "tema": "Consumo masivo",
+        "dijo": "Informó la importancia del enfoque preventivo en la defensa del consumidor.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Crisólogo Cáceres",
+        "cargo": "invitado",
+        "sobre": "Falta de reglamentos en leyes",
+        "postura": "en contra",
+        "tema": "Consumo masivo",
+        "dijo": "Denunció la falta de reglamentos en diversas leyes de protección.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Crisólogo Cáceres",
+        "cargo": "invitado",
+        "sobre": "Reformas del sistema financiero",
+        "postura": "en contra",
+        "tema": "Banca",
+        "dijo": "Cuestionó la falta de representación de consumidores en las reformas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Crisólogo Cáceres",
+        "cargo": "invitado",
+        "sobre": "Reforma del sistema previsional",
+        "postura": "en contra",
+        "tema": "Pensiones",
+        "dijo": "Cuestionó el recorte de derechos en la reforma previsional.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Crisólogo Cáceres",
+        "cargo": "invitado",
+        "sobre": "Acceso al crédito para bodegueros",
+        "postura": "comenta",
+        "tema": "Banca",
+        "dijo": "Informó la dificultad de acceso al crédito para los bodegueros.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Crisólogo Cáceres",
+        "cargo": "invitado",
+        "sobre": "Cláusulas abusivas bancarias",
+        "postura": "en contra",
+        "tema": "Banca",
+        "dijo": "Denunció la existencia de cláusulas abusivas en el sistema bancario.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Crisólogo Cáceres",
+        "cargo": "invitado",
+        "sobre": "Libre elección de entidades financieras",
+        "postura": "comenta",
+        "tema": "Banca",
+        "dijo": "Informó sobre la lucha por la libre elección de bancos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Crisólogo Cáceres",
+        "cargo": "invitado",
+        "sobre": "Seguridad de productos eléctricos",
+        "postura": "propone",
+        "tema": "Consumo masivo",
+        "dijo": "Pidió reglamentación técnica para productos eléctricos y de alimentos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Crisólogo Cáceres",
+        "cargo": "invitado",
+        "sobre": "Municipalización de la defensa del consumidor",
+        "postura": "propone",
+        "tema": "Consumo masivo",
+        "dijo": "Propuso aprobar la ley de municipalización de la defensa del consumidor.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Crisólogo Cáceres",
+        "cargo": "invitado",
+        "sobre": "Financiamiento de asociaciones de consumidores",
+        "postura": "en contra",
+        "tema": "Otros",
+        "dijo": "Denunció la falta de financiamiento estatal para las asociaciones.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Crisólogo Cáceres",
+        "cargo": "invitado",
+        "sobre": "Fondo para asociaciones de consumidores",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Propuso crear un fondo concursable para las asociaciones de consumidores.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Crisólogo Cáceres",
+        "cargo": "invitado",
+        "sobre": "Educación al consumidor escolar",
+        "postura": "en contra",
+        "tema": "Educación",
+        "dijo": "Denunció la falta de educación al consumidor en las escuelas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Crisólogo Cáceres",
+        "cargo": "invitado",
+        "sobre": "Mesa de trabajo para el financiamiento",
+        "postura": "propone",
+        "tema": "Consumo masivo",
+        "dijo": "Propuso una mesa de trabajo para evaluar el financiamiento.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Barbarán",
+        "cargo": "legislador",
+        "sobre": "Importancia de la educación financiera",
+        "postura": "comenta",
+        "tema": "Banca",
+        "dijo": "Informó la necesidad de educación financiera ante los abusos.",
+        "proyecto": "",
+        "id": "diputados:barbaran reyes"
+      },
+      {
+        "orador": "Barbarán",
+        "cargo": "legislador",
+        "sobre": "Competencia en el sistema bancario",
+        "postura": "propone",
+        "tema": "Banca",
+        "dijo": "Pidió que la SBS fomente la competencia en la banca.",
+        "proyecto": "",
+        "id": "diputados:barbaran reyes"
+      },
+      {
+        "orador": "Barbarán",
+        "cargo": "legislador",
+        "sobre": "Normativa de los fondos de pensiones",
+        "postura": "comenta",
+        "tema": "Pensiones",
+        "dijo": "Informó sobre las correcciones en la normativa de pensiones.",
+        "proyecto": "",
+        "id": "diputados:barbaran reyes"
+      },
+      {
+        "orador": "Barbarán",
+        "cargo": "legislador",
+        "sobre": "Agenda de la comisión",
+        "postura": "propone",
+        "tema": "Consumo masivo",
+        "dijo": "Propuso elaborar una agenda prioritaria con la comisión.",
+        "proyecto": "",
+        "id": "diputados:barbaran reyes"
+      },
+      {
+        "orador": "venezles",
+        "cargo": "legislador",
+        "sobre": "Listado de leyes sin reglamentos",
+        "postura": "pregunta",
+        "tema": "Consumo masivo",
+        "dijo": "Pidió el listado de leyes que no tienen reglamentos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Kispe",
+        "cargo": "legislador",
+        "sobre": "Cumplimiento del medio pasaje",
+        "postura": "comenta",
+        "tema": "Transporte",
+        "dijo": "Denunció el incumplimiento del beneficio del medio pasaje.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Kispe",
+        "cargo": "legislador",
+        "sobre": "Oficinas municipales de defensa",
+        "postura": "propone",
+        "tema": "Consumo masivo",
+        "dijo": "Propuso implementar oficinas de defensa del consumidor en municipalidades.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Palomino",
+        "cargo": "legislador",
+        "sobre": "Responsabilidad del Estado en financiamiento",
+        "postura": "pregunta",
+        "tema": "Otros",
+        "dijo": "Preguntó sobre la responsabilidad del Estado en el financiamiento.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Nora",
+        "cargo": "legislador",
+        "sobre": "Penalidades por pronto pago",
+        "postura": "en contra",
+        "tema": "Banca",
+        "dijo": "Denunció las penalidades bancarias aplicadas por pronto pago.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Crisólogo Cáceres",
+        "cargo": "invitado",
+        "sobre": "Porcentaje de multas para consumidores",
+        "postura": "propone",
+        "tema": "Consumo masivo",
+        "dijo": "Pidió que se entregue un porcentaje de las multas a los consumidores individuales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Crisólogo Cáceres",
+        "cargo": "invitado",
+        "sobre": "Educación al consumidor en escuelas",
+        "postura": "propone",
+        "tema": "Educación",
+        "dijo": "Propuso coordinar con el Ministerio de Educación la enseñanza de defensa al consumidor.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Crisólogo Cáceres",
+        "cargo": "invitado",
+        "sobre": "Financiamiento de asociaciones de consumidores",
+        "postura": "propone",
+        "tema": "Consumo masivo",
+        "dijo": "Propuso establecer una mesa de trabajo para el financiamiento de las asociaciones.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=D0RiZFWp9QY"
+  },
+  "fb_1115608257501394": {
+    "fecha": "2026-10-05",
+    "organo": "Comisión de Fiscalización",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Luigi García",
+        "cargo": "legislador",
+        "sobre": "la reconciliación de la votación",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso la reconciliación de la votación de la moción aprobada.",
+        "proyecto": "",
+        "id": "EC:garcia velasquez"
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1115608257501394"
   }
 }
