@@ -941,5 +941,352 @@
       }
     ],
     "url": "https://www.youtube.com/watch?v=XGv0b_4rffs"
+  },
+  "EZTv1OTkKf0": {
+    "fecha": "2026-10-29",
+    "organo": "Pleno de Diputados",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Vladimiro Guaró Portocarrero",
+        "cargo": "ministro o autoridad",
+        "sobre": "Reprogramación de informe de cambio climático",
+        "postura": "propone",
+        "tema": "Ambiente",
+        "dijo": "Solicitó reprogramar su informe sobre cambio climático.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Hugo Jesús Yataco Pérez",
+        "cargo": "invitado",
+        "sobre": "Reprogramación de sesión de defensa",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Pidió diferir la sesión por falta de información.",
+        "proyecto": "denuncia constitucional 403",
+        "id": null
+      },
+      {
+        "orador": "Walter Edinson Ayala González",
+        "cargo": "invitado",
+        "sobre": "Reprogramación de audiencia de defensa",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Solicitó reprogramar la audiencia para estudiar la información.",
+        "proyecto": "denuncia constitucional 403",
+        "id": null
+      },
+      {
+        "orador": "Eduardo Enrique Castillo Rivas",
+        "cargo": "legislador",
+        "sobre": "Modificación de la Ley de Enfermería",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Sustentó el dictamen para fortalecer la enfermería.",
+        "proyecto": "PL 0091-2026 y PL 00159-2026",
+        "id": "diputados:castillo rivas"
+      },
+      {
+        "orador": "Paola Martínez Paitán",
+        "cargo": "legislador",
+        "sobre": "Autonomía y seguridad de la enfermería",
+        "postura": "a favor",
+        "tema": "Salud",
+        "dijo": "Defendió la autonomía profesional y la identidad de enfermería.",
+        "proyecto": "PL 0091-2026",
+        "id": "diputados:martinez paitan"
+      },
+      {
+        "orador": "Jessica Benítez Barrionuevo",
+        "cargo": "legislador",
+        "sobre": "Reconocimiento de la autonomía de enfermería",
+        "postura": "a favor",
+        "tema": "Salud",
+        "dijo": "Respaldó el dictamen para fortalecer la enfermería.",
+        "proyecto": "PL 0091-2026",
+        "id": "diputados:benitez barrionuevo"
+      },
+      {
+        "orador": "Leo de Paz",
+        "cargo": "legislador",
+        "sobre": "Protección y autonomía de la enfermería",
+        "postura": "a favor",
+        "tema": "Salud",
+        "dijo": "Apoyó el reconocimiento de la autonomía de enfermería.",
+        "proyecto": "PL 0091-2026",
+        "id": "diputados:de paz lancho"
+      },
+      {
+        "orador": "Flor de Jesús Mesa Rivera",
+        "cargo": "legislador",
+        "sobre": "Fortalecimiento del ejercicio de la enfermería",
+        "postura": "a favor",
+        "tema": "Salud",
+        "dijo": "Respaldó la iniciativa para fortalecer la enfermería.",
+        "proyecto": "PL 0091-2026",
+        "id": "diputados:meza rivera"
+      },
+      {
+        "orador": "Flor de Jesús Mesa Rivera",
+        "cargo": "legislador",
+        "sobre": "Autonomía y ejercicio de la enfermería",
+        "postura": "a favor",
+        "tema": "Salud",
+        "dijo": "Respaldó la iniciativa que fortalece la enfermería.",
+        "proyecto": "",
+        "id": "diputados:meza rivera"
+      },
+      {
+        "orador": "María Luisa Silupú Inca",
+        "cargo": "legislador",
+        "sobre": "Fortalecimiento de la profesión de enfermería",
+        "postura": "a favor",
+        "tema": "Salud",
+        "dijo": "Respaldó la propuesta para mejorar la salud.",
+        "proyecto": "",
+        "id": "diputados:silupu inga"
+      },
+      {
+        "orador": "Luis Quispec Candia",
+        "cargo": "legislador",
+        "sobre": "Modificación de la Ley 27669",
+        "postura": "a favor",
+        "tema": "Salud",
+        "dijo": "Apoyó la modificación de la Ley 27669.",
+        "proyecto": "Ley 27669",
+        "id": "diputados:quispe candia"
+      },
+      {
+        "orador": "Mary Eliana Infantes Castañeda",
+        "cargo": "legislador",
+        "sobre": "Límites de la autonomía de enfermería",
+        "postura": "con observaciones",
+        "tema": "Salud",
+        "dijo": "Cuestionó que la autonomía invada otras profesiones.",
+        "proyecto": "",
+        "id": "diputados:infantes castaneda"
+      },
+      {
+        "orador": "Dina Janco",
+        "cargo": "legislador",
+        "sobre": "Respaldo a profesionales de salud",
+        "postura": "a favor",
+        "tema": "Salud",
+        "dijo": "Brindó su respaldo total a los profesionales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "César Manuel Revilla Villanueva",
+        "cargo": "legislador",
+        "sobre": "Dictamen sobre autonomía de enfermería",
+        "postura": "a favor",
+        "tema": "Salud",
+        "dijo": "Reafirmó el apoyo de Fuerza Popular al dictamen.",
+        "proyecto": "",
+        "id": "diputados:revilla villanueva"
+      },
+      {
+        "orador": "Julia Ambrosio",
+        "cargo": "legislador",
+        "sobre": "Autonomía profesional y uso de uniformes",
+        "postura": "con observaciones",
+        "tema": "Salud",
+        "dijo": "Propuso cambios sobre uniformes y competencias.",
+        "proyecto": "",
+        "id": "diputados:ambrosio dominguez"
+      },
+      {
+        "orador": "Romina Uribe",
+        "cargo": "legislador",
+        "sobre": "Valoración del cuidado en la salud",
+        "postura": "a favor",
+        "tema": "Salud",
+        "dijo": "Destacó la importancia del cuidado en la sociedad.",
+        "proyecto": "",
+        "id": "diputados:uribe saenz"
+      },
+      {
+        "orador": "Paola Martínez",
+        "cargo": "legislador",
+        "sobre": "Uso indebido de uniformes de enfermería",
+        "postura": "a favor",
+        "tema": "Salud",
+        "dijo": "Denunció los riesgos del uso de uniformes.",
+        "proyecto": "",
+        "id": "diputados:martinez paitan"
+      },
+      {
+        "orador": "Eduardo Enrique Castillo Rivas",
+        "cargo": "legislador",
+        "sobre": "Redacción del texto sustitutorio",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Informó sobre la redacción del texto sustitutorio.",
+        "proyecto": "",
+        "id": "diputados:castillo rivas"
+      },
+      {
+        "orador": "Kerk",
+        "cargo": "legislador",
+        "sobre": "Acceso a documentos digitales",
+        "postura": "con observaciones",
+        "tema": "Otros",
+        "dijo": "Pidió facilidades para leer documentos en tablets.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Norma Yarro",
+        "cargo": "legislador",
+        "sobre": "Reglamentación de la ley de enfermería",
+        "postura": "con observaciones",
+        "tema": "Salud",
+        "dijo": "Sugirió controlar la venta de uniformes.",
+        "proyecto": "",
+        "id": "diputados:yarrow lumbreras"
+      },
+      {
+        "orador": "Menzur",
+        "cargo": "legislador",
+        "sobre": "Importancia de la agenda legislativa",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Resaltó la importancia de la agenda legislativa.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "González Polar",
+        "cargo": "legislador",
+        "sobre": "Reconocimiento de la UNSA como Benemérita",
+        "postura": "propone",
+        "tema": "Educación",
+        "dijo": "Propuso declarar a la Universidad Nacional de San Agustín de Arequipa como Benemérita de la República.",
+        "proyecto": "",
+        "id": "diputados:gonzales polar"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=EZTv1OTkKf0"
+  },
+  "5sgiZ9XT0NE": {
+    "fecha": "2026-10-29",
+    "organo": "Comisión de Justicia",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Mirta Basquiat-Chukilín",
+        "cargo": "legislador",
+        "sobre": "informe de personas afectadas en protestas",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Informó sobre el reporte de la Defensoría del Poder Judicial.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Mirta Basquiat-Chukilín",
+        "cargo": "legislador",
+        "sobre": "informe sobre Susi Aponte",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Comunicó el informe del Ministerio del Interior sobre Susi Aponte.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Mirta Basquiat-Chukilín",
+        "cargo": "legislador",
+        "sobre": "dictámenes de la Cámara de Diputados",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Informó sobre los dictámenes aprobados en la Cámara de Diputados.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Marta Chaves",
+        "cargo": "legislador",
+        "sobre": "sesiones no ordinarias de la comisión",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso no convocar sesiones no ordinarias hasta recibir dictámenes.",
+        "proyecto": "",
+        "id": "senado:chavez cossio"
+      },
+      {
+        "orador": "Andrés Ramos Wilka",
+        "cargo": "legislador",
+        "sobre": "apertura de escuela policial",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Pidió la apertura de una escuela policial para los postulantes.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Gavidia",
+        "cargo": "legislador",
+        "sobre": "asistencia de la Procuradora General",
+        "postura": "defiende",
+        "tema": "Política y control político",
+        "dijo": "Defendió la sesión para recibir a la Procuradora General.",
+        "proyecto": "",
+        "id": "senado:gavidia rodriguez"
+      },
+      {
+        "orador": "Marta Chaves",
+        "cargo": "legislador",
+        "sobre": "comparecencia de la presidenta del Poder Judicial",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Propuso reprogramar la asistencia de la presidenta del Poder Judicial.",
+        "proyecto": "",
+        "id": "senado:chavez cossio"
+      },
+      {
+        "orador": "María Dolores Péchez Becerra",
+        "cargo": "invitado",
+        "sobre": "temas presupuestales del Poder Judicial",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Informó que su presentación se centrará en temas presupuestales.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=5sgiZ9XT0NE"
+  },
+  "LL2GxtowMAA": {
+    "fecha": "2026-10-29",
+    "organo": "Comisión de Control Político",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Muñante",
+        "cargo": "legislador",
+        "sobre": "error material en el dictamen",
+        "postura": "con observaciones",
+        "tema": "Comercio",
+        "dijo": "Señaló un error material en la conclusión de un artículo.",
+        "proyecto": "TIE 001-2026",
+        "id": "senado:munante barrios"
+      },
+      {
+        "orador": "Guido",
+        "cargo": "legislador",
+        "sobre": "estado de emergencia en Ático",
+        "postura": "con observaciones",
+        "tema": "Transporte",
+        "dijo": "Manifestó preocupación por la eficacia de las medidas para la ciudadanía.",
+        "proyecto": "DS 118-2026-PCM",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=LL2GxtowMAA"
   }
 }
