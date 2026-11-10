@@ -30082,5 +30082,190 @@
       }
     ],
     "url": "https://www.facebook.com/watch/?v=1115608257501394"
+  },
+  "fb_1377486204160445": {
+    "fecha": "2026-10-05",
+    "organo": "Comisión de Fiscalización",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [],
+    "url": "https://www.facebook.com/watch/?v=1377486204160445"
+  },
+  "RUaZt2rRNy0": {
+    "fecha": "2026-10-02",
+    "organo": "Comisión de Seguimiento Legislativo",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [],
+    "url": "https://www.youtube.com/watch?v=RUaZt2rRNy0"
+  },
+  "o6ocvV5iWIk": {
+    "fecha": "2026-10-02",
+    "organo": "Comisión de Presupuesto",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Washington Alexander Sotelo Luna",
+        "cargo": "ministro o autoridad",
+        "sobre": "Presupuesto 2027 del Gobierno Regional de Ica",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Presentó la evolución y distribución del presupuesto para el año 2027.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Carlos Valdíaz",
+        "cargo": "legislador",
+        "sobre": "Eficiencia del gasto en Ica",
+        "postura": "a favor",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Resaltó la alta eficiencia en la ejecución del gasto en Ica.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Caterina Pueblo",
+        "cargo": "legislador",
+        "sobre": "Ejecución de inversiones en Ica",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Cuestionó la baja ejecución de inversiones y el alto endeudamiento.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Flores Suárez",
+        "cargo": "legislador",
+        "sobre": "Deficiencias en la presa Los Loro",
+        "postura": "en contra",
+        "tema": "Infraestructura",
+        "dijo": "Expresó preocupación por las deficiencias estructurales de la presa Los Loro.",
+        "proyecto": "",
+        "id": "senado:flores suarez"
+      },
+      {
+        "orador": "Saúl Armacanqui Morales",
+        "cargo": "legislador",
+        "sobre": "Conflictos hídricos en Ica",
+        "postura": "comenta",
+        "tema": "Saneamiento",
+        "dijo": "Mencionó la problemática de los recursos hídricos en la región Ica.",
+        "proyecto": "",
+        "id": "senado:armacanqui morales"
+      },
+      {
+        "orador": "Absalón Vázquez",
+        "cargo": "legislador",
+        "sobre": "Obras de saneamiento paralizadas",
+        "postura": "en contra",
+        "tema": "Saneamiento",
+        "dijo": "Denunció la paralización de obras de agua potable desde el 2011.",
+        "proyecto": "",
+        "id": "senado:vasquez villanueva"
+      },
+      {
+        "orador": "Washington Alexander Sotelo Luna",
+        "cargo": "ministro o autoridad",
+        "sobre": "Respuesta a consultas parlamentarias",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Explicó la situación de las obras y el sector educación.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Roel Sánchez Sánchez",
+        "cargo": "ministro o autoridad",
+        "sobre": "Presupuesto 2027 del Gobierno Regional de Arequipa",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Expuso las deficiencias presupuestales para infraestructura y servicios en Arequipa.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Roel Sánchez",
+        "cargo": "ministro o autoridad",
+        "sobre": "Presupuesto de la región Arequipa",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Informó sobre la ejecución de inversiones y las necesidades presupuestales de Arequipa.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Segundo Tapia Bernal",
+        "cargo": "legislador",
+        "sobre": "Composición del presupuesto de Arequipa",
+        "postura": "con observaciones",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Cuestionó la alta proporción de gasto corriente frente a la inversión.",
+        "proyecto": "",
+        "id": "senado:tapia bernal"
+      },
+      {
+        "orador": "Walter Gagá",
+        "cargo": "legislador",
+        "sobre": "Gestión del proyecto Majes Siguas",
+        "postura": "en contra",
+        "tema": "Infraestructura",
+        "dijo": "Criticó la ineficiencia administrativa en la gestión del proyecto Majes Siguas.",
+        "proyecto": "",
+        "id": "senado:gago rodriguez"
+      },
+      {
+        "orador": "Absalom Vázquez",
+        "cargo": "legislador",
+        "sobre": "Infraestructura hídrica y salud regional",
+        "postura": "en contra",
+        "tema": "Infraestructura",
+        "dijo": "Denunció el riesgo de colapso de la infraestructura hídrica en la región.",
+        "proyecto": "",
+        "id": "senado:vasquez villanueva"
+      },
+      {
+        "orador": "Yessica Navas",
+        "cargo": "legislador",
+        "sobre": "Gestión de hospitales e infraestructura hídrica",
+        "postura": "pregunta",
+        "tema": "Salud",
+        "dijo": "Preguntó sobre la compra de equipos para el hospital de Camaná.",
+        "proyecto": "",
+        "id": "diputados:navas sanchez"
+      },
+      {
+        "orador": "Júbér",
+        "cargo": "legislador",
+        "sobre": "Gestión del hospital Goyeneche",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Pidió un informe detallado sobre la gestión del hospital Goyeneche.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Jaime Quito",
+        "cargo": "legislador",
+        "sobre": "Modelo de descentralización y presupuesto",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció la falta de una descentralización económica efectiva en el país.",
+        "proyecto": "",
+        "id": "senado:quito sarmiento"
+      },
+      {
+        "orador": "Washington Alexander Sotelo Luna",
+        "cargo": "ministro o autoridad",
+        "sobre": "Presupuesto 2027 del Gobierno Regional de Ica",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Informó sobre el presupuesto y los objetivos del Gobierno Regional de Ica.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=o6ocvV5iWIk"
   }
 }
