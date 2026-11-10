@@ -252,7 +252,9 @@
   "4QiUnlBZMf4",
   "bLcUpTxG0d4",
   "fb_1086991034339755",
-  "jMc-5on5dQE"
+  "jMc-5on5dQE",
+  "fb_1814126226381431",
+  "fb_2964719143885519"
  ],
  "sesiones": [
   {
@@ -2249,6 +2251,22 @@
    "pais": "PE",
    "url": "https://www.youtube.com/watch?v=jMc-5on5dQE",
    "visto_at": "2026-11-10T19:56:14Z"
+  },
+  {
+   "id": "fb_1814126226381431",
+   "titulo": "SESIÓN No.140 COMISIÓN ESPECIALIZADA PERMANENTE DE BIODIVERSIDAD Y RECURSOS NATURALES",
+   "tipo": "Comision: Biodiversidad (EC)",
+   "pais": "EC",
+   "url": "https://www.facebook.com/watch/?v=1814126226381431",
+   "visto_at": "2026-11-10T20:09:59Z"
+  },
+  {
+   "id": "fb_2964719143885519",
+   "titulo": "Sesión Nro. 2025-2027-172 de la Comisión de Soberanía, Integración y Seguridad Integral",
+   "tipo": "Comision: Seguridad Integral (EC)",
+   "pais": "EC",
+   "url": "https://www.facebook.com/watch/?v=2964719143885519",
+   "visto_at": "2026-11-10T20:09:59Z"
   }
  ],
  "avisado": {
