@@ -30267,5 +30267,822 @@
       }
     ],
     "url": "https://www.youtube.com/watch?v=o6ocvV5iWIk"
+  },
+  "_g8iB60yKC8": {
+    "fecha": "2026-10-01",
+    "organo": "Comisión de Defensa Nacional",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Alcorta Suero",
+        "cargo": "legislador",
+        "sobre": "Bullying en colegios militares",
+        "postura": "en contra",
+        "tema": "Educación",
+        "dijo": "Denunció la grave situación de bullying en colegios militares.",
+        "proyecto": "",
+        "id": "senado:alcorta suero"
+      },
+      {
+        "orador": "Alcorta Suero",
+        "cargo": "legislador",
+        "sobre": "Inteligencia artificial en defensa nacional",
+        "postura": "pregunta",
+        "tema": "Tecnología",
+        "dijo": "Preguntó a quién invitar para explicar la inteligencia artificial.",
+        "proyecto": "",
+        "id": "senado:alcorta suero"
+      },
+      {
+        "orador": "Alcorta Suero",
+        "cargo": "legislador",
+        "sobre": "Presencia estatal contra el terrorismo",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Denunció la insuficiente presencia estatal frente a los terroristas.",
+        "proyecto": "",
+        "id": "senado:alcorta suero"
+      },
+      {
+        "orador": "Alcorta Suero",
+        "cargo": "legislador",
+        "sobre": "Reactivación de fiscalías especializadas",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Informó sobre la reactivación de fiscalías especializadas en zonas.",
+        "proyecto": "",
+        "id": "senado:alcorta suero"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=_g8iB60yKC8"
+  },
+  "4D9U7qdV0bY": {
+    "fecha": "2026-10-01",
+    "organo": "Comisión de Justicia",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Marta Chávez",
+        "cargo": "legislador",
+        "sobre": "grupo de trabajo sobre protestas",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Rechazó la creación de un grupo de trabajo sobre protestas.",
+        "proyecto": "",
+        "id": "senado:chavez cossio"
+      },
+      {
+        "orador": "Héctor Ventura",
+        "cargo": "legislador",
+        "sobre": "investigaciones de carácter penal",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Cuestionó la competencia de la comisión en investigaciones penales.",
+        "proyecto": "",
+        "id": "senado:ventura angel"
+      },
+      {
+        "orador": "Andrés Avelino",
+        "cargo": "legislador",
+        "sobre": "seguimiento de información sobre fallecimientos",
+        "postura": "a favor",
+        "tema": "Justicia",
+        "dijo": "Defendió el seguimiento de información sobre fallecimientos.",
+        "proyecto": "",
+        "id": "senado:andres lujan"
+      },
+      {
+        "orador": "Alejandro Aguinaga",
+        "cargo": "legislador",
+        "sobre": "competencia jurisdiccional de temas penales",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Señaló que el tema ya se encuentra en el órgano jurisdiccional.",
+        "proyecto": "",
+        "id": "senado:aguinaga recuenco"
+      },
+      {
+        "orador": "Mirta Vázquez",
+        "cargo": "legislador",
+        "sobre": "seguimiento de investigaciones y justicia",
+        "postura": "a favor",
+        "tema": "Justicia",
+        "dijo": "Propuso admitir la mesa de trabajo para control político.",
+        "proyecto": "",
+        "id": "senado:vasquez chuquilin"
+      },
+      {
+        "orador": "Maravillo Larte",
+        "cargo": "legislador",
+        "sobre": "creación de grupo de trabajo",
+        "postura": "a favor",
+        "tema": "Justicia",
+        "dijo": "Defendió la creación de un grupo de trabajo de estudio.",
+        "proyecto": "",
+        "id": "senado:maravi olarte"
+      },
+      {
+        "orador": "Cúttipa",
+        "cargo": "legislador",
+        "sobre": "moción de Ramos Wilcas",
+        "postura": "a favor",
+        "tema": "Justicia",
+        "dijo": "Respaldó la moción de Ramos Wilcas sin efecto jurisdiccional.",
+        "proyecto": "",
+        "id": "senado:cutipa ccama"
+      },
+      {
+        "orador": "Ramos",
+        "cargo": "legislador",
+        "sobre": "grupo de trabajo sobre protestas",
+        "postura": "a favor",
+        "tema": "Justicia",
+        "dijo": "Citó el informe de la Defensoría sobre los fallecidos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Jorge Gavidia",
+        "cargo": "legislador",
+        "sobre": "subjetividad en la búsqueda de justicia",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Advirtió que la subjetividad política desvirtuaría la comisión.",
+        "proyecto": "",
+        "id": "senado:gavidia rodriguez"
+      },
+      {
+        "orador": "Juan Antonio Fernández Geri",
+        "cargo": "invitado",
+        "sobre": "gestión de la Autoridad Nacional de Control",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Informó sobre el trabajo de la Autoridad Nacional de Control.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Maraví",
+        "cargo": "legislador",
+        "sobre": "Agradecimiento a especialistas del Consejo Consultivo",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Mencionó la solicitud de agradecimiento para los especialistas del Consejo Consultivo.",
+        "proyecto": "",
+        "id": "senado:maravi olarte"
+      },
+      {
+        "orador": "Juan Antonio Fernández Geri",
+        "cargo": "invitado",
+        "sobre": "Gestión de la Autoridad Nacional de Control",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Expuso la gestión de la Autoridad Nacional de Control y sus limitaciones.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Akinaga",
+        "cargo": "legislador",
+        "sobre": "Efectividad del control disciplinario",
+        "postura": "pregunta",
+        "tema": "Justicia",
+        "dijo": "Preguntó cómo garantizar un control disciplinario efectivo con la capacidad actual.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Juan Antonio Fernández Geri",
+        "cargo": "invitado",
+        "sobre": "Capacidad operativa para el control",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Explicó que la falta de recursos limita la capacidad de control.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Vasquez",
+        "cargo": "legislador",
+        "sobre": "Denuncias de falta de integridad",
+        "postura": "pregunta",
+        "tema": "Justicia",
+        "dijo": "Cuestionó la legitimidad del jefe de control por las denuncias recibidas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Juan Antonio Fernández Geri",
+        "cargo": "invitado",
+        "sobre": "Respuesta ante denuncias de integridad",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Defendió su integridad ante las denuncias sobre sus diplomados.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Fernández Geri",
+        "cargo": "ministro o autoridad",
+        "sobre": "Gestión de la Autoridad Nacional de Control",
+        "postura": "a favor",
+        "tema": "Justicia",
+        "dijo": "Defendió la descentralización de la gestión del Ministerio Público.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Fernández Geri",
+        "cargo": "ministro o autoridad",
+        "sobre": "Modelo de integridad de la PCM",
+        "postura": "a favor",
+        "tema": "Justicia",
+        "dijo": "Explicó el avance de las acciones del plan de integridad.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Alejandro Guinaj",
+        "cargo": "legislador",
+        "sobre": "Gasto en papel de la autoridad",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Cuestionó el elevado gasto en papel de la autoridad.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Fernández Geri",
+        "cargo": "ministro o autoridad",
+        "sobre": "Gasto en papel de la gestión anterior",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Aclaró que el presupuesto de papel fue de gestiones anteriores.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Marta Chávez",
+        "cargo": "legislador",
+        "sobre": "Concurso de fiscales de control",
+        "postura": "pregunta",
+        "tema": "Justicia",
+        "dijo": "Preguntó por la falta de concursos para fiscales de control.",
+        "proyecto": "",
+        "id": "senado:chavez cossio"
+      },
+      {
+        "orador": "Fernández Geri",
+        "cargo": "ministro o autoridad",
+        "sobre": "Presupuesto y personal de la fiscalía",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Explicó las causas del déficit presupuestal en la institución.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Marta Chávez",
+        "cargo": "legislador",
+        "sobre": "Origen de los fondos de la autoridad",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Señaló que los fondos provienen de la Contraloría.",
+        "proyecto": "",
+        "id": "senado:chavez cossio"
+      },
+      {
+        "orador": "Fernández Geri",
+        "cargo": "ministro o autoridad",
+        "sobre": "Apoyo de la Contraloría General",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Informó que el apoyo de la Contraloría fue suspendido.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Roberto Alejandro Palacios-Bram",
+        "cargo": "invitado",
+        "sobre": "Gestión de la autoridad de control judicial",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Expuso los avances y retos de la autoridad de control.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Mirta Vásquez",
+        "cargo": "legislador",
+        "sobre": "Resolución de casos disciplinarios",
+        "postura": "pregunta",
+        "tema": "Justicia",
+        "dijo": "Consultó sobre la duración de los procedimientos disciplinarios.",
+        "proyecto": "",
+        "id": "senado:vasquez chuquilin"
+      },
+      {
+        "orador": "Marta Chávez",
+        "cargo": "legislador",
+        "sobre": "Control difuso y sanciones",
+        "postura": "pregunta",
+        "tema": "Justicia",
+        "dijo": "Preguntó sobre la relación entre control difuso y sanciones.",
+        "proyecto": "",
+        "id": "senado:chavez cossio"
+      },
+      {
+        "orador": "Jorge Gavidia",
+        "cargo": "legislador",
+        "sobre": "Gestión digital en el control",
+        "postura": "pregunta",
+        "tema": "Justicia",
+        "dijo": "Preguntó sobre la utilidad de la gestión digital.",
+        "proyecto": "",
+        "id": "senado:gavidia rodriguez"
+      },
+      {
+        "orador": "Roberto Alejandro Palacios-Bram",
+        "cargo": "invitado",
+        "sobre": "Modelos predictivos y propuesta del Defensor",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Explicó el uso de modelos predictivos en la gestión.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Alejandro Guinaj",
+        "cargo": "legislador",
+        "sobre": "Suspensión de un juez",
+        "postura": "pregunta",
+        "tema": "Justicia",
+        "dijo": "Expresó preocupación por la suspensión de un juez.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Roberto Alejandro Valacios Bram",
+        "cargo": "invitado",
+        "sobre": "Uso de herramientas digitales en la gestión",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Informó sobre el uso de herramientas digitales para la gestión judicial.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Roberto Alejandro Valacios Bram",
+        "cargo": "invitado",
+        "sobre": "Proyecto de ley del Defensor del Pueblo",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Comentó que el proyecto de ley requiere un mayor análisis.",
+        "proyecto": "Defensor del Pueblo",
+        "id": null
+      },
+      {
+        "orador": "Roberto Alejandro Valacios Bram",
+        "cargo": "invitado",
+        "sobre": "Auditoría e inconductas en los juzgados",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Informó sobre la auditoría e investigaciones por inconductas en juzgados.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Roberto Alejandro Valacios Bram",
+        "cargo": "invitado",
+        "sobre": "Plazos de procedimientos administrativos disciplinarios",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Indicó que los procedimientos administrativos duran catorce meses en promedio.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Roberto Alejandro Valacios Bram",
+        "cargo": "invitado",
+        "sobre": "Acceso público a sanciones de magistrados",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Mencionó la importancia de que la población acceda a la información.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Roberto Alejandro Valacios Bram",
+        "cargo": "invitado",
+        "sobre": "Independencia e integridad del Poder Judicial",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Defendió una visión integral de la independencia y la imparcialidad.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Roberto Alejandro Valacios Bram",
+        "cargo": "invitado",
+        "sobre": "Información de la Junta Nacional de Justicia",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Explicó que la Autoridad Nacional de Control realiza las investigaciones.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Roberto Alejandro Valacios Bram",
+        "cargo": "invitado",
+        "sobre": "Aplicación de la Constitución por jueces",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Recordó que los jueces deben aplicar la Constitución y la ley.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Alejandro Aguinaga",
+        "cargo": "legislador",
+        "sobre": "Situación del juez Rafael Martínez Vargas",
+        "postura": "pregunta",
+        "tema": "Justicia",
+        "dijo": "Preguntó sobre la situación actual del juez Rafael Martínez Vargas.",
+        "proyecto": "",
+        "id": "senado:aguinaga recuenco"
+      },
+      {
+        "orador": "Roberto Alejandro Valacios Bram",
+        "cargo": "invitado",
+        "sobre": "Situación del juez Rafael Martínez Vargas",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Prometió verificar la información sobre el caso del juez mencionado.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=4D9U7qdV0bY"
+  },
+  "TuiZAwqngDw": {
+    "fecha": "2026-10-01",
+    "organo": "Pleno de la Asamblea",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Esteban Torres",
+        "cargo": "legislador",
+        "sobre": "Reforma a la Ley de Inquilinato",
+        "postura": "comenta",
+        "tema": "Inmobiliario",
+        "dijo": "Comentó los alcances de la Ley de Inquilinato.",
+        "proyecto": "Ley de Inquilinato",
+        "id": "EC:torres cobo"
+      },
+      {
+        "orador": "Samuel Saleriel",
+        "cargo": "legislador",
+        "sobre": "Reforma a la Ley de Inquilinato",
+        "postura": "a favor",
+        "tema": "Inmobiliario",
+        "dijo": "Defendió la modernización de la Ley de Inquilinato.",
+        "proyecto": "Ley de Inquilinato",
+        "id": null
+      },
+      {
+        "orador": "Rosa Torres",
+        "cargo": "legislador",
+        "sobre": "Reforma a la Ley de Inquilinato",
+        "postura": "a favor",
+        "tema": "Inmobiliario",
+        "dijo": "Comentó la regulación de la Ley de Inquilinato.",
+        "proyecto": "Ley de Inquilinato",
+        "id": "EC:torres cadena"
+      },
+      {
+        "orador": "Marco Olmedo",
+        "cargo": "legislador",
+        "sobre": "Reforma a la Ley de Inquilinato",
+        "postura": "a favor",
+        "tema": "Inmobiliario",
+        "dijo": "Respaldó la modernización de la Ley de Inquilinato.",
+        "proyecto": "Ley de Inquilinato",
+        "id": "EC:olmedo arias"
+      },
+      {
+        "orador": "Lucía Jaramillo",
+        "cargo": "legislador",
+        "sobre": "Cooperación contra el crimen organizado",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso fortalecer la cooperación internacional contra criminales.",
+        "proyecto": "",
+        "id": "EC:jaramillo zurita lucia"
+      },
+      {
+        "orador": "Javier Ordóñez",
+        "cargo": "legislador",
+        "sobre": "Cobros en el peaje Guayasamín",
+        "postura": "propone",
+        "tema": "Transporte",
+        "dijo": "Denunció cobros injustificados en el peaje Guayasamín.",
+        "proyecto": "",
+        "id": "EC:ordonez fuentes"
+      },
+      {
+        "orador": "Mónica Salazar",
+        "cargo": "legislador",
+        "sobre": "Día de la identidad Montubia",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Comentó la importancia de la identidad montubia.",
+        "proyecto": "",
+        "id": "EC:salazar hidalgo"
+      },
+      {
+        "orador": "Mónica Salazar",
+        "cargo": "legislador",
+        "sobre": "Identidad y derechos montubios",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Defendió la importancia de la identidad y derechos del pueblo montubio.",
+        "proyecto": "",
+        "id": "EC:salazar hidalgo"
+      },
+      {
+        "orador": "Gabriela García Ureta",
+        "cargo": "invitado",
+        "sobre": "Protección y dignificación del pueblo montubio",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Defendió la dignificación y protección legal del pueblo montubio.",
+        "proyecto": "Anteproyecto Ley Pueblo Montubio",
+        "id": null
+      },
+      {
+        "orador": "Marco Olmedo",
+        "cargo": "legislador",
+        "sobre": "Reforma de la Ley de Inquilinato",
+        "postura": "a favor",
+        "tema": "Inmobiliario",
+        "dijo": "Respaldó la propuesta para establecer reglas claras en los arrendamientos.",
+        "proyecto": "Ley de Inquilinato",
+        "id": "EC:olmedo arias"
+      },
+      {
+        "orador": "Samuel Celeri",
+        "cargo": "legislador",
+        "sobre": "Reforma de la Ley de Inquilinato",
+        "postura": "con observaciones",
+        "tema": "Inmobiliario",
+        "dijo": "Propuso incluir protección para inquilinos en situación de vulnerabilidad.",
+        "proyecto": "Ley de Inquilinato",
+        "id": "EC:celleri gomez"
+      },
+      {
+        "orador": "Mariana Junguite",
+        "cargo": "legislador",
+        "sobre": "Reforma de la Ley de Inquilinato",
+        "postura": "con observaciones",
+        "tema": "Inmobiliario",
+        "dijo": "Propuso reconocer la rebaja de canon desde la notificación judicial.",
+        "proyecto": "Ley de Inquilinato",
+        "id": null
+      },
+      {
+        "orador": "Catherine Pacheco",
+        "cargo": "legislador",
+        "sobre": "Reforma de la Ley de Inquilinato",
+        "postura": "a favor",
+        "tema": "Inmobiliario",
+        "dijo": "Defendió la necesidad de formalizar contratos de arrendamiento por escrito.",
+        "proyecto": "Ley de Inquilinato",
+        "id": "EC:pacheco machuca"
+      },
+      {
+        "orador": "Luis Fernando Molina",
+        "cargo": "legislador",
+        "sobre": "Reforma de la Ley de Inquilinato",
+        "postura": "propone",
+        "tema": "Inmobiliario",
+        "dijo": "Propuso retornar el proyecto a la comisión para su perfeccionamiento.",
+        "proyecto": "Ley de Inquilinato",
+        "id": "EC:molina onofa"
+      },
+      {
+        "orador": "Esteban Torres",
+        "cargo": "legislador",
+        "sobre": "Reforma de la Ley de Inquilinato",
+        "postura": "a favor",
+        "tema": "Inmobiliario",
+        "dijo": "Defendió el uso de la mediación en conflictos de arrendamiento.",
+        "proyecto": "Ley de Inquilinato",
+        "id": "EC:torres cobo"
+      },
+      {
+        "orador": "Luis Fernando Molina",
+        "cargo": "legislador",
+        "sobre": "retorno del proyecto a la comisión",
+        "postura": "propone",
+        "tema": "Inmobiliario",
+        "dijo": "Propuso que el proyecto retorne a la Comisión de Justicia para ampliar el debate.",
+        "proyecto": "Ley de Inquilinato",
+        "id": "EC:molina onofa"
+      },
+      {
+        "orador": "Esteban Torres",
+        "cargo": "legislador",
+        "sobre": "regulación de arrendamientos y desahucios",
+        "postura": "a favor",
+        "tema": "Inmobiliario",
+        "dijo": "Defendió la necesidad de regular los arrendamientos y los desahucios.",
+        "proyecto": "Ley de Inquilinato",
+        "id": "EC:torres cobo"
+      },
+      {
+        "orador": "Mónica Salazar",
+        "cargo": "legislador",
+        "sobre": "observaciones al proyecto de ley",
+        "postura": "con observaciones",
+        "tema": "Inmobiliario",
+        "dijo": "Pidió la revisión de cinco observaciones técnicas para mejorar el proyecto.",
+        "proyecto": "Ley de Inquilinato",
+        "id": "EC:salazar hidalgo"
+      },
+      {
+        "orador": "Maite Levi",
+        "cargo": "legislador",
+        "sobre": "observaciones para fortalecer la ley",
+        "postura": "con observaciones",
+        "tema": "Inmobiliario",
+        "dijo": "Propuso cambios técnicos para fortalecer el proyecto de ley de inquilinato.",
+        "proyecto": "Ley de Inquilinato",
+        "id": "EC:levi cabello"
+      },
+      {
+        "orador": "Ana María Rafa",
+        "cargo": "legislador",
+        "sobre": "reformas a la ley de inquilinato",
+        "postura": "con observaciones",
+        "tema": "Inmobiliario",
+        "dijo": "Pidió que el proyecto retorne a la comisión para incluir al sector rural.",
+        "proyecto": "Ley de Inquilinato",
+        "id": null
+      },
+      {
+        "orador": "Juan Gonzaga",
+        "cargo": "legislador",
+        "sobre": "derechos de arrendadores y arrendatarios",
+        "postura": "con observaciones",
+        "tema": "Inmobiliario",
+        "dijo": "Propuso que los municipios tengan competencias en la fijación de cánones.",
+        "proyecto": "Ley de Inquilinato",
+        "id": "EC:gonzaga salazar"
+      },
+      {
+        "orador": "Ana Herrera",
+        "cargo": "legislador",
+        "sobre": "modernización de la ley de inquilinato",
+        "postura": "a favor",
+        "tema": "Inmobiliario",
+        "dijo": "Respaldó la modernización de la ley de inquilinato para el país.",
+        "proyecto": "Ley de Inquilinato",
+        "id": "EC:herrera gomez"
+      },
+      {
+        "orador": "José Betjaramillo",
+        "cargo": "legislador",
+        "sobre": "detalles técnicos de la reforma",
+        "postura": "comenta",
+        "tema": "Inmobiliario",
+        "dijo": "Propuso reglas claras para la garantía y el inventario de bienes.",
+        "proyecto": "Ley de Inquilinato",
+        "id": null
+      },
+      {
+        "orador": "Rosa Torres",
+        "cargo": "legislador",
+        "sobre": "retorno del proyecto a la comisión",
+        "postura": "propone",
+        "tema": "Inmobiliario",
+        "dijo": "Solicitó que el proyecto regrese a la comisión para incorporar sugerencias.",
+        "proyecto": "Ley de Inquilinato",
+        "id": "EC:torres cadena"
+      },
+      {
+        "orador": "Adrián Castro",
+        "cargo": "legislador",
+        "sobre": "día nacional contra el crimen organizado",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso declarar el día nacional de la lucha contra el crimen organizado.",
+        "proyecto": "",
+        "id": "EC:castro piedra"
+      },
+      {
+        "orador": "Noemía Cabrera",
+        "cargo": "legislador",
+        "sobre": "crisis de inseguridad en El Oro",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Denunció la falta de resultados ante la crisis de seguridad provincial.",
+        "proyecto": "",
+        "id": "EC:cabrera chacon"
+      },
+      {
+        "orador": "Diana Hacome",
+        "cargo": "legislador",
+        "sobre": "resultados de operativos de seguridad",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Respaldó los resultados obtenidos durante el reciente toque de queda.",
+        "proyecto": "",
+        "id": "EC:jacome silva"
+      },
+      {
+        "orador": "Mónica Lehmann",
+        "cargo": "legislador",
+        "sobre": "gestión del Consejo de la Judicatura",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Cuestionó la eliminación de las unidades judiciales especializadas en crimen.",
+        "proyecto": "",
+        "id": "EC:aleman marmol"
+      },
+      {
+        "orador": "Diana Hacome",
+        "cargo": "legislador",
+        "sobre": "resultados del toque de queda y decomisos",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Informó sobre las personas aprehendidas y la droga decomisada durante el toque de queda.",
+        "proyecto": "",
+        "id": "EC:jacome silva"
+      },
+      {
+        "orador": "Mónica Lehmann",
+        "cargo": "legislador",
+        "sobre": "declaratoria del día contra el crimen organizado",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Cuestionó la declaratoria debido a la supresión de unidades judiciales especializadas en corrupción.",
+        "proyecto": "",
+        "id": "EC:aleman marmol"
+      },
+      {
+        "orador": "Adrián Castro",
+        "cargo": "legislador",
+        "sobre": "declaratoria del día contra el crimen organizado",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso declarar el 15 de noviembre como día nacional contra el crimen organizado.",
+        "proyecto": "",
+        "id": "EC:castro piedra"
+      },
+      {
+        "orador": "Héctor Vaya Dares",
+        "cargo": "legislador",
+        "sobre": "cobros indebidos en el peaje Guayasamín",
+        "postura": "en contra",
+        "tema": "Transporte",
+        "dijo": "Denunció cobros indebidos y posibles irregularidades en el peaje Osvaldo Guayasamín.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Viviana Veloz",
+        "cargo": "legislador",
+        "sobre": "fiscalización a los gobiernos autónomos descentralizados",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Rechazó la competencia de la Asamblea para fiscalizar a los gobiernos autónomos descentralizados.",
+        "proyecto": "",
+        "id": "EC:veloz ramirez"
+      },
+      {
+        "orador": "Javier Ordóñez",
+        "cargo": "legislador",
+        "sobre": "fiscalización de cobros en el peaje Guayasamín",
+        "postura": "propone",
+        "tema": "Transporte",
+        "dijo": "Propuso fiscalizar los presuntos cobros duplicados en el peaje Osvaldo Guayasamín.",
+        "proyecto": "",
+        "id": "EC:ordonez fuentes"
+      },
+      {
+        "orador": "Samuel Celleri",
+        "cargo": "legislador",
+        "sobre": "reformas a la Ley de Inquilinato",
+        "postura": "comenta",
+        "tema": "Inmobiliario",
+        "dijo": "Explicó que la reforma busca modernizar la Ley de Inquilinato y equilibrar derechos.",
+        "proyecto": "Ley de Inquilinato",
+        "id": "EC:celleri gomez"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=TuiZAwqngDw"
   }
 }
