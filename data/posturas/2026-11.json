@@ -5502,5 +5502,413 @@
       }
     ],
     "url": "https://www.facebook.com/watch/?v=1674440954035237"
+  },
+  "HuxETV7qCoM": {
+    "fecha": "2026-11-10",
+    "organo": "Comisión de Defensa Nacional",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Abelardo Ramayo",
+        "cargo": "invitado",
+        "sobre": "opinión técnica sobre PL 067",
+        "postura": "comenta",
+        "tema": "Infraestructura",
+        "dijo": "Informó que Indecopi no tiene competencia para opinar sobre el proyecto.",
+        "proyecto": "PL 067-2026-2031-CD",
+        "id": null
+      },
+      {
+        "orador": "Fidel Hernández",
+        "cargo": "invitado",
+        "sobre": "opinión técnica sobre PL 067",
+        "postura": "con observaciones",
+        "tema": "Infraestructura",
+        "dijo": "Propuso suprimir un artículo para evitar duplicidad de funciones.",
+        "proyecto": "PL 067-2026-2031-CD",
+        "id": null
+      },
+      {
+        "orador": "José Luis Gustavante",
+        "cargo": "invitado",
+        "sobre": "certificación de competencias en gestión de riesgos",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Informó sobre el proceso de certificación de competencias profesionales.",
+        "proyecto": "PL 169-2026-2031-CD",
+        "id": null
+      },
+      {
+        "orador": "Kispec Candia Luis",
+        "cargo": "legislador",
+        "sobre": "proceso de certificación de competencias",
+        "postura": "pregunta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Preguntó por qué pocos profesionales lograron la certificación.",
+        "proyecto": "PL 169-2026-2031-CD",
+        "id": "diputados:quispe candia"
+      },
+      {
+        "orador": "Espinosa Wilka Edwin",
+        "cargo": "legislador",
+        "sobre": "oferta de profesionales certificados",
+        "postura": "pregunta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Cuestionó la capacidad estatal para ofrecer suficientes profesionales.",
+        "proyecto": "PL 169-2026-2031-CD",
+        "id": null
+      },
+      {
+        "orador": "Patiño Urcoana",
+        "cargo": "legislador",
+        "sobre": "capacitación en zonas alejadas",
+        "postura": "pregunta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Preguntó sobre capacitaciones para autoridades en zonas alejadas.",
+        "proyecto": "PL 169-2026-2031-CD",
+        "id": "diputados:patino urco"
+      },
+      {
+        "orador": "Rosanda Layser",
+        "cargo": "legislador",
+        "sobre": "diagnóstico de la propuesta",
+        "postura": "pregunta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Pidió información actualizada sobre los responsables municipales.",
+        "proyecto": "PL 169-2026-2031-CD",
+        "id": null
+      },
+      {
+        "orador": "Carlos Dominguez",
+        "cargo": "legislador",
+        "sobre": "importancia de las opiniones técnicas",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Respaldó la importancia de las opiniones técnicas recibidas.",
+        "proyecto": "PL 169-2026-2031-CD",
+        "id": "diputados:dominguez herrera"
+      },
+      {
+        "orador": "José Luis Gustavante",
+        "cargo": "invitado",
+        "sobre": "metodología de certificación de competencias",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Informó sobre la estructura de los estándares de competencia.",
+        "proyecto": "PL 169-2026-2031-CD",
+        "id": null
+      },
+      {
+        "orador": "Rosalba Liza",
+        "cargo": "legislador",
+        "sobre": "propuesta legislativa de gestión de riesgos",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Cuestionó si la propuesta legislativa ayuda a cerrar la brecha de profesionales.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=HuxETV7qCoM"
+  },
+  "XlAKPUYLHIE": {
+    "fecha": "2026-11-09",
+    "organo": "Pleno de la Asamblea",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Kiara Colósimo",
+        "cargo": "invitado",
+        "sobre": "Experiencia italiana contra el crimen organizado",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso aplicar penas fuertes y la confiscación de bienes.",
+        "proyecto": "Ley antimafias",
+        "id": null
+      },
+      {
+        "orador": "Giovanni Daoli",
+        "cargo": "invitado",
+        "sobre": "Lucha contra la mafia transnacional",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Respaldó la necesidad de tipificar delitos y aumentar penas.",
+        "proyecto": "Ley antimafias",
+        "id": null
+      },
+      {
+        "orador": "Georgio Sili",
+        "cargo": "invitado",
+        "sobre": "Cooperación internacional contra la criminalidad",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso trabajar conjuntamente para combatir los desafíos globales.",
+        "proyecto": "Ley antimafias",
+        "id": null
+      },
+      {
+        "orador": "Andrés Castillo",
+        "cargo": "legislador",
+        "sobre": "Reformas de la Ley Antimafias",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Defendió el incremento de penas y la persecución de reincidentes.",
+        "proyecto": "Ley antimafias",
+        "id": "EC:castillo maldonado"
+      },
+      {
+        "orador": "Inés Alarcón",
+        "cargo": "legislador",
+        "sobre": "Proyecto de Ley Antimafias",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Defendió la ley para asfixiar financieramente a las mafias.",
+        "proyecto": "Ley antimafias",
+        "id": "EC:alarcon bueno"
+      },
+      {
+        "orador": "Michel Mancheno",
+        "cargo": "legislador",
+        "sobre": "Protección de familias ante el crimen",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Defendió la ley para recuperar el control territorial.",
+        "proyecto": "Ley antimafias",
+        "id": "EC:mancheno davila"
+      },
+      {
+        "orador": "Inés Alarcón",
+        "cargo": "legislador",
+        "sobre": "El informe de minoría de la oposición",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Denunció la complicidad de la oposición con las mafias.",
+        "proyecto": "Ley antimafias",
+        "id": "EC:alarcon bueno"
+      },
+      {
+        "orador": "Michel Manchenda Dávila",
+        "cargo": "legislador",
+        "sobre": "El proyecto de ley antimafias",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Defendió el proyecto de ley antimafias.",
+        "proyecto": "Ley antimafias",
+        "id": "EC:mancheno davila"
+      },
+      {
+        "orador": "Carolina Dueñas",
+        "cargo": "legislador",
+        "sobre": "El proyecto de ley antimafias",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Respaldó el proyecto de ley antimafias.",
+        "proyecto": "Ley antimafias",
+        "id": "EC:duenas palma"
+      },
+      {
+        "orador": "Sergio Peña",
+        "cargo": "legislador",
+        "sobre": "El proyecto de ley antimafias",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Respaldó el proyecto de ley antimafias.",
+        "proyecto": "Ley antimafias",
+        "id": "EC:pena veloz"
+      },
+      {
+        "orador": "Alfredo Serrano",
+        "cargo": "legislador",
+        "sobre": "La acumulación de penas en la ley",
+        "postura": "con observaciones",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso que la acumulación de penas inicie desde el segundo delito.",
+        "proyecto": "Ley antimafias",
+        "id": "EC:serrano valladares"
+      },
+      {
+        "orador": "Alfredo Cerrado",
+        "cargo": "legislador",
+        "sobre": "acumulación de penas",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Respaldó la acumulación de penas para combatir el miedo.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "José Nango",
+        "cargo": "legislador",
+        "sobre": "almacenamiento de combustible en la Amazonía",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Defendió el derecho al almacenamiento de combustible en la Amazonía.",
+        "proyecto": "",
+        "id": "EC:nango cuji"
+      },
+      {
+        "orador": "Isaac Solano",
+        "cargo": "legislador",
+        "sobre": "ley antimafias",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Apoyó la ley que castiga a quienes financian mafias.",
+        "proyecto": "",
+        "id": "EC:solano calle"
+      },
+      {
+        "orador": "Kevín Gallardo",
+        "cargo": "legislador",
+        "sobre": "ley antimafias",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Defendió la ley para proteger a los desplazados ecuatorianos.",
+        "proyecto": "",
+        "id": "EC:gallardo ruiz"
+      },
+      {
+        "orador": "Juan Gonzaga",
+        "cargo": "legislador",
+        "sobre": "endurecimiento de penas y delitos hidrocarburíferos",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso establecer penas más severas contra la violencia criminal.",
+        "proyecto": "",
+        "id": "EC:gonzaga salazar"
+      },
+      {
+        "orador": "Yajaira Urresta",
+        "cargo": "legislador",
+        "sobre": "informe de la comisión de seguridad",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Felicitó a la comisión de seguridad por su intenso trabajo.",
+        "proyecto": "",
+        "id": "EC:urresta guzman"
+      },
+      {
+        "orador": "Natalie Farín",
+        "cargo": "legislador",
+        "sobre": "extinción de dominio",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Resaltó la eficacia de la extinción de dominio contra criminales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Natalie Farinango",
+        "cargo": "legislador",
+        "sobre": "proyecto de ley antimafias",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Respaldó las herramientas legales contra las organizaciones criminales.",
+        "proyecto": "Ley antimafias",
+        "id": "EC:farinango delgado"
+      },
+      {
+        "orador": "Marco Olmedo",
+        "cargo": "legislador",
+        "sobre": "proyecto de ley antimafias",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Defendió el ataque a las estructuras financieras del crimen organizado.",
+        "proyecto": "Ley antimafias",
+        "id": "EC:olmedo arias"
+      },
+      {
+        "orador": "Alex Morán",
+        "cargo": "legislador",
+        "sobre": "proyecto de ley antimafias",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Apoyó el endurecimiento de penas contra el tráfico de combustible.",
+        "proyecto": "Ley antimafias",
+        "id": "EC:moran galarza"
+      },
+      {
+        "orador": "Rosa Torres",
+        "cargo": "legislador",
+        "sobre": "proyecto de ley antimafias",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Respaldó la ley para combatir la cadena de delitos criminales.",
+        "proyecto": "Ley antimafias",
+        "id": "EC:torres cadena"
+      },
+      {
+        "orador": "Fabiola San Martín",
+        "cargo": "legislador",
+        "sobre": "proyecto de ley antimafias",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Defendió la desarticulación de organizaciones criminales y sus finanzas.",
+        "proyecto": "Ley antimafias",
+        "id": "EC:sanmartin parra"
+      },
+      {
+        "orador": "Jorge Chamba",
+        "cargo": "legislador",
+        "sobre": "proyecto de ley antimafias",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Apoyó el proyecto para devolver la paz a los ciudadanos.",
+        "proyecto": "Ley antimafias",
+        "id": "EC:chamba cabanilla"
+      },
+      {
+        "orador": "Andrés Castillo",
+        "cargo": "legislador",
+        "sobre": "proyecto de ley antimafias",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Defendió la necesidad de voluntad política contra las mafias.",
+        "proyecto": "Ley antimafias",
+        "id": "EC:castillo maldonado"
+      },
+      {
+        "orador": "Andrés Castillo",
+        "cargo": "legislador",
+        "sobre": "proyecto de ley antimafias",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Defendió la ley antimafias para fortalecer la lucha contra el crimen organizado.",
+        "proyecto": "Ley antimafias",
+        "id": "EC:castillo maldonado"
+      },
+      {
+        "orador": "Inés Alarcón",
+        "cargo": "legislador",
+        "sobre": "aprobación de la ley antimafias",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso la aprobación de la ley antimafias para combatir la inseguridad.",
+        "proyecto": "Ley antimafias",
+        "id": "EC:alarcon bueno"
+      },
+      {
+        "orador": "Kiara Colosimo",
+        "cargo": "invitado",
+        "sobre": "experiencia italiana contra la mafia",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Informó sobre las estrategias y leyes utilizadas por Italia contra las mafias.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Kiara Colossimo",
+        "cargo": "invitado",
+        "sobre": "Cooperación internacional contra la mafia",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Respaldó la cooperación entre Italia y Ecuador para combatir la mafia.",
+        "proyecto": "ley antimafia",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=XlAKPUYLHIE"
   }
 }
