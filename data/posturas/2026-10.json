@@ -29228,5 +29228,402 @@
       }
     ],
     "url": "https://www.facebook.com/watch/?v=1050068857995425"
+  },
+  "fb_1843406376647627": {
+    "fecha": "2026-10-07",
+    "organo": "Comisión de Desarrollo Económico",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Juan Sebastián Alviar",
+        "cargo": "invitado",
+        "sobre": "Incompatibilidad de la mediación en el proyecto",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Denunció que la mediación es incompatible con el proyecto de ley.",
+        "proyecto": "PL de concurso preventivo",
+        "id": null
+      },
+      {
+        "orador": "Juan Acubio López",
+        "cargo": "invitado",
+        "sobre": "Alivio financiero para zonas de desastre",
+        "postura": "propone",
+        "tema": "Comercio",
+        "dijo": "Propuso un mecanismo de condonación para zonas afectadas por terremotos.",
+        "proyecto": "PL de concurso preventivo",
+        "id": null
+      },
+      {
+        "orador": "Fania López",
+        "cargo": "legislador",
+        "sobre": "Resabos económicos en el cantón Chone",
+        "postura": "pregunta",
+        "tema": "Comercio",
+        "dijo": "Preguntó sobre los problemas económicos que afectan al sector comercial.",
+        "proyecto": "PL de concurso preventivo",
+        "id": "EC:lopez pico"
+      },
+      {
+        "orador": "Fanía López",
+        "cargo": "legislador",
+        "sobre": "continuidad empresarial en Chone",
+        "postura": "pregunta",
+        "tema": "Comercio",
+        "dijo": "Preguntó sobre los resabos económicos que afectan al sector comercial en Chone.",
+        "proyecto": "",
+        "id": "EC:lopez pico"
+      },
+      {
+        "orador": "Juan Vicente",
+        "cargo": "invitado",
+        "sobre": "reactivación del sector comercial y agrícola",
+        "postura": "propone",
+        "tema": "Comercio",
+        "dijo": "Propuso incentivos de capital y plazos de pago para reactivar la economía en Chone.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Fanía López",
+        "cargo": "legislador",
+        "sobre": "seguridad jurídica del artículo 49",
+        "postura": "pregunta",
+        "tema": "Justicia",
+        "dijo": "Preguntó sobre los riesgos procesales de la redacción actual del artículo 49.",
+        "proyecto": "",
+        "id": "EC:lopez pico"
+      },
+      {
+        "orador": "Juan Sebastián Alvear",
+        "cargo": "invitado",
+        "sobre": "ejecución de acuerdos de mediación",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Explicó la inejecutabilidad de los acuerdos de mediación frente a terceros no firmantes.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1843406376647627"
+  },
+  "fb_1415529696662818": {
+    "fecha": "2026-10-06",
+    "organo": "Comisión de Seguridad Integral",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Ghandi Vela",
+        "cargo": "invitado",
+        "sobre": "observaciones a la Ley anti-mafias",
+        "postura": "con observaciones",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso ajustes técnicos a la Ley anti-mafias.",
+        "proyecto": "Ley anti-mafias",
+        "id": null
+      },
+      {
+        "orador": "Delegados de la Superintendencia de Ordenamiento Territorial",
+        "cargo": "invitado",
+        "sobre": "tipificación de delitos de tráfico de tierras",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso nuevos tipos penales sobre el tráfico de tierras.",
+        "proyecto": "Ley anti-mafias",
+        "id": null
+      },
+      {
+        "orador": "Carolina Dueñas",
+        "cargo": "legislador",
+        "sobre": "extorsión y venta ilegal de terrenos",
+        "postura": "pregunta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Preguntó cómo evitar la venta ilegal de terrenos.",
+        "proyecto": "",
+        "id": "EC:duenas palma"
+      },
+      {
+        "orador": "Ambrán",
+        "cargo": "legislador",
+        "sobre": "denuncias contra gobiernos locales",
+        "postura": "pregunta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Preguntó sobre denuncias de la Superintendencia contra gobiernos locales.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1415529696662818"
+  },
+  "2T6CGbrg-Ec": {
+    "fecha": "2026-10-05",
+    "organo": "Comisión de Medio Ambiente",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Pilar Zulca Castillo",
+        "cargo": "legislador",
+        "sobre": "Contaminación del río Lampaya",
+        "postura": "en contra",
+        "tema": "Ambiente",
+        "dijo": "Denunció la contaminación del río Lampaya por la minería.",
+        "proyecto": "",
+        "id": "diputados:sulca castillo"
+      },
+      {
+        "orador": "Yaqueda",
+        "cargo": "legislador",
+        "sobre": "Protección de Candamo",
+        "postura": "propone",
+        "tema": "Ambiente",
+        "dijo": "Propuso invitar a ministros por el convenio de gas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ayala",
+        "cargo": "legislador",
+        "sobre": "Gestión ambiental en fábricas",
+        "postura": "pregunta",
+        "tema": "Ambiente",
+        "dijo": "Preguntó sobre las multas de la empresa Tenda.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ivana Fisher Bastini",
+        "cargo": "ministro o autoridad",
+        "sobre": "Plan de fiscalización ambiental",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Informó sobre el plan de fiscalización regional.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Yaqueda",
+        "cargo": "legislador",
+        "sobre": "Monitoreo de polvo en Salaverry",
+        "postura": "pregunta",
+        "tema": "Ambiente",
+        "dijo": "Preguntó por la ubicación de las estaciones de monitoreo.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Vallarta",
+        "cargo": "legislador",
+        "sobre": "Derrame en La Pampilla",
+        "postura": "pregunta",
+        "tema": "Ambiente",
+        "dijo": "Preguntó sobre el derrame en La Pampilla.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Poma",
+        "cargo": "legislador",
+        "sobre": "Situación de la Laguna de Paca",
+        "postura": "pregunta",
+        "tema": "Ambiente",
+        "dijo": "Cuestionó la capacidad de carga de la laguna.",
+        "proyecto": "",
+        "id": "diputados:poma huamani"
+      },
+      {
+        "orador": "Silopu",
+        "cargo": "legislador",
+        "sobre": "Contaminación en Sullana",
+        "postura": "pregunta",
+        "tema": "Ambiente",
+        "dijo": "Pidió información sobre la contaminación en Sullana.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Cabrera",
+        "cargo": "legislador",
+        "sobre": "Eficacia de medidas de fiscalización",
+        "postura": "propone",
+        "tema": "Ambiente",
+        "dijo": "Propuso que se remita información por escrito.",
+        "proyecto": "",
+        "id": "diputados:cabrera nieto"
+      },
+      {
+        "orador": "Samanes",
+        "cargo": "legislador",
+        "sobre": "Contaminación sonora y visual",
+        "postura": "pregunta",
+        "tema": "Ambiente",
+        "dijo": "Pidió fiscalizar la contaminación sonora urbana.",
+        "proyecto": "",
+        "id": "diputados:samanez gonzales vigil"
+      },
+      {
+        "orador": "Vendaño",
+        "cargo": "legislador",
+        "sobre": "Impacto eléctrico en aves",
+        "postura": "pregunta",
+        "tema": "Ambiente",
+        "dijo": "Preguntó sobre el impacto eléctrico en aves.",
+        "proyecto": "",
+        "id": "diputados:avendano vilca"
+      },
+      {
+        "orador": "Pérez",
+        "cargo": "legislador",
+        "sobre": "Gestión de residuos sólidos",
+        "postura": "pregunta",
+        "tema": "Ambiente",
+        "dijo": "Pidió informes sobre la gestión de residuos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ivana Fisher Bastini",
+        "cargo": "ministro o autoridad",
+        "sobre": "Respuesta a consultas de la comisión",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Informó sobre la situación de la empresa Paltarumi.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Johanna Fisher",
+        "cargo": "autoridad",
+        "sobre": "la empresa Paltarumi",
+        "postura": "comenta",
+        "tema": "Minería",
+        "dijo": "Explicó la situación de la empresa minera Paltarumi.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Johanna Fisher",
+        "cargo": "autoridad",
+        "sobre": "la cerámica Tengda",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Informó sobre las sanciones aplicadas a la cerámica Tengda.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Johanna Fisher",
+        "cargo": "autoridad",
+        "sobre": "Acero Lima Shanglong",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Detalló el proceso sancionador contra Acero Lima Shanglong.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Johanna Fisher",
+        "cargo": "autoridad",
+        "sobre": "monitoreo de aire en Trujillo",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Describió el sistema de monitoreo de aire en Trujillo.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Johanna Fisher",
+        "cargo": "autoridad",
+        "sobre": "transporte de carbón mineral",
+        "postura": "comenta",
+        "tema": "Transporte",
+        "dijo": "Explicó la competencia del MTC sobre el transporte de carbón.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Johanna Fisher",
+        "cargo": "autoridad",
+        "sobre": "tecnologías de supervisión ambiental",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Aclaró que OEFA supervisa las tecnologías ya aprobadas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Johanna Fisher",
+        "cargo": "autoridad",
+        "sobre": "incidente en La Pampilla",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Informó sobre la supervisión tras el incidente en La Pampilla.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Johanna Fisher",
+        "cargo": "autoridad",
+        "sobre": "vertimientos en el río Guaura",
+        "postura": "comenta",
+        "tema": "Saneamiento",
+        "dijo": "Reportó la inspección de aguas residuales en el río Guaura.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Johanna Fisher",
+        "cargo": "autoridad",
+        "sobre": "programas de capacitación de OEFA",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Explicó los programas de capacitación de la OEFA.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Johanna Fisher",
+        "cargo": "autoridad",
+        "sobre": "residuos en canal de Sullana",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Informó sobre la gestión de residuos en Sullana.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Johanna Fisher",
+        "cargo": "autoridad",
+        "sobre": "la laguna de Paca",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Detalló las supervisiones realizadas en la laguna de Paca.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Johanna Fisher",
+        "cargo": "autoridad",
+        "sobre": "contaminación sonora y visual",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Explicó que la fiscalización sonora compete a los municipios.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Johanna Fisher",
+        "cargo": "autoridad",
+        "sobre": "faja marginal en la laguna",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Informó sobre la delimitación de la faja marginal en Paca.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=2T6CGbrg-Ec"
   }
 }
