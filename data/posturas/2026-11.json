@@ -8078,5 +8078,163 @@
       }
     ],
     "url": "https://www.facebook.com/watch/?v=1434315122103124"
+  },
+  "6015TDyvWYg": {
+    "fecha": "2026-11-11",
+    "organo": "Comisión de Medio Ambiente",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "César y Pensa Peralta",
+        "cargo": "invitado",
+        "sobre": "Desarrollo agrario en la Amazonía",
+        "postura": "en contra",
+        "tema": "Ambiente",
+        "dijo": "Rechazó la propuesta por vulnerar la Constitución y la normativa ambiental.",
+        "proyecto": "PL 08",
+        "id": null
+      },
+      {
+        "orador": "Raúl de los Ríos Cáceres",
+        "cargo": "invitado",
+        "sobre": "Desarrollo agrario en la Amazonía",
+        "postura": "en contra",
+        "tema": "Ambiente",
+        "dijo": "Denunció la desnaturalización del sistema nacional de gestión ambiental.",
+        "proyecto": "PL 08",
+        "id": null
+      },
+      {
+        "orador": "Gustavo Suárez de Freitas Calmet",
+        "cargo": "invitado",
+        "sobre": "Desarrollo agrario en la Amazonía",
+        "postura": "con observaciones",
+        "tema": "Agricultura",
+        "dijo": "Propuso regularizar la Amazonía para mejorar la productividad y sostenibilidad.",
+        "proyecto": "PL 08",
+        "id": null
+      },
+      {
+        "orador": "Gustavo Suárez de Freitas",
+        "cargo": "invitado",
+        "sobre": "Desarrollo sostenible amazónico",
+        "postura": "con observaciones",
+        "tema": "Ambiente",
+        "dijo": "Defendió el proyecto pero sugirió mejorar detalles técnicos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Cipriani",
+        "cargo": "legislador",
+        "sobre": "Mesas de trabajo territoriales",
+        "postura": "pregunta",
+        "tema": "Agricultura",
+        "dijo": "Preguntó sobre la participación de productores en mesas territoriales.",
+        "proyecto": "",
+        "id": "diputados:cipriani thorne"
+      },
+      {
+        "orador": "Bendaño",
+        "cargo": "legislador",
+        "sobre": "Formalización mediante el Reinfo",
+        "postura": "pregunta",
+        "tema": "Ambiente",
+        "dijo": "Preguntó sobre los impactos de la formalización en la Amazonía.",
+        "proyecto": "Reinfo",
+        "id": null
+      },
+      {
+        "orador": "Pérez",
+        "cargo": "legislador",
+        "sobre": "Asesoría a empresas agropecuarias",
+        "postura": "pregunta",
+        "tema": "Agricultura",
+        "dijo": "Preguntó si los expertos asesoran a empresas amazónicas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Raúl de los Ríos",
+        "cargo": "invitado",
+        "sobre": "Nueva propuesta forestal",
+        "postura": "en contra",
+        "tema": "Ambiente",
+        "dijo": "Cuestionó la legitimidad de la nueva propuesta forestal.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Gustavo Suárez",
+        "cargo": "invitado",
+        "sobre": "la formalización de productores amazónicos",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Explicó su vinculación con la discusión de la ley ambiental.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Cochabo",
+        "cargo": "legislador",
+        "sobre": "la constitucionalidad de la propuesta forestal",
+        "postura": "pregunta",
+        "tema": "Ambiente",
+        "dijo": "Consultó sobre la legalidad de la propuesta forestal.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ipensa",
+        "cargo": "invitado",
+        "sobre": "la protección del patrimonio forestal nacional",
+        "postura": "en contra",
+        "tema": "Ambiente",
+        "dijo": "Denunció que la iniciativa vulnera la Constitución.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Raúl del Ríos",
+        "cargo": "invitado",
+        "sobre": "la regresión de la protección ambiental",
+        "postura": "en contra",
+        "tema": "Ambiente",
+        "dijo": "Cuestionó la demora en los procesos sancionadores.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Gustavo Suárez",
+        "cargo": "invitado",
+        "sobre": "la titulación de tierras en la Amazonía",
+        "postura": "con observaciones",
+        "tema": "Ambiente",
+        "dijo": "Propuso establecer reglas claras para la titulación.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=6015TDyvWYg"
+  },
+  "I8tDQiZPfT8": {
+    "fecha": "2026-11-11",
+    "organo": "Pleno del Senado",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Marta Chávez",
+        "cargo": "legislador",
+        "sobre": "Viaje de la presidenta a China",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Defendió la agenda de la presidenta y su viaje a China.",
+        "proyecto": "",
+        "id": "senado:chavez cossio"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=I8tDQiZPfT8"
   }
 }
