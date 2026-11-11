@@ -7314,17 +7314,17 @@
   },
   {
     "video_id": "Mcct_cJqHAU",
-    "resumen": "Mesa técnica multidisciplinaria de la Comisión de Educación, Cultura y Deporte sobre ciberbullying y salud mental escolar, con participación del Ministerio de Educación, el Ministerio de la Mujer, el MTC y la Dirección de Investigación de Cibercrimen de la PNP (la transcripción capturada corta abruptamente aca, probablemente por una interrupción técnica en la captura - no hay evidencia de que la sesión siguiera en curso a esta altura).",
+    "resumen": "Mesa técnica multidisciplinaria de la Comisión de Educación, Cultura y Deporte sobre ciberacoso escolar (ciberbullying), con representantes del Ministerio de Educación, el Ministerio de la Mujer, el Ministerio de Transportes y Comunicaciones y la División de Ciberprotección Infantil de la Dirección de Investigación de Cibercrimen de la PNP. Se discutieron los límites entre conflicto escolar, ciberbullying y hecho delictivo, los protocolos de preservación de evidencia digital y las brechas de personal especializado en el sector educación (la transcripción capturada corta abruptamente aca, probablemente por una interrupcion tecnica en la captura - no hay evidencia de que la sesion siguiera en curso a esta altura).",
     "ideas_clave": [
-      "El Minedu reportó una brecha de 6,000 plazas de auxiliares de educación a nivel nacional y una brecha muy grande de psicólogos escolares frente a la norma de un psicólogo por colegio.",
-      "La plataforma SíseVe del Minedu para reportar violencia escolar es confidencial (no anónima) y está en proceso de actualización para registrar nuevas formas de violencia, incluyendo ciberbullying.",
-      "La Dirección de Investigación de Cibercrimen de la PNP explicó que tiene aproximadamente 200 carpetas de investigación activas por pornografía infantil, además de casos de grooming, chantaje sexual digital, suplantación de identidad y acceso ilícito.",
-      "La PNP distinguió entre conflicto escolar, ciberbullying (no es automáticamente delito) y hecho delictivo, señalando que la revisión de dispositivos electrónicos requiere mandato judicial.",
-      "Se mencionó un proyecto de ley que obligaría a directores de instituciones educativas a denunciar casos de violencia o ciberacoso dentro de las 24 horas.",
-      "El MTC señaló que la conservación de metadatos de conexión (bajo el DL 1182) permite identificar el punto de conexión de un usuario para investigaciones policiales, pero no el detalle de la actividad dentro de cada aplicativo.",
-      "La Policía Nacional recomendó protocolos de preservación de evidencia digital (registrar URL, usuario, fecha, hash) sin acceder ilícitamente a cuentas de terceros, y reforzar la alfabetización digital y capacitación a docentes y padres sobre grooming y extorsión."
+      "Minedu explicó que la plataforma SíseVe (CCB) para reportar violencia escolar genera reportes confidenciales (no anónimos) con registro del denunciante.",
+      "Minedu reportó una brecha de más de 6.000 plazas de auxiliares de educación a nivel nacional respecto a la normativa vigente, y de 85.000 psicólogos necesarios para cubrir 360.000 escuelas.",
+      "La PNP (Dirección de Investigación de Cibercrimen, vigente desde el 5 de noviembre de 2025) diferenció conflicto escolar, ciberbullying y hecho delictivo: el ciberbullying no es automáticamente delito y requiere calificación jurídica caso por caso.",
+      "La División de Ciber Protección Infantil de la PNP investiga pornografía infantil (con IA incluida), chantaje sexual digital, suplantación de identidad y acceso ilícito; tiene unas 200 carpetas de investigación activas por pornografía infantil.",
+      "La PNP identificó como principales trabas de investigación el uso de VPN, redes privadas, deep/dark web, borrado remoto de evidencia, mensajes efímeros y falta de preservación de cuentas, además de demoras en cooperación internacional.",
+      "Se mencionó un proyecto de ley que obligaría a directores de instituciones educativas a denunciar casos de violencia escolar en un plazo de 24 horas.",
+      "El Ministerio de Transportes y Comunicaciones (MTC) señaló que la conservación de metadatos de tráfico de red por operadoras (Decreto Legislativo 1182) permite identificar nodo de conexión pero no el aplicativo específico usado para cometer un delito."
     ],
-    "generated_at": "2026-11-10T18:51:11Z",
+    "generated_at": "2026-11-11T04:51:00Z",
     "duracion_seg": 3228,
     "agenda_cumplida": null
   },
@@ -7442,32 +7442,31 @@
   },
   {
     "video_id": "yhZhRCsW2gE",
-    "resumen": "Sesion de la Comision de Economia, Medio Ambiente y Defensa del Consumidor del Senado del Peru, centrada en la comparecencia del ministro de Desarrollo Agrario y Riego, Marco Antonio Vinelli Ruiz, sobre las medidas frente a sequias e incendios forestales en la Amazonia y el estado del seguro agrario catastrofico. La sesion incluyo ademas pedidos de los senadores sobre los cortes de luz en San Martin y el vertimiento de aguas servidas a los rios (la transcripcion capturada corta abruptamente aca, probablemente por una interrupcion tecnica en la captura - no hay evidencia de que la sesion siguiera en curso a esta altura).",
+    "resumen": "Séptima sesión ordinaria de la Comisión de Economía, Medio Ambiente y Defensa del Consumidor del Senado, centrada en la exposición del ministro de Desarrollo Agrario (Marco Vinelli) sobre contaminación por agroquímicos prohibidos en frutas y verduras, el modelo institucional de fiscalización de SENASA, la problemática de arsénico en Chaviña (Ayacucho) y los cortes de luz en San Martín, además de informes sobre la agenda de la comisión (la transcripcion capturada corta abruptamente aca, probablemente por una interrupcion tecnica en la captura - no hay evidencia de que la sesion siguiera en curso a esta altura).",
     "ideas_clave": [
-      "El ministro Marco Antonio Vinelli Ruiz informo que el seguro agrario catastrofico cubre cerca de 12,000 hectareas en la Amazonia (Amazonas, Loreto, Madre de Dios, San Martin, Ucayali) con un capital asegurado de aproximadamente 53 millones de soles.",
-      "Se reportaron 126 casos indemnizables y 490 hectareas indemnizables por el fenomeno climatico, con una suma asegurada de alrededor de 1.5 millones de soles.",
-      "El Ministerio de Desarrollo Agrario y Riego informo haber otorgado 662 millones de soles en creditos para enfrentar el fenomeno climatico en la region amazonica.",
-      "Los senadores cuestionaron la brecha de productividad del maiz peruano (4-5 toneladas por hectarea) frente a paises como Argentina, Bolivia y Estados Unidos, y las diferencias en creditos agrarios entre costa y sierra para cultivos como la quinua.",
-      "Una senadora solicito citar a Electro Oriente, OSINERGMIN y FONAFE por los cortes de luz y suministro electrico en San Martin, que generaron un planton de la Camara de Comercio frente a Electro Oriente.",
-      "Se pidio al sector coordinar con otras entidades sobre el vertimiento de aguas servidas a los rios amparado en el Decreto Legislativo 285, proponiendo su tratamiento y reutilizacion como abono.",
-      "Se alerto sobre una advertencia meteorologica (SENAMHI/INDECI) para Lima el mismo dia de la sesion, ante la cual el sector se mantendria en alerta para atender contingencias."
+      "El senador Jaime Delgado citó un monitoreo ciudadano con notario público y laboratorios acreditados que halló agroquímicos prohibidos por la ley peruana en supermercados: apio con 25.000% por encima del límite máximo de residuos y pimiento con 8.000% por encima, incluyendo clorpirifos (disruptor endocrino).",
+      "Se debatió el dictamen de la Comisión de Defensa del Consumidor (periodo anterior) para que SENASA sea la única entidad rectora de fiscalización fitosanitaria, frente a una opinión de Midagri que cuestionó la modificación invocando la Ley Orgánica de Municipalidades.",
+      "Se preguntó al ministro sobre la Resolución Ministerial 434 de Midagri, que eliminó la tasa del procedimiento de evaluación de riesgo ambiental para el registro de plaguicidas agrícolas, sin que esté claro cómo se financiará esa evaluación en adelante.",
+      "La presidencia informó sobre la mesa técnica del 5 de noviembre por contaminación con arsénico en Chaviña (provincia de Lucanas, Ayacucho), con gestiones ante la PCM y los ministerios de Vivienda, Ambiente y Economía para agua potable y descontaminación.",
+      "Se anunció una alerta de huaico (fenómeno El Niño) en Lima para el día de la sesión, según SENAMHI e INDECI.",
+      "La senadora Patricia Turga pidió citar a Electro Oriente, Osinergmin, FONAFE y el viceministerio de Electricidad por cortes de luz y suministro eléctrico en San Martín, que generaron protestas de la Cámara de Comercio regional.",
+      "Se acordó una conferencia conjunta con la Comisión de Medio Ambiente y Sostenibilidad de la Cámara de Diputados el 17 de noviembre para que el ministro de Energía y Minas informe sobre minería ilegal y relaveras que afectan ríos de la costa peruana."
     ],
-    "generated_at": "2026-11-10T13:53:34Z",
+    "generated_at": "2026-11-11T04:51:28Z",
     "duracion_seg": 7705,
     "agenda_cumplida": null
   },
   {
     "video_id": "MsoScpGc9_E",
-    "resumen": "Sexta sesión ordinaria de la Comisión de Ética Parlamentaria de la Cámara de Diputados, que aprobó iniciar investigación contra el diputado Víctor Eduardo Piñán Mamani por un hecho de la denuncia en su contra y archivar los otros dos, y realizó la audiencia de descargo y testimonios en el expediente contra la diputada Milagros Karina Santana Vera (la transcripción capturada corta abruptamente aca, probablemente por una interrupción técnica en la captura - no hay evidencia de que la sesión siguiera en curso a esta altura).",
+    "resumen": "Sexta sesión ordinaria de la Comisión de Ética Parlamentaria de la Cámara de Diputados, que aprobó el acta anterior por unanimidad y trató tres denuncias: la calificación de la denuncia contra el diputado Víctor Eduardo Piñán Mamani, la audiencia de descargo y testigos en el expediente contra la diputada Milagros Karina Santana Vera por un caso de estacionamiento indebido y presunta amenaza a fiscalizadoras municipales en Huaral, y el inicio de la audiencia reservada en el expediente contra el diputado Cristian Aranda Vásquez (la transcripcion capturada corta abruptamente aca, probablemente por una interrupcion tecnica en la captura - no hay evidencia de que la sesion siguiera en curso a esta altura).",
     "ideas_clave": [
-      "La comisión aprobó por unanimidad (6 votos) declarar procedente la denuncia contra el diputado Víctor Eduardo Piñán Mamani por el hecho 1 (haber interferido el retiro de propaganda electoral por personal de la municipalidad de San Juan de Lurigancho) e iniciar etapa de investigación por presunta infracción a los artículos 115, 117 y 118 del reglamento del Congreso.",
-      "La misma comisión declaró improcedentes y archivó los hechos 2 y 3 de la denuncia contra Piñán Mamani (declaraciones sobre un predio en la urbanización Incamanco Cápac y sobre una obra vial en la Av. Fernando Bice), al considerar que fueron opiniones dentro del ejercicio legítimo de representación y fiscalización.",
-      "En audiencia por el expediente contra la diputada Milagros Karina Santana Vera (vehículo obstruyendo el tránsito peatonal en un bulevar de Huaral el 5 de septiembre de 2026 e intimidación a una fiscalizadora municipal grabada advirtiéndole que 'perdería su trabajo'), la diputada negó intención de amenaza y adjuntó un informe médico por una fractura de tobillo como justificación.",
-      "Tres testigos (trabajadoras de fiscalización de la Municipalidad de Huaral) declararon bajo juramento que la diputada invocó su investidura parlamentaria para justificar el estacionamiento indebido del vehículo y que les advirtió que podían perder su trabajo por grabarla.",
-      "La diputada Santana Vera pidió disculpas públicas a las trabajadoras municipales en sus alegatos finales; la comisión dio por concluida la audiencia y pasará a elaborar el informe final sobre este expediente.",
-      "La comisión votó por unanimidad pasar a sesión reservada (art. 50 del reglamento) para la audiencia del expediente contra el diputado Cristian Aranda Vásquez, por tratarse de información sensible de un tercero vinculada a un oficio enviado al Hospital Regional Guillermo Díaz de la Vega."
+      "La comisión aprobó por unanimidad (6 votos) declarar procedente la denuncia contra el diputado Víctor Eduardo Piñán Mamani por el hecho 1 (interferencia a un vehículo municipal que retiraba propaganda electoral) e iniciar investigación; declaró improcedentes los hechos 2 y 3 (declaraciones sobre un predio en Manco Cápac y sobre una obra vial en la Av. Fernando Belice).",
+      "En el expediente contra la diputada Milagros Karina Santana Vera (expediente 4), tres trabajadoras de fiscalización de la Municipalidad de Huaral declararon como testigas que la diputada habría invocado su investidura parlamentaria y amenazado con que perderían su trabajo por grabarla, tras estacionar su vehículo en una zona peatonal (bulevar de la Av. Solar) para una mudanza.",
+      "La diputada Santana Vera se defendió alegando un impedimento físico (fractura de tobillo), que la ordenanza municipal 00929-MPH no prohíbe expresamente el estacionamiento en ese tramo, y pidió disculpas públicas a las trabajadoras; se cerró la audiencia y queda pendiente el informe final.",
+      "La comisión aprobó por unanimidad pasar a sesión reservada (artículo 50 del Reglamento) para la audiencia del expediente 2 contra el diputado Cristian Aranda Vásquez, por tratarse de información sensible vinculada a un oficio dirigido al Hospital Regional Guillermo Díaz Vega.",
+      "Varios diputados (Cipriani, Infantes) remarcaron en sus intervenciones la necesidad de que la comisión transmita una imagen de ejemplo y transparencia del Congreso ante la ciudadanía."
     ],
-    "generated_at": "2026-11-10T18:51:11Z",
+    "generated_at": "2026-11-11T04:51:14Z",
     "duracion_seg": 4075,
     "agenda_cumplida": null
   },
@@ -7505,17 +7504,16 @@
   },
   {
     "video_id": "tcg_XHPH2Ss",
-    "resumen": "Sesion plenaria No. 139 de la Asamblea Nacional de Ecuador (10 de noviembre de 2026). El pleno incorporo por 85 votos un quinto punto de agenda sobre presuntos cobros indebidos a artistas y gestores culturales en las fiestas de Quito 2026, entrego una condecoracion al ciclista Jonathan Narvaez, aprobo con 138 votos la licencia del presidente Daniel Noboa Azin para participar en la campana electoral, aprobo con 88 votos a favor y 52 en contra el Tratado de Extradicion entre Ecuador y Costa Rica (tras objeciones de la bancada Revolucion Ciudadana sobre los plazos de tramite y la falta de equivalencia en la definicion de terrorismo entre ambos paises), y archivo por unanimidad (140 votos) la iniciativa popular normativa de seguridad ciudadana remitida por el Consejo Nacional Electoral, al no reunir las firmas de respaldo requeridas. Al cierre de la transcripcion se debatia el quinto punto sobre los cobros indebidos en las fiestas de Quito, sin llegar a someterse a votacion la mocion planteada por el asambleista Luis Garcia (la transcripcion capturada corta abruptamente aca, probablemente por una interrupcion tecnica en la captura - no hay evidencia de que la sesion siguiera en curso a esta altura).",
+    "resumen": "Sesión 139 del Pleno de la Asamblea Nacional de Ecuador, que incorporó un quinto punto al orden del día sobre declaraciones de una concejala respecto a las fiestas de Quito, otorgó la licencia solicitada por el presidente Daniel Noboa Azín, y aprobó el Tratado de Extradición entre Ecuador y Costa Rica, además de conocer el oficio del Consejo Nacional Electoral sobre una iniciativa popular normativa (la transcripcion capturada corta abruptamente aca, probablemente por una interrupcion tecnica en la captura - no hay evidencia de que la sesion siguiera en curso a esta altura).",
     "ideas_clave": [
-      "El pleno aprobo con 85 votos a favor y 54 en contra incorporar un quinto punto a la agenda, propuesto por el asambleista Luis Garcia, para investigar denuncias de cobros indebidos a artistas y bandas (ejemplo citado: 826 dolares) para pagar a la empresa publica de limpieza EMASEO en el marco de las fiestas de Quito 2026.",
-      "Se aprobo con 138 votos afirmativos, 2 en contra y 1 abstencion la mocion de la asambleista Nataly Farinango para conceder la licencia solicitada por el presidente Daniel Noboa Azin, ajustada a los periodos del 12 al 18 y del 20 al 26 de noviembre de 2026 (reincorporandose el 19), para participar en actividades de campana de Accion Democratica Nacional.",
-      "El pleno condecoro al ciclista ecuatoriano Jonathan Narvaez Prado ('El Aguila') por su trayectoria, incluyendo el triunfo de etapa en el Giro de Italia 2024 y su participacion en el Mundial de Ciclismo en Ruta de Montreal 2026.",
-      "Se aprobo con 88 votos a favor y 52 en contra el Tratado de Extradicion entre Ecuador y Costa Rica, tras el informe favorable de la Comision de Relaciones Internacionales (presidida por Lucia Jaramillo) y el dictamen previo de conformidad constitucional de la Corte Constitucional.",
-      "La asambleista de Revolucion Ciudadana Sara Noemi Cabrera objeto el tramite acelerado del informe (la comision avoco conocimiento el 29 de octubre y voto en menos de una hora tras la comparecencia del Ministerio del Interior, sin respetar el plazo de 24 horas de anticipacion ni los 20 dias de tratamiento que exige el articulo 28 de la Ley Organica de la Funcion Legislativa) y cuestiono que Ecuador (COIP, articulo 366) y Costa Rica (Ley 8719) tienen definiciones distintas de terrorismo, lo que tensiona el requisito de doble incriminacion del tratado.",
-      "El Consejo Nacional Electoral informo que la iniciativa popular normativa para el fortalecimiento de la seguridad ciudadana y convivencia social pacifica, promovida por el ciudadano Wilson Eduardo Merino Riva(de)Neira, no reunio el porcentaje de firmas de respaldo ciudadano exigido (15,163 registros aceptados) dentro del plazo adicional de 90 dias otorgado, por lo que el pleno archivo la iniciativa por unanimidad con 140 votos a favor.",
-      "Como quinto punto, el asambleista Luis Garcia presento su propuesta de resolucion para que la Asamblea requiera informacion al Ministerio de Educacion, Deporte y Cultura sobre las denuncias de cobros indebidos a artistas y gestores culturales durante las fiestas de Quito 2026, enmarcandolo como un posible caso de financiamiento ilegal de campanas; la transcripcion capturada corta antes de que se sometiera a votacion esta mocion."
+      "Con 85 votos afirmativos, 54 en contra y 1 abstención, el Pleno aprobó incorporar un quinto punto al orden del día, propuesto por el asambleísta Luis García, sobre declaraciones de una concejala respecto a 65 procesos suspendidos y la organización de las Fiestas de Quito.",
+      "Con 138 votos afirmativos, 2 en contra y 1 abstención, la Asamblea aprobó la licencia del presidente Daniel Noboa Azín del 12 al 26 de noviembre para participar en actividades de campaña, en base a los artículos 146 de la Constitución y 42 de la Ley Orgánica de la Función Legislativa.",
+      "Con 88 votos afirmativos y 52 en contra, el Pleno aprobó el Tratado de Extradición entre Ecuador y Costa Rica (suscrito el 8 de noviembre de 2021, ya ratificado por Costa Rica en 2023), que habilita la entrega recíproca de personas requeridas por la justicia.",
+      "El Consejo Nacional Electoral informó a la Asamblea que la iniciativa popular normativa para el fortalecimiento de la seguridad ciudadana y la convivencia social pacífica no cumplió con los respaldos ciudadanos requeridos.",
+      "Legisladores opositores cuestionaron que el Tratado de Extradición con Costa Rica debía deliberarse con más tiempo para subsanar observaciones antes de la votación.",
+      "Se mencionó que el Pleno realizaría además una condecoración al deportista Jonathan Arbaiz durante la sesión."
     ],
-    "generated_at": "2026-11-10T22:49:28Z",
+    "generated_at": "2026-11-11T04:51:52Z",
     "duracion_seg": 6607,
     "agenda_cumplida": null
   },
@@ -7697,17 +7695,16 @@
   },
   {
     "video_id": "cO41B4PABpg",
-    "resumen": "La Comisión en asuntos de Desarrollo Productivo, Energía, Infraestructura y Trabajo del Senado recibió al ministro de Energía y Minas, Guillermo Shinno Huamani, quien expuso sobre la novena adenda del contrato de concesión con Calidda para la masificación del gas natural y sobre el proceso de exclusión de inscritos del REINFO. La mayoría de senadores que intervinieron, varios de regiones del sur como Cusco, cuestionaron duramente la adenda por considerarla favorable a la empresa y por no resolver el problema de fondo del acceso al gas en el sur del país (sesión en curso al momento de este resumen).",
+    "resumen": "Sesión de la Comisión en asuntos de Desarrollo Productivo, Energía, Infraestructura y Trabajo del Senado, con la exposición del ministro de Energía y Minas, Guillermo Shinno Huamaní, sobre la adenda con Calidda para la masificación del gas natural y el proceso de exclusión de inscritos del Registro Integral de Formalización Minera (REINFO) (la transcripcion capturada corta abruptamente aca, probablemente por una interrupcion tecnica en la captura - no hay evidencia de que la sesion siguiera en curso a esta altura).",
     "ideas_clave": [
-      "El ministro Shinno Huamani presentó la novena adenda con Calidda: llevar gas natural a 7 regiones (15 localidades), conectar 200.000 viviendas (con potencial de hasta 300.000), a cambio de extender 10 años más la concesión de Calidda en Lima; la inversión estimada es de US$ 550 millones y la penalidad por incumplimiento de metas de conexión es de US$ 53 millones.",
-      "Según el ministro, el proceso de exclusión del REINFO ya sacó del registro a unos 60.000 inscritos (8.000 por resolución administrativa por incumplimiento de condiciones, 50.000 por decreto supremo del año pasado), quedando unos 30.000 con REINFO vigente.",
-      "Varios senadores acusaron que la adenda constituye una 'concesión encubierta a dedo' a Calidda y cuestionaron la cláusula 5.4, que trasladaría los nuevos costos de operación y mantenimiento a la tarifa que pagan los usuarios.",
-      "El senador Wilfredo Veramendi cuestionó técnicamente el esquema BOOT del contrato: alegó un 'valor contable pendiente' de entre US$ 824 y 854 millones a favor del concesionario y un incremento arbitrario del 27% en costos unitarios de redes de distribución, además de que el Ejecutivo y Pro Inversión estarían desconociendo informes técnicos de Osinergmin por considerarlos no vinculantes; preguntó si el ministro asumiría responsabilidad penal/administrativa si la Contraloría determina perjuicio por la adenda.",
-      "La senadora Ruth Luque (Cusco) rechazó públicamente la adenda, señalando que solo contempla unas 33.367 conexiones para Cusco, Yanahuara y Calca y que no resuelve el problema estructural de acceso al gas en el sur.",
-      "Un senador mencionó cuatro denuncias fiscales contra el director general de Asuntos Ambientales de Hidrocarburos, Efraín Soto, vinculadas a un derrame de petróleo cuyo plan de rehabilitación seguiría pendiente, próximo a cumplir cuatro años del hecho.",
-      "Hacia el final de la sesión, otros senadores sumaron acusaciones de corrupción y \"sabotaje\" de gobiernos anteriores como responsables de la falta de un gasoducto al sur del país, en una intervención que queda interrumpida a mitad de frase."
+      "El ministro Shinno informó que la adenda con Calidda, negociada en 11 reuniones conjuntas entre Pro Inversión, el MEF y el MEM hasta mayo de este año, busca ampliar la masificación de gas natural a siete regiones del centro y sur del país (Apurímac, Ayacucho, Cusco, entre otras).",
+      "Senadores de oposición (Cusco) rechazaron la firma de la adenda y cuestionaron si Osinergmin pierde potestad para fijar tarifas de gas natural conforme a la Ley 27332, además de pedir responsabilidad política y administrativa del ministro si la Contraloría determina perjuicio económico por sobrecostos.",
+      "Sobre el REINFO, el ministro reportó que alrededor de 60.000 inscripciones ya no forman parte del registro (10.000 excluidas por resolución tras procedimiento individual y 50.000 por decreto supremo del año pasado), quedando unos 30.000 agentes con REINFO vigente.",
+      "Las causales de exclusión del REINFO incluyen incumplimiento de la condición de pequeño productor o minero artesanal, no permitir verificación en campo, o uso indebido de la inscripción.",
+      "Se criticó que la masificación de gas mediante cisternas (gas virtual) en Arequipa, Moquegua y Tacna solo alcanza unas 12.000 viviendas en Arequipa, y se cuestionó por qué no se prioriza un sistema troncal subterráneo frente al transporte en camiones cisterna.",
+      "Varios senadores atribuyeron el retraso histórico del gasoducto del sur a actos de corrupción de gobiernos anteriores y pidieron atender la demanda pendiente de gas natural domiciliario en zonas altas de Lima y el sur del país."
     ],
-    "generated_at": "2026-11-11T00:49:52Z",
+    "generated_at": "2026-11-11T04:51:41Z",
     "duracion_seg": 2623,
     "agenda_cumplida": null
   },
