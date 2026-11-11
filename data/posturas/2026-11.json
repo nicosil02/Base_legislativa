@@ -7214,5 +7214,393 @@
       }
     ],
     "url": "https://www.facebook.com/watch/?v=1086991034339755"
+  },
+  "jMc-5on5dQE": {
+    "fecha": "2026-11-10",
+    "organo": "Pleno de Diputados",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Cristian Aranda",
+        "cargo": "legislador",
+        "sobre": "falta de respeto del alcalde de Tacna",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció la falta de respeto del alcalde de Tacna hacia una diputada.",
+        "proyecto": "",
+        "id": "diputados:aranda vasquez"
+      },
+      {
+        "orador": "Esbieta Fernández",
+        "cargo": "legislador",
+        "sobre": "irregularidades de un alcalde provincial",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Pidió que la Procuraduría investigue las presuntas irregularidades de un alcalde.",
+        "proyecto": "",
+        "id": "diputados:fernandez gonzalez"
+      },
+      {
+        "orador": "Aldo Prócoro",
+        "cargo": "legislador",
+        "sobre": "aniversario del Colegio Guadalupe",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Saludó al colegio Guadalupe por su aniversario institucional.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Manrico Oliveira",
+        "cargo": "legislador",
+        "sobre": "respeto a la labor de fiscalización",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Respaldó a las colegas que sufrieron faltas de respeto durante su fiscalización.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Oscar Retotero",
+        "cargo": "legislador",
+        "sobre": "gestión de la Procuraduría del Congreso",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Informó que ya instruyó al procurador para atender los hechos reportados.",
+        "proyecto": "",
+        "id": "diputados:reto otero"
+      },
+      {
+        "orador": "González Delgado",
+        "cargo": "legislador",
+        "sobre": "presupuesto para comisión del fenómeno del niño",
+        "postura": "propone",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Pidió la aprobación del presupuesto para la comisión del fenómeno del niño.",
+        "proyecto": "",
+        "id": "diputados:gonzales delgado"
+      },
+      {
+        "orador": "Oscar Retotero",
+        "cargo": "legislador",
+        "sobre": "presupuesto de la Cámara de Diputados",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Cuestionó la propuesta presupuestal del Senado por no consultar a la Cámara.",
+        "proyecto": "",
+        "id": "diputados:reto otero"
+      },
+      {
+        "orador": "Arturo García",
+        "cargo": "legislador",
+        "sobre": "debate sobre el presupuesto parlamentario",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Coincidió en la importancia de debatir la asignación de recursos.",
+        "proyecto": "",
+        "id": "diputados:alegria garcia"
+      },
+      {
+        "orador": "Palomino Casabil",
+        "cargo": "legislador",
+        "sobre": "contaminación por relaves mineros",
+        "postura": "en contra",
+        "tema": "Ambiente",
+        "dijo": "Denunció la contaminación por relaves mineros que afecta a una escuela.",
+        "proyecto": "",
+        "id": "diputados:palomino casavilca"
+      },
+      {
+        "orador": "Juan Castregón Fernández",
+        "cargo": "legislador",
+        "sobre": "reintegro tributario para editoriales",
+        "postura": "a favor",
+        "tema": "Tributos",
+        "dijo": "Defendió la prórroga del reintegro tributario para el sector editorial.",
+        "proyecto": "PL 306 y 508",
+        "id": "diputados:castrejon fernandez"
+      },
+      {
+        "orador": "José Miguel Marcelo Salazar",
+        "cargo": "legislador",
+        "sobre": "reintegro del impuesto general a las ventas",
+        "postura": "a favor",
+        "tema": "Tributos",
+        "dijo": "Sustentó el restablecimiento del reintegro del impuesto general a las ventas.",
+        "proyecto": "PL 306 y 508",
+        "id": "diputados:marcelo salazar"
+      },
+      {
+        "orador": "José Miguel Marcelo Salazar",
+        "cargo": "legislador",
+        "sobre": "Reintegro del IGV para editoriales",
+        "postura": "a favor",
+        "tema": "Tributos",
+        "dijo": "Sustentó el dictamen para restablecer el reintegro del IGV.",
+        "proyecto": "PL 306 y 508",
+        "id": "diputados:marcelo salazar"
+      },
+      {
+        "orador": "Luis Quispe",
+        "cargo": "legislador",
+        "sobre": "Reintegro del IGV para libros",
+        "postura": "a favor",
+        "tema": "Educación",
+        "dijo": "Instó a aprobar el reintegro tributario para fomentar la lectura.",
+        "proyecto": "PL 003-6-2026-2031",
+        "id": "diputados:quispe candia"
+      },
+      {
+        "orador": "Leo de Paz",
+        "cargo": "legislador",
+        "sobre": "Dictamen sobre la industria editorial",
+        "postura": "a favor",
+        "tema": "Educación",
+        "dijo": "Respaldó el dictamen para incentivar la industria editorial.",
+        "proyecto": "",
+        "id": "diputados:de paz lancho"
+      },
+      {
+        "orador": "Liliana Milagros Takayama Jiménez",
+        "cargo": "legislador",
+        "sobre": "Reintegro tributario para editoriales",
+        "postura": "a favor",
+        "tema": "Tributos",
+        "dijo": "Anunció su voto a favor del dictamen presentado.",
+        "proyecto": "PL 508",
+        "id": "diputados:takayama jimenez"
+      },
+      {
+        "orador": "Amalia Palomino",
+        "cargo": "legislador",
+        "sobre": "Exoneración del IGV para libros",
+        "postura": "con observaciones",
+        "tema": "Educación",
+        "dijo": "Pidió que la exoneración sea una medida permanente.",
+        "proyecto": "",
+        "id": "diputados:palomino pacheco"
+      },
+      {
+        "orador": "José Tito Rojas",
+        "cargo": "legislador",
+        "sobre": "Reintegro del IGV para textos",
+        "postura": "con observaciones",
+        "tema": "Educación",
+        "dijo": "Propuso que el beneficio tributario sea para siempre.",
+        "proyecto": "",
+        "id": "diputados:tito rojas"
+      },
+      {
+        "orador": "José Marcelo",
+        "cargo": "legislador",
+        "sobre": "Fomento de la lectura nacional",
+        "postura": "comenta",
+        "tema": "Educación",
+        "dijo": "Sugirió realizar concursos de lectura para fomentar el hábito.",
+        "proyecto": "",
+        "id": "diputados:marcelo salazar"
+      },
+      {
+        "orador": "Ernesto Sunini",
+        "cargo": "legislador",
+        "sobre": "Reintegro tributario para autores",
+        "postura": "a favor",
+        "tema": "Tributos",
+        "dijo": "Defendió el beneficio para apoyar a los autores.",
+        "proyecto": "",
+        "id": "diputados:zunini yerren"
+      },
+      {
+        "orador": "Gina Duarte",
+        "cargo": "legislador",
+        "sobre": "Acceso al conocimiento mediante libros",
+        "postura": "a favor",
+        "tema": "Educación",
+        "dijo": "Defendió la medida para facilitar el acceso al conocimiento.",
+        "proyecto": "",
+        "id": "diputados:duarte"
+      },
+      {
+        "orador": "Anaberta Patiño Urco",
+        "cargo": "legislador",
+        "sobre": "Producción de libros regionales",
+        "postura": "a favor",
+        "tema": "Tributos",
+        "dijo": "Destacó el aumento de títulos registrados por la medida.",
+        "proyecto": "",
+        "id": "diputados:patino urco"
+      },
+      {
+        "orador": "Crisia Garanda",
+        "cargo": "legislador",
+        "sobre": "Función promotora de los tributos",
+        "postura": "a favor",
+        "tema": "Tributos",
+        "dijo": "Resaltó la función promotora de los tributos.",
+        "proyecto": "",
+        "id": "diputados:aranda vasquez"
+      },
+      {
+        "orador": "Ana Luisa Jufralugo",
+        "cargo": "legislador",
+        "sobre": "Reintegro del IGV para editoriales",
+        "postura": "a favor",
+        "tema": "Tributos",
+        "dijo": "Respaldó la propuesta para evitar costos adicionales a editoriales.",
+        "proyecto": "",
+        "id": "diputados:yuffra lugo"
+      },
+      {
+        "orador": "Oswar Kaguasa",
+        "cargo": "legislador",
+        "sobre": "Desarrollo de la educación nacional",
+        "postura": "a favor",
+        "tema": "Educación",
+        "dijo": "Felicitó la iniciativa para mejorar la educación nacional.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Indira Agulca",
+        "cargo": "legislador",
+        "sobre": "Beneficio tributario para editoriales",
+        "postura": "con observaciones",
+        "tema": "Tributos",
+        "dijo": "Observó que las editoriales pequeñas tienen dificultades de acceso.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Dina Hanco",
+        "cargo": "legislador",
+        "sobre": "Entrega de textos en colegios",
+        "postura": "comenta",
+        "tema": "Educación",
+        "dijo": "Exigió la entrega oportuna de textos en los colegios.",
+        "proyecto": "",
+        "id": "diputados:hancco hancco"
+      },
+      {
+        "orador": "Mary Infantes Casañeda",
+        "cargo": "legislador",
+        "sobre": "Inversión en cultura y educación",
+        "postura": "propone",
+        "tema": "Educación",
+        "dijo": "Propuso fomentar la lectura mediante bibliotecas y campañas.",
+        "proyecto": "",
+        "id": "diputados:infantes castaneda"
+      },
+      {
+        "orador": "Romina Uribe",
+        "cargo": "legislador",
+        "sobre": "Acceso a la lectura",
+        "postura": "a favor",
+        "tema": "Educación",
+        "dijo": "Destacó la importancia de facilitar el acceso a libros.",
+        "proyecto": "",
+        "id": "diputados:uribe saenz"
+      },
+      {
+        "orador": "Carina Beteta Rubín",
+        "cargo": "legislador",
+        "sobre": "Beneficio tributario para editoriales",
+        "postura": "a favor",
+        "tema": "Tributos",
+        "dijo": "Resaltó que la medida ayuda a combatir la piratería.",
+        "proyecto": "",
+        "id": "diputados:beteta rubin"
+      },
+      {
+        "orador": "Juan Castrejón Fernández",
+        "cargo": "legislador",
+        "sobre": "Votación del dictamen de Educación",
+        "postura": "propone",
+        "tema": "Educación",
+        "dijo": "Solicitó la votación del dictamen de su comisión.",
+        "proyecto": "",
+        "id": "diputados:castrejon fernandez"
+      },
+      {
+        "orador": "José Miguel Marcelo Salazar",
+        "cargo": "legislador",
+        "sobre": "Consensar textos de las comisiones",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso un cuarto intermedio para elaborar un texto conjunto.",
+        "proyecto": "",
+        "id": "diputados:marcelo salazar"
+      },
+      {
+        "orador": "Juan Castrejón Fernández",
+        "cargo": "legislador",
+        "sobre": "Prórroga del impuesto a la renta",
+        "postura": "comenta",
+        "tema": "Tributos",
+        "dijo": "Informó que la consulta al MEF no fue favorable.",
+        "proyecto": "",
+        "id": "diputados:castrejon fernandez"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=jMc-5on5dQE"
+  },
+  "jpAiIpszKm4": {
+    "fecha": "2026-11-10",
+    "organo": "Comisión de Gestión del Estado",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Mirta Baspez",
+        "cargo": "legislador",
+        "sobre": "Concordancia de la ley universitaria",
+        "postura": "con observaciones",
+        "tema": "Educación",
+        "dijo": "Pidió revisar la concordancia de la ley universitaria.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Segundo Tapia",
+        "cargo": "legislador",
+        "sobre": "Conformación de grupo de trabajo multipartidario",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso la conformación de un grupo de trabajo.",
+        "proyecto": "",
+        "id": "senado:tapia bernal"
+      },
+      {
+        "orador": "Absalom Vázquez",
+        "cargo": "legislador",
+        "sobre": "Fiscalización de obras y concesiones",
+        "postura": "propone",
+        "tema": "Infraestructura",
+        "dijo": "Propuso crear un grupo de fiscalización de obras.",
+        "proyecto": "",
+        "id": "senado:vasquez villanueva"
+      },
+      {
+        "orador": "Evelin Mirella Coloma Cieza",
+        "cargo": "invitado",
+        "sobre": "Estado situacional de la SUNAFIL",
+        "postura": "comenta",
+        "tema": "Trabajo",
+        "dijo": "Informó sobre el estado situacional de la SUNAFIL.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Jorge",
+        "cargo": "legislador",
+        "sobre": "Situación operativa de la SUNAFIL",
+        "postura": "pregunta",
+        "tema": "Trabajo",
+        "dijo": "Preguntó sobre la gestión y condiciones de SUNAFIL.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=jpAiIpszKm4"
   }
 }
