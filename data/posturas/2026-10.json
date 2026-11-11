@@ -11113,5 +11113,142 @@
       }
     ],
     "url": "https://www.youtube.com/watch?v=l-2b95G29Zw"
+  },
+  "fb_29083195037986270": {
+    "fecha": "2026-10-21",
+    "organo": "Comisión de Biodiversidad",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Andrea Gómez Arias",
+        "cargo": "invitado",
+        "sobre": "Proyecto de la Orgánica de Biodiconomía",
+        "postura": "con observaciones",
+        "tema": "Ambiente",
+        "dijo": "Propuso cambios para fortalecer el proyecto de biodiconomía.",
+        "proyecto": "Orgánica de Fomento de la Biodiconomía",
+        "id": null
+      },
+      {
+        "orador": "Andrea Gómez Arias",
+        "cargo": "invitado",
+        "sobre": "Articulación con la mesa de finanzas",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Explicó la articulación con la mesa de finanzas.",
+        "proyecto": "Orgánica de Fomento de la Biodiconomía",
+        "id": null
+      },
+      {
+        "orador": "Casanova",
+        "cargo": "legislador",
+        "sobre": "Aprovechamiento económico y salvaguardas ambientales",
+        "postura": "pregunta",
+        "tema": "Ambiente",
+        "dijo": "Preguntó cómo evitar la sobreexplotación de la biodiversidad.",
+        "proyecto": "Orgánica de Fomento de la Biodiconomía",
+        "id": "EC:casanova montesino"
+      },
+      {
+        "orador": "Andrea Gómez Arias",
+        "cargo": "invitado",
+        "sobre": "Salvaguardas ambientales y conservación",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Explicó el uso de lodos para generar biogás.",
+        "proyecto": "Orgánica de Fomento de la Biodiconomía",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=29083195037986270"
+  },
+  "fb_1362073759338536": {
+    "fecha": "2026-10-21",
+    "organo": "Comisión de Educación",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Ana Belén",
+        "cargo": "legislador",
+        "sobre": "Ausencia de autoridades ante el fenómeno del niño",
+        "postura": "en contra",
+        "tema": "Educación",
+        "dijo": "Cuestionó la ausencia de autoridades ante el fenómeno del niño.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Representante del Inami",
+        "cargo": "invitado",
+        "sobre": "Monitoreo del fenómeno del niño",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Informó que el Inami remitirá la información solicitada por la comisión.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Adriana Rodríguez",
+        "cargo": "invitado",
+        "sobre": "Funciones técnicas del Inami",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Explicó que el Inami provee información técnica sobre condiciones hidrometeorológicas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ana María Rafa",
+        "cargo": "legislador",
+        "sobre": "Inasistencia de autoridades y falta de información",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso notificar a la Presidencia la inasistencia de las autoridades.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Sofía Estefanía León Sánchez",
+        "cargo": "invitado",
+        "sobre": "Resultados de la evaluación PISA 2025",
+        "postura": "comenta",
+        "tema": "Educación",
+        "dijo": "Presentó los resultados de Ecuador en la evaluación PISA 2025.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Anna María Ron",
+        "cargo": "legislador",
+        "sobre": "Resultados de la evaluación PISA",
+        "postura": "en contra",
+        "tema": "Educación",
+        "dijo": "Cuestionó los resultados de Ineval y el presupuesto de 1.39 millones.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1362073759338536"
+  },
+  "fb_28957761680521250": {
+    "fecha": "2026-10-21",
+    "organo": "Comisión de Biodiversidad",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Carlos Miguel Cuesta Álvarez",
+        "cargo": "legislador",
+        "sobre": "Reforma al Código Orgánico del Ambiente",
+        "postura": "a favor",
+        "tema": "Ambiente",
+        "dijo": "Defendió la reforma al Código Orgánico del Ambiente para apoyar a los productores rurales.",
+        "proyecto": "Ley Orgánica Reformatoria al Código Orgánico del Ambiente",
+        "id": "EC:cuesta alvarez"
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=28957761680521250"
   }
 }
