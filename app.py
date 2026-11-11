@@ -131,6 +131,28 @@ def _soltar_cache(path: Path) -> None:
         pass
 
 
+def _log_memoria(donde: str) -> None:
+    """Deja en los logs la memoria que cuenta el contenedor y de que tipo:
+    anon = Python, file = cache de disco. Cinco caidas por "over resource
+    limits" sin saber cual de las dos crecia (2026-11-11)."""
+    import os
+    try:
+        cg = Path("/sys/fs/cgroup")
+        if (cg / "memory.current").exists():  # cgroup v2
+            total, stat, claves = cg / "memory.current", cg / "memory.stat", ("anon", "file", "shmem")
+        else:  # cgroup v1
+            cg = cg / "memory"
+            total, stat, claves = cg / "memory.usage_in_bytes", cg / "memory.stat", ("rss", "cache", "shmem")
+        s = dict(linea.split()[:2] for linea in stat.read_text().splitlines())
+        mb = lambda v: int(v) // 2**20
+        disco = sum(f.stat().st_size for f in _REPO_ROOT.rglob("*.db*") if f.is_file())
+        print(f"[memoria] {donde}: total={mb(total.read_text())} MB "
+              + " ".join(f"{k}={mb(s.get(k, 0))}" for k in claves)
+              + f" | bases en disco={mb(disco)} MB pid={os.getpid()}", flush=True)
+    except Exception as e:
+        print(f"[memoria] {donde}: no pude leer ({e})", flush=True)
+
+
 @st.cache_resource
 def _estado_descarga_datos() -> dict:
     return {}  # {nombre_gz: (ultimo_chequeo, etag)} - uno por proceso
@@ -261,6 +283,12 @@ def _bootstrap_dbs_impl():
 
     repo_root = Path(__file__).resolve().parent
 
+    import time
+    estado = _estado_descarga_datos()
+    if time.time() - estado.get("_memoria", 0) >= 600:
+        estado["_memoria"] = time.time()
+        _log_memoria("control")
+
     # Perú: decomprimir data/proyectos.db.gz (14 MB) → proyectos.db (78 MB)
     pe_db = repo_root / "proyectos.db"
     pe_gz = repo_root / "data" / "proyectos.db.gz"
@@ -288,7 +316,9 @@ def _bootstrap_dbs_impl():
                 gz.with_suffix("").unlink(missing_ok=True)
             try:
                 partes.armar(pe_db, {p: gz for p, gz in partes_gz.items() if gz.exists()}, para_web=True)
+                _log_memoria("recien armada")
                 _soltar_cache(pe_db)
+                _log_memoria("cache soltada")
                 print(f"[bootstrap] proyectos.db armada ({motivos[0]})")
             except Exception as e:
                 print(f"[bootstrap] error armando PE DB: {e}")
