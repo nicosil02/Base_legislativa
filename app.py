@@ -2,7 +2,7 @@
 
 Antes de cualquier dashboard:
   - Si [auth] esta en Secrets → exige login con Google (st.user.is_logged_in),
-    restringido a @valiconsultores.com. Sin [auth] la app no abre (salvo
+    restringido a los dominios de ALLOWED_DOMAINS. Sin [auth] la app no abre (salvo
     VALI_SIN_LOGIN=1 en el .env de la PC).
   - Monta pages/0_Hoy.py, la unica pagina.
 
@@ -387,7 +387,9 @@ _bootstrap_dbs()
 #
 # Credenciales en [auth] de los Secrets (Streamlit Cloud: Manage app >
 # Settings > Secrets). Sin ellas la app no abre (ver mas abajo).
-ALLOWED_DOMAIN = "@valiconsultores.com"
+# Dominios de correo que pueden entrar. Solo el primero (la consultora) queda
+# registrado para recibir el correo diario de alertas.
+ALLOWED_DOMAINS = ("@valiconsultores.com", "@kitsuneia.com")
 
 
 def _google_auth_configured() -> bool:
@@ -417,7 +419,7 @@ if _google_auth_configured():
             "color:#0A294D;margin:0 0 12px 0;\">Vali Intelligence</h1>"
             "<p style='font-size:14px;color:#435D74;margin-bottom:28px;'>"
             "Inicia sesión con tu cuenta de Google "
-            "<strong>@valiconsultores.com</strong> para continuar.</p></div>",
+            "<strong>autorizada</strong> para continuar.</p></div>",
             unsafe_allow_html=True,
         )
         _cols = st.columns([1, 1.2, 1])
@@ -427,9 +429,10 @@ if _google_auth_configured():
                 st.login("google")
         st.stop()
 
-    if not st.user.email.endswith(ALLOWED_DOMAIN):
+    _correo = (st.user.email or "").lower()
+    if not _correo.endswith(ALLOWED_DOMAINS):
         st.error(
-            f"Solo cuentas {ALLOWED_DOMAIN} pueden acceder a Vali Intelligence. "
+            f"Solo cuentas {' o '.join(ALLOWED_DOMAINS)} pueden acceder a Vali Intelligence. "
             f"Conectado como {st.user.email}."
         )
         if st.button("Cerrar sesión"):
@@ -439,8 +442,9 @@ if _google_auth_configured():
     # Registra al usuario en data/users.json si es su primer login (idempotente)
     # - alerts/cli.py lo usa como lista de destinatarios de las alertas diarias.
     try:
-        from auth.store import register
-        register(st.user.email)
+        if _correo.endswith(ALLOWED_DOMAINS[0]):
+            from auth.store import register
+            register(st.user.email)
     except Exception as e:
         print(f"[auth] no se pudo registrar {st.user.email}: {e}")
 

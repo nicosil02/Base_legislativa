@@ -173,8 +173,8 @@ python -m clientes.nuevo crear acme --nombre "Acme" --paises PE,EC
 
 El repositorio es público. Estas son las reglas que lo hacen posible.
 
-- **Login.** La app solo abre con una cuenta de Google del dominio de la
-  consultora (`app.py`).
+- **Login.** La app solo abre con una cuenta de Google de los dominios
+  autorizados (`ALLOWED_DOMAINS` en `app.py`).
 - **Datos de clientes cifrados.** Los perfiles, las matrices, el historial de
   alertas y lo que marca el analista van en git solo como `*.cifrado`. La clave
   es el secreto `CLIENTES_CLAVE`. El código está en `clientes/privado.py` y
