@@ -45,14 +45,14 @@ jobs:
 
       - run: |
           pip install -c constraints.txt -q torch --index-url https://download.pytorch.org/whl/cpu --extra-index-url https://pypi.org/simple
-          pip install -c constraints.txt -q transformers google-genai sqlite-vec numpy
+          pip install -c constraints.txt -q transformers google-genai sqlite-vec numpy pycryptodome
 
       - name: Bajar DBs y el cerebro publicado
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           bash scripts/bajar_db.sh proyectos.db.gz proyectos.db
-          gh release download cerebro -p cerebro.db -D data --clobber
+          bash scripts/cerebro_release.sh bajar cerebro.db
 
       - name: Gemini etiqueta pares
         if: inputs.etiquetar
@@ -72,7 +72,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release upload cerebro data/cerebro.db --clobber   # etiquetas nuevas, sin veredictos del modelo viejo
+          bash scripts/cerebro_release.sh subir cerebro.db   # etiquetas nuevas, sin veredictos del modelo viejo
           tar -czf data/mismo_hecho_modelo.tar.gz -C data mismo_hecho_modelo
           gh release upload cerebro data/mismo_hecho_modelo.tar.gz --clobber
           {

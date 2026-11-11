@@ -5,8 +5,9 @@ name: Cerebro (embeddings del corpus)
 # datos nuevos y embebe SOLO lo nuevo o cambiado.
 #
 # cerebro.db no va a git (vectores, casi no comprimen): se publica como
-# adjunto del release "cerebro" (--clobber, sin historial) y la app lo baja
-# de ahi (cerebro.embeddings.descargar_si_falta).
+# adjunto del release "cerebro" (sin historial) y la app lo baja de ahi
+# (cerebro.embeddings.descargar_si_falta). Va cifrado con CLIENTES_CLAVE
+# porque lleva perfiles y relevancia por cliente (scripts/cerebro_release.sh).
 #
 # Disparo por workflow_run (no por schedule: el cron nativo de GitHub no es
 # confiable en este repo, ver backfill-auto.yml).
@@ -58,7 +59,7 @@ jobs:
         with:
           python-version: '3.13'
 
-      - run: pip install -c constraints.txt -q google-genai sqlite-vec lightrag-hku fastembed openpyxl pymupdf  # openpyxl: matrices de PLs en el perfil del cliente; pymupdf: fecha real de los PDF
+      - run: pip install -c constraints.txt -q google-genai sqlite-vec lightrag-hku fastembed openpyxl pymupdf pycryptodome  # pycryptodome: cifrado del release; openpyxl: matrices de PLs en el perfil del cliente; pymupdf: fecha real de los PDF
 
       - name: Bajar DBs y el cerebro publicado
         env:
@@ -70,8 +71,9 @@ jobs:
           gh release view cerebro > /dev/null 2>&1 || \
             gh release create cerebro --title "Cerebro (embeddings)" \
               --notes "data/cerebro.db generado por .github/workflows/cerebro.yml - no editar a mano." --latest=false
-          gh release download cerebro -p cerebro.db -D data --clobber || echo "sin cerebro.db previo, se arma de cero"
-          gh release download cerebro -p grafo.tar.gz -D data --clobber             && tar -xzf data/grafo.tar.gz -C data || echo "sin grafo previo, se arma de cero"
+          bash scripts/cerebro_release.sh bajar cerebro.db
+          bash scripts/cerebro_release.sh bajar grafo.tar.gz
+          if [ -f data/grafo.tar.gz ]; then tar -xzf data/grafo.tar.gz -C data; fi
 
       - name: Embeber lo nuevo
         env:
@@ -149,8 +151,8 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          if [ -f data/cerebro.db ]; then gh release upload cerebro data/cerebro.db --clobber; fi
+          if [ -f data/cerebro.db ]; then bash scripts/cerebro_release.sh subir cerebro.db; fi
           if [ -d data/grafo ]; then
             python -X utf8 -m cerebro.grafo empaquetar
-            gh release upload cerebro data/grafo.tar.gz --clobber
+            bash scripts/cerebro_release.sh subir grafo.tar.gz
           fi

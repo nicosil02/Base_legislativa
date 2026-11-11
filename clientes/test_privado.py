@@ -56,3 +56,24 @@ def test_buzon_ida_y_vuelta_y_recibir_cifra(tmp_path, monkeypatch):
     assert not hechos[0].exists()
     cif = (tmp_path / "acme" / "notas.md.cifrado").read_text(encoding="ascii")
     assert privado.descifrar(cif) == b"perfil de acme"
+
+
+def test_archivo_grande_por_trozos(monkeypatch, tmp_path):
+    monkeypatch.setenv("CLIENTES_CLAVE", "una")
+    monkeypatch.setattr(privado, "_TROZO", 1000)
+    claro, cif, vuelta = tmp_path / "a.db", tmp_path / "a.db.cifrado", tmp_path / "b.db"
+    claro.write_bytes(b"perfil de Bayer " * 160)  # 2560 bytes: dos trozos enteros y uno parcial
+    privado.cerrar_archivo(claro, cif)
+    assert b"Bayer" not in cif.read_bytes()
+    with open(cif, "rb") as f:  # tambien desde un flujo, como la respuesta HTTP
+        privado.abrir_archivo(f, vuelta)
+    assert vuelta.read_bytes() == claro.read_bytes()
+    vuelta.write_bytes(b"copia anterior")
+    cortado = tmp_path / "cortado"
+    cortado.write_bytes(cif.read_bytes()[:-20])  # sin el trozo final
+    with pytest.raises(ValueError):
+        privado.abrir_archivo(cortado, vuelta)
+    monkeypatch.setenv("CLIENTES_CLAVE", "otra")
+    with pytest.raises(ValueError):
+        privado.abrir_archivo(cif, vuelta)
+    assert vuelta.read_bytes() == b"copia anterior"  # si falla no pisa lo que habia

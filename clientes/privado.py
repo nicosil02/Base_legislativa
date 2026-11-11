@@ -10,6 +10,9 @@ Cifrado solo con la libreria estandar (corre igual en Streamlit, en cada
 workflow y en Windows): flujo HMAC-SHA256 en modo contador + etiqueta
 HMAC-SHA256 sobre nonce y texto cifrado (cifrar y despues autenticar).
 
+Los archivos grandes (cerebro.db y el grafo, que van al release publico
+"cerebro") usan AES-256-GCM por trozos con pycryptodome: ver cerrar_archivo.
+
 Uso local:
   python -m clientes.privado abrir [--pisar]   # .cifrado -> texto (tras git pull)
   python -m clientes.privado cerrar            # texto -> .cifrado (antes de commit)
@@ -189,13 +192,95 @@ def recibir(carpeta: Path = CARPETA) -> int:
     return len(textos)
 
 
+# ------------------------------------------------------------ archivos grandes
+# cerebro.db y el grafo pesan cientos de MB y llevan perfiles y relevancia por
+# cliente. El cifrado de arriba es Python puro, lento para ese tamano: aca
+# AES-256-GCM por trozos de 1 MB (pycryptodome, que la app ya instala).
+# Formato: magia + prefijo(8) y, por trozo, largo(4) + etiqueta(16) + cuerpo.
+# El nonce es prefijo + numero de trozo (nadie puede reordenarlos) y el ultimo
+# trozo va vacio y marcado "fin" (un archivo cortado no pasa por completo).
+_MAGIA_ARCHIVO = b"VALIA1"
+_TROZO = 1 << 20
+
+
+def _aes(clave: bytes, prefijo: bytes, i: int, fin: bool):
+    from Crypto.Cipher import AES
+    c = AES.new(clave, AES.MODE_GCM, nonce=prefijo + i.to_bytes(4, "big"))
+    c.update(b"fin" if fin else b"trozo")
+    return c
+
+
+def _clave_archivo(claves) -> bytes:
+    k_cif, _ = claves or _claves() or _sin_clave()
+    return hmac.new(k_cif, b"archivo", hashlib.sha256).digest()
+
+
+def _leer(f, n: int) -> bytes:
+    """Exactamente n bytes (una respuesta HTTP puede entregar de a menos)."""
+    partes, falta = [], n
+    while falta:
+        b = f.read(falta)
+        if not b:
+            raise ValueError("archivo cifrado incompleto")
+        partes.append(b)
+        falta -= len(b)
+    return b"".join(partes)
+
+
+def cerrar_archivo(origen: Path, destino: Path, claves: tuple[bytes, bytes] | None = None) -> None:
+    clave, prefijo = _clave_archivo(claves), secrets.token_bytes(8)
+    with open(origen, "rb") as f, open(destino, "wb") as g:
+        g.write(_MAGIA_ARCHIVO + prefijo)
+        i = 0
+        while True:
+            trozo = f.read(_TROZO)
+            cuerpo, etiqueta = _aes(clave, prefijo, i, fin=not trozo).encrypt_and_digest(trozo)
+            g.write(len(cuerpo).to_bytes(4, "big") + etiqueta + cuerpo)
+            if not trozo:
+                return
+            i += 1
+
+
+def abrir_archivo(origen, destino: Path, claves: tuple[bytes, bytes] | None = None) -> None:
+    """origen: una ruta o algo con .read() (la respuesta HTTP del release).
+    Escribe por trozos en un temporal y solo reemplaza destino si todo el
+    archivo paso la verificacion. ValueError si la clave no es o esta alterado."""
+    clave = _clave_archivo(claves)
+    f = open(origen, "rb") if isinstance(origen, (str, Path)) else origen
+    tmp = Path(str(destino) + ".tmp")
+    try:
+        if _leer(f, len(_MAGIA_ARCHIVO)) != _MAGIA_ARCHIVO:
+            raise ValueError("no es un archivo cifrado de clientes")
+        prefijo = _leer(f, 8)
+        with open(tmp, "wb") as g:
+            i = 0
+            while True:
+                n = int.from_bytes(_leer(f, 4), "big")
+                if n > _TROZO:
+                    raise ValueError("archivo cifrado alterado")
+                etiqueta = _leer(f, 16)
+                g.write(_aes(clave, prefijo, i, fin=not n).decrypt_and_verify(_leer(f, n), etiqueta))
+                if not n:
+                    break
+                i += 1
+        tmp.replace(destino)
+    finally:
+        tmp.unlink(missing_ok=True)
+        if f is not origen:
+            f.close()
+
+
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
-    ap.add_argument("accion", choices=["abrir", "cerrar", "enviar", "recibir"])
-    ap.add_argument("rutas", nargs="*", type=Path, help="enviar: carpetas o archivos de clientes/")
+    ap.add_argument("accion", choices=["abrir", "cerrar", "enviar", "recibir", "cerrar-archivo", "abrir-archivo"])
+    ap.add_argument("rutas", nargs="*", type=Path,
+                    help="enviar: carpetas o archivos de clientes/. *-archivo: origen y destino")
     ap.add_argument("--pisar", action="store_true", help="abrir: reemplaza el texto local")
     a = ap.parse_args()
-    if a.accion == "enviar":
+    if a.accion.endswith("-archivo"):
+        (cerrar_archivo if a.accion.startswith("cerrar") else abrir_archivo)(*a.rutas)
+        print(f"[clientes] {a.accion}: {a.rutas[1]}")
+    elif a.accion == "enviar":
         hechos = enviar(a.rutas)
         for b in hechos:
             print(f"  {b}")

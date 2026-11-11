@@ -4,7 +4,7 @@ name: Rotar clave de clientes
 # con el secreto `vieja`. Si `rama` viene, primero la une a main, asi el codigo
 # que espera la clave nueva y los datos recifrados llegan en el MISMO commit.
 # Tambien cifra los JSON de core/store.CIFRADOS que sigan en claro y los saca
-# de git. Antes de correrlo, CLIENTES_CLAVE nueva tiene que estar en GitHub,
+# de git, y recifra los adjuntos del release "cerebro". Antes de correrlo, CLIENTES_CLAVE nueva tiene que estar en GitHub,
 # en los Secrets de Streamlit y en el .env de la PC.
 
 on:
@@ -27,7 +27,7 @@ concurrency:
 jobs:
   rotar:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
         with:
@@ -86,3 +86,22 @@ jobs:
             echo "main avanzo, reintento"; sleep 5
           done
           exit 1
+
+      - name: Recifrar los adjuntos del release cerebro
+        # Si se corta a medias, cerebro.yml falla al abrir (no arma de cero):
+        # volver a correr este workflow.
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VIEJA: ${{ secrets[inputs.vieja] }}
+          NUEVA: ${{ secrets.CLIENTES_CLAVE }}
+        run: |
+          set -e
+          pip install -c constraints.txt -q pycryptodome
+          for a in cerebro.db grafo.tar.gz; do
+            if CLIENTES_CLAVE="$NUEVA" bash scripts/cerebro_release.sh bajar "$a"; then
+              echo "$a ya abre con la clave nueva"
+            else
+              CLIENTES_CLAVE="$VIEJA" bash scripts/cerebro_release.sh bajar "$a"
+              CLIENTES_CLAVE="$NUEVA" bash scripts/cerebro_release.sh subir "$a"
+            fi
+          done

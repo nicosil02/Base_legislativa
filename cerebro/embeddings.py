@@ -18,7 +18,6 @@ from __future__ import annotations
 import functools
 import hashlib
 import json
-import shutil
 import re
 import sqlite3
 import struct
@@ -32,7 +31,8 @@ from clientes import config
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 CEREBRO_DB = REPO_ROOT / "data" / "cerebro.db"
-RELEASE_URL = "https://github.com/nicosil02/Base_legislativa/releases/download/cerebro/cerebro.db"
+# Cifrado con CLIENTES_CLAVE: lleva perfiles y relevancia por cliente (clientes/privado.py)
+RELEASE_URL = "https://github.com/nicosil02/Base_legislativa/releases/download/cerebro/cerebro.db.cifrado"
 
 MODELO = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
 DIM = 384
@@ -157,7 +157,7 @@ ESPERA_TRAS_FALLO = 600
 def descargar_si_falta(path: Path | None = None, max_edad_seg: int = 3 * 3600) -> Path | None:
     """Para la app (Streamlit Cloud): baja el cerebro.db publicado si no hay
     copia local o si la local tiene mas de max_edad_seg. None si no se pudo
-    (sin red, release todavia no creado)."""
+    (sin red, sin CLIENTES_CLAVE, release todavia no creado)."""
     global _ULTIMO_FALLO
     path = path or CEREBRO_DB
     if path.exists() and time.time() - path.stat().st_mtime < max_edad_seg:
@@ -170,11 +170,10 @@ def descargar_si_falta(path: Path | None = None, max_edad_seg: int = 3 * 3600) -
         if time.time() - _ULTIMO_FALLO < ESPERA_TRAS_FALLO:
             return path if path.exists() else None
         try:
-            tmp = path.with_suffix(".tmp")
+            from clientes import privado
             path.parent.mkdir(parents=True, exist_ok=True)
-            with urllib.request.urlopen(RELEASE_URL, timeout=120) as r, open(tmp, "wb") as f:
-                shutil.copyfileobj(r, f, 1 << 20)  # por partes: no 280 MB en memoria
-            tmp.replace(path)
+            with urllib.request.urlopen(RELEASE_URL, timeout=120) as r:
+                privado.abrir_archivo(r, path)  # por trozos: no 280 MB en memoria
             return path
         except Exception as e:
             _ULTIMO_FALLO = time.time()

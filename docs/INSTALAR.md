@@ -41,7 +41,7 @@ bash scripts/bajar_db.sh proyectos_ec.db.gz proyectos_ec.db
 
 `proyectos.db` se publica en partes y el script la arma sola. `cerebro.db` y
 el grafo (`data/grafo/`) los baja la app la primera vez desde el release
-`cerebro` de GitHub, no hay que hacer nada.
+`cerebro` de GitHub, no hay que hacer nada. Van cifrados: hace falta `CLIENTES_CLAVE`.
 
 ## 3. Correr la app y los tests
 

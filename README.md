@@ -145,7 +145,8 @@ La app baja sola las bases de la rama `datos` en el primer arranque. Sin
 `VALI_SIN_LOGIN=1` en el `.env` no abre, porque exige el login de Google.
 
 Sin la clave de clientes (`CLIENTES_CLAVE`) todo funciona, pero sin las
-secciones que dependen de las fichas de clientes.
+secciones que dependen de las fichas de clientes ni la búsqueda por
+significado.
 
 La guía completa, con los secretos y los servicios externos, está en
 [`docs/INSTALAR.md`](docs/INSTALAR.md).
@@ -178,7 +179,9 @@ El repositorio es público. Estas son las reglas que lo hacen posible.
 - **Datos de clientes cifrados.** Los perfiles, las matrices, el historial de
   alertas y lo que marca el analista van en git solo como `*.cifrado`. La clave
   es el secreto `CLIENTES_CLAVE`. El código está en `clientes/privado.py` y
-  `core/store.py`. Sin la clave nunca se escribe nada en claro.
+  `core/store.py`. Sin la clave nunca se escribe nada en claro. Los adjuntos
+  del release `cerebro` llevan relevancia por cliente y también van cifrados
+  (`scripts/cerebro_release.sh`).
 - **Secretos.** Ninguno está en el repositorio. Viven en los Secrets de GitHub
   Actions y de Streamlit Cloud. Sus nombres están en `docs/INSTALAR.md`.
 - **Las bases no van en `main`.** Van en la rama `datos`. No hay que commitear

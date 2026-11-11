@@ -14,7 +14,7 @@ Cada documento tiene un id estable: LightRAG no re-procesa lo ya hecho, asi
 que cada corrida solo agrega lo nuevo (y reintenta lo que fallo).
 
 Donde vive: data/grafo/ (archivos JSON/GraphML de LightRAG, sin servidor),
-publicado como grafo.tar.gz en el release "cerebro" - igual que cerebro.db.
+publicado como grafo.tar.gz.cifrado en el release "cerebro" - igual que cerebro.db.
 
 Uso:
     python -m cerebro.grafo construir [max_docs]
@@ -36,7 +36,7 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 GRAFO_DIR = REPO_ROOT / "data" / "grafo"
-RELEASE_URL = "https://github.com/nicosil02/Base_legislativa/releases/download/cerebro/grafo.tar.gz"
+RELEASE_URL = "https://github.com/nicosil02/Base_legislativa/releases/download/cerebro/grafo.tar.gz.cifrado"
 
 # No gemini-3.6-flash: su cupo gratuito (20/día) es el de los chats y una
 # corrida del grafo lo agotó. Gemma solo si flash-lite se queda sin cupo.
@@ -356,8 +356,9 @@ def descargar_si_falta(max_edad_seg: int = 3 * 3600) -> bool:
     try:
         tmp = REPO_ROOT / "data" / "grafo.tar.gz"
         tmp.parent.mkdir(parents=True, exist_ok=True)
-        with urllib.request.urlopen(RELEASE_URL, timeout=120) as r, open(tmp, "wb") as f:
-            f.write(r.read())
+        from clientes import privado
+        with urllib.request.urlopen(RELEASE_URL, timeout=120) as r:
+            privado.abrir_archivo(r, tmp)
         with tarfile.open(tmp) as tar:
             tar.extractall(REPO_ROOT / "data", filter="data")
         marca.touch()
