@@ -259,7 +259,10 @@
   "jpAiIpszKm4",
   "6015TDyvWYg",
   "cO41B4PABpg",
-  "fb_1434315122103124"
+  "fb_1434315122103124",
+  "I8tDQiZPfT8",
+  "2kTRrHDvmpk",
+  "DmiGxqblADo"
  ],
  "sesiones": [
   {
@@ -2312,6 +2315,30 @@
    "pais": "EC",
    "url": "https://www.facebook.com/watch/?v=1434315122103124",
    "visto_at": "2026-11-10T23:51:04Z"
+  },
+  {
+   "id": "I8tDQiZPfT8",
+   "titulo": "🔴EN VIVO: Sesión del Pleno del Senado de la República | 11/11/2026",
+   "tipo": "Pleno: Senado",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=I8tDQiZPfT8",
+   "visto_at": "2026-11-11T17:03:19Z"
+  },
+  {
+   "id": "2kTRrHDvmpk",
+   "titulo": "🔴EN VIVO: Comisión de Modernización de la Gestión del Estado y Contraloría  11/11/2026",
+   "tipo": "Comision: Gestion Del Estado",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=2kTRrHDvmpk",
+   "visto_at": "2026-11-11T17:03:19Z"
+  },
+  {
+   "id": "DmiGxqblADo",
+   "titulo": "🔴EN VIVO: Audiencia pública descentralizada de la Comisión de Energía y Minas  11/11/2026",
+   "tipo": "Comision: Energia Y Minas",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=DmiGxqblADo",
+   "visto_at": "2026-11-11T17:03:19Z"
   }
  ],
  "avisado": {
