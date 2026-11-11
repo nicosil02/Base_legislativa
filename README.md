@@ -5,6 +5,8 @@ lo que pasa en el Congreso del Perú y en la Asamblea Nacional del Ecuador, lo
 cruza con normas y noticias, y le dice al analista qué le interesa a cada
 cliente.
 
+**App en línea:** https://valiintelligence.streamlit.app (pide una cuenta de Google autorizada).
+
 ## Objetivos
 
 1. **No perder nada relevante.** Reunir en un solo lugar los proyectos de ley,
