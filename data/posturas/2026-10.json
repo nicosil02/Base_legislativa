@@ -11506,5 +11506,242 @@
     "v": 4,
     "dichos": [],
     "url": "https://www.youtube.com/watch?v=7xb1vH1EPfQ"
+  },
+  "1GkSZl09wVw": {
+    "fecha": "2026-10-21",
+    "organo": "Pleno del Senado",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Cabuana Aymachoque",
+        "cargo": "legislador",
+        "sobre": "Sustentación del informe de la comisión",
+        "postura": "comenta",
+        "tema": "Banca",
+        "dijo": "Informó sobre el proceso de evaluación de los candidatos.",
+        "proyecto": "",
+        "id": "senado:ccahuana aymachoque"
+      },
+      {
+        "orador": "Flavio Fialo",
+        "cargo": "legislador",
+        "sobre": "Candidatos para el directorio del BCRP",
+        "postura": "a favor",
+        "tema": "Banca",
+        "dijo": "Defendió la capacidad profesional de los candidatos presentados.",
+        "proyecto": "",
+        "id": "senado:figallo rivadeneyra"
+      },
+      {
+        "orador": "Alfón",
+        "cargo": "legislador",
+        "sobre": "Candidatos al directorio del BCRP",
+        "postura": "comenta",
+        "tema": "Banca",
+        "dijo": "Manifestó su opinión respecto a la trayectoria de los postulantes.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Cabuana Aymachoque",
+        "cargo": "legislador",
+        "sobre": "Votación del informe de la comisión",
+        "postura": "propone",
+        "tema": "Banca",
+        "dijo": "Solicitó la votación del informe de la comisión especial.",
+        "proyecto": "",
+        "id": "senado:ccahuana aymachoque"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=1GkSZl09wVw"
+  },
+  "fb_959796786743679": {
+    "fecha": "2026-10-21",
+    "organo": "Comisión de Gobiernos Autónomos",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Byron Gabriel Líger Mosquera",
+        "cargo": "invitado",
+        "sobre": "reformas al COTAP para seguridad",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso reformas al COTAP para fortalecer la gobernanza territorial y la seguridad ciudadana.",
+        "proyecto": "COTAP",
+        "id": null
+      },
+      {
+        "orador": "Patricia Núñez",
+        "cargo": "legislador",
+        "sobre": "presupuesto para la seguridad ciudadana",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Cuestionó la viabilidad de las reformas por la falta de presupuesto para inversión.",
+        "proyecto": "COTAP",
+        "id": "EC:nunez ramos"
+      },
+      {
+        "orador": "Byron Gabriel Líger Mosquera",
+        "cargo": "invitado",
+        "sobre": "financiamiento de medidas de seguridad",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Defendió la capacidad de los GAD para financiar medidas de seguridad mediante tasas locales.",
+        "proyecto": "COTAP",
+        "id": null
+      },
+      {
+        "orador": "Javier Lasso",
+        "cargo": "legislador",
+        "sobre": "desconexión entre Estado y ciudadanía",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Comentó la dificultad de los ciudadanos para tener contacto con las autoridades nacionales.",
+        "proyecto": "",
+        "id": "EC:lasso mendoza"
+      },
+      {
+        "orador": "Javier Lasso",
+        "cargo": "legislador",
+        "sobre": "Seguridad en las parroquias",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Resaltó la importancia de la seguridad parroquial.",
+        "proyecto": "",
+        "id": "EC:lasso mendoza"
+      },
+      {
+        "orador": "Samuel Celler",
+        "cargo": "legislador",
+        "sobre": "Modernización tecnológica de la seguridad",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Sugirió usar tecnología de videovigilancia china.",
+        "proyecto": "",
+        "id": "EC:celleri gomez"
+      },
+      {
+        "orador": "Cristian Benavig",
+        "cargo": "legislador",
+        "sobre": "Autonomía municipal y seguridad territorial",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso fortalecer la seguridad con comités barriales.",
+        "proyecto": "",
+        "id": "EC:benavides fuentes"
+      },
+      {
+        "orador": "Pablo Jurado",
+        "cargo": "legislador",
+        "sobre": "Narcotráfico y minería ilegal",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Alertó sobre la presencia de minicarteles.",
+        "proyecto": "",
+        "id": "EC:jurado moreno"
+      },
+      {
+        "orador": "Tiero",
+        "cargo": "legislador",
+        "sobre": "Inseguridad en Durán",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Denunció la inseguridad en la ciudad de Durán.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Milton Aguas",
+        "cargo": "legislador",
+        "sobre": "Reformas al COTAD",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Defendió la importancia de reformar el COTAD.",
+        "proyecto": "COTAD",
+        "id": "EC:aguas flores"
+      },
+      {
+        "orador": "Jennifer Guillen",
+        "cargo": "legislador",
+        "sobre": "Seguridad y lucha contra el crimen",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Defendió la gestión del gobierno ante el crimen organizado.",
+        "proyecto": "",
+        "id": "EC:guillen rodriguez"
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=959796786743679"
+  },
+  "fb_1874572143904977": {
+    "fecha": "2026-10-21",
+    "organo": "Comisión de Transparencia y Participación Ciudadana",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Francisco Javier Albuja Varela",
+        "cargo": "invitado",
+        "sobre": "Proyecto de Ley de Garantías Jurisdiccionales",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Propuso diversas observaciones técnicas al proyecto de la ley unificada.",
+        "proyecto": "Ley Orgánica de Garantías Jurisdiccionales",
+        "id": null
+      },
+      {
+        "orador": "Chamba",
+        "cargo": "legislador",
+        "sobre": "Decisiones judiciales y prevaricato",
+        "postura": "pregunta",
+        "tema": "Justicia",
+        "dijo": "Preguntó sobre la impugnación de decisiones y el prevaricato.",
+        "proyecto": "",
+        "id": "EC:chamba cabanilla"
+      },
+      {
+        "orador": "Francisco Javier Albuja Varela",
+        "cargo": "invitado",
+        "sobre": "Contradicciones en la redacción de la ley",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Propuso eliminar la redacción negativa para evitar contradicciones.",
+        "proyecto": "Ley Orgánica de Garantías Jurisdiccionales",
+        "id": null
+      },
+      {
+        "orador": "Francisco Javier Albuja Varela",
+        "cargo": "invitado",
+        "sobre": "Impugnación de decisiones de otras jurisdicciones",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Propuso incluir ejemplos de actos excluidos de la acción de protección.",
+        "proyecto": "Ley Orgánica de Garantías Jurisdiccionales",
+        "id": null
+      },
+      {
+        "orador": "Francisco Javier Albuja Varela",
+        "cargo": "invitado",
+        "sobre": "Independencia judicial y prevaricato",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Cuestionó la aplicación del delito de prevaricato a los jueces.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Francisco Albuja",
+        "cargo": "invitado",
+        "sobre": "reforma de la ley orgánica",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Propuso cambios en la ley para proteger la independencia de la Corte.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1874572143904977"
   }
 }
