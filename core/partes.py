@@ -21,10 +21,12 @@ nunca se pisa una fila ajena, y en transcripciones gana el texto mas largo.
 """
 from __future__ import annotations
 
+import gc
 import gzip
 import shutil
 import sqlite3
 import sys
+import time
 from pathlib import Path
 
 PARTES = {
@@ -137,7 +139,18 @@ def armar(destino: Path, partes: dict[str, Path], para_web: bool = False) -> Non
         if gz or para_web:
             path.unlink()
     conn.close()
-    tmp.replace(destino)
+    # Windows no deja reemplazar un archivo abierto y la app lee la base en
+    # conexiones cortas: se reintenta hasta un minuto (el 11/11/2026 fallaba
+    # con WinError 5 y la PC se quedaba con los datos del arranque).
+    for intento in range(30):
+        try:
+            tmp.replace(destino)
+            return
+        except PermissionError:
+            if intento == 29:
+                raise
+            gc.collect()  # cierra las conexiones que nadie usa ya
+            time.sleep(2)
 
 
 def unir(local: Path, remoto: Path, parte: str) -> int:
