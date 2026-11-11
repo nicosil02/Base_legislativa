@@ -1,134 +1,226 @@
-# Vali Intelligence
+# Radar Legislativo (Vali Intelligence)
 
-Plataforma de seguimiento regulatorio y asuntos públicos para Perú y Ecuador.
+Herramienta interna de una consultora de asuntos públicos. Sigue todos los días
+lo que pasa en el Congreso del Perú y en la Asamblea Nacional del Ecuador, lo
+cruza con normas y noticias, y le dice al analista qué le interesa a cada
+cliente.
 
-Congreso (proyectos, agenda, sesiones transcritas, votaciones), normas, noticias y
-alertas por cliente. Frontend propio (`front/`) montado en Streamlit; las bases se
-publican en la rama `datos`.
+## Objetivos
 
-## Setup inicial
+1. **No perder nada relevante.** Reunir en un solo lugar los proyectos de ley,
+   las agendas, las sesiones, las votaciones, las normas publicadas y las
+   noticias de los dos países.
+2. **Avisar a tiempo.** Detectar lo que le importa a cada cliente y avisarlo
+   por Telegram y por correo el mismo día, incluso mientras una sesión sigue
+   en vivo.
+3. **Ahorrar lectura.** Transcribir y resumir las sesiones para que el analista
+   no tenga que ver horas de video.
+4. **Funcionar sin servidor propio.** Todo corre gratis en GitHub Actions y en
+   Streamlit Community Cloud.
 
-### Camino rápido (PC nueva, usando la base publicada)
+## Qué hace
 
-Paso a paso completo, con secretos y servicios externos, en `docs/INSTALAR.md`.
+| Función | Detalle |
+|---|---|
+| Proyectos de ley | Baja todos los proyectos del Congreso (Perú) y de la Asamblea (Ecuador), con su estado, comisiones, autores y documentos. Les asigna un tema. |
+| Agenda | Sesiones de comisiones y del Pleno de los dos países, y qué proyectos se tratan en cada una. |
+| Sesiones en vivo | Detecta cuándo empieza una sesión en YouTube o Facebook, la transcribe con Whisper, la resume y avisa si se menciona algo de interés. |
+| Votaciones | Votos nominales del Pleno. Los lee del PDF oficial y usa OCR cuando el PDF es un escaneo. |
+| Noticias y normas | Lee unas 120 fuentes (medios, entidades públicas, El Peruano, Registro Oficial), las clasifica por tema y junta las que cuentan el mismo hecho. |
+| Televisión | Revisa los subtítulos de programas de TV y entrevistas para encontrar menciones de autoridades y temas seguidos. |
+| Interés por cliente | Un modelo de lenguaje (Gemini) lee cada novedad junto al perfil del cliente y decide si le interesa y por qué. |
+| Alertas | Telegram en el momento, un resumen diario y un correo a las 9:00 y a las 14:00 (hora de Lima) solo si hay novedades. |
+| Búsqueda | Búsqueda por significado sobre todo el contenido, con embeddings locales, y un grafo de conocimiento. |
+| Panel web | Una sola página donde el analista revisa su bandeja, sigue proyectos, lee transcripciones y redacta alertas. |
+
+## Cómo fluye el dato
+
+```mermaid
+flowchart LR
+    F[Portales del Congreso y la Asamblea<br>YouTube, Facebook, medios, diarios oficiales]
+    W[GitHub Actions<br>scrapers, transcripción, OCR, clasificación]
+    D[(Rama datos<br>bases SQLite comprimidas)]
+    R[(Release cerebro<br>embeddings y grafo)]
+    A[App Streamlit<br>panel del analista]
+    T[Telegram y correo]
+    M[(Rama main<br>código y estado en JSON)]
+
+    F --> W
+    W --> D
+    W --> R
+    W --> T
+    W --> M
+    D --> A
+    R --> A
+    A -- lo que marca el analista --> M
+```
+
+1. Los **workflows** de `.github/workflows/` corren los scrapers según un
+   horario y escriben en dos bases SQLite, `proyectos.db` (Perú, y lo común a
+   los dos países) y `proyectos_ec.db` (Ecuador).
+2. `scripts/publicar_db.sh` sube esas bases comprimidas a la rama **`datos`**.
+   Esa rama tiene un solo commit que se reemplaza en cada publicación, así el
+   repositorio no crece. `proyectos.db` se publica en partes, una por cada
+   grupo de workflows que la escribe (`core/partes.py`).
+3. La **app** (`app.py`) baja las bases de `datos` al arrancar y vuelve a
+   revisar cada 30 minutos.
+4. Lo que el analista marca en la web (seguir un proyecto, descartar una
+   noticia, guardar un borrador) se guarda como un commit en `main` por la API
+   de GitHub (`core/store.py`). Por eso el historial tiene muchos commits
+   automáticos.
+
+## Mapa del repositorio
+
+| Carpeta | Qué contiene |
+|---|---|
+| `app.py` | Punto de entrada. Carga los secretos, baja las bases, exige el login y monta la página. |
+| `pages/` | La única página, `0_Hoy.py`. Monta la interfaz y pasa las acciones del navegador al servidor. |
+| `front/` | Interfaz propia. Los `.js` y el `.css` corren en el navegador. `vistas.py` prepara los datos de cada sección y atiende las acciones. |
+| `core/` | Piezas comunes: conexión a SQLite, bases en partes, guardado de JSON en GitHub, cliente de Gemini, utilidades de texto, hora y HTTP. |
+| `scraper/` | Proyectos de ley del Perú desde la API del portal del Congreso. Define el esquema de `proyectos.db` y los temas. |
+| `scraper_ec/` | Proyectos de ley del Ecuador. Define el esquema de `proyectos_ec.db`. |
+| `sesiones/` | Agenda de las comisiones del Congreso del Perú. |
+| `pleno/` | Agenda del Pleno del Perú, leída de los PDF de cada cámara. |
+| `agenda_ec/` | Agenda de la Asamblea del Ecuador desde su calendario público. |
+| `mesas_tecnicas/` | Mesas de trabajo y eventos del Congreso del Perú. |
+| `votaciones/` | Votos nominales del Pleno del Perú, por texto del PDF o por OCR. |
+| `congreso_live/` | Sesiones en vivo: detección, transcripción, resumen, oradores y avisos. |
+| `noticias/` | Fuentes, scraper de noticias y normas, temas, monitor de TV y juez de "mismo hecho". |
+| `consultas/` | Consultas que usa la interfaz. También tiene los scrapers de cargos, integrantes, votos de comisiones y posturas. |
+| `clasificador/` | Modelo que asigna tema a los proyectos de ley (TF-IDF y regresión logística). |
+| `models/` | El modelo entrenado del clasificador. |
+| `cerebro/` | Búsqueda por significado (embeddings y sqlite-vec) y grafo de conocimiento. |
+| `clientes/` | Fichas de clientes **cifradas**, el código que las cifra y la configuración por cliente. |
+| `alerts/` | Correo diario, juez de interés por cliente, resumen del día, proyectos seguidos, bandeja y redacción de alertas. |
+| `auth/` | Registro de usuarios que reciben el correo. El login está en `app.py`. |
+| `sistema/` | Registro de cada corrida y aviso cuando un workflow falla o deja de correr. |
+| `scripts/` | Publicar y bajar las bases, proxy para YouTube y dos vigías puntuales. |
+| `data/` | Estado en JSON que escriben los workflows y la app, y las fotos de los asambleístas. Las bases no van aquí. |
+| `docs/` | `INSTALAR.md`, la guía para montar todo desde cero. |
+
+Los tests están junto al código que prueban, en archivos `test_*.py`.
+
+## Automatizaciones
+
+Todo lo programado vive en `.github/workflows/`. Los principales:
+
+| Workflow | Cuándo corre | Qué hace |
+|---|---|---|
+| `refrescar-pe.yml` | Cada hora, de 8:00 a 22:00 (Lima) | El recorrido principal: proyectos del Perú, agendas, noticias de los dos países, normas, votaciones y el correo. |
+| `enriquecer-ec.yml` | 4 veces al día | Proyectos, documentos y agenda del Ecuador. |
+| `vigilar-congreso.yml` | Cada 10 minutos en horario parlamentario | Detecta sesiones en vivo, las transcribe y avisa. |
+| `backfill-auto.yml`, `backfill-vod.yml`, `videos-pedidos.yml` | Cada 6 horas o a pedido | Recuperan y transcriben sesiones que no se captaron en vivo. |
+| `oradores.yml` | Cada 3 horas | Identifica quién habla en cada transcripción. |
+| `posturas.yml` | Cada 3 horas | Lee las sesiones y anota la postura de cada parlamentario. |
+| `tv-monitor.yml`, `tv-en-vivo.yml` | Varias veces al día | Monitor de televisión y entrevistas. |
+| `cerebro.yml` | Al terminar los anteriores | Embeddings, juez de interés por cliente, resumen del día y grafo. |
+| `votaciones-ocr-bicameral.yml` | Diario | OCR de las votaciones escaneadas. |
+| `entrenar-ml.yml` | Domingos | Reentrena el clasificador de temas. |
+| `salud.yml` | Cada hora | Avisa si algún workflow falló o no corrió. |
+| `tests.yml` | En cada push y pull request con código | Corre `pytest`. |
+
+Los demás son manuales: `enviar-aviso.yml`, `probar-avisos.yml`,
+`buzon-clientes.yml`, `rotar-clave-clientes.yml`, `entrenar-mismo-hecho.yml`
+y `votaciones-ocr.yml`.
+
+Dos servicios externos disparan workflows porque el horario propio de GitHub
+se atrasa. Están descritos en `docs/INSTALAR.md`, sección 6.
+
+## Correrlo en local
+
+Hace falta Python 3.13. En Windows los comandos van en Git Bash.
 
 ```bash
+git clone https://github.com/nicosil02/Base_legislativa.git
+cd Base_legislativa
+python -m venv .venv
+source .venv/Scripts/activate            # Linux y Mac: source .venv/bin/activate
 pip install -r requirements.txt -c constraints.txt
-bash scripts/bajar_db.sh proyectos.db.gz proyectos.db
-python -m streamlit run app.py            # abre el dashboard
-```
 
-Luego corres `python -m scraper.cli update` para traer los PLs nuevos.
-
-### Camino desde cero
-
-```powershell
-pip install -r requirements.txt -c constraints.txt
-python -m scraper.cli init                       # crea proyectos.db + comisiones
-python -m scraper.cli update                     # carga completa (~30-40 min)
-```
-
-No commitear `data/*.db.gz` en `main`: la base va solo en la rama `datos`.
-
-## Dashboard (frontend)
-
-```powershell
+cp .env.example .env                     # y poner VALI_SIN_LOGIN=1
 python -m streamlit run app.py
 ```
 
-App multi-página con estética editorial-data (tipografía Inter, peso 900, acentos azules `#2563EB`).
+La app baja sola las bases de la rama `datos` en el primer arranque. Sin
+`VALI_SIN_LOGIN=1` en el `.env` no abre, porque exige el login de Google.
 
-- **Home (`/`)** — `app.py`. Title "Radar Legislativo" + grid de países: 🇵🇪 Perú operativo, 🇨🇴 Colombia y 🇪🇨 Ecuador como placeholders. Cards con bordes sutiles que en hover destacan en azul.
-- **Perú (`/Peru`)** — `pages/1_Peru.py`. Dashboard con:
-  - **KPIs**: Total, Presentados, En comisión, Con dictamen, Autógrafas, Ley publicada (matchea `PUBLIC...PERUANO` y variantes).
-  - **Filtros**: PL (text), Tema, Estado, Comisión, Partido, Proponente (todos selectbox single-select con "Todos" por defecto) + búsqueda libre por título / autor.
-  - **Tabla `st.dataframe` con 6 columnas** que entran sin scroll horizontal: PL, Título, Presentado, Estado, Tema, Comisión (princ.). Click en headers para ordenar.
-  - **Panel de detalle** al hacer click en una fila: PL + título completo, metadata grid (Estado, Tema, Partido, Proponente, Presentado, Último cambio), todas las comisiones asignadas, sumilla, autores completos, historial de cambios, links Portal y PDF.
-  - **Sidebar**: rango de fechas (date range picker) + panel Sync con último run y botón "Actualizar ahora".
-- **Comisiones**: el filtro muestra solo las **24 ordinarias** + un grupo único **"Comisiones Especiales"** que agrupa el resto (especiales, subcomisiones, typos del catálogo). El mapeo está en `scraper/comisiones_ordinarias.py`.
+Sin la clave de clientes (`CLIENTES_CLAVE`) todo funciona, pero sin las
+secciones que dependen de las fichas de clientes.
 
-Caching de queries 60s. Para refrescar manualmente: `C` o `R` en la página.
+La guía completa, con los secretos y los servicios externos, está en
+[`docs/INSTALAR.md`](docs/INSTALAR.md).
 
-## Actualización automática cada 2 horas (Windows)
+### Tests
 
-```powershell
-# Una sola vez:
-.\scripts\install_schedule.ps1
+```bash
+pip install pytest pyyaml faster-whisper -c constraints.txt
+python -m pytest
 ```
 
-Registra la tarea **BaseLegislativa-Update** en el Task Scheduler:
-- Corre `python -m scraper.cli update` cada 2 horas.
-- Logs en `update.log` (en la carpeta del repo).
-- No requiere admin; corre bajo tu usuario aunque la sesión esté bloqueada (`-LogonType S4U`).
+### Comandos sueltos
 
-Comandos útiles:
+Cada módulo se puede correr por separado. Algunos ejemplos:
 
-```powershell
-Get-ScheduledTask -TaskName "BaseLegislativa-Update"     # ver estado
-Start-ScheduledTask -TaskName "BaseLegislativa-Update"   # disparar manualmente
-Get-Content update.log -Tail 50 -Wait                    # ver logs en vivo
-.\scripts\install_schedule.ps1 -Uninstall                # desinstalar
+```bash
+python -m scraper.cli update                    # proyectos de ley del Perú
+python -m scraper.cli show 14515                # detalle e historial de un proyecto
+python -m noticias.cli sync                     # noticias y normas
+python -m congreso_live.cli check               # ¿hay una sesión en vivo ahora?
+python -m clientes.nuevo crear acme --nombre "Acme" --paises PE,EC
 ```
 
-Para cambiar la frecuencia: `.\scripts\install_schedule.ps1 -IntervalHours 1`.
+## Seguridad y datos
 
-## CLI sin frontend
+El repositorio es público. Estas son las reglas que lo hacen posible.
 
-```powershell
-python -m scraper.cli update                                 # sync incremental
-python -m scraper.cli update --full                          # rehace TODO el detalle
-python -m scraper.cli query --tema "Tecnología" --limit 30
-python -m scraper.cli query --partido "Perú Libre" --estado "EN COMISIÓN"
-python -m scraper.cli show 14515                             # detalle + historial
-python -m scraper.cli recategorizar                          # re-aplica reglas a los no-manuales
-python -m scraper.cli export --out proyectos.json            # dump completo
-```
+- **Login.** La app solo abre con una cuenta de Google del dominio de la
+  consultora (`app.py`).
+- **Datos de clientes cifrados.** Los perfiles, las matrices, el historial de
+  alertas y lo que marca el analista van en git solo como `*.cifrado`. La clave
+  es el secreto `CLIENTES_CLAVE`. El código está en `clientes/privado.py` y
+  `core/store.py`. Sin la clave nunca se escribe nada en claro.
+- **Secretos.** Ninguno está en el repositorio. Viven en los Secrets de GitHub
+  Actions y de Streamlit Cloud. Sus nombres están en `docs/INSTALAR.md`.
+- **Las bases no van en `main`.** Van en la rama `datos`. No hay que commitear
+  ningún `*.db` ni `*.db.gz`.
+- **Los avisos no se escriben en los logs.** Los logs de GitHub Actions de un
+  repositorio público también son públicos.
 
-## Cómo funciona
+## Convenciones
 
-El portal oficial (`https://wb2server.congreso.gob.pe/spley-portal/`) es una SPA Angular
-que consume un API REST en `https://api.congreso.gob.pe/spley-portal-service`.
+- **Idioma.** El código y los comentarios están en español. Algunas carpetas
+  antiguas tienen nombre en inglés (`scraper`, `alerts`, `core`).
+- **Comentarios con fecha.** Cuando un comentario cita una fecha, explica un
+  error real que ocurrió ese día y por qué el código quedó así.
+- **Comentarios `ponytail:`.** Marcan una simplificación hecha a propósito e
+  indican cuál es su límite y cuándo convendría cambiarla.
+- **Versiones fijas.** `requirements.txt` tiene lo que usa la app.
+  `constraints.txt` fija la versión de todo lo que instalan los workflows. Un
+  test falla si un workflow instala algo sin usarlo.
+- **Historial.** La mayoría de los commits de `main` son datos automáticos.
+  Para ver solo los cambios de código:
 
-- **Listado**: `POST /proyecto-ley/lista-con-filtro` con `{perParId, first, rows}` — el
-  sync corre esto para **cada período** en `scraper.sync.PERIODOS_SYNC` (hoy solo
-  `2026`, ver abajo). Devuelve todos los PLs del período en una sola respuesta.
-- **Detalle**: `GET /expediente/{enc(perParId)}/{enc(pleyNum)}`. Los parámetros se cifran
-  con AES-128-ECB + PKCS7 (clave extraída del bundle Angular). Trae comisiones, firmantes,
-  seguimientos completos y archivos PDF.
-- **Comisiones**: `GET /comisiones` (catálogo, no depende del período).
+  ```bash
+  git log --oneline -- '*.py' '*.js' '*.css' '*.yml' '*.sh' '*.md'
+  ```
 
-El sync sólo llama al detalle para PLs nuevos o cuyo `desEstado` cambió → en uso
-incremental son pocas docenas de calls.
+## Detalles del Congreso del Perú
 
-### Períodos parlamentarios (`perParId`)
+El portal oficial de proyectos de ley consume una API REST en
+`https://api.congreso.gob.pe/spley-portal-service`. El scraper usa esa misma
+API (`scraper/client.py`).
 
-El Congreso peruano pasó de unicameral a **bicameral** (Senado + Cámara de Diputados) el
-2026-07-27, tras la reforma constitucional de 2024. `scraper/sync.py` solo sincroniza el vigente:
+- **Listado.** `POST /proyecto-ley/lista-con-filtro` devuelve todos los
+  proyectos de un período.
+- **Detalle.** `GET /expediente/{período}/{número}`. El portal cifra esos dos
+  parámetros con AES-128-ECB y el scraper hace lo mismo.
+- **Sincronización incremental.** Solo se pide el detalle de los proyectos
+  nuevos o de los que cambiaron de estado.
 
-| `perParId` | Período | Congreso | Estado |
-|---|---|---|---|
-| `2021` | 2021–2026 | Unicameral | Histórico (cerrado 2026-07-26) |
-| `2026` | 2026–2031 | Bicameral | **Vigente** — `PER_PAR_ID_ACTUAL` |
+El Congreso pasó de una cámara a dos (Senado y Cámara de Diputados) el 27 de
+julio de 2026. El sistema sincroniza solo el período vigente.
 
-Los demás módulos con datos period-sensibles (`sesiones/` — comisiones, `pleno/` —
-agendas del Pleno) siguen el mismo criterio; ver sus propios `__init__.py`/`README` para
-el detalle de cada API (cada una usa su propio backend del Congreso, con su propio
-catálogo de períodos).
-
-## Esquema SQLite
-
-- `proyectos` — fila principal con `tema`, `tema_manual` (1 = manual del Excel o de
-  un override Tec/Farma; 0 = clasificador automático), `first_seen_at`, `last_changed_at`.
-- `proyecto_comision` — M:N con las comisiones asignadas.
-- `seguimientos` — historial de cambios tal como lo da el servidor.
-- `archivos` — PDFs adjuntos por seguimiento.
-- `comisiones` — catálogo.
-- `sync_runs` — bitácora de cada corrida.
-
-## Roadmap
-
-- Migrar a Postgres (Supabase / Neon) y desplegar:
-  - Frontend → Streamlit Cloud (gratis para apps públicas, conectado al repo de GitHub).
-  - Scheduler → GitHub Actions cron cada 2h (gratis, sin servidor).
-- Tag "Crop" para Syngenta dentro de Agricultura.
-- Ampliar período: 2016-2021 y anteriores.
+| Período | Congreso | Estado |
+|---|---|---|
+| 2021-2026 | Unicameral | Histórico |
+| 2026-2031 | Bicameral | Vigente |

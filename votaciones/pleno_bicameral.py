@@ -13,7 +13,8 @@ Gotchas:
   "PROVISIONAL" son PDF de texto pero se reemplazan en la web. Por eso se
   suman las URL que pleno.agenda_pdf ya guardo (ahi quedaron provisionales).
   La misma votacion de dos PDF cae en la misma clave y gana la que cuadra.
-- TODO OCR: paginas sin texto se cuentan en pleno_votacion_pdf
+- Las paginas sin texto (escaneos) se cuentan en pleno_votacion_pdf y las
+  lee despues votaciones/pleno_bicameral_ocr.py
   (paginas_sin_texto) y se saltan. votaciones/ocr_pleno.py tiene el OCR del
   periodo anterior si hace falta.
 - Fila sin voto = SINRESP (en el Senado ahi aparece el que preside).
@@ -295,7 +296,7 @@ def parse_pdf(pdf_bytes: bytes) -> tuple[list[dict], int]:
         for page in doc:
             words = [(w[0], w[1], w[4]) for w in page.get_text("words")]
             if not words:
-                sin_texto += 1  # TODO OCR: escaneo sin capa de texto
+                sin_texto += 1  # escaneo sin capa de texto: lo lee pleno_bicameral_ocr.py
                 continue
             b = parse_pagina(words)
             if b:

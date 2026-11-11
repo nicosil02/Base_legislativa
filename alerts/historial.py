@@ -13,6 +13,8 @@ _ENCABEZADO = re.compile(r"^## (\d{4}-\d{2}-\d{2})(.*)$", re.MULTILINE)
 
 
 def ruta(slug: str) -> str:
+    if not re.fullmatch(r"[a-z0-9_-]+", slug):  # llega del navegador y arma una ruta del repo
+        raise ValueError(f"cliente no valido: {slug!r}")
     return f"clientes/{slug}/historial_alertas.md"
 
 
@@ -47,7 +49,7 @@ def agregar(slug: str, entrada_md: str, autor: str | None = None) -> None:
         return privado.cifrar(nuevo["texto"].encode("utf-8"))
 
     store.actualizar_texto(ruta(slug) + privado.SUFIJO, cambio,
-                           f"alertas: enviada a {slug}" + (f" ({autor})" if autor else ""))
+                           "alertas: historial actualizado")  # sin cliente ni autor: el repo es publico
     local = ROOT / ruta(slug)
     local.parent.mkdir(parents=True, exist_ok=True)
     local.write_text(nuevo["texto"], encoding="utf-8")

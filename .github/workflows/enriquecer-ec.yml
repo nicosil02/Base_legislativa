@@ -119,11 +119,12 @@ jobs:
 
       - name: Determinar parametros
         id: params
+        env:
+          LIMIT: ${{ inputs.limit || '60' }}
+          FORCE: ${{ inputs.force || 'false' }}
+          SOLO_SIN_FASE: ${{ inputs.solo_sin_fase || 'false' }}
+          ESTADO: ${{ inputs.estado || '' }}
         run: |
-          LIMIT="${{ inputs.limit || '60' }}"
-          FORCE="${{ inputs.force || 'false' }}"
-          SOLO_SIN_FASE="${{ inputs.solo_sin_fase || 'false' }}"
-          ESTADO="${{ inputs.estado || '' }}"
           ARGS="--limit $LIMIT"
           if [ "$FORCE" = "true" ]; then
             ARGS="$ARGS --force"

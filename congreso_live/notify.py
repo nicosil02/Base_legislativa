@@ -62,8 +62,9 @@ def enviar_telegram(mensaje: str, token: str, chat_id: str) -> bool:
 
 
 def enviar_whatsapp(mensaje: str) -> bool:
-    # El texto completo queda en el log de Actions como respaldo si el envio falla.
-    log.info("[notify] ALERTA_TXT %s", json.dumps(mensaje, ensure_ascii=False))
+    # Solo el largo: el repo es publico y sus logs de Actions tambien, y el
+    # texto dice que se le aviso a que cliente.
+    log.info("[notify] alerta de %d caracteres", len(mensaje))
     # Nombre historico: todos los callers llaman enviar_whatsapp. Si hay
     # Telegram configurado va por ahi; CallMeBot queda como respaldo.
     tg_token = os.environ.get("TELEGRAM_BOT_TOKEN")
@@ -73,8 +74,8 @@ def enviar_whatsapp(mensaje: str) -> bool:
     phone = os.environ.get("CALLMEBOT_PHONE")
     apikey = os.environ.get("CALLMEBOT_APIKEY")
     if not phone or not apikey:
-        log.warning("[notify] sin CALLMEBOT_PHONE/APIKEY; mensaje no enviado:\n%s",
-                    mensaje)
+        log.warning("[notify] sin CALLMEBOT_PHONE/APIKEY; mensaje no enviado (%d caracteres)",
+                    len(mensaje))
         return False
     url = (f"https://api.callmebot.com/whatsapp.php?phone={quote(phone)}"
            f"&text={quote(mensaje)}&apikey={quote(apikey)}")

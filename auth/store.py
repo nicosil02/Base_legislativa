@@ -34,5 +34,5 @@ def register(email):
         agregado = True
         return users + [{"email": email, "registered_at": now_iso()}]
 
-    store.actualizar(USERS_PATH, cambio, "auth: registro de " + email, [])
+    store.actualizar(USERS_PATH, cambio, "auth: registro", [])
     return agregado

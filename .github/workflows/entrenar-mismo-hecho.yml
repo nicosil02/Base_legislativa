@@ -59,7 +59,9 @@ jobs:
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           PYTHONIOENCODING: utf-8
-        run: python -X utf8 -u -m noticias.mismo_hecho etiquetar --dias ${{ inputs.dias }} --max ${{ inputs.max }}
+          DIAS: ${{ inputs.dias }}
+          MAX: ${{ inputs.max }}
+        run: python -X utf8 -u -m noticias.mismo_hecho etiquetar --dias "$DIAS" --max "$MAX"
 
       - name: Afinar y evaluar
         env:

@@ -46,9 +46,12 @@ jobs:
         # paddlepaddle fijo en 3.2.2 (3.3.x rompe en CPU con oneDNN, ver refrescar-pe.yml)
         run: pip install -c constraints.txt requests pymupdf pillow numpy "paddlepaddle==3.2.2" paddleocr
       - name: OCR de su parte
+        env:
+          DESDE: ${{ inputs.desde }}
+          HASTA: ${{ inputs.hasta }}
         run: |
           python -X utf8 -u -m votaciones.ocr_pleno procesar \
-            --desde "${{ inputs.desde }}" --hasta "${{ inputs.hasta }}" \
+            --desde "$DESDE" --hasta "$HASTA" \
             --parte ${{ matrix.parte }} --partes 10 --db votaciones_${{ matrix.parte }}.db
       - uses: actions/upload-artifact@v4
         if: always()

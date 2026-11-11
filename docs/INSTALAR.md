@@ -53,7 +53,10 @@ python -m pytest
 
 Para la app local los secretos van en un archivo `.env` en la raiz
 (`NOMBRE=valor`, uno por linea) o en `.streamlit/secrets.toml`. Los dos
-estan en `.gitignore`.
+estan en `.gitignore`. `.env.example` trae la lista.
+
+La app exige el login de Google. En la PC se abre sin login poniendo
+`VALI_SIN_LOGIN=1` en el `.env`.
 
 ## 4. Secretos de GitHub Actions
 
@@ -61,7 +64,9 @@ Se cargan en Settings > Secrets and variables > Actions del repo.
 
 | Secreto | Para que sirve |
 |---|---|
-| `GEMINI_API_KEY` | Gemini (tier gratis) para resumir sesiones, avisos de TV, grafo del cerebro y el juez "mismo hecho". Tambien es la clave de los datos de clientes (llega a cada workflow como `CLIENTES_CLAVE`, ver seccion 6b) |
+| `GEMINI_API_KEY` | Gemini (tier gratis) para resumir sesiones, avisos de TV, grafo del cerebro y el juez "mismo hecho" |
+| `CLIENTES_CLAVE` | Clave de los datos de clientes cifrados (seccion 6b). Es un secreto propio y aleatorio, no la clave de Gemini |
+| `CLIENTES_BUZON` | Llave privada del buzon: abre los archivos `*.buzon` que se suben desde una PC sin la clave (seccion 6b) |
 | `TELEGRAM_BOT_TOKEN` | Token del bot de alertas (@RadarValiAlertasBot) |
 | `TELEGRAM_CHAT_ID` | Chat o grupo donde el bot manda los avisos |
 | `CALLMEBOT_PHONE` | Numero de WhatsApp para CallMeBot (respaldo si Telegram falla) |
@@ -79,10 +84,11 @@ a variables de entorno al arrancar (`app.py`).
 | Secreto | Para que sirve |
 |---|---|
 | `GEMINI_API_KEY` | Chat sobre transcripciones y preguntas al grafo del cerebro |
+| `CLIENTES_CLAVE` | La misma clave de clientes que en GitHub Actions. Sin ella la app no puede leer ni guardar lo que marca el analista |
 | `GH_TOKEN` | Token de GitHub (permiso Contents lectura y escritura) para guardar decisiones, descartes, usuarios y pedidos de video en el repo |
 | `GH_REPO` | `nicosil02/Base_legislativa` |
 | `GH_BRANCH` | Rama donde se guardan esos archivos (por defecto `main`) |
-| `[auth]` | Login con Google. Lleva `redirect_uri` y `cookie_secret`, y dentro `[auth.google]` van `client_id`, `client_secret` y `server_metadata_url`. Si falta, la app queda abierta sin login |
+| `[auth]` | Login con Google. Lleva `redirect_uri` y `cookie_secret`, y dentro `[auth.google]` van `client_id`, `client_secret` y `server_metadata_url`. Si falta, la app no abre |
 | `TURSO_URL_<BASE>` y `TURSO_TOKEN` | Opcional. Base alojada en Turso en vez del sqlite local (ej. `TURSO_URL_PROYECTOS`). Hoy no se usa |
 
 En Streamlit Cloud la app se crea con repo `nicosil02/Base_legislativa`,
@@ -91,8 +97,17 @@ rama `main`, archivo `app.py` y Python 3.13.
 ## 6. Servicios externos
 
 - **cron-job.org** dispara `vigilar-congreso.yml` cada 10 minutos por la API
-  de GitHub, porque el cron de GitHub se atrasa horas. Necesita un token de
-  GitHub con permiso Actions. Paso a paso en `docs/cron-job-org-setup.md`.
+  de GitHub, porque el cron de GitHub se atrasa horas. Es una llamada
+  `POST` a
+  `https://api.github.com/repos/nicosil02/Base_legislativa/actions/workflows/vigilar-congreso.yml/dispatches`
+  con el cuerpo `{"ref": "main"}` y la cabecera `Authorization: Bearer <token>`.
+  El token es uno de GitHub de tipo fine-grained, limitado a este repo y con
+  el unico permiso `Actions: Read and write`.
+- **Rutina programada en la nube** (Claude Code). Por la misma razon, hace un
+  commit en `data/.refrescar_trigger` cada hora y en `data/.backfill_trigger`
+  cada 6 horas, y eso dispara `refrescar-pe.yml` y `backfill-auto.yml`. Otra
+  rutina resume las transcripciones nuevas y las guarda en
+  `data/transcripciones_resumenes.json`.
 - **Bot de Telegram** se crea con @BotFather (da el token). El chat id sale
   de mandarle un mensaje al bot y leer `getUpdates`.
 - **Gemini** da la API key gratis en Google AI Studio.
@@ -111,18 +126,22 @@ rama `main`, archivo `app.py` y Python 3.13.
 
 El repo es publico, asi que perfiles, historial de alertas y matrices de
 clientes van en git solo como `clientes/**/*.cifrado` (`clientes/privado.py`).
-La web y los workflows los abren solos con el valor de `GEMINI_API_KEY`. En
+La web y los workflows los abren solos con el secreto `CLIENTES_CLAVE`. En
 una PC nueva:
 
 ```bash
-export CLIENTES_CLAVE="<el mismo valor de GEMINI_API_KEY>"
+export CLIENTES_CLAVE="<el valor del secreto>"
 python -m clientes.privado abrir      # .cifrado -> texto (tras git pull: --pisar)
 python -m clientes.privado cerrar     # texto -> .cifrado, antes de hacer commit
 ```
 
-Sin la clave la app arranca igual, pero sin clientes. Si se cambia la clave
-de Gemini: primero `abrir` con la vieja, despues `cerrar` con la nueva y
-recien ahi cambiar el secreto.
+Sin la clave la app arranca igual, pero sin clientes. Para cambiar la clave
+esta el workflow `rotar-clave-clientes.yml`, que vuelve a cifrar todo con la
+nueva.
+
+Una PC sin la clave puede subir fichas por el buzon: `enviar` las cifra con la
+llave publica `clientes/buzon.pub` y `buzon-clientes.yml` las pasa a
+`.cifrado` al recibir el push.
 
 ### Cliente nuevo (sin tocar codigo)
 

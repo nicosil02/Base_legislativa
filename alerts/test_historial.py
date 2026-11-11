@@ -41,3 +41,9 @@ def test_clientes_por_pais(tmp_path, monkeypatch):
         assert historial.paises("google") == {"PE"}
     finally:
         config.todos.cache_clear()
+
+
+def test_ruta_rechaza_slug_con_barras():
+    import pytest
+    with pytest.raises(ValueError):
+        historial.ruta("../core")

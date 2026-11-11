@@ -62,7 +62,9 @@ jobs:
 
       - name: OCR
         if: steps.pend.outputs.n != '0'
-        run: python -X utf8 -u -m votaciones.pleno_bicameral_ocr --minutos "${{ inputs.minutos || '90' }}"
+        env:
+          MINUTOS: ${{ inputs.minutos || '90' }}
+        run: python -X utf8 -u -m votaciones.pleno_bicameral_ocr --minutos "$MINUTOS"
 
       - name: Publicar parte votaciones
         if: steps.pend.outputs.n != '0'

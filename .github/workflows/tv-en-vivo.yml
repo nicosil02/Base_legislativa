@@ -93,10 +93,10 @@ jobs:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          MIN: ${{ github.event.inputs.minutos }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          MIN="${{ github.event.inputs.minutos }}"
           if [ -z "$MIN" ]; then
             # Sin minutos explicitos (schedule o disparo desde tv-monitor.yml):
             # escuchar hasta el fin de la franja, 10:00 o 23:00 Lima. Fuera de

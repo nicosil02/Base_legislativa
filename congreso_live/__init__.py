@@ -1,9 +1,8 @@
 """Vigilancia en vivo del Congreso del Peru por YouTube.
 
-Fase 0: detecta cuando el Pleno o una comision ordinaria entra EN VIVO en el
-canal @congresodelarepublicaperu y avisa por WhatsApp. Corre en GitHub Actions
-(repo publico = minutos gratis), sin maquina dedicada.
-
-Fase 1 (pendiente): transcribir el audio en vivo (ffmpeg + STT), extraer numero
-de PL y votacion (1ra/2da, a favor/contra/abstencion, aprobado), y notificar.
+Detecta cuando el Pleno o una comision entra en vivo (YouTube en Peru,
+Facebook para las comisiones de Ecuador), transcribe el audio con Whisper,
+lo resume y avisa por Telegram lo que interesa. Tambien recupera las sesiones
+que no se captaron en vivo (backfill) e identifica a los oradores. Corre en
+GitHub Actions, sin maquina dedicada. Entrada: `python -m congreso_live.cli`.
 """

@@ -14,11 +14,6 @@ venv/
 update.log
 live_watch.log
 
-# Snapshot del estado bajo data/ (Excel y DB comprimida) sí se commitean,
-# se restauran con `python -m scraper.cli restaurar`.
-!data/
-!data/ProyectosDeLey.xlsx
-
 # CSV descargado fresco cada corrida por scraper_ec.cli actualizar-csv -
 # efimero, NUNCA commitear (bug real 2026-09-17: reusar el seed trackeado
 # ppless_listado_2025-2029_snapshot.csv como destino de la descarga dejaba
@@ -30,10 +25,6 @@ data/ppless_actual.csv
 
 # Lista de usuarios registrados (escrito por la app via GitHub API)
 !data/users.json
-scripts/recon_agenda_output.json
-
-# Proyecto aparte (mapas electorales geopandas), creado aquí por error
-mapa_electoral/
 
 # Datos de clientes (perfiles, historial de alertas, matrices): el repo es
 # publico, asi que van CIFRADOS (`*.cifrado`, ver clientes/privado.py) desde
@@ -80,3 +71,9 @@ data/bandeja_analista.json
 *.db.graftest-*
 .playwright-mcp/
 .codex/
+
+# Claves y variantes de .env: nunca al repo
+.env.*
+!.env.example
+*.pem
+*.key
