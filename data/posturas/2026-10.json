@@ -10876,5 +10876,242 @@
       }
     ],
     "url": "https://www.facebook.com/watch/?v=2366758590820159"
+  },
+  "fb_1974410993515218": {
+    "fecha": "2026-10-21",
+    "organo": "Comisión de Derecho al Trabajo",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Nicolás Sebastián Crón Muñoz",
+        "cargo": "invitado",
+        "sobre": "inserción del primer empleo de jóvenes",
+        "postura": "con observaciones",
+        "tema": "Trabajo",
+        "dijo": "Presentó observaciones técnicas al proyecto de inserción del primer empleo.",
+        "proyecto": "Ley de inserción del primer empleo",
+        "id": null
+      },
+      {
+        "orador": "Paula Jaramillo",
+        "cargo": "legislador",
+        "sobre": "reforma al primer empleo juvenil",
+        "postura": "a favor",
+        "tema": "Trabajo",
+        "dijo": "Apoyó la validación de pasantías dentro de la reforma laboral.",
+        "proyecto": "Ley de inserción del primer empleo",
+        "id": "EC:jaramillo zurita paola"
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1974410993515218"
+  },
+  "fb_1662040862228406": {
+    "fecha": "2026-10-21",
+    "organo": "Comisión de Régimen Económico",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Diego Sebastián Ceballos Algado",
+        "cargo": "invitado",
+        "sobre": "Proyecto de ley sobre rentas energéticas",
+        "postura": "con observaciones",
+        "tema": "Energía",
+        "dijo": "Presentó antecedentes y observaciones sobre el Decreto Ley 047.",
+        "proyecto": "Decreto Ley 047",
+        "id": null
+      },
+      {
+        "orador": "Yesus Igor Barros",
+        "cargo": "legislador",
+        "sobre": "Uso de recursos en conservación ambiental",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Manifestó su apoyo al enfoque ambiental del proyecto.",
+        "proyecto": "Decreto Ley 047",
+        "id": null
+      },
+      {
+        "orador": "Martina Checa",
+        "cargo": "legislador",
+        "sobre": "Designación de un ente fiscalizador",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso la creación de un ente fiscalizador nacional.",
+        "proyecto": "Decreto Ley 047",
+        "id": null
+      },
+      {
+        "orador": "Diego Sebastián Ceballos Algado",
+        "cargo": "invitado",
+        "sobre": "Control de los recursos energéticos",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Explicó los mecanismos de control de recursos existentes.",
+        "proyecto": "Decreto Ley 047",
+        "id": null
+      },
+      {
+        "orador": "María José Proaño Navarrete",
+        "cargo": "invitado",
+        "sobre": "Reforma a la contratación pública",
+        "postura": "con observaciones",
+        "tema": "Trabajo",
+        "dijo": "Expuso observaciones al proyecto de contratación pública.",
+        "proyecto": "Ley de Contratación Pública",
+        "id": null
+      },
+      {
+        "orador": "Alexandra Gabriela Sierra García",
+        "cargo": "invitado",
+        "sobre": "Mejoras en la contratación territorial",
+        "postura": "con observaciones",
+        "tema": "Trabajo",
+        "dijo": "Propuso cambios para evitar la discrecionalidad contractual.",
+        "proyecto": "Ley de Contratación Pública",
+        "id": null
+      },
+      {
+        "orador": "María José Pruebaño y Alexandra Sierra",
+        "cargo": "invitado",
+        "sobre": "Observaciones a la reforma de contratación",
+        "postura": "con observaciones",
+        "tema": "Otros",
+        "dijo": "Propuso cambios para evitar la discrecionalidad.",
+        "proyecto": "Ley de Contratación Pública",
+        "id": null
+      },
+      {
+        "orador": "Vallejo",
+        "cargo": "legislador",
+        "sobre": "Definición de territorio y mano de obra",
+        "postura": "pregunta",
+        "tema": "Otros",
+        "dijo": "Preguntó sobre la precisión territorial y laboral.",
+        "proyecto": "Ley de Contratación Pública",
+        "id": "EC:vallejo ayala"
+      },
+      {
+        "orador": "María José Pruebaño y Alexandra Sierra",
+        "cargo": "invitado",
+        "sobre": "Definición de territorio y mano de obra",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Explicó la aplicación de los porcentajes territoriales.",
+        "proyecto": "Ley de Contratación Pública",
+        "id": null
+      },
+      {
+        "orador": "San Cristalema",
+        "cargo": "legislador",
+        "sobre": "Sanciones por incumplimiento de mano de obra",
+        "postura": "pregunta",
+        "tema": "Otros",
+        "dijo": "Preguntó sobre las sanciones por incumplimiento.",
+        "proyecto": "Ley de Contratación Pública",
+        "id": null
+      },
+      {
+        "orador": "María José Pruebaño y Alexandra Sierra",
+        "cargo": "invitado",
+        "sobre": "Sanciones por incumplimiento de mano de obra",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Informó que las sanciones ya existen.",
+        "proyecto": "Ley de Contratación Pública",
+        "id": null
+      },
+      {
+        "orador": "San Ministerio Castro",
+        "cargo": "legislador",
+        "sobre": "Contratación en cantones pequeños",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Denunció problemas de parentesco en cantones.",
+        "proyecto": "Ley de Contratación Pública",
+        "id": "EC:castro piedra"
+      },
+      {
+        "orador": "Martina Jekka",
+        "cargo": "legislador",
+        "sobre": "Concurrencia de beneficios de preferencia",
+        "postura": "pregunta",
+        "tema": "Otros",
+        "dijo": "Preguntó sobre la duplicidad de beneficios.",
+        "proyecto": "Ley de Contratación Pública",
+        "id": null
+      },
+      {
+        "orador": "María José Pruebaño y Alexandra Sierra",
+        "cargo": "invitado",
+        "sobre": "Concurrencia de beneficios de preferencia",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Explicó la diferencia entre márgenes y valoración.",
+        "proyecto": "Ley de Contratación Pública",
+        "id": null
+      },
+      {
+        "orador": "Martina Checa",
+        "cargo": "legislador",
+        "sobre": "Impacto de la obligatoriedad del porcentaje",
+        "postura": "pregunta",
+        "tema": "Otros",
+        "dijo": "Preguntó sobre el impacto de la reforma.",
+        "proyecto": "Ley de Contratación Pública",
+        "id": null
+      },
+      {
+        "orador": "María José Pruebaño y Alexandra Sierra",
+        "cargo": "invitado",
+        "sobre": "Impacto de la obligatoriedad del porcentaje",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Informó sobre la dinamización de la economía.",
+        "proyecto": "Ley de Contratación Pública",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1662040862228406"
+  },
+  "l-2b95G29Zw": {
+    "fecha": "2026-10-21",
+    "organo": "Comisión de Economía",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Navas",
+        "cargo": "legislador",
+        "sobre": "Invitación al ministro de Comercio Exterior y Turismo",
+        "postura": "con observaciones",
+        "tema": "Comercio",
+        "dijo": "Respaldó la invitación pero enfatizó la necesidad de seguridad.",
+        "proyecto": "",
+        "id": "diputados:navas sanchez"
+      },
+      {
+        "orador": "Marquez",
+        "cargo": "legislador",
+        "sobre": "Exclusión de grandes empresas de beneficios tributarios",
+        "postura": "propone",
+        "tema": "Tributos",
+        "dijo": "Pidió excluir a las grandes empresas de beneficios tributarios.",
+        "proyecto": "PL 78-2026-31-CD",
+        "id": "diputados:marquez huanca"
+      },
+      {
+        "orador": "González Delgado",
+        "cargo": "legislador",
+        "sobre": "Sustentación de la política económica y fiscal",
+        "postura": "propone",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Pidió la sustentación de la política económica y fiscal.",
+        "proyecto": "",
+        "id": "diputados:gonzales delgado"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=l-2b95G29Zw"
   }
 }
