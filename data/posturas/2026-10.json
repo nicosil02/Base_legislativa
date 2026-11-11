@@ -4627,5 +4627,492 @@
       }
     ],
     "url": "https://www.facebook.com/watch/?v=4548848318763525"
+  },
+  "fb_1427972262201492": {
+    "fecha": "2026-10-28",
+    "organo": "Comisión de Educación",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Pablo Nieto",
+        "cargo": "invitado",
+        "sobre": "Proyecto de ley de inteligencia artificial",
+        "postura": "en contra",
+        "tema": "Tecnología",
+        "dijo": "Cuestionó la amplitud y las restricciones del proyecto de ley de inteligencia artificial.",
+        "proyecto": "Proyecto de ley de IA",
+        "id": null
+      },
+      {
+        "orador": "Diego Urbina",
+        "cargo": "invitado",
+        "sobre": "Estrategia nacional de inteligencia artificial",
+        "postura": "propone",
+        "tema": "Tecnología",
+        "dijo": "Propuso fortalecer el desarrollo tecnológico mediante alianzas público-privadas y académicas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Patricia Acosta Vargas",
+        "cargo": "invitado",
+        "sobre": "Fomento de la investigación en IA",
+        "postura": "con observaciones",
+        "tema": "Tecnología",
+        "dijo": "Propuso mecanismos de incentivos para fomentar la investigación tecnológica nacional.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Cecilia Baltazar Ucaya",
+        "cargo": "legislador",
+        "sobre": "Artículos del proyecto de ley de IA",
+        "postura": "pregunta",
+        "tema": "Tecnología",
+        "dijo": "Pidió detalles sobre el fomento a la innovación y los sistemas de riesgo.",
+        "proyecto": "Proyecto de ley de IA",
+        "id": "EC:baltazar yucailla"
+      },
+      {
+        "orador": "Rafael Melgarrejo Heredia",
+        "cargo": "invitado",
+        "sobre": "Ajustes técnicos al proyecto de ley",
+        "postura": "con observaciones",
+        "tema": "Tecnología",
+        "dijo": "Sugirió coordinar el proyecto con la normativa de protección de datos personales.",
+        "proyecto": "Proyecto de ley de IA",
+        "id": null
+      },
+      {
+        "orador": "Anavela Aguile",
+        "cargo": "legislador",
+        "sobre": "Barreras de la regulación en Latinoamérica",
+        "postura": "pregunta",
+        "tema": "Tecnología",
+        "dijo": "Preguntó sobre las principales barreras para la innovación en Latinoamérica.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Anavela Aguile",
+        "cargo": "legislador",
+        "sobre": "Financiamiento para la investigación tecnológica",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Señaló la necesidad de presupuesto para la investigación en inteligencia artificial.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Anavela Aguiela",
+        "cargo": "legislador",
+        "sobre": "incentivos para la inteligencia artificial",
+        "postura": "con observaciones",
+        "tema": "Tecnología",
+        "dijo": "Señaló que el presupuesto nacional limita los incentivos para la inteligencia artificial.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Urbina",
+        "cargo": "invitado",
+        "sobre": "regulación de la inteligencia artificial",
+        "postura": "en contra",
+        "tema": "Tecnología",
+        "dijo": "Advirtió que las definiciones demasiado amplias podrían desincentivar la inversión en Ecuador.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1427972262201492"
+  },
+  "fb_2834144213646590": {
+    "fecha": "2026-10-27",
+    "organo": "Comisión de Derecho al Trabajo",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Juan Pablo Molina",
+        "cargo": "legislador",
+        "sobre": "Fiscalización de asuntos municipales",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó la competencia de la Asamblea en temas municipales.",
+        "proyecto": "",
+        "id": "EC:molina saldana"
+      },
+      {
+        "orador": "Roberto Cuerro Medina",
+        "cargo": "legislador",
+        "sobre": "Fiscalización de asuntos municipales",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Rechazó la fiscalización municipal por ser competencia de concejales.",
+        "proyecto": "",
+        "id": "EC:cuero medina"
+      },
+      {
+        "orador": "Humberto Alvarado",
+        "cargo": "legislador",
+        "sobre": "Informe de fiscalización laboral",
+        "postura": "en contra",
+        "tema": "Trabajo",
+        "dijo": "Denunció la falta de solidez del informe de fiscalización.",
+        "proyecto": "",
+        "id": "EC:alvarado espinel"
+      },
+      {
+        "orador": "Egnerey de Recalde Álava",
+        "cargo": "legislador",
+        "sobre": "Informe de fiscalización laboral",
+        "postura": "a favor",
+        "tema": "Trabajo",
+        "dijo": "Defendió la fiscalización de la tercerización laboral.",
+        "proyecto": "",
+        "id": "EC:recalde alava"
+      },
+      {
+        "orador": "Nayeli Quintana Tapia",
+        "cargo": "legislador",
+        "sobre": "Informe de fiscalización laboral",
+        "postura": "propone",
+        "tema": "Trabajo",
+        "dijo": "Propuso aprobar el informe de fiscalización laboral.",
+        "proyecto": "",
+        "id": "EC:quintana tapia"
+      },
+      {
+        "orador": "Elizabeth Vega",
+        "cargo": "legislador",
+        "sobre": "Informe de fiscalización laboral",
+        "postura": "a favor",
+        "tema": "Trabajo",
+        "dijo": "Respaldó la moción de aprobación del informe.",
+        "proyecto": "",
+        "id": "EC:vega segura"
+      },
+      {
+        "orador": "Victoria Quintana Tápia",
+        "cargo": "legislador",
+        "sobre": "Eliminación de la tercerización",
+        "postura": "propone",
+        "tema": "Trabajo",
+        "dijo": "Presentó una moción para eliminar la tercerización.",
+        "proyecto": "",
+        "id": "EC:quintana tapia"
+      },
+      {
+        "orador": "Juan Pablo Molina",
+        "cargo": "legislador",
+        "sobre": "La tercerización laboral",
+        "postura": "en contra",
+        "tema": "Trabajo",
+        "dijo": "Rechazó la tercerización y denunció la crisis de salud.",
+        "proyecto": "",
+        "id": "EC:molina saldana"
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=2834144213646590"
+  },
+  "gFhyCd_ZH7I": {
+    "fecha": "2026-10-27",
+    "organo": "Comisión de Justicia",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Tito Rojas",
+        "cargo": "legislador",
+        "sobre": "investigación de muertes en Puno",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Pidió celeridad en las investigaciones sobre las muertes en Puno.",
+        "proyecto": "",
+        "id": "diputados:tito rojas"
+      },
+      {
+        "orador": "Javier Castro Cruz",
+        "cargo": "legislador",
+        "sobre": "trámites registrales en Lambayeque",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Denunció la inoperatividad de la oficina registral en Chiclayo.",
+        "proyecto": "",
+        "id": "diputados:castro cruz"
+      },
+      {
+        "orador": "Romina Uribe",
+        "cargo": "legislador",
+        "sobre": "participación en red parlamentaria",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Informó sobre su participación en un encuentro parlamentario.",
+        "proyecto": "",
+        "id": "diputados:uribe saenz"
+      },
+      {
+        "orador": "César Eusobio Padilla",
+        "cargo": "legislador",
+        "sobre": "derogación de las leyes procrimen",
+        "postura": "a favor",
+        "tema": "Justicia",
+        "dijo": "Defendió la derogación de las leyes que limitan la prescripción.",
+        "proyecto": "PL 00002-2031-CD",
+        "id": "diputados:eusebio padilla"
+      },
+      {
+        "orador": "Javier Cipriani",
+        "cargo": "legislador",
+        "sobre": "eliminación del límite de prescripción",
+        "postura": "a favor",
+        "tema": "Justicia",
+        "dijo": "Propuso eliminar el límite de un año para la prescripción.",
+        "proyecto": "PL 471",
+        "id": "diputados:cipriani thorne"
+      },
+      {
+        "orador": "Javier Castro Cruz",
+        "cargo": "legislador",
+        "sobre": "cumplimiento de acuerdos de la comisión",
+        "postura": "pregunta",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó el cumplimiento de los acuerdos de la comisión.",
+        "proyecto": "",
+        "id": "diputados:castro cruz"
+      },
+      {
+        "orador": "Carina Beteta",
+        "cargo": "legislador",
+        "sobre": "gestión de la presidencia",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Criticó la conducción de la comisión por ser autoritaria.",
+        "proyecto": "",
+        "id": "diputados:beteta rubin"
+      },
+      {
+        "orador": "Roxana Rocha",
+        "cargo": "legislador",
+        "sobre": "suspensión de la prescripción penal",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Propuso vincular la suspensión con los plazos procesales.",
+        "proyecto": "",
+        "id": "diputados:rocha gallegos"
+      },
+      {
+        "orador": "Jan Marco",
+        "cargo": "legislador",
+        "sobre": "ampliación de la suspensión de prescripción",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Advirtió que ampliar plazos no soluciona la investigación.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Dominguez",
+        "cargo": "legislador",
+        "sobre": "búsqueda de consenso legislativo",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Propuso buscar un punto intermedio para lograr consensos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Eber López Letona",
+        "cargo": "legislador",
+        "sobre": "análisis del predictamen de prescripción",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Pidió una jerarquización de delitos para el dictamen.",
+        "proyecto": "",
+        "id": "diputados:lopez letona"
+      },
+      {
+        "orador": "Edra González",
+        "cargo": "legislador",
+        "sobre": "trámite urgente del dictamen",
+        "postura": "a favor",
+        "tema": "Justicia",
+        "dijo": "Respaldó la urgencia de aprobar el predictamen.",
+        "proyecto": "",
+        "id": "diputados:fernandez gonzalez"
+      },
+      {
+        "orador": "Indira Wilka",
+        "cargo": "legislador",
+        "sobre": "impacto de las leyes SOTO",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Denunció que las leyes actuales generan impunidad.",
+        "proyecto": "Ley 31751",
+        "id": null
+      },
+      {
+        "orador": "Roxana Rocha",
+        "cargo": "legislador",
+        "sobre": "opinión de la Defensoría del Pueblo",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Informó la postura de la Defensoría del Pueblo.",
+        "proyecto": "",
+        "id": "diputados:rocha gallegos"
+      },
+      {
+        "orador": "Indira Wilka",
+        "cargo": "legislador",
+        "sobre": "Plazo de prescripción de la acción penal",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Cuestionó el plazo rígido de un año por generar impunidad en procesos complejos.",
+        "proyecto": "Ley 32104",
+        "id": null
+      },
+      {
+        "orador": "Roxana Rocha",
+        "cargo": "legislador",
+        "sobre": "Límite de prescripción de la acción penal",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Propuso una regla graduada según la gravedad del delito y su complejidad.",
+        "proyecto": "Ley 32104",
+        "id": "diputados:rocha gallegos"
+      },
+      {
+        "orador": "Bobadilla Galindo",
+        "cargo": "legislador",
+        "sobre": "Proporcionalidad en los plazos de investigación",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Sugirió un texto más consensuado sobre la proporcionalidad de los plazos.",
+        "proyecto": "",
+        "id": "diputados:bobadilla galindo"
+      },
+      {
+        "orador": "Quezada",
+        "cargo": "legislador",
+        "sobre": "Cuestión previa para el dictamen",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Planteó una cuestión previa para integrar opiniones técnicas al dictamen.",
+        "proyecto": "",
+        "id": "diputados:quezada castro"
+      },
+      {
+        "orador": "César Holguín",
+        "cargo": "legislador",
+        "sobre": "Proporcionalidad de la prescripción penal",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Denunció que el plazo de un año favorece al crimen en casos complejos.",
+        "proyecto": "Ley 32104",
+        "id": "diputados:holguin loaiza"
+      },
+      {
+        "orador": "Beteta",
+        "cargo": "legislador",
+        "sobre": "Razonabilidad de los plazos de prescripción",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Explicó que la prescripción sanciona la inacción de la administración de justicia.",
+        "proyecto": "",
+        "id": "diputados:beteta rubin"
+      },
+      {
+        "orador": "Eberlo Pesetona",
+        "cargo": "legislador",
+        "sobre": "Mejora del texto sustitutorio propuesto",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Consideró viable la propuesta pero pidió mejorar la redacción del texto.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Tito Rojas",
+        "cargo": "legislador",
+        "sobre": "Continuidad del debate sobre prescripción",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Rechazó las dilaciones en el debate y la falta de responsabilidad.",
+        "proyecto": "",
+        "id": "diputados:tito rojas"
+      },
+      {
+        "orador": "Presidenta",
+        "cargo": "legislador",
+        "sobre": "Predictamen sobre extinción de dominio",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Presentó el predictamen para fortalecer la recuperación de activos ilícitos.",
+        "proyecto": "Decreto Legislativo 1373",
+        "id": null
+      },
+      {
+        "orador": "Domínguez Herrera",
+        "cargo": "legislador",
+        "sobre": "Falta de información en el predictamen",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Cuestionó la votación por no incluir los aportes de la mesa técnica.",
+        "proyecto": "Decreto Legislativo 1373",
+        "id": "diputados:dominguez herrera"
+      },
+      {
+        "orador": "Roxana Rocha",
+        "cargo": "legislador",
+        "sobre": "Observaciones al predictamen de extinción de dominio",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Formuló seis observaciones técnicas para mejorar el proyecto de ley.",
+        "proyecto": "Decreto Legislativo 1373",
+        "id": "diputados:rocha gallegos"
+      },
+      {
+        "orador": "Javier Castro",
+        "cargo": "legislador",
+        "sobre": "Barreras ideológicas en el debate legislativo",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció barreras ideológicas que impiden un debate jurídico efectivo.",
+        "proyecto": "",
+        "id": "diputados:castro cruz"
+      },
+      {
+        "orador": "Domínguez Herrera",
+        "cargo": "legislador",
+        "sobre": "Falta de debate en extinción de dominio",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Lamentó que el predictamen no haya sido fruto de un debate consensuado.",
+        "proyecto": "Decreto Legislativo 1373",
+        "id": "diputados:dominguez herrera"
+      },
+      {
+        "orador": "Beteta",
+        "cargo": "legislador",
+        "sobre": "Respeto a las mesas de trabajo",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció que no se respetan los aportes de las mesas técnicas.",
+        "proyecto": "",
+        "id": "diputados:beteta rubin"
+      },
+      {
+        "orador": "Domínguez Herrera",
+        "cargo": "legislador",
+        "sobre": "Sesgo político en la comisión",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Expresó preocupación por el sesgo político en las decisiones tomadas.",
+        "proyecto": "",
+        "id": "diputados:dominguez herrera"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=gFhyCd_ZH7I"
   }
 }
