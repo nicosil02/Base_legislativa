@@ -10419,5 +10419,462 @@
       }
     ],
     "url": "https://www.youtube.com/watch?v=3F0hJn2PZBY"
+  },
+  "CVI6JYhpN4I": {
+    "fecha": "2026-10-21",
+    "organo": "Comisión de Ciencia",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Ana Patiño",
+        "cargo": "legislador",
+        "sobre": "Suspensión de audiencia en Junín",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Comentó su comprensión ante la suspensión de la audiencia en Junín.",
+        "proyecto": "",
+        "id": "diputados:patino urco"
+      },
+      {
+        "orador": "Amalia Palomino Pacheco",
+        "cargo": "legislador",
+        "sobre": "Hackatón de talento y tecnología",
+        "postura": "comenta",
+        "tema": "Tecnología",
+        "dijo": "Comentó la realización de un hackatón tecnológico en la Universidad Continental.",
+        "proyecto": "",
+        "id": "diputados:palomino pacheco"
+      },
+      {
+        "orador": "Amalia Palomino Pacheco",
+        "cargo": "legislador",
+        "sobre": "Proyecto de hidrógeno verde en Arequipa",
+        "postura": "comenta",
+        "tema": "Energía",
+        "dijo": "Comentó las preocupaciones de los pescadores sobre el hidrógeno verde.",
+        "proyecto": "",
+        "id": "diputados:palomino pacheco"
+      },
+      {
+        "orador": "Máximo Peralta",
+        "cargo": "legislador",
+        "sobre": "Actividades en la región Junín",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Comentó el reconocimiento de dieciséis científicos en la región Junín.",
+        "proyecto": "",
+        "id": "diputados:peralta jorpa"
+      },
+      {
+        "orador": "Yair Yataco Torrealba",
+        "cargo": "legislador",
+        "sobre": "Red dorsal de fibra óptica",
+        "postura": "propone",
+        "tema": "Telecomunicaciones",
+        "dijo": "Propuso realizar un hackatón para mejorar la red de Pronatel.",
+        "proyecto": "",
+        "id": "diputados:yataco torrealva"
+      },
+      {
+        "orador": "Yair Yataco Torrealba",
+        "cargo": "legislador",
+        "sobre": "Reunión con Transformación Digital",
+        "postura": "en contra",
+        "tema": "Otros",
+        "dijo": "Denunció obstáculos logísticos para reunirse con el sector de transformación digital.",
+        "proyecto": "",
+        "id": "diputados:yataco torrealva"
+      },
+      {
+        "orador": "Judit",
+        "cargo": "legislador",
+        "sobre": "Mitigación de incendios forestales",
+        "postura": "propone",
+        "tema": "Ambiente",
+        "dijo": "Propuso solicitar drones para ayudar a mitigar los incendios forestales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Amalia Palomino Pacheco",
+        "cargo": "legislador",
+        "sobre": "Próxima audiencia pública descentralizada",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Propuso que la siguiente audiencia pública se realice en Quilca.",
+        "proyecto": "",
+        "id": "diputados:palomino pacheco"
+      },
+      {
+        "orador": "Frank",
+        "cargo": "legislador",
+        "sobre": "Reglamentación de la Ley 3199",
+        "postura": "propone",
+        "tema": "Energía",
+        "dijo": "Pidió información al Ejecutivo sobre la reglamentación de la Ley 3199.",
+        "proyecto": "Ley 3199",
+        "id": null
+      },
+      {
+        "orador": "Amalia Palomino Pacheco",
+        "cargo": "legislador",
+        "sobre": "Estudio de impacto ambiental",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Comentó que el Ministerio de Producción realizó el estudio ambiental.",
+        "proyecto": "",
+        "id": "diputados:palomino pacheco"
+      },
+      {
+        "orador": "Roel Sánchez Sánchez",
+        "cargo": "invitado",
+        "sobre": "Proyecto de hidrógeno verde en Arequipa",
+        "postura": "comenta",
+        "tema": "Energía",
+        "dijo": "Comentó el desarrollo de un hub de hidrógeno verde en Arequipa.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Amalia Palomino Pacheco",
+        "cargo": "legislador",
+        "sobre": "Impacto ambiental del hidrógeno verde",
+        "postura": "con observaciones",
+        "tema": "Ambiente",
+        "dijo": "Cuestionó el daño de la salmuera en el ecosistema marino.",
+        "proyecto": "",
+        "id": "diputados:palomino pacheco"
+      },
+      {
+        "orador": "Palomino",
+        "cargo": "legislador",
+        "sobre": "Reutilización de la salmuera en el proyecto",
+        "postura": "con observaciones",
+        "tema": "Ambiente",
+        "dijo": "Cuestionó el manejo de la salmuera en el proyecto.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Yair",
+        "cargo": "legislador",
+        "sobre": "Reglamentación de la ley 31992",
+        "postura": "pregunta",
+        "tema": "Energía",
+        "dijo": "Preguntó sobre la reglamentación de la ley 31992.",
+        "proyecto": "Ley 31992",
+        "id": null
+      },
+      {
+        "orador": "Ana",
+        "cargo": "legislador",
+        "sobre": "Alcance de la tecnología e innovación",
+        "postura": "pregunta",
+        "tema": "Tecnología",
+        "dijo": "Consultó sobre el alcance de la innovación tecnológica.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "María",
+        "cargo": "legislador",
+        "sobre": "Desarrollo tecnológico en Arequipa",
+        "postura": "a favor",
+        "tema": "Tecnología",
+        "dijo": "Felicitó el avance tecnológico de la región Arequipa.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Rojas",
+        "cargo": "ministro o autoridad",
+        "sobre": "Producción de hidrógeno verde en Arequipa",
+        "postura": "a favor",
+        "tema": "Energía",
+        "dijo": "Explicó la producción de hidrógeno verde en Arequipa.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=CVI6JYhpN4I"
+  },
+  "SHSVUEeVePs": {
+    "fecha": "2026-10-21",
+    "organo": "Comisión de Agraria",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "María Luisa Silupú Inga",
+        "cargo": "legislador",
+        "sobre": "situación de los agricultores en Piura",
+        "postura": "comenta",
+        "tema": "Agricultura",
+        "dijo": "Informó sobre las preocupaciones de los agricultores de Piura.",
+        "proyecto": "",
+        "id": "diputados:silupu inga"
+      },
+      {
+        "orador": "Analí Márquez Huanca",
+        "cargo": "legislador",
+        "sobre": "incendios forestales en el Cusco",
+        "postura": "propone",
+        "tema": "Ambiente",
+        "dijo": "Exigió la intervención del gobierno ante los incendios.",
+        "proyecto": "",
+        "id": "diputados:marquez huanca"
+      },
+      {
+        "orador": "Cristian Aranda Vázquez",
+        "cargo": "legislador",
+        "sobre": "integración de juntas de usuarios en COER",
+        "postura": "propone",
+        "tema": "Agricultura",
+        "dijo": "Propuso integrar a las juntas de usuarios de agua.",
+        "proyecto": "",
+        "id": "diputados:aranda vasquez"
+      },
+      {
+        "orador": "Aldo Antonio Bravo Quispe",
+        "cargo": "legislador",
+        "sobre": "situación de arroceros en Bajo Piura",
+        "postura": "comenta",
+        "tema": "Agricultura",
+        "dijo": "Informó sobre los problemas de crédito de los arroceros.",
+        "proyecto": "",
+        "id": "diputados:bravo quispe"
+      },
+      {
+        "orador": "Gloria Irachi Pizarro",
+        "cargo": "legislador",
+        "sobre": "incendios forestales en Arequipa",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Denunció los incendios forestales que afectan a Arequipa.",
+        "proyecto": "",
+        "id": "diputados:hirache pizarro"
+      },
+      {
+        "orador": "Cristian Aranda Vázquez",
+        "cargo": "legislador",
+        "sobre": "gestión de riesgos y juntas de usuarios",
+        "postura": "propone",
+        "tema": "Agricultura",
+        "dijo": "Solicitó información sobre la participación de las juntas.",
+        "proyecto": "",
+        "id": "diputados:aranda vasquez"
+      },
+      {
+        "orador": "Jennifer Paredes Navarro",
+        "cargo": "legislador",
+        "sobre": "obras de prevención en Piura",
+        "postura": "propone",
+        "tema": "Agricultura",
+        "dijo": "Pidió un informe urgente sobre las obras en Piura.",
+        "proyecto": "",
+        "id": "diputados:paredes navarro"
+      },
+      {
+        "orador": "Jesús Pérez Alcahuamán",
+        "cargo": "legislador",
+        "sobre": "daños por incendios en Apurímac",
+        "postura": "propone",
+        "tema": "Ambiente",
+        "dijo": "Pidió un inventario de daños por los incendios.",
+        "proyecto": "",
+        "id": "diputados:perez alccahuaman"
+      },
+      {
+        "orador": "Aldo Antonio Bravo Quispe",
+        "cargo": "legislador",
+        "sobre": "control de incendios forestales",
+        "postura": "propone",
+        "tema": "Ambiente",
+        "dijo": "Solicitó información sobre el estado de los incendios.",
+        "proyecto": "",
+        "id": "diputados:bravo quispe"
+      },
+      {
+        "orador": "Analí Márquez Huanca",
+        "cargo": "legislador",
+        "sobre": "subvenciones para afectados por incendios",
+        "postura": "propone",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Propuso otorgar subvenciones económicas a los afectados.",
+        "proyecto": "",
+        "id": "diputados:marquez huanca"
+      },
+      {
+        "orador": "Rafael Aldo Celis Castillo",
+        "cargo": "legislador",
+        "sobre": "prevención de incendios forestales",
+        "postura": "propone",
+        "tema": "Ambiente",
+        "dijo": "Propuso desarrollar políticas para prevenir incendios.",
+        "proyecto": "",
+        "id": "diputados:celiz castillo"
+      },
+      {
+        "orador": "Analí Márquez Huanca",
+        "cargo": "legislador",
+        "sobre": "causas de los incendios forestales",
+        "postura": "en contra",
+        "tema": "Ambiente",
+        "dijo": "Rechazó que los incendios sean por prácticas ancestrales.",
+        "proyecto": "",
+        "id": "diputados:marquez huanca"
+      },
+      {
+        "orador": "Edgar Adrián Alvarón de la Cruz",
+        "cargo": "legislador",
+        "sobre": "Inasistencia de autoridades del Ejecutivo",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Lamentó la ausencia de los titulares de las instituciones convocadas.",
+        "proyecto": "",
+        "id": "diputados:alvaron de la cruz"
+      },
+      {
+        "orador": "Aldo Bravo",
+        "cargo": "legislador",
+        "sobre": "Inasistencia de autoridades del Ejecutivo",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Criticó la falta de respeto por la inasistencia de funcionarios.",
+        "proyecto": "",
+        "id": "diputados:bravo quispe"
+      },
+      {
+        "orador": "Rafael Aldoelis Castillo",
+        "cargo": "legislador",
+        "sobre": "Atención a funcionarios delegados",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso escuchar a los representantes que asistieron a la sesión.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Demetrio Valquí",
+        "cargo": "legislador",
+        "sobre": "Reunión extraordinaria con el ministro",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Pidió una reunión extraordinaria con el ministro de economía.",
+        "proyecto": "",
+        "id": "diputados:valqui calderon"
+      },
+      {
+        "orador": "Gladis Griselda Andrade Salguero de Álvarez",
+        "cargo": "legislador",
+        "sobre": "Modificación de la ley de recursos hídricos",
+        "postura": "propone",
+        "tema": "Agricultura",
+        "dijo": "Propuso que organizaciones de usuarios ejecuten defensas ribereñas.",
+        "proyecto": "PL 0095-2026-CD",
+        "id": "diputados:andrade salguero de alvarez"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=SHSVUEeVePs"
+  },
+  "fb_2366758590820159": {
+    "fecha": "2026-10-21",
+    "organo": "Comisión de Seguridad Integral",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Maura Janette Chulbe",
+        "cargo": "invitado",
+        "sobre": "Proyecto de ley antimafias",
+        "postura": "con observaciones",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Respaldó el proyecto pero solicitó separar la inteligencia de la investigación.",
+        "proyecto": "Ley antimafias",
+        "id": null
+      },
+      {
+        "orador": "Gerardo Machado",
+        "cargo": "legislador",
+        "sobre": "Uso de información secreta",
+        "postura": "pregunta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Preguntó sobre la utilidad de la información para combatir mafias.",
+        "proyecto": "Ley antimafias",
+        "id": "EC:machado clavijo"
+      },
+      {
+        "orador": "Maura Janette Chulbe",
+        "cargo": "invitado",
+        "sobre": "Uso de información reservada",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Informó que la información reservada orienta las decisiones del presidente.",
+        "proyecto": "Ley antimafias",
+        "id": null
+      },
+      {
+        "orador": "Jair Endorio",
+        "cargo": "legislador",
+        "sobre": "Efectividad contra el crimen organizado",
+        "postura": "pregunta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Preguntó sobre la efectividad del sistema ante el lavado de activos.",
+        "proyecto": "Ley antimafias",
+        "id": null
+      },
+      {
+        "orador": "Maura Janette Chulbe",
+        "cargo": "invitado",
+        "sobre": "Limitaciones de la ley de inteligencia",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Informó que los artículos suspendidos limitan su capacidad operativa.",
+        "proyecto": "Ley antimafias",
+        "id": null
+      },
+      {
+        "orador": "Jair Endorio",
+        "cargo": "legislador",
+        "sobre": "Desempeño de la Corte Nacional",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Denunció la falta de regularización de artículos en la Corte Nacional.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Gerardo Machado",
+        "cargo": "legislador",
+        "sobre": "Rol de los legisladores",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Defendió su intención de preguntar para aprender y aportar.",
+        "proyecto": "Ley antimafias",
+        "id": "EC:machado clavijo"
+      },
+      {
+        "orador": "Natalia Estefanía Molla Chávez",
+        "cargo": "invitado",
+        "sobre": "Acuerdo comercial con Canadá",
+        "postura": "a favor",
+        "tema": "Comercio",
+        "dijo": "Respaldó la importancia de asegurar la cadena logística comercial.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Roberto Calderón",
+        "cargo": "invitado",
+        "sobre": "Reformas al código penal",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Propuso reformas técnicas para mejorar el código penal.",
+        "proyecto": "Ley antimafias",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=2366758590820159"
   }
 }
