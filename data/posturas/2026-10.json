@@ -9633,5 +9633,791 @@
       }
     ],
     "url": "https://www.youtube.com/watch?v=MynXZyWG3CA"
+  },
+  "ggJwf-DFHPU": {
+    "fecha": "2026-10-22",
+    "organo": "Comisión de Presupuesto",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [],
+    "url": "https://www.youtube.com/watch?v=ggJwf-DFHPU"
+  },
+  "R1E7WGTStac": {
+    "fecha": "2026-10-21",
+    "organo": "Comisión de Justicia",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Javier Castro Cuzo",
+        "cargo": "legislador",
+        "sobre": "Citar al fiscal de la nación",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Pidió la citación del fiscal de la nación por corrupción en Lambayeque.",
+        "proyecto": "",
+        "id": "diputados:castro cruz"
+      },
+      {
+        "orador": "Roxana Rocha Gallegos",
+        "cargo": "legislador",
+        "sobre": "Pago oportuno de alimentos",
+        "postura": "a favor",
+        "tema": "Justicia",
+        "dijo": "Propuso que las actas de conciliación tengan el mismo valor que una sentencia.",
+        "proyecto": "PL 00188-2026-23 CD",
+        "id": "diputados:rocha gallegos"
+      },
+      {
+        "orador": "Fernando García Ubi",
+        "cargo": "legislador",
+        "sobre": "Efectividad de la conciliación",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Advirtió que los abogados podrían utilizar la conciliación para dilatar procesos.",
+        "proyecto": "PL 00188-2026-23 CD",
+        "id": null
+      },
+      {
+        "orador": "Karina Beteta",
+        "cargo": "legislador",
+        "sobre": "Gestión del Poder Judicial",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Solicitó que la presidenta del Poder Judicial informe sobre los juzgados de familia.",
+        "proyecto": "PL 00188-2026-23 CD",
+        "id": "diputados:beteta rubin"
+      },
+      {
+        "orador": "Herbert López Letón",
+        "cargo": "legislador",
+        "sobre": "Proyecto de ley de alimentos",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Sugirió realizar ajustes técnicos para garantizar el debido proceso.",
+        "proyecto": "PL 00188-2026-23 CD",
+        "id": "diputados:lopez letona"
+      },
+      {
+        "orador": "Fernando García Ubi",
+        "cargo": "legislador",
+        "sobre": "Responsabilidad de familiares por alimentos",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Sugirió incluir a los familiares como responsables en el acta de conciliación.",
+        "proyecto": "PL 00188-2026-23 CD",
+        "id": null
+      },
+      {
+        "orador": "Edgar González Polar",
+        "cargo": "legislador",
+        "sobre": "Derecho a la doble instancia",
+        "postura": "pregunta",
+        "tema": "Justicia",
+        "dijo": "Preguntó si la propuesta respeta el principio de la doble instancia.",
+        "proyecto": "PL 00188-2026-23 CD",
+        "id": "diputados:gonzales polar"
+      },
+      {
+        "orador": "Roxana Rocha Gallegos",
+        "cargo": "legislador",
+        "sobre": "Defensa del proyecto de alimentos",
+        "postura": "a favor",
+        "tema": "Justicia",
+        "dijo": "Aclaró que la apelación no suspende el pago de la pensión alimenticia.",
+        "proyecto": "PL 00188-2026-23 CD",
+        "id": "diputados:rocha gallegos"
+      },
+      {
+        "orador": "José Manuel Cruz Chamba",
+        "cargo": "invitado",
+        "sobre": "Evaluación de la Ley 32130",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Informó sobre los beneficios de la Ley 32130 contra la criminalidad organizada.",
+        "proyecto": "Ley 32130",
+        "id": null
+      },
+      {
+        "orador": "José Cruz Chamba",
+        "cargo": "invitado",
+        "sobre": "Efectividad de la ley 32130",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Defendió la efectividad de la ley 32130 para reducir la criminalidad.",
+        "proyecto": "Ley 32130",
+        "id": null
+      },
+      {
+        "orador": "Raúl Salazar Salazar",
+        "cargo": "invitado",
+        "sobre": "Aplicación de las leyes 32130 y 32735",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso la aplicación de las leyes 32130 y 32735.",
+        "proyecto": "Ley 32130 y Ley 32735",
+        "id": null
+      },
+      {
+        "orador": "Carlos Martín Gómez Cagua",
+        "cargo": "invitado",
+        "sobre": "Análisis de la ley 32130",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Defendió la ley 32130 para mejorar la investigación policial.",
+        "proyecto": "Ley 32130",
+        "id": null
+      },
+      {
+        "orador": "César Azabache Caracioclo",
+        "cargo": "invitado",
+        "sobre": "Debate sobre la ley 32130",
+        "postura": "con observaciones",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso un debate profundo para corregir la ley 32130.",
+        "proyecto": "Ley 32130",
+        "id": null
+      },
+      {
+        "orador": "Karina Beteta",
+        "cargo": "legislador",
+        "sobre": "la derogatoria de la ley 32130",
+        "postura": "pregunta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Pidió que se facilite la información estadística de la exposición policial.",
+        "proyecto": "Ley 32130",
+        "id": "diputados:beteta rubin"
+      },
+      {
+        "orador": "José Baela",
+        "cargo": "legislador",
+        "sobre": "la conducción de la investigación preliminar",
+        "postura": "pregunta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Preguntó por las consecuencias de derogar la ley 32130 para el país.",
+        "proyecto": "Ley 32130",
+        "id": "diputados:baella malca"
+      },
+      {
+        "orador": "Javier Castro",
+        "cargo": "legislador",
+        "sobre": "el apoyo policial en la investigación",
+        "postura": "pregunta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Cuestionó el impacto de la derogatoria en la carga procesal nacional.",
+        "proyecto": "Ley 32130",
+        "id": "diputados:castro cruz"
+      },
+      {
+        "orador": "César Tito",
+        "cargo": "legislador",
+        "sobre": "la derogatoria de la ley 32130",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Defendió el uso de la capacidad técnica de la policía.",
+        "proyecto": "Ley 32130",
+        "id": "diputados:tito rojas"
+      },
+      {
+        "orador": "Cecilia Chacón",
+        "cargo": "legislador",
+        "sobre": "la derogatoria de la ley 32130",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Cuestionó la derogación de una norma que reduce la criminalidad.",
+        "proyecto": "Ley 32130",
+        "id": "diputados:chacon de vettori"
+      },
+      {
+        "orador": "Romina Uribe",
+        "cargo": "legislador",
+        "sobre": "la capacidad de la Policía Nacional",
+        "postura": "pregunta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Preguntó sobre las brechas de recursos y capacitación policial.",
+        "proyecto": "Ley 32130",
+        "id": "diputados:uribe saenz"
+      },
+      {
+        "orador": "Indira Wilca",
+        "cargo": "legislador",
+        "sobre": "la constitucionalidad de la ley 32130",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Denunció que la norma vulnera la conducción jurídica de la fiscalía.",
+        "proyecto": "Ley 32130",
+        "id": null
+      },
+      {
+        "orador": "Ever López Letón",
+        "cargo": "legislador",
+        "sobre": "el otorgamiento de facultades a la policía",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Cuestionó la preparación legal de los suboficiales de la policía.",
+        "proyecto": "Ley 32130",
+        "id": null
+      },
+      {
+        "orador": "César Olguín",
+        "cargo": "legislador",
+        "sobre": "la inconstitucionalidad de la ley 32130",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Denunció la inconstitucionalidad de la ley y la falta de datos.",
+        "proyecto": "Ley 32130",
+        "id": "diputados:holguin loaiza"
+      },
+      {
+        "orador": "Carlos Domínguez",
+        "cargo": "legislador",
+        "sobre": "los beneficios de la ley 32130",
+        "postura": "pregunta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Pidió datos sobre los beneficios de la ley 32130.",
+        "proyecto": "Ley 32130",
+        "id": "diputados:dominguez herrera"
+      },
+      {
+        "orador": "Ángel Bobadillo",
+        "cargo": "legislador",
+        "sobre": "la coordinación entre fiscalía y policía",
+        "postura": "pregunta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Preguntó por propuestas concretas para mejorar la coordinación institucional.",
+        "proyecto": "Ley 32130",
+        "id": "senado:ventura angel"
+      },
+      {
+        "orador": "Ángel Bobadilla",
+        "cargo": "legislador",
+        "sobre": "la utilidad de los invitados",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó la utilidad de invitar especialistas si no se consideran sus aportes.",
+        "proyecto": "",
+        "id": "diputados:bobadilla galindo"
+      },
+      {
+        "orador": "José Baela",
+        "cargo": "legislador",
+        "sobre": "la exposición de la ley 32735",
+        "postura": "pregunta",
+        "tema": "Justicia",
+        "dijo": "Preguntó si los invitados también expondrían sobre la ley 32735.",
+        "proyecto": "Ley 32735",
+        "id": "diputados:baella malca"
+      },
+      {
+        "orador": "José Cruz Chamba",
+        "cargo": "invitado",
+        "sobre": "los beneficios de la ley 32130",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Defendió la ley 32130 citando la reducción de muertes violentas.",
+        "proyecto": "Ley 32130",
+        "id": null
+      },
+      {
+        "orador": "Raúl Salazar",
+        "cargo": "invitado",
+        "sobre": "la constitucionalidad de la ley 32130",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Respaldó la constitucionalidad de la ley 32130 y el rol policial.",
+        "proyecto": "Ley 32130",
+        "id": null
+      },
+      {
+        "orador": "César Azabache",
+        "cargo": "invitado",
+        "sobre": "la cláusula de interceptaciones telefónicas",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Propuso derogar la cláusula que limita las interceptaciones telefónicas.",
+        "proyecto": "Ley 32130",
+        "id": null
+      },
+      {
+        "orador": "Gómez Caguas",
+        "cargo": "invitado",
+        "sobre": "la vigencia de la ley 32130",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Defendió la ley 32130 advirtiendo consecuencias funestas si se deroga.",
+        "proyecto": "Ley 32130",
+        "id": null
+      },
+      {
+        "orador": "Olguín López",
+        "cargo": "legislador",
+        "sobre": "las estadísticas presentadas",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Denunció el uso de estadísticas desactualizadas durante la sesión.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Herbe López",
+        "cargo": "legislador",
+        "sobre": "la investigación preliminar policial",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Cuestionó otorgar la investigación preliminar a la policía.",
+        "proyecto": "Ley 32130",
+        "id": "diputados:lopez letona"
+      },
+      {
+        "orador": "José Cruz Chamba",
+        "cargo": "invitado",
+        "sobre": "la metodología de las estadísticas",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Informó que usó datos de 2021 para establecer una comparación.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Gómez Caguas",
+        "cargo": "invitado",
+        "sobre": "la conducción jurídica y operativa",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Informó sobre la distinción entre la conducción y la ejecución.",
+        "proyecto": "Ley 32130",
+        "id": null
+      },
+      {
+        "orador": "Gómez Caguas",
+        "cargo": "invitado",
+        "sobre": "Competencia de la PNP en investigaciones",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Respaldó la labor de la Policía Nacional.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Karina Beteta",
+        "cargo": "legislador",
+        "sobre": "Solicitud de informes técnicos",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Pidió informes del Ministerio de Justicia.",
+        "proyecto": "",
+        "id": "diputados:beteta rubin"
+      },
+      {
+        "orador": "García Jubi",
+        "cargo": "legislador",
+        "sobre": "Derogación de la ley 32735",
+        "postura": "a favor",
+        "tema": "Justicia",
+        "dijo": "Defendió la derogación de la ley 32735.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Indira Huelca",
+        "cargo": "legislador",
+        "sobre": "Competencia de la justicia ordinaria",
+        "postura": "a favor",
+        "tema": "Justicia",
+        "dijo": "Respaldó la competencia de la justicia ordinaria.",
+        "proyecto": "",
+        "id": "diputados:huilca flores"
+      },
+      {
+        "orador": "Cecilia Chacón",
+        "cargo": "legislador",
+        "sobre": "Sanciones para militares y policías",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Propuso sanciones para la Policía Nacional.",
+        "proyecto": "",
+        "id": "diputados:chacon de vettori"
+      },
+      {
+        "orador": "César Olguín",
+        "cargo": "legislador",
+        "sobre": "Corrección de la ley 32735",
+        "postura": "a favor",
+        "tema": "Justicia",
+        "dijo": "Rechazó la distorsión de la ley 32735.",
+        "proyecto": "",
+        "id": "diputados:holguin loaiza"
+      },
+      {
+        "orador": "Alejandro Manay",
+        "cargo": "legislador",
+        "sobre": "La ley de impunidad 32735",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Denunció la impunidad de la ley 32735.",
+        "proyecto": "PL 32735",
+        "id": "diputados:manay pillaca"
+      },
+      {
+        "orador": "Indira Huelca",
+        "cargo": "legislador",
+        "sobre": "Alcance de los delitos de función",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Respaldó la jurisprudencia del Tribunal Constitucional.",
+        "proyecto": "",
+        "id": "diputados:huilca flores"
+      },
+      {
+        "orador": "Carlos Domínguez",
+        "cargo": "legislador",
+        "sobre": "Necesidad de mayor debate técnico",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Pidió la participación de la Fiscalía de la Nación.",
+        "proyecto": "",
+        "id": "diputados:dominguez herrera"
+      },
+      {
+        "orador": "Carlos Domínguez",
+        "cargo": "legislador",
+        "sobre": "debate sobre el fuero militar",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Pidió mayor debate y la participación de la fiscalía.",
+        "proyecto": "",
+        "id": "diputados:dominguez herrera"
+      },
+      {
+        "orador": "Neri Fernández",
+        "cargo": "legislador",
+        "sobre": "uso del término terrorismo",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Criticó el uso del término terrorismo para estigmatizar.",
+        "proyecto": "",
+        "id": "diputados:fernandez nina"
+      },
+      {
+        "orador": "Nali Márquez",
+        "cargo": "legislador",
+        "sobre": "derogación del fuero militar",
+        "postura": "a favor",
+        "tema": "Justicia",
+        "dijo": "Defendió la derogación del fuero militar policial.",
+        "proyecto": "",
+        "id": "diputados:marquez huanca"
+      },
+      {
+        "orador": "Javier Castro",
+        "cargo": "legislador",
+        "sobre": "respaldo a la policía nacional",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Cuestionó la derogación por desproteger a la policía.",
+        "proyecto": "",
+        "id": "diputados:castro cruz"
+      },
+      {
+        "orador": "Cecilia Chacón",
+        "cargo": "legislador",
+        "sobre": "protección de militares y policías",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Rechazó la propuesta de desproteger a la policía.",
+        "proyecto": "",
+        "id": "diputados:chacon de vettori"
+      },
+      {
+        "orador": "Ever López",
+        "cargo": "legislador",
+        "sobre": "definición técnica de terrorismo",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Cuestionó el uso técnico del término terrorismo.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Nali Márquez",
+        "cargo": "legislador",
+        "sobre": "impacto de leyes procrimen",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Denunció que las leyes procrimen favorecen la delincuencia.",
+        "proyecto": "",
+        "id": "diputados:marquez huanca"
+      },
+      {
+        "orador": "Cecilia Chacón",
+        "cargo": "legislador",
+        "sobre": "uso del término terrorista",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Defendió su derecho a usar términos según su criterio.",
+        "proyecto": "",
+        "id": "diputados:chacon de vettori"
+      },
+      {
+        "orador": "Cecilia García Jubí",
+        "cargo": "legislador",
+        "sobre": "situación de la policía nacional",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Denunció la falta de recursos de la policía.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "García Ji",
+        "cargo": "legislador",
+        "sobre": "modificación de la ley",
+        "postura": "a favor",
+        "tema": "Justicia",
+        "dijo": "Respaldó la derogación de la ley de función.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Edgar González",
+        "cargo": "legislador",
+        "sobre": "desarrollo del debate legislativo",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Exhortó a los diputados a centrarse en el debate.",
+        "proyecto": "",
+        "id": "diputados:fernandez gonzalez"
+      },
+      {
+        "orador": "Kim Muñoz",
+        "cargo": "legislador",
+        "sobre": "votación de la cuestión previa",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Pidió que se proceda a la votación inmediata.",
+        "proyecto": "",
+        "id": "diputados:munoz yurivilca"
+      },
+      {
+        "orador": "Beteta Rubín",
+        "cargo": "legislador",
+        "sobre": "Derogación de la ley 32735",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Defendió la aplicación del fuero militar en ejercicio de funciones.",
+        "proyecto": "PL 32735",
+        "id": "diputados:beteta rubin"
+      },
+      {
+        "orador": "Luis Masco",
+        "cargo": "legislador",
+        "sobre": "Uso del término terrorismo",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Informó que el terrorismo desapareció hace muchos años.",
+        "proyecto": "",
+        "id": "diputados:masco caceres"
+      },
+      {
+        "orador": "Cecilia Chacón",
+        "cargo": "legislador",
+        "sobre": "Límites de la prescripción penal",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Cuestionó que la norma no solucione las demoras judiciales.",
+        "proyecto": "PL 279",
+        "id": "diputados:chacon de vettori"
+      },
+      {
+        "orador": "Ever",
+        "cargo": "legislador",
+        "sobre": "Límites de la prescripción penal",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Pidió convocar a técnicos para profundizar el debate.",
+        "proyecto": "PL 279",
+        "id": null
+      },
+      {
+        "orador": "Aquías",
+        "cargo": "legislador",
+        "sobre": "Plazos de la prescripción penal",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Pidió la presencia del Fiscal de la Nación.",
+        "proyecto": "PL 279",
+        "id": null
+      },
+      {
+        "orador": "José Isidro Bael Amalca",
+        "cargo": "legislador",
+        "sobre": "Modificación de penas en delitos graves",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso aumentar las penas por sicariato, violación, extorsión y colusión.",
+        "proyecto": "4620261 CD",
+        "id": "diputados:baella malca"
+      },
+      {
+        "orador": "Marledi Arminta Valencia",
+        "cargo": "legislador",
+        "sobre": "Sanción de violencia sexual digital por IA",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso sancionar la creación de contenido sexual mediante inteligencia artificial.",
+        "proyecto": "0620261 CD",
+        "id": "diputados:arminta valencia"
+      },
+      {
+        "orador": "Karina Beteta",
+        "cargo": "legislador",
+        "sobre": "Abuso de autoridad en la sesión",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció la restricción de su derecho a opinar durante el debate.",
+        "proyecto": "",
+        "id": "diputados:beteta rubin"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=R1E7WGTStac"
+  },
+  "3F0hJn2PZBY": {
+    "fecha": "2026-10-21",
+    "organo": "Comisión de Energía y Minas",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Renato Carol Guevara Carrasco",
+        "cargo": "invitado",
+        "sobre": "Acciones ante el fenómeno del Niño",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Explicó las características y la magnitud del fenómeno del Niño.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Luis Enrique Vázquez Guerrero",
+        "cargo": "invitado",
+        "sobre": "Gestión de riesgos ante el Niño",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Detalló la gestión de riesgos y los niveles de emergencia.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Óscar Aguirre Gonzalo",
+        "cargo": "invitado",
+        "sobre": "Escenarios de riesgo por el fenómeno del Niño",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Presentó escenarios de riesgo por inundaciones y sequías.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Rut Luk",
+        "cargo": "legislador",
+        "sobre": "medidas de prevención de gobiernos anteriores",
+        "postura": "pregunta",
+        "tema": "Ambiente",
+        "dijo": "Preguntó sobre las medidas de prevención de gobiernos anteriores.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Castillo Terrones",
+        "cargo": "legislador",
+        "sobre": "presupuesto para puntos críticos en Lambayeque",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Denunció la falta de presupuesto en puntos críticos de Lambayeque.",
+        "proyecto": "",
+        "id": "senado:castillo terrones"
+      },
+      {
+        "orador": "Joaquín",
+        "cargo": "legislador",
+        "sobre": "pronóstico y sistemas de alerta temprana",
+        "postura": "pregunta",
+        "tema": "Ambiente",
+        "dijo": "Consultó sobre la periodicidad y sistemas de alerta temprana.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Jaime Quito",
+        "cargo": "legislador",
+        "sobre": "planes de prevención e incendios forestales",
+        "postura": "pregunta",
+        "tema": "Ambiente",
+        "dijo": "Preguntó sobre la falta de planes de prevención.",
+        "proyecto": "",
+        "id": "senado:quito sarmiento"
+      },
+      {
+        "orador": "Absalón Vázquez",
+        "cargo": "legislador",
+        "sobre": "cultura de prevención ante desastres",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Enfatizó la necesidad de implementar una cultura de prevención.",
+        "proyecto": "",
+        "id": "senado:vasquez villanueva"
+      },
+      {
+        "orador": "Renato Carol Guevara Carrasco",
+        "cargo": "invitado",
+        "sobre": "pronóstico e intensidad del fenómeno El Niño",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Explicó la dificultad científica de pronosticar la intensidad del fenómeno.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Pasalón Vázquez",
+        "cargo": "legislador",
+        "sobre": "Monitoreo de los eventos del Niño",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Pidió mayor equipamiento científico para monitorear el mar.",
+        "proyecto": "",
+        "id": "senado:vasquez villanueva"
+      },
+      {
+        "orador": "Luis Enrique Vázquez Guerrero",
+        "cargo": "ministro o autoridad",
+        "sobre": "Gestión de riesgos y prevención de desastres",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Informó sobre la gestión de riesgos y los incendios.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Miguel Yamasaki Coisumi",
+        "cargo": "ministro o autoridad",
+        "sobre": "Planificación urbana y gestión de riesgos",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Denunció la falta de planificación urbana preventiva.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Luis Enrique Vázquez Guerrero",
+        "cargo": "ministro o autoridad",
+        "sobre": "Cumplimiento del plan de contingencia",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Informó que las metas del plan de contingencia no se cumplieron.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=3F0hJn2PZBY"
   }
 }
