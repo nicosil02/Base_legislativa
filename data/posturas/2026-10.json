@@ -9257,5 +9257,232 @@
       }
     ],
     "url": "https://www.youtube.com/watch?v=ubmnWklg9n4"
+  },
+  "lwiO_paYRPk": {
+    "fecha": "2026-10-22",
+    "organo": "Pleno de la Asamblea",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Yanina Rizo",
+        "cargo": "legislador",
+        "sobre": "Proyecto contra el desperdicio de alimentos",
+        "postura": "a favor",
+        "tema": "Agricultura",
+        "dijo": "Defendió el proyecto para reducir el desperdicio de alimentos.",
+        "proyecto": "Proyecto de ley contra el desperdicio de alimentos",
+        "id": "EC:rizzo alvear"
+      },
+      {
+        "orador": "Carlos Gavilanes",
+        "cargo": "legislador",
+        "sobre": "Informe sobre el desperdicio de alimentos",
+        "postura": "a favor",
+        "tema": "Agricultura",
+        "dijo": "Respaldó el informe para mejorar la seguridad alimentaria.",
+        "proyecto": "Proyecto de ley contra el desperdicio de alimentos",
+        "id": "EC:gavilanez munoz"
+      },
+      {
+        "orador": "Andrés Castillo",
+        "cargo": "legislador",
+        "sobre": "Investigación de cobros indebidos en Quito",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso investigar presuntos cobros indebidos en Quito.",
+        "proyecto": "",
+        "id": "EC:castillo maldonado"
+      },
+      {
+        "orador": "Gabriela Rivadeneira",
+        "cargo": "invitado",
+        "sobre": "Concientización sobre cáncer de mama",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Relató su vivencia personal con el cáncer de mama.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Gabriela Riva de Neira",
+        "cargo": "invitado",
+        "sobre": "prevención del cáncer de mama",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Relató su experiencia personal con el cáncer de mama y la importancia de la detección temprana.",
+        "proyecto": "Ley de atención integral al cáncer de mama",
+        "id": null
+      },
+      {
+        "orador": "Nora Mejía",
+        "cargo": "invitado",
+        "sobre": "proyecto de reducción de desperdicio de alimentos",
+        "postura": "a favor",
+        "tema": "Agricultura",
+        "dijo": "Defendió la reforma para asegurar la transparencia y el control de alimentos donados.",
+        "proyecto": "proyecto de ley para reducir la pérdida y desperdicio de alimentos",
+        "id": null
+      },
+      {
+        "orador": "Yanina Rizo",
+        "cargo": "legislador",
+        "sobre": "informe sobre la reforma de alimentos",
+        "postura": "propone",
+        "tema": "Agricultura",
+        "dijo": "Propuso el informe para regular la pérdida y el desperdicio de alimentos.",
+        "proyecto": "proyecto de ley orgánica reformatoria de la ley para prevenir y reducir la pérdida y desperdicio de alimentos",
+        "id": "EC:rizzo alvear"
+      },
+      {
+        "orador": "Carlos Gavilanes",
+        "cargo": "legislador",
+        "sobre": "reforma sobre donación de alimentos",
+        "postura": "a favor",
+        "tema": "Agricultura",
+        "dijo": "Respaldó la reforma para garantizar la gratuidad y trazabilidad de alimentos donados.",
+        "proyecto": "proyecto de ley que reforma la normativa sobre donación de alimentos",
+        "id": "EC:gavilanez munoz"
+      },
+      {
+        "orador": "Becibel Mendoza",
+        "cargo": "legislador",
+        "sobre": "prevención del desperdicio de alimentos",
+        "postura": "a favor",
+        "tema": "Agricultura",
+        "dijo": "Propuso reglas para asegurar la gratuidad y seguridad de los alimentos donados.",
+        "proyecto": "proyecto de ley para reducir la pérdida y desperdicio de alimentos",
+        "id": "EC:mendoza ibarra"
+      },
+      {
+        "orador": "Becibel Mendoza",
+        "cargo": "legislador",
+        "sobre": "Prevención del desperdicio de alimentos",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Defendió la reforma para fortalecer las donaciones de alimentos.",
+        "proyecto": "",
+        "id": "EC:mendoza ibarra"
+      },
+      {
+        "orador": "Anaguín",
+        "cargo": "legislador",
+        "sobre": "Reforma de la ley de alimentos",
+        "postura": "con observaciones",
+        "tema": "Otros",
+        "dijo": "Propuso aclarar la diferencia entre caducidad y expiración.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Camila Cueva",
+        "cargo": "legislador",
+        "sobre": "Proyecto de ley de desperdicio de alimentos",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Respaldó la reforma para combatir la desnutrición infantil.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Andrés Castillo",
+        "cargo": "legislador",
+        "sobre": "Intermediación en bancos de alimentos",
+        "postura": "en contra",
+        "tema": "Comercio",
+        "dijo": "Denunció el lucro de intermediarios en donaciones de alimentos.",
+        "proyecto": "",
+        "id": "EC:castillo maldonado"
+      },
+      {
+        "orador": "Mariana Yumbai",
+        "cargo": "legislador",
+        "sobre": "Proyecto de ley de desperdicio de alimentos",
+        "postura": "con observaciones",
+        "tema": "Otros",
+        "dijo": "Propuso mantener las multas en el régimen sancionatorio.",
+        "proyecto": "",
+        "id": "EC:yumbay yallico"
+      },
+      {
+        "orador": "Guadalupe Vélez",
+        "cargo": "legislador",
+        "sobre": "Reforma de la ley de alimentos",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Respaldó la gratuidad de las donaciones de alimentos.",
+        "proyecto": "",
+        "id": "EC:velez velez"
+      },
+      {
+        "orador": "Diana Arboleda",
+        "cargo": "autoridad",
+        "sobre": "Reforma de la ley de lavado de activos",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Propuso archivar el proyecto de lavado de activos.",
+        "proyecto": "Ley de lavado de activos",
+        "id": null
+      },
+      {
+        "orador": "Natalie Farinango",
+        "cargo": "legislador",
+        "sobre": "proyecto de ley de lavado de activos",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso archivar la reforma por riesgos de inconstitucionalidad.",
+        "proyecto": "Ley de Prevención de Lavado de Activos",
+        "id": "EC:farinango delgado"
+      },
+      {
+        "orador": "Maritza",
+        "cargo": "invitado",
+        "sobre": "resumen de la sesión legislativa",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Informó sobre el archivo del proyecto de lavado de activos.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=lwiO_paYRPk"
+  },
+  "Qnb9swCU3Jg": {
+    "fecha": "2026-10-22",
+    "organo": "Comisión de Defensa Nacional",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Daniel Jorge Jávez",
+        "cargo": "invitado",
+        "sobre": "Internacionalización de las fuerzas armadas",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Informó sobre la internacionalización de las fuerzas armadas.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=Qnb9swCU3Jg"
+  },
+  "fb_1158120466564694": {
+    "fecha": "2026-10-22",
+    "organo": "Comisión de Derecho al Trabajo",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Egnery de Recal de Álava",
+        "cargo": "legislador",
+        "sobre": "Investigación del proyecto Quitopía",
+        "postura": "propone",
+        "tema": "Infraestructura",
+        "dijo": "Pidió la elaboración de documentos para solicitar información sobre el proyecto Quitopía.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1158120466564694"
   }
 }
