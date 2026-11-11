@@ -227,3 +227,8 @@ julio de 2026. El sistema sincroniza solo el período vigente.
 |---|---|---|
 | 2021-2026 | Unicameral | Histórico |
 | 2026-2031 | Bicameral | Vigente |
+
+## Licencia
+
+Todos los derechos reservados. El repositorio es público solo para su
+revisión. Ver [`LICENSE`](LICENSE).
