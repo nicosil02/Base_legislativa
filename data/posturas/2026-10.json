@@ -6331,5 +6331,783 @@
       }
     ],
     "url": "https://www.youtube.com/watch?v=C9L24osaBhw"
+  },
+  "TQTihXaQo7A": {
+    "fecha": "2026-10-28",
+    "organo": "Comisión de Comercio Exterior",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Andrea Medina Stein",
+        "cargo": "legislador",
+        "sobre": "Visita de su santidad el Papa",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Respaldó la importancia de la visita del Papa.",
+        "proyecto": "",
+        "id": "diputados:medina stein"
+      },
+      {
+        "orador": "Andrea Medina Stein",
+        "cargo": "legislador",
+        "sobre": "Sede de los FIFA Best",
+        "postura": "comenta",
+        "tema": "Horeca",
+        "dijo": "Respaldó la promoción de los FIFA Best.",
+        "proyecto": "",
+        "id": "diputados:medina stein"
+      },
+      {
+        "orador": "Jessica Guevara",
+        "cargo": "legislador",
+        "sobre": "Visita papal en Cajamarca",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Pidió un informe sobre la visita del Papa.",
+        "proyecto": "",
+        "id": "diputados:guevara ramirez"
+      },
+      {
+        "orador": "Andrea Medina Stein",
+        "cargo": "legislador",
+        "sobre": "Promoción del sector Gamarra",
+        "postura": "comenta",
+        "tema": "Mype",
+        "dijo": "Respaldó la promoción del sector textil en Gamarra.",
+        "proyecto": "Gamarra Fashion Week",
+        "id": "diputados:medina stein"
+      },
+      {
+        "orador": "Juan Carlos Requejo Alemán",
+        "cargo": "ministro o autoridad",
+        "sobre": "Gestión del sector pesca",
+        "postura": "comenta",
+        "tema": "Pesca",
+        "dijo": "Defendió el desarrollo productivo del sector pesquero.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Juan Carlos Requejo Alemán",
+        "cargo": "ministro o autoridad",
+        "sobre": "Renovación de la flota científica",
+        "postura": "comenta",
+        "tema": "Pesca",
+        "dijo": "Defendió la renovación de la flota científica.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Juan Carlos Requejo Alemán",
+        "cargo": "ministro o autoridad",
+        "sobre": "Captura de pota y bonito",
+        "postura": "comenta",
+        "tema": "Pesca",
+        "dijo": "Defendió la pesca de pota y bonito.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Juan Carlos Requejo Alemán",
+        "cargo": "ministro o autoridad",
+        "sobre": "Disponibilidad de jurel y caballa",
+        "postura": "comenta",
+        "tema": "Pesca",
+        "dijo": "Defendió la disponibilidad de recursos en altamar.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Juan Carlos Requejo Alemán",
+        "cargo": "ministro o autoridad",
+        "sobre": "Situación de la anchoveta",
+        "postura": "comenta",
+        "tema": "Pesca",
+        "dijo": "Defendió el manejo de la anchoveta.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Juan Carlos Requejo Alemán",
+        "cargo": "ministro o autoridad",
+        "sobre": "Reglamentación de la pesca artesanal",
+        "postura": "comenta",
+        "tema": "Pesca",
+        "dijo": "Defendió la reglamentación de la Ley 31749.",
+        "proyecto": "Ley 31749",
+        "id": null
+      },
+      {
+        "orador": "Juan Carlos Requejo Alemán",
+        "cargo": "ministro o autoridad",
+        "sobre": "Créditos asistidos de Fondep",
+        "postura": "comenta",
+        "tema": "Mype",
+        "dijo": "Defendió los créditos asistidos de Fondep.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Juan Carlos Requejo Alemán",
+        "cargo": "ministro o autoridad",
+        "sobre": "Programa de comer pescado",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Defendió el programa de comer pescado.",
+        "proyecto": "Programa Nacional de Comer Pescado",
+        "id": null
+      },
+      {
+        "orador": "Juan Carlos Requejo Alemán",
+        "cargo": "ministro o autoridad",
+        "sobre": "Plan nacional de acuicultura",
+        "postura": "comenta",
+        "tema": "Pesca",
+        "dijo": "Defendió el plan nacional de acuicultura.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Juan Carlos Requejo Alemán",
+        "cargo": "ministro o autoridad",
+        "sobre": "Anchoveta contra la anemia",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Defendió el uso de anchoveta para la anemia.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Juan Carlos Requejo Alemán",
+        "cargo": "ministro o autoridad",
+        "sobre": "Incentivos para la acuicultura",
+        "postura": "propone",
+        "tema": "Tributos",
+        "dijo": "Propuso medidas tributarias para la acuicultura.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro de la Producción",
+        "cargo": "ministro o autoridad",
+        "sobre": "Hidrolizado de anchoveta contra la anemia",
+        "postura": "comenta",
+        "tema": "Pesca",
+        "dijo": "Informó sobre el uso de hidrolizado de anchoveta para combatir la anemia.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro de la Producción",
+        "cargo": "ministro o autoridad",
+        "sobre": "Incentivos para la acuicultura en altura",
+        "postura": "propone",
+        "tema": "Pesca",
+        "dijo": "Propuso implementar incentivos para la acuicultura en zonas de altura.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro de la Producción",
+        "cargo": "ministro o autoridad",
+        "sobre": "Obras en Pucusana y Matarani",
+        "postura": "comenta",
+        "tema": "Pesca",
+        "dijo": "Informó sobre la ejecución de obras en desembarcaderos pesqueros artesanales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro de la Producción",
+        "cargo": "ministro o autoridad",
+        "sobre": "Control satelital de aguas jurisdiccionales",
+        "postura": "comenta",
+        "tema": "Pesca",
+        "dijo": "Detalló el uso de sistemas satelitales para monitorear flotas extranjeras.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro de la Producción",
+        "cargo": "ministro o autoridad",
+        "sobre": "Control satelital mediante el FONEP",
+        "postura": "propone",
+        "tema": "Pesca",
+        "dijo": "Propuso financiar sistemas de control satelital para pescadores mediante el FONEP.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro de la Producción",
+        "cargo": "ministro o autoridad",
+        "sobre": "Modernización de la flota de anchoveta",
+        "postura": "propone",
+        "tema": "Pesca",
+        "dijo": "Propuso la modernización de la flota pesquera industrial de anchoveta.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro de la Producción",
+        "cargo": "ministro o autoridad",
+        "sobre": "Impacto del fenómeno El Niño",
+        "postura": "comenta",
+        "tema": "Pesca",
+        "dijo": "Denunció pérdidas de 14,000 millones por el fenómeno El Niño.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro de la Producción",
+        "cargo": "ministro o autoridad",
+        "sobre": "Coordinación de medidas con el MEF",
+        "postura": "comenta",
+        "tema": "Pesca",
+        "dijo": "Informó la coordinación de medidas de emergencia con el MEF.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro de la Producción",
+        "cargo": "ministro o autoridad",
+        "sobre": "Uso de biofertilizantes en la agricultura",
+        "postura": "propone",
+        "tema": "Pesca",
+        "dijo": "Propuso el uso de biofertilizantes para dinamizar la comunidad pesquera.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro de la Producción",
+        "cargo": "ministro o autoridad",
+        "sobre": "Implementación del esquema de trámite cero",
+        "postura": "propone",
+        "tema": "Mype",
+        "dijo": "Propuso implementar un esquema de trámite cero para negocios de bajo riesgo.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro de la Producción",
+        "cargo": "ministro o autoridad",
+        "sobre": "Agilización de trámites para inversiones",
+        "postura": "comenta",
+        "tema": "Mype",
+        "dijo": "Informó que la agilización de certificaciones ambientales generará nuevas inversiones.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro de la Producción",
+        "cargo": "ministro o autoridad",
+        "sobre": "Desarrollo de parques industriales regionales",
+        "postura": "comenta",
+        "tema": "Mype",
+        "dijo": "Informó sobre el acompañamiento en el desarrollo de parques industriales regionales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro de la Producción",
+        "cargo": "ministro o autoridad",
+        "sobre": "Implementación de la economía circular",
+        "postura": "propone",
+        "tema": "Mype",
+        "dijo": "Propuso la economía circular para mejorar la competitividad industrial.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro de la Producción",
+        "cargo": "ministro o autoridad",
+        "sobre": "desarrollo de parques industriales",
+        "postura": "comenta",
+        "tema": "Infraestructura",
+        "dijo": "Informó sobre el acompañamiento técnico en parques industriales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro de la Producción",
+        "cargo": "ministro o autoridad",
+        "sobre": "comisión multisectorial de desarrollo",
+        "postura": "comenta",
+        "tema": "Mype",
+        "dijo": "Explicó la creación de una comisión para destrabar inversiones.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro de la Producción",
+        "cargo": "ministro o autoridad",
+        "sobre": "implementación de economía circular",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Destacó la importancia de la economía circular para la competitividad.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro de la Producción",
+        "cargo": "ministro o autoridad",
+        "sobre": "industria de alta tecnología",
+        "postura": "comenta",
+        "tema": "Tecnología",
+        "dijo": "Resaltó la competitividad de la industria tecnológica nacional.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro de la Producción",
+        "cargo": "ministro o autoridad",
+        "sobre": "uso y expansión del factoring",
+        "postura": "propone",
+        "tema": "Banca",
+        "dijo": "Propuso extender el uso del factoring en el sector público.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro de la Producción",
+        "cargo": "ministro o autoridad",
+        "sobre": "gestión de fondos Procompite",
+        "postura": "comenta",
+        "tema": "Mype",
+        "dijo": "Señaló la baja ejecución de los recursos de Procompite.",
+        "proyecto": "Procompite",
+        "id": null
+      },
+      {
+        "orador": "Ministro de la Producción",
+        "cargo": "ministro o autoridad",
+        "sobre": "extensión de Proinóvate",
+        "postura": "comenta",
+        "tema": "Tecnología",
+        "dijo": "Informó sobre la gestión para extender Proinóvate cinco años.",
+        "proyecto": "Proinóvate",
+        "id": null
+      },
+      {
+        "orador": "Ministro de la Producción",
+        "cargo": "ministro o autoridad",
+        "sobre": "kits escolares para MIPEs",
+        "postura": "comenta",
+        "tema": "Mype",
+        "dijo": "Mencionó el uso de kits escolares para fortalecer MIPEs.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro de la Producción",
+        "cargo": "ministro o autoridad",
+        "sobre": "promoción mediante ferias",
+        "postura": "comenta",
+        "tema": "Comercio",
+        "dijo": "Destacó la importancia de las ferias para los emprendedores.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro de la Producción",
+        "cargo": "ministro o autoridad",
+        "sobre": "defensa ante competencia desleal",
+        "postura": "propone",
+        "tema": "Comercio",
+        "dijo": "Pidió fortalecer los mecanismos contra la competencia desleal.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro de la Producción",
+        "cargo": "ministro o autoridad",
+        "sobre": "capacitación en inteligencia artificial",
+        "postura": "comenta",
+        "tema": "Tecnología",
+        "dijo": "Informó sobre las capacitaciones en inteligencia artificial para emprendedores.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro de la Producción",
+        "cargo": "ministro o autoridad",
+        "sobre": "fortalecimiento de la red CITE",
+        "postura": "comenta",
+        "tema": "Tecnología",
+        "dijo": "Sugerió articular los centros CITE con la academia.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro de la Producción",
+        "cargo": "ministro o autoridad",
+        "sobre": "modernización de mercados",
+        "postura": "comenta",
+        "tema": "Infraestructura",
+        "dijo": "Informó sobre proyectos para modernizar los mercados de abastos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro de la Producción",
+        "cargo": "ministro o autoridad",
+        "sobre": "cadena de fibra de alpaca",
+        "postura": "comenta",
+        "tema": "Agricultura",
+        "dijo": "Explicó la importancia de mejorar la calidad de la alpaca.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro de la Producción",
+        "cargo": "ministro o autoridad",
+        "sobre": "situación del sector textil",
+        "postura": "comenta",
+        "tema": "Mype",
+        "dijo": "Denunció la caída de la producción del sector textil.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro de la Producción",
+        "cargo": "ministro o autoridad",
+        "sobre": "ejecución presupuestal de Produce",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Informó sobre los niveles de ejecución del presupuesto sectorial.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Juan Carlos Requejo Alemán",
+        "cargo": "ministro o autoridad",
+        "sobre": "caída del sector textil",
+        "postura": "comenta",
+        "tema": "Mype",
+        "dijo": "Informó sobre la caída del 15% en el sector textil.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Juan Carlos Requejo Alemán",
+        "cargo": "ministro o autoridad",
+        "sobre": "uso de Procompite",
+        "postura": "comenta",
+        "tema": "Mype",
+        "dijo": "Explicó que Procompite dinamizará los sectores afectados.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Juan Carlos Rejejo Alemán",
+        "cargo": "ministro o autoridad",
+        "sobre": "kits para mercados",
+        "postura": "propone",
+        "tema": "Infraestructura",
+        "dijo": "Propuso la adquisición de kits de emergencia para mercados.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Juan Carlos Requejo Alemán",
+        "cargo": "ministro o autoridad",
+        "sobre": "ejecución presupuestal",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Detalló la ejecución del presupuesto modificado de 824 millones.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Juan Carlos Requejo Alemán",
+        "cargo": "ministro o autoridad",
+        "sobre": "presupuesto pesca e industria",
+        "postura": "comenta",
+        "tema": "Pesca",
+        "dijo": "Describió el presupuesto para pesca y la industria.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Fernández",
+        "cargo": "legislador",
+        "sobre": "acciones fenómeno El Niño",
+        "postura": "pregunta",
+        "tema": "Pesca",
+        "dijo": "Preguntó sobre las acciones para mitigar el fenómeno El Niño.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Fernández",
+        "cargo": "legislador",
+        "sobre": "desembarcadero de Hilo",
+        "postura": "propone",
+        "tema": "Infraestructura",
+        "dijo": "Pidió acelerar los estudios para el desembarcadero de Hilo.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Fernández",
+        "cargo": "legislador",
+        "sobre": "maricultura en Cechura",
+        "postura": "propone",
+        "tema": "Pesca",
+        "dijo": "Propuso crear un fondo semilla para la maricultura.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Domínguez",
+        "cargo": "legislador",
+        "sobre": "sector pesquero en crisis",
+        "postura": "en contra",
+        "tema": "Pesca",
+        "dijo": "Denunció que el sector pesquero está en cuidados intensivos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Domínguez",
+        "cargo": "legislador",
+        "sobre": "decreto supremo 025",
+        "postura": "con observaciones",
+        "tema": "Pesca",
+        "dijo": "Sugirió revisar el artículo 30 del decreto 025.",
+        "proyecto": "DS 025",
+        "id": null
+      },
+      {
+        "orador": "Domínguez",
+        "cargo": "legislador",
+        "sobre": "infraestructura DPA Warmey",
+        "postura": "pregunta",
+        "tema": "Infraestructura",
+        "dijo": "Consultó por la situación de la obra en Warmey.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "de Paz Lancho",
+        "cargo": "legislador",
+        "sobre": "implementación ley 31749",
+        "postura": "pregunta",
+        "tema": "Pesca",
+        "dijo": "Preguntó por la fecha de adecuación de la ley 31749.",
+        "proyecto": "Ley 31749",
+        "id": "diputados:de paz lancho"
+      },
+      {
+        "orador": "de Paz Lancho",
+        "cargo": "legislador",
+        "sobre": "emprendimientos de Lima",
+        "postura": "pregunta",
+        "tema": "Mype",
+        "dijo": "Consultó sobre los emprendimientos de Lima en Proignóate.",
+        "proyecto": "",
+        "id": "diputados:de paz lancho"
+      },
+      {
+        "orador": "Mendoza",
+        "cargo": "legislador",
+        "sobre": "situación pesca industrial",
+        "postura": "en contra",
+        "tema": "Pesca",
+        "dijo": "Alertó sobre la alarmante situación de la pesca industrial.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Mendoza",
+        "cargo": "legislador",
+        "sobre": "ventanilla única pymes",
+        "postura": "comenta",
+        "tema": "Mype",
+        "dijo": "Expresó su apoyo a la implementación de la ventanilla única.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Mendoza",
+        "cargo": "legislador",
+        "sobre": "parque industrial Huancón",
+        "postura": "comenta",
+        "tema": "Infraestructura",
+        "dijo": "Destacó el proyecto del parque industrial de Huancón.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Mendoza",
+        "cargo": "legislador",
+        "sobre": "ferias internacionales",
+        "postura": "comenta",
+        "tema": "Comercio",
+        "dijo": "Mencionó la importancia de las ferias para la inversión.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Wión",
+        "cargo": "legislador",
+        "sobre": "empresarios en el exterior",
+        "postura": "propone",
+        "tema": "Mype",
+        "dijo": "Pidió soporte para que empresarios reinviertan en Perú.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Tapullima",
+        "cargo": "legislador",
+        "sobre": "irregularidades Compras a mi Perú",
+        "postura": "en contra",
+        "tema": "Mype",
+        "dijo": "Denunció irregularidades en el programa Compras a mi Perú.",
+        "proyecto": "Compras a mi Perú",
+        "id": "diputados:tapullima insapillo"
+      },
+      {
+        "orador": "Tapullima",
+        "cargo": "legislador",
+        "sobre": "participación pueblos originarios",
+        "postura": "pregunta",
+        "tema": "Otros",
+        "dijo": "Preguntó si se garantizará la participación de pueblos originarios.",
+        "proyecto": "",
+        "id": "diputados:tapullima insapillo"
+      },
+      {
+        "orador": "Vida",
+        "cargo": "legislador",
+        "sobre": "ingresos para pescadores",
+        "postura": "en contra",
+        "tema": "Pesca",
+        "dijo": "Lamentó la falta de ingresos de los pescadores.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Vida",
+        "cargo": "legislador",
+        "sobre": "formalización pescadores Piura",
+        "postura": "pregunta",
+        "tema": "Pesca",
+        "dijo": "Pidió controlar la formalidad de pescadores en Piura.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Vida",
+        "cargo": "legislador",
+        "sobre": "mercado de Belén",
+        "postura": "propone",
+        "tema": "Infraestructura",
+        "dijo": "Propuso retomar la obra del mercado de Belén.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Paarapaxi",
+        "cargo": "legislador",
+        "sobre": "facultades para emprendedores",
+        "postura": "en contra",
+        "tema": "Mype",
+        "dijo": "Criticó la falta de facultades para los emprendedores.",
+        "proyecto": "",
+        "id": "diputados:paucara paxi"
+      },
+      {
+        "orador": "Paarapaxi",
+        "cargo": "legislador",
+        "sobre": "mercado de San Ignacio",
+        "postura": "propone",
+        "tema": "Infraestructura",
+        "dijo": "Pidió culminar la obra del mercado de San Ignacio.",
+        "proyecto": "",
+        "id": "diputados:paucara paxi"
+      },
+      {
+        "orador": "Paarapaxi",
+        "cargo": "legislador",
+        "sobre": "DPA del Callao",
+        "postura": "pregunta",
+        "tema": "Infraestructura",
+        "dijo": "Solicitó apoyo para la DPA del Callao.",
+        "proyecto": "",
+        "id": "diputados:paucara paxi"
+      },
+      {
+        "orador": "Guevara Ramírez",
+        "cargo": "legislador",
+        "sobre": "proyectos para Cajamarca",
+        "postura": "pregunta",
+        "tema": "Otros",
+        "dijo": "Preguntó sobre las actividades agendadas para Cajamarca.",
+        "proyecto": "",
+        "id": "diputados:guevara ramirez"
+      },
+      {
+        "orador": "Mendoza",
+        "cargo": "legislador",
+        "sobre": "diagnóstico de obras",
+        "postura": "comenta",
+        "tema": "Construcción",
+        "dijo": "Explicó que se realiza un diagnóstico de obras.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Juan Carlos Requejo Alemán",
+        "cargo": "ministro o autoridad",
+        "sobre": "nuevos proyectos de ley",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Anunció la preparación de 17 proyectos de ley.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=TQTihXaQo7A"
+  },
+  "fb_4642109872727106": {
+    "fecha": "2026-10-27",
+    "organo": "Comisión de Niñez y Adolescencia",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Jonathan Rosero",
+        "cargo": "invitado",
+        "sobre": "Informe de seguimiento resolución RL 032",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Presentó las conclusiones de la resolución 032.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Melissa Zambrán",
+        "cargo": "legislador",
+        "sobre": "Aprobación del octavo informe de seguimiento",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Propuso aprobar el octavo informe de seguimiento.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ricardo Pateña",
+        "cargo": "legislador",
+        "sobre": "Gestión de informes de fiscalización",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció la inacción de la Asamblea Nacional.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=4642109872727106"
   }
 }
