@@ -8019,5 +8019,64 @@
       }
     ],
     "url": "https://www.facebook.com/watch/?v=1814126226381431"
+  },
+  "fb_1434315122103124": {
+    "fecha": "2026-11-10",
+    "organo": "Comisión de Fiscalización",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Amable Chica",
+        "cargo": "legislador",
+        "sobre": "competencia de fiscalización municipal",
+        "postura": "en contra",
+        "tema": "Polítíca y control político",
+        "dijo": "Cuestionó la facultad de la comisión para intervenir en procesos de contratación municipal.",
+        "proyecto": "",
+        "id": "EC:chica valencia"
+      },
+      {
+        "orador": "Ana Herrera",
+        "cargo": "legislador",
+        "sobre": "competencia de fiscalización municipal",
+        "postura": "en contra",
+        "tema": "Polítíca y control político",
+        "dijo": "Cuestionó la competencia de la comisión para fiscalizar a alcaldes y prefectos.",
+        "proyecto": "",
+        "id": "EC:herrera gomez"
+      },
+      {
+        "orador": "María Paula Villacreza-Sarrera",
+        "cargo": "legislador",
+        "sobre": "competencia de fiscalización municipal",
+        "postura": "a favor",
+        "tema": "Polítíca y control político",
+        "dijo": "Afirmó que la fiscalización de gobiernos autónomos descentralizados es constitucional.",
+        "proyecto": "",
+        "id": "EC:villacreses herrera"
+      },
+      {
+        "orador": "Luigi García",
+        "cargo": "legislador",
+        "sobre": "competencia de fiscalización municipal",
+        "postura": "a favor",
+        "tema": "Polítíca y control político",
+        "dijo": "Defendió la potestad de la Asamblea para fiscalizar otros órganos del poder público.",
+        "proyecto": "",
+        "id": "EC:garcia velasquez"
+      },
+      {
+        "orador": "José Nango",
+        "cargo": "legislador",
+        "sobre": "fiscalización del caso asfalto de oro",
+        "postura": "a favor",
+        "tema": "Polítíca y control político",
+        "dijo": "Respaldó el proceso de fiscalización para brindar respuestas a la ciudadanía.",
+        "proyecto": "",
+        "id": "EC:nango cuji"
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1434315122103124"
   }
 }
