@@ -17,6 +17,7 @@ nunca se pisa una fila ajena, y en transcripciones gana el texto mas largo.
     python -m core.partes armar DESTINO.db PARTES_DIR      # parte.db.gz -> base completa
     python -m core.partes extraer ORIGEN.db PARTE SALIDA.db
     python -m core.partes unir LOCAL_PARTE.db REMOTO_PARTE.db PARTE
+    python -m core.partes web PARTE_TV.db SALIDA.db         # tv solo con lo que lee la web
 """
 from __future__ import annotations
 
@@ -84,6 +85,20 @@ def extraer(origen: Path, parte: str, salida: Path) -> None:
 # resto, que en Streamlit Cloud la llevaba a "over resource limits" (2026-11-07).
 SOLO_WEB = {"tv_vistos": "video_id IN (SELECT video_id FROM p.tv_menciones "
                          "WHERE first_seen_at >= datetime('now', '-14 days'))"}
+
+
+def recortar_web(origen: Path, salida: Path) -> None:
+    """Deja en `salida` la parte `origen` solo con las filas que lee la web
+    (SOLO_WEB). Los workflows de TV la publican como parte `tvweb` y la app
+    baja esa: la parte tv entera suelta (244 MB) era el pico de disco en cada
+    rearmado (2026-11-11)."""
+    salida.unlink(missing_ok=True)
+    conn = sqlite3.connect(salida)
+    conn.execute("ATTACH DATABASE ? AS p", (str(origen),))
+    for t in _tablas(conn, "p"):
+        _copiar_tabla(conn, "p", t, SOLO_WEB.get(t, ""))
+    conn.commit()
+    conn.close()
 
 
 def _descomprimir(gz: Path, destino: Path) -> Path:
@@ -159,6 +174,8 @@ if __name__ == "__main__":
         armar(destino, {p: carpeta / archivo(p).removesuffix(".gz") for p in NOMBRES})
     elif cmd == "extraer":
         extraer(Path(args[0]), args[1], Path(args[2]))
+    elif cmd == "web":
+        recortar_web(Path(args[0]), Path(args[1]))
     elif cmd == "unir":
         print(f"[partes] {unir(Path(args[0]), Path(args[1]), args[2])} fila(s) de otros workflows")
     else:

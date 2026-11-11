@@ -61,6 +61,12 @@ for intento in 1 2 3 4 5 6; do
       fi
       gzip -9nc "$TMP/$ARCH" > "$TMP/$ARCH.gz"
       git update-index --add --cacheinfo "100644,$(git hash-object -w "$TMP/$ARCH.gz"),data/$ARCH.gz"
+      if [ "$parte" = "tv" ]; then
+        # La web baja esta, recortada a lo que muestra (core/partes.recortar_web).
+        python -X utf8 -m core.partes web "$TMP/$ARCH" "$TMP/proyectos.tvweb.db"
+        gzip -9nc "$TMP/proyectos.tvweb.db" > "$TMP/proyectos.tvweb.db.gz"
+        git update-index --add --cacheinfo "100644,$(git hash-object -w "$TMP/proyectos.tvweb.db.gz"),data/proyectos.tvweb.db.gz"
+      fi
     done
     # Con las tres partes publicadas, la base entera vieja solo confunde.
     if git ls-files --error-unmatch data/proyectos.base.db.gz data/proyectos.transcripciones.db.gz \

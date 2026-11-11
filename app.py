@@ -112,7 +112,23 @@ def _get_bootstrap_lock() -> threading.Lock:
 # cada commit de la base la redesplegaba; ahora baja el .gz de `datos` cada
 # DATOS_CADA_SEG como mucho, y solo si cambio (ETag -> 304 si no).
 DATOS_URL = "https://raw.githubusercontent.com/nicosil02/Base_legislativa/datos/data/{}"
-DATOS_CADA_SEG = 600
+DATOS_CADA_SEG = 1800  # cada rearmado escribe ~400 MB; con 600 era uno cada 10 min todo el dia
+
+
+def _soltar_cache(path: Path) -> None:
+    """Saca de la cache de disco del sistema un archivo recien escrito. En
+    Streamlit Cloud esa cache se cuenta como memoria de la app y cada
+    rearmado de la base la llenaba ("over resource limits", 2026-11-11)."""
+    import os
+    try:
+        fd = os.open(path, os.O_RDONLY)
+        try:
+            os.fsync(fd)
+            os.posix_fadvise(fd, 0, 0, os.POSIX_FADV_DONTNEED)
+        finally:
+            os.close(fd)
+    except (OSError, AttributeError):  # Windows no tiene posix_fadvise
+        pass
 
 
 @st.cache_resource
@@ -125,6 +141,7 @@ def _bajar_de_datos(gz_path: Path) -> None:
     ultima vez. Cualquier fallo (sin red, rama todavia no creada) deja lo
     que haya - el bootstrap sigue igual que antes con el .gz local."""
     import os
+    import shutil
     import tempfile
     import time
     import urllib.error
@@ -143,8 +160,9 @@ def _bajar_de_datos(gz_path: Path) -> None:
             gz_path.parent.mkdir(parents=True, exist_ok=True)
             fd, tmp = tempfile.mkstemp(dir=gz_path.parent, prefix=gz_path.name + ".", suffix=".tmp")
             with os.fdopen(fd, "wb") as f:
-                f.write(r.read())
+                shutil.copyfileobj(r, f)  # r.read() subia el .gz entero a memoria
             os.replace(tmp, gz_path)  # mtime nuevo -> _needs_restore lo ve "stale"
+            _soltar_cache(gz_path)
             estado[gz_path.name] = (time.time(), r.headers.get("ETag"))
             print(f"[datos] {gz_path.name} actualizado desde la rama datos")
     except urllib.error.HTTPError as e:
@@ -250,6 +268,13 @@ def _bootstrap_dbs_impl():
     # arma la base completa. Sin partes en `datos`, la base entera de antes.
     partes = _importar("core.partes")
     partes_gz = {p: repo_root / "data" / partes.archivo(p) for p in partes.NOMBRES}
+    # TV recortada a lo que muestra la web, si los workflows ya la publican:
+    # la parte entera suelta pesa 244 MB y la web solo usa un tercio.
+    tvweb = repo_root / "data" / partes.archivo("tvweb")
+    _bajar_de_datos(tvweb)
+    if tvweb.exists():
+        partes_gz["tv"].unlink(missing_ok=True)
+        partes_gz["tv"] = tvweb
     for gz in partes_gz.values():
         _bajar_de_datos(gz)
     motivos = [m for gz in partes_gz.values() if (m := _needs_restore(pe_db, gz))]
@@ -263,6 +288,7 @@ def _bootstrap_dbs_impl():
                 gz.with_suffix("").unlink(missing_ok=True)
             try:
                 partes.armar(pe_db, {p: gz for p, gz in partes_gz.items() if gz.exists()}, para_web=True)
+                _soltar_cache(pe_db)
                 print(f"[bootstrap] proyectos.db armada ({motivos[0]})")
             except Exception as e:
                 print(f"[bootstrap] error armando PE DB: {e}")

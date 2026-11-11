@@ -109,3 +109,17 @@ def test_armar_desde_gz_deja_los_gz(tmp_path):
     assert c.execute("SELECT texto FROM sesiones_transcripciones").fetchone() == ("texto",)
     assert all(p.exists() for p in partes.values())
     assert not list(tmp_path.glob("*.suelta"))
+
+
+def test_recortar_web_deja_solo_tv_reciente(tmp_path):
+    orig = tmp_path / "orig.db"
+    _base(orig, [("nuevo", "a"), ("viejo", "b")], [], "CREATE TABLE tv_menciones (video_id TEXT, first_seen_at TEXT)")
+    c = sqlite3.connect(orig)
+    c.executemany("INSERT INTO tv_menciones VALUES (?, ?)", [("nuevo", "2999-01-01"), ("viejo", "2000-01-01")])
+    c.commit()
+    c.close()
+    P.extraer(orig, "tv", tmp_path / "tv.db")
+    P.recortar_web(tmp_path / "tv.db", tmp_path / "tvweb.db")
+    c = sqlite3.connect(tmp_path / "tvweb.db")
+    assert [r[0] for r in c.execute("SELECT video_id FROM tv_vistos")] == ["nuevo"]
+    assert c.execute("SELECT COUNT(*) FROM tv_menciones").fetchone()[0] == 2
