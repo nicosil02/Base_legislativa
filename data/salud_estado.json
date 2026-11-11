@@ -1,8 +1,5 @@
 {
-  "sin_correr:Actualizar Ecuador (CSV + documentos)": "Actualizar Ecuador (CSV + documentos): no corre desde 11/11 05:34 (tocaba 11/11 08:00)",
-  "sin_correr:Quien habla (transcripciones por turnos)": "Quien habla (transcripciones por turnos): no corre desde 11/11 07:38 (tocaba 11/11 07:40)",
-  "falla:Quien habla (transcripciones por turnos)": "Quien habla (transcripciones por turnos): fallo 3 veces seguidas (https://github.com/nicosil02/Base_legislativa/actions/runs/43022025749)",
-  "sin_correr:Posturas de congresistas (Gemma)": "Posturas de congresistas (Gemma): no corre desde 11/11 01:45 (tocaba 11/11 07:20)",
-  "falla:Vigilar Congreso en vivo (Fase 0)": "Vigilar Congreso en vivo (Fase 0): fallo 6 veces seguidas (https://github.com/nicosil02/Base_legislativa/actions/runs/43040667480)",
+  "sin_correr:Actualizar Ecuador (CSV + documentos)": "Actualizar Ecuador (CSV + documentos): no corre desde 11/11 05:34 (tocaba 11/11 12:00)",
+  "falla:Quien habla (transcripciones por turnos)": "Quien habla (transcripciones por turnos): fallo 5 veces seguidas (https://github.com/nicosil02/Base_legislativa/actions/runs/43067878825)",
   "sin_correr:Votaciones Pleno bicameral (OCR de escaneados)": "Votaciones Pleno bicameral (OCR de escaneados): no corre desde 10/11 14:55 (tocaba 11/11 07:30)"
 }
