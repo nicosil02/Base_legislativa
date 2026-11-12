@@ -9047,5 +9047,71 @@
       }
     ],
     "url": "https://www.facebook.com/watch/?v=1658547095908884"
+  },
+  "fb_1618783580024959": {
+    "fecha": "2026-11-11",
+    "organo": "Comisión de Régimen Económico",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Lorena Flores",
+        "cargo": "invitado",
+        "sobre": "reforma a la ley de contratación pública",
+        "postura": "con observaciones",
+        "tema": "Otros",
+        "dijo": "Propuso ajustes para evitar la duplicidad normativa.",
+        "proyecto": "Ley de Contratación Pública",
+        "id": null
+      },
+      {
+        "orador": "Asambleísta Durán",
+        "cargo": "legislador",
+        "sobre": "dudas sobre la aplicación de la reforma",
+        "postura": "pregunta",
+        "tema": "Otros",
+        "dijo": "Preguntó sobre la aplicación técnica de la reforma.",
+        "proyecto": "Ley de Contratación Pública",
+        "id": "EC:duran aguilar"
+      },
+      {
+        "orador": "Lorena Flores",
+        "cargo": "invitado",
+        "sobre": "respuestas sobre la ejecución de la reforma",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Defendió la viabilidad de los mecanismos de control.",
+        "proyecto": "Ley de Contratación Pública",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1618783580024959"
+  },
+  "fb_1857426632239192": {
+    "fecha": "2026-11-11",
+    "organo": "Comisión de Biodiversidad",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Sebastián Garzón Navarrete",
+        "cargo": "invitado",
+        "sobre": "Proyecto de Ley de Bioeconomía",
+        "postura": "con observaciones",
+        "tema": "Ambiente",
+        "dijo": "Propuso incentivos para el cultivo de biomasa en el proyecto de ley.",
+        "proyecto": "Ley de Bioeconomía",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1857426632239192"
+  },
+  "fb_1190072177047534": {
+    "fecha": "2026-11-10",
+    "organo": "Comisión de Fiscalización",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [],
+    "url": "https://www.facebook.com/watch/?v=1190072177047534"
   }
 }
