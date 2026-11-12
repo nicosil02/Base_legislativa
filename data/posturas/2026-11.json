@@ -8383,5 +8383,262 @@
       }
     ],
     "url": "https://www.facebook.com/watch/?v=4683015568596699"
+  },
+  "fb_953758410916492": {
+    "fecha": "2026-11-11",
+    "organo": "Comisión de Biodiversidad",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Garza",
+        "cargo": "invitado",
+        "sobre": "Propuesta de reformas para la bioeconomía",
+        "postura": "propone",
+        "tema": "Mype",
+        "dijo": "Propuso cambios regulatorios para fortalecer la bioeconomía.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Roque",
+        "cargo": "legislador",
+        "sobre": "Implementación de sandbox en la Amazonía",
+        "postura": "pregunta",
+        "tema": "Otros",
+        "dijo": "Preguntó sobre las condiciones del sandbox.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Garza",
+        "cargo": "invitado",
+        "sobre": "Estandarización para el sandbox regulatorio",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Propuso la estandarización nacional de requisitos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Roque",
+        "cargo": "legislador",
+        "sobre": "Barreras para emprendedores en el sandbox",
+        "postura": "pregunta",
+        "tema": "Otros",
+        "dijo": "Preguntó por mecanismos para evitar la burocracia.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Garza",
+        "cargo": "invitado",
+        "sobre": "Acceso de emprendedores al sandbox",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Propuso el uso de incubadoras y la digitalización.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=953758410916492"
+  },
+  "fb_1065062606551763": {
+    "fecha": "2026-11-11",
+    "organo": "Comisión de Seguridad Integral",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Moisés Ben Amor",
+        "cargo": "invitado",
+        "sobre": "proyecto de ley de drogas sintéticas",
+        "postura": "con observaciones",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso integrar la ley marco de la OEA al proyecto.",
+        "proyecto": "Proyecto de ley de drogas sintéticas",
+        "id": null
+      },
+      {
+        "orador": "Elizabeth Arribas",
+        "cargo": "invitado",
+        "sobre": "proyecto de ley de drogas sintéticas",
+        "postura": "con observaciones",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso realizar ajustes para evitar posibles vacíos legales.",
+        "proyecto": "Proyecto de ley de drogas sintéticas",
+        "id": null
+      },
+      {
+        "orador": "Noriega",
+        "cargo": "legislador",
+        "sobre": "Participación ciudadana en la comisión",
+        "postura": "propone",
+        "tema": "Minería",
+        "dijo": "Propuso recibir al colectivo Quito sin minería en comisión general.",
+        "proyecto": "",
+        "id": "EC:noriega donoso"
+      },
+      {
+        "orador": "Juan Miguel Durán",
+        "cargo": "ministro o autoridad",
+        "sobre": "Explotación de áridos y pétreos en Quito",
+        "postura": "comenta",
+        "tema": "Minería",
+        "dijo": "Informó sobre los 67 derechos mineros registrados en Quito.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Noriega",
+        "cargo": "legislador",
+        "sobre": "Concesiones mineras en Chocó Andino",
+        "postura": "pregunta",
+        "tema": "Minería",
+        "dijo": "Preguntó sobre las concesiones mineras vencidas en Chocó Andino.",
+        "proyecto": "",
+        "id": "EC:noriega donoso"
+      },
+      {
+        "orador": "Juan Miguel Durán",
+        "cargo": "ministro o autoridad",
+        "sobre": "Facultades administrativas de la agencia ARCOM",
+        "postura": "comenta",
+        "tema": "Minería",
+        "dijo": "Defendió las facultades administrativas de la agencia ARCOM.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Noriega",
+        "cargo": "legislador",
+        "sobre": "Depuración del catastro minero",
+        "postura": "pregunta",
+        "tema": "Minería",
+        "dijo": "Cuestionó la falta de depuración del catastro minero.",
+        "proyecto": "",
+        "id": "EC:noriega donoso"
+      },
+      {
+        "orador": "Juan Miguel Durán",
+        "cargo": "ministro o autoridad",
+        "sobre": "Actualización del catastro minero",
+        "postura": "comenta",
+        "tema": "Minería",
+        "dijo": "Propuso un cronograma para actualizar el catastro minero.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Noriega",
+        "cargo": "legislador",
+        "sobre": "Fecha para actualizar el catastro",
+        "postura": "pregunta",
+        "tema": "Minería",
+        "dijo": "Preguntó por una fecha concreta para la actualización del catastro.",
+        "proyecto": "",
+        "id": "EC:noriega donoso"
+      },
+      {
+        "orador": "Juan Miguel Durán",
+        "cargo": "ministro o autoridad",
+        "sobre": "Coordinación con el Municipio de Quito",
+        "postura": "comenta",
+        "tema": "Minería",
+        "dijo": "Defendió la coordinación con el GAD de Quito.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Paula Sánchez",
+        "cargo": "ministro o autoridad",
+        "sobre": "Transferencia de expedientes ambientales",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Informó la transferencia de 85 expedientes al municipio de Quito.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Noriega",
+        "cargo": "legislador",
+        "sobre": "Calidad de la comparecencia ministerial",
+        "postura": "con observaciones",
+        "tema": "Ambiente",
+        "dijo": "Cuestionó la falta de profundidad en la comparecencia ministerial.",
+        "proyecto": "",
+        "id": "EC:noriega donoso"
+      },
+      {
+        "orador": "Noriega",
+        "cargo": "legislador",
+        "sobre": "Resolución de fiscalización minera",
+        "postura": "a favor",
+        "tema": "Minería",
+        "dijo": "Defendió la resolución de fiscalización y cuestionó al Ministerio de Ambiente.",
+        "proyecto": "",
+        "id": "EC:noriega donoso"
+      },
+      {
+        "orador": "Delegada del Ministerio de Ambiente",
+        "cargo": "ministro o autoridad",
+        "sobre": "Gestión de concesiones mineras",
+        "postura": "comenta",
+        "tema": "Minería",
+        "dijo": "Informó sobre inspecciones técnicas y la suspensión de concesiones mineras.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Noriega",
+        "cargo": "legislador",
+        "sobre": "Directrices para renovaciones mineras",
+        "postura": "en contra",
+        "tema": "Minería",
+        "dijo": "Cuestionó la ausencia de directrices para prohibir renovaciones mineras.",
+        "proyecto": "",
+        "id": "EC:noriega donoso"
+      },
+      {
+        "orador": "Ayumbay",
+        "cargo": "legislador",
+        "sobre": "Catastro minero y consulta Yasuní",
+        "postura": "en contra",
+        "tema": "Minería",
+        "dijo": "Denunció la falta de depuración del catastro y gestión del Yasuní.",
+        "proyecto": "",
+        "id": "EC:yumbay yallico"
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1065062606551763"
+  },
+  "fb_971592135590008": {
+    "fecha": "2026-11-11",
+    "organo": "Comisión de Biodiversidad",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Álvaro Javier Píriz Smith",
+        "cargo": "invitado",
+        "sobre": "Proyecto de Gestión Costera Integrada",
+        "postura": "con observaciones",
+        "tema": "Ambiente",
+        "dijo": "Cuestionó la necesidad de la ley por la densidad normativa.",
+        "proyecto": "Proyecto de Gestión Costera Integrada",
+        "id": null
+      },
+      {
+        "orador": "Álvaro Javier Píriz Smith",
+        "cargo": "invitado",
+        "sobre": "Diferenciación de la normativa costera",
+        "postura": "propone",
+        "tema": "Ambiente",
+        "dijo": "Propuso centrar la normativa en los deberes ambientales.",
+        "proyecto": "Proyecto de Gestión Costera Integrada",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=971592135590008"
   }
 }
