@@ -8640,5 +8640,412 @@
       }
     ],
     "url": "https://www.facebook.com/watch/?v=971592135590008"
+  },
+  "fb_1426627332960657": {
+    "fecha": "2026-11-11",
+    "organo": "Comisión de Derecho a la Salud",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Paola Michelle Jaramillo Zurita",
+        "cargo": "legislador",
+        "sobre": "Protección de personas con autismo y neurodivergencias",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Propuso protocolos y un registro nacional para personas con neurodivergencias.",
+        "proyecto": "Proyecto de ley para la protección de personas con autismo y neurodivergencias",
+        "id": "EC:jaramillo zurita paola"
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1426627332960657"
+  },
+  "2kTRrHDvmpk": {
+    "fecha": "2026-11-11",
+    "organo": "Comisión de Gestión del Estado",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Jibaja",
+        "cargo": "legislador",
+        "sobre": "iniciativa para centros poblados",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Respaldó la iniciativa para beneficiar a los centros poblados.",
+        "proyecto": "",
+        "id": "diputados:jibaja ramos"
+      },
+      {
+        "orador": "Urquillo",
+        "cargo": "legislador",
+        "sobre": "fortalecimiento de municipalidades de centros poblados",
+        "postura": "con observaciones",
+        "tema": "Política y control político",
+        "dijo": "Pidió correcciones para proteger la autonomía regional.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Roxana Rocha Gallego",
+        "cargo": "legislador",
+        "sobre": "Ley de defensa responsable",
+        "postura": "propone",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Propuso la Ley de defensa responsable para servidores.",
+        "proyecto": "PL 505-2016",
+        "id": "diputados:rocha gallegos"
+      },
+      {
+        "orador": "Quispe",
+        "cargo": "legislador",
+        "sobre": "defensa legal de servidores públicos",
+        "postura": "con observaciones",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Propuso incluir contratos para garantizar gastos legales.",
+        "proyecto": "PL 505-2016",
+        "id": null
+      },
+      {
+        "orador": "César Enrique Aguilar",
+        "cargo": "ministro o autoridad",
+        "sobre": "estado de las obras públicas",
+        "postura": "comenta",
+        "tema": "Infraestructura",
+        "dijo": "Denunció la paralización de dos mil obras nacionales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "César Aguilar",
+        "cargo": "ministro o autoridad",
+        "sobre": "Modificación de la ley de control",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso modificar la ley para evitar la consumación del daño",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "César Aguilar",
+        "cargo": "ministro o autoridad",
+        "sobre": "Situaciones adversas en educación",
+        "postura": "comenta",
+        "tema": "Educación",
+        "dijo": "Reportó miles de situaciones adversas detectadas en el sector educación",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "César Aguilar",
+        "cargo": "ministro o autoridad",
+        "sobre": "Situaciones adversas en salud",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Informó sobre deficiencias de infraestructura y medicamentos en salud",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "César Aguilar",
+        "cargo": "ministro o autoridad",
+        "sobre": "Reducción del presupuesto de Contraloría",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Denunció la disminución presupuestaria que afecta la capacidad operativa",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "César Aguilar",
+        "cargo": "ministro o autoridad",
+        "sobre": "Contratación de personal especializado",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso realizar concursos públicos externos para fortalecer la institución",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "César Aguilar",
+        "cargo": "ministro o autoridad",
+        "sobre": "Autonomía de la Contraloría",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Explicó que la autonomía debe blindarse a nivel constitucional",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Gamarra",
+        "cargo": "legislador",
+        "sobre": "Obras paralizadas en Ancash",
+        "postura": "propone",
+        "tema": "Infraestructura",
+        "dijo": "Pidió fortalecer la fiscalización de obras en la región Ancash",
+        "proyecto": "",
+        "id": "diputados:gamarra pita"
+      },
+      {
+        "orador": "Gamarra",
+        "cargo": "legislador",
+        "sobre": "Crisis de salud en Casma",
+        "postura": "denuncia",
+        "tema": "Salud",
+        "dijo": "Denunció la falta de reactivos en el hospital de Casma",
+        "proyecto": "",
+        "id": "diputados:gamarra pita"
+      },
+      {
+        "orador": "Aguirre",
+        "cargo": "legislador",
+        "sobre": "Obras paralizadas en Junín",
+        "postura": "comenta",
+        "tema": "Infraestructura",
+        "dijo": "Mencionó la preocupación por las ochenta y siete obras paralizadas",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Aguirre",
+        "cargo": "legislador",
+        "sobre": "Presupuesto de control en municipalidades",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Solicitó asegurar el presupuesto de control en las municipalidades",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Molina",
+        "cargo": "legislador",
+        "sobre": "Seguimiento de obras ante fenómeno del niño",
+        "postura": "pregunta",
+        "tema": "Infraestructura",
+        "dijo": "Preguntó sobre el seguimiento a las entidades responsables de obras",
+        "proyecto": "",
+        "id": "diputados:molina soto"
+      },
+      {
+        "orador": "Manrique Xívaja",
+        "cargo": "legislador",
+        "sobre": "Gestión de SEDAPAL en Juliaca",
+        "postura": "propone",
+        "tema": "Saneamiento",
+        "dijo": "Denunció irregularidades financieras y deficiencia en el servicio de agua",
+        "proyecto": "",
+        "id": "diputados:manrique olivera"
+      },
+      {
+        "orador": "Manrique Xívaja",
+        "cargo": "legislador",
+        "sobre": "Retrasos de obras en PRONIS",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Exigió investigación sobre el retraso de hospitales del PRONIS",
+        "proyecto": "",
+        "id": "diputados:manrique olivera"
+      },
+      {
+        "orador": "Hibaja",
+        "cargo": "legislador",
+        "sobre": "Debilitamiento de la Contraloría",
+        "postura": "pregunta",
+        "tema": "Política y control político",
+        "dijo": "Preguntó sobre las razones para debilitar a la Contraloría",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Diputado Manrique",
+        "cargo": "legislador",
+        "sobre": "Gestión de Zedas y PRONIS",
+        "postura": "en contra",
+        "tema": "Infraestructura",
+        "dijo": "Denunció peculado en Zedas Juliaca y retrasos en hospitales del PRONIS.",
+        "proyecto": "",
+        "id": "diputados:manrique olivera"
+      },
+      {
+        "orador": "Diputado Hibaja",
+        "cargo": "legislador",
+        "sobre": "Recursos de la Contraloría",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó la falta de recursos para sancionar la corrupción en el país.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Diputado Pom",
+        "cargo": "legislador",
+        "sobre": "Control preventivo de Contraloría",
+        "postura": "pregunta",
+        "tema": "Educación",
+        "dijo": "Pidió fortalecer el control preventivo y fiscalizar la infraestructura en Madre de Dios.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Diputado Piñano",
+        "cargo": "legislador",
+        "sobre": "Reactivación de obras públicas",
+        "postura": "pregunta",
+        "tema": "Infraestructura",
+        "dijo": "Preguntó por acciones para la reactivación de dos mil obras públicas.",
+        "proyecto": "",
+        "id": "diputados:pinan mamani"
+      },
+      {
+        "orador": "Diputado Bando",
+        "cargo": "legislador",
+        "sobre": "Obras paralizadas en el Callao",
+        "postura": "comenta",
+        "tema": "Infraestructura",
+        "dijo": "Expresó preocupación por las múltiples obras paralizadas en la región Callao.",
+        "proyecto": "",
+        "id": "diputados:obando morgan"
+      },
+      {
+        "orador": "Diputado Quispecandia",
+        "cargo": "legislador",
+        "sobre": "Corrupción de autoridades locales",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso perfeccionar las leyes para combatir la corrupción de las autoridades.",
+        "proyecto": "",
+        "id": "diputados:quispe candia"
+      },
+      {
+        "orador": "Pierre Figari",
+        "cargo": "legislador",
+        "sobre": "Gestión del Museo de Pachacamac",
+        "postura": "comenta",
+        "tema": "Infraestructura",
+        "dijo": "Denunció el abandono y cierre del Museo Nacional de Pachacamac.",
+        "proyecto": "",
+        "id": "diputados:figari mendoza"
+      },
+      {
+        "orador": "Diputado Trujillo",
+        "cargo": "legislador",
+        "sobre": "Obras en La Libertad y presupuesto",
+        "postura": "pregunta",
+        "tema": "Infraestructura",
+        "dijo": "Solicitó información sobre obras críticas en La Libertad y el presupuesto.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Diputada Chipana",
+        "cargo": "legislador",
+        "sobre": "Contaminación de la minera Aruntan",
+        "postura": "pregunta",
+        "tema": "Minería",
+        "dijo": "Pidió investigar los daños ambientales causados por la minera Aruntan Isaac.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Diputada Roxana Rocha",
+        "cargo": "legislador",
+        "sobre": "Gestión en el sector salud",
+        "postura": "pregunta",
+        "tema": "Salud",
+        "dijo": "Preguntó sobre las alertas en hospitales y la reducción de personal.",
+        "proyecto": "",
+        "id": "diputados:rocha gallegos"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=2kTRrHDvmpk"
+  },
+  "fb_1658547095908884": {
+    "fecha": "2026-11-11",
+    "organo": "Comisión de Seguridad Integral",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Edwin Patricio Canizares",
+        "cargo": "ministro o autoridad",
+        "sobre": "propuesta de reformas a la ley militar",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso cambios sobre adicciones, redes sociales y beneficios económicos.",
+        "proyecto": "Ley Orgánica Reformatoria, la Ley Orgánica de Personal y Disciplina a las Fuerzas Armadas",
+        "id": null
+      },
+      {
+        "orador": "Jerec Noriega",
+        "cargo": "legislador",
+        "sobre": "crítica a la reforma militar",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Cuestionó la capacitación, la unión familiar y las amnistías militares.",
+        "proyecto": "Ley Orgánica Reformatoria, la Ley Orgánica de Personal y Disciplina a las Fuerzas Armadas",
+        "id": "EC:noriega donoso"
+      },
+      {
+        "orador": "Edwin Patricio Canizares",
+        "cargo": "ministro o autoridad",
+        "sobre": "aclaraciones sobre la reforma militar",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Defendió la formación técnica, la disponibilidad y las amnistías.",
+        "proyecto": "Ley Orgánica Reformatoria, la Ley Orgánica de Personal y Disciplina a las Fuerzas Armadas",
+        "id": null
+      },
+      {
+        "orador": "Justicia Puente",
+        "cargo": "invitado",
+        "sobre": "definición de actos de servicio",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Informó sobre la definición de actos de servicio en la ley.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Simo Quinta",
+        "cargo": "invitado",
+        "sobre": "límites geográficos en operaciones militares",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Cuestionó la dificultad de determinar límites geográficos en operaciones.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Señor Vicepresidente",
+        "cargo": "legislador",
+        "sobre": "disciplina militar y amnistía",
+        "postura": "con observaciones",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Cuestionó el uso de redes sociales y la diferencia entre amnistía e indulto.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Yajaira Orresta",
+        "cargo": "legislador",
+        "sobre": "misiones militares y actos de servicio",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Explicó las fases de planificación y ejecución de misiones militares.",
+        "proyecto": "",
+        "id": "EC:urresta guzman"
+      },
+      {
+        "orador": "Her Carolina Moreno",
+        "cargo": "invitado",
+        "sobre": "observaciones al proyecto de ley de las FF.AA.",
+        "postura": "con observaciones",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Detalló observaciones técnicas sobre el debido proceso y la imparcialidad.",
+        "proyecto": "Ley orgánica de personal y disciplina de las FF.AA.",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1658547095908884"
   }
 }
