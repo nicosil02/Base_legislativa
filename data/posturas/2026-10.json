@@ -18800,5 +18800,162 @@
       }
     ],
     "url": "https://www.youtube.com/watch?v=Gj8Xusw0Vnc"
+  },
+  "fb_1605261540450154": {
+    "fecha": "2026-10-15",
+    "organo": "Comisión de Relaciones Internacionales",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Lucía Lisbet Jaramillo Surita",
+        "cargo": "legislador",
+        "sobre": "informe del proyecto reformatorio",
+        "postura": "a favor",
+        "tema": "Justicia",
+        "dijo": "Presentó las conclusiones y recomendaciones del informe.",
+        "proyecto": "Ley de Trata de Personas",
+        "id": "EC:jaramillo zurita lucia"
+      },
+      {
+        "orador": "Javier Ordóñez Puentes",
+        "cargo": "legislador",
+        "sobre": "proyecto de ley reformatorio",
+        "postura": "a favor",
+        "tema": "Justicia",
+        "dijo": "Respaldó el proyecto tras un trabajo serio.",
+        "proyecto": "Ley de Trata de Personas",
+        "id": "EC:ordonez fuentes"
+      },
+      {
+        "orador": "Uñiga",
+        "cargo": "legislador",
+        "sobre": "legislación contra la trata",
+        "postura": "a favor",
+        "tema": "Justicia",
+        "dijo": "Elogió el trabajo de la comisión legislativa.",
+        "proyecto": "Ley de Trata de Personas",
+        "id": "EC:zuniga rocha"
+      },
+      {
+        "orador": "Edwin Harín",
+        "cargo": "legislador",
+        "sobre": "ley contra la trata",
+        "postura": "a favor",
+        "tema": "Justicia",
+        "dijo": "Respaldó la ley por su importancia social.",
+        "proyecto": "Ley de Trata de Personas",
+        "id": null
+      },
+      {
+        "orador": "Bertha Belles",
+        "cargo": "legislador",
+        "sobre": "reforma contra la trata",
+        "postura": "a favor",
+        "tema": "Justicia",
+        "dijo": "Felicitó el esfuerzo realizado en la reforma.",
+        "proyecto": "Ley de Trata de Personas",
+        "id": null
+      },
+      {
+        "orador": "Sara Núñez Cabrera",
+        "cargo": "legislador",
+        "sobre": "informe de la reforma",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Cuestionó la redacción y la definición de sectores.",
+        "proyecto": "Ley de Trata de Personas",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1605261540450154"
+  },
+  "fb_3685108901655945": {
+    "fecha": "2026-10-15",
+    "organo": "Comisión de Derecho al Trabajo",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Enri de Recal de Ala va",
+        "cargo": "legislador",
+        "sobre": "Envío de informes a la Corte Constitucional",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Informó que los informes de cumplimiento serán remitidos a la Corte Constitucional.",
+        "proyecto": "",
+        "id": "EC:de la"
+      },
+      {
+        "orador": "Gris Maricela Cadena Vilca-Uano",
+        "cargo": "invitado",
+        "sobre": "Proyectos de seguridad social de las fuerzas armadas",
+        "postura": "comenta",
+        "tema": "Trabajo",
+        "dijo": "Destacó la importancia de los informes de seguridad social de las fuerzas armadas y la policía.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=3685108901655945"
+  },
+  "fb_2159320081324367": {
+    "fecha": "2026-10-15",
+    "organo": "Comisión de Justicia",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Víctor Andrés Doquendo Torres",
+        "cargo": "autoridad",
+        "sobre": "Reforma Ley de Identidad",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Propuso adecuar la redacción para delimitar competencias técnicas.",
+        "proyecto": "Ley de Gestión de Identidad",
+        "id": null
+      },
+      {
+        "orador": "Cristian Rueda",
+        "cargo": "autoridad",
+        "sobre": "Emisión de cédulas físicas",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Informó sobre la emisión de cédulas a nivel nacional.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Daniel Garzón",
+        "cargo": "autoridad",
+        "sobre": "Emisión de cédulas digitales",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Informó sobre las estadísticas de cédulas digitales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Rosa Legría Torres Cadena",
+        "cargo": "legislador",
+        "sobre": "Obligatoriedad de la cédula digital",
+        "postura": "pregunta",
+        "tema": "Justicia",
+        "dijo": "Preguntó sobre la necesidad de establecer la obligatoriedad.",
+        "proyecto": "Ley de Gestión de Identidad",
+        "id": "EC:torres cadena"
+      },
+      {
+        "orador": "Andrea Tamirano",
+        "cargo": "autoridad",
+        "sobre": "Obligatoriedad de la cédula digital",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Informó que la cédula digital ya posee validez legal.",
+        "proyecto": "Ley de Gestión de Identidad",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=2159320081324367"
   }
 }
