@@ -1,5 +1,3 @@
 {
-  "sin_correr:Quien habla (transcripciones por turnos)": "Quien habla (transcripciones por turnos): no corre desde 11/11 13:38 (tocaba 11/11 13:40)",
-  "falla:Quien habla (transcripciones por turnos)": "Quien habla (transcripciones por turnos): fallo 6 veces seguidas (https://github.com/nicosil02/Base_legislativa/actions/runs/43079623494)",
-  "sin_correr:Posturas de congresistas (Gemma)": "Posturas de congresistas (Gemma): no corre desde 11/11 12:15 (tocaba 11/11 13:20)"
+  "falla:Quien habla (transcripciones por turnos)": "Quien habla (transcripciones por turnos): fallo 8 veces seguidas (https://github.com/nicosil02/Base_legislativa/actions/runs/43131085782)"
 }
