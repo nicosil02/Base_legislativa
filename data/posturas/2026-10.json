@@ -18156,5 +18156,192 @@
       }
     ],
     "url": "https://www.facebook.com/watch/?v=1009276272224478"
+  },
+  "fb_1788678658920501": {
+    "fecha": "2026-10-19",
+    "organo": "Comisión de Seguridad Integral",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Edwin Cañizárez Cisneros",
+        "cargo": "ministro o autoridad",
+        "sobre": "Proyecto de ley anti mafias",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Respaldó el proyecto de ley contra el crimen organizado.",
+        "proyecto": "Ley anti mafias",
+        "id": null
+      },
+      {
+        "orador": "Marta Cecilia Lugo",
+        "cargo": "ministro o autoridad",
+        "sobre": "Observaciones a la ley anti mafias",
+        "postura": "con observaciones",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso incluir todos los espacios acuáticos nacionales.",
+        "proyecto": "Ley anti mafias",
+        "id": null
+      },
+      {
+        "orador": "Daniela Arazo",
+        "cargo": "invitado",
+        "sobre": "Observaciones a la ley anti mafias",
+        "postura": "con observaciones",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Pidió precisiones legales para proteger la minería formal.",
+        "proyecto": "Ley anti mafias",
+        "id": null
+      },
+      {
+        "orador": "Luis G. García",
+        "cargo": "legislador",
+        "sobre": "Reforma de la ley de las FF.AA.",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso la reforma de la ley de personal militar.",
+        "proyecto": "Ley de personal y disciplina FF.AA.",
+        "id": "EC:garcia velasquez"
+      },
+      {
+        "orador": "Luigi García",
+        "cargo": "legislador",
+        "sobre": "Actualización de beneficios económicos militares",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso actualizar la tasa de beneficios para los militares.",
+        "proyecto": "",
+        "id": "EC:garcia velasquez"
+      },
+      {
+        "orador": "Urreste",
+        "cargo": "legislador",
+        "sobre": "Beneficios para el personal militar",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Respaldó la iniciativa de beneficios para militares.",
+        "proyecto": "",
+        "id": "EC:urresta guzman"
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1788678658920501"
+  },
+  "fb_1101448635579214": {
+    "fecha": "2026-10-16",
+    "organo": "Comisión de Régimen Económico",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Duran",
+        "cargo": "legislador",
+        "sobre": "Veto al Código Tributario",
+        "postura": "en contra",
+        "tema": "Tributos",
+        "dijo": "Denunció que el veto no protege al contribuyente común.",
+        "proyecto": "Código Tributario",
+        "id": "EC:duran aguilar"
+      },
+      {
+        "orador": "San Cristalema",
+        "cargo": "legislador",
+        "sobre": "Informe de la reforma tributaria",
+        "postura": "en contra",
+        "tema": "Tributos",
+        "dijo": "Rechazó el informe por no corregir injusticias del veto.",
+        "proyecto": "Código Tributario",
+        "id": null
+      },
+      {
+        "orador": "Castro",
+        "cargo": "legislador",
+        "sobre": "Contratación y paraísos fiscales",
+        "postura": "comenta",
+        "tema": "Tributos",
+        "dijo": "Comentó la relación entre paraísos fiscales y corrupción pública.",
+        "proyecto": "",
+        "id": "EC:castro piedra"
+      },
+      {
+        "orador": "Zapata",
+        "cargo": "legislador",
+        "sobre": "Aprobación del informe tributario",
+        "postura": "a favor",
+        "tema": "Tributos",
+        "dijo": "Respaldó el informe por considerar que corrige errores técnicos.",
+        "proyecto": "Código Tributario",
+        "id": "EC:zapata rojas"
+      },
+      {
+        "orador": "Zapata",
+        "cargo": "legislador",
+        "sobre": "Reconsideración de la votación",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Pidió la reconsideración de la votación del informe.",
+        "proyecto": "",
+        "id": "EC:zapata rojas"
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1101448635579214"
+  },
+  "fb_2308694766598677": {
+    "fecha": "2026-10-16",
+    "organo": "Comisión de Régimen Económico",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Gustavo Pérez",
+        "cargo": "invitado",
+        "sobre": "Informe de ejecución presupuestaria",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Explicó el proceso de elaboración del informe de ejecución presupuestaria.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Durán",
+        "cargo": "legislador",
+        "sobre": "Informe de ejecución presupuestaria",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Denunció la falta de ministros y la inconsistencia de datos.",
+        "proyecto": "",
+        "id": "EC:duran aguilar"
+      },
+      {
+        "orador": "Alemán",
+        "cargo": "legislador",
+        "sobre": "Informe de ejecución presupuestaria",
+        "postura": "con observaciones",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Señaló errores técnicos y falta de financiamiento en ministerios.",
+        "proyecto": "",
+        "id": "EC:aleman marmol"
+      },
+      {
+        "orador": "María del Cisna Molina",
+        "cargo": "legislador",
+        "sobre": "Aprobación del informe presupuestario",
+        "postura": "propone",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Presentó la moción de aprobación del informe presupuestario.",
+        "proyecto": "",
+        "id": "EC:molina coro"
+      },
+      {
+        "orador": "Boye",
+        "cargo": "legislador",
+        "sobre": "Informe de ejecución presupuestaria",
+        "postura": "con observaciones",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Cuestionó la metodología técnica utilizada en el informe.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=2308694766598677"
   }
 }
