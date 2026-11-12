@@ -22825,5 +22825,752 @@
       }
     ],
     "url": "https://www.facebook.com/watch/?v=1114888161124450"
+  },
+  "v9GiYDQ1Nw8": {
+    "fecha": "2026-10-16",
+    "organo": "Comisión de Presupuesto",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Walter Grundel",
+        "cargo": "autoridad",
+        "sobre": "Presupuesto 2027 de San Martín",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Expuso las necesidades presupuestales de la región San Martín.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Equipo técnico del Gobierno Regional de San Martín",
+        "cargo": "autoridad",
+        "sobre": "Presupuesto regional para 2027",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Presentó la planificación estratégica y financiera para San Martín.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Walter Grundel",
+        "cargo": "autoridad",
+        "sobre": "Obras paralizadas en San Martín",
+        "postura": "comenta",
+        "tema": "Infraestructura",
+        "dijo": "Explicó las causas técnicas de las obras paralizadas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Calisto Jean Pietri",
+        "cargo": "legislador",
+        "sobre": "Presupuesto para combatir el dengue",
+        "postura": "pregunta",
+        "tema": "Salud",
+        "dijo": "Consultó sobre la asignación de presupuesto para el dengue.",
+        "proyecto": "",
+        "id": "senado:calisto giampietri"
+      },
+      {
+        "orador": "Walter Grundel",
+        "cargo": "autoridad",
+        "sobre": "Prevención del dengue en San Martín",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Indicó la importancia de la gestión de residuos sólidos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Walter Grundel",
+        "cargo": "autoridad",
+        "sobre": "Límites con la región Amazonas",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Informó sobre las gestiones para la delimitación territorial.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Gobernador de Loreto",
+        "cargo": "autoridad",
+        "sobre": "Presupuesto 2027 de Loreto",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Expuso los ejes estratégicos y el presupuesto de Loreto.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Juan Carlos de la Aguila",
+        "cargo": "legislador",
+        "sobre": "Agua potable en Loreto",
+        "postura": "pregunta",
+        "tema": "Saneamiento",
+        "dijo": "Cuestionó la deficiencia de los servicios de agua potable.",
+        "proyecto": "",
+        "id": "senado:del aguila cardenas"
+      },
+      {
+        "orador": "Gobernador de Loreto",
+        "cargo": "autoridad",
+        "sobre": "Saneamiento en la ciudad de Iquitos",
+        "postura": "comenta",
+        "tema": "Saneamiento",
+        "dijo": "Explicó las gestiones para mejorar el sistema de alcantarillado.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Juan Carlos de la Aguila",
+        "cargo": "legislador",
+        "sobre": "Inversión privada en Loreto",
+        "postura": "pregunta",
+        "tema": "Otros",
+        "dijo": "Preguntó sobre las medidas para atraer inversión privada.",
+        "proyecto": "",
+        "id": "senado:del aguila cardenas"
+      },
+      {
+        "orador": "Gobernador de Loreto",
+        "cargo": "autoridad",
+        "sobre": "Reactivación de hidrocarburos y energía",
+        "postura": "comenta",
+        "tema": "Energía",
+        "dijo": "Detalló la estrategia para reactivar los lotes petroleros.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Juan Carlos de la Aguila",
+        "cargo": "legislador",
+        "sobre": "Producción de petróleo en Loreto",
+        "postura": "comenta",
+        "tema": "Energía",
+        "dijo": "Comentó la optimista proyección de producción de petróleo.",
+        "proyecto": "",
+        "id": "senado:del aguila cardenas"
+      },
+      {
+        "orador": "Manuel Gambini Urupaya",
+        "cargo": "autoridad",
+        "sobre": "Presupuesto 2027 de Ucayali",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Expuso el marco estratégico y presupuesto para Ucayali.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Manuel Gambini Rupaiti",
+        "cargo": "ministro o autoridad",
+        "sobre": "Presupuesto 2027 de Ucayali",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Expuso las proyecciones presupuestales de su región.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Manuel Gambini Rupaiti",
+        "cargo": "ministro o autoridad",
+        "sobre": "Obra de agua en Yarina Cocha",
+        "postura": "propone",
+        "tema": "Saneamiento",
+        "dijo": "Solicitó la firma de un convenio para la obra de agua.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Manuel Gambini Rupaiti",
+        "cargo": "ministro o autoridad",
+        "sobre": "Personal en el sector salud",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Pidió la asignación de plazas para el sector salud.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Manuel Gambini Rupaiti",
+        "cargo": "ministro o autoridad",
+        "sobre": "Hospital principal de Ucayali",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Reclamó recursos para la construcción del hospital principal.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Manuel Gambini Rupaiti",
+        "cargo": "ministro o autoridad",
+        "sobre": "Saneamiento del Hospital Amazónico",
+        "postura": "comenta",
+        "tema": "Saneamiento",
+        "dijo": "Informó sobre el saneamiento del Hospital Amazónico.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Manuel Gambini Rupaiti",
+        "cargo": "ministro o autoridad",
+        "sobre": "Desarrollo de la agricultura",
+        "postura": "propone",
+        "tema": "Agricultura",
+        "dijo": "Propuso generar programas para la producción de peces.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Manuel Gambini Rupaiti",
+        "cargo": "ministro o autoridad",
+        "sobre": "Conectividad fluvial",
+        "postura": "propone",
+        "tema": "Transporte",
+        "dijo": "Pidió el mantenimiento de los ríos en la Amazonía.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Manuel Gambini Rupaiti",
+        "cargo": "ministro o autoridad",
+        "sobre": "Escuela de Suboficiales",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso construir una escuela de suboficiales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Manuel Gambini Rupaiti",
+        "cargo": "ministro o autoridad",
+        "sobre": "Proyecto de arroz bajo riego",
+        "postura": "propone",
+        "tema": "Agricultura",
+        "dijo": "Presentó un proyecto de arroz bajo riego.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Manuel Gambini Rupaiti",
+        "cargo": "ministro o autoridad",
+        "sobre": "Puerto de Pucalpa",
+        "postura": "propone",
+        "tema": "Transporte",
+        "dijo": "Pidió la atención del puerto de Pucalpa.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Calisto Jean Pietri",
+        "cargo": "legislador",
+        "sobre": "Proyectos de piscicultura",
+        "postura": "propone",
+        "tema": "Pesca",
+        "dijo": "Instó a retomar los proyectos de piscicultura en la región.",
+        "proyecto": "",
+        "id": "senado:calisto giampietri"
+      },
+      {
+        "orador": "Calisto Jean Pietri",
+        "cargo": "legislador",
+        "sobre": "Deforestación en Ucayali",
+        "postura": "en contra",
+        "tema": "Ambiente",
+        "dijo": "Denunció la deforestación que sufre la región Ucayali.",
+        "proyecto": "",
+        "id": "senado:calisto giampietri"
+      },
+      {
+        "orador": "Hilmer Wilson Orna Corrales",
+        "cargo": "ministro o autoridad",
+        "sobre": "Presupuesto 2027 de Amazonas",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Presentó el presupuesto institucional para el año 2027.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Hilmer Wilson Orna Corrales",
+        "cargo": "ministro o autoridad",
+        "sobre": "Recorte de presupuesto en inversiones",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Denunció un recorte del treinta y tres por ciento en inversiones.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Caballero León",
+        "cargo": "legislador",
+        "sobre": "Fiscalización en Amazonas",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció la obstaculización de la labor de fiscalización.",
+        "proyecto": "",
+        "id": "senado:caballero leon"
+      },
+      {
+        "orador": "Caballero León David",
+        "cargo": "legislador",
+        "sobre": "Obstrucción de fiscalización en obra de Amazonas",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció la obstrucción de fiscalización por parte de la UNOPS.",
+        "proyecto": "",
+        "id": "senado:caballero leon"
+      },
+      {
+        "orador": "Calisto Jean Pietri",
+        "cargo": "legislador",
+        "sobre": "Límites a la fiscalización del Senado",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Defendió la facultad de control político de los senadores.",
+        "proyecto": "",
+        "id": "senado:calisto giampietri"
+      },
+      {
+        "orador": "Hilmer Orna Corrales",
+        "cargo": "ministro o autoridad",
+        "sobre": "Gestión de obra en la región Amazonas",
+        "postura": "en contra",
+        "tema": "Infraestructura",
+        "dijo": "Negó que la obra en Amazonas esté abandonada.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=v9GiYDQ1Nw8"
+  },
+  "fb_2663522467415565": {
+    "fecha": "2026-10-16",
+    "organo": "Comisión de Justicia",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Camila Calle",
+        "cargo": "invitado",
+        "sobre": "reforma de la cédula digital",
+        "postura": "con observaciones",
+        "tema": "Tecnología",
+        "dijo": "Pidió vincular la identidad física con la digital y mejorar los protocolos de verificación.",
+        "proyecto": "Ley de gestión de la identidad y datos civiles",
+        "id": null
+      },
+      {
+        "orador": "Luis Tamawong",
+        "cargo": "invitado",
+        "sobre": "seguridad técnica de la cédula digital",
+        "postura": "con observaciones",
+        "tema": "Tecnología",
+        "dijo": "Propuso establecer protocolos técnicos de seguridad y mecanismos para revocar dispositivos vinculados.",
+        "proyecto": "Ley de gestión de la identidad y datos civiles",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=2663522467415565"
+  },
+  "F_GAByuRCYY": {
+    "fecha": "2026-10-15",
+    "organo": "Comisión de Agraria",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Diputado",
+        "cargo": "legislador",
+        "sobre": "Incendios en las regiones de Apurímac y Cusco",
+        "postura": "propone",
+        "tema": "Ambiente",
+        "dijo": "Pidió la intervención del gobierno central ante los incendios forestales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Vice-ministro",
+        "cargo": "ministro o autoridad",
+        "sobre": "Situación de los incendios en el sur",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Denunció la triste situación de la población afectada por incendios.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Diputado Walkeys",
+        "cargo": "legislador",
+        "sobre": "Apoyo económico para las regiones afectadas",
+        "postura": "propone",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Propuso un proyecto institucional para evitar el uso de costumbres.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Diputado Bravo",
+        "cargo": "legislador",
+        "sobre": "Respuesta ante emergencias climáticas",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso convocar a autoridades para apoyar en las emergencias.",
+        "proyecto": "",
+        "id": "diputados:bravo quispe"
+      },
+      {
+        "orador": "Milagros Andalus",
+        "cargo": "legislador",
+        "sobre": "Mitigación del cambio climático",
+        "postura": "propone",
+        "tema": "Ambiente",
+        "dijo": "Pidió trabajar de forma conjunta para mitigar el cambio climático.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Diputado Marcos",
+        "cargo": "legislador",
+        "sobre": "Apoyo al sector agrario",
+        "postura": "comenta",
+        "tema": "Agricultura",
+        "dijo": "Respaldó la necesidad de trabajar juntos por el sector agrario.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Diputado",
+        "cargo": "legislador",
+        "sobre": "Ejecución de actividades de prevención",
+        "postura": "pregunta",
+        "tema": "Agricultura",
+        "dijo": "Preguntó sobre la selección de empresas para ejecutar obras preventivas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Vice-ministro",
+        "cargo": "ministro o autoridad",
+        "sobre": "Procedimientos de contratación y puntos críticos",
+        "postura": "comenta",
+        "tema": "Infraestructura",
+        "dijo": "Denunció la complejidad de los procedimientos administrativos en el ejecutivo.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Representante de la ANA",
+        "cargo": "ministro o autoridad",
+        "sobre": "Situación de la cuenca del río Chira",
+        "postura": "comenta",
+        "tema": "Infraestructura",
+        "dijo": "Denunció el alto riesgo de habitantes en la cuenca del Chira.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Representante de la ANA",
+        "cargo": "ministro o autoridad",
+        "sobre": "Intervenciones en la región Piura",
+        "postura": "comenta",
+        "tema": "Infraestructura",
+        "dijo": "Respaldó los avances de los trabajos en la zona norte.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Representante de la Junta Nacional",
+        "cargo": "invitado",
+        "sobre": "Coordinación de proyectos con las juntas",
+        "postura": "pregunta",
+        "tema": "Agricultura",
+        "dijo": "Preguntó sobre la ejecución de proyectos en coordinación con las juntas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Vice-ministro",
+        "cargo": "ministro o autoridad",
+        "sobre": "Requisito del padrón agrario en emergencias",
+        "postura": "comenta",
+        "tema": "Agricultura",
+        "dijo": "Respaldó que el padrón agrario no es requisito para emergencias.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Miguel Guamón",
+        "cargo": "legislador",
+        "sobre": "Puntos críticos en la región Piura",
+        "postura": "pregunta",
+        "tema": "Infraestructura",
+        "dijo": "Preguntó si las intervenciones en puntos críticos están aseguradas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Vice-ministro",
+        "cargo": "ministro o autoridad",
+        "sobre": "Avances en puntos críticos de Piura",
+        "postura": "comenta",
+        "tema": "Infraestructura",
+        "dijo": "Respaldó la programación de ciento treinta y cuatro puntos críticos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Senadora Vera",
+        "cargo": "legislador",
+        "sobre": "Ejecución de obras por impuestos",
+        "postura": "propone",
+        "tema": "Infraestructura",
+        "dijo": "Propuso realizar recomendaciones para intervenir puntos críticos mediante impuestos.",
+        "proyecto": "",
+        "id": "diputados:santana vera"
+      },
+      {
+        "orador": "Autoridad de la ANA",
+        "cargo": "ministro o autoridad",
+        "sobre": "Ejecución de obras en ciudades de Piura",
+        "postura": "comenta",
+        "tema": "Infraestructura",
+        "dijo": "Respaldó la ejecución de obras en diversas ciudades de Piura.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Autoridad de la ANA",
+        "cargo": "ministro o autoridad",
+        "sobre": "Uso del decreto de urgencia 008",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Respaldó el uso del decreto de urgencia cero cero ocho.",
+        "proyecto": "Decreto de urgencia 008",
+        "id": null
+      },
+      {
+        "orador": "Diputado",
+        "cargo": "legislador",
+        "sobre": "Aceleración de ejecución mediante obras por impuestos",
+        "postura": "pregunta",
+        "tema": "Infraestructura",
+        "dijo": "Preguntó cómo acelerar la ejecución mediante el mecanismo de impuestos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Autoridad de la ANA",
+        "cargo": "ministro o autoridad",
+        "sobre": "Mecanismo de obras por impuestos",
+        "postura": "comenta",
+        "tema": "Infraestructura",
+        "dijo": "Respaldó el uso de fichas técnicas por la empresa privada.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Autoridad de la ANA",
+        "cargo": "ministro o autoridad",
+        "sobre": "Necesidad de planes integrales de gestión",
+        "postura": "propone",
+        "tema": "Ambiente",
+        "dijo": "Propuso la implementación de planes integrales para el manejo de ríos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Diputado",
+        "cargo": "legislador",
+        "sobre": "Mantenimiento de la infraestructura hidráulica",
+        "postura": "pregunta",
+        "tema": "Infraestructura",
+        "dijo": "Preguntó sobre el mantenimiento de la infraestructura en años pasados.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Director del PSI",
+        "cargo": "ministro o autoridad",
+        "sobre": "Programa de fortalecimiento de infraestructura agraria",
+        "postura": "comenta",
+        "tema": "Infraestructura",
+        "dijo": "Respaldó el programa de fortalecimiento de la infraestructura agraria.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Director del PSI",
+        "cargo": "ministro o autoridad",
+        "sobre": "Inversión en puntos críticos en Piura",
+        "postura": "comenta",
+        "tema": "Infraestructura",
+        "dijo": "Respaldó la inversión de treinta millones en puntos críticos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Diputado",
+        "cargo": "legislador",
+        "sobre": "Intervenciones preventivas del PSI",
+        "postura": "pregunta",
+        "tema": "Infraestructura",
+        "dijo": "Preguntó sobre las intervenciones preventivas que realiza el PSI.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Director de Ejecutor",
+        "cargo": "ministro o autoridad",
+        "sobre": "Rehabilitación de canales de riego",
+        "postura": "comenta",
+        "tema": "Infraestructura",
+        "dijo": "Respaldó la programación de la rehabilitación de canales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Saúl Durán",
+        "cargo": "invitado",
+        "sobre": "Situación de las juntas de usuarios",
+        "postura": "comenta",
+        "tema": "Agricultura",
+        "dijo": "Denunció la problemática de las juntas ante el fenómeno.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Saúl Durán",
+        "cargo": "invitado",
+        "sobre": "Gestión de puntos críticos y maquinaria",
+        "postura": "en contra",
+        "tema": "Infraestructura",
+        "dijo": "Denunció la falta de coordinación y maquinaria para puntos críticos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Saúl Durán",
+        "cargo": "invitado",
+        "sobre": "Créditos y seguro agrario",
+        "postura": "propone",
+        "tema": "Banca",
+        "dijo": "Propuso ampliar los plazos de los créditos agrarios.",
+        "proyecto": "Seguro Agrario Catastrófico",
+        "id": null
+      },
+      {
+        "orador": "Saúl Durán",
+        "cargo": "invitado",
+        "sobre": "Titulación de tierras para agricultores",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Pidió agilizar la titulación de tierras para los agricultores.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Diputado",
+        "cargo": "legislador",
+        "sobre": "Necesidades urgentes de las juntas",
+        "postura": "pregunta",
+        "tema": "Agricultura",
+        "dijo": "Preguntó sobre las necesidades urgentes de las juntas usuarias.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Diputado",
+        "cargo": "legislador",
+        "sobre": "Mesa de trabajo con la ANA",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso concretar una mesa de trabajo con la ANA.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Eduardo",
+        "cargo": "legislador",
+        "sobre": "Mesa de trabajo de la comisión",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso organizar una mesa de trabajo desde la comisión.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Carlos Serrano Sánchez",
+        "cargo": "legislador",
+        "sobre": "Titulación para el pequeño agricultor",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Pidió priorizar la titulación para el pequeño agricultor.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "López Gancho",
+        "cargo": "legislador",
+        "sobre": "Diagnóstico de recursos de las organizaciones",
+        "postura": "pregunta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Preguntó por el diagnóstico de recursos de las organizaciones.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Diputada",
+        "cargo": "legislador",
+        "sobre": "Corrupción en las juntas de usuarios",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció la corrupción en la gestión de las juntas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "María Silvonín",
+        "cargo": "legislador",
+        "sobre": "Prioridades de la comisión ante emergencia",
+        "postura": "pregunta",
+        "tema": "Otros",
+        "dijo": "Preguntó sobre las prioridades de la comisión ante la emergencia.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Diputado",
+        "cargo": "legislador",
+        "sobre": "Articulación del plan de infraestructura",
+        "postura": "propone",
+        "tema": "Infraestructura",
+        "dijo": "Propuso articular un plan de infraestructura hidráulica nacional.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Vice-ministro",
+        "cargo": "ministro o autoridad",
+        "sobre": "Identificación de brechas de infraestructura",
+        "postura": "propone",
+        "tema": "Infraestructura",
+        "dijo": "Propuso un programa semestral para identificar brechas de infraestructura.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Víctor Raúl Chundratá",
+        "cargo": "invitado",
+        "sobre": "protección de la pequeña producción agrícola",
+        "postura": "comenta",
+        "tema": "Agricultura",
+        "dijo": "Informó sobre las medidas para proteger a los pequeños productores.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=F_GAByuRCYY"
   }
 }
