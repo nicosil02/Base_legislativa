@@ -15941,5 +15941,732 @@
       }
     ],
     "url": "https://www.facebook.com/watch/?v=1874788896848368"
+  },
+  "LLkxXj_QJyw": {
+    "fecha": "2026-10-22",
+    "organo": "Comisión de Cultura",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Gina Duarte",
+        "cargo": "legislador",
+        "sobre": "violencia escolar y capital humano",
+        "postura": "en contra",
+        "tema": "Educación",
+        "dijo": "Denunció la falta de presupuesto para psicólogos escolares.",
+        "proyecto": "",
+        "id": "diputados:duarte"
+      },
+      {
+        "orador": "Marleni",
+        "cargo": "legislador",
+        "sobre": "situación del colegio Nuestra Señora",
+        "postura": "en contra",
+        "tema": "Educación",
+        "dijo": "Cuestionó la situación del terreno del colegio en Arequipa.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Marleni",
+        "cargo": "legislador",
+        "sobre": "infraestructura del colegio Melaidas",
+        "postura": "en contra",
+        "tema": "Educación",
+        "dijo": "Informó sobre problemas de infraestructura en el colegio Melaidas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Marleni",
+        "cargo": "legislador",
+        "sobre": "retraso en obra del colegio Arequipa",
+        "postura": "en contra",
+        "tema": "Educación",
+        "dijo": "Denunció el retraso en la obra del colegio Arequipa.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Marleni",
+        "cargo": "legislador",
+        "sobre": "irregularidades en UGEL Sur Arequipa",
+        "postura": "en contra",
+        "tema": "Educación",
+        "dijo": "Denunció deudas y falta de pagos en la UGEL Sur.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Marleni",
+        "cargo": "legislador",
+        "sobre": "invitación investigación Universidad de Oklahoma",
+        "postura": "comenta",
+        "tema": "Educación",
+        "dijo": "Extendió una invitación para un evento de investigación educativa.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Cristian",
+        "cargo": "legislador",
+        "sobre": "falta de psicólogos en colegios",
+        "postura": "en contra",
+        "tema": "Educación",
+        "dijo": "Informó que solo el 3% de colegios tiene psicólogos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Cristian",
+        "cargo": "legislador",
+        "sobre": "plataforma de reportes de violencia",
+        "postura": "comenta",
+        "tema": "Educación",
+        "dijo": "Señaló la falta de datos sobre reportes verificados.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Cristian",
+        "cargo": "legislador",
+        "sobre": "daño al patrimonio en Arequipa",
+        "postura": "en contra",
+        "tema": "Otros",
+        "dijo": "Denunció la afectación al patrimonio arqueológico en Arequipa.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Palomino",
+        "cargo": "legislador",
+        "sobre": "situación del IPD en San Martín",
+        "postura": "en contra",
+        "tema": "Deporte",
+        "dijo": "Denunció que el IPD se encuentra acéfalo en San Martín.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Janco",
+        "cargo": "legislador",
+        "sobre": "necesidades educativas en Puno",
+        "postura": "en contra",
+        "tema": "Educación",
+        "dijo": "Informó sobre la falta de infraestructura en institutos de Puno.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Gina Duarte",
+        "cargo": "legislador",
+        "sobre": "presupuesto para psicólogos escolares",
+        "postura": "propone",
+        "tema": "Educación",
+        "dijo": "Propuso invitar al ministro de Economía al debate.",
+        "proyecto": "",
+        "id": "diputados:duarte"
+      },
+      {
+        "orador": "Leo",
+        "cargo": "legislador",
+        "sobre": "fiscalización de gestión educativa",
+        "postura": "comenta",
+        "tema": "Educación",
+        "dijo": "Informó sobre la instalación de un grupo de trabajo.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Leo",
+        "cargo": "legislador",
+        "sobre": "situación de los COAR",
+        "postura": "en contra",
+        "tema": "Educación",
+        "dijo": "Denunció la congelación de sueldos en el COAR La Libertad.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Yataco",
+        "cargo": "legislador",
+        "sobre": "calor extremo en la región Ica",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Pidió medidas urgentes ante el calor extremo en Ica.",
+        "proyecto": "",
+        "id": "diputados:yataco torrealva"
+      },
+      {
+        "orador": "Yataco",
+        "cargo": "legislador",
+        "sobre": "retraso de obras educativas en Ica",
+        "postura": "en contra",
+        "tema": "Educación",
+        "dijo": "Denunció el abandono de colegios en la región Ica.",
+        "proyecto": "",
+        "id": "diputados:yataco torrealva"
+      },
+      {
+        "orador": "Jesús Pérez",
+        "cargo": "legislador",
+        "sobre": "situación de la UTEA en Apurímac",
+        "postura": "pregunta",
+        "tema": "Educación",
+        "dijo": "Pidió que Sunedu informe sobre la situación de la UTEA.",
+        "proyecto": "",
+        "id": "diputados:perez alccahuaman"
+      },
+      {
+        "orador": "Palomino",
+        "cargo": "legislador",
+        "sobre": "lineamientos de disciplina escolar",
+        "postura": "comenta",
+        "tema": "Educación",
+        "dijo": "Informó los aportes de la mesa técnica de disciplina.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Leo",
+        "cargo": "legislador",
+        "sobre": "situación de los colegios COAR",
+        "postura": "propone",
+        "tema": "Educación",
+        "dijo": "Propuso tratar la situación de los COAR en la sesión.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Cristian",
+        "cargo": "legislador",
+        "sobre": "presupuesto para psicólogos escolares",
+        "postura": "pregunta",
+        "tema": "Educación",
+        "dijo": "Solicitó informe sobre el presupuesto para psicólogos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Cristian",
+        "cargo": "legislador",
+        "sobre": "reportes en la plataforma CISB",
+        "postura": "pregunta",
+        "tema": "Educación",
+        "dijo": "Pidió datos sobre los reportes verificados en la plataforma.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Cristian",
+        "cargo": "legislador",
+        "sobre": "protección del patrimonio en Arequipa",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Solicitó la protección urgente de sitios arqueológicos en Arequipa.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Marleni",
+        "cargo": "legislador",
+        "sobre": "nombramiento de docentes",
+        "postura": "propone",
+        "tema": "Educación",
+        "dijo": "Propuso el nombramiento excepcional de ciertos docentes.",
+        "proyecto": "PL 450",
+        "id": null
+      },
+      {
+        "orador": "Leo",
+        "cargo": "legislador",
+        "sobre": "informe de los COAR",
+        "postura": "propone",
+        "tema": "Educación",
+        "dijo": "Pidió un informe detallado sobre la situación de los COAR.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Cristian",
+        "cargo": "legislador",
+        "sobre": "presupuesto de psicólogos",
+        "postura": "propone",
+        "tema": "Educación",
+        "dijo": "Solicitó información sobre el presupuesto para psicólogos en colegios.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Cristian",
+        "cargo": "legislador",
+        "sobre": "plataforma del CISB",
+        "postura": "propone",
+        "tema": "Educación",
+        "dijo": "Pidió reportes de la plataforma CISB divididos por regiones.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Cristian",
+        "cargo": "legislador",
+        "sobre": "protección de sitios arqueológicos",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Solicitó la protección preventiva de sitios arqueológicos en emergencia.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Yataco",
+        "cargo": "legislador",
+        "sobre": "nombramiento de docentes",
+        "postura": "propone",
+        "tema": "Educación",
+        "dijo": "Propuso priorizar el nombramiento excepcional de docentes de educación.",
+        "proyecto": "PL 450",
+        "id": "diputados:yataco torrealva"
+      },
+      {
+        "orador": "Yataco",
+        "cargo": "legislador",
+        "sobre": "informe de la UGEL Sur",
+        "postura": "propone",
+        "tema": "Educación",
+        "dijo": "Solicitó que la UGEL Sur informe sobre hechos denunciados.",
+        "proyecto": "",
+        "id": "diputados:yataco torrealva"
+      },
+      {
+        "orador": "Leo",
+        "cargo": "legislador",
+        "sobre": "espacios del Gobierno Regional de Arequipa",
+        "postura": "comenta",
+        "tema": "Educación",
+        "dijo": "Informó sobre el uso de espacios en Arequipa para educación.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Palomino",
+        "cargo": "legislador",
+        "sobre": "aplicación de la Ley 30797",
+        "postura": "propone",
+        "tema": "Educación",
+        "dijo": "Pidió citar al ministro para asegurar el presupuesto de psicólogos.",
+        "proyecto": "Ley 30797",
+        "id": null
+      },
+      {
+        "orador": "Palomino",
+        "cargo": "legislador",
+        "sobre": "presupuesto para los COAR",
+        "postura": "pregunta",
+        "tema": "Educación",
+        "dijo": "Preguntó por el presupuesto destinado para los COAR en 2027.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Palomino",
+        "cargo": "legislador",
+        "sobre": "aumento de sueldos universitarios",
+        "postura": "pregunta",
+        "tema": "Educación",
+        "dijo": "Solicitó aclaración sobre la ejecución del aumento de sueldos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Palomino",
+        "cargo": "legislador",
+        "sobre": "pago de CTS en UGEL Sur",
+        "postura": "propone",
+        "tema": "Educación",
+        "dijo": "Exigió citar al ministro para resolver el pago de la CTS.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Kim",
+        "cargo": "legislador",
+        "sobre": "reintegro tributario para editoriales",
+        "postura": "propone",
+        "tema": "Tributos",
+        "dijo": "Solicitó el debate urgente de la prórroga del reintegro tributario.",
+        "proyecto": "PL 508",
+        "id": null
+      },
+      {
+        "orador": "Luis Martín Víctor Bogdanovic Mendoza",
+        "cargo": "invitado",
+        "sobre": "recuperación del Centro Histórico de Lima",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Informó sobre la gestión y recuperación del Centro Histórico.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Marleni Arminta",
+        "cargo": "legislador",
+        "sobre": "inmuebles históricos de la Beneficencia",
+        "postura": "pregunta",
+        "tema": "Otros",
+        "dijo": "Preguntó por el estado de inmuebles inhabitables de la Beneficencia.",
+        "proyecto": "",
+        "id": "diputados:arminta valencia"
+      },
+      {
+        "orador": "Marleni Arminta",
+        "cargo": "legislador",
+        "sobre": "intervención de Prolima en la Beneficencia",
+        "postura": "pregunta",
+        "tema": "Otros",
+        "dijo": "Consultó cómo interviene Prolima ante la falta de recursos.",
+        "proyecto": "",
+        "id": "diputados:arminta valencia"
+      },
+      {
+        "orador": "Moraque",
+        "cargo": "legislador",
+        "sobre": "modelo de gestión en otros centros históricos",
+        "postura": "pregunta",
+        "tema": "Otros",
+        "dijo": "Preguntó por modelos de gestión aplicables a otros centros históricos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Moraque",
+        "cargo": "legislador",
+        "sobre": "buenas prácticas de Prolima",
+        "postura": "pregunta",
+        "tema": "Otros",
+        "dijo": "Consultó sobre las buenas prácticas implementadas por Prolima.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Moraque",
+        "cargo": "legislador",
+        "sobre": "replicabilidad del modelo económico de Prolima",
+        "postura": "pregunta",
+        "tema": "Otros",
+        "dijo": "Planteó la posibilidad de replicar el modelo económico regionalmente.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Luis Martín Víctor Bogdanovic Mendoza",
+        "cargo": "invitado",
+        "sobre": "gestión de inmuebles de la Beneficencia",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Explicó las dificultades de gestión de la Beneficencia.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Karinul Pineda",
+        "cargo": "ministro o autoridad",
+        "sobre": "Moratoria para creación de nuevas universidades",
+        "postura": "a favor",
+        "tema": "Educación",
+        "dijo": "Defendió la moratoria de cinco años para asegurar la calidad en la educación superior.",
+        "proyecto": "PL 0461",
+        "id": null
+      },
+      {
+        "orador": "Ronald Nicolás Palomino Hurtado",
+        "cargo": "ministro o autoridad",
+        "sobre": "Estrategias para implementar la moratoria universitaria",
+        "postura": "a favor",
+        "tema": "Educación",
+        "dijo": "Detalló que la moratoria busca consolidar la oferta mediante filiales y secciones de facultad.",
+        "proyecto": "PL 0461",
+        "id": null
+      },
+      {
+        "orador": "Kim Muñoz",
+        "cargo": "legislador",
+        "sobre": "Fortalecimiento de la calidad y servicios universitarios",
+        "postura": "propone",
+        "tema": "Educación",
+        "dijo": "Propuso mejorar la infraestructura y los servicios de alimentación para los estudiantes universitarios.",
+        "proyecto": "",
+        "id": "diputados:munoz yurivilca"
+      },
+      {
+        "orador": "Kim",
+        "cargo": "legislador",
+        "sobre": "Fortalecimiento de universidades existentes",
+        "postura": "propone",
+        "tema": "Educación",
+        "dijo": "Propuso fortalecer las universidades existentes y mejorar el apoyo estudiantil.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Nora Yaqu",
+        "cargo": "legislador",
+        "sobre": "Moratoria de creación de universidades",
+        "postura": "pregunta",
+        "tema": "Educación",
+        "dijo": "Preguntó sobre la calidad universitaria y el alcance de la moratoria.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Leo Miguel",
+        "cargo": "legislador",
+        "sobre": "Sostenibilidad y rigor técnico universitario",
+        "postura": "a favor",
+        "tema": "Educación",
+        "dijo": "Respaldó la iniciativa mediante la sostenibilidad presupuestal y técnica.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Karen Pineda",
+        "cargo": "ministro o autoridad",
+        "sobre": "Implementación de la moratoria universitaria",
+        "postura": "comenta",
+        "tema": "Educación",
+        "dijo": "Explicó los criterios para identificar brechas y la situación de escuelas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Nora Yaqu",
+        "cargo": "legislador",
+        "sobre": "Conversión de institutos a universidades",
+        "postura": "pregunta",
+        "tema": "Educación",
+        "dijo": "Preguntó sobre el proceso de conversión de institutos a universidades.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Karen Pineda",
+        "cargo": "ministro o autoridad",
+        "sobre": "Articulación técnica y universitaria",
+        "postura": "comenta",
+        "tema": "Educación",
+        "dijo": "Informó sobre la articulación entre la educación técnica y universitaria.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ronald Palomino",
+        "cargo": "ministro o autoridad",
+        "sobre": "Servicios técnicos en universidades públicas",
+        "postura": "comenta",
+        "tema": "Educación",
+        "dijo": "Informó la posibilidad de brindar servicios técnicos en universidades públicas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Marleni",
+        "cargo": "legislador",
+        "sobre": "Compartir diapositivas de la sesión",
+        "postura": "propone",
+        "tema": "Educación",
+        "dijo": "Pidió que se compartan las diapositivas utilizadas en la sesión.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Eustaquio Larico Vera",
+        "cargo": "invitado",
+        "sobre": "Incremento salarial y reglamentación docente",
+        "postura": "en contra",
+        "tema": "Educación",
+        "dijo": "Denunció la falta de reglamentación y el incumplimiento salarial.",
+        "proyecto": "Ley 32732",
+        "id": null
+      },
+      {
+        "orador": "Segundo Castel Juan Fernández",
+        "cargo": "invitado",
+        "sobre": "Reglamentación de beneficios sociales docentes",
+        "postura": "propone",
+        "tema": "Educación",
+        "dijo": "Pidió la reglamentación de leyes para asegurar beneficios sociales.",
+        "proyecto": "Ley 31653",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=LLkxXj_QJyw"
+  },
+  "fb_2896164720761634": {
+    "fecha": "2026-10-22",
+    "organo": "Comisión de Biodiversidad",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Paulo Orlando Vizenguena",
+        "cargo": "invitado",
+        "sobre": "Gestión costera integrada",
+        "postura": "con observaciones",
+        "tema": "Ambiente",
+        "dijo": "Propuso incluir investigación científica en el proyecto de gestión costera.",
+        "proyecto": "Gestión Costera Integrada",
+        "id": null
+      },
+      {
+        "orador": "Guir",
+        "cargo": "legislador",
+        "sobre": "Protección de especies en Galápagos",
+        "postura": "pregunta",
+        "tema": "Ambiente",
+        "dijo": "Preguntó cómo potenciar la protección de especies en Galápagos.",
+        "proyecto": "Gestión Costera Integrada",
+        "id": null
+      },
+      {
+        "orador": "Paulo Orlando Vizenguena",
+        "cargo": "invitado",
+        "sobre": "Protección de recursos genéticos",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Propuso establecer líneas base para proteger los recursos genéticos.",
+        "proyecto": "Gestión Costera Integrada",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=2896164720761634"
+  },
+  "da-jbzlI3f4": {
+    "fecha": "2026-10-21",
+    "organo": "Comisión de Economía",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "ELMER CUBA BUSTINZA",
+        "cargo": "ministro o autoridad",
+        "sobre": "Gestión de proyectos de inversión",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Explicó las causas de los proyectos paralizados.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "ELMER CUBA BUSTINZA",
+        "cargo": "ministro o autoridad",
+        "sobre": "Ahorros del Tesoro Público",
+        "postura": "comenta",
+        "tema": "Banca",
+        "dijo": "Aclaró que los recursos están en el BCRP.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "ORREO PECHE",
+        "cargo": "ministro o autoridad",
+        "sobre": "Iniciativas del Poder Ejecutivo",
+        "postura": "comenta",
+        "tema": "Tributos",
+        "dijo": "Presentó tres propuestas para la Ley 30498.",
+        "proyecto": "PL 507-2031-CD",
+        "id": null
+      },
+      {
+        "orador": "OBRIGÓN SALÉS",
+        "cargo": "legislador",
+        "sobre": "Servicio de catering en donaciones",
+        "postura": "pregunta",
+        "tema": "Tributos",
+        "dijo": "Consultó sobre el alcance del servicio de catering.",
+        "proyecto": "PL 507-2031-CD",
+        "id": null
+      },
+      {
+        "orador": "ORREO PECHE",
+        "cargo": "ministro o autoridad",
+        "sobre": "Definición de servicios de catering",
+        "postura": "comenta",
+        "tema": "Tributos",
+        "dijo": "Precisó que los servicios son para emergencias.",
+        "proyecto": "PL 507-2031-CD",
+        "id": null
+      },
+      {
+        "orador": "GONZÁLEZ",
+        "cargo": "legislador",
+        "sobre": "Precisión de términos legales",
+        "postura": "propone",
+        "tema": "Tributos",
+        "dijo": "Pidió mayor claridad en los conceptos de la ley.",
+        "proyecto": "PL 507-2031-CD",
+        "id": "diputados:fernandez gonzalez"
+      },
+      {
+        "orador": "DOMINGO ANDEIRA LUPE",
+        "cargo": "ministro o autoridad",
+        "sobre": "Beneficios de las donaciones",
+        "postura": "comenta",
+        "tema": "Tributos",
+        "dijo": "Detalló la certificación de las donaciones.",
+        "proyecto": "PL 507-2031-CD",
+        "id": null
+      },
+      {
+        "orador": "ARIADNA MIRAI",
+        "cargo": "ministro o autoridad",
+        "sobre": "Novedades de la Ley 30498",
+        "postura": "comenta",
+        "tema": "Tributos",
+        "dijo": "Explicó la inclusión del peligro inminente.",
+        "proyecto": "PL 507-2031-CD",
+        "id": null
+      },
+      {
+        "orador": "FERNÁNDEZ GONZÁLEZ",
+        "cargo": "legislador",
+        "sobre": "Fiscalización de las donaciones",
+        "postura": "con observaciones",
+        "tema": "Tributos",
+        "dijo": "Solicitó mayor control sobre las donaciones.",
+        "proyecto": "PL 507-2031-CD",
+        "id": "diputados:fernandez gonzalez"
+      },
+      {
+        "orador": "Chacón",
+        "cargo": "legislador",
+        "sobre": "Forraje e incendios forestales",
+        "postura": "a favor",
+        "tema": "Agricultura",
+        "dijo": "Destacó la importancia del forraje ante los incendios forestales.",
+        "proyecto": "PL 507-2026-2031-CD",
+        "id": null
+      },
+      {
+        "orador": "Vestorí",
+        "cargo": "legislador",
+        "sobre": "Beneficio tributario por donaciones",
+        "postura": "comenta",
+        "tema": "Tributos",
+        "dijo": "Explicó la lógica fiscal de las donaciones de forraje.",
+        "proyecto": "PL 507-2026-2031-CD",
+        "id": "diputados:chacon de vettori"
+      },
+      {
+        "orador": "Vestorí",
+        "cargo": "legislador",
+        "sobre": "Fiscalización de donaciones de alimentos",
+        "postura": "propone",
+        "tema": "Agricultura",
+        "dijo": "Pidió mayor fiscalización en las donaciones de alimentos.",
+        "proyecto": "PL 507-2026-2031-CD",
+        "id": "diputados:chacon de vettori"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=da-jbzlI3f4"
   }
 }
