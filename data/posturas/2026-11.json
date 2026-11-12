@@ -8236,5 +8236,152 @@
       }
     ],
     "url": "https://www.youtube.com/watch?v=I8tDQiZPfT8"
+  },
+  "DmiGxqblADo": {
+    "fecha": "2026-11-11",
+    "organo": "Comisión de Energía y Minas",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "César Mendoza",
+        "cargo": "invitado",
+        "sobre": "la formalización de la minería artesanal",
+        "postura": "en contra",
+        "tema": "Minería",
+        "dijo": "Denunció la falta de apoyo estatal para la formalización minera en Pataz.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=DmiGxqblADo"
+  },
+  "lONYu_uFgPc": {
+    "fecha": "2026-11-11",
+    "organo": "Comisión de Economía",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Adrián Darmas",
+        "cargo": "invitado",
+        "sobre": "Aumento de la cuota en el FMI",
+        "postura": "comenta",
+        "tema": "Banca",
+        "dijo": "Explicó el aumento del 50% de la cuota en el FMI.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "González de Agu",
+        "cargo": "legislador",
+        "sobre": "Aumento de la cuota en el FMI",
+        "postura": "en contra",
+        "tema": "Banca",
+        "dijo": "Cuestionó la decisión ante la inflación y el fenómeno El Niño.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "César Olímpio",
+        "cargo": "legislador",
+        "sobre": "Evaluación de riesgos de la cuota",
+        "postura": "propone",
+        "tema": "Banca",
+        "dijo": "Pidió una evaluación de riesgos sobre la cuota del FMI.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Barbarán Reyes",
+        "cargo": "legislador",
+        "sobre": "Gestión técnica del Banco Central",
+        "postura": "a favor",
+        "tema": "Banca",
+        "dijo": "Respaldó la gestión técnica y autonomía del BCR.",
+        "proyecto": "",
+        "id": "diputados:barbaran reyes"
+      },
+      {
+        "orador": "Adriana Armas Rivas",
+        "cargo": "invitado",
+        "sobre": "Acceso a las reservas internacionales",
+        "postura": "comenta",
+        "tema": "Banca",
+        "dijo": "Informó sobre los beneficios del aumento del acceso a las reservas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "César Holguín",
+        "cargo": "legislador",
+        "sobre": "Impacto de no aprobar la norma",
+        "postura": "pregunta",
+        "tema": "Banca",
+        "dijo": "Preguntó sobre las consecuencias internacionales de no aprobar la norma.",
+        "proyecto": "",
+        "id": "diputados:holguin loaiza"
+      },
+      {
+        "orador": "Adriana Armas Rivas",
+        "cargo": "invitado",
+        "sobre": "Evaluación de la norma",
+        "postura": "comenta",
+        "tema": "Banca",
+        "dijo": "Explicó que la medida no afecta el nivel de las reservas.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=lONYu_uFgPc"
+  },
+  "fb_4683015568596699": {
+    "fecha": "2026-11-11",
+    "organo": "Comisión de Justicia",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Saúl Pakuruku",
+        "cargo": "ministro o autoridad",
+        "sobre": "Reforma de gestión de identidad y datos",
+        "postura": "a favor",
+        "tema": "Justicia",
+        "dijo": "Respaldó la inclusión de servicios de identificación en el exterior.",
+        "proyecto": "Ley de Gestión de Identidad",
+        "id": null
+      },
+      {
+        "orador": "Natalia Ramírez",
+        "cargo": "ministro o autoridad",
+        "sobre": "Observaciones a la reforma de identidad",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Propuso ajustes técnicos en artículos de la reforma.",
+        "proyecto": "Ley de Gestión de Identidad",
+        "id": null
+      },
+      {
+        "orador": "Brian Paul Palate Cisalema",
+        "cargo": "ministro o autoridad",
+        "sobre": "Implementación de la identidad digital",
+        "postura": "con observaciones",
+        "tema": "Tecnología",
+        "dijo": "Cuestionó la obligatoriedad de la reforma para el sector privado.",
+        "proyecto": "Ley de Gestión de Identidad",
+        "id": null
+      },
+      {
+        "orador": "Carlos Bonifaz Cabezas",
+        "cargo": "ministro o autoridad",
+        "sobre": "Reglamento de la ley de identidad",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Propuso incluir disposiciones transitorias para la reforma.",
+        "proyecto": "Ley de Gestión de Identidad",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=4683015568596699"
   }
 }
