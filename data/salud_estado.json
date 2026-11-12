@@ -1,6 +1,5 @@
 {
   "sin_correr:Actualizar Ecuador (CSV + documentos)": "Actualizar Ecuador (CSV + documentos): no corre desde 11/11 21:06 (tocaba 11/11 22:00)",
-  "sin_correr:Quien habla (transcripciones por turnos)": "Quien habla (transcripciones por turnos): no corre desde 11/11 19:57 (tocaba 11/11 22:40)",
-  "falla:Quien habla (transcripciones por turnos)": "Quien habla (transcripciones por turnos): fallo 8 veces seguidas (https://github.com/nicosil02/Base_legislativa/actions/runs/43131085782)",
+  "falla:Quien habla (transcripciones por turnos)": "Quien habla (transcripciones por turnos): fallo 9 veces seguidas (https://github.com/nicosil02/Base_legislativa/actions/runs/43169498658)",
   "sin_correr:Posturas de congresistas (Gemma)": "Posturas de congresistas (Gemma): no corre desde 11/11 19:50 (tocaba 11/11 22:20)"
 }
