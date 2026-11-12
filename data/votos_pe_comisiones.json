@@ -64,7 +64,10 @@
     "e9bb228b-4d46-4435-8d24-baaca920fb14",
     "6f9502c2-1ae9-477c-89c4-de9cfad25a0d",
     "368aa5fc-82b8-47ae-a5c8-15e58d15dc28",
-    "b9c99fa6-2dee-4415-acb9-3d3589b2715d"
+    "b9c99fa6-2dee-4415-acb9-3d3589b2715d",
+    "a2ebc821-5f6c-49e2-b2d7-a61bb0b231ac",
+    "9333a725-a7ef-4e93-846e-de8bdfb8e98c",
+    "1e932fb1-9e86-434f-bc59-fd400eed70d6"
   ],
   "votaciones": [
     {
@@ -245,6 +248,20 @@
       "comision": "Defensa Nacional y Orden Interno",
       "sesion": 3606,
       "url": "https://wb2server.congreso.gob.pe/service-alfresco/alfresko/detalle/preview/file?idDocument=30073414-2ad5-4064-948c-ba93ab0773a9&key=47j6sp1KH2elP2IphiOp78e"
+    },
+    {
+      "pl": "127",
+      "camara_pl": "D",
+      "asunto": "tamen recaído en la Proposición Legislativa 127-2026-2031-CD, mediante la cual se propone, con texto sustitutorio, la “Ley que modifica la Ley 32069, Ley General de Contrataciones Públicas, a fin de crear la Ficha Pública Acumulativa de Ejecución Contractual como herramienta digital para fortalecer la transparencia y el control de las modificaciones en los contratos públicos”. Sometido a votación nominal el dictamen",
+      "no": 0,
+      "abst": 0,
+      "si": 16,
+      "votos": {},
+      "fecha": "2026-10-07",
+      "camara": "diputados",
+      "comision": "Modernización de la Gestión del Estado y Contraloría",
+      "sesion": 3618,
+      "url": "https://wb2server.congreso.gob.pe/service-alfresco/alfresko/detalle/preview/file?idDocument=1e932fb1-9e86-434f-bc59-fd400eed70d6&key=47j6sp1KH2elP2IphiOp78e"
     },
     {
       "pl": "535",
