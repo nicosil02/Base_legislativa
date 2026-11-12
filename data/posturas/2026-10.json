@@ -18957,5 +18957,1342 @@
       }
     ],
     "url": "https://www.facebook.com/watch/?v=2159320081324367"
+  },
+  "_qIAOKG_ZVw": {
+    "fecha": "2026-10-28",
+    "organo": "Comisión de Agraria",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "María Luisa Silupú Inga",
+        "cargo": "legislador",
+        "sobre": "obras de infraestructura en Piura",
+        "postura": "comenta",
+        "tema": "Infraestructura",
+        "dijo": "Informó sobre la inspección de obras hidráulicas en Piura.",
+        "proyecto": "",
+        "id": "diputados:silupu inga"
+      },
+      {
+        "orador": "Luzmila Gamarra",
+        "cargo": "legislador",
+        "sobre": "monitoreo del proyecto Chineca",
+        "postura": "comenta",
+        "tema": "Agricultura",
+        "dijo": "Informó sobre la reprogramación de la visita al proyecto Chineca.",
+        "proyecto": "",
+        "id": "diputados:gamarra pita"
+      },
+      {
+        "orador": "César Muedas",
+        "cargo": "legislador",
+        "sobre": "incendios forestales en Junín",
+        "postura": "propone",
+        "tema": "Ambiente",
+        "dijo": "Pidió seguimiento a los incendios forestales en la región Junín.",
+        "proyecto": "",
+        "id": "diputados:muedas balbiese"
+      },
+      {
+        "orador": "Gloria Irachi Pizarro",
+        "cargo": "legislador",
+        "sobre": "bocatomas y canales en Arequipa",
+        "postura": "propone",
+        "tema": "Saneamiento",
+        "dijo": "Pidió información sobre la vulnerabilidad de las bocatomas en Arequipa.",
+        "proyecto": "",
+        "id": "diputados:hirache pizarro"
+      },
+      {
+        "orador": "Aldo Antonio Bravo Quispe",
+        "cargo": "legislador",
+        "sobre": "fiscalización de la inocuidad alimentaria",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Propuso invitar al Contralor para informar sobre la inocuidad alimentaria.",
+        "proyecto": "",
+        "id": "diputados:bravo quispe"
+      },
+      {
+        "orador": "Jennifer Paredes",
+        "cargo": "legislador",
+        "sobre": "proyecto Majes Siguas",
+        "postura": "propone",
+        "tema": "Agricultura",
+        "dijo": "Pidió una reunión de trabajo sobre el proyecto Majes Siguas.",
+        "proyecto": "Majes Siguas",
+        "id": "diputados:paredes navarro"
+      },
+      {
+        "orador": "Ruser Castro Grández",
+        "cargo": "legislador",
+        "sobre": "prevención de riesgos naturales",
+        "postura": "propone",
+        "tema": "Ambiente",
+        "dijo": "Pidió información sobre la prevención de riesgos ante peligros naturales.",
+        "proyecto": "",
+        "id": "diputados:castro grandez"
+      },
+      {
+        "orador": "Analí Márquez Huanca",
+        "cargo": "legislador",
+        "sobre": "subvención para familias damnificadas",
+        "postura": "pregunta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Preguntó sobre el estado del pedido de subvención para damnificados.",
+        "proyecto": "",
+        "id": "diputados:marquez huanca"
+      },
+      {
+        "orador": "Rafael Celis",
+        "cargo": "legislador",
+        "sobre": "sesiones descentralizadas",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Informó que no podrá participar en las sesiones descentralizadas.",
+        "proyecto": "",
+        "id": "diputados:ticlla rafael"
+      },
+      {
+        "orador": "Analí Márquez Huanca",
+        "cargo": "legislador",
+        "sobre": "fechas de sesiones descentralizadas",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Propuso adelantar las sesiones descentralizadas para el mes de noviembre.",
+        "proyecto": "",
+        "id": "diputados:marquez huanca"
+      },
+      {
+        "orador": "Oliver Peña Córdoba",
+        "cargo": "legislador",
+        "sobre": "programación de sesiones descentralizadas",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Propuso realizar las sesiones descentralizadas a fines de noviembre.",
+        "proyecto": "",
+        "id": "diputados:pena cordova"
+      },
+      {
+        "orador": "Ruser Castro Grández",
+        "cargo": "legislador",
+        "sobre": "fechas de sesiones descentralizadas",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Pidió reprogramar las fechas de las sesiones descentralizadas.",
+        "proyecto": "",
+        "id": "diputados:castro grandez"
+      },
+      {
+        "orador": "Milagro Santana",
+        "cargo": "legislador",
+        "sobre": "sesiones descentralizadas",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Propuso considerar a la región Lima Provincias en las sesiones.",
+        "proyecto": "",
+        "id": "diputados:santana vera"
+      },
+      {
+        "orador": "Gloria Irachi Pizarro",
+        "cargo": "legislador",
+        "sobre": "fecha de la sesión en Arequipa",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Propuso el nueve de noviembre para la sesión en Arequipa.",
+        "proyecto": "",
+        "id": "diputados:hirache pizarro"
+      },
+      {
+        "orador": "Luzmila Gamarra",
+        "cargo": "legislador",
+        "sobre": "sesiones descentralizadas",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Propuso priorizar la emergencia como tema principal en las sesiones.",
+        "proyecto": "",
+        "id": "diputados:gamarra pita"
+      },
+      {
+        "orador": "César Muedas",
+        "cargo": "legislador",
+        "sobre": "aceleración de proyectos de ley",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Propuso acelerar la aprobación de los proyectos de ley.",
+        "proyecto": "",
+        "id": "diputados:muedas balbiese"
+      },
+      {
+        "orador": "Vilma Aurora Gutarra García",
+        "cargo": "ministro o autoridad",
+        "sobre": "inocuidad alimentaria y plaguicidas",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Informó sobre las acciones de monitoreo de plaguicidas en alimentos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Vilma Aurora Gutarra García",
+        "cargo": "ministro o autoridad",
+        "sobre": "Gestión de inocuidad y escuelas de campo",
+        "postura": "comenta",
+        "tema": "Agricultura",
+        "dijo": "Explicó la implementación de escuelas de campo y el uso de sellos QR para la inocuidad.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Josué Carrasco Valent",
+        "cargo": "ministro o autoridad",
+        "sobre": "Responsabilidades en la cadena agroalimentaria",
+        "postura": "comenta",
+        "tema": "Agricultura",
+        "dijo": "Detalló las responsabilidades compartidas en la cadena alimentaria para garantizar la inocuidad.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Aldo Antonio Bravo Quispe",
+        "cargo": "legislador",
+        "sobre": "Veracidad de estadísticas de inocuidad",
+        "postura": "en contra",
+        "tema": "Agricultura",
+        "dijo": "Cuestionó la falta de rigor estadístico en los reportes de inocuidad presentados.",
+        "proyecto": "",
+        "id": "diputados:bravo quispe"
+      },
+      {
+        "orador": "Rafael Aldo Celis",
+        "cargo": "legislador",
+        "sobre": "Control de pesticidas y sanciones",
+        "postura": "pregunta",
+        "tema": "Agricultura",
+        "dijo": "Consultó sobre las sanciones y procedimientos ante el uso de pesticidas prohibidos.",
+        "proyecto": "",
+        "id": "diputados:ticlla rafael"
+      },
+      {
+        "orador": "Oliver Peña Córdoba",
+        "cargo": "legislador",
+        "sobre": "Control sanitario del cultivo de arroz",
+        "postura": "pregunta",
+        "tema": "Agricultura",
+        "dijo": "Preguntó por qué el control del arroz corresponde a la DIESA y no a SENASA.",
+        "proyecto": "",
+        "id": "diputados:pena cordova"
+      },
+      {
+        "orador": "Milagro Santana",
+        "cargo": "legislador",
+        "sobre": "Fiscalización de agroquímicos y certificación",
+        "postura": "pregunta",
+        "tema": "Agricultura",
+        "dijo": "Solicitó información sobre la cobertura de capacitación y control de agroquímicos suspendidos.",
+        "proyecto": "",
+        "id": "diputados:santana vera"
+      },
+      {
+        "orador": "RER Casto Grandes",
+        "cargo": "legislador",
+        "sobre": "Certificación de productos bandera regionales",
+        "postura": "propone",
+        "tema": "Agricultura",
+        "dijo": "Pidió priorizar la certificación de cacao, café y jengibre en la selva alta.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Jesús Pérez Alcahuamán",
+        "cargo": "legislador",
+        "sobre": "Presencia de SENASA en Apurímac",
+        "postura": "pregunta",
+        "tema": "Agricultura",
+        "dijo": "Solicitó un informe detallado sobre la certificación de carne en Apurímac.",
+        "proyecto": "",
+        "id": "diputados:perez alccahuaman"
+      },
+      {
+        "orador": "Analí Márquez Huanca",
+        "cargo": "legislador",
+        "sobre": "Rol de SENASA ante incendios forestales",
+        "postura": "pregunta",
+        "tema": "Agricultura",
+        "dijo": "Consultó sobre la intervención de SENASA ante los recientes incendios forestales.",
+        "proyecto": "",
+        "id": "diputados:marquez huanca"
+      },
+      {
+        "orador": "Luzmila Gamarra Pita",
+        "cargo": "legislador",
+        "sobre": "Estrategias ante la falta de facultades",
+        "postura": "pregunta",
+        "tema": "Agricultura",
+        "dijo": "Preguntó sobre las estrategias de SENASA ante la falta de facultades otorgadas.",
+        "proyecto": "",
+        "id": "diputados:gamarra pita"
+      },
+      {
+        "orador": "Gloria Díche Pizarro",
+        "cargo": "legislador",
+        "sobre": "Control de inocuidad en ganadería",
+        "postura": "pregunta",
+        "tema": "Agricultura",
+        "dijo": "Cuestionó la diferencia de controles entre productos de exportación y de consumo nacional.",
+        "proyecto": "",
+        "id": "diputados:hirache pizarro"
+      },
+      {
+        "orador": "César Muedas",
+        "cargo": "legislador",
+        "sobre": "Monitoreo de residuos en Junín",
+        "postura": "pregunta",
+        "tema": "Agricultura",
+        "dijo": "Solicitó información sobre el monitoreo de pesticidas y planes de bioinsumos en Junín.",
+        "proyecto": "",
+        "id": "diputados:muedas balbiese"
+      },
+      {
+        "orador": "Alexander Salz Rivera",
+        "cargo": "legislador",
+        "sobre": "Control de la mosca de la fruta",
+        "postura": "pregunta",
+        "tema": "Agricultura",
+        "dijo": "Denunció la pérdida de cosechas por plagas y el uso de pesticidas prohibidos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "María Luisa Zulupú",
+        "cargo": "legislador",
+        "sobre": "Prevención del Fusarium en banano",
+        "postura": "pregunta",
+        "tema": "Agricultura",
+        "dijo": "Preguntó por las medidas para prevenir el Fusarium en las plantaciones de banano.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Vilma Aurora Gutarra García",
+        "cargo": "ministro o autoridad",
+        "sobre": "Respuesta a interrogantes de la comisión",
+        "postura": "comenta",
+        "tema": "Agricultura",
+        "dijo": "Reconoció la necesidad de fortalecer la presencia de SENASA en todas las regiones.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Vilma Aurora Gutarre García",
+        "cargo": "ministro o autoridad",
+        "sobre": "control de plagas y laboratorios",
+        "postura": "comenta",
+        "tema": "Agricultura",
+        "dijo": "Informó sobre la gestión de SENASA ante plagas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Vilma Aurora Gutarre García",
+        "cargo": "ministro o autoridad",
+        "sobre": "exportación de arroz",
+        "postura": "comenta",
+        "tema": "Agricultura",
+        "dijo": "Informó sobre la exportación de arroz a Estados Unidos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Vilma Aurora Gutarre García",
+        "cargo": "ministro o autoridad",
+        "sobre": "enfermedad del banano",
+        "postura": "comenta",
+        "tema": "Agricultura",
+        "dijo": "Describió el impacto del hongo Fusarium en bananos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Juan Carlos Castro Vargas",
+        "cargo": "ministro o autoridad",
+        "sobre": "descolmatación de puntos críticos",
+        "postura": "comenta",
+        "tema": "Infraestructura",
+        "dijo": "Informó sobre la descolmatación de 70 puntos críticos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Juan Carlos Castro Vargas",
+        "cargo": "ministro o autoridad",
+        "sobre": "ejecución presupuestal de ANA",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Reportó el avance de la ejecución presupuestal.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Aldo Bravo Quispe",
+        "cargo": "legislador",
+        "sobre": "intervención del Ejército en Piura",
+        "postura": "propone",
+        "tema": "Infraestructura",
+        "dijo": "Propuso asignar puntos críticos pendientes al Ejército.",
+        "proyecto": "",
+        "id": "diputados:bravo quispe"
+      },
+      {
+        "orador": "Aldo Bravo Quispe",
+        "cargo": "legislador",
+        "sobre": "relación con usuarios del agua",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Sugirió mejorar la comunicación con usuarios del agua.",
+        "proyecto": "",
+        "id": "diputados:bravo quispe"
+      },
+      {
+        "orador": "Lorelia Chupizarro",
+        "cargo": "legislador",
+        "sobre": "maquinaria en Arequipa",
+        "postura": "propone",
+        "tema": "Infraestructura",
+        "dijo": "Propuso trasladar maquinaria hacia la región Arequipa.",
+        "proyecto": "",
+        "id": "diputados:hirache pizarro"
+      },
+      {
+        "orador": "Luz Mila Gama",
+        "cargo": "legislador",
+        "sobre": "retrasos en Ancash",
+        "postura": "pregunta",
+        "tema": "Infraestructura",
+        "dijo": "Preguntó por la demora en puntos críticos de Ancash.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Milagro Santana",
+        "cargo": "legislador",
+        "sobre": "disparidad de avances regionales",
+        "postura": "pregunta",
+        "tema": "Infraestructura",
+        "dijo": "Cuestionó la disparidad de avances en las regiones.",
+        "proyecto": "",
+        "id": "diputados:santana vera"
+      },
+      {
+        "orador": "Milagro Santana",
+        "cargo": "legislador",
+        "sobre": "límite normativo de ANA",
+        "postura": "pregunta",
+        "tema": "Otros",
+        "dijo": "Preguntó quién atenderá los puntos críticos restantes.",
+        "proyecto": "",
+        "id": "diputados:santana vera"
+      },
+      {
+        "orador": "Demetrio Valqui Calderón",
+        "cargo": "legislador",
+        "sobre": "puntos críticos en La Libertad",
+        "postura": "pregunta",
+        "tema": "Infraestructura",
+        "dijo": "Preguntó por la situación en La Libertad.",
+        "proyecto": "",
+        "id": "diputados:valqui calderon"
+      },
+      {
+        "orador": "Rafael Aldo Ceris",
+        "cargo": "legislador",
+        "sobre": "cronograma de trabajo en Tumbes",
+        "postura": "pregunta",
+        "tema": "Infraestructura",
+        "dijo": "Solicitó un cronograma de actividades para Tumbes.",
+        "proyecto": "",
+        "id": "diputados:ticlla rafael"
+      },
+      {
+        "orador": "Carlos Segarra",
+        "cargo": "legislador",
+        "sobre": "inversión hídrica en Ica",
+        "postura": "pregunta",
+        "tema": "Agricultura",
+        "dijo": "Cuestionó la inversión privada en puntos críticos de Ica.",
+        "proyecto": "",
+        "id": "diputados:zegarra sanchez"
+      },
+      {
+        "orador": "Lida Prado Vallejos",
+        "cargo": "legislador",
+        "sobre": "pozos ilegales en Ica",
+        "postura": "pregunta",
+        "tema": "Agricultura",
+        "dijo": "Preguntó sobre la sobreexplotación de acuíferos en Ica.",
+        "proyecto": "",
+        "id": "diputados:prado vallejos"
+      },
+      {
+        "orador": "César Muedas",
+        "cargo": "legislador",
+        "sobre": "calidad del agua en Junín",
+        "postura": "pregunta",
+        "tema": "Ambiente",
+        "dijo": "Preguntó por la calidad de fuentes de agua.",
+        "proyecto": "",
+        "id": "diputados:muedas balbiese"
+      },
+      {
+        "orador": "Oliver Peña Córdoba",
+        "cargo": "legislador",
+        "sobre": "coordinación de ANA en San Martín",
+        "postura": "pregunta",
+        "tema": "Infraestructura",
+        "dijo": "Denunció falta de coordinación de ANA en San Martín.",
+        "proyecto": "",
+        "id": "diputados:pena cordova"
+      },
+      {
+        "orador": "Analí Márquez Huanca",
+        "cargo": "legislador",
+        "sobre": "escasez de agua en Cusco",
+        "postura": "pregunta",
+        "tema": "Ambiente",
+        "dijo": "Preguntó por la falta de agua en Cusco.",
+        "proyecto": "",
+        "id": "diputados:marquez huanca"
+      },
+      {
+        "orador": "Gloria Pizarro",
+        "cargo": "legislador",
+        "sobre": "escasez de agua en Arequipa",
+        "postura": "pregunta",
+        "tema": "Saneamiento",
+        "dijo": "Preguntó sobre medidas contra la escasez en Arequipa.",
+        "proyecto": "",
+        "id": "diputados:hirache pizarro"
+      },
+      {
+        "orador": "Juan Carlos Castro Vargas",
+        "cargo": "ministro o autoridad",
+        "sobre": "acceso al recurso hídrico",
+        "postura": "comenta",
+        "tema": "Saneamiento",
+        "dijo": "Explicó la diferencia entre disponibilidad y acceso al agua.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Juan Castro Vargas",
+        "cargo": "ministro o autoridad",
+        "sobre": "Gestión de la Autoridad Nacional del Agua",
+        "postura": "comenta",
+        "tema": "Agricultura",
+        "dijo": "Informó sobre las funciones de la ANA y las intervenciones en regiones.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=_qIAOKG_ZVw"
+  },
+  "xXEnAuZm7tE": {
+    "fecha": "2026-10-28",
+    "organo": "Comisión de Gestión del Estado",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Abraham Lescano Salazar",
+        "cargo": "ministro o autoridad",
+        "sobre": "Estado situacional del INPE",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Informó sobre la sobrepoblación del 156% en los establecimientos del INPE.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Abraham Carlos",
+        "cargo": "ministro o autoridad",
+        "sobre": "Gestión y seguridad del sistema penitenciario",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Explicó las estrategias tecnológicas para mejorar la seguridad penitenciaria.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Canterino",
+        "cargo": "legislador",
+        "sobre": "Presupuesto de alimentación en penales",
+        "postura": "con observaciones",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Cuestionó el presupuesto de alimentación y los negocios en penales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Canterino",
+        "cargo": "legislador",
+        "sobre": "Salarios y bonos de agentes",
+        "postura": "pregunta",
+        "tema": "Trabajo",
+        "dijo": "Preguntó sobre posibles aumentos de sueldo para agentes penitenciarios.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Canterino",
+        "cargo": "legislador",
+        "sobre": "Riesgo de infraestructura por El Niño",
+        "postura": "pregunta",
+        "tema": "Ambiente",
+        "dijo": "Consultó sobre la vulnerabilidad de los penales ante desastres naturales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Canterino",
+        "cargo": "legislador",
+        "sobre": "Construcción de nuevos penales",
+        "postura": "pregunta",
+        "tema": "Infraestructura",
+        "dijo": "Preguntó sobre la proyección de construcción de nuevos centros penitenciarios.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Canterino",
+        "cargo": "legislador",
+        "sobre": "Contrato de teléfonos azules",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Denunció corrupción vinculada al uso de teléfonos azules en penales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Mirta Vázquez",
+        "cargo": "legislador",
+        "sobre": "Relación de internos peruanos y extranjeros",
+        "postura": "pregunta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Solicitó la proporción de internos peruanos frente a los extranjeros.",
+        "proyecto": "",
+        "id": "senado:vasquez chuquilin"
+      },
+      {
+        "orador": "Mirta Vázquez",
+        "cargo": "legislador",
+        "sobre": "Intervención de las fuerzas armadas",
+        "postura": "pregunta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Preguntó sobre las funciones de las fuerzas armadas en penales.",
+        "proyecto": "",
+        "id": "senado:vasquez chuquilin"
+      },
+      {
+        "orador": "Mirta Vázquez",
+        "cargo": "legislador",
+        "sobre": "Corrupción de funcionarios del INPE",
+        "postura": "pregunta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Cuestionó la corrupción de funcionarios en el ingreso de objetos.",
+        "proyecto": "",
+        "id": "senado:vasquez chuquilin"
+      },
+      {
+        "orador": "Mirta Vázquez",
+        "cargo": "legislador",
+        "sobre": "Implementación de la ley 31657",
+        "postura": "pregunta",
+        "tema": "Justicia",
+        "dijo": "Consultó sobre el avance de la carrera especial penitenciaria.",
+        "proyecto": "Ley 31657",
+        "id": "senado:vasquez chuquilin"
+      },
+      {
+        "orador": "Mirta Vázquez",
+        "cargo": "legislador",
+        "sobre": "Presupuesto para el año 2027",
+        "postura": "pregunta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Preguntó si habrá mayor presupuesto para el año 2027.",
+        "proyecto": "",
+        "id": "senado:vasquez chuquilin"
+      },
+      {
+        "orador": "Jorge Velázquez",
+        "cargo": "legislador",
+        "sobre": "Obra del penal de Pucalpa",
+        "postura": "en contra",
+        "tema": "Infraestructura",
+        "dijo": "Denunció el retraso en la obra del penal de Pucalpa.",
+        "proyecto": "",
+        "id": "senado:velasquez portocarrero"
+      },
+      {
+        "orador": "Jorge Velázquez",
+        "cargo": "legislador",
+        "sobre": "Unidad ejecutora de Pucalpa",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Criticó el cambio de la unidad ejecutora en Pucalpa.",
+        "proyecto": "",
+        "id": "senado:velasquez portocarrero"
+      },
+      {
+        "orador": "Jorge Velázquez",
+        "cargo": "legislador",
+        "sobre": "Clasificación de la peligrosidad de internos",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso clasificar la peligrosidad de todos los internos actuales.",
+        "proyecto": "",
+        "id": "senado:velasquez portocarrero"
+      },
+      {
+        "orador": "Jorge Velázquez",
+        "cargo": "legislador",
+        "sobre": "Robo de bienes en penales",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Denunció el robo de bienes de internos por funcionarios.",
+        "proyecto": "",
+        "id": "senado:velasquez portocarrero"
+      },
+      {
+        "orador": "Nora Bonifaz",
+        "cargo": "legislador",
+        "sobre": "Penetración del crimen organizado",
+        "postura": "pregunta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Preguntó sobre la presencia de organizaciones criminales en penales.",
+        "proyecto": "",
+        "id": "senado:bonifaz carmona"
+      },
+      {
+        "orador": "Nora Bonifaz",
+        "cargo": "legislador",
+        "sobre": "Brecha de personal penitenciario",
+        "postura": "pregunta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Consultó sobre la cantidad de agentes necesarios para el INPE.",
+        "proyecto": "",
+        "id": "senado:bonifaz carmona"
+      },
+      {
+        "orador": "Nora Bonifaz",
+        "cargo": "legislador",
+        "sobre": "Facultades legislativas para penales",
+        "postura": "pregunta",
+        "tema": "Política y control político",
+        "dijo": "Preguntó por las facultades necesarias para controlar los penales.",
+        "proyecto": "",
+        "id": "senado:bonifaz carmona"
+      },
+      {
+        "orador": "Joaquín",
+        "cargo": "legislador",
+        "sobre": "Perfil de los internos",
+        "postura": "pregunta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Preguntó sobre el perfil socioeconómico de los delincuentes presos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Joaquín",
+        "cargo": "legislador",
+        "sobre": "Implementación de cárceles productivas",
+        "postura": "propone",
+        "tema": "Trabajo",
+        "dijo": "Propuso implementar cárceles productivas para lograr la resocialización.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Joaquín Yori",
+        "cargo": "legislador",
+        "sobre": "Política de seguridad penitenciaria",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Comentó la necesidad de atacar la raíz de la criminalidad.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Hugo Cahuana",
+        "cargo": "legislador",
+        "sobre": "el sistema penitenciario y la resocialización",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso implementar cárceles productivas para lograr la resocialización de los internos.",
+        "proyecto": "",
+        "id": "senado:ccahuana aymachoque"
+      },
+      {
+        "orador": "Joaquín Yori",
+        "cargo": "legislador",
+        "sobre": "la gestión tecnológica del INPE",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Cuestionó el uso de archivos Excel para la gestión de datos de los internos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Yaurí",
+        "cargo": "legislador",
+        "sobre": "la corrupción en los penales",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Denunció la existencia de cobros ilícitos y corrupción en los establecimientos penitenciarios.",
+        "proyecto": "",
+        "id": "senado:yauri tunque"
+      },
+      {
+        "orador": "Abraham Vcano",
+        "cargo": "ministro o autoridad",
+        "sobre": "Gestión de la seguridad penitenciaria",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Defendió el programa de cárceles productivas y la gestión de seguridad.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Segundo Tapia",
+        "cargo": "legislador",
+        "sobre": "Hacinamiento en los penales de Cajamarca",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Denunció el hacinamiento y la falta de control en Cajamarca.",
+        "proyecto": "",
+        "id": "senado:tapia bernal"
+      },
+      {
+        "orador": "Abraham Vcano",
+        "cargo": "ministro o autoridad",
+        "sobre": "Control de economatos y situación en Cajamarca",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Defendió las medidas para controlar los economatos y la situación en Cajamarca.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=xXEnAuZm7tE"
+  },
+  "NNfSFqKV43o": {
+    "fecha": "2026-10-22",
+    "organo": "Comisión de Gestión del Estado",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Poma",
+        "cargo": "legislador",
+        "sobre": "Obras y servicios en Madre de Dios",
+        "postura": "propone",
+        "tema": "Infraestructura",
+        "dijo": "Solicitó informes sobre obras y servicios en Madre de Dios.",
+        "proyecto": "",
+        "id": "diputados:poma huamani"
+      },
+      {
+        "orador": "Fernández",
+        "cargo": "legislador",
+        "sobre": "Gestión del gobernador regional de Tacna",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Pidió la citación urgente del gobernador regional de Tacna.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ovando",
+        "cargo": "legislador",
+        "sobre": "Acceso a internet y conectividad",
+        "postura": "propone",
+        "tema": "Telecomunicaciones",
+        "dijo": "Solicitó una reunión para evaluar la conectividad rural.",
+        "proyecto": "Ley 31878",
+        "id": null
+      },
+      {
+        "orador": "Aguirre",
+        "cargo": "legislador",
+        "sobre": "Sesión descentralizada en Satipo",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso realizar una sesión descentralizada en la provincia de Satipo.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Marcelo",
+        "cargo": "legislador",
+        "sobre": "Estado de obras de la entidad",
+        "postura": "propone",
+        "tema": "Infraestructura",
+        "dijo": "Pidió citar al jefe de la entidad para informar sobre obras.",
+        "proyecto": "",
+        "id": "diputados:marcelo salazar"
+      },
+      {
+        "orador": "Domínguez",
+        "cargo": "legislador",
+        "sobre": "Abandono de obra en Huaráz",
+        "postura": "propone",
+        "tema": "Educación",
+        "dijo": "Solicitó información sobre un colegio y la presencia de la ANA.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Aguirre",
+        "cargo": "legislador",
+        "sobre": "Invitación del contralor y municipalidad",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Pidió tratar la invitación del contralor y municipalidad.",
+        "proyecto": "oficio 00116-2026",
+        "id": null
+      },
+      {
+        "orador": "Fernández",
+        "cargo": "legislador",
+        "sobre": "Participación del contralor en la comisión",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Sugirió que el encargado de la Contraloría rinda informes.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Yarrow",
+        "cargo": "legislador",
+        "sobre": "Gestión del fenómeno del niño",
+        "postura": "propone",
+        "tema": "Ambiente",
+        "dijo": "Sugirió designar un ministro para la emergencia climática.",
+        "proyecto": "",
+        "id": "diputados:yarrow lumbreras"
+      },
+      {
+        "orador": "Marcelo",
+        "cargo": "legislador",
+        "sobre": "Control de obra en Ancash",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Cuestionó la falta de investigación sobre un hospital.",
+        "proyecto": "",
+        "id": "diputados:marcelo salazar"
+      },
+      {
+        "orador": "García",
+        "cargo": "legislador",
+        "sobre": "Situación agrícola en Jayanca",
+        "postura": "en contra",
+        "tema": "Agricultura",
+        "dijo": "Denunció la pérdida de cultivos en la zona de Jayanca.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "García",
+        "cargo": "legislador",
+        "sobre": "Gestión del Gobierno Regional del Callao",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció contrataciones irregulares en el Gobierno del Callao.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Quispe",
+        "cargo": "legislador",
+        "sobre": "Problemas en Villa Rica y Oxapampa",
+        "postura": "propone",
+        "tema": "Infraestructura",
+        "dijo": "Informó sobre problemas en carreteras y universidades de Oxapampa.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Poma",
+        "cargo": "legislador",
+        "sobre": "Servicios en Valparaíso",
+        "postura": "comenta",
+        "tema": "Telecomunicaciones",
+        "dijo": "Expuso la falta de servicios básicos en Valparaíso.",
+        "proyecto": "",
+        "id": "diputados:poma huamani"
+      },
+      {
+        "orador": "Albañil",
+        "cargo": "legislador",
+        "sobre": "Riesgos de lluvias en Piura",
+        "postura": "en contra",
+        "tema": "Ambiente",
+        "dijo": "Advirtió sobre el riesgo de lluvias en la ciudad de Piura.",
+        "proyecto": "",
+        "id": "diputados:albanil carmona"
+      },
+      {
+        "orador": "Fernández",
+        "cargo": "legislador",
+        "sobre": "Gestión del gobernador de Tacna",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Exigió la comparecencia del gobernador regional de Tacna.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Gamarra",
+        "cargo": "legislador",
+        "sobre": "Creación del distrito de San Pedro",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Solicitó información del INEI para la demarcación territorial.",
+        "proyecto": "",
+        "id": "diputados:gamarra pita"
+      },
+      {
+        "orador": "Poma",
+        "cargo": "legislador",
+        "sobre": "Mejoramiento de obra en Chiringayo",
+        "postura": "propone",
+        "tema": "Educación",
+        "dijo": "Pidió el mejoramiento de la obra en Chiringayo.",
+        "proyecto": "",
+        "id": "diputados:poma huamani"
+      },
+      {
+        "orador": "Fernández",
+        "cargo": "legislador",
+        "sobre": "Obra paralizada en colegio José Abelardo Quiñones",
+        "postura": "en contra",
+        "tema": "Educación",
+        "dijo": "Denunció el retraso de una obra educativa.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Gamarra",
+        "cargo": "legislador",
+        "sobre": "Creación del distrito de San Pedro",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso la creación del distrito de San Pedro.",
+        "proyecto": "",
+        "id": "diputados:gamarra pita"
+      },
+      {
+        "orador": "Poma",
+        "cargo": "legislador",
+        "sobre": "Mejoramiento de obra en Madre de Dios",
+        "postura": "propone",
+        "tema": "Educación",
+        "dijo": "Pidió la presencia de la gobernadora regional.",
+        "proyecto": "",
+        "id": "diputados:poma huamani"
+      },
+      {
+        "orador": "Celis",
+        "cargo": "legislador",
+        "sobre": "Participación del vicecontralor en la sesión",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso la presencia del vicecontralor en la sesión.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Quispe",
+        "cargo": "legislador",
+        "sobre": "Participación del vicecontralor en la sesión",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Respaldó la participación del vicecontralor en la sesión.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Poma",
+        "cargo": "legislador",
+        "sobre": "Participación del vicecontralor en la sesión",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Respaldó la presencia del vicecontralor en la sesión.",
+        "proyecto": "",
+        "id": "diputados:poma huamani"
+      },
+      {
+        "orador": "Aguirre",
+        "cargo": "legislador",
+        "sobre": "Participación del vicecontralor en la sesión",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Propuso la presencia del vicecontralor en la sesión.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Gamarra",
+        "cargo": "legislador",
+        "sobre": "Participación del contralor encargado",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Pidió la presencia del contralor encargado.",
+        "proyecto": "",
+        "id": "diputados:gamarra pita"
+      },
+      {
+        "orador": "Domínguez",
+        "cargo": "legislador",
+        "sobre": "Fortalecimiento de la Contraloría General",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso que los informes sean vinculantes.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Secretaria Técnica",
+        "cargo": "invitado",
+        "sobre": "Gestión del riesgo de desastres",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Comentó el predictamen sobre riesgos de desastres.",
+        "proyecto": "PL 103 y 208",
+        "id": null
+      },
+      {
+        "orador": "Albaño",
+        "cargo": "legislador",
+        "sobre": "Ejecución de proyectos de inversión",
+        "postura": "con observaciones",
+        "tema": "Ambiente",
+        "dijo": "Propuso la ejecución de proyectos de inversión.",
+        "proyecto": "PL 103 y 208",
+        "id": null
+      },
+      {
+        "orador": "Poma",
+        "cargo": "legislador",
+        "sobre": "Especialización en gestión de riesgos",
+        "postura": "con observaciones",
+        "tema": "Ambiente",
+        "dijo": "Propuso que los gestores de riesgos sean especialistas.",
+        "proyecto": "PL 103 y 208",
+        "id": "diputados:poma huamani"
+      },
+      {
+        "orador": "García",
+        "cargo": "legislador",
+        "sobre": "Certificación para gestores de riesgos",
+        "postura": "a favor",
+        "tema": "Ambiente",
+        "dijo": "Respaldó la certificación para gestores de riesgos.",
+        "proyecto": "PL 103 y 208",
+        "id": null
+      },
+      {
+        "orador": "García",
+        "cargo": "legislador",
+        "sobre": "Autonomía para la defensa civil",
+        "postura": "con observaciones",
+        "tema": "Ambiente",
+        "dijo": "Propuso mayor autonomía para la defensa civil.",
+        "proyecto": "PL 103 y 208",
+        "id": null
+      },
+      {
+        "orador": "Manoro",
+        "cargo": "legislador",
+        "sobre": "Vigencia de la propuesta de riesgos",
+        "postura": "con observaciones",
+        "tema": "Ambiente",
+        "dijo": "Propuso establecer una vigencia para la ley.",
+        "proyecto": "PL 103",
+        "id": null
+      },
+      {
+        "orador": "Secretaria Técnica",
+        "cargo": "invitado",
+        "sobre": "Incentivos para egresados de programas",
+        "postura": "comenta",
+        "tema": "Trabajo",
+        "dijo": "Comentó el predictamen sobre modalidades formativas.",
+        "proyecto": "PL 168",
+        "id": null
+      },
+      {
+        "orador": "Poma",
+        "cargo": "legislador",
+        "sobre": "Puntaje en cursos de extensión",
+        "postura": "con observaciones",
+        "tema": "Trabajo",
+        "dijo": "Cuestionó la falta de meritocracia estatal.",
+        "proyecto": "PL 168",
+        "id": "diputados:poma huamani"
+      },
+      {
+        "orador": "Poma",
+        "cargo": "legislador",
+        "sobre": "Puntaje de cursos en SERVIR",
+        "postura": "con observaciones",
+        "tema": "Trabajo",
+        "dijo": "Cuestionó el puntaje asignado por cursos de SERVIR.",
+        "proyecto": "PL 168",
+        "id": "diputados:poma huamani"
+      },
+      {
+        "orador": "Poma",
+        "cargo": "legislador",
+        "sobre": "Bonificación para egresados",
+        "postura": "a favor",
+        "tema": "Trabajo",
+        "dijo": "Respaldó la bonificación del diez por ciento para egresados.",
+        "proyecto": "PL 168",
+        "id": "diputados:poma huamani"
+      },
+      {
+        "orador": "Quispe",
+        "cargo": "legislador",
+        "sobre": "Perfeccionamiento de bonificación para egresados",
+        "postura": "con observaciones",
+        "tema": "Trabajo",
+        "dijo": "Sugirió aplicar el estímulo al tercio superior.",
+        "proyecto": "PL 168",
+        "id": null
+      },
+      {
+        "orador": "García",
+        "cargo": "legislador",
+        "sobre": "Alcance de la propuesta de vivienda",
+        "postura": "pregunta",
+        "tema": "Inmobiliario",
+        "dijo": "Preguntó si los profesionales 276 están incluidos.",
+        "proyecto": "PL 3021",
+        "id": null
+      },
+      {
+        "orador": "Fernández",
+        "cargo": "legislador",
+        "sobre": "Postulación de trabajadores a vivienda municipal",
+        "postura": "a favor",
+        "tema": "Inmobiliario",
+        "dijo": "Respaldó la propuesta legislativa para trabajadores municipales.",
+        "proyecto": "PL 3021",
+        "id": null
+      },
+      {
+        "orador": "Norma",
+        "cargo": "legislador",
+        "sobre": "Opinión de municipalidades en propuesta de vivienda",
+        "postura": "propone",
+        "tema": "Inmobiliario",
+        "dijo": "Propuso postergar la votación para obtener opiniones.",
+        "proyecto": "PL 3021",
+        "id": null
+      },
+      {
+        "orador": "Celis",
+        "cargo": "legislador",
+        "sobre": "Estadísticas en dictámenes de la comisión",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Sugirió incluir estadísticas en los dictámenes presentados.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Carla Mónica Gaviño",
+        "cargo": "invitado",
+        "sobre": "Gestión de contrataciones públicas",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Informó sobre los ejes estratégicos de su gestión.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Poma",
+        "cargo": "legislador",
+        "sobre": "Ineficiencia y posibles irregularidades en OS",
+        "postura": "pregunta",
+        "tema": "Otros",
+        "dijo": "Cuestionó la ineficiencia técnica y posibles fraudes.",
+        "proyecto": "",
+        "id": "diputados:poma huamani"
+      },
+      {
+        "orador": "Domínguez",
+        "cargo": "legislador",
+        "sobre": "Discriminación de jóvenes y alerta de proveedores",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Propuso crear un sistema de alerta de proveedores.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ovando",
+        "cargo": "legislador",
+        "sobre": "Eliminación de barreras burocráticas",
+        "postura": "pregunta",
+        "tema": "Otros",
+        "dijo": "Solicitó identificar las barreras burocráticas más importantes.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Quispe",
+        "cargo": "legislador",
+        "sobre": "Combate a la corrupción en contrataciones",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Instó a la autoridad a proponer medidas anticorrupción.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Quispe",
+        "cargo": "legislador",
+        "sobre": "perfeccionamiento de normas para evitar la corrupción",
+        "postura": "propone",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Pidió que la comisión reciba propuestas para perfeccionar las normas de contratación.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Norma Yarro",
+        "cargo": "legislador",
+        "sobre": "corrupción en contrataciones y falta de control",
+        "postura": "en contra",
+        "tema": "Polítca y control político",
+        "dijo": "Denunció la corrupción en las adjudicaciones de Perú Compras y la falta de control.",
+        "proyecto": "",
+        "id": "diputados:yarrow lumbreras"
+      },
+      {
+        "orador": "Carla Gaviño Macías",
+        "cargo": "invitado",
+        "sobre": "gestión de OS y proyecto BIT",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Informó sobre las medidas de transparencia y la asistencia técnica de OS.",
+        "proyecto": "Proyecto BIT",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=NNfSFqKV43o"
   }
 }
