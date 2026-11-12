@@ -9113,5 +9113,792 @@
     "v": 4,
     "dichos": [],
     "url": "https://www.facebook.com/watch/?v=1190072177047534"
+  },
+  "tvaaOwXQQ20": {
+    "fecha": "2026-11-12",
+    "organo": "Comisión de Justicia",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Buñante",
+        "cargo": "legislador",
+        "sobre": "Tratar leyes de la Cámara de Diputados",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Propuso tratar las leyes de la Cámara de Diputados.",
+        "proyecto": "",
+        "id": "senado:munante barrios"
+      },
+      {
+        "orador": "Mraví",
+        "cargo": "legislador",
+        "sobre": "Selección de expertos para el debate",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Propuso incluir opiniones divergentes para enriquecer el debate.",
+        "proyecto": "",
+        "id": "senado:maravi olarte"
+      },
+      {
+        "orador": "Muñate",
+        "cargo": "legislador",
+        "sobre": "Escuchar posiciones de las fiscalías",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Pidió considerar la posición institucional de las fiscalías.",
+        "proyecto": "",
+        "id": "senado:munante barrios"
+      },
+      {
+        "orador": "Maraville",
+        "cargo": "legislador",
+        "sobre": "Solicitar expertos adicionales",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Propuso solicitar expertos consultores adicionales por escrito.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Tomás Aladino Gálvez Villegas",
+        "cargo": "ministro o autoridad",
+        "sobre": "Presupuesto del Ministerio Público",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Denunció la disminución del presupuesto del Ministerio Público.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Tomás Aladino Gálvez Villegas",
+        "cargo": "ministro o autoridad",
+        "sobre": "Extinción de dominio",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Propuso priorizar la investigación patrimonial del delito.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Tomás Aladino Gálvez Villegas",
+        "cargo": "ministro o autoridad",
+        "sobre": "Investigación preliminar policial",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Cuestionó la constitucionalidad de la ley 32130.",
+        "proyecto": "Ley 32130",
+        "id": null
+      },
+      {
+        "orador": "Tomás Aladino Gálvez Villegas",
+        "cargo": "ministro o autoridad",
+        "sobre": "Fiscalías de derechos humanos",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Comentó la baja carga en las fiscalías de derechos humanos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Marta Vázquez",
+        "cargo": "legislador",
+        "sobre": "Levantamiento del secreto bancario",
+        "postura": "pregunta",
+        "tema": "Justicia",
+        "dijo": "Preguntó por el levantamiento del secreto bancario.",
+        "proyecto": "",
+        "id": "senado:vasquez chuquilin"
+      },
+      {
+        "orador": "Fiscal de la Nación",
+        "cargo": "ministro o autoridad",
+        "sobre": "investigación policial y fiscal",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Propuso que la policía inicie investigaciones bajo supervisión del fiscal.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Fiscal de la Nación",
+        "cargo": "ministro o autoridad",
+        "sobre": "delito de función militar",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Cuestionó la definición demasiado amplia del delito de función.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Fiscal de la Nación",
+        "cargo": "ministro o autoridad",
+        "sobre": "ley de extinción de dominio",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Denunció que el decreto legislativo 1373 afectó el derecho de propiedad.",
+        "proyecto": "DL 1373",
+        "id": null
+      },
+      {
+        "orador": "Fiscal de la Nación",
+        "cargo": "ministro o autoridad",
+        "sobre": "prescripción de la acción penal",
+        "postura": "a favor",
+        "tema": "Justicia",
+        "dijo": "Respaldó que el plazo máximo sea la suma de plazos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Marta Chávez",
+        "cargo": "legislador",
+        "sobre": "eficiencia de condenas y capacitación fiscal",
+        "postura": "pregunta",
+        "tema": "Justicia",
+        "dijo": "Preguntó sobre la tasa de condenas y la capacitación fiscal.",
+        "proyecto": "",
+        "id": "senado:chavez cossio"
+      },
+      {
+        "orador": "Akinaga",
+        "cargo": "legislador",
+        "sobre": "coordinación entre policía y fiscalía",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Manifestó su preocupación por la falta de coordinación en las investigaciones.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Marta Chávez",
+        "cargo": "legislador",
+        "sobre": "opiniones institucionales en el Congreso",
+        "postura": "pregunta",
+        "tema": "Justicia",
+        "dijo": "Preguntó sobre la emisión de opiniones institucionales en el Congreso anterior.",
+        "proyecto": "",
+        "id": "senado:chavez cossio"
+      },
+      {
+        "orador": "Quinaaga",
+        "cargo": "legislador",
+        "sobre": "coordinación entre policía y fiscalía",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Cuestionó la falta de coordinación entre la policía y la fiscalía.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ramos Wilka",
+        "cargo": "legislador",
+        "sobre": "investigación de protestas de 2023",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Pidió resultados escritos sobre las investigaciones de las protestas sociales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Gavídea Rodríguez",
+        "cargo": "legislador",
+        "sobre": "reforma y presupuesto del Ministerio Público",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Propuso reformas en tecnología y capacitación para la fiscalía.",
+        "proyecto": "",
+        "id": "senado:gavidia rodriguez"
+      },
+      {
+        "orador": "Mirta Vázquez",
+        "cargo": "legislador",
+        "sobre": "derogación de la Ley 32130",
+        "postura": "a favor",
+        "tema": "Justicia",
+        "dijo": "Respaldó la derogación de la ley sobre conducción de investigaciones.",
+        "proyecto": "Ley 32130",
+        "id": "senado:vasquez chuquilin"
+      },
+      {
+        "orador": "Mirta Vázquez",
+        "cargo": "legislador",
+        "sobre": "ley de extinción de dominio",
+        "postura": "pregunta",
+        "tema": "Justicia",
+        "dijo": "Preguntó sobre la eficacia de la ley de extinción de dominio.",
+        "proyecto": "",
+        "id": "senado:vasquez chuquilin"
+      },
+      {
+        "orador": "Mirta Vázquez",
+        "cargo": "legislador",
+        "sobre": "reducción de fiscalías de derechos humanos",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Denunció el riesgo de reducir las fiscalías de derechos humanos.",
+        "proyecto": "",
+        "id": "senado:vasquez chuquilin"
+      },
+      {
+        "orador": "Mirta Vázquez",
+        "cargo": "legislador",
+        "sobre": "investigaciones contra el fiscal de la nación",
+        "postura": "pregunta",
+        "tema": "Justicia",
+        "dijo": "Pidió información sobre las investigaciones penales contra el fiscal.",
+        "proyecto": "",
+        "id": "senado:vasquez chuquilin"
+      },
+      {
+        "orador": "Mirta Vázquez",
+        "cargo": "legislador",
+        "sobre": "minería informal cerca de escuela",
+        "postura": "pregunta",
+        "tema": "Minería",
+        "dijo": "Pidió explicaciones sobre minería informal cerca de una escuela.",
+        "proyecto": "",
+        "id": "senado:vasquez chuquilin"
+      },
+      {
+        "orador": "Víctor Cúttipa",
+        "cargo": "legislador",
+        "sobre": "presupuesto del Ministerio Público",
+        "postura": "pregunta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Preguntó sobre la asignación de recursos para la fiscalía.",
+        "proyecto": "",
+        "id": "senado:cutipa ccama"
+      },
+      {
+        "orador": "Víctor Cúttipa",
+        "cargo": "legislador",
+        "sobre": "la ley Soto",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Cuestionó la ley que favorece a los delincuentes prófugos.",
+        "proyecto": "Ley Soto",
+        "id": "senado:cutipa ccama"
+      },
+      {
+        "orador": "Víctor Cúttipa",
+        "cargo": "legislador",
+        "sobre": "uso de diligencias previas",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Denunció el uso abusivo de las diligencias previas.",
+        "proyecto": "",
+        "id": "senado:cutipa ccama"
+      },
+      {
+        "orador": "Víctor Cúttipa",
+        "cargo": "legislador",
+        "sobre": "inconductas y corrupción de fiscales",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Denunció la corrupción y el despilfarro de fiscales.",
+        "proyecto": "",
+        "id": "senado:cutipa ccama"
+      },
+      {
+        "orador": "Marta Chávez",
+        "cargo": "legislador",
+        "sobre": "regulación de las diligencias previas",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Cuestionó el uso abusivo de las diligencias previas por parte de los fiscales.",
+        "proyecto": "",
+        "id": "senado:chavez cossio"
+      },
+      {
+        "orador": "Marta Chávez",
+        "cargo": "legislador",
+        "sobre": "eficacia de la incautación de bienes",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Propuso utilizar la incautación para evitar la duplicidad de funciones.",
+        "proyecto": "",
+        "id": "senado:chavez cossio"
+      },
+      {
+        "orador": "Marta Chávez",
+        "cargo": "legislador",
+        "sobre": "cantidad de fiscales especializados",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Propuso que la asignación de fiscales dependa de la carga procesal.",
+        "proyecto": "",
+        "id": "senado:chavez cossio"
+      },
+      {
+        "orador": "Marta Chávez",
+        "cargo": "legislador",
+        "sobre": "relación entre Fiscalía y Policía",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Denunció que la norma actual profundiza el conflicto entre las instituciones.",
+        "proyecto": "",
+        "id": "senado:chavez cossio"
+      },
+      {
+        "orador": "Fiscal de la Nación",
+        "cargo": "ministro o autoridad",
+        "sobre": "sentencia del Tribunal Constitucional",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Informó que la sentencia del Tribunal Constitucional fue declarada infundada.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Fiscal de la Nación",
+        "cargo": "ministro o autoridad",
+        "sobre": "niveles de certeza en acusaciones",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Informó sobre los distintos niveles de certeza requeridos para acusar.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Fiscal de la Nación",
+        "cargo": "ministro o autoridad",
+        "sobre": "provisionalidad de los fiscales",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Informó que el cincuenta y uno por ciento de los fiscales son provisionales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Fiscal de la Nación",
+        "cargo": "ministro o autoridad",
+        "sobre": "vinculación de sentencias internacionales",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Rechazó que la jurisprudencia internacional imponga normas penales al país.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Fiscal de la Nación",
+        "cargo": "ministro o autoridad",
+        "sobre": "caso de las esterilizaciones",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Comentó que en el caso de las esterilizaciones hubo abandono.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Fiscal de la Nación",
+        "cargo": "ministro o autoridad",
+        "sobre": "nueva ley orgánica del Ministerio Público",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Informó sobre el proyecto de la nueva ley orgánica del Ministerio Público.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Fiscal de la Nación",
+        "cargo": "ministro o autoridad",
+        "sobre": "uso de inteligencia artificial",
+        "postura": "comenta",
+        "tema": "Tecnología",
+        "dijo": "Comentó que la inteligencia artificial es una herramienta de optimización.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Fiscal de la Nación",
+        "cargo": "invitado",
+        "sobre": "Sentencias de la Corte Interamericana",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Defendió la primacía de la Constitución sobre sentencias internacionales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Fiscal de la Nación",
+        "cargo": "invitado",
+        "sobre": "Acusaciones de interferencia en procesos",
+        "postura": "a favor",
+        "tema": "Justicia",
+        "dijo": "Defendió su inocencia frente a las acusaciones presentadas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Fiscal de la Nación",
+        "cargo": "invitado",
+        "sobre": "Proyecto minero en terreno familiar",
+        "postura": "comenta",
+        "tema": "Minería",
+        "dijo": "Aclaró que es heredero y no propietario del terreno.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Mirta Vázquez",
+        "cargo": "legislador",
+        "sobre": "Propiedad del terreno minero",
+        "postura": "pregunta",
+        "tema": "Justicia",
+        "dijo": "Preguntó si el fiscal era propietario del bien.",
+        "proyecto": "",
+        "id": "senado:vasquez chuquilin"
+      },
+      {
+        "orador": "Mirta Vázquez",
+        "cargo": "legislador",
+        "sobre": "Ley Orgánica del Ministerio Público",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Cuestionó la propiedad de bienes para evitar conflictos.",
+        "proyecto": "",
+        "id": "senado:vasquez chuquilin"
+      },
+      {
+        "orador": "Ampuedo",
+        "cargo": "legislador",
+        "sobre": "Presupuesto del Ministerio Público",
+        "postura": "pregunta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Solicitó información sobre el presupuesto para la gestión.",
+        "proyecto": "",
+        "id": "senado:ampuero meza"
+      },
+      {
+        "orador": "Fiscal de la Nación",
+        "cargo": "invitado",
+        "sobre": "Presupuesto para el Ministerio Público",
+        "postura": "propone",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Propuso una asignación de cinco mil millones de soles.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Fiscal de la Nación",
+        "cargo": "invitado",
+        "sobre": "Gestión de fiscales en caso Odebrecht",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Denunció la gestión de los fiscales Vela y Pérez.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Jennifer Ludenia Trujillo",
+        "cargo": "legislador",
+        "sobre": "Presupuesto para sueldos",
+        "postura": "pregunta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Preguntó sobre la disponibilidad de presupuesto para sueldos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ampuedo",
+        "cargo": "legislador",
+        "sobre": "Ley Soto y prescripción",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Criticó la ley que facilita la prescripción de delitos.",
+        "proyecto": "Ley Soto",
+        "id": "senado:ampuero meza"
+      },
+      {
+        "orador": "Fiscal de la Nación",
+        "cargo": "invitado",
+        "sobre": "Regulación de diligencias previas",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Propuso regular las diligencias previas para evitar perjuicios.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ampuedo",
+        "cargo": "legislador",
+        "sobre": "Acuerdos plenarios del Poder Judicial",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Criticó la obligatoriedad de los acuerdos plenarios judiciales.",
+        "proyecto": "",
+        "id": "senado:ampuero meza"
+      },
+      {
+        "orador": "Fiscal de la Nación",
+        "cargo": "invitado",
+        "sobre": "Extinción de dominio y decomiso",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Propuso priorizar el decomiso sobre la extinción de dominio.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ampuedo",
+        "cargo": "legislador",
+        "sobre": "Duración de diligencias preliminares",
+        "postura": "pregunta",
+        "tema": "Justicia",
+        "dijo": "Consultó sobre el plazo razonable para las investigaciones.",
+        "proyecto": "",
+        "id": "senado:ampuero meza"
+      },
+      {
+        "orador": "Ampuedo",
+        "cargo": "legislador",
+        "sobre": "Supuestos de pérdida de dominio",
+        "postura": "pregunta",
+        "tema": "Justicia",
+        "dijo": "Planteó supuestos específicos para la pérdida de dominio.",
+        "proyecto": "",
+        "id": "senado:ampuero meza"
+      },
+      {
+        "orador": "Fiscal de la Nación",
+        "cargo": "invitado",
+        "sobre": "Supuestos de pérdida de dominio",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Explicó los supuestos legales para la pérdida de dominio.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=tvaaOwXQQ20"
+  },
+  "fb_2666225277185736": {
+    "fecha": "2026-11-11",
+    "organo": "Comisión de Seguridad Integral",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Mauricio Pretto",
+        "cargo": "invitado",
+        "sobre": "Funcionamiento de los criptoactivos",
+        "postura": "comenta",
+        "tema": "Tecnología",
+        "dijo": "Comentó la transparencia e inmutabilidad de la tecnología blockchain.",
+        "proyecto": "Ley Orgánica de Activos Digitales",
+        "id": null
+      },
+      {
+        "orador": "Nydia Soto",
+        "cargo": "invitado",
+        "sobre": "Observaciones técnicas al proyecto de ley",
+        "postura": "con observaciones",
+        "tema": "Tecnología",
+        "dijo": "Cuestionó la falta de la regla de viaje y supervisión.",
+        "proyecto": "Ley Orgánica de Activos Digitales",
+        "id": null
+      },
+      {
+        "orador": "Camila Cueva",
+        "cargo": "legislador",
+        "sobre": "Protección de jóvenes en criptomonedas",
+        "postura": "pregunta",
+        "tema": "Educación",
+        "dijo": "Preguntó sobre la protección de menores frente a estafas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Mauricio Pretto",
+        "cargo": "invitado",
+        "sobre": "Prevención de riesgos mediante educación digital",
+        "postura": "propone",
+        "tema": "Educación",
+        "dijo": "Propuso fortalecer la educación digital para prevenir riesgos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Noriega",
+        "cargo": "legislador",
+        "sobre": "Regulación o prohibición de criptoactivos",
+        "postura": "pregunta",
+        "tema": "Tecnología",
+        "dijo": "Preguntó si conviene regular o prohibir los criptoactivos.",
+        "proyecto": "",
+        "id": "EC:noriega donoso"
+      },
+      {
+        "orador": "Mauricio Pretto",
+        "cargo": "invitado",
+        "sobre": "Riesgos de la prohibición de criptoactivos",
+        "postura": "comenta",
+        "tema": "Tecnología",
+        "dijo": "Comentó que la prohibición genera mercados negros peligrosos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Carolina Dueñas",
+        "cargo": "legislador",
+        "sobre": "reporte de transacciones cripto",
+        "postura": "pregunta",
+        "tema": "Tecnología",
+        "dijo": "Preguntó sobre la notificación de transacciones de criptomonedas en el exterior.",
+        "proyecto": "",
+        "id": "EC:duenas palma"
+      },
+      {
+        "orador": "César Nandes",
+        "cargo": "invitado",
+        "sobre": "regulación de drogas sintéticas",
+        "postura": "con observaciones",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso incluir un estándar para procesar componentes químicos análogos.",
+        "proyecto": "Proyecto de ley de drogas sintéticas",
+        "id": null
+      },
+      {
+        "orador": "Carolina Dueñas",
+        "cargo": "legislador",
+        "sobre": "mutaciones en drogas sintéticas",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Comentó la peligrosidad de los cambios químicos en la heroína.",
+        "proyecto": "",
+        "id": "EC:duenas palma"
+      },
+      {
+        "orador": "Doctor Sosa",
+        "cargo": "invitado",
+        "sobre": "Casos análogos de drogas sintéticas",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso establecer cuatro parámetros para cubrir casos análogos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Carolina Dueñas",
+        "cargo": "legislador",
+        "sobre": "Control de precursores y drogas sintéticas",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Respaldó la creación del tipo penal de desvío.",
+        "proyecto": "",
+        "id": "EC:duenas palma"
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=2666225277185736"
+  },
+  "fb_1113803481551586": {
+    "fecha": "2026-11-11",
+    "organo": "Comisión de Educación",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Carlos Eduardo Ortega Tapia",
+        "cargo": "invitado",
+        "sobre": "Ley de Inteligencia Artificial",
+        "postura": "con observaciones",
+        "tema": "Tecnología",
+        "dijo": "Sugirió incluir la investigación penal en la coordinación institucional.",
+        "proyecto": "Ley de Inteligencia Artificial",
+        "id": null
+      },
+      {
+        "orador": "Israel Carrion",
+        "cargo": "invitado",
+        "sobre": "Ley de Inteligencia Artificial",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Advirtió sobre la posible duplicidad de tipos penales.",
+        "proyecto": "Ley de Inteligencia Artificial",
+        "id": null
+      },
+      {
+        "orador": "Rodrigo Fernando Varela Torres",
+        "cargo": "invitado",
+        "sobre": "Ley de Inteligencia Artificial",
+        "postura": "con observaciones",
+        "tema": "Tecnología",
+        "dijo": "Propuso fortalecer la protección de los derechos humanos.",
+        "proyecto": "Ley de Inteligencia Artificial",
+        "id": null
+      },
+      {
+        "orador": "Paula Solarte Ceballos",
+        "cargo": "invitado",
+        "sobre": "Ley de Inteligencia Artificial",
+        "postura": "con observaciones",
+        "tema": "Tecnología",
+        "dijo": "Planteó observaciones sobre definiciones y aplicación extraterritorial.",
+        "proyecto": "Ley de Inteligencia Artificial",
+        "id": null
+      },
+      {
+        "orador": "Alex Oto Mayor",
+        "cargo": "invitado",
+        "sobre": "Definiciones y gestión de riesgos de la IA",
+        "postura": "con observaciones",
+        "tema": "Tecnología",
+        "dijo": "Propuso cambios en la definición de inteligencia artificial.",
+        "proyecto": "Proyecto de Ley de Inteligencia Artificial",
+        "id": null
+      },
+      {
+        "orador": "Anavela Inguela",
+        "cargo": "legislador",
+        "sobre": "Competencias de la Fiscalía ante delitos con IA",
+        "postura": "pregunta",
+        "tema": "Justicia",
+        "dijo": "Preguntó sobre las competencias de la Fiscalía ante delitos con IA.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Paola Cabezas",
+        "cargo": "legislador",
+        "sobre": "Protección de la voz como dato biométrico",
+        "postura": "pregunta",
+        "tema": "Tecnología",
+        "dijo": "Preguntó sobre la protección de la voz como dato biométrico.",
+        "proyecto": "",
+        "id": "EC:cabezas castillo"
+      },
+      {
+        "orador": "Doctor Carrion",
+        "cargo": "ministro o autoridad",
+        "sobre": "Duplicidad de verbos rectores en el COIP",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Cuestionó la posible duplicidad de verbos rectores en el COIP.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Andrés López Andrade",
+        "cargo": "invitado",
+        "sobre": "Respaldo al proyecto de ley de inteligencia artificial",
+        "postura": "a favor",
+        "tema": "Tecnología",
+        "dijo": "Respaldó el proyecto de ley de inteligencia artificial.",
+        "proyecto": "Proyecto de Ley de Inteligencia Artificial",
+        "id": null
+      },
+      {
+        "orador": "José Luis Paz",
+        "cargo": "invitado",
+        "sobre": "Impacto de la IA en la locución",
+        "postura": "con observaciones",
+        "tema": "Trabajo",
+        "dijo": "Denunció el riesgo de pérdida de empleos de locutores.",
+        "proyecto": "Proyecto de Ley de Inteligencia Artificial",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1113803481551586"
   }
 }
