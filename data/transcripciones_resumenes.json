@@ -7933,7 +7933,7 @@
   },
   {
     "video_id": "fb_1857426632239192",
-    "resumen": "La Comision Especializada Permanente de Biodiversidad y Recursos Naturales de la Asamblea Nacional de Ecuador sesiono de forma virtual para recibir en comision general, dentro del tratamiento para primer debate del proyecto de Ley Organica de Fomento a la Bioeconomia y Biocomercio Productivo basado en Biodiversidad, al experto en innovacion y startups Sebastian Garzon Navarrete, quien presento un diagnostico de brechas del ecosistema de emprendimiento e innovacion ecuatoriano y propuso reformas puntuales al articulado (sesion en curso al momento de este resumen).",
+    "resumen": "La Comision Especializada Permanente de Biodiversidad y Recursos Naturales de la Asamblea Nacional de Ecuador sesiono de forma virtual para recibir en comision general, dentro del tratamiento para primer debate del proyecto de Ley Organica de Fomento a la Bioeconomia y Biocomercio Productivo basado en Biodiversidad, al experto en innovacion y startups Sebastian Garzon Navarrete, quien presento un diagnostico de brechas del ecosistema de emprendimiento e innovacion ecuatoriano y propuso reformas puntuales al articulado (la transcripcion capturada corta abruptamente aca, probablemente por una interrupcion tecnica en la captura; no hay evidencia de que la sesion siguiera en curso a esta altura).",
     "ideas_clave": [
       "Garzon identifico cinco brechas con siete observaciones al proyecto: cadena de suministro agricola insuficiente en biomasa, falta de liquidez para exportar, barreras sanitarias de la ARCSA que exigen permiso por producto en lugar de por linea de producto, laboratorios y plantas piloto subutilizados, y tramites de internacionalizacion sin expediente digital repetible.",
       "Senalo que Ecuador ocupa el puesto 113 de 139 en el Global Innovation Index y el puesto 94 (bajo 13 puestos desde 2024) en el ranking global de ecosistemas de startups, ubicandose en el puesto 16 de 21 en innovacion en America Latina y el Caribe.",
@@ -7943,8 +7943,24 @@
       "Describio el proyecto como una arquitectura institucional necesaria que incluye ventanilla unica, acceso regulado a recursos geneticos, entornos de prueba (sandbox), certificacion de cumplimiento bioeconomico, transferencia tecnologica via universidades y un consejo de coordinacion, pero planteo que falta incluir herramientas concretas de financiamiento y permisos accesibles para el emprendedor.",
       "La transcripcion captada corta a mitad de la exposicion del experto (se interrumpio antes de completar la presentacion de sus siete observaciones articuladas)."
     ],
-    "generated_at": "2026-11-11T21:50:52Z",
+    "generated_at": "2026-11-12T01:50:04Z",
     "duracion_seg": 986,
+    "agenda_cumplida": null
+  },
+  {
+    "video_id": "fb_1113803481551586",
+    "resumen": "La Comision Especializada Permanente de Educacion, Cultura, Ciencia, Tecnologia e Innovacion y Saberes Ancestrales de la Asamblea Nacional de Ecuador sesiono de forma virtual para tratar el proyecto de Ley Organica para el Desarrollo, Uso Etico y Gobernanza de la Inteligencia Artificial, recibiendo en comparecencia a la Policia Nacional, la Fiscalia General del Estado, la Defensoria del Pueblo y la Superintendencia de Proteccion de Datos Personales, ademas de dos expertos invitados (un consultor en IA y el presidente de la Asociacion de Locutores Ecuatorianos). La sesion se extendio mas de dos horas con observaciones articulo por articulo al proyecto y concluyo de forma ordenada tras agotar el orden del dia.",
+    "ideas_clave": [
+      "La Fiscalia General del Estado (Israel Carrion) objeto el articulo 35 por asignarle funciones de prevencion que no le corresponden, ya que la institucion actua solo de forma represiva, ex post al delito.",
+      "La Fiscalia senalo una posible duplicidad penal entre el nuevo articulo 212.1 (suplantacion de identidad mediante IA) y la reforma al articulo 178 del COIP, ambos con pena de 3 a 5 anios por las mismas conductas, y propuso considerar el uso de IA como agravante no constitutiva de infraccion en vez de crear tipos penales nuevos, para poder aplicarla tambien a extorsion, acoso sexual, fraude procesal y pornografia infantil.",
+      "La Defensoria del Pueblo (Rosa Cecilia Baltazar) pidio elevar a rango legal la prohibicion del tratamiento biometrico de ninos, ninas y adolescentes, calificar como alto riesgo la videovigilancia con analitica automatizada en espacios publicos, y garantizar revision humana efectiva en decisiones automatizadas.",
+      "La Superintendencia de Proteccion de Datos Personales (Paula Solarte y Alex Sotomayor) presento observaciones articulo por articulo: pidio ampliar el ambito de aplicacion a actores extranjeros (articulo 3), corregir las definiciones de implementador, explicabilidad y sesgo (articulo 4), y reclamo la rectoria sobre todo tratamiento de IA que use datos personales (articulos 25 y 27).",
+      "Un consultor en innovacion se presento mostrando un deepfake de si mismo para ilustrar el riesgo del proyecto, respaldo la ley y pidio aprobar el informe para primer debate, fusionarla con el proyecto de deepfakes y fijar fecha para el segundo debate; citó que Ecuador ocupa el puesto 10 de 19 en el indice latinoamericano de IA 2025, con 40.7 puntos frente a un promedio regional de 43%.",
+      "El presidente de la Asociacion de Locutores Ecuatorianos (Jose Luis Paz) propuso proteger la locucion publicitaria humana frente a voces sinteticas, exigir consentimiento expreso para clonar voces, crear un registro nacional de trazabilidad de publicidad (modelo Argentina) y establecer incentivos tributarios para quien contrate talento humano ecuatoriano, citando el antecedente de la reforma de mayo 2026 a la Ley Federal del Trabajo de Mexico.",
+      "Las asambleistas Anabel Aguilera y Paola Cabezas consultaron a la Fiscalia por estadisticas de delitos de suplantacion de identidad y pornografia con IA, y a la Superintendencia sobre si la voz clonada constituye dato biometrico y si se requiere reforma a su propia ley para tener rectoria explicita sobre el entrenamiento de IA con datos personales."
+    ],
+    "generated_at": "2026-11-12T01:50:04Z",
+    "duracion_seg": 7190,
     "agenda_cumplida": null
   }
 ]
