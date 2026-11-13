@@ -25428,5 +25428,192 @@
       }
     ],
     "url": "https://www.facebook.com/watch/?v=1615415227048928"
+  },
+  "fb_1113727501356429": {
+    "fecha": "2026-10-14",
+    "organo": "Comisión de Soberanía Alimentaria",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Carlos Romero",
+        "cargo": "invitado",
+        "sobre": "Informe técnico de la reforma alimentaria",
+        "postura": "comenta",
+        "tema": "Agricultura",
+        "dijo": "Explicó los cambios técnicos del proyecto de ley de alimentos.",
+        "proyecto": "Ley para prevenir el desperdicio de alimentos",
+        "id": null
+      },
+      {
+        "orador": "María Bécibel Mendoza Ibarra",
+        "cargo": "legislador",
+        "sobre": "Aprobación del informe de la comisión",
+        "postura": "propone",
+        "tema": "Agricultura",
+        "dijo": "Propuso la aprobación del informe para primer debate.",
+        "proyecto": "Ley para prevenir el desperdicio de alimentos",
+        "id": "EC:mendoza ibarra"
+      },
+      {
+        "orador": "Lorena Rosado",
+        "cargo": "legislador",
+        "sobre": "Respaldo a la moción de Mendoza",
+        "postura": "a favor",
+        "tema": "Agricultura",
+        "dijo": "Respaldó la moción de aprobación presentada por Mendoza.",
+        "proyecto": "Ley para prevenir el desperdicio de alimentos",
+        "id": "EC:rosado sanchez"
+      },
+      {
+        "orador": "María Bécibel Mendoza Ibarra",
+        "cargo": "legislador",
+        "sobre": "Reconsideración de la votación de la moción",
+        "postura": "propone",
+        "tema": "Agricultura",
+        "dijo": "Pidió la reconsideración de la votación de la moción.",
+        "proyecto": "Ley para prevenir el desperdicio de alimentos",
+        "id": "EC:mendoza ibarra"
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1113727501356429"
+  },
+  "fb_2183612953037001": {
+    "fecha": "2026-10-14",
+    "organo": "Comisión de Gobiernos Autónomos",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Pablo Jurado",
+        "cargo": "legislador",
+        "sobre": "protección de nombres en el informe",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso usar códigos en lugar de nombres para proteger la honra de las autoridades.",
+        "proyecto": "",
+        "id": "EC:jurado moreno"
+      },
+      {
+        "orador": "Sandra Figueroa",
+        "cargo": "legislador",
+        "sobre": "confidencialidad de la información de fiscalización",
+        "postura": "pregunta",
+        "tema": "Política y control político",
+        "dijo": "Expresó su inquietud por el sigilo y la posible entrega de nombres en anexos.",
+        "proyecto": "",
+        "id": "EC:figueroa aguilar"
+      },
+      {
+        "orador": "Pablo Jurado",
+        "cargo": "legislador",
+        "sobre": "prevención de distorsiones mediáticas",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Explicó que su moción busca evitar que los medios malinterpreten la información.",
+        "proyecto": "",
+        "id": "EC:jurado moreno"
+      },
+      {
+        "orador": "Javier Lasso",
+        "cargo": "legislador",
+        "sobre": "autonomía de gobiernos descentralizados",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó el mal uso de la información y la interferencia en la autonomía municipal.",
+        "proyecto": "",
+        "id": "EC:lasso mendoza"
+      },
+      {
+        "orador": "Patricia Núñez",
+        "cargo": "legislador",
+        "sobre": "gestión de la comisión",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció la falta de transparencia y el mal manejo de procesos en la comisión.",
+        "proyecto": "",
+        "id": "EC:nunez ramos"
+      },
+      {
+        "orador": "Samuel Celler",
+        "cargo": "legislador",
+        "sobre": "trazabilidad técnica del informe",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Defendió la legitimidad de la moción basándose en la trazabilidad de datos oficiales.",
+        "proyecto": "",
+        "id": "EC:celleri gomez"
+      },
+      {
+        "orador": "Pablo Jurado",
+        "cargo": "legislador",
+        "sobre": "distinción entre informe y anexos",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Aclaró la diferencia entre el informe de alertas y el anexo con nombres.",
+        "proyecto": "",
+        "id": "EC:jurado moreno"
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=2183612953037001"
+  },
+  "fb_1784101032637253": {
+    "fecha": "2026-10-14",
+    "organo": "Comisión de Derecho al Trabajo",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Jorge Luis Silva Espin",
+        "cargo": "invitado",
+        "sobre": "reforma de inserción primer empleo",
+        "postura": "en contra",
+        "tema": "Trabajo",
+        "dijo": "Cuestionó la deficiente técnica legislativa del proyecto para la inserción laboral de jóvenes.",
+        "proyecto": "Ley reformatoria LOSEP primer empleo",
+        "id": null
+      },
+      {
+        "orador": "Roberto Puer",
+        "cargo": "legislador",
+        "sobre": "medidas de acción afirmativa para jóvenes",
+        "postura": "con observaciones",
+        "tema": "Trabajo",
+        "dijo": "Sugirió incluir mecanismos de control, incentivos y sanciones para asegurar la aplicación normativa.",
+        "proyecto": "Ley reformatoria LOSEP primer empleo",
+        "id": null
+      },
+      {
+        "orador": "Carmen C. Tipul",
+        "cargo": "legislador",
+        "sobre": "articulación con la Ley de Juventudes",
+        "postura": "pregunta",
+        "tema": "Trabajo",
+        "dijo": "Preguntó cómo articular la reforma con la ley de juventudes para evitar vacíos.",
+        "proyecto": "Ley reformatoria LOSEP primer empleo",
+        "id": "EC:tiupul urquizo"
+      },
+      {
+        "orador": "Alvarado",
+        "cargo": "legislador",
+        "sobre": "eficacia territorial y sector privado",
+        "postura": "propone",
+        "tema": "Trabajo",
+        "dijo": "Propuso crear cuotas para provincias pequeñas e incentivos para el sector privado.",
+        "proyecto": "Ley reformatoria LOSEP primer empleo",
+        "id": "EC:alvarado espinel"
+      },
+      {
+        "orador": "Marina",
+        "cargo": "legislador",
+        "sobre": "cuotas para jóvenes sin experiencia",
+        "postura": "propone",
+        "tema": "Trabajo",
+        "dijo": "Propuso establecer un porcentaje de contratación basado en el rendimiento académico.",
+        "proyecto": "Ley reformatoria LOSEP primer empleo",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1784101032637253"
   }
 }
