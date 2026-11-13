@@ -29447,5 +29447,122 @@
       }
     ],
     "url": "https://www.facebook.com/watch/?v=1843406376647627"
+  },
+  "RLA-kC1bZ38": {
+    "fecha": "2026-10-06",
+    "organo": "Comisión de Defensa Nacional",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Pérez Malqui Julián",
+        "cargo": "legislador",
+        "sobre": "inhibición de la comisión",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Pidió reconsiderar la inhibición sobre la hoja de coca.",
+        "proyecto": "PL 00428-2026-2031",
+        "id": "diputados:perez mallqui"
+      },
+      {
+        "orador": "Ramón Rosales María",
+        "cargo": "legislador",
+        "sobre": "competencia de la comisión",
+        "postura": "propone",
+        "tema": "Agricultura",
+        "dijo": "Propuso derivar el proyecto a la comisión de agricultura.",
+        "proyecto": "PL 00428-2026-2031",
+        "id": "diputados:ramos rosales"
+      },
+      {
+        "orador": "Quispecandia Luis",
+        "cargo": "legislador",
+        "sobre": "erradicación del narcotráfico",
+        "postura": "pregunta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Preguntó qué comisión se encargaría de la erradicación del narcotráfico.",
+        "proyecto": "",
+        "id": "diputados:quispe candia"
+      },
+      {
+        "orador": "Patiño Urco Ana",
+        "cargo": "legislador",
+        "sobre": "inhibición de la comisión",
+        "postura": "a favor",
+        "tema": "Agricultura",
+        "dijo": "Respaldó la inhibición por falta de competencia en la materia.",
+        "proyecto": "PL 00428-2026-2031",
+        "id": "diputados:patino urco"
+      },
+      {
+        "orador": "Valqui-Ordoñez Jong",
+        "cargo": "legislador",
+        "sobre": "aplicación de la reglamentación",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Respaldó la aplicación del reglamento durante la sesión.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "John Valquiordones",
+        "cargo": "legislador",
+        "sobre": "integrantes del grupo de trabajo de ciberseguridad",
+        "postura": "comenta",
+        "tema": "Tecnología",
+        "dijo": "Informó sobre los seis integrantes del grupo de trabajo encargado de la ciberseguridad.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=RLA-kC1bZ38"
+  },
+  "Eg1EgY1LI20": {
+    "fecha": "2026-10-06",
+    "organo": "Pleno de la Asamblea",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Verónica Indigues",
+        "cargo": "legislador",
+        "sobre": "empoderamiento de mujeres rurales",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Defendió el proyecto para garantizar derechos de mujeres rurales.",
+        "proyecto": "Ley de mujeres rurales",
+        "id": "EC:iniguez gallardo"
+      },
+      {
+        "orador": "Mónica Salazar",
+        "cargo": "legislador",
+        "sobre": "proyecto de ley mujeres rurales",
+        "postura": "en contra",
+        "tema": "Otros",
+        "dijo": "Denunció que el proyecto es inconstitucional e inexecutable.",
+        "proyecto": "Ley de mujeres rurales",
+        "id": "EC:salazar hidalgo"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=Eg1EgY1LI20"
+  },
+  "cEnzueyjs5Q": {
+    "fecha": "2026-10-06",
+    "organo": "Comisión de Ética Parlamentaria",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Yashiro",
+        "cargo": "legislador",
+        "sobre": "Informe de calificación contra Ruth Luque",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Respaldó la improcedencia de la denuncia contra Ruth Luque",
+        "proyecto": "01-226-2027",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=cEnzueyjs5Q"
   }
 }
