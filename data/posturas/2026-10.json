@@ -949,5 +949,762 @@
       }
     ],
     "url": "https://www.facebook.com/watch/?v=4532055303691262"
+  },
+  "2T6CGbrg-Ec": {
+    "fecha": "2026-10-05",
+    "organo": "Comisión de Medio Ambiente",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Pilar Zulca Castillo",
+        "cargo": "legislador",
+        "sobre": "Contaminación del río Lampaya",
+        "postura": "en contra",
+        "tema": "Ambiente",
+        "dijo": "Denunció la contaminación del río Lampaya por la minera Paltarumi.",
+        "proyecto": "",
+        "id": "diputados:sulca castillo"
+      },
+      {
+        "orador": "Yaqueda",
+        "cargo": "legislador",
+        "sobre": "Protección del Parque Nacional Candamo",
+        "postura": "propone",
+        "tema": "Ambiente",
+        "dijo": "Propuso invitar a ministros por el convenio de PeruPetro.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ayala",
+        "cargo": "legislador",
+        "sobre": "Sanciones a Tengda y Acero Lima",
+        "postura": "pregunta",
+        "tema": "Ambiente",
+        "dijo": "Preguntó por las sanciones de las empresas Tengda y Acero Lima.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ivana Fisher Bastini",
+        "cargo": "invitado",
+        "sobre": "Plan de fiscalización ambiental",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Expuso las labores de fiscalización de OEFA en varias regiones.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Yaqueda",
+        "cargo": "legislador",
+        "sobre": "Monitoreo de polvo de carbón",
+        "postura": "pregunta",
+        "tema": "Ambiente",
+        "dijo": "Consultó sobre la ubicación de estaciones de monitoreo en Trujillo.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Vallarta",
+        "cargo": "legislador",
+        "sobre": "Derrame de petróleo de Repsol",
+        "postura": "pregunta",
+        "tema": "Ambiente",
+        "dijo": "Preguntó sobre hidrocarburos en especies tras el derrame de Repsol.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Poma",
+        "cargo": "legislador",
+        "sobre": "Residuos en Sullana y Laguna de Paca",
+        "postura": "pregunta",
+        "tema": "Ambiente",
+        "dijo": "Preguntó sobre la gestión de residuos y la Laguna de Paca.",
+        "proyecto": "",
+        "id": "diputados:poma huamani"
+      },
+      {
+        "orador": "Silopu",
+        "cargo": "legislador",
+        "sobre": "Contaminación en Sullana",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Expresó preocupación por la contaminación en la provincia de Sullana.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Cabrera",
+        "cargo": "legislador",
+        "sobre": "Información sobre casos ambientales",
+        "postura": "propone",
+        "tema": "Ambiente",
+        "dijo": "Pidió información escrita sobre cuatro casos ambientales de la comisión.",
+        "proyecto": "",
+        "id": "diputados:cabrera nieto"
+      },
+      {
+        "orador": "Samanes",
+        "cargo": "legislador",
+        "sobre": "Contaminación sonora y visual",
+        "postura": "pregunta",
+        "tema": "Ambiente",
+        "dijo": "Consultó sobre la fiscalización de la contaminación sonora y visual.",
+        "proyecto": "",
+        "id": "diputados:samanez gonzales vigil"
+      },
+      {
+        "orador": "Vendaño",
+        "cargo": "legislador",
+        "sobre": "Protección de aves en Lucanas",
+        "postura": "pregunta",
+        "tema": "Ambiente",
+        "dijo": "Preguntó sobre la protección de aves en la provincia de Lucanas.",
+        "proyecto": "",
+        "id": "diputados:avendano vilca"
+      },
+      {
+        "orador": "Pérez",
+        "cargo": "legislador",
+        "sobre": "Gestión de residuos en Ayacucho",
+        "postura": "pregunta",
+        "tema": "Ambiente",
+        "dijo": "Consultó sobre la gestión de residuos en la región de Ayacucho.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ivana Fisher Bastini",
+        "cargo": "invitado",
+        "sobre": "Respuesta a consultas legislativas",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Respondió sobre la fiscalización de la empresa minera Paltarumi.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Johanna Fisher",
+        "cargo": "ministro o autoridad",
+        "sobre": "Situación minera de la empresa Paltarumi",
+        "postura": "comenta",
+        "tema": "Minería",
+        "dijo": "Explicó que la fiscalización de Paltarumi corresponde al gobierno regional.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Johanna Fisher",
+        "cargo": "ministro o autoridad",
+        "sobre": "Sanciones a la empresa Cerámica Tengda",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Informó que las actividades de la empresa se encuentran paralizadas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Johanna Fisher",
+        "cargo": "ministro o autoridad",
+        "sobre": "Proceso sancionador de Acero Lima Shanglon",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Detalló que se recomendó iniciar un proceso administrativo sancionador.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Johanna Fisher",
+        "cargo": "ministro o autoridad",
+        "sobre": "Monitoreo de partículas en Trujillo",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Describió el funcionamiento del sistema de monitoreo de 24 horas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Johanna Fisher",
+        "cargo": "ministro o autoridad",
+        "sobre": "Fiscalización del transporte de carbón",
+        "postura": "comenta",
+        "tema": "Transporte",
+        "dijo": "Precisó que la fiscalización del transporte recae en el MTC.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Johanna Fisher",
+        "cargo": "ministro o autoridad",
+        "sobre": "Tecnologías supervisadas por el OEFA",
+        "postura": "comenta",
+        "tema": "Tecnología",
+        "dijo": "Indicó que supervisan las tecnologías aprobadas en los instrumentos ambientales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Johanna Fisher",
+        "cargo": "ministro o autoridad",
+        "sobre": "Incidente de hidrocarburos en La Pampilla",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Informó que se realizó una supervisión in situ tras el incidente.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Johanna Fisher",
+        "cargo": "ministro o autoridad",
+        "sobre": "Vertimientos en el río Guaura",
+        "postura": "comenta",
+        "tema": "Saneamiento",
+        "dijo": "Confirmó que se constató la existencia de descargas clandestinas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Johanna Fisher",
+        "cargo": "ministro o autoridad",
+        "sobre": "Capacitación ambiental y gestión de riesgos",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Explicó los pilares de capacitación y acompañamiento de OEFA.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Johanna Fisher",
+        "cargo": "ministro o autoridad",
+        "sobre": "Acceso a la información pública ambiental",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Señaló que la información está disponible en su página web.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Johanna Fisher",
+        "cargo": "ministro o autoridad",
+        "sobre": "Supervisión de la quema de caña",
+        "postura": "comenta",
+        "tema": "Agricultura",
+        "dijo": "Afirmó que las empresas no realizan quema de caña.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Johanna Fisher",
+        "cargo": "ministro o autoridad",
+        "sobre": "Acumulación de residuos en Sullana",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Mencionó que realizará una verificación in situ próximamente.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Johanna Fisher",
+        "cargo": "ministro o autoridad",
+        "sobre": "Fiscalización de contaminación sonora municipal",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Aclaró que la fiscalización sonora no corresponde al OEFA.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Johanna Fisher",
+        "cargo": "ministro o autoridad",
+        "sobre": "Aprobación de planes de mitigación ambiental",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Indicó que OEFA supervisará los planes aprobados por el MINEM.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Johanna Fisher",
+        "cargo": "ministro o autoridad",
+        "sobre": "Situación ambiental de la Laguna de Paca",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Informó sobre las supervisiones realizadas en la Laguna de Paca.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=2T6CGbrg-Ec"
+  },
+  "D0RiZFWp9QY": {
+    "fecha": "2026-10-05",
+    "organo": "Comisión de Defensa del Consumidor",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Palomino",
+        "cargo": "legislador",
+        "sobre": "Proyecto de hidrógeno verde en Arequipa",
+        "postura": "propone",
+        "tema": "Energía",
+        "dijo": "Pidió la presencia del puerto de Matarani en la reunión descentralizada.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Orguujo",
+        "cargo": "legislador",
+        "sobre": "Coordinación con la oficialía mayor",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Solicitó información a la oficialía mayor sobre acuerdos de la mesa.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "María Gabriela Carrasco",
+        "cargo": "ministro o autoridad",
+        "sobre": "Autorización de ruta Lima-Trujillo",
+        "postura": "comenta",
+        "tema": "Transporte",
+        "dijo": "Explicó el proceso de autorización para la empresa Polominería.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Milero Esposo",
+        "cargo": "ministro o autoridad",
+        "sobre": "Fiscalización de plataformas de transporte",
+        "postura": "comenta",
+        "tema": "Consumo masivo",
+        "dijo": "Detalló las obligaciones de información e idoneidad de los proveedores.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Albañil",
+        "cargo": "legislador",
+        "sobre": "Investigación de la plataforma FlixBus",
+        "postura": "pregunta",
+        "tema": "Consumo masivo",
+        "dijo": "Consultó sobre el seguimiento del procedimiento de investigación a FlixBus.",
+        "proyecto": "",
+        "id": "diputados:albanil carmona"
+      },
+      {
+        "orador": "Judith",
+        "cargo": "legislador",
+        "sobre": "Uso de marca FlixBus en buses",
+        "postura": "pregunta",
+        "tema": "Transporte",
+        "dijo": "Preguntó por la seguridad y el uso de la marca FlixBus.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Gladys",
+        "cargo": "legislador",
+        "sobre": "Responsabilidades de plataformas y transportistas",
+        "postura": "pregunta",
+        "tema": "Transporte",
+        "dijo": "Cuestionó la división de obligaciones entre plataformas y transportistas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Crisólogo Cáceres",
+        "cargo": "invitado",
+        "sobre": "Desafíos en protección al consumidor",
+        "postura": "comenta",
+        "tema": "Consumo masivo",
+        "dijo": "Compartió reflexiones sobre los desafíos de la defensa del consumidor.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Crisólogo Cáceres",
+        "cargo": "invitado",
+        "sobre": "Enfoque de la defensa del consumidor",
+        "postura": "comenta",
+        "tema": "Consumo masivo",
+        "dijo": "Explicó que el INDECOPI requiere un enfoque preventivo y educativo.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Crisólogo Cáceres",
+        "cargo": "invitado",
+        "sobre": "Falta de reglamentación de leyes",
+        "postura": "en contra",
+        "tema": "Consumo masivo",
+        "dijo": "Denunció que muchas leyes carecen de sus reglamentos correspondientes.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Crisólogo Cáceres",
+        "cargo": "invitado",
+        "sobre": "Reforma del sistema financiero",
+        "postura": "en contra",
+        "tema": "Banca",
+        "dijo": "Cuestionó que Asbank lidere la reforma del sistema financiero.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Crisólogo Cáceres",
+        "cargo": "invitado",
+        "sobre": "Cláusulas abusivas bancarias",
+        "postura": "en contra",
+        "tema": "Banca",
+        "dijo": "Criticó la falta de fiscalización de las cláusulas abusivas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Crisólogo Cáceres",
+        "cargo": "invitado",
+        "sobre": "Seguridad de productos eléctricos",
+        "postura": "propone",
+        "tema": "Consumo masivo",
+        "dijo": "Pidió impulsar reglamentos técnicos sobre la seguridad de productos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Crisólogo Cáceres",
+        "cargo": "invitado",
+        "sobre": "Municipalización de la defensa del consumidor",
+        "postura": "propone",
+        "tema": "Consumo masivo",
+        "dijo": "Propuso aprobar la ley de municipalización de la defensa.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Crisólogo Cáceres",
+        "cargo": "invitado",
+        "sobre": "Financiamiento de asociaciones de consumidores",
+        "postura": "propone",
+        "tema": "Consumo masivo",
+        "dijo": "Planteó crear un fondo para financiar asociaciones de consumidores.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Crisólogo Cáceres",
+        "cargo": "invitado",
+        "sobre": "Educación del consumidor en escuelas",
+        "postura": "propone",
+        "tema": "Educación",
+        "dijo": "Exigió implementar la educación del consumidor en las escuelas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Barbarán",
+        "cargo": "legislador",
+        "sobre": "Abusos de las empresas",
+        "postura": "en contra",
+        "tema": "Consumo masivo",
+        "dijo": "Condenó los abusos de las empresas en el mercado.",
+        "proyecto": "",
+        "id": "diputados:barbaran reyes"
+      },
+      {
+        "orador": "Barbarán",
+        "cargo": "legislador",
+        "sobre": "Rol de la SBS",
+        "postura": "propone",
+        "tema": "Banca",
+        "dijo": "Pidió que la SBS proteja más a los clientes.",
+        "proyecto": "",
+        "id": "diputados:barbaran reyes"
+      },
+      {
+        "orador": "Barbarán",
+        "cargo": "legislador",
+        "sobre": "Competencia bancaria",
+        "postura": "propone",
+        "tema": "Banca",
+        "dijo": "Sugerió atraer más bancos para mejorar la competencia.",
+        "proyecto": "",
+        "id": "diputados:barbaran reyes"
+      },
+      {
+        "orador": "Barbarán",
+        "cargo": "legislador",
+        "sobre": "Reforma del sistema previsional",
+        "postura": "comenta",
+        "tema": "Pensiones",
+        "dijo": "Mencionó la corrección de errores en la reforma previsional.",
+        "proyecto": "",
+        "id": "diputados:barbaran reyes"
+      },
+      {
+        "orador": "Kispe",
+        "cargo": "legislador",
+        "sobre": "Derechos del consumidor",
+        "postura": "comenta",
+        "tema": "Consumo masivo",
+        "dijo": "Señaló la ignorancia de los ciudadanos sobre sus derechos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Kispe",
+        "cargo": "legislador",
+        "sobre": "Cumplimiento del medio pasaje",
+        "postura": "en contra",
+        "tema": "Transporte",
+        "dijo": "Denunció que no se cumple la ley del medio pasaje.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Kispe",
+        "cargo": "legislador",
+        "sobre": "Oficinas de defensa municipal",
+        "postura": "propone",
+        "tema": "Consumo masivo",
+        "dijo": "Propuso implementar oficinas de defensa en las municipalidades.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Kispe",
+        "cargo": "legislador",
+        "sobre": "Control de infracciones de transporte",
+        "postura": "propone",
+        "tema": "Transporte",
+        "dijo": "Planteó que jueces supervisen los procesos de infracción.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Palomino",
+        "cargo": "legislador",
+        "sobre": "Financiamiento de asociaciones",
+        "postura": "pregunta",
+        "tema": "Consumo masivo",
+        "dijo": "Preguntó cómo el Estado financiaría las asociaciones de consumidores.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Palomino",
+        "cargo": "legislador",
+        "sobre": "Efectividad de órganos de control",
+        "postura": "pregunta",
+        "tema": "Consumo masivo",
+        "dijo": "Consultó sobre la efectividad de los órganos de control.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Nora",
+        "cargo": "legislador",
+        "sobre": "Reglamentación de leyes bancarias",
+        "postura": "propone",
+        "tema": "Banca",
+        "dijo": "Exhortó a reglamentar leyes contra los abusos bancarios.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Crisólogo Cáceres",
+        "cargo": "invitado",
+        "sobre": "Competencias de la SBS e Indecopi",
+        "postura": "comenta",
+        "tema": "Banca",
+        "dijo": "Aclaró las competencias de la SBS e Indecopi.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Crisólogo Cáceres",
+        "cargo": "invitado",
+        "sobre": "Modelo de financiamiento por multas",
+        "postura": "propone",
+        "tema": "Consumo masivo",
+        "dijo": "Explicó un modelo de financiamiento mediante fondos concursables.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Crisólogo Cáceres",
+        "cargo": "invitado",
+        "sobre": "Porcentaje de multas para ciudadanos",
+        "postura": "propone",
+        "tema": "Consumo masivo",
+        "dijo": "Planteó que consumidores reciban parte de las multas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Crisólogo Cáceres",
+        "cargo": "invitado",
+        "sobre": "Educación del consumidor escolar",
+        "postura": "propone",
+        "tema": "Educación",
+        "dijo": "Reclamó la implementación de la educación del consumidor escolar.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Crisólogo Cáceres",
+        "cargo": "invitado",
+        "sobre": "Reparto de multas a consumidores",
+        "postura": "en contra",
+        "tema": "Consumo masivo",
+        "dijo": "Cuestionó la falta de reparto de multas a consumidores individuales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Crisólogo Cáceres",
+        "cargo": "invitado",
+        "sobre": "Educación al consumidor en escuelas",
+        "postura": "propone",
+        "tema": "Educación",
+        "dijo": "Pidió coordinar con el Ministerio de Educación la educación al consumidor.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Crisólogo Cáceres",
+        "cargo": "invitado",
+        "sobre": "Financiamiento de asociaciones de consumidores",
+        "postura": "propone",
+        "tema": "Consumo masivo",
+        "dijo": "Propuso establecer una mesa de trabajo para el financiamiento asociativo.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=D0RiZFWp9QY"
+  },
+  "38iTKgwON5A": {
+    "fecha": "2026-10-05",
+    "organo": "Comisión de Educación",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Delgado",
+        "cargo": "legislador",
+        "sobre": "Riesgo de cáncer por agroquímicos",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Advirtió sobre el riesgo de cáncer por el uso de agroquímicos en la hoja de coca.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Mancha Pineda",
+        "cargo": "legislador",
+        "sobre": "Presencia de arsénico en el agua",
+        "postura": "propone",
+        "tema": "Saneamiento",
+        "dijo": "Propuso la creación de laboratorios para analizar la presencia de arsénico en el agua.",
+        "proyecto": "",
+        "id": "senado:mancha pineda"
+      },
+      {
+        "orador": "Mancha",
+        "cargo": "legislador",
+        "sobre": "Gestión de la salud en Puno",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Cuestionó la falta de continuidad en la gestión de la salud en Puno.",
+        "proyecto": "",
+        "id": "senado:mancha pineda"
+      },
+      {
+        "orador": "Jauregui",
+        "cargo": "legislador",
+        "sobre": "Violencia en Condorcanqui",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Denunció el abandono del Estado en la atención de víctimas en Condorcanqui.",
+        "proyecto": "",
+        "id": "senado:jauregui martinez de aguayo"
+      },
+      {
+        "orador": "Mancha",
+        "cargo": "legislador",
+        "sobre": "Conformación del grupo de trabajo",
+        "postura": "pregunta",
+        "tema": "Política y control político",
+        "dijo": "Preguntó sobre la composición y los alcances del nuevo grupo de trabajo.",
+        "proyecto": "",
+        "id": "senado:mancha pineda"
+      },
+      {
+        "orador": "Jaime Delgado",
+        "cargo": "legislador",
+        "sobre": "Importancia del árbol de la quina",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Resaltó el valor medicinal e histórico de la quina.",
+        "proyecto": "",
+        "id": "senado:delgado zegarra"
+      },
+      {
+        "orador": "Alejandro Bómez",
+        "cargo": "invitado",
+        "sobre": "Deforestación y especies exóticas",
+        "postura": "en contra",
+        "tema": "Ambiente",
+        "dijo": "Denunció la deforestación y el uso de especies exóticas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Mancha Pineda",
+        "cargo": "legislador",
+        "sobre": "Siembra de quina en áreas estatales",
+        "postura": "propone",
+        "tema": "Ambiente",
+        "dijo": "Propuso sembrar árboles de la quina en el Estado.",
+        "proyecto": "",
+        "id": "senado:mancha pineda"
+      },
+      {
+        "orador": "Noriega",
+        "cargo": "legislador",
+        "sobre": "Iniciativas para proteger la quina",
+        "postura": "a favor",
+        "tema": "Ambiente",
+        "dijo": "Resaltó el esfuerzo de quienes conservan la quina.",
+        "proyecto": "",
+        "id": "senado:noriega reategui"
+      },
+      {
+        "orador": "Verano",
+        "cargo": "legislador",
+        "sobre": "Patentes de plantas medicinales",
+        "postura": "en contra",
+        "tema": "Farma",
+        "dijo": "Denunció el riesgo de patentes farmacéuticas.",
+        "proyecto": "",
+        "id": "senado:verano saravia"
+      },
+      {
+        "orador": "Doctora",
+        "cargo": "legislador",
+        "sobre": "Educación para la conservación",
+        "postura": "propone",
+        "tema": "Educación",
+        "dijo": "Propuso sensibilizar a los alumnos sobre la conservación.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=38iTKgwON5A"
   }
 }
