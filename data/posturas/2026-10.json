@@ -29640,5 +29640,512 @@
       }
     ],
     "url": "https://www.youtube.com/watch?v=_g8iB60yKC8"
+  },
+  "EBD0GhqBXhg": {
+    "fecha": "2026-10-20",
+    "organo": "Pleno de la Asamblea",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Lucía Jaramillo",
+        "cargo": "legislador",
+        "sobre": "reformas a la ley de trata de personas",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Defendió el aumento de penas contra la trata de personas.",
+        "proyecto": "Ley de trata y tráfico",
+        "id": "EC:jaramillo zurita lucia"
+      },
+      {
+        "orador": "Edwin Jarrín",
+        "cargo": "legislador",
+        "sobre": "proyecto de ley reformatorio de trata",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Respaldó la aprobación unánime del proyecto de ley reformatorio.",
+        "proyecto": "Ley de trata y tráfico",
+        "id": "EC:jarrin rivadeneira"
+      },
+      {
+        "orador": "Adrián Castro",
+        "cargo": "legislador",
+        "sobre": "contratación de conciertos en Azuay",
+        "postura": "propone",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Propuso investigar irregularidades en contratos de conciertos en Cuenca.",
+        "proyecto": "",
+        "id": "EC:castro piedra"
+      },
+      {
+        "orador": "Valentina Centeno",
+        "cargo": "legislador",
+        "sobre": "gestión de agua en Manabí",
+        "postura": "propone",
+        "tema": "Saneamiento",
+        "dijo": "Solicitó auditorías a la planta de agua La Estancilla.",
+        "proyecto": "",
+        "id": "EC:centeno arteaga"
+      },
+      {
+        "orador": "Fernando Jaramillo",
+        "cargo": "legislador",
+        "sobre": "adquisición de camiones recolectores en Quito",
+        "postura": "propone",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Pidió investigar la compra de camiones de basura en EMACEO.",
+        "proyecto": "",
+        "id": "EC:jaramillo martinez"
+      },
+      {
+        "orador": "Fernando Jaramillo",
+        "cargo": "legislador",
+        "sobre": "adquisición de camiones de basura",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Propuso conocer la adquisición de seis camiones de basura de Ecopo EP.",
+        "proyecto": "",
+        "id": "EC:jaramillo martinez"
+      },
+      {
+        "orador": "Marco Tapia",
+        "cargo": "invitado",
+        "sobre": "promoción de artesanías de La Suay",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Pidió apoyo para la difusión de las artesanías de su cantón.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Lucía Jaramillo",
+        "cargo": "legislador",
+        "sobre": "reforma contra la trata de personas",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Defendió la reforma para aumentar penas y proteger a las víctimas.",
+        "proyecto": "Ley contra la trata de personas",
+        "id": "EC:jaramillo zurita lucia"
+      },
+      {
+        "orador": "Gustavo Mateus",
+        "cargo": "legislador",
+        "sobre": "reforma contra la trata de personas",
+        "postura": "con observaciones",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Cuestionó si el gobierno cuenta con recursos suficientes para proteger a las víctimas.",
+        "proyecto": "Ley contra la trata de personas",
+        "id": "EC:mateus acosta"
+      },
+      {
+        "orador": "Graciela Ramírez",
+        "cargo": "legislador",
+        "sobre": "reforma contra la trata de personas",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso investigar el patrimonio de mafias y fortalecer la prevención digital.",
+        "proyecto": "Ley contra la trata de personas",
+        "id": "EC:ramirez chalen"
+      },
+      {
+        "orador": "Paola Cabezas",
+        "cargo": "legislador",
+        "sobre": "justicia para víctimas de esclavitud",
+        "postura": "a favor",
+        "tema": "Justicia",
+        "dijo": "Exigió reparaciones para las víctimas de servidumbre en el sector de Furucagua.",
+        "proyecto": "Ley contra la trata de personas",
+        "id": "EC:cabezas castillo"
+      },
+      {
+        "orador": "Paola Cabezas",
+        "cargo": "legislador",
+        "sobre": "Reforma contra la trata de personas",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Pidió fortalecer el control laboral en el artículo 12 de la ley.",
+        "proyecto": "Ley contra la trata de personas",
+        "id": "EC:cabezas castillo"
+      },
+      {
+        "orador": "Edwin Jarrín",
+        "cargo": "legislador",
+        "sobre": "Aumento de penas por trata",
+        "postura": "a favor",
+        "tema": "Justicia",
+        "dijo": "Respaldó el aumento de las penas por trata de personas.",
+        "proyecto": "Ley contra la trata de personas",
+        "id": "EC:jarrin rivadeneira"
+      },
+      {
+        "orador": "Javier Ordóñez",
+        "cargo": "legislador",
+        "sobre": "Vigilancia de mercados laborales",
+        "postura": "a favor",
+        "tema": "Justicia",
+        "dijo": "Defendió la redacción del artículo 12 sobre vigilancia laboral.",
+        "proyecto": "Ley contra la trata de personas",
+        "id": "EC:ordonez fuentes"
+      },
+      {
+        "orador": "Lucía Jaramillo",
+        "cargo": "legislador",
+        "sobre": "Aprobación del proyecto de ley",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Propuso la aprobación del proyecto de ley unificado.",
+        "proyecto": "Ley contra la trata de personas",
+        "id": "EC:jaramillo zurita lucia"
+      },
+      {
+        "orador": "Adrián Castro",
+        "cargo": "legislador",
+        "sobre": "Contrataciones culturales en Azuay",
+        "postura": "propone",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Denunció irregularidades en la contratación de artistas en Azuay.",
+        "proyecto": "",
+        "id": "EC:castro piedra"
+      },
+      {
+        "orador": "Adrián Castro",
+        "cargo": "legislador",
+        "sobre": "Contratos de artistas en Cuenca",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Denunció irregularidades en contratos de artistas en Cuenca.",
+        "proyecto": "",
+        "id": "EC:castro piedra"
+      },
+      {
+        "orador": "Fernando Jaramillo",
+        "cargo": "legislador",
+        "sobre": "Compra de camiones de basura",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Cuestionó la compra de camiones para Emaeo EP.",
+        "proyecto": "",
+        "id": "EC:jaramillo martinez"
+      },
+      {
+        "orador": "Javier Lazo",
+        "cargo": "legislador",
+        "sobre": "Debate sobre fiscalización de camiones",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Criticó el comportamiento de los legisladores en el pleno.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Jorge Chamba",
+        "cargo": "legislador",
+        "sobre": "Insultos entre asambleístas",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Protestó por los epítetos recibidos de un colega.",
+        "proyecto": "",
+        "id": "EC:chamba cabanilla"
+      },
+      {
+        "orador": "Javier Ordóñez",
+        "cargo": "legislador",
+        "sobre": "Compra de camiones en Emaeo",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Denunció la compra de camiones defectuosos para Emaeo.",
+        "proyecto": "",
+        "id": "EC:ordonez fuentes"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=EBD0GhqBXhg"
+  },
+  "GTShjieQP9Q": {
+    "fecha": "2026-10-13",
+    "organo": "Pleno de la Asamblea",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Secretario",
+        "cargo": "ministro o autoridad",
+        "sobre": "Declaratoria de Loja como capital del café",
+        "postura": "comenta",
+        "tema": "Agricultura",
+        "dijo": "Informó que la moción de Yosefe Jaramillo fue aprobada por unanimidad.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Secretario",
+        "cargo": "ministro o autoridad",
+        "sobre": "Notificación de David Alejandro Rosero Minda",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Informó que el consejero fue notificado mediante el sistema DTS 2.0.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Secretaria Relatora",
+        "cargo": "ministro o autoridad",
+        "sobre": "Enjuiciamiento político contra David Alejandro Rosero Minda",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Detalló la solicitud de enjuiciamiento político contra el consejero David Rosero.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Denis Urita",
+        "cargo": "ministro o autoridad",
+        "sobre": "informe de enjuiciamiento a David Rosero",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Recomendó la continuación del juicio político contra Rosero.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Sergio Jesús Peñabelos",
+        "cargo": "legislador",
+        "sobre": "interpelación de David Rosero Minda",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Informó que realizará la interpelación de forma individual.",
+        "proyecto": "",
+        "id": "EC:pena veloz"
+      },
+      {
+        "orador": "Sergio Jesús Peñabelos",
+        "cargo": "legislador",
+        "sobre": "juicio político contra David Rosero Minda",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Defendió la validez de las pruebas y pericias presentadas.",
+        "proyecto": "",
+        "id": "EC:pena veloz"
+      },
+      {
+        "orador": "Sergio Peña",
+        "cargo": "legislador",
+        "sobre": "Juicio político contra David Rosero",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Sostuvo que las pericias demuestran la reunión ilegal.",
+        "proyecto": "",
+        "id": "EC:pena veloz"
+      },
+      {
+        "orador": "David Rosero",
+        "cargo": "ministro o autoridad",
+        "sobre": "Juicio político en su contra",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Rechazó el juicio político por falta de pruebas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Carlos Pobel",
+        "cargo": "invitado",
+        "sobre": "Validez de la metapericia",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó la falta de documentos originales en la pericia.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "David Rosero",
+        "cargo": "autoridad",
+        "sobre": "Supuesta reunión con la doctora Romero",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Rechazó la existencia de una reunión con la doctora Romero.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Edwin Guevara",
+        "cargo": "invitado",
+        "sobre": "Veracidad de metadatos en redes sociales",
+        "postura": "comenta",
+        "tema": "Tecnología",
+        "dijo": "Informó sobre la dificultad de verificar metadatos en redes sociales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Edwin Guevara",
+        "cargo": "invitado",
+        "sobre": "Identificación morfológica en imágenes",
+        "postura": "comenta",
+        "tema": "Tecnología",
+        "dijo": "Informó sobre la compatibilidad morfológica en las imágenes periciadas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "David Rosero",
+        "cargo": "autoridad",
+        "sobre": "Validez de la prueba pericial",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó la falta de nexo causal en la acusación.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Edwin Guevara",
+        "cargo": "invitado",
+        "sobre": "Pérdida de detalles anatómicos",
+        "postura": "comenta",
+        "tema": "Tecnología",
+        "dijo": "Confirmó la pérdida de detalles anatómicos en el video.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "David Rosero",
+        "cargo": "autoridad",
+        "sobre": "Defensa del debido proceso",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Defendió su itinerario y el debido proceso constitucional.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "David Rosero",
+        "cargo": "ministro o autoridad",
+        "sobre": "juicio político en su contra",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Defendió su inocencia y la validez de sus pruebas",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Sergio Peña",
+        "cargo": "legislador",
+        "sobre": "juicio político contra Rosero",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció un presunto conflicto de interés y nepotismo",
+        "proyecto": "",
+        "id": "EC:pena veloz"
+      },
+      {
+        "orador": "David Rosero",
+        "cargo": "ministro o autoridad",
+        "sobre": "derecho a la réplica",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Rechazó los argumentos de la asambleísta por falta de sustento",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Luigi García",
+        "cargo": "legislador",
+        "sobre": "informe de fiscalización",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Respaldó el informe de fiscalización y la censura del funcionario",
+        "proyecto": "",
+        "id": "EC:garcia velasquez"
+      },
+      {
+        "orador": "María Paula Villacresa",
+        "cargo": "legislador",
+        "sobre": "transparencia en el concurso",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó la transparencia en el proceso de selección",
+        "proyecto": "",
+        "id": "EC:villacreses herrera"
+      },
+      {
+        "orador": "Amable Chica",
+        "cargo": "legislador",
+        "sobre": "juicio político contra Rosero",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció la falta de pruebas en el informe de fiscalización",
+        "proyecto": "",
+        "id": "EC:chica valencia"
+      },
+      {
+        "orador": "Victoria Desintonio",
+        "cargo": "legislador",
+        "sobre": "Juicio político a David Rosero",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció la ineficiencia del gobierno nacional.",
+        "proyecto": "",
+        "id": "EC:desintonio malave"
+      },
+      {
+        "orador": "Andrés Castillo",
+        "cargo": "legislador",
+        "sobre": "Juicio político a David Rosero",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó la moralidad de la Revolución Ciudadana.",
+        "proyecto": "",
+        "id": "EC:castillo maldonado"
+      },
+      {
+        "orador": "Victoria Desintonio",
+        "cargo": "legislador",
+        "sobre": "Juicio político a David Rosero",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Defendió su trayectoria en el Consejo de Participación.",
+        "proyecto": "",
+        "id": "EC:desintonio malave"
+      },
+      {
+        "orador": "Andrés Castillo",
+        "cargo": "legislador",
+        "sobre": "Juicio político a David Rosero",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Criticó la falta de preparación de la asambleísta Herrera.",
+        "proyecto": "",
+        "id": "EC:castillo maldonado"
+      },
+      {
+        "orador": "Sergio Peña",
+        "cargo": "legislador",
+        "sobre": "Juicio político a David Rosero",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Propuso la destitución de David Rosero.",
+        "proyecto": "",
+        "id": "EC:pena veloz"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=GTShjieQP9Q"
+  },
+  "fb_1421392376025337": {
+    "fecha": "2026-10-08",
+    "organo": "Comisión de Seguridad Integral",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Andrés Castillo",
+        "cargo": "legislador",
+        "sobre": "Ley de disciplina de las fuerzas armadas",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Respaldó el proyecto de ley de personal y disciplina de las fuerzas armadas.",
+        "proyecto": "Ley de personal y disciplina de las fuerzas armadas",
+        "id": "EC:castillo maldonado"
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1421392376025337"
   }
 }
