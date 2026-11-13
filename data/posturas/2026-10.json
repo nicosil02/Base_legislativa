@@ -28940,5 +28940,512 @@
       }
     ],
     "url": "https://www.facebook.com/watch/?v=1423770282549207"
+  },
+  "pv-mz5znyFY": {
+    "fecha": "2026-10-07",
+    "organo": "Pleno de Diputados",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Ernesto Sunini",
+        "cargo": "legislador",
+        "sobre": "requisitos del nuevo texto",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Informó sobre la obligatoriedad de firmas para la propuesta.",
+        "proyecto": "",
+        "id": "diputados:zunini yerren"
+      },
+      {
+        "orador": "Jaime Abenzur",
+        "cargo": "legislador",
+        "sobre": "dictamen en minoría",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Explicó la naturaleza singular del dictamen en minoría.",
+        "proyecto": "",
+        "id": "diputados:abensur pinasco"
+      },
+      {
+        "orador": "Neri Fernández Nina",
+        "cargo": "legislador",
+        "sobre": "dictamen sobre seguridad y fenómeno del niño",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Defendió el dictamen de consenso en seguridad ciudadana.",
+        "proyecto": "PL 98",
+        "id": "diputados:fernandez nina"
+      },
+      {
+        "orador": "José Marcelo",
+        "cargo": "legislador",
+        "sobre": "pérdida de moción de consenso",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Informó que la propuesta de consenso fue rechazada.",
+        "proyecto": "",
+        "id": "diputados:marcelo salazar"
+      },
+      {
+        "orador": "Ángel Meneses",
+        "cargo": "legislador",
+        "sobre": "búsqueda de consensos parlamentarios",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Instó al oficialismo a modificar su propuesta legislativa.",
+        "proyecto": "",
+        "id": "diputados:meneses crispin"
+      },
+      {
+        "orador": "Eber López",
+        "cargo": "legislador",
+        "sobre": "tiempo para el debate legislativo",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Cuestionó la falta de tiempo para el debate técnico.",
+        "proyecto": "",
+        "id": "diputados:lopez letona"
+      },
+      {
+        "orador": "Cabrera Nieto",
+        "cargo": "legislador",
+        "sobre": "boicot a necesidades urgentes",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Denunció el boicot a las necesidades de seguridad ciudadana.",
+        "proyecto": "",
+        "id": "diputados:cabrera nieto"
+      },
+      {
+        "orador": "Don Lutos",
+        "cargo": "legislador",
+        "sobre": "dictamen de mayoría",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Respaldó el dictamen de mayoría solicitado por la gente.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ernesto Sunini",
+        "cargo": "legislador",
+        "sobre": "interpretación del reglamento",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó la interpretación reglamentaria de la mesa directiva.",
+        "proyecto": "",
+        "id": "diputados:zunini yerren"
+      },
+      {
+        "orador": "Rosana Laisa",
+        "cargo": "legislador",
+        "sobre": "gestos políticos y consensos",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Criticó la falta de gestos políticos para lograr consensos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Cristian Arana",
+        "cargo": "legislador",
+        "sobre": "integración del dictamen de mayoría",
+        "postura": "con observaciones",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Solicitó integrar los puntos técnicos del dictamen mayoritario.",
+        "proyecto": "",
+        "id": "diputados:aranda vasquez"
+      },
+      {
+        "orador": "Arturo Alegría García",
+        "cargo": "legislador",
+        "sobre": "nuevo texto sustitutorio en minoría",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Presentó un nuevo texto con nueve materias adicionales.",
+        "proyecto": "",
+        "id": "diputados:alegria garcia"
+      },
+      {
+        "orador": "Neri Fernández",
+        "cargo": "legislador",
+        "sobre": "dictamen sobre seguridad y fenómeno del niño",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Informó sobre el trabajo para lograr consensos.",
+        "proyecto": "PL 98",
+        "id": "diputados:fernandez nina"
+      },
+      {
+        "orador": "Ángel Meneze",
+        "cargo": "legislador",
+        "sobre": "consenso en seguridad y fenómeno del niño",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Pidió replantear el dictamen en minoría.",
+        "proyecto": "",
+        "id": "diputados:meneses crispin"
+      },
+      {
+        "orador": "Ernesto Sunini",
+        "cargo": "legislador",
+        "sobre": "irregularidades en el procedimiento parlamentario",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó las prácticas parlamentarias en la Cámara.",
+        "proyecto": "",
+        "id": "diputados:zunini yerren"
+      },
+      {
+        "orador": "Indira Huilca",
+        "cargo": "legislador",
+        "sobre": "validez del dictamen en minoría",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Defendió la validez del dictamen en minoría.",
+        "proyecto": "",
+        "id": "diputados:huilca flores"
+      },
+      {
+        "orador": "Benzur",
+        "cargo": "legislador",
+        "sobre": "aceptación de la cuestión previa",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó la aceptación de la cuestión previa.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Arturo Alegría",
+        "cargo": "legislador",
+        "sobre": "existencia del dictamen de cincuenta puntos",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció la inexistencia del dictamen original.",
+        "proyecto": "PL 98",
+        "id": "diputados:alegria garcia"
+      },
+      {
+        "orador": "Rocha",
+        "cargo": "legislador",
+        "sobre": "reconsideración de la votación del dictamen",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Pidió la reconsideración de la votación del dictamen.",
+        "proyecto": "PL 98",
+        "id": "diputados:rocha gallegos"
+      },
+      {
+        "orador": "Víctor Piña",
+        "cargo": "legislador",
+        "sobre": "retiro de firma del texto sustitutorio",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Informó sobre el retiro de su firma.",
+        "proyecto": "PL 98",
+        "id": "diputados:pinan mamani"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=pv-mz5znyFY"
+  },
+  "cFp-ypDtJAA": {
+    "fecha": "2026-10-07",
+    "organo": "Comisión de Constitución",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Aldo Bravo-Kispé",
+        "cargo": "legislador",
+        "sobre": "rectificación de la senadora Ruth Luque",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Saludó la rectificación de la senadora Luque sobre las denuncias contra Dina Boluarte.",
+        "proyecto": "",
+        "id": "diputados:bravo quispe"
+      },
+      {
+        "orador": "Columbus Murata",
+        "cargo": "legislador",
+        "sobre": "rectificación de la senadora Ruth Luque",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Coincidió con la importancia de la rectificación para evitar la nulidad de los pedidos.",
+        "proyecto": "",
+        "id": "diputados:columbus murata"
+      },
+      {
+        "orador": "Iván Rojas",
+        "cargo": "invitado",
+        "sobre": "caducidad de denuncia contra Mirta Vásquez",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso declarar la caducidad de la prerrogativa de Mirta Vásquez.",
+        "proyecto": "0010X114",
+        "id": null
+      },
+      {
+        "orador": "Aldo Bravo-Kispé",
+        "cargo": "legislador",
+        "sobre": "deslinde de responsabilidades por caducidad",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Pidió deslindar responsabilidades por la demora en el trámite de las denuncias.",
+        "proyecto": "0010X114",
+        "id": "diputados:bravo quispe"
+      },
+      {
+        "orador": "Bahía Malca",
+        "cargo": "legislador",
+        "sobre": "retiro de generales de la Policía Nacional",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Cuestionó el retiro de diecisiete generales de la Policía Nacional.",
+        "proyecto": "00036",
+        "id": "diputados:baella malca"
+      },
+      {
+        "orador": "Aldo Bravo-Kispé",
+        "cargo": "legislador",
+        "sobre": "demora en trámite de denuncias",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Denunció la falta de celeridad en el trámite de las denuncias constitucionales.",
+        "proyecto": "00036",
+        "id": "diputados:bravo quispe"
+      },
+      {
+        "orador": "Duarte Georgina",
+        "cargo": "legislador",
+        "sobre": "investigación de miembros de comisión anterior",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso investigar y amonestar a los miembros de la comisión anterior.",
+        "proyecto": "",
+        "id": "diputados:duarte"
+      },
+      {
+        "orador": "Jever López",
+        "cargo": "legislador",
+        "sobre": "objetividad en las denuncias",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Pidió mantener la objetividad para generar confianza en la población.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Catherine Palomino",
+        "cargo": "legislador",
+        "sobre": "persecución política en denuncias",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Advirtió sobre el riesgo de usar la política como herramienta de persecución.",
+        "proyecto": "",
+        "id": "diputados:palomino casavilca"
+      },
+      {
+        "orador": "Iván Rojas",
+        "cargo": "invitado",
+        "sobre": "improcedencia de denuncia contra ONP",
+        "postura": "propone",
+        "tema": "Pensiones",
+        "dijo": "Propuso declarar improcedente la denuncia contra funcionarios de la ONP.",
+        "proyecto": "00072X723",
+        "id": null
+      },
+      {
+        "orador": "Fernando García Ubi",
+        "cargo": "legislador",
+        "sobre": "improcedencia de denuncia contra ONP",
+        "postura": "a favor",
+        "tema": "Pensiones",
+        "dijo": "Respaldó la improcedencia de la denuncia por falta de fuero constitucional.",
+        "proyecto": "00072X723",
+        "id": null
+      },
+      {
+        "orador": "Duarte Georgina",
+        "cargo": "legislador",
+        "sobre": "agilización de votaciones",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso votar varios informes de calificación de manera conjunta.",
+        "proyecto": "",
+        "id": "diputados:duarte"
+      },
+      {
+        "orador": "Columbus Murata",
+        "cargo": "legislador",
+        "sobre": "diligenciamiento de expedientes próximos a caducar",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Pidió diligenciar los expedientes para evitar que caduquen.",
+        "proyecto": "",
+        "id": "diputados:columbus murata"
+      },
+      {
+        "orador": "Iván Rojas",
+        "cargo": "invitado",
+        "sobre": "improcedencia de denuncia contra ONP",
+        "postura": "propone",
+        "tema": "Pensiones",
+        "dijo": "Propuso la improcedencia de la denuncia contra el jefe de la ONP.",
+        "proyecto": "00075",
+        "id": null
+      },
+      {
+        "orador": "Fernando García Ubi",
+        "cargo": "legislador",
+        "sobre": "notificación sobre improcedencia de denuncias",
+        "postura": "propone",
+        "tema": "Pensiones",
+        "dijo": "Sugirió notificar a los ciudadanos que sus denuncias no tienen sustento.",
+        "proyecto": "00075",
+        "id": null
+      },
+      {
+        "orador": "Iván Rojas",
+        "cargo": "invitado",
+        "sobre": "Informe de calificación denuncia 0075",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Informó la propuesta de improcedencia de la denuncia 0075.",
+        "proyecto": "0075-2026-2031",
+        "id": null
+      },
+      {
+        "orador": "Fernando Garciubi",
+        "cargo": "legislador",
+        "sobre": "Denuncia contra Gastón Rojas",
+        "postura": "con observaciones",
+        "tema": "Política y control político",
+        "dijo": "Propuso precisar la vía legal de la denuncia 0075.",
+        "proyecto": "0075-2026-2031",
+        "id": "diputados:garcia huby"
+      },
+      {
+        "orador": "Richard Santillán",
+        "cargo": "invitado",
+        "sobre": "Informe de calificación denuncia 0077",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Informó los hechos de la denuncia constitucional 0077.",
+        "proyecto": "0077-2026-2031",
+        "id": null
+      },
+      {
+        "orador": "Georgina Duarte",
+        "cargo": "legislador",
+        "sobre": "Denuncia constitucional 0012X403",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Pidió celeridad para evitar la caducidad de la denuncia 0012X403.",
+        "proyecto": "0012X403",
+        "id": "diputados:duarte"
+      },
+      {
+        "orador": "Fernando García-Uvín",
+        "cargo": "legislador",
+        "sobre": "Denuncia constitucional 0012X403",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso elevar el informe de la denuncia 0012X403 al pleno.",
+        "proyecto": "0012X403",
+        "id": null
+      },
+      {
+        "orador": "Cecilia Chacón de Vettori",
+        "cargo": "legislador",
+        "sobre": "Denuncia constitucional 0012X403",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Comentó que la denuncia 0012X403 es un trámite formal.",
+        "proyecto": "0012X403",
+        "id": "diputados:chacon de vettori"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=cFp-ypDtJAA"
+  },
+  "fb_1843406376647627": {
+    "fecha": "2026-10-07",
+    "organo": "Comisión de Desarrollo Económico",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Juan Sebastián Alviar",
+        "cargo": "invitado",
+        "sobre": "Incompatibilidad de la mediación en el proyecto",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Denunció la incompatibilidad de la mediación con la ley de arbitraje vigente.",
+        "proyecto": "Ley de concurso preventivo",
+        "id": null
+      },
+      {
+        "orador": "Juan Acurio López",
+        "cargo": "invitado",
+        "sobre": "Alivio financiero por desastres naturales",
+        "postura": "propone",
+        "tema": "Comercio",
+        "dijo": "Propuso un mecanismo de condonación para empresas afectadas por desastres.",
+        "proyecto": "Ley de concurso preventivo",
+        "id": null
+      },
+      {
+        "orador": "Fanía López",
+        "cargo": "legislador",
+        "sobre": "Problemas económicos en el cantón Chone",
+        "postura": "pregunta",
+        "tema": "Comercio",
+        "dijo": "Preguntó sobre los problemas económicos del sector comercial en Chone.",
+        "proyecto": "Ley de concurso preventivo",
+        "id": "EC:lopez pico"
+      },
+      {
+        "orador": "Fania López",
+        "cargo": "legislador",
+        "sobre": "Continuidad empresarial en Chone",
+        "postura": "pregunta",
+        "tema": "Comercio",
+        "dijo": "Preguntó sobre los rezagos económicos que afectan al sector productivo de Chone.",
+        "proyecto": "",
+        "id": "EC:lopez pico"
+      },
+      {
+        "orador": "Juan Vicente",
+        "cargo": "invitado",
+        "sobre": "Reactivación económica de Chone",
+        "postura": "propone",
+        "tema": "Comercio",
+        "dijo": "Propuso incentivos de capital y plazos largos para reactivar la economía.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Fania López",
+        "cargo": "legislador",
+        "sobre": "Seguridad jurídica del artículo 49",
+        "postura": "pregunta",
+        "tema": "Justicia",
+        "dijo": "Preguntó sobre los riesgos procesales de la redacción del artículo 49.",
+        "proyecto": "",
+        "id": "EC:lopez pico"
+      },
+      {
+        "orador": "Juan Sebastián Alvear",
+        "cargo": "invitado",
+        "sobre": "Ejecución de acuerdos de mediación",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Explicó la inejecutabilidad de los acuerdos de mediación frente a terceros.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1843406376647627"
   }
 }
