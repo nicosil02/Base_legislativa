@@ -25822,5 +25822,832 @@
       }
     ],
     "url": "https://www.youtube.com/watch?v=gq_zDWFiiaE"
+  },
+  "s3EGAcpYP4s": {
+    "fecha": "2026-10-13",
+    "organo": "Comisión de Presupuesto",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Ángel Meneses",
+        "cargo": "legislador",
+        "sobre": "la cuenta general de la República 2025",
+        "postura": "propone",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Propuso incorporar dos precisiones en la disposición complementaria.",
+        "proyecto": "001-2026-2031-CR",
+        "id": "diputados:meneses crispin"
+      },
+      {
+        "orador": "Gustavo Núñez del Arco Mendoza",
+        "cargo": "ministro o autoridad",
+        "sobre": "la cuenta general de la República 2025",
+        "postura": "a favor",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Respaldó el análisis técnico realizado por la comisión.",
+        "proyecto": "001-2026-2031-CR",
+        "id": null
+      },
+      {
+        "orador": "Juan Luis Chombo Heredia",
+        "cargo": "ministro o autoridad",
+        "sobre": "presupuesto institucional 2027 de Pasco",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Defendió la gestión de infraestructura en la región Pasco.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Juan Luis Chombo",
+        "cargo": "ministro o autoridad",
+        "sobre": "Gestión presupuestal de Pasco",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Detalló la evolución presupuestal de su región.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Equipo técnico",
+        "cargo": "invitado",
+        "sobre": "Evolución presupuestal de Pasco",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Expuso la distribución del presupuesto de Pasco.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Afsalón Vázquez Villanueva",
+        "cargo": "legislador",
+        "sobre": "Capacidad de gasto de Pasco",
+        "postura": "pregunta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Cuestionó la baja capacidad de gasto regional.",
+        "proyecto": "",
+        "id": "senado:vasquez villanueva"
+      },
+      {
+        "orador": "Juan Luis Chombo",
+        "cargo": "ministro o autoridad",
+        "sobre": "Respuesta sobre capacidad de gasto",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Explicó el impacto del crédito suplementario aprobado.",
+        "proyecto": "Ley 32732",
+        "id": null
+      },
+      {
+        "orador": "Sósimo Cárdenas Mujica",
+        "cargo": "ministro o autoridad",
+        "sobre": "Recorte presupuestal en Junín",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Denunció la reducción de fondos para proyectos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Héctor Guillén Valencia",
+        "cargo": "legislador",
+        "sobre": "Obra educativa Tupacamaro",
+        "postura": "pregunta",
+        "tema": "Educación",
+        "dijo": "Preguntó por retrasos en consultas técnicas.",
+        "proyecto": "",
+        "id": "diputados:guillen valencia"
+      },
+      {
+        "orador": "Sósimo Cárdenas Mujica",
+        "cargo": "ministro o autoridad",
+        "sobre": "Respuesta sobre obra Tupacamaro",
+        "postura": "comenta",
+        "tema": "Educación",
+        "dijo": "Aseguró la culminación de la obra pronto.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Pérsigo Doi Medina",
+        "cargo": "ministro o autoridad",
+        "sobre": "Presupuesto de Apurímac",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Presentó la planificación presupuestal de Apurímac.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Pérsigo Doi Medina",
+        "cargo": "ministro o autoridad",
+        "sobre": "Proyectos de desarrollo en Apurímac",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Mencionó proyectos de riego y conectividad vial.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Pérsigo Doi Medina",
+        "cargo": "ministro o autoridad",
+        "sobre": "Implementación del turismo",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Informó sobre los proyectos de miradores turísticos.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=s3EGAcpYP4s"
+  },
+  "pqwft33Sgok": {
+    "fecha": "2026-10-13",
+    "organo": "Comisión de Constitución",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Luque",
+        "cargo": "legislador",
+        "sobre": "Presencia de invitados y agenda",
+        "postura": "pregunta",
+        "tema": "Política y control político",
+        "dijo": "Preguntó sobre la presencia de los invitados del consejo consultivo.",
+        "proyecto": "PL 0013-2026-2031-S",
+        "id": "senado:luque ibarra"
+      },
+      {
+        "orador": "Fígado",
+        "cargo": "legislador",
+        "sobre": "Límites de la propuesta legislativa",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso consultar a expertos en derecho penal sobre seguridad.",
+        "proyecto": "PL 0013-2026-2031-S",
+        "id": null
+      },
+      {
+        "orador": "Javier Vargas-Rimaray",
+        "cargo": "invitado",
+        "sobre": "Delegación de facultades para gastronomía",
+        "postura": "a favor",
+        "tema": "Horeca",
+        "dijo": "Pidió la delegación de facultades con beneficios para gastronomía.",
+        "proyecto": "PL 0013-2026-2031-S",
+        "id": null
+      },
+      {
+        "orador": "Rebeca Antesana Adías",
+        "cargo": "invitado",
+        "sobre": "Reforma tributaria para mype",
+        "postura": "a favor",
+        "tema": "Mype",
+        "dijo": "Pidió considerar a las mype en la reforma tributaria.",
+        "proyecto": "PL 0013-2026-2031-S",
+        "id": null
+      },
+      {
+        "orador": "Andrés Choyli",
+        "cargo": "invitado",
+        "sobre": "Inseguridad y leyes para bodegueros",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Pidió leyes contra la delincuencia para proteger bodegas.",
+        "proyecto": "PL 0013-2026-2031-S",
+        "id": null
+      },
+      {
+        "orador": "Julio Surco Achiri",
+        "cargo": "invitado",
+        "sobre": "Fortalecimiento de la manufactura",
+        "postura": "a favor",
+        "tema": "Mype",
+        "dijo": "Pidió facultades para fortalecer la industria manufacturera nacional.",
+        "proyecto": "PL 0013-2026-2031-S",
+        "id": null
+      },
+      {
+        "orador": "Marisol Guillén Quintanilla",
+        "cargo": "invitado",
+        "sobre": "Delegación de facultades para mype",
+        "postura": "a favor",
+        "tema": "Mype",
+        "dijo": "Respaldó la delegación de facultades para apoyar a mype.",
+        "proyecto": "PL 0013-2026-2031-S",
+        "id": null
+      },
+      {
+        "orador": "Luque",
+        "cargo": "legislador",
+        "sobre": "Alcance de la delegación legislativa",
+        "postura": "con observaciones",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó el alcance de la delegación de facultades.",
+        "proyecto": "PL 0013-2026-2031-S",
+        "id": "senado:luque ibarra"
+      },
+      {
+        "orador": "Rebeca Antesana Adías",
+        "cargo": "invitado",
+        "sobre": "Apoyo ante la inseguridad ciudadana",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Pidió atención urgente ante la inseguridad ciudadana.",
+        "proyecto": "PL 0013-2026-2031-S",
+        "id": null
+      },
+      {
+        "orador": "López Chau",
+        "cargo": "legislador",
+        "sobre": "Proceso de delegación de facultades",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Defendió el proceso legislativo entre las dos cámaras.",
+        "proyecto": "PL 0013-2026-2031-S",
+        "id": "senado:lopez chau nava"
+      },
+      {
+        "orador": "Heredia",
+        "cargo": "invitado",
+        "sobre": "Facultades para el sector panadero",
+        "postura": "a favor",
+        "tema": "Mype",
+        "dijo": "Respaldó las facultades para enfrentar el fenómeno del niño.",
+        "proyecto": "PL 0013-2026-2031-S",
+        "id": null
+      },
+      {
+        "orador": "Edgar Sainz",
+        "cargo": "invitado",
+        "sobre": "Aprobación de facultades legislativas",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Pidió la aprobación de facultades para los trabajadores.",
+        "proyecto": "PL 0013-2026-2031-S",
+        "id": null
+      },
+      {
+        "orador": "Víctor García Toma",
+        "cargo": "invitado",
+        "sobre": "Supremacía de la Constitución",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Defendió la supremacía de la Constitución sobre el reglamento.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Víctor García Toma",
+        "cargo": "invitado",
+        "sobre": "Atribuciones revisoras del Senado",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Explicó la supremacía constitucional y la naturaleza revisora del Senado frente a los diputados.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ventura",
+        "cargo": "legislador",
+        "sobre": "Inseguridad y economía en Tumbes",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Pidió medidas urgentes para combatir la criminalidad y reactivar la economía en el norte.",
+        "proyecto": "",
+        "id": "senado:ventura angel"
+      },
+      {
+        "orador": "Ynturbe",
+        "cargo": "legislador",
+        "sobre": "Alcances de la facultad modificatoria",
+        "postura": "pregunta",
+        "tema": "Política y control político",
+        "dijo": "Consultó sobre la prohibición de incorporar materias distintas a la propuesta de diputados.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Víctor García Toma",
+        "cargo": "invitado",
+        "sobre": "Conexión material en las modificaciones",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Precisó que el Senado puede agregar temas con conexión material a la materia delegada.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Guínaga",
+        "cargo": "legislador",
+        "sobre": "Competencia revisora del Senado",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Respaldó la facultad del Senado para incluir temas relacionados con la seguridad.",
+        "proyecto": "",
+        "id": "senado:aguinaga recuenco"
+      },
+      {
+        "orador": "López Chávez",
+        "cargo": "legislador",
+        "sobre": "Relación entre ambas cámaras",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Sugirió coordinar entre cámaras para evitar que el Senado humille a los diputados.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Víctor García Toma",
+        "cargo": "invitado",
+        "sobre": "Límites de la desnaturalización",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Argumentó que revisar no es humillar siempre que se respeten los elementos esenciales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Yamashiro",
+        "cargo": "legislador",
+        "sobre": "Alcance de la modificación legislativa",
+        "postura": "pregunta",
+        "tema": "Política y control político",
+        "dijo": "Preguntó si modificar implica alterar el texto o la materia de la propuesta.",
+        "proyecto": "",
+        "id": "senado:yamashiro ore"
+      },
+      {
+        "orador": "Víctor García Toma",
+        "cargo": "invitado",
+        "sobre": "Modelos de bicameralidad mundial",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Indicó que no existen modelos donde una cámara tenga la palabra final absoluta.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Matute",
+        "cargo": "legislador",
+        "sobre": "Antecedentes de la bicameralidad",
+        "postura": "pregunta",
+        "tema": "Política y control político",
+        "dijo": "Solicitó ejemplos de sistemas bicamerales con asimetría de facultades entre cámaras.",
+        "proyecto": "",
+        "id": "senado:matute charun"
+      },
+      {
+        "orador": "Víctor García Toma",
+        "cargo": "invitado",
+        "sobre": "Mecanismos de mediación legislativa",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Admitió que los sistemas actuales carecen de mecanismos de mediación entre cámaras.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Juárez",
+        "cargo": "legislador",
+        "sobre": "Incoherencia en la delegación legislativa",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Denunció la falta de coherencia entre lo solicitado por el Ejecutivo y lo resuelto.",
+        "proyecto": "",
+        "id": "senado:juarez gallegos"
+      },
+      {
+        "orador": "Víctor García Toma",
+        "cargo": "invitado",
+        "sobre": "Naturaleza de las facultades delegadas",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Informó sobre la naturaleza de las facultades delegadas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Yamashiro",
+        "cargo": "legislador",
+        "sobre": "Conceptos jurídicos indeterminados",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Comentó la dificultad de resolver conceptos indeterminados.",
+        "proyecto": "",
+        "id": "senado:yamashiro ore"
+      },
+      {
+        "orador": "Yamashiro",
+        "cargo": "legislador",
+        "sobre": "Funciones del Senado",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Comentó la importancia del diálogo entre las cámaras.",
+        "proyecto": "",
+        "id": "senado:yamashiro ore"
+      },
+      {
+        "orador": "Yamashiro",
+        "cargo": "legislador",
+        "sobre": "Libertad de conciencia parlamentaria",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Defendió el ejercicio de la conciencia legislativa.",
+        "proyecto": "",
+        "id": "senado:yamashiro ore"
+      },
+      {
+        "orador": "Víctor García Toma",
+        "cargo": "invitado",
+        "sobre": "Atribuciones de la Cámara de Senadores",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Informó sobre la mayor potencia política de los senadores.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Barragán",
+        "cargo": "legislador",
+        "sobre": "Consensos entre líderes políticos",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso buscar consensos entre los líderes políticos.",
+        "proyecto": "",
+        "id": "senado:barragan coloma"
+      },
+      {
+        "orador": "Maraví",
+        "cargo": "legislador",
+        "sobre": "Votación de facultades delegadas",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Pidió la votación inmediata de las facultades delegadas.",
+        "proyecto": "",
+        "id": "senado:maravi olarte"
+      },
+      {
+        "orador": "Maraví",
+        "cargo": "legislador",
+        "sobre": "Aclaración sobre texto sustitutorio",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Comentó que retiraba su frase sobre el texto sustitutorio.",
+        "proyecto": "",
+        "id": "senado:maravi olarte"
+      },
+      {
+        "orador": "Víctor García Toma",
+        "cargo": "invitado",
+        "sobre": "Interpretación de la Constitución",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Cuestionó la facultad de la comisión para interpretar la Constitución.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Susana Flor de María Matute Charun",
+        "cargo": "legislador",
+        "sobre": "Límites de modificación de propuestas",
+        "postura": "pregunta",
+        "tema": "Política y control político",
+        "dijo": "Preguntó sobre los límites para modificar las propuestas.",
+        "proyecto": "",
+        "id": "senado:matute charun"
+      },
+      {
+        "orador": "Calixto",
+        "cargo": "legislador",
+        "sobre": "Seguridad e inteligencia nacional",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso cambios en materia de seguridad e inteligencia.",
+        "proyecto": "DL 1095 y DL 1141",
+        "id": "senado:calisto giampietri"
+      },
+      {
+        "orador": "Susana Flor de María Matute Charun",
+        "cargo": "legislador",
+        "sobre": "Participación en la sesión",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Comentó que su participación es a título personal.",
+        "proyecto": "",
+        "id": "senado:matute charun"
+      },
+      {
+        "orador": "Alfonso López Chau",
+        "cargo": "legislador",
+        "sobre": "Evitar colisión legislativa",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso establecer puentes entre las legislaciones.",
+        "proyecto": "",
+        "id": "senado:lopez chau nava"
+      },
+      {
+        "orador": "Daniel Barragán, Coloma",
+        "cargo": "legislador",
+        "sobre": "Aportes de la comisión de economía",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Comentó que su comisión enviará aportes por escrito.",
+        "proyecto": "",
+        "id": "senado:barragan coloma"
+      },
+      {
+        "orador": "Alfonso López Chau",
+        "cargo": "legislador",
+        "sobre": "Conferencia con la Comisión de Diputados",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Pidió conferenciar con la Comisión de Constitución de Diputados.",
+        "proyecto": "",
+        "id": "senado:lopez chau nava"
+      },
+      {
+        "orador": "Daniel Barragán Coloma",
+        "cargo": "legislador",
+        "sobre": "Aporte de su comisión",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Informó que enviará por escrito los aportes de su comisión.",
+        "proyecto": "",
+        "id": "senado:barragan coloma"
+      },
+      {
+        "orador": "Luque Ibarra",
+        "cargo": "legislador",
+        "sobre": "Criterios de invitación de invitados",
+        "postura": "pregunta",
+        "tema": "Política y control político",
+        "dijo": "Preguntó sobre los criterios para invitar al Consejo Consultivo.",
+        "proyecto": "",
+        "id": "senado:luque ibarra"
+      },
+      {
+        "orador": "Fabio Fígado",
+        "cargo": "legislador",
+        "sobre": "Expertos en derecho penal",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Propuso consultar a expertos en temas de derecho penal.",
+        "proyecto": "",
+        "id": "senado:figallo rivadeneyra"
+      },
+      {
+        "orador": "Maravío Larte",
+        "cargo": "legislador",
+        "sobre": "Invitación a la CGTP",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Pidió invitar a los representantes de la CGTP.",
+        "proyecto": "",
+        "id": "senado:maravi olarte"
+      },
+      {
+        "orador": "Luque Ibarra",
+        "cargo": "legislador",
+        "sobre": "Tratamiento de su opinión consultiva",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Pidió tratar su opinión consultiva en la siguiente sesión.",
+        "proyecto": "",
+        "id": "senado:luque ibarra"
+      },
+      {
+        "orador": "Carlos Mezías Ramírez",
+        "cargo": "legislador",
+        "sobre": "Convocatoria de asesores",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Informó la discrecionalidad del presidente para convocar asesores.",
+        "proyecto": "PL 003-2026-2031-S",
+        "id": "senado:mesia ramirez"
+      },
+      {
+        "orador": "Javier Vargas-Rimaray",
+        "cargo": "invitado",
+        "sobre": "Fomento de la gastronomía peruana",
+        "postura": "con observaciones",
+        "tema": "Horeca",
+        "dijo": "Pidió apoyo estatal y candados en la delegación.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Rebeca Antesana Adías",
+        "cargo": "invitado",
+        "sobre": "Inclusión de las MYPE",
+        "postura": "propone",
+        "tema": "Mype",
+        "dijo": "Pidió considerar a las mype en la delegación.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=pqwft33Sgok"
+  },
+  "iyEO8b-JAwQ": {
+    "fecha": "2026-10-13",
+    "organo": "Comisión de Energía y Minas",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Iris Marlene Carrenas Pino",
+        "cargo": "ministro o autoridad",
+        "sobre": "Transporte de gas y adenda Cálida",
+        "postura": "comenta",
+        "tema": "Energía",
+        "dijo": "Informó sobre el estado del SITGAS y la adenda Cálida.",
+        "proyecto": "SITGAS",
+        "id": null
+      },
+      {
+        "orador": "Reynoso Rojas Jiménez",
+        "cargo": "ministro o autoridad",
+        "sobre": "Proyectos de transporte de gas sur",
+        "postura": "comenta",
+        "tema": "Energía",
+        "dijo": "Explicó la situación de los proyectos de gas en el sur.",
+        "proyecto": "SITGAS",
+        "id": null
+      },
+      {
+        "orador": "Alejandro Narváez",
+        "cargo": "invitado",
+        "sobre": "Masificación de gas en el sur",
+        "postura": "en contra",
+        "tema": "Energía",
+        "dijo": "Denunció la disparidad de precios del gas en regiones.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Raúl Camargo Porta",
+        "cargo": "legislador",
+        "sobre": "la adenda al contrato de Cálida",
+        "postura": "en contra",
+        "tema": "Energía",
+        "dijo": "Cuestionó la falta de una nueva licitación internacional.",
+        "proyecto": "",
+        "id": "diputados:camargo porta"
+      },
+      {
+        "orador": "Jesús Pérez",
+        "cargo": "legislador",
+        "sobre": "la novena adenda de Cálida",
+        "postura": "en contra",
+        "tema": "Energía",
+        "dijo": "Cuestionó la aplicación de una adenda en vez de licitación.",
+        "proyecto": "",
+        "id": "diputados:perez alccahuaman"
+      },
+      {
+        "orador": "Eber López",
+        "cargo": "legislador",
+        "sobre": "el Gasoducto Surperuano",
+        "postura": "en contra",
+        "tema": "Energía",
+        "dijo": "Denunció la falta de continuidad del Gasoducto Surperuano.",
+        "proyecto": "",
+        "id": "diputados:lopez letona"
+      },
+      {
+        "orador": "Edwin Espinosa",
+        "cargo": "legislador",
+        "sobre": "la adenda de la empresa Cálida",
+        "postura": "en contra",
+        "tema": "Energía",
+        "dijo": "Pidió claridad sobre el contrato de la adenda.",
+        "proyecto": "",
+        "id": "diputados:espinoza huillca"
+      },
+      {
+        "orador": "Julián Pérez Malqui",
+        "cargo": "legislador",
+        "sobre": "la gestión de los hidrocarburos",
+        "postura": "propone",
+        "tema": "Energía",
+        "dijo": "Propuso la conclusión del Gasoducto Surperuano.",
+        "proyecto": "",
+        "id": "diputados:perez mallqui"
+      },
+      {
+        "orador": "Colombo Murata",
+        "cargo": "legislador",
+        "sobre": "la ley de masificación del gas",
+        "postura": "propone",
+        "tema": "Energía",
+        "dijo": "Propuso modificar la ley de masificación del gas natural.",
+        "proyecto": "",
+        "id": "diputados:columbus murata"
+      },
+      {
+        "orador": "Susena Isla Rojas",
+        "cargo": "invitado",
+        "sobre": "el precio del gas en Loreto",
+        "postura": "en contra",
+        "tema": "Energía",
+        "dijo": "Cuestionó el alto costo del gas en Loreto.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Nari Pinasco",
+        "cargo": "legislador",
+        "sobre": "la falta de soluciones energéticas",
+        "postura": "propone",
+        "tema": "Energía",
+        "dijo": "Propuso buscar soluciones energéticas para el Cusco.",
+        "proyecto": "",
+        "id": "diputados:pinasco montenegro"
+      },
+      {
+        "orador": "Amilcar Romero de Randon",
+        "cargo": "invitado",
+        "sobre": "la falta de propuestas de industrialización",
+        "postura": "en contra",
+        "tema": "Energía",
+        "dijo": "Denunció la falta de propuestas de industrialización.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Andrés Olivares Muñoz",
+        "cargo": "invitado",
+        "sobre": "el abandono de obras estatales",
+        "postura": "en contra",
+        "tema": "Energía",
+        "dijo": "Denunció el abandono del Gasoducto Surperuano.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Luisa Lóbregón",
+        "cargo": "invitado",
+        "sobre": "justicia energética en Cusco",
+        "postura": "en contra",
+        "tema": "Energía",
+        "dijo": "Pidió justicia energética para la región de Cusco.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Jorge Pizfánio Pacheco",
+        "cargo": "invitado",
+        "sobre": "reactivación del gasoducto sur peruano",
+        "postura": "propone",
+        "tema": "Energía",
+        "dijo": "Pidió la reactivación del gasoducto sur peruano.",
+        "proyecto": "Gasoducto Sur Peruano",
+        "id": null
+      },
+      {
+        "orador": "Jennifer Paré",
+        "cargo": "invitado",
+        "sobre": "instalación de ramales de gas",
+        "postura": "pregunta",
+        "tema": "Energía",
+        "dijo": "Pidió respuestas claras sobre la instalación de ramales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Jesús Córsio Milnoviza",
+        "cargo": "invitado",
+        "sobre": "investigación de fondos asignados",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso investigar la asignación de fondos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Boris Tomás",
+        "cargo": "invitado",
+        "sobre": "adenda de la empresa Cálida",
+        "postura": "en contra",
+        "tema": "Energía",
+        "dijo": "Rechazó la adenda de la empresa Cálida.",
+        "proyecto": "Gasoducto Surandino",
+        "id": null
+      },
+      {
+        "orador": "Jennifer Paredes",
+        "cargo": "legislador",
+        "sobre": "arbitrajes de GCP y CENEAS",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso fiscalizar arbitrajes de GCP y CENEAS.",
+        "proyecto": "",
+        "id": "diputados:paredes navarro"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=iyEO8b-JAwQ"
   }
 }
