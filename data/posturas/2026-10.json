@@ -1706,5 +1706,291 @@
       }
     ],
     "url": "https://www.youtube.com/watch?v=38iTKgwON5A"
+  },
+  "fb_1377486204160445": {
+    "fecha": "2026-10-05",
+    "organo": "Comisión de Fiscalización",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [],
+    "url": "https://www.facebook.com/watch/?v=1377486204160445"
+  },
+  "fb_2492545311214016": {
+    "fecha": "2026-10-05",
+    "organo": "Comisión de Seguridad Integral",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Pablo Caña Merino",
+        "cargo": "invitado",
+        "sobre": "la Ley anti mafias",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Cuestionó la desproporción de las penas en la Ley anti mafias.",
+        "proyecto": "Ley anti mafias",
+        "id": null
+      },
+      {
+        "orador": "María Anita",
+        "cargo": "legislador",
+        "sobre": "sanciones a contadores en la ley",
+        "postura": "pregunta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Preguntó por la responsabilidad de los contadores en la ley.",
+        "proyecto": "Ley anti mafias",
+        "id": null
+      },
+      {
+        "orador": "Pablo Caña Merino",
+        "cargo": "invitado",
+        "sobre": "responsabilidad de profesionales",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Informó que la sanción requiere probar el dolo del profesional.",
+        "proyecto": "Ley anti mafias",
+        "id": null
+      },
+      {
+        "orador": "Joana Peralta",
+        "cargo": "invitado",
+        "sobre": "regulación de sistemas de videovigilancia",
+        "postura": "con observaciones",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso dieciocho meses para implementar la Ley de videovigilancia.",
+        "proyecto": "Ley de videovigilancia",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=2492545311214016"
+  },
+  "8jwUPC35zdc": {
+    "fecha": "2026-10-03",
+    "organo": "Comisión de Ciencia",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Patiño Urco",
+        "cargo": "legislador",
+        "sobre": "inauguración de tomógrafo Lastic",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Informó sobre la inauguración del tomógrafo Lastic en el Instituto Nacional de Histomología.",
+        "proyecto": "",
+        "id": "diputados:patino urco"
+      },
+      {
+        "orador": "Manrique Olivera",
+        "cargo": "legislador",
+        "sobre": "prevención de desastres naturales",
+        "postura": "comenta",
+        "tema": "Tecnología",
+        "dijo": "Informó sobre su visita al IGP y el Colegio de Ingenieros para prevenir desastres.",
+        "proyecto": "",
+        "id": "diputados:manrique olivera"
+      },
+      {
+        "orador": "Judith Fernández",
+        "cargo": "legislador",
+        "sobre": "ejes de inteligencia artificial y ciberseguridad",
+        "postura": "propone",
+        "tema": "Tecnología",
+        "dijo": "Propuso separar los ejes de inteligencia artificial y ciberseguridad en la agenda.",
+        "proyecto": "",
+        "id": "diputados:fernandez de la torre"
+      },
+      {
+        "orador": "Patiño Urco",
+        "cargo": "legislador",
+        "sobre": "sesión descentralizada en Junín",
+        "postura": "propone",
+        "tema": "Tecnología",
+        "dijo": "Pidió realizar una sesión descentralizada en la región Junín.",
+        "proyecto": "",
+        "id": "diputados:patino urco"
+      },
+      {
+        "orador": "Patiño Urco",
+        "cargo": "legislador",
+        "sobre": "Congreso Internacional de Oftalmociencia",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Solicitó un reconocimiento a los expertos del Congreso Internacional de Oftalmociencia.",
+        "proyecto": "",
+        "id": "diputados:patino urco"
+      },
+      {
+        "orador": "Peralta Jorpa",
+        "cargo": "legislador",
+        "sobre": "informe sobre delegación de facultades",
+        "postura": "con observaciones",
+        "tema": "Tecnología",
+        "dijo": "Solicitó detallar el marco normativo de la transformación y seguridad digital.",
+        "proyecto": "SL 231",
+        "id": "diputados:peralta jorpa"
+      },
+      {
+        "orador": "Manrique Olivera",
+        "cargo": "legislador",
+        "sobre": "delegación de facultades al Ejecutivo",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó la urgencia y especificidad de la delegación de facultades solicitada.",
+        "proyecto": "",
+        "id": "diputados:manrique olivera"
+      },
+      {
+        "orador": "Fernández Nina",
+        "cargo": "legislador",
+        "sobre": "delegación de facultades legislativas",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció la falta de análisis técnico y defectos en el informe de facultades.",
+        "proyecto": "",
+        "id": "diputados:fernandez nina"
+      },
+      {
+        "orador": "Patiño Urco",
+        "cargo": "legislador",
+        "sobre": "simplificación de trámites administrativos",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Defendió la urgencia de simplificar trámites para atender emergencias como el fenómeno del Niño.",
+        "proyecto": "",
+        "id": "diputados:patino urco"
+      },
+      {
+        "orador": "Palomino Pacheco",
+        "cargo": "legislador",
+        "sobre": "delegación de facultades al Ejecutivo",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Rechazó la delegación de facultades por considerarla un cheque en blanco.",
+        "proyecto": "",
+        "id": "diputados:palomino pacheco"
+      },
+      {
+        "orador": "Manrique Olivera",
+        "cargo": "legislador",
+        "sobre": "proceso de transformación digital",
+        "postura": "en contra",
+        "tema": "Tecnología",
+        "dijo": "Explicó que la transformación digital requiere infraestructura y conectividad previa.",
+        "proyecto": "",
+        "id": "diputados:manrique olivera"
+      },
+      {
+        "orador": "Cipriani Torne",
+        "cargo": "legislador",
+        "sobre": "brechas de servicios y burocracia",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Defendió la necesidad de reducir la burocracia para ayudar a los más pobres.",
+        "proyecto": "",
+        "id": "diputados:cipriani thorne"
+      },
+      {
+        "orador": "Ramos Rosales",
+        "cargo": "legislador",
+        "sobre": "urgencia de acciones gubernamentales",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Instó a actuar con prontitud ante las emergencias que atraviesa el país.",
+        "proyecto": "",
+        "id": "diputados:ramos rosales"
+      },
+      {
+        "orador": "Palomino Pacheco",
+        "cargo": "legislador",
+        "sobre": "pedido de delegación de facultades",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó que las facultades solicitadas no abordan el fenómeno del Niño.",
+        "proyecto": "",
+        "id": "diputados:palomino pacheco"
+      },
+      {
+        "orador": "Palomino Pacheco",
+        "cargo": "legislador",
+        "sobre": "conectividad en zonas rurales",
+        "postura": "en contra",
+        "tema": "Telecomunicaciones",
+        "dijo": "Argumentó que garantizar la conectividad requiere un proceso mucho más largo.",
+        "proyecto": "",
+        "id": "diputados:palomino pacheco"
+      },
+      {
+        "orador": "Dietel",
+        "cargo": "legislador",
+        "sobre": "informe sobre simplificación administrativa",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Rechazó la delegación argumentando que la implementación ya cuenta con marco normativo.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Dietel",
+        "cargo": "legislador",
+        "sobre": "estándares regulatorios y autonomía regional",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Planteó la necesidad de elevar los estándares regulatorios para la OCDE.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Manrique",
+        "cargo": "legislador",
+        "sobre": "Delegación de facultades al Ejecutivo",
+        "postura": "con observaciones",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó la efectividad de la digitalización sin conectividad.",
+        "proyecto": "",
+        "id": "diputados:manrique olivera"
+      },
+      {
+        "orador": "Fernández",
+        "cargo": "legislador",
+        "sobre": "Simplificación administrativa municipal",
+        "postura": "con observaciones",
+        "tema": "Otros",
+        "dijo": "Cuestionó la urgencia de la delegación solicitada.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Pacheco",
+        "cargo": "legislador",
+        "sobre": "Eliminación de barreras burocráticas",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Respaldó la eliminación de trámites engorrosos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Patiño",
+        "cargo": "legislador",
+        "sobre": "Facultades para el Ejecutivo",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Pidió otorgar facultades para obtener resultados.",
+        "proyecto": "",
+        "id": "diputados:patino urco"
+      },
+      {
+        "orador": "Castrejo",
+        "cargo": "legislador",
+        "sobre": "Artículo 104 de la Constitución",
+        "postura": "con observaciones",
+        "tema": "Política y control político",
+        "dijo": "Pidió respetar el artículo 104 de la Constitución.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=8jwUPC35zdc"
   }
 }
