@@ -30147,5 +30147,582 @@
       }
     ],
     "url": "https://www.facebook.com/watch/?v=1421392376025337"
+  },
+  "RPJniUD1mG8": {
+    "fecha": "2026-10-07",
+    "organo": "Pleno del Senado",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Miguel Ángel Torres Morales",
+        "cargo": "legislador",
+        "sobre": "Aniversario de la Marina de Guerra",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Informó sobre el aniversario de la Marina de Guerra.",
+        "proyecto": "",
+        "id": "senado:torres morales"
+      },
+      {
+        "orador": "Francisco José Calisto y Ampietri",
+        "cargo": "legislador",
+        "sobre": "Homenaje a la Marina de Guerra",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Defendió el legado de la Marina de Guerra.",
+        "proyecto": "",
+        "id": "senado:calisto giampietri"
+      },
+      {
+        "orador": "Miguel Ángel Torres Morales",
+        "cargo": "legislador",
+        "sobre": "Legado de Miguel Grau",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Respaldó la memoria de Miguel Grau.",
+        "proyecto": "",
+        "id": "senado:torres morales"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=RPJniUD1mG8"
+  },
+  "l9yfl2bNSnc": {
+    "fecha": "2026-10-07",
+    "organo": "Comisión de Presupuesto",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Tomás Aladino Gálvez Villegas",
+        "cargo": "ministro o autoridad",
+        "sobre": "Presupuesto institucional para el 2027",
+        "postura": "a favor",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Solicitó un presupuesto adicional de 3561 millones de soles.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Coaí la Juana",
+        "cargo": "legislador",
+        "sobre": "Presupuesto y cámaras Gesell",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Denunció la falta de cámaras Gesell en Tacna.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Tapia Bernal",
+        "cargo": "legislador",
+        "sobre": "Gestión del Ministerio Público",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Cuestionó la gestión y la meritocracia institucional.",
+        "proyecto": "",
+        "id": "senado:tapia bernal"
+      },
+      {
+        "orador": "Gloria Irache",
+        "cargo": "legislador",
+        "sobre": "Implementación de la carpeta electrónica",
+        "postura": "pregunta",
+        "tema": "Tecnología",
+        "dijo": "Preguntó sobre el estado de la carpeta electrónica.",
+        "proyecto": "",
+        "id": "diputados:hirache pizarro"
+      },
+      {
+        "orador": "Trujillo Segarra Silver",
+        "cargo": "legislador",
+        "sobre": "Presupuesto para La Libertad",
+        "postura": "pregunta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Consultó sobre las necesidades de La Libertad.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Vázquez Villanueva",
+        "cargo": "legislador",
+        "sobre": "Digitalización y provisionalidad de fiscales",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Felicitó la gestión y pidió la digitalización.",
+        "proyecto": "",
+        "id": "senado:vasquez villanueva"
+      },
+      {
+        "orador": "Vázquez Villanueva",
+        "cargo": "legislador",
+        "sobre": "gestión y presupuesto del Ministerio Público",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Señaló deficiencias en infraestructura y tecnología del Ministerio Público.",
+        "proyecto": "",
+        "id": "senado:vasquez villanueva"
+      },
+      {
+        "orador": "Fiscal de la Nación",
+        "cargo": "ministro o autoridad",
+        "sobre": "gestión y presupuesto del Ministerio Público",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Respondió sobre la impunidad y la falta de fiscales titulares.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Gerente General del Ministerio Público",
+        "cargo": "ministro o autoridad",
+        "sobre": "implementación de tecnología y perfiles genéticos",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Informó sobre la ejecución de la carpeta fiscal electrónica.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Karina Beteta Rubín",
+        "cargo": "legislador",
+        "sobre": "resultados en la lucha contra la corrupción",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Cuestionó la impunidad y la carga procesal en Puno.",
+        "proyecto": "",
+        "id": "diputados:beteta rubin"
+      },
+      {
+        "orador": "Karina Beteta Rubín",
+        "cargo": "legislador",
+        "sobre": "infraestructura de medicina legal y fiscalías",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Pidió mejorar las condiciones de las morgues y fiscalías.",
+        "proyecto": "",
+        "id": "diputados:beteta rubin"
+      },
+      {
+        "orador": "Fiscal de la Nación",
+        "cargo": "ministro o autoridad",
+        "sobre": "transparencia en gastos de equipos fiscales",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Explicó que se investigará el gasto de equipos fiscales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Fiscal de la Nación",
+        "cargo": "ministro o autoridad",
+        "sobre": "nueva Ley Orgánica del Ministerio Público",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Propuso presentar un nuevo proyecto de Ley Orgánica.",
+        "proyecto": "Ley Orgánica del Ministerio Público",
+        "id": null
+      },
+      {
+        "orador": "Gillian Infa",
+        "cargo": "ministro o autoridad",
+        "sobre": "presupuesto para inversión de Moquegua",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Denunció el recorte de recursos ordinarios para Moquegua.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Gerente General del Gobierno Regional de Moquegua",
+        "cargo": "ministro o autoridad",
+        "sobre": "ejecución presupuestal de Moquegua",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Informó sobre la adecuada ejecución de inversiones en la región.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Gillian Infa",
+        "cargo": "ministro o autoridad",
+        "sobre": "abandono de la carretera Moquegua-Arequipa",
+        "postura": "en contra",
+        "tema": "Transporte",
+        "dijo": "Denunció el abandono de la carretera Moquegua-Arequipa.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "María Gutiérrez Ayala",
+        "cargo": "ministro o autoridad",
+        "sobre": "Reinicio de la carretera Moquegua-Arequipa",
+        "postura": "propone",
+        "tema": "Transporte",
+        "dijo": "Pidió la incorporación de la carretera Moquegua-Arequipa en el presupuesto.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "María Gutiérrez Ayala",
+        "cargo": "ministro o autoridad",
+        "sobre": "Justicia presupuestal para Moquegua",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Denunció la falta de inversión del gobierno central en Moquegua.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "María Gutiérrez Ayala",
+        "cargo": "ministro o autoridad",
+        "sobre": "Proyectos de salud y educación",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Defendió la ejecución de proyectos de salud y educación en la región.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Segundo Leucario Tapia Bernal",
+        "cargo": "legislador",
+        "sobre": "Ejecución presupuestal de Moquegua",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Cuestionó la baja ejecución de inversiones y el aumento del gasto corriente.",
+        "proyecto": "",
+        "id": "senado:tapia bernal"
+      },
+      {
+        "orador": "Segundo Leucario Tapia Bernal",
+        "cargo": "legislador",
+        "sobre": "Uso del canon minero",
+        "postura": "pregunta",
+        "tema": "Minería",
+        "dijo": "Preguntó sobre el destino de los recursos provenientes de la minería.",
+        "proyecto": "",
+        "id": "senado:tapia bernal"
+      },
+      {
+        "orador": "Segundo Leucario Tapia Bernal",
+        "cargo": "legislador",
+        "sobre": "Reducción del gasto de capital",
+        "postura": "pregunta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Preguntó cómo compensarán la reducción del gasto de capital en Moquegua.",
+        "proyecto": "",
+        "id": "senado:tapia bernal"
+      },
+      {
+        "orador": "Juan Carlos Del Águila",
+        "cargo": "legislador",
+        "sobre": "Gestión de Martín Vizcarra",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció la gestión de Martín Vizcarra como gobernador regional de Moquegua.",
+        "proyecto": "",
+        "id": "senado:del aguila cardenas"
+      },
+      {
+        "orador": "María Gutiérrez Ayala",
+        "cargo": "ministro o autoridad",
+        "sobre": "Construcción con el canon minero",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Defendió la construcción de hospitales con recursos del canon minero.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "María Gutiérrez Ayala",
+        "cargo": "ministro o autoridad",
+        "sobre": "Gestión de educación en Moquegua",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Defendió la competitividad y educación alcanzadas en la gestión pasada.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Karina Beteta",
+        "cargo": "legislador",
+        "sobre": "Obras de envergadura con el canon",
+        "postura": "pregunta",
+        "tema": "Infraestructura",
+        "dijo": "Preguntó sobre las obras de envergadura que realiza la región.",
+        "proyecto": "",
+        "id": "diputados:beteta rubin"
+      },
+      {
+        "orador": "María Gutiérrez Ayala",
+        "cargo": "ministro o autoridad",
+        "sobre": "Infraestructura de salud y educación",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Defendió la construcción de diversos centros de salud y colegios.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Leóncio Guayanani",
+        "cargo": "ministro o autoridad",
+        "sobre": "Presupuesto de inversión para Huancavelica",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Denunció la reducción del presupuesto para inversión en Huancavelica.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Leóncio Guayanani",
+        "cargo": "ministro o autoridad",
+        "sobre": "Contratación de médicos especialistas",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Pidió presupuesto adicional para contratar médicos especialistas en la región.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Leóncio Guayanani",
+        "cargo": "ministro o autoridad",
+        "sobre": "Metas de aprendizaje en Huancavelica",
+        "postura": "comenta",
+        "tema": "Educación",
+        "dijo": "Defendió las metas para mejorar los logros de aprendizaje escolar.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Leóncio Guayanani",
+        "cargo": "ministro o autoridad",
+        "sobre": "Carreteras en la región Huancavelica",
+        "postura": "propone",
+        "tema": "Transporte",
+        "dijo": "Pidió la conclusión de proyectos de carreteras en Huancavelica.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Karina Beteta",
+        "cargo": "legislador",
+        "sobre": "Comparación de presupuestos regionales",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Denunció la disparidad presupuestal entre las regiones del país.",
+        "proyecto": "",
+        "id": "diputados:beteta rubin"
+      },
+      {
+        "orador": "Carlos Alberto Cegarra Sanchez",
+        "cargo": "legislador",
+        "sobre": "Proyectos de la región Huancavelica",
+        "postura": "pregunta",
+        "tema": "Otros",
+        "dijo": "Preguntó sobre la situación de proyectos y procesos en la región.",
+        "proyecto": "",
+        "id": "diputados:zegarra sanchez"
+      },
+      {
+        "orador": "Leoncio Guayani",
+        "cargo": "ministro o autoridad",
+        "sobre": "demanda de desarrollo para Huancavelica",
+        "postura": "propone",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Pidió atención para cerrar brechas en Huancavelica.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Carlos Alberto Cegarra Sánchez",
+        "cargo": "legislador",
+        "sobre": "situación de proyectos en Huancavelica",
+        "postura": "pregunta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Preguntó sobre el estado de proyectos regionales.",
+        "proyecto": "",
+        "id": "diputados:zegarra sanchez"
+      },
+      {
+        "orador": "Héctor Guillén Valencia",
+        "cargo": "legislador",
+        "sobre": "ejecución de proyectos hospitalarios",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Cuestionó la baja ejecución de presupuesto hospitalario.",
+        "proyecto": "",
+        "id": "diputados:guillen valencia"
+      },
+      {
+        "orador": "Leoncio Guayani",
+        "cargo": "ministro o autoridad",
+        "sobre": "mantenimiento de vías departamentales",
+        "postura": "comenta",
+        "tema": "Transporte",
+        "dijo": "Informó sobre el mantenimiento de carreteras departamentales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Víctor Mudillo",
+        "cargo": "invitado",
+        "sobre": "proyectos de obras por impuestos",
+        "postura": "comenta",
+        "tema": "Infraestructura",
+        "dijo": "Informó sobre la ejecución de proyectos por impuestos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Leoncio Guayani",
+        "cargo": "ministro o autoridad",
+        "sobre": "sustentación del presupuesto 2027",
+        "postura": "propone",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Pidió ayuda para cerrar brechas en Huancavelica.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=l9yfl2bNSnc"
+  },
+  "J8gei_kQM1Y": {
+    "fecha": "2026-10-07",
+    "organo": "Pleno del Senado",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Ruth Lucke",
+        "cargo": "legislador",
+        "sobre": "Viaje de la presidenta a El Salvador",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Cuestionó la utilidad de la visita oficial",
+        "proyecto": "Proyecto de resolución legislativa",
+        "id": null
+      },
+      {
+        "orador": "Muñante",
+        "cargo": "legislador",
+        "sobre": "Viaje de la presidenta al Salvador",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Apoyó la toma de experiencias exitosas",
+        "proyecto": "Proyecto de resolución legislativa",
+        "id": "senado:munante barrios"
+      },
+      {
+        "orador": "Aguina",
+        "cargo": "legislador",
+        "sobre": "Viaje de la presidenta al Salvador",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Resaltó la importancia de recoger experiencias",
+        "proyecto": "Proyecto de resolución legislativa",
+        "id": "senado:aguinaga recuenco"
+      },
+      {
+        "orador": "Maraví",
+        "cargo": "legislador",
+        "sobre": "Viaje de la presidenta al Salvador",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Denunció el fracaso del actual gobierno",
+        "proyecto": "Proyecto de resolución legislativa",
+        "id": "senado:maravi olarte"
+      },
+      {
+        "orador": "Ticona",
+        "cargo": "legislador",
+        "sobre": "Viaje de la presidenta al Salvador",
+        "postura": "con observaciones",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Sugirió conocer otros modelos de seguridad",
+        "proyecto": "Proyecto de resolución legislativa",
+        "id": "senado:ticona cohaila"
+      },
+      {
+        "orador": "Kito",
+        "cargo": "legislador",
+        "sobre": "Viaje de la presidenta al Salvador",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Rechazó el viaje por considerarlo mediático",
+        "proyecto": "Proyecto de resolución legislativa",
+        "id": null
+      },
+      {
+        "orador": "Flores",
+        "cargo": "legislador",
+        "sobre": "Viaje de la presidenta al Salvador",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Saludó la importancia del viaje presidencial",
+        "proyecto": "Proyecto de resolución legislativa",
+        "id": null
+      },
+      {
+        "orador": "Nadur Yamashiro",
+        "cargo": "legislador",
+        "sobre": "Viaje de la presidenta al Salvador",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Celebró la iniciativa para combatir delincuencia",
+        "proyecto": "Proyecto de resolución legislativa",
+        "id": "senado:yamashiro ore"
+      },
+      {
+        "orador": "Gavidia",
+        "cargo": "legislador",
+        "sobre": "Viaje de la presidenta al Salvador",
+        "postura": "con observaciones",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Pidió que el viaje incluya planes técnicos",
+        "proyecto": "Proyecto de resolución legislativa",
+        "id": "senado:gavidia rodriguez"
+      },
+      {
+        "orador": "Osorio",
+        "cargo": "legislador",
+        "sobre": "Viaje de la presidenta al Salvador",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Anunció su voto a favor del viaje",
+        "proyecto": "Proyecto de resolución legislativa",
+        "id": "senado:osorio palpan"
+      },
+      {
+        "orador": "Carlos Salomásquez",
+        "cargo": "legislador",
+        "sobre": "Obstrucción de facultades en el Senado",
+        "postura": "comenta",
+        "tema": "Políticay control político",
+        "dijo": "Instó a no caer en la obstrucción",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Carlos Mecías",
+        "cargo": "legislador",
+        "sobre": "Combate al crimen organizado",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Saludó la incorporación a la alianza internacional",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Alcorta",
+        "cargo": "legislador",
+        "sobre": "Gestión de la política exterior",
+        "postura": "a favor",
+        "tema": "Políticay control político",
+        "dijo": "Defendió el servicio de la política exterior",
+        "proyecto": "",
+        "id": "senado:alcorta suero"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=J8gei_kQM1Y"
   }
 }
