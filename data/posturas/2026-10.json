@@ -26649,5 +26649,282 @@
       }
     ],
     "url": "https://www.youtube.com/watch?v=iyEO8b-JAwQ"
+  },
+  "fb_2195924931313847": {
+    "fecha": "2026-10-13",
+    "organo": "Comisión de Biodiversidad",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Hugo Uveche Berriáviz",
+        "cargo": "invitado",
+        "sobre": "Proyecto de ley de bioeconomía y biocomercio",
+        "postura": "con observaciones",
+        "tema": "Ambiente",
+        "dijo": "Propuso armonizar el proyecto con la estrategia nacional de biodiversidad y reglamentos vigentes.",
+        "proyecto": "Ley de bioeconomía y biocomercio",
+        "id": null
+      },
+      {
+        "orador": "Casanova",
+        "cargo": "legislador",
+        "sobre": "Mecanismos de control y sanción del proyecto",
+        "postura": "pregunta",
+        "tema": "Ambiente",
+        "dijo": "Preguntó si el proyecto establece mecanismos de control y sanción suficientemente claros.",
+        "proyecto": "Ley de bioeconomía y biocomercio",
+        "id": "EC:casanova montesino"
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=2195924931313847"
+  },
+  "fb_2149920189253836": {
+    "fecha": "2026-10-13",
+    "organo": "Comisión de Relaciones Internacionales",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Lucia Lisbet Jaramillo Zurita",
+        "cargo": "legislador",
+        "sobre": "Reforma a la Ley Orgánica del Servicio Exterior",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Explicó los objetivos de la reforma al servicio exterior.",
+        "proyecto": "Ley Orgánica del Servicio Exterior",
+        "id": "EC:jaramillo zurita lucia"
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=2149920189253836"
+  },
+  "__ikA2OV6n0": {
+    "fecha": "2026-10-12",
+    "organo": "Comisión de Presupuesto",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Luis Alberto Vallejos Portal",
+        "cargo": "invitado",
+        "sobre": "Presupuesto 2027 del Gobierno Regional de Cajamarca",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Sustentó el presupuesto institucional para el año 2027 de Cajamarca.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Daniel Hugo Barragán",
+        "cargo": "legislador",
+        "sobre": "Objetivos del presupuesto 2026",
+        "postura": "pregunta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Preguntó sobre las metas logradas con el presupuesto 2026.",
+        "proyecto": "",
+        "id": "senado:barragan coloma"
+      },
+      {
+        "orador": "Caterina Ampuero",
+        "cargo": "legislador",
+        "sobre": "Gestión y ejecución presupuestal de Cajamarca",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Denunció la baja ejecución y gastos en viajes.",
+        "proyecto": "",
+        "id": "senado:ampuero meza"
+      },
+      {
+        "orador": "Natalí Meligros Molina",
+        "cargo": "legislador",
+        "sobre": "Financiamiento y gestión regional",
+        "postura": "propone",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Propuso una ingeniería social para mejorar la gestión regional.",
+        "proyecto": "",
+        "id": "diputados:molina soto"
+      },
+      {
+        "orador": "Vázquez Villanueva",
+        "cargo": "legislador",
+        "sobre": "Pobreza y extractivismo regional",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Reflexionó sobre el ciclo de pobreza en las regiones.",
+        "proyecto": "",
+        "id": "senado:vasquez villanueva"
+      },
+      {
+        "orador": "Azucuri",
+        "cargo": "legislador",
+        "sobre": "Estado de las carreteras en Cajamarca",
+        "postura": "en contra",
+        "tema": "Infraestructura",
+        "dijo": "Criticó el mal estado de las carreteras regionales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Astucuri",
+        "cargo": "legislador",
+        "sobre": "Gestión de obras en Cajamarca",
+        "postura": "en contra",
+        "tema": "Infraestructura",
+        "dijo": "Denunció deficiencias en las obras de salud y transporte.",
+        "proyecto": "",
+        "id": "senado:astucuri laura"
+      },
+      {
+        "orador": "Astucuri",
+        "cargo": "legislador",
+        "sobre": "Presupuesto 2027 de Cajamarca",
+        "postura": "pregunta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Preguntó sobre el sustento de los gastos presupuestales de 2027.",
+        "proyecto": "",
+        "id": "senado:astucuri laura"
+      },
+      {
+        "orador": "Gobernador de Cajamarca",
+        "cargo": "ministro o autoridad",
+        "sobre": "Defensa de su gestión regional",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Defendió su administración frente a las acusaciones de corrupción.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Gobernador de Cajamarca",
+        "cargo": "ministro o autoridad",
+        "sobre": "Ejecución de obras en Cajamarca",
+        "postura": "comenta",
+        "tema": "Infraestructura",
+        "dijo": "Explicó la situación técnica de proyectos viales y sanitarios.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Wilfredo Scorimanuña",
+        "cargo": "ministro o autoridad",
+        "sobre": "Presupuesto de Ayacucho 2027",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Denunció la reducción del presupuesto para el gobierno de Ayacucho.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Astucuri",
+        "cargo": "legislador",
+        "sobre": "Reducción presupuestal en Ayacucho",
+        "postura": "pregunta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Cuestionó la drástica reducción del presupuesto para Ayacucho.",
+        "proyecto": "",
+        "id": "senado:astucuri laura"
+      },
+      {
+        "orador": "Wilfredo Oscorima",
+        "cargo": "ministro o autoridad",
+        "sobre": "presupuesto para Ayacucho 2027",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Solicitó presupuesto adicional para evitar consecuencias económicas en Ayacucho.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Astucuri",
+        "cargo": "legislador",
+        "sobre": "reducción del presupuesto regional",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Cuestionó la drástica reducción de los recursos para la región.",
+        "proyecto": "",
+        "id": "senado:astucuri laura"
+      },
+      {
+        "orador": "Vásquez Villanueva",
+        "cargo": "legislador",
+        "sobre": "mantenimiento de vías y hospitales",
+        "postura": "pregunta",
+        "tema": "Infraestructura",
+        "dijo": "Preguntó sobre el gasto proyectado y el mantenimiento de vías.",
+        "proyecto": "",
+        "id": "senado:vasquez villanueva"
+      },
+      {
+        "orador": "Absalom Vázquez",
+        "cargo": "legislador",
+        "sobre": "ejecución en salud y transporte",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Denunció la baja ejecución presupuestal en sectores críticos.",
+        "proyecto": "",
+        "id": "senado:vasquez villanueva"
+      },
+      {
+        "orador": "Wilfredo Oscorima",
+        "cargo": "ministro o autoridad",
+        "sobre": "ejecución y obras de Ayacucho",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Informó sobre la alta ejecución de proyectos y hospitales estratégicos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "José Antonio Leonías Pulgar Lucas",
+        "cargo": "ministro o autoridad",
+        "sobre": "presupuesto institucional de Huánuco",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Expuso los objetivos estratégicos y las brechas sociales de Huánuco.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Barragán",
+        "cargo": "legislador",
+        "sobre": "brechas de agua y saneamiento",
+        "postura": "pregunta",
+        "tema": "Saneamiento",
+        "dijo": "Cuestionó la falta de inversión en agua y saneamiento.",
+        "proyecto": "",
+        "id": "senado:barragan coloma"
+      },
+      {
+        "orador": "Pedro Alfredo Hernández Chávez",
+        "cargo": "autoridad",
+        "sobre": "Presupuesto del Tribunal Constitucional 2027",
+        "postura": "propone",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Propuso una demanda adicional de 22 millones para el Tribunal Constitucional.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Astucuri",
+        "cargo": "legislador",
+        "sobre": "Incremento de recursos humanos",
+        "postura": "pregunta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Preguntó por la justificación del aumento en recursos humanos.",
+        "proyecto": "",
+        "id": "senado:astucuri laura"
+      },
+      {
+        "orador": "Pedro Alfredo Hernández Chávez",
+        "cargo": "autoridad",
+        "sobre": "Régimen laboral de trabajadores CAS",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Defendió la implementación de la Ley 32488 para el personal.",
+        "proyecto": "Ley 32488",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=__ikA2OV6n0"
   }
 }
