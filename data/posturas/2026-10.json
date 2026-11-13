@@ -29564,5 +29564,81 @@
       }
     ],
     "url": "https://www.youtube.com/watch?v=cEnzueyjs5Q"
+  },
+  "fb_1115608257501394": {
+    "fecha": "2026-10-05",
+    "organo": "Comisión de Fiscalización",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Luigi García",
+        "cargo": "legislador",
+        "sobre": "reconciliación de la votación",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Solicitó la reconciliación de la votación de la moción aprobada.",
+        "proyecto": "",
+        "id": "EC:garcia velasquez"
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1115608257501394"
+  },
+  "RUaZt2rRNy0": {
+    "fecha": "2026-10-02",
+    "organo": "Comisión de Seguimiento Legislativo",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [],
+    "url": "https://www.youtube.com/watch?v=RUaZt2rRNy0"
+  },
+  "_g8iB60yKC8": {
+    "fecha": "2026-10-01",
+    "organo": "Comisión de Defensa Nacional",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Alcorta Suero",
+        "cargo": "legislador",
+        "sobre": "Bullying en colegios militares",
+        "postura": "en contra",
+        "tema": "Educación",
+        "dijo": "Denunció el problema de bullying en los colegios militares.",
+        "proyecto": "",
+        "id": "senado:alcorta suero"
+      },
+      {
+        "orador": "Alcorta Suero",
+        "cargo": "legislador",
+        "sobre": "Inteligencia artificial en defensa nacional",
+        "postura": "propone",
+        "tema": "Tecnología",
+        "dijo": "Propuso invitar expertos sobre inteligencia artificial en defensa.",
+        "proyecto": "",
+        "id": "senado:alcorta suero"
+      },
+      {
+        "orador": "Alcorta Suero",
+        "cargo": "legislador",
+        "sobre": "Presencia del Estado contra el terrorismo",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Cuestionó la insuficiente presencia del Estado ante el terrorismo.",
+        "proyecto": "",
+        "id": "senado:alcorta suero"
+      },
+      {
+        "orador": "Alcorta Suero",
+        "cargo": "legislador",
+        "sobre": "Reactivación de fiscalías especializadas",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Informó sobre la reactivación de las fiscalías especializadas.",
+        "proyecto": "",
+        "id": "senado:alcorta suero"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=_g8iB60yKC8"
   }
 }
