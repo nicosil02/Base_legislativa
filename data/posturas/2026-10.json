@@ -8834,5 +8834,392 @@
       }
     ],
     "url": "https://www.youtube.com/watch?v=MynXZyWG3CA"
+  },
+  "_SU9vwpIvLs": {
+    "fecha": "2026-10-28",
+    "organo": "Pleno del Senado",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Calisto Jean Pietri",
+        "cargo": "legislador",
+        "sobre": "Ingreso de unidad naval chilena",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Explicó la necesidad de autorizar el tránsito de la unidad chilena.",
+        "proyecto": "PL 14-2026-2031",
+        "id": "senado:calisto giampietri"
+      },
+      {
+        "orador": "Robles",
+        "cargo": "legislador",
+        "sobre": "Ingreso de militares chilenos",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Cuestionó la presencia de militares extranjeros en territorio patrio.",
+        "proyecto": "PL 14-2026-2031",
+        "id": "senado:robles araujo"
+      },
+      {
+        "orador": "Lourdes Alcorta",
+        "cargo": "legislador",
+        "sobre": "Ingreso de fuerzas armadas",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Informó sobre el proceso de ingreso de tropas extranjeras.",
+        "proyecto": "",
+        "id": "senado:alcorta suero"
+      },
+      {
+        "orador": "Mesías Ramírez",
+        "cargo": "legislador",
+        "sobre": "Reglamento para elegir magistrados",
+        "postura": "a favor",
+        "tema": "Justicia",
+        "dijo": "Sustentó el dictamen para la elección de magistrados del Tribunal.",
+        "proyecto": "PL 11 y 16",
+        "id": "senado:mesia ramirez"
+      },
+      {
+        "orador": "Hugo Caguana",
+        "cargo": "legislador",
+        "sobre": "Evaluación de magistrados del Tribunal",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Denunció la falta de control objetivo en la evaluación.",
+        "proyecto": "PL 11 y 16",
+        "id": "senado:ccahuana aymachoque"
+      },
+      {
+        "orador": "Patricia Iturregui",
+        "cargo": "legislador",
+        "sobre": "Modelo de elección de magistrados",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Señaló que el modelo de elección afecta la independencia institucional.",
+        "proyecto": "PL 11 y 16",
+        "id": "senado:iturregui byrne"
+      },
+      {
+        "orador": "Mirtha Vásquez Chukilín",
+        "cargo": "legislador",
+        "sobre": "Reglamento de elección de magistrados",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Propuso modificaciones para garantizar la transparencia en la elección.",
+        "proyecto": "PL 11 y 16",
+        "id": "senado:vasquez chuquilin"
+      },
+      {
+        "orador": "Fernando Quito",
+        "cargo": "legislador",
+        "sobre": "Control político sobre el tribunal",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Criticó que el reglamento mantiene el control político institucional.",
+        "proyecto": "PL 11 y 16",
+        "id": "senado:quito sarmiento"
+      },
+      {
+        "orador": "Iber Maraví",
+        "cargo": "legislador",
+        "sobre": "Puntaje de evaluación de magistrados",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Rechazó la distribución de puntos que favorece la subjetividad.",
+        "proyecto": "PL 11 y 16",
+        "id": "senado:maravi olarte"
+      },
+      {
+        "orador": "Caterina Ampuedo",
+        "cargo": "legislador",
+        "sobre": "Elección de magistrados del Tribunal",
+        "postura": "a favor",
+        "tema": "Justicia",
+        "dijo": "Respaldó el dictamen para asegurar la meritocracia en la elección.",
+        "proyecto": "PL 11 y 16",
+        "id": "senado:ampuero meza"
+      },
+      {
+        "orador": "Lourdes Alcorta",
+        "cargo": "legislador",
+        "sobre": "Postulación de candidatos al tribunal",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Aclaró que la ciudadanía puede proponer candidatos al tribunal.",
+        "proyecto": "PL 11 y 16",
+        "id": "senado:alcorta suero"
+      },
+      {
+        "orador": "Marta Moyano",
+        "cargo": "legislador",
+        "sobre": "Debate del reglamento en el pleno",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Cuestionó la falta de coherencia en el debate del pleno.",
+        "proyecto": "PL 11 y 16",
+        "id": "senado:moyano delgado"
+      },
+      {
+        "orador": "Marta Mollano",
+        "cargo": "legislador",
+        "sobre": "Reglamento de elección de magistrados",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Cuestionó la falta de coherencia de las bancadas en el debate.",
+        "proyecto": "Reglamento de elección de magistrados",
+        "id": "senado:moyano delgado"
+      },
+      {
+        "orador": "Víctor Gutiper",
+        "cargo": "legislador",
+        "sobre": "Puntaje de la entrevista de magistrados",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Propuso un texto sustitutorio para la selección de magistrados.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Jack Roderich",
+        "cargo": "legislador",
+        "sobre": "Calidad de las universidades",
+        "postura": "propone",
+        "tema": "Educación",
+        "dijo": "Sugirió mecanismos para evaluar la calidad de las universidades.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Mancha",
+        "cargo": "legislador",
+        "sobre": "Evaluación de la entrevista personal",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Propuso elaborar una rúbrica para la entrevista de magistrados.",
+        "proyecto": "",
+        "id": "senado:mancha pineda"
+      },
+      {
+        "orador": "Marta Mollano",
+        "cargo": "legislador",
+        "sobre": "Independencia del Tribunal Constitucional",
+        "postura": "a favor",
+        "tema": "Justicia",
+        "dijo": "Defendió la autonomía del Tribunal Constitucional ante las críticas.",
+        "proyecto": "",
+        "id": "senado:moyano delgado"
+      },
+      {
+        "orador": "Patricia Juárez",
+        "cargo": "legislador",
+        "sobre": "Composición política del Tribunal",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Rechazó que el Tribunal sea de tendencia derechista.",
+        "proyecto": "",
+        "id": "senado:juarez gallegos"
+      },
+      {
+        "orador": "Barragán",
+        "cargo": "legislador",
+        "sobre": "Participación de colegios profesionales",
+        "postura": "pregunta",
+        "tema": "Justicia",
+        "dijo": "Preguntó sobre la participación de los colegios profesionales.",
+        "proyecto": "",
+        "id": "senado:barragan coloma"
+      },
+      {
+        "orador": "Mecía Ramírez",
+        "cargo": "legislador",
+        "sobre": "Interpretación de colegios profesionales",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Propuso una interpretación extensiva de los colegios profesionales.",
+        "proyecto": "",
+        "id": "senado:mesia ramirez"
+      },
+      {
+        "orador": "Mecía Ramírez",
+        "cargo": "legislador",
+        "sobre": "Número de magistrados del Tribunal",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Propuso aumentar el número de magistrados del Tribunal.",
+        "proyecto": "Reglamento de elección de magistrados",
+        "id": "senado:mesia ramirez"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=_SU9vwpIvLs"
+  },
+  "fb_1325990186228080": {
+    "fecha": "2026-10-28",
+    "organo": "Comisión de Seguridad Integral",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Daisy Terán",
+        "cargo": "invitado",
+        "sobre": "Viabilidad de la ley de disciplina militar",
+        "postura": "a favor",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Respaldó la viabilidad de la ley de disciplina militar.",
+        "proyecto": "Ley Orgánica de Personal y Disciplina de las Fuerzas Armadas",
+        "id": null
+      },
+      {
+        "orador": "Guillermo Pabón",
+        "cargo": "invitado",
+        "sobre": "Inclusión de contrabando en la ley antimafias",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Respaldó la inclusión del contrabando en la ley antimafias.",
+        "proyecto": "Ley Antimafias",
+        "id": null
+      },
+      {
+        "orador": "Gerardo Machado",
+        "cargo": "legislador",
+        "sobre": "Propuestas para la ley antimafias",
+        "postura": "pregunta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Preguntó cómo enriquecer la ley antimafias con propuestas.",
+        "proyecto": "Ley Antimafias",
+        "id": "EC:machado clavijo"
+      },
+      {
+        "orador": "Mauricio Nágera",
+        "cargo": "invitado",
+        "sobre": "Observaciones a la ley antimafias",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Cuestionó la desproporcionalidad de la ley antimafias.",
+        "proyecto": "Ley Antimafias",
+        "id": null
+      },
+      {
+        "orador": "Mario Sombrán",
+        "cargo": "legislador",
+        "sobre": "Penalidades de la ley antimafias",
+        "postura": "pregunta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Preguntó sobre penas en la ley antimafias.",
+        "proyecto": "Ley Antimafias",
+        "id": null
+      },
+      {
+        "orador": "Mauricio Nágera",
+        "cargo": "invitado",
+        "sobre": "Reajuste de penas en la ley antimafias",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Propuso reajustes en la ley antimafias.",
+        "proyecto": "Ley Antimafias",
+        "id": null
+      },
+      {
+        "orador": "Gerardo Machado",
+        "cargo": "legislador",
+        "sobre": "Garantías en la ley antimafias",
+        "postura": "pregunta",
+        "tema": "Justicia",
+        "dijo": "Preguntó cómo fortalecer la ley antimafias.",
+        "proyecto": "Ley Antimafias",
+        "id": "EC:machado clavijo"
+      },
+      {
+        "orador": "Mauricio Nágera",
+        "cargo": "invitado",
+        "sobre": "Fortalecimiento de la ley antimafias",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso fortalecer la inteligencia en la ley antimafias.",
+        "proyecto": "Ley Antimafias",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1325990186228080"
+  },
+  "fb_4548848318763525": {
+    "fecha": "2026-10-28",
+    "organo": "Comisión de Derecho al Trabajo",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Cristian Marcelo Balceca Narvaz",
+        "cargo": "invitado",
+        "sobre": "Reforma LOSEP para primer empleo",
+        "postura": "con observaciones",
+        "tema": "Trabajo",
+        "dijo": "Defendió la necesidad de la reforma pero criticó su redacción técnica.",
+        "proyecto": "Reforma LOSEP primer empleo",
+        "id": null
+      },
+      {
+        "orador": "Roberto Cuero",
+        "cargo": "legislador",
+        "sobre": "Acciones afirmativas para jóvenes excluidos",
+        "postura": "a favor",
+        "tema": "Trabajo",
+        "dijo": "Propuso incluir acciones afirmativas para jóvenes en situación de exclusión.",
+        "proyecto": "Reforma LOSEP primer empleo",
+        "id": "EC:cuero medina"
+      },
+      {
+        "orador": "Humberto Alvarado",
+        "cargo": "legislador",
+        "sobre": "Presupuesto para nuevas plazas de empleo",
+        "postura": "en contra",
+        "tema": "Trabajo",
+        "dijo": "Cuestionó la falta de presupuesto para crear nuevas plazas laborales.",
+        "proyecto": "Reforma LOSEP primer empleo",
+        "id": "EC:alvarado espinel"
+      },
+      {
+        "orador": "Roberto Emilio Puerta",
+        "cargo": "legislador",
+        "sobre": "Acciones afirmativas para sectores populares",
+        "postura": "a favor",
+        "tema": "Trabajo",
+        "dijo": "Respaldó la implementación de acciones afirmativas para sectores populares.",
+        "proyecto": "Reforma LOSEP primer empleo",
+        "id": null
+      },
+      {
+        "orador": "Alvarado",
+        "cargo": "legislador",
+        "sobre": "Reforma de la LOCC",
+        "postura": "con observaciones",
+        "tema": "Trabajo",
+        "dijo": "Defendió las acciones afirmativas pero señaló vacíos en la norma.",
+        "proyecto": "",
+        "id": "EC:alvarado espinel"
+      },
+      {
+        "orador": "Marcelo Balseca Narváez",
+        "cargo": "invitado",
+        "sobre": "Reforma de la LOCC",
+        "postura": "con observaciones",
+        "tema": "Trabajo",
+        "dijo": "Propuso simplificar los requisitos para evitar posibles inconstitucionalidades.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "De la Torre",
+        "cargo": "legislador",
+        "sobre": "Reforma de la LOCC",
+        "postura": "con observaciones",
+        "tema": "Trabajo",
+        "dijo": "Cuestionó la limitación de edad y las restricciones presupuestarias.",
+        "proyecto": "",
+        "id": "EC:de la"
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=4548848318763525"
   }
 }
