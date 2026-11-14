@@ -12385,5 +12385,292 @@
       }
     ],
     "url": "https://www.facebook.com/watch/?v=2366758590820159"
+  },
+  "fb_1974410993515218": {
+    "fecha": "2026-10-21",
+    "organo": "Comisión de Derecho al Trabajo",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Nicolás Sebastián Crón Muñoz",
+        "cargo": "invitado",
+        "sobre": "Reforma para la inserción del primer empleo",
+        "postura": "con observaciones",
+        "tema": "Trabajo",
+        "dijo": "Propuso incorporar mecanismos de seguimiento y valorar las prácticas preprofesionales en la reforma legislativa.",
+        "proyecto": "Ley de Servicio Público para el primer empleo",
+        "id": null
+      },
+      {
+        "orador": "Paula Jaramillo",
+        "cargo": "legislador",
+        "sobre": "Reforma para la inserción del primer empleo",
+        "postura": "a favor",
+        "tema": "Trabajo",
+        "dijo": "Defendió la validación de las pasantías para facilitar el acceso de universitarios al empleo público.",
+        "proyecto": "Ley de Servicio Público para el primer empleo",
+        "id": "EC:jaramillo zurita paola"
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1974410993515218"
+  },
+  "CzLAVmmi5ZE": {
+    "fecha": "2026-10-21",
+    "organo": "Comisión de Constitución",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Marleni Arminta Valencia",
+        "cargo": "legislador",
+        "sobre": "demoras en informes de caducidad",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso una reflexión institucional sobre la demora en las denuncias.",
+        "proyecto": "",
+        "id": "diputados:arminta valencia"
+      },
+      {
+        "orador": "Iván Rojas",
+        "cargo": "invitado",
+        "sobre": "caducidad de denuncia contra Víctor Ticona",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Propuso declarar la caducidad de la prerrogativa de Víctor Ticona.",
+        "proyecto": "0003X444",
+        "id": null
+      },
+      {
+        "orador": "Fernando García Ubi",
+        "cargo": "legislador",
+        "sobre": "seguimiento de denuncia contra César Cómbina",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Pidió remitir los actuados a la Fiscalía de la Nación.",
+        "proyecto": "00126X484",
+        "id": null
+      },
+      {
+        "orador": "Georgina Duarte",
+        "cargo": "legislador",
+        "sobre": "seguimiento de casos en la fiscalía",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Pidió realizar un seguimiento de los casos ante la Fiscalía.",
+        "proyecto": "",
+        "id": "diputados:duarte"
+      },
+      {
+        "orador": "Secretario Técnico",
+        "cargo": "ministro o autoridad",
+        "sobre": "procedimiento tras caducidad de prerrogativa",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Informó el procedimiento tras la caducidad de la prerrogativa funcional.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Colchado Guamani",
+        "cargo": "legislador",
+        "sobre": "resúmenes de acuerdos de la comisión",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso que el secretario técnico entregue resúmenes de sesiones.",
+        "proyecto": "",
+        "id": "diputados:colchado huamani"
+      },
+      {
+        "orador": "Iván Rojas",
+        "cargo": "invitado",
+        "sobre": "caducidad de denuncia contra César Cómbina",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Propuso la caducidad de la prerrogativa de César Cómbina.",
+        "proyecto": "00136X555",
+        "id": null
+      },
+      {
+        "orador": "Iván Rojas",
+        "cargo": "invitado",
+        "sobre": "calificación de denuncia contra magistrados",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Propuso el informe de calificación de la denuncia contra magistrados.",
+        "proyecto": "00001",
+        "id": null
+      },
+      {
+        "orador": "Iván Rojas",
+        "cargo": "invitado",
+        "sobre": "Denuncia constitucional 00001",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso declarar improcedente la denuncia contra los magistrados del Tribunal Constitucional.",
+        "proyecto": "00001",
+        "id": null
+      },
+      {
+        "orador": "Fernando García Buenaventura",
+        "cargo": "legislador",
+        "sobre": "Denuncia constitucional 00001",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Consideró que la denuncia 00001 estaba mal planteada y debía declararse improcedente.",
+        "proyecto": "00001",
+        "id": null
+      },
+      {
+        "orador": "Iván Rojas",
+        "cargo": "invitado",
+        "sobre": "Denuncias contra la ONP",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso archivar las denuncias contra funcionarios de la ONP por falta de competencia.",
+        "proyecto": "00074-X725 y 00076-X727",
+        "id": null
+      },
+      {
+        "orador": "Cristian Garanda Vázquez",
+        "cargo": "legislador",
+        "sobre": "Denuncias contra la ONP",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Respaldó el informe de calificación pese a empatizar con la situación de la denunciante.",
+        "proyecto": "00074-X725 y 00076-X727",
+        "id": "diputados:aranda vasquez"
+      },
+      {
+        "orador": "Iván Rojas",
+        "cargo": "invitado",
+        "sobre": "Denuncia contra Juan José Santibáñez",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso admitir a trámite la denuncia contra el exministro Juan José Santibáñez.",
+        "proyecto": "000065-X692",
+        "id": null
+      },
+      {
+        "orador": "Colchado Guamani",
+        "cargo": "legislador",
+        "sobre": "Denuncia contra Juan José Santibáñez",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Respaldó la admisión de la denuncia tras exponer la gravedad de los hechos.",
+        "proyecto": "000065-X692",
+        "id": "diputados:colchado huamani"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=CzLAVmmi5ZE"
+  },
+  "fb_2376024616547641": {
+    "fecha": "2026-10-21",
+    "organo": "Comisión de Desarrollo Económico",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Anabela Asin Arce",
+        "cargo": "legislador",
+        "sobre": "Proyecto de ley de concurso preventivo",
+        "postura": "a favor",
+        "tema": "Mype",
+        "dijo": "Defendió el proyecto de ley para la continuidad empresarial.",
+        "proyecto": "proyecto de ley de concurso preventivo",
+        "id": "EC:azin arce"
+      },
+      {
+        "orador": "Luis Cabezas Clare",
+        "cargo": "ministro o autoridad",
+        "sobre": "Reformas al proyecto de ley de concurso",
+        "postura": "con observaciones",
+        "tema": "Mype",
+        "dijo": "Propuso ajustes técnicos y mayor presupuesto para la Superintendencia.",
+        "proyecto": "proyecto de ley de concurso preventivo",
+        "id": null
+      },
+      {
+        "orador": "Valentina Centeno-Arteaga",
+        "cargo": "legislador",
+        "sobre": "Necesidad de la reforma de la ley",
+        "postura": "a favor",
+        "tema": "Mype",
+        "dijo": "Respaldó la urgencia de reformar el marco normativo empresarial.",
+        "proyecto": "proyecto de ley de concurso preventivo",
+        "id": "EC:centeno arteaga"
+      },
+      {
+        "orador": "Estefanía López",
+        "cargo": "legislador",
+        "sobre": "Proyecto de ley de concurso preventivo",
+        "postura": "a favor",
+        "tema": "Mype",
+        "dijo": "Respaldó la propuesta por su importancia para el sector industrial.",
+        "proyecto": "proyecto de ley de concurso preventivo",
+        "id": "EC:lopez pico"
+      },
+      {
+        "orador": "Estefania López",
+        "cargo": "legislador",
+        "sobre": "El potencial empresarial de Tungurahua",
+        "postura": "a favor",
+        "tema": "Mype",
+        "dijo": "Resaltó la importancia de proteger la producción provincial.",
+        "proyecto": "Proyecto de ley de concurso preventivo",
+        "id": "EC:lopez pico"
+      },
+      {
+        "orador": "Sergio Peña",
+        "cargo": "legislador",
+        "sobre": "La importancia de las empresas para el empleo",
+        "postura": "a favor",
+        "tema": "Mype",
+        "dijo": "Destacó que las empresas son el motor económico.",
+        "proyecto": "Proyecto de ley de concurso preventivo",
+        "id": "EC:pena veloz"
+      },
+      {
+        "orador": "Luis Cabezas",
+        "cargo": "ministro o autoridad",
+        "sobre": "La revisión de planes y el quorum",
+        "postura": "comenta",
+        "tema": "Mype",
+        "dijo": "Explicó que reducir el quorum facilitará los acuerdos.",
+        "proyecto": "Proyecto de ley de concurso preventivo",
+        "id": null
+      },
+      {
+        "orador": "Mabel Méndez",
+        "cargo": "legislador",
+        "sobre": "La aplicabilidad y los intereses de acreedores",
+        "postura": "pregunta",
+        "tema": "Mype",
+        "dijo": "Consultó sobre la efectividad de la nueva normativa.",
+        "proyecto": "Proyecto de ley de concurso preventivo",
+        "id": "EC:mendez rojas"
+      },
+      {
+        "orador": "Luis Cabezas",
+        "cargo": "ministro o autoridad",
+        "sobre": "La aplicación de la ley y los acreedores",
+        "postura": "comenta",
+        "tema": "Mype",
+        "dijo": "Aseguró que el proyecto facilitará la aplicación de la ley.",
+        "proyecto": "Proyecto de ley de concurso preventivo",
+        "id": null
+      },
+      {
+        "orador": "Estefania López",
+        "cargo": "legislador",
+        "sobre": "Plazos para la admisión de solicitudes",
+        "postura": "pregunta",
+        "tema": "Mype",
+        "dijo": "Preguntó por los tiempos de respuesta de la institución.",
+        "proyecto": "Proyecto de ley de concurso preventivo",
+        "id": "EC:lopez pico"
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=2376024616547641"
   }
 }
