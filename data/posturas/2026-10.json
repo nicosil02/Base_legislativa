@@ -12769,5 +12769,742 @@
       }
     ],
     "url": "https://www.facebook.com/watch/?v=28957761680521250"
+  },
+  "idj5rUvns_g": {
+    "fecha": "2026-10-29",
+    "organo": "Pleno de la Asamblea",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Anthony Becerra",
+        "cargo": "legislador",
+        "sobre": "informe de fiscalización sobre tercerización laboral",
+        "postura": "propone",
+        "tema": "Trabajo",
+        "dijo": "Denunció la tercerización laboral en la empresa EMAC.",
+        "proyecto": "",
+        "id": "EC:becerra contreras"
+      },
+      {
+        "orador": "Adrián Castro",
+        "cargo": "legislador",
+        "sobre": "informe de fiscalización sobre tercerización laboral",
+        "postura": "a favor",
+        "tema": "Trabajo",
+        "dijo": "Respaldó el informe de fiscalización de la empresa EMAC.",
+        "proyecto": "",
+        "id": "EC:castro piedra"
+      },
+      {
+        "orador": "Javier Ordóñez",
+        "cargo": "legislador",
+        "sobre": "explotación de áridos y pétreos en Quito",
+        "postura": "propone",
+        "tema": "Minería",
+        "dijo": "Propuso fiscalizar la extracción de 2.2 millones de metros cúbicos de áridos.",
+        "proyecto": "",
+        "id": "EC:ordonez fuentes"
+      },
+      {
+        "orador": "Jorge Machumbra",
+        "cargo": "invitado",
+        "sobre": "reconocimiento por trayectoria artística",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Agradeció el reconocimiento de la Asamblea por su trayectoria artística amazónica.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "María Palacios González",
+        "cargo": "ministro o autoridad",
+        "sobre": "informe de fiscalización de tercerización laboral",
+        "postura": "comenta",
+        "tema": "Trabajo",
+        "dijo": "Leyó el memorando y la parte resolutiva del informe de fiscalización.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Recalde",
+        "cargo": "legislador",
+        "sobre": "fiscalización de la empresa EMAC EP",
+        "postura": "a favor",
+        "tema": "Trabajo",
+        "dijo": "Defendió la aprobación del informe sobre la tercerización en la EMAC EP.",
+        "proyecto": "",
+        "id": "EC:recalde alava"
+      },
+      {
+        "orador": "Anthony Becerra",
+        "cargo": "legislador",
+        "sobre": "tercerización laboral en EMAC EP",
+        "postura": "a favor",
+        "tema": "Trabajo",
+        "dijo": "Denunció la precaria situación laboral de las trabajadoras de aseo en Cuenca.",
+        "proyecto": "",
+        "id": "EC:becerra contreras"
+      },
+      {
+        "orador": "Humberto Alvarado",
+        "cargo": "legislador",
+        "sobre": "informe de fiscalización sobre tercerización",
+        "postura": "con observaciones",
+        "tema": "Trabajo",
+        "dijo": "Propuso medidas inmediatas ante el informe sobre tercerización laboral.",
+        "proyecto": "",
+        "id": "EC:alvarado espinel"
+      },
+      {
+        "orador": "Naila Quintana",
+        "cargo": "legislador",
+        "sobre": "dignificación del trabajo de aseo",
+        "postura": "a favor",
+        "tema": "Trabajo",
+        "dijo": "Resaltó la importancia de proteger la dignidad de las trabajadoras.",
+        "proyecto": "",
+        "id": "EC:quintana tapia"
+      },
+      {
+        "orador": "Humberto Alvarado",
+        "cargo": "legislador",
+        "sobre": "derechos de trabajadores del aseo",
+        "postura": "a favor",
+        "tema": "Trabajo",
+        "dijo": "Defendió los derechos laborales de las trabajadoras del aseo.",
+        "proyecto": "",
+        "id": "EC:alvarado espinel"
+      },
+      {
+        "orador": "Naila Quintana",
+        "cargo": "legislador",
+        "sobre": "informe de tercerización laboral",
+        "postura": "a favor",
+        "tema": "Trabajo",
+        "dijo": "Respaldó el informe de la Comisión de Trabajo.",
+        "proyecto": "",
+        "id": "EC:quintana tapia"
+      },
+      {
+        "orador": "Adrián Castro",
+        "cargo": "legislador",
+        "sobre": "informe de tercerización laboral",
+        "postura": "a favor",
+        "tema": "Trabajo",
+        "dijo": "Pidió apoyo para las trabajadoras de Cuenca.",
+        "proyecto": "",
+        "id": "EC:castro piedra"
+      },
+      {
+        "orador": "Roque Ordóñez",
+        "cargo": "legislador",
+        "sobre": "reforma a la ley de juventudes",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Defendió el proyecto de la Ley de Juventudes.",
+        "proyecto": "Ley Orgánica de Juventudes",
+        "id": "EC:ordonez quezada"
+      },
+      {
+        "orador": "Roque Ordóñez",
+        "cargo": "legislador",
+        "sobre": "Políticas públicas para la juventud",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Defendió las políticas de bienestar para la juventud.",
+        "proyecto": "Ley de juventudes",
+        "id": "EC:ordonez quezada"
+      },
+      {
+        "orador": "Natalie Farinango",
+        "cargo": "legislador",
+        "sobre": "Reforma a la ley de juventudes",
+        "postura": "con observaciones",
+        "tema": "Otros",
+        "dijo": "Propuso una cuota progresiva de acceso al trabajo.",
+        "proyecto": "Ley de juventudes",
+        "id": "EC:farinango delgado"
+      },
+      {
+        "orador": "Eliana Correa",
+        "cargo": "legislador",
+        "sobre": "Garantías para jóvenes migrantes",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Pidió incluir garantías para jóvenes en movilidad humana.",
+        "proyecto": "Ley de juventudes",
+        "id": "EC:correa gonzalez"
+      },
+      {
+        "orador": "Dominic Serrano",
+        "cargo": "legislador",
+        "sobre": "Salud mental y entorno laboral",
+        "postura": "con observaciones",
+        "tema": "Salud",
+        "dijo": "Propuso vincular la salud mental con el trabajo.",
+        "proyecto": "Ley de juventudes",
+        "id": "EC:serrano molina"
+      },
+      {
+        "orador": "Noemí Cabrera",
+        "cargo": "legislador",
+        "sobre": "Desafíos y necesidades de la juventud",
+        "postura": "con observaciones",
+        "tema": "Otros",
+        "dijo": "Denunció la falta de oportunidades para la juventud.",
+        "proyecto": "Ley de juventudes",
+        "id": "EC:cabrera chacon"
+      },
+      {
+        "orador": "Carlos Gavilanes",
+        "cargo": "legislador",
+        "sobre": "Prácticas preprofesionales y cuota laboral",
+        "postura": "con observaciones",
+        "tema": "Trabajo",
+        "dijo": "Propuso diferenciar las prácticas académicas de la relación laboral.",
+        "proyecto": "Ley de juventudes",
+        "id": "EC:gavilanez munoz"
+      },
+      {
+        "orador": "Cristina Jacomee",
+        "cargo": "legislador",
+        "sobre": "Apoyo integral para los jóvenes",
+        "postura": "con observaciones",
+        "tema": "Otros",
+        "dijo": "Defendió la necesidad de mayor apoyo estudiantil.",
+        "proyecto": "Ley de juventudes",
+        "id": "EC:jacome benitez"
+      },
+      {
+        "orador": "Cristiana Jácome",
+        "cargo": "legislador",
+        "sobre": "Ley Orgánica de Juventudes",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Respaldó la propuesta para fortalecer los derechos de la juventud.",
+        "proyecto": "Ley de Juventudes",
+        "id": "EC:jacome benitez"
+      },
+      {
+        "orador": "Mariana Yumbai",
+        "cargo": "legislador",
+        "sobre": "Ley Orgánica de Juventudes",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Pidió la aprobación del proyecto para asegurar oportunidades juveniles.",
+        "proyecto": "Ley de Juventudes",
+        "id": "EC:yumbay yallico"
+      },
+      {
+        "orador": "María Palacios",
+        "cargo": "legislador",
+        "sobre": "Derechos de jóvenes migrantes",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Propuso garantizar los derechos de los jóvenes ecuatorianos migrantes.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Naila Quintana",
+        "cargo": "legislador",
+        "sobre": "Ley Orgánica de Juventudes",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Respaldó los alcances de la reforma a la Ley de Juventudes.",
+        "proyecto": "Ley de Juventudes",
+        "id": "EC:quintana tapia"
+      },
+      {
+        "orador": "Franklin Zamaniejo",
+        "cargo": "legislador",
+        "sobre": "Ley Orgánica de Juventudes",
+        "postura": "con observaciones",
+        "tema": "Trabajo",
+        "dijo": "Propuso establecer límites a las pasantías y jornadas flexibles.",
+        "proyecto": "Ley de Juventudes",
+        "id": "EC:samaniego maigua"
+      },
+      {
+        "orador": "Adrián Castro",
+        "cargo": "legislador",
+        "sobre": "Ley Orgánica de Juventudes",
+        "postura": "propone",
+        "tema": "Trabajo",
+        "dijo": "Propuso incluir beneficios para hijos de recicladoras en la ley.",
+        "proyecto": "Ley de Juventudes",
+        "id": "EC:castro piedra"
+      },
+      {
+        "orador": "Javier Ordóñez",
+        "cargo": "legislador",
+        "sobre": "Control de áridos y petreos",
+        "postura": "propone",
+        "tema": "Minería",
+        "dijo": "Pidió fiscalizar la minería ilegal de áridos en Quito.",
+        "proyecto": "",
+        "id": "EC:ordonez fuentes"
+      },
+      {
+        "orador": "Javier Ordóñez",
+        "cargo": "legislador",
+        "sobre": "fiscalización de la minería ilegal en Quito",
+        "postura": "propone",
+        "tema": "Minería",
+        "dijo": "Propuso que la Comisión de Seguridad fiscalice la minería ilegal en Quito.",
+        "proyecto": "",
+        "id": "EC:ordonez fuentes"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=idj5rUvns_g"
+  },
+  "ubmnWklg9n4": {
+    "fecha": "2026-10-22",
+    "organo": "Pleno de Diputados",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Juan Castrejón Fernández",
+        "cargo": "legislador",
+        "sobre": "Derogación de la ley 32645",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Presentó el dictamen para derogar la ley 32645.",
+        "proyecto": "Ley 32645",
+        "id": "diputados:castrejon fernandez"
+      },
+      {
+        "orador": "Rosana Alera Macera",
+        "cargo": "legislador",
+        "sobre": "Derogación de la ley 32645",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Defendió la derogación de la ley 32645.",
+        "proyecto": "PL 12",
+        "id": null
+      },
+      {
+        "orador": "Indira Wilca Flores",
+        "cargo": "legislador",
+        "sobre": "Derogación de la ley 32645",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Denunció la discriminación en la ley 32645.",
+        "proyecto": "PL 24",
+        "id": "diputados:huilca flores"
+      },
+      {
+        "orador": "Neri Fernández Nina",
+        "cargo": "legislador",
+        "sobre": "Derogación de la ley 32645",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Respaldó la derogación de la ley 32645.",
+        "proyecto": "Ley 32645",
+        "id": "diputados:fernandez nina"
+      },
+      {
+        "orador": "Muñoz Yuribilca Kim Tami",
+        "cargo": "legislador",
+        "sobre": "Derogación de la ley 32645",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Apoyó la derogación de la ley 32645.",
+        "proyecto": "Ley 32645",
+        "id": "diputados:munoz yurivilca"
+      },
+      {
+        "orador": "Norma Yarrow",
+        "cargo": "legislador",
+        "sobre": "Derogación de la ley 32645",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Pidió la derogación de la ley 32645.",
+        "proyecto": "Ley 32645",
+        "id": "diputados:yarrow lumbreras"
+      },
+      {
+        "orador": "Analí Márquez",
+        "cargo": "legislador",
+        "sobre": "Derogación de la ley 32645",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Cuestionó la creación de la ley 32645.",
+        "proyecto": "Ley 32645",
+        "id": "diputados:marquez huanca"
+      },
+      {
+        "orador": "Analí Márquez",
+        "cargo": "legislador",
+        "sobre": "Derogación de la Ley 32645",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Cuestionó la creación del Colegio Profesional de Artistas.",
+        "proyecto": "Ley 32645",
+        "id": "diputados:marquez huanca"
+      },
+      {
+        "orador": "Luis Quispecandia",
+        "cargo": "legislador",
+        "sobre": "Derogación de la Ley 32645",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Respaldó la derogación de la ley de artistas.",
+        "proyecto": "Ley 32645",
+        "id": "diputados:quispe candia"
+      },
+      {
+        "orador": "Amalia Palomino",
+        "cargo": "legislador",
+        "sobre": "Derogación de la Ley 32645",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Denunció el uso político de la ley vigente.",
+        "proyecto": "Ley 32645",
+        "id": "diputados:palomino pacheco"
+      },
+      {
+        "orador": "James Olguín",
+        "cargo": "legislador",
+        "sobre": "Derogación de la Ley 32645",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Manifestó satisfacción por la derogación de la ley.",
+        "proyecto": "Ley 32645",
+        "id": "diputados:holguin aguirre"
+      },
+      {
+        "orador": "Tito Rojas",
+        "cargo": "legislador",
+        "sobre": "Derogación de la Ley 32645",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Calificó de inconstitucional la ley del artista.",
+        "proyecto": "Ley 32645",
+        "id": "diputados:tito rojas"
+      },
+      {
+        "orador": "Pacheco Quispe Marco Antonio",
+        "cargo": "legislador",
+        "sobre": "Derogación de la Ley 32645",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Respaldó la derogación del Colegio de Artistas.",
+        "proyecto": "Ley 32645",
+        "id": "diputados:pacheco quispe"
+      },
+      {
+        "orador": "Dina Janco",
+        "cargo": "legislador",
+        "sobre": "Apoyo a los artistas peruanos",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Pidió mayor apoyo y formación para los artistas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Marlenia Arminta",
+        "cargo": "legislador",
+        "sobre": "Derogación de la Ley 32645",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Apoyó la aprobación de la derogación de la ley.",
+        "proyecto": "Ley 32645",
+        "id": "diputados:arminta valencia"
+      },
+      {
+        "orador": "Rafael Aldo Céis Castillo",
+        "cargo": "legislador",
+        "sobre": "Derogación de la Ley 32645",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Respaldó la iniciativa de derogar la ley.",
+        "proyecto": "Ley 32645",
+        "id": null
+      },
+      {
+        "orador": "Víctor Piñán",
+        "cargo": "legislador",
+        "sobre": "Derogación de la Ley 32645",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Denunció que la ley perjudica a los artistas.",
+        "proyecto": "Ley 32645",
+        "id": "diputados:pinan mamani"
+      },
+      {
+        "orador": "Ernesto Sunini",
+        "cargo": "legislador",
+        "sobre": "Derogación de la Ley 32645",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Propuso legislar en beneficio de los artistas.",
+        "proyecto": "Ley 32645",
+        "id": "diputados:zunini yerren"
+      },
+      {
+        "orador": "César Olguín",
+        "cargo": "legislador",
+        "sobre": "Derogación de la Ley 32645",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Denunció la inconstitucionalidad de la norma actual.",
+        "proyecto": "Ley 32645",
+        "id": "diputados:holguin loaiza"
+      },
+      {
+        "orador": "Frank Kerk",
+        "cargo": "legislador",
+        "sobre": "Colegiación obligatoria de profesionales",
+        "postura": "en contra",
+        "tema": "Otros",
+        "dijo": "Criticó la obligatoriedad de los colegios profesionales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Luis Arturo Alegría García",
+        "cargo": "legislador",
+        "sobre": "Derogación de la Ley 32645",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Reconoció el error al aprobar la ley.",
+        "proyecto": "Ley 32645",
+        "id": "diputados:alegria garcia"
+      },
+      {
+        "orador": "Gina Duarte Patiño",
+        "cargo": "legislador",
+        "sobre": "Importancia del arte en educación",
+        "postura": "a favor",
+        "tema": "Educación",
+        "dijo": "Defendió el desarrollo del arte en niños.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Adrián Álvarez",
+        "cargo": "legislador",
+        "sobre": "Ley de colegiatura para artistas",
+        "postura": "en contra",
+        "tema": "Otros",
+        "dijo": "Calificó de discriminatoria la ley de colegiatura.",
+        "proyecto": "",
+        "id": "diputados:andrade salguero de alvarez"
+      },
+      {
+        "orador": "Flor de María Mesa Rivera",
+        "cargo": "legislador",
+        "sobre": "Protección de niños en orfandad",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Sustentó el dictamen sobre la protección de niños en situación de orfandad.",
+        "proyecto": "PL 178",
+        "id": null
+      },
+      {
+        "orador": "Leo Miguel de Paz Lancho",
+        "cargo": "legislador",
+        "sobre": "Cambios técnicos al dictamen",
+        "postura": "con observaciones",
+        "tema": "Otros",
+        "dijo": "Propuso cambios técnicos para mejorar la redacción del dictamen.",
+        "proyecto": "PL 178",
+        "id": "diputados:de paz lancho"
+      },
+      {
+        "orador": "Baella",
+        "cargo": "legislador",
+        "sobre": "Aniversario de Seguridad del Estado",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Saludó a la Dirección Nacional de Seguridad del Estado por su aniversario.",
+        "proyecto": "",
+        "id": "diputados:baella malca"
+      },
+      {
+        "orador": "Paola Martínez",
+        "cargo": "legislador",
+        "sobre": "Protección de niños en orfandad",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Defendió la propuesta de sensibilización y protección a la orfandad.",
+        "proyecto": "PL 178",
+        "id": "diputados:martinez paitan"
+      },
+      {
+        "orador": "Neri Fernández Nina",
+        "cargo": "legislador",
+        "sobre": "Día nacional de la orfandad",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Respaldó la creación de un día nacional para visibilizar la orfandad.",
+        "proyecto": "PL 178",
+        "id": "diputados:fernandez nina"
+      },
+      {
+        "orador": "Pirangeli Daniela Dodero Jovich",
+        "cargo": "legislador",
+        "sobre": "Modificaciones al dictamen de orfandad",
+        "postura": "con observaciones",
+        "tema": "Otros",
+        "dijo": "Propuso cambios en el título y estructura de la norma.",
+        "proyecto": "PL 178",
+        "id": "diputados:dodero jovich"
+      },
+      {
+        "orador": "Barbarán Reyes Rosángela Andrea",
+        "cargo": "legislador",
+        "sobre": "Situación de abandono infantil",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Denunció las dificultades en los procesos de adopción en el país.",
+        "proyecto": "PL 178",
+        "id": "diputados:barbaran reyes"
+      },
+      {
+        "orador": "Marleni Arminta",
+        "cargo": "legislador",
+        "sobre": "Mejoras técnicas al dictamen",
+        "postura": "con observaciones",
+        "tema": "Otros",
+        "dijo": "Pidió corregir errores técnicos y de terminología en el texto.",
+        "proyecto": "PL 178",
+        "id": "diputados:arminta valencia"
+      },
+      {
+        "orador": "Amalia Palomino",
+        "cargo": "legislador",
+        "sobre": "Presupuesto para salud integral infantil",
+        "postura": "a favor",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Pidió asignar presupuesto para la atención psicológica de niños huérfanos.",
+        "proyecto": "PL 178",
+        "id": "diputados:palomino pacheco"
+      },
+      {
+        "orador": "Ana Luisa Yufra Lugo",
+        "cargo": "legislador",
+        "sobre": "Visibilidad de niños desprotegidos",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Respaldó la institucionalización de una fecha para la orfandad.",
+        "proyecto": "PL 178",
+        "id": "diputados:yuffra lugo"
+      },
+      {
+        "orador": "Dina Hango",
+        "cargo": "legislador",
+        "sobre": "Protección de la infancia",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Respaldó la protección de niños y adolescentes en el país.",
+        "proyecto": "PL 178",
+        "id": null
+      },
+      {
+        "orador": "Carlos Alberto Domínguez Herrera",
+        "cargo": "legislador",
+        "sobre": "Acreditación de centros de acogida",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Informó sobre la brecha de centros de acogida no acreditados.",
+        "proyecto": "PL 178",
+        "id": "diputados:dominguez herrera"
+      },
+      {
+        "orador": "Indira Hilca",
+        "cargo": "legislador",
+        "sobre": "Terminología y asistencia económica",
+        "postura": "con observaciones",
+        "tema": "Otros",
+        "dijo": "Propuso reemplazar el término abandono por desprotección familiar.",
+        "proyecto": "PL 178",
+        "id": "diputados:huilca flores"
+      },
+      {
+        "orador": "Luis Quispecandia",
+        "cargo": "legislador",
+        "sobre": "Protección y sensibilización infantil",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Respaldó el propósito de la propuesta legislativa sobre orfandad.",
+        "proyecto": "PL 178",
+        "id": "diputados:quispe candia"
+      },
+      {
+        "orador": "Luis Quispecandia",
+        "cargo": "legislador",
+        "sobre": "Protección de niños en abandono",
+        "postura": "con observaciones",
+        "tema": "Otros",
+        "dijo": "Cuestionó la insuficiencia de la propuesta ante el abandono.",
+        "proyecto": "",
+        "id": "diputados:quispe candia"
+      },
+      {
+        "orador": "Infantes Castañeda",
+        "cargo": "legislador",
+        "sobre": "Atención integral a niños vulnerables",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Pidió la articulación entre gobiernos locales y regionales.",
+        "proyecto": "",
+        "id": "diputados:infantes castaneda"
+      },
+      {
+        "orador": "Rosana Rocha",
+        "cargo": "legislador",
+        "sobre": "Día nacional de protección a la orfandad",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Respaldó el proyecto para proteger a la orfandad.",
+        "proyecto": "",
+        "id": "diputados:rocha gallegos"
+      },
+      {
+        "orador": "Fernando García Ubi",
+        "cargo": "legislador",
+        "sobre": "Deterioro familiar y procesos de adopción",
+        "postura": "con observaciones",
+        "tema": "Otros",
+        "dijo": "Denunció la laxitud estatal en los procesos de adopción.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Flor de Jesús Mesa Rivera",
+        "cargo": "legislador",
+        "sobre": "Texto sustitutorio para la comisión",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Propuso un cuarto intermedio para lograr el consenso.",
+        "proyecto": "",
+        "id": "diputados:meza rivera"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=ubmnWklg9n4"
+  },
+  "Qnb9swCU3Jg": {
+    "fecha": "2026-10-22",
+    "organo": "Comisión de Defensa Nacional",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Carlos Abrellos Tomavana",
+        "cargo": "ministro o autoridad",
+        "sobre": "internacionalización de las fuerzas armadas",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Explicó que la situación se debe a la internacionalización de las fuerzas armadas.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=Qnb9swCU3Jg"
   }
 }
