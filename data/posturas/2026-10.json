@@ -6296,5 +6296,682 @@
       }
     ],
     "url": "https://www.youtube.com/watch?v=XGv0b_4rffs"
+  },
+  "BGnG_EJ88tg": {
+    "fecha": "2026-10-28",
+    "organo": "Comisión de Transportes",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Normallar",
+        "cargo": "legislador",
+        "sobre": "Mantenimiento de puente Huampaní y Techo Propio",
+        "postura": "en contra",
+        "tema": "Infraestructura",
+        "dijo": "Denunció la falta de mantenimiento en el puente Huampaní y el desfinanciamiento de Techo Propio.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "John Valqui Ordóñez",
+        "cargo": "legislador",
+        "sobre": "Estado de proyectos viales en Pasco",
+        "postura": "comenta",
+        "tema": "Infraestructura",
+        "dijo": "Informó sobre la revisión de proyectos viales en la región Pasco y Oxapampa.",
+        "proyecto": "",
+        "id": "diputados:valqui ordonez"
+      },
+      {
+        "orador": "John Valqui Ordóñez",
+        "cargo": "legislador",
+        "sobre": "Envío de la proposición legislativa 0642",
+        "postura": "propone",
+        "tema": "Construcción",
+        "dijo": "Solicitó que la comisión evalúe la proposición legislativa cero seiscientos cuarenta y dos.",
+        "proyecto": "PL 0642",
+        "id": "diputados:valqui ordonez"
+      },
+      {
+        "orador": "Verónica Jones",
+        "cargo": "legislador",
+        "sobre": "Supervisión de infraestructuras por OSITRAN",
+        "postura": "propone",
+        "tema": "Transporte",
+        "dijo": "Pidió citar a OSITRAN para supervisar la infraestructura de las vías concesionadas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Neri Fernández Nina",
+        "cargo": "legislador",
+        "sobre": "Desfinanciamiento del programa Techo Propio",
+        "postura": "propone",
+        "tema": "Construcción",
+        "dijo": "Pidió citar a los ministros de Vivienda y Economía por el desfinanciamiento de Techo Propio.",
+        "proyecto": "",
+        "id": "diputados:fernandez nina"
+      },
+      {
+        "orador": "Mauricio Fernando Díaz González",
+        "cargo": "ministro o autoridad",
+        "sobre": "Brechas de agua potable y saneamiento",
+        "postura": "comenta",
+        "tema": "Saneamiento",
+        "dijo": "Informó sobre las brechas de cobertura de agua potable y alcantarillado en el país.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Mauricio Fernando Díaz González",
+        "cargo": "ministro o autoridad",
+        "sobre": "Nuevo modelo Ciudad de Oportunidades",
+        "postura": "propone",
+        "tema": "Construcción",
+        "dijo": "Presentó el modelo Ciudad de Oportunidades para brindar viviendas formales y con servicios.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Mauricio Fernando Díaz González",
+        "cargo": "ministro o autoridad",
+        "sobre": "Ejecución presupuestal del Ministerio de Vivienda",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Informó sobre la tendencia positiva de la ejecución presupuestal del sector.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Mauricio Ornillas",
+        "cargo": "ministro o autoridad",
+        "sobre": "Gestión presupuestal y destrabe de obras",
+        "postura": "comenta",
+        "tema": "Construcción",
+        "dijo": "Informó sobre el avance de ejecución presupuestal y destrabe de obras.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Muedas",
+        "cargo": "legislador",
+        "sobre": "Atención de damnificados por sismo en Junín",
+        "postura": "en contra",
+        "tema": "Infraestructura",
+        "dijo": "Cuestionó la demora en la atención de familias damnificadas en Junín.",
+        "proyecto": "",
+        "id": "diputados:muedas balbiese"
+      },
+      {
+        "orador": "Liliana Tacayama",
+        "cargo": "legislador",
+        "sobre": "Prevención de ocupación informal y riesgos",
+        "postura": "pregunta",
+        "tema": "Construcción",
+        "dijo": "Preguntó sobre medidas para prevenir la ocupación informal en zonas de riesgo.",
+        "proyecto": "",
+        "id": "diputados:takayama jimenez"
+      },
+      {
+        "orador": "Milagro Santana",
+        "cargo": "legislador",
+        "sobre": "Brechas de agua y ejecución presupuestal",
+        "postura": "pregunta",
+        "tema": "Saneamiento",
+        "dijo": "Consultó sobre las metas de reducción de brechas de agua potable.",
+        "proyecto": "",
+        "id": "diputados:santana vera"
+      },
+      {
+        "orador": "Norma Yar",
+        "cargo": "legislador",
+        "sobre": "Reglamentación de ley de agua de emergencia",
+        "postura": "en contra",
+        "tema": "Saneamiento",
+        "dijo": "Denunció la falta de reglamentación de la ley de agua de emergencia.",
+        "proyecto": "Ley 32349",
+        "id": null
+      },
+      {
+        "orador": "Pilar Zulca",
+        "cargo": "legislador",
+        "sobre": "Financiamiento de obras de saneamiento",
+        "postura": "pregunta",
+        "tema": "Saneamiento",
+        "dijo": "Pidió coordinaciones con el MEF para el financiamiento de obras.",
+        "proyecto": "",
+        "id": "diputados:sulca castillo"
+      },
+      {
+        "orador": "John Valqui",
+        "cargo": "legislador",
+        "sobre": "Reactivación de obras de saneamiento",
+        "postura": "pregunta",
+        "tema": "Saneamiento",
+        "dijo": "Preguntó por la cantidad de obras de saneamiento reactivadas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ángel Bobadía",
+        "cargo": "legislador",
+        "sobre": "Obras por impuestos y gestión de riesgos",
+        "postura": "pregunta",
+        "tema": "Saneamiento",
+        "dijo": "Consultó sobre la aplicación de obras por impuestos en vivienda.",
+        "proyecto": "",
+        "id": "senado:ventura angel"
+      },
+      {
+        "orador": "Gerald Sonco",
+        "cargo": "legislador",
+        "sobre": "Atención de damnificados y saneamiento en Puno",
+        "postura": "pregunta",
+        "tema": "Saneamiento",
+        "dijo": "Solicitó la inclusión de proyectos de saneamiento para Puno.",
+        "proyecto": "",
+        "id": "diputados:sonco villanueva"
+      },
+      {
+        "orador": "Gilmer Trujillo",
+        "cargo": "legislador",
+        "sobre": "Información detallada de proyectos por región",
+        "postura": "pregunta",
+        "tema": "Saneamiento",
+        "dijo": "Solicitó información detallada de los proyectos de agua por región.",
+        "proyecto": "",
+        "id": "diputados:trujillo zegarra"
+      },
+      {
+        "orador": "Olber Peña Córdoba",
+        "cargo": "legislador",
+        "sobre": "Presupuesto para construcción en sitio propio",
+        "postura": "pregunta",
+        "tema": "Construcción",
+        "dijo": "Consultó sobre el presupuesto asignado para la construcción en sitio propio.",
+        "proyecto": "",
+        "id": "diputados:pena cordova"
+      },
+      {
+        "orador": "Sadit Pérez",
+        "cargo": "legislador",
+        "sobre": "Atención por heladas en Puno",
+        "postura": "propone",
+        "tema": "Construcción",
+        "dijo": "Pidió atención estatal para las familias afectadas por heladas en Puno.",
+        "proyecto": "",
+        "id": "diputados:perez quispe"
+      },
+      {
+        "orador": "Mauricio Arnías",
+        "cargo": "ministro o autoridad",
+        "sobre": "Módulos térmicos en Junín",
+        "postura": "comenta",
+        "tema": "Construcción",
+        "dijo": "Informó la instalación de 386 módulos térmicos en Junín.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Sóimo Cárdenas Muge",
+        "cargo": "ministro o autoridad",
+        "sobre": "Obras de infraestructura en Junín",
+        "postura": "comenta",
+        "tema": "Infraestructura",
+        "dijo": "Expuso la situación de los proyectos de salud en Junín.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Cárdenas",
+        "cargo": "ministro o autoridad",
+        "sobre": "Estado de obras viales regionales",
+        "postura": "comenta",
+        "tema": "Transporte",
+        "dijo": "Informó sobre el avance de proyectos como el Puente Noruega.",
+        "proyecto": "Puente Noruega",
+        "id": null
+      },
+      {
+        "orador": "Cárdenas",
+        "cargo": "ministro o autoridad",
+        "sobre": "Recortes al presupuesto 2027",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Denunció los recortes presupuestales que afectan a la región.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Cárdenas",
+        "cargo": "ministro o autoridad",
+        "sobre": "Proyectos de salud y educación",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Mencionó que diversos hospitales y colegios están en ejecución.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Muedas",
+        "cargo": "legislador",
+        "sobre": "Gestión del Hospital Manuel Aracaqui",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Cuestionó la gestión y la ubicación del hospital de Satipo.",
+        "proyecto": "",
+        "id": "diputados:muedas balbiese"
+      },
+      {
+        "orador": "Muedas",
+        "cargo": "legislador",
+        "sobre": "Licitación de nuevo hospital",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció una licitación de 290 millones para un hospital.",
+        "proyecto": "",
+        "id": "diputados:muedas balbiese"
+      },
+      {
+        "orador": "Muedas",
+        "cargo": "legislador",
+        "sobre": "Adelantos en la carretera JU 1",
+        "postura": "en contra",
+        "tema": "Transporte",
+        "dijo": "Cuestionó el adelanto de 8 millones sin obras de asfalto.",
+        "proyecto": "JU 1",
+        "id": "diputados:muedas balbiese"
+      },
+      {
+        "orador": "Muedas",
+        "cargo": "legislador",
+        "sobre": "Negligencia en la JU 100",
+        "postura": "en contra",
+        "tema": "Transporte",
+        "dijo": "Preguntó por la omisión de recomendaciones de la Contraloría.",
+        "proyecto": "JU 100",
+        "id": "diputados:muedas balbiese"
+      },
+      {
+        "orador": "Muedas",
+        "cargo": "legislador",
+        "sobre": "Desembolsos en la carretera JU 108",
+        "postura": "en contra",
+        "tema": "Transporte",
+        "dijo": "Denunció el desembolso del 70% con poco avance físico.",
+        "proyecto": "JU 108",
+        "id": "diputados:muedas balbiese"
+      },
+      {
+        "orador": "Muedas",
+        "cargo": "legislador",
+        "sobre": "Ejecución del puente Quimiri",
+        "postura": "pregunta",
+        "tema": "Transporte",
+        "dijo": "Consultó por el nulo avance financiero en el puente Quimiri.",
+        "proyecto": "Puente Quimiri",
+        "id": "diputados:muedas balbiese"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=BGnG_EJ88tg"
+  },
+  "gFhyCd_ZH7I": {
+    "fecha": "2026-10-27",
+    "organo": "Comisión de Justicia",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Tito Rojas",
+        "cargo": "legislador",
+        "sobre": "Investigación de muertes en Puno",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Pidió celeridad en la investigación de muertes en Puno.",
+        "proyecto": "",
+        "id": "diputados:tito rojas"
+      },
+      {
+        "orador": "Javier Castro Cruz",
+        "cargo": "legislador",
+        "sobre": "Problemas de registros en Lambayeque",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Denunció la inoperatividad de la oficina registral en Lambayeque.",
+        "proyecto": "",
+        "id": "diputados:castro cruz"
+      },
+      {
+        "orador": "Romina Uribe",
+        "cargo": "legislador",
+        "sobre": "Participación en red parlamentaria",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Informó su participación en la red parlamentaria de justicia.",
+        "proyecto": "",
+        "id": "diputados:uribe saenz"
+      },
+      {
+        "orador": "César Eusobio Padilla",
+        "cargo": "legislador",
+        "sobre": "Derogación de leyes procrimen",
+        "postura": "a favor",
+        "tema": "Justicia",
+        "dijo": "Defendió la derogación de las leyes que favorecen la impunidad.",
+        "proyecto": "PL 00002-2031-CD",
+        "id": "diputados:eusebio padilla"
+      },
+      {
+        "orador": "Javier Cipriani",
+        "cargo": "legislador",
+        "sobre": "Límite de suspensión de prescripción",
+        "postura": "a favor",
+        "tema": "Justicia",
+        "dijo": "Propuso eliminar el límite de un año para la prescripción.",
+        "proyecto": "PL 471",
+        "id": "diputados:cipriani thorne"
+      },
+      {
+        "orador": "Javier Castro Cruz",
+        "cargo": "legislador",
+        "sobre": "Cumplimiento de acuerdos de comisión",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó el incumplimiento de acuerdos de la sesión anterior.",
+        "proyecto": "",
+        "id": "diputados:castro cruz"
+      },
+      {
+        "orador": "Carina Beteta",
+        "cargo": "legislador",
+        "sobre": "Conducción de la comisión de justicia",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció la gestión autoritaria de la presidencia de la comisión.",
+        "proyecto": "",
+        "id": "diputados:beteta rubin"
+      },
+      {
+        "orador": "Roxana Rocha",
+        "cargo": "legislador",
+        "sobre": "Fórmula para la suspensión de prescripción",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Propuso vincular la suspensión de la prescripción con plazos procesales.",
+        "proyecto": "",
+        "id": "diputados:rocha gallegos"
+      },
+      {
+        "orador": "Jan Marco",
+        "cargo": "legislador",
+        "sobre": "Efectividad de la ampliación de prescripción",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Advirtió que ampliar la prescripción no soluciona retrasos judiciales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Domínguez",
+        "cargo": "legislador",
+        "sobre": "Consenso sobre la modificación legislativa",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso buscar un consenso entre las diversas bancadas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Eber López Letona",
+        "cargo": "legislador",
+        "sobre": "Análisis técnico de la prescripción penal",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Cuestionó la falta de análisis técnico y proporcional.",
+        "proyecto": "",
+        "id": "diputados:lopez letona"
+      },
+      {
+        "orador": "Edra González",
+        "cargo": "legislador",
+        "sobre": "Urgencia de la modificación de la norma",
+        "postura": "a favor",
+        "tema": "Justicia",
+        "dijo": "Respaldó la urgencia de modificar la norma de prescripción.",
+        "proyecto": "",
+        "id": "diputados:fernandez gonzalez"
+      },
+      {
+        "orador": "Indira Wilka",
+        "cargo": "legislador",
+        "sobre": "Impacto de las leyes SOTO",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Denunció que las leyes SOTO beneficiaron a delincuentes.",
+        "proyecto": "Leyes SOTO",
+        "id": null
+      },
+      {
+        "orador": "Roxana Rocha",
+        "cargo": "legislador",
+        "sobre": "Opinión de la Defensoría del Pueblo",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Informó la postura de la Defensoría del Pueblo sobre la prescripción.",
+        "proyecto": "",
+        "id": "diputados:rocha gallegos"
+      },
+      {
+        "orador": "Indira Wilka",
+        "cargo": "legislador",
+        "sobre": "límite de prescripción penal",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Propuso reemplazar el tope de un año por un plazo proporcional.",
+        "proyecto": "Ley 32104",
+        "id": null
+      },
+      {
+        "orador": "Roxana Rocha",
+        "cargo": "legislador",
+        "sobre": "plazo de prescripción penal",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Pidió establecer una regla graduada según la gravedad del delito.",
+        "proyecto": "Ley 32104",
+        "id": "diputados:rocha gallegos"
+      },
+      {
+        "orador": "Bobadilla Galindo",
+        "cargo": "legislador",
+        "sobre": "proporcionalidad de plazos penales",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Propuso un texto más consensuado sobre la proporcionalidad de plazos.",
+        "proyecto": "Ley 32104",
+        "id": "diputados:bobadilla galindo"
+      },
+      {
+        "orador": "Quezada",
+        "cargo": "legislador",
+        "sobre": "elaboración de dictamen técnico",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Propuso una cuestión previa para integrar opiniones técnicas.",
+        "proyecto": "",
+        "id": "diputados:quezada castro"
+      },
+      {
+        "orador": "César Holguín",
+        "cargo": "legislador",
+        "sobre": "impunidad por plazo de un año",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Denunció que el plazo de un año favorece la impunidad.",
+        "proyecto": "",
+        "id": "diputados:holguin loaiza"
+      },
+      {
+        "orador": "Beteta",
+        "cargo": "legislador",
+        "sobre": "inacción en la administración de justicia",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Cuestionó la inacción de los fiscales para llegar a sentencias.",
+        "proyecto": "",
+        "id": "diputados:beteta rubin"
+      },
+      {
+        "orador": "Eberlo Pesletona",
+        "cargo": "legislador",
+        "sobre": "modificación de leyes penales",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Propuso mejorar la propuesta para evitar críticas en el pleno.",
+        "proyecto": "",
+        "id": "diputados:lopez letona"
+      },
+      {
+        "orador": "Tito Rojas",
+        "cargo": "legislador",
+        "sobre": "aprobación del predictamen de prescripción",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Cuestionó la demora en decidir sobre la prescripción.",
+        "proyecto": "",
+        "id": "diputados:tito rojas"
+      },
+      {
+        "orador": "Presidenta",
+        "cargo": "legislador",
+        "sobre": "reforma de la extinción de dominio",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Propuso la aprobación del predictamen sobre extinción de dominio.",
+        "proyecto": "Extinción de dominio",
+        "id": null
+      },
+      {
+        "orador": "Domínguez",
+        "cargo": "legislador",
+        "sobre": "aportes de la mesa técnica",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Cuestionó la falta de aportes técnicos en el predictamen.",
+        "proyecto": "Extinción de dominio",
+        "id": null
+      },
+      {
+        "orador": "Roxana Rocha",
+        "cargo": "legislador",
+        "sobre": "observaciones al predictamen de extinción",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Pidió incorporar observaciones técnicas al predictamen de extinción.",
+        "proyecto": "Extinción de dominio",
+        "id": "diputados:rocha gallegos"
+      },
+      {
+        "orador": "Javier Castro",
+        "cargo": "legislador",
+        "sobre": "debate ideológico en el parlamento",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció la existencia de barreras ideológicas en el debate.",
+        "proyecto": "",
+        "id": "diputados:castro cruz"
+      },
+      {
+        "orador": "Beteta",
+        "cargo": "legislador",
+        "sobre": "respeto a las mesas técnicas",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció la falta de respeto a las mesas técnicas.",
+        "proyecto": "",
+        "id": "diputados:beteta rubin"
+      },
+      {
+        "orador": "Domínguez",
+        "cargo": "legislador",
+        "sobre": "politización de la comisión",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó la politización de las decisiones de la comisión.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=gFhyCd_ZH7I"
+  },
+  "fb_4642109872727106": {
+    "fecha": "2026-10-27",
+    "organo": "Comisión de Niñez y Adolescencia",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Jonathan Rosero",
+        "cargo": "invitado",
+        "sobre": "Informe de seguimiento de la resolución 032",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Informó las conclusiones del informe de la resolución 032.",
+        "proyecto": "RL 2023-2025-032",
+        "id": null
+      },
+      {
+        "orador": "Melissa Zambrán",
+        "cargo": "legislador",
+        "sobre": "Aprobación del octavo informe de seguimiento",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Propuso la aprobación del informe y su inclusión en el Pleno.",
+        "proyecto": "RL 2023-2025-032",
+        "id": null
+      },
+      {
+        "orador": "Ricardo Pateña",
+        "cargo": "legislador",
+        "sobre": "Gestión de la Asamblea Nacional",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció la desatención de la Asamblea hacia la niñez.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Evelyn Melisa Zambrano Chávez",
+        "cargo": "legislador",
+        "sobre": "Abandono de informes de fiscalización",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Denunció el abandono de ocho informes de procesos de fiscalización.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Secretario",
+        "cargo": "ministro o autoridad",
+        "sobre": "Certificación de la moción presentada",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Certificó que la moción fue ingresada mediante un memorando.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Secretario",
+        "cargo": "ministro o autoridad",
+        "sobre": "Resultado de la votación",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Informó que la moción se aprobó con ocho votos afirmativos.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=4642109872727106"
   }
 }
