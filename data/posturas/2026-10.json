@@ -2739,5 +2739,122 @@
       }
     ],
     "url": "https://www.facebook.com/watch/?v=1782074196331703"
+  },
+  "5sgiZ9XT0NE": {
+    "fecha": "2026-10-29",
+    "organo": "Comisión de Justicia",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Marta Chaves",
+        "cargo": "legislador",
+        "sobre": "inasistencia de autoridades",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Informó la inasistencia del ministro y la presidenta.",
+        "proyecto": "",
+        "id": "senado:chavez cossio"
+      },
+      {
+        "orador": "Marta Chaves",
+        "cargo": "legislador",
+        "sobre": "sesiones no ordinarias",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso no realizar sesiones no ordinarias sin dictámenes.",
+        "proyecto": "",
+        "id": "senado:chavez cossio"
+      },
+      {
+        "orador": "Andrés Ramos Wilka",
+        "cargo": "legislador",
+        "sobre": "apertura de escuela policial",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Pidió la apertura de una escuela policial.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Gavidia",
+        "cargo": "legislador",
+        "sobre": "sesión para la procuradora",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso realizar una sesión para la procuradora general.",
+        "proyecto": "",
+        "id": "senado:gavidia rodriguez"
+      },
+      {
+        "orador": "Marta Chaves",
+        "cargo": "legislador",
+        "sobre": "reprogramación de la presidenta",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Sugirió reprogramar la visita de la presidenta.",
+        "proyecto": "",
+        "id": "senado:chavez cossio"
+      },
+      {
+        "orador": "María Dolores Péchez Becerra",
+        "cargo": "invitado",
+        "sobre": "temas presupuestales del Poder Judicial",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Informó que la presentación será sobre presupuestos.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=5sgiZ9XT0NE"
+  },
+  "LL2GxtowMAA": {
+    "fecha": "2026-10-29",
+    "organo": "Comisión de Control Político",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Muñante",
+        "cargo": "legislador",
+        "sobre": "Error material en el dictamen",
+        "postura": "con observaciones",
+        "tema": "Política y control político",
+        "dijo": "Advirtió un error material en la conclusión número uno del dictamen.",
+        "proyecto": "TIE 001-2026",
+        "id": "senado:munante barrios"
+      },
+      {
+        "orador": "Guido",
+        "cargo": "legislador",
+        "sobre": "Estado de emergencia en Ático",
+        "postura": "con observaciones",
+        "tema": "Transporte",
+        "dijo": "Señaló la importancia de la carretera para la conectividad del sur.",
+        "proyecto": "DS 118-2026",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=LL2GxtowMAA"
+  },
+  "fb_1776864057373287": {
+    "fecha": "2026-10-29",
+    "organo": "Comisión de Relaciones Internacionales",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "David Fernando Carrón",
+        "cargo": "invitado",
+        "sobre": "Reforma a la Ley del Servicio Exterior",
+        "postura": "con observaciones",
+        "tema": "Política y control político",
+        "dijo": "Propuso cambios técnicos a la reforma del servicio exterior.",
+        "proyecto": "Orgánica Reformatoria a la Ley Orgánica del Servicio Exterior",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1776864057373287"
   }
 }
