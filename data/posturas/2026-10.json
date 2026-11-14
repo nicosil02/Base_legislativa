@@ -2856,5 +2856,92 @@
       }
     ],
     "url": "https://www.facebook.com/watch/?v=1776864057373287"
+  },
+  "fb_1689813039378836": {
+    "fecha": "2026-10-29",
+    "organo": "Comisión de Soberanía Alimentaria",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Lizarro Mauricio Reina-Bowen",
+        "cargo": "invitado",
+        "sobre": "Proyecto de ley de investigación agropecuaria",
+        "postura": "con observaciones",
+        "tema": "Agricultura",
+        "dijo": "Propuso cambios para fortalecer la articulación con las universidades.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Baez",
+        "cargo": "legislador",
+        "sobre": "Viabilidad presupuestaria del proyecto",
+        "postura": "pregunta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Preguntó sobre la viabilidad del proyecto ante recortes presupuestarios.",
+        "proyecto": "",
+        "id": "EC:baez mera"
+      },
+      {
+        "orador": "Lizarro Mauricio Reina-Bowen",
+        "cargo": "invitado",
+        "sobre": "Gestión de recursos mediante alianzas",
+        "postura": "comenta",
+        "tema": "Agricultura",
+        "dijo": "Explicó que las alianzas con universidades optimizarán los recursos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Lizarro Mauricio Reina-Bowen",
+        "cargo": "invitado",
+        "sobre": "Financiamiento mediante fondos concursables",
+        "postura": "comenta",
+        "tema": "Agricultura",
+        "dijo": "Detalló el uso de fondos concursables para la investigación.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1689813039378836"
+  },
+  "fb_1181017327599992": {
+    "fecha": "2026-10-29",
+    "organo": "Comisión de Relaciones Internacionales",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Lucía Lizved Jaramillo Solita",
+        "cargo": "legislador",
+        "sobre": "Tratado de extradición con Costa Rica",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Informó que la comisión abocó conocimiento del tratado de extradición con Costa Rica.",
+        "proyecto": "",
+        "id": "EC:jaramillo zurita lucia"
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1181017327599992"
+  },
+  "fb_1108545102158093": {
+    "fecha": "2026-10-29",
+    "organo": "Comisión de Fiscalización",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Luigi Edu García Velázquez",
+        "cargo": "legislador",
+        "sobre": "Compra de camiones de Maseo EP",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso solicitar información sobre la compra de camiones recolectores.",
+        "proyecto": "",
+        "id": "EC:garcia velasquez"
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1108545102158093"
   }
 }
