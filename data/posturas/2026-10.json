@@ -2943,5 +2943,932 @@
       }
     ],
     "url": "https://www.facebook.com/watch/?v=1108545102158093"
+  },
+  "fb_2327625428077477": {
+    "fecha": "2026-10-29",
+    "organo": "Comisión de Fiscalización",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Jerry Giovanni Coronel Castillo",
+        "cargo": "invitado",
+        "sobre": "gestión de la Mancomunidad La Esperanza",
+        "postura": "comenta",
+        "tema": "Saneamiento",
+        "dijo": "Explicó las irregularidades y el fracaso del proyecto de agua potable regional.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Cristian Ruiz",
+        "cargo": "invitado",
+        "sobre": "situación jurídica de la Mancomunidad",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Detalló los procesos judiciales y acciones de protección que enfrenta la entidad.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Rivítes Evalles",
+        "cargo": "invitado",
+        "sobre": "operatividad y proyectos de la Mancomunidad",
+        "postura": "comenta",
+        "tema": "Saneamiento",
+        "dijo": "Informó sobre la continuidad del servicio de agua y los mantenimientos realizados.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=2327625428077477"
+  },
+  "XjrXq2mcGCM": {
+    "fecha": "2026-10-28",
+    "organo": "Pleno de la Asamblea",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Andrés Castillo",
+        "cargo": "legislador",
+        "sobre": "Investigación de contribuciones en Quito",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso investigar presuntas extorsiones en el municipio.",
+        "proyecto": "",
+        "id": "EC:castillo maldonado"
+      },
+      {
+        "orador": "Juan González",
+        "cargo": "legislador",
+        "sobre": "Fiscalización de la corrupción estatal",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Exigió que los legisladores vigilen la corrupción.",
+        "proyecto": "",
+        "id": "EC:gonzalez alvear"
+      },
+      {
+        "orador": "Javier Ordóñez",
+        "cargo": "legislador",
+        "sobre": "Extorsiones en el municipio de Quito",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Denunció el sistema de extorsión en Quito.",
+        "proyecto": "",
+        "id": "EC:ordonez fuentes"
+      },
+      {
+        "orador": "Héctor Rodríguez",
+        "cargo": "legislador",
+        "sobre": "Vínculos de la Revolución Ciudadana con FARC",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Rechazó las acusaciones de financiamiento de las FARC.",
+        "proyecto": "",
+        "id": "EC:rodriguez chavez"
+      },
+      {
+        "orador": "Javier Ordóñez",
+        "cargo": "legislador",
+        "sobre": "Capacidad académica de los legisladores",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó el conocimiento técnico de sus colegas.",
+        "proyecto": "",
+        "id": "EC:ordonez fuentes"
+      },
+      {
+        "orador": "Andrés Castillo",
+        "cargo": "legislador",
+        "sobre": "Veracidad de las declaraciones políticas",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció la mentira en los argumentos presentados.",
+        "proyecto": "",
+        "id": "EC:castillo maldonado"
+      },
+      {
+        "orador": "Andrés Castillo",
+        "cargo": "legislador",
+        "sobre": "Investigación de irregularidades en el gobierno de Quito",
+        "postura": "propone",
+        "tema": "Trabajo",
+        "dijo": "Propuso investigar al Ministerio de Trabajo sobre irregularidades en Quito.",
+        "proyecto": "Memorando No. AN 11M AF 20260204M",
+        "id": "EC:castillo maldonado"
+      },
+      {
+        "orador": "Secretario",
+        "cargo": "ministro o autoridad",
+        "sobre": "Resultado de la votación",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Informó que la propuesta fue aprobada con 85 votos.",
+        "proyecto": "Memorando No. AN 11M AF 20260204M",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=XjrXq2mcGCM"
+  },
+  "mJXvZAjW9To": {
+    "fecha": "2026-10-28",
+    "organo": "Pleno del Congreso",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "José Arista Arbildo",
+        "cargo": "legislador",
+        "sobre": "Cuenta General de la República 2025",
+        "postura": "a favor",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Defendió la aprobación de la cuenta general del año 2025.",
+        "proyecto": "PL 126-2023",
+        "id": "senado:arista arbildo"
+      },
+      {
+        "orador": "Flavio Figalo",
+        "cargo": "legislador",
+        "sobre": "Aprobación de la cuenta general",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Cuestionó la demora de doce años en aprobar la cuenta general.",
+        "proyecto": "",
+        "id": "senado:figallo rivadeneyra"
+      },
+      {
+        "orador": "César Olguín",
+        "cargo": "legislador",
+        "sobre": "Cuenta general de la República",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Rechazó la aprobación por la existencia de miles de obras paralizadas.",
+        "proyecto": "",
+        "id": "diputados:holguin loaiza"
+      },
+      {
+        "orador": "Jaime Delgado",
+        "cargo": "legislador",
+        "sobre": "Gestión de recursos nacionales",
+        "postura": "con observaciones",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Pidió implementar mecanismos de fiscalización para mejorar la gestión pública.",
+        "proyecto": "",
+        "id": "senado:delgado zegarra"
+      },
+      {
+        "orador": "Neri Fernández",
+        "cargo": "legislador",
+        "sobre": "Cuenta general de la República",
+        "postura": "con observaciones",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Propuso utilizar la cuenta general para exigir mejoras en el Estado.",
+        "proyecto": "",
+        "id": "diputados:fernandez nina"
+      },
+      {
+        "orador": "Alfonso López Chao",
+        "cargo": "legislador",
+        "sobre": "Dictamen de la cuenta general",
+        "postura": "con observaciones",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Informó que su bancada votará a favor del dictamen con reservas.",
+        "proyecto": "",
+        "id": "senado:lopez chau nava"
+      },
+      {
+        "orador": "Roxana Rocha",
+        "cargo": "legislador",
+        "sobre": "Evaluación de la cuenta general",
+        "postura": "a favor",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Respaldó la aprobación del dictamen y propuso controlar obras paralizadas.",
+        "proyecto": "",
+        "id": "diputados:rocha gallegos"
+      },
+      {
+        "orador": "Lourdes Alcorta",
+        "cargo": "legislador",
+        "sobre": "Rendición de cuentas 2025",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Denunció el incumplimiento de reglas fiscales y la falta de control.",
+        "proyecto": "",
+        "id": "senado:alcorta suero"
+      },
+      {
+        "orador": "Cecilia Chacón",
+        "cargo": "legislador",
+        "sobre": "Cuenta General de la República",
+        "postura": "a favor",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Defendió el dictamen para mejorar la transparencia y fiscalización.",
+        "proyecto": "",
+        "id": "diputados:chacon de vettori"
+      },
+      {
+        "orador": "Arista Arbildo",
+        "cargo": "legislador",
+        "sobre": "Cuenta General de la República 2025",
+        "postura": "a favor",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Pidió la aprobación del proyecto de ley 001-2026201 CR.",
+        "proyecto": "PL 001-2026201 CR",
+        "id": "senado:arista arbildo"
+      },
+      {
+        "orador": "Ever López",
+        "cargo": "legislador",
+        "sobre": "Crédito suplementario para el fenómeno del niño",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Cuestionó la compra de aviones del proyecto 005-20262031 CR.",
+        "proyecto": "PL 005-20262031 CR",
+        "id": null
+      },
+      {
+        "orador": "Mirta Vázquez Chuquilín",
+        "cargo": "legislador",
+        "sobre": "Gastos del crédito suplementario",
+        "postura": "con observaciones",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Cuestionó la distribución de gastos del proyecto 005-20262031 CR.",
+        "proyecto": "PL 005-20262031 CR",
+        "id": "senado:vasquez chuquilin"
+      },
+      {
+        "orador": "De Paz Leo",
+        "cargo": "legislador",
+        "sobre": "Crédito suplementario para el fenómeno del niño",
+        "postura": "a favor",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Respaldó el proyecto 005-20262031 CR ante el fenómeno del niño.",
+        "proyecto": "PL 005-20262031 CR",
+        "id": "diputados:de paz lancho"
+      },
+      {
+        "orador": "Castillo Terrones",
+        "cargo": "legislador",
+        "sobre": "Crédito suplementario para el fenómeno del niño",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Denunció la compra de aviones en el proyecto 005-20262031 CR.",
+        "proyecto": "PL 005-20262031 CR",
+        "id": "senado:castillo terrones"
+      },
+      {
+        "orador": "Fernández Neri",
+        "cargo": "legislador",
+        "sobre": "Distribución del crédito suplementario",
+        "postura": "con observaciones",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Cuestionó la centralización del proyecto de ley 005-20262031 CR.",
+        "proyecto": "PL 005-20262031 CR",
+        "id": "diputados:fernandez nina"
+      },
+      {
+        "orador": "Astucuri Laura",
+        "cargo": "legislador",
+        "sobre": "Transferencia para agua mediante cisternas",
+        "postura": "propone",
+        "tema": "Saneamiento",
+        "dijo": "Propuso transferencias financieras para la distribución de agua potable.",
+        "proyecto": "",
+        "id": "senado:astucuri laura"
+      },
+      {
+        "orador": "Paola Martínez",
+        "cargo": "legislador",
+        "sobre": "Crédito suplementario y conectividad satelital",
+        "postura": "con observaciones",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Informó sobre el gasto en educación y propuso conectividad satelital.",
+        "proyecto": "",
+        "id": "diputados:martinez paitan"
+      },
+      {
+        "orador": "Carlos Caballero",
+        "cargo": "legislador",
+        "sobre": "Fiscalización del crédito suplementario",
+        "postura": "con observaciones",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Cuestionó la centralización de recursos y la asignación para publicidad.",
+        "proyecto": "",
+        "id": "senado:caballero leon"
+      },
+      {
+        "orador": "Luzmila Gamarra",
+        "cargo": "legislador",
+        "sobre": "Crédito suplementario Fenómeno del Niño",
+        "postura": "a favor",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Respaldó el crédito para atender la emergencia climática nacional.",
+        "proyecto": "",
+        "id": "diputados:gamarra pita"
+      },
+      {
+        "orador": "Jaime Delgado Segarra",
+        "cargo": "legislador",
+        "sobre": "Enfoque del crédito suplementario",
+        "postura": "con observaciones",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Sugirió concentrar los recursos exclusivamente en la atención de la emergencia.",
+        "proyecto": "",
+        "id": "senado:delgado zegarra"
+      },
+      {
+        "orador": "Rosana Ala",
+        "cargo": "legislador",
+        "sobre": "Transparencia del crédito suplementario",
+        "postura": "con observaciones",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Anunció su voto a favor pero exigió mayor transparencia presupuestaria.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Silvana Emperatriz Robles Araujo",
+        "cargo": "legislador",
+        "sobre": "Proyectos de agua potable",
+        "postura": "propone",
+        "tema": "Saneamiento",
+        "dijo": "Solicitó incorporar proyectos de agua potable para comunidades en emergencia.",
+        "proyecto": "CUI 233148",
+        "id": "senado:robles araujo"
+      },
+      {
+        "orador": "Marleni Arminta",
+        "cargo": "legislador",
+        "sobre": "Gasto por ministerios",
+        "postura": "con observaciones",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Denunció la alta concentración de recursos en defensa e interior.",
+        "proyecto": "",
+        "id": "diputados:arminta valencia"
+      },
+      {
+        "orador": "Carla Sherfer",
+        "cargo": "legislador",
+        "sobre": "Equipamiento para la Policía Nacional",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso garantizar la compra de patrulleros y chalecos antibalas.",
+        "proyecto": "",
+        "id": "senado:schaefer cuculiza"
+      },
+      {
+        "orador": "César Tito",
+        "cargo": "legislador",
+        "sobre": "Adquisición de aviones de combate",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Solicitó suspender la compra de aviones para priorizar otras necesidades.",
+        "proyecto": "",
+        "id": "diputados:tito rojas"
+      },
+      {
+        "orador": "Bernardo Quito",
+        "cargo": "legislador",
+        "sobre": "Endeudamiento y crédito suplementario",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Rechazó el crédito por el alto endeudamiento y falta de transparencia.",
+        "proyecto": "",
+        "id": "senado:quito sarmiento"
+      },
+      {
+        "orador": "Norma Yarro",
+        "cargo": "legislador",
+        "sobre": "Vivienda para familias afectadas",
+        "postura": "propone",
+        "tema": "Construcción",
+        "dijo": "Pidió asignar recursos adicionales para la adquisición de viviendas provisionales.",
+        "proyecto": "",
+        "id": "diputados:yarrow lumbreras"
+      },
+      {
+        "orador": "Segunda Tapia",
+        "cargo": "legislador",
+        "sobre": "Kits de cocina y vasos de leche",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Propuso financiar kits de cocina para ollas comunes en emergencia.",
+        "proyecto": "",
+        "id": "senado:tapia bernal"
+      },
+      {
+        "orador": "Oswar Cahuaza",
+        "cargo": "legislador",
+        "sobre": "Distribución de recursos en Ucayali",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Cuestionó la baja asignación presupuestal para la región Ucayali.",
+        "proyecto": "",
+        "id": "diputados:cahuaza mitivire"
+      },
+      {
+        "orador": "Saúl Armacanqui",
+        "cargo": "legislador",
+        "sobre": "Infraestructura de riego",
+        "postura": "propone",
+        "tema": "Agricultura",
+        "dijo": "Solicitó priorizar obras de infraestructura de riego en Apurímac.",
+        "proyecto": "",
+        "id": "senado:armacanqui morales"
+      },
+      {
+        "orador": "Juan Cabrera",
+        "cargo": "legislador",
+        "sobre": "Congruencia del crédito suplementario",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Denunció la falta de lógica en la distribución del presupuesto.",
+        "proyecto": "",
+        "id": "diputados:cabrera nieto"
+      },
+      {
+        "orador": "Flavio",
+        "cargo": "legislador",
+        "sobre": "Denominación y ejecución del crédito suplementario",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Cuestionó la denominación y capacidad de ejecución del crédito.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Jesús Pérez",
+        "cargo": "legislador",
+        "sobre": "Inversión en la región de Apurímac",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Denunció el abandono de la salud en Apurímac.",
+        "proyecto": "",
+        "id": "diputados:perez alccahuaman"
+      },
+      {
+        "orador": "Andrés Ramos",
+        "cargo": "legislador",
+        "sobre": "Distribución del crédito suplementario",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Cuestionó la distribución del gasto en el crédito.",
+        "proyecto": "PL 5 2026",
+        "id": "senado:ramos huillcas"
+      },
+      {
+        "orador": "Carlos Segarra",
+        "cargo": "legislador",
+        "sobre": "Aprobación del crédito suplementario",
+        "postura": "a favor",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Respaldó la aprobación del crédito para cerrar brechas.",
+        "proyecto": "",
+        "id": "diputados:zegarra sanchez"
+      },
+      {
+        "orador": "Edison Humberto Morales Ramírez",
+        "cargo": "legislador",
+        "sobre": "Uso del presupuesto nacional",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Denunció el mal uso de fondos para publicidad.",
+        "proyecto": "",
+        "id": "senado:morales ramirez"
+      },
+      {
+        "orador": "Héctor Guillén",
+        "cargo": "legislador",
+        "sobre": "Crédito suplementario para el fenómeno del niño",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Rechazó el crédito suplementario en sus términos actuales.",
+        "proyecto": "",
+        "id": "diputados:guillen valencia"
+      },
+      {
+        "orador": "Héctor Guillén",
+        "cargo": "legislador",
+        "sobre": "Proyectos de urgencia para la zona central",
+        "postura": "propone",
+        "tema": "Infraestructura",
+        "dijo": "Propuso incorporar proyectos de urgencia para Huancavelica.",
+        "proyecto": "",
+        "id": "diputados:guillen valencia"
+      },
+      {
+        "orador": "Joaquín Yauri",
+        "cargo": "legislador",
+        "sobre": "Necesidades de la región Huancavelica",
+        "postura": "en contra",
+        "tema": "Infraestructura",
+        "dijo": "Cuestionó la falta de presupuesto para carreteras.",
+        "proyecto": "",
+        "id": "senado:yauri tunque"
+      },
+      {
+        "orador": "Hugo Cahuana",
+        "cargo": "legislador",
+        "sobre": "Salud en Madre de Dios",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Pidió la incorporación de un hospital para Madre de Dios.",
+        "proyecto": "",
+        "id": "senado:ccahuana aymachoque"
+      },
+      {
+        "orador": "Pilar Zulca",
+        "cargo": "legislador",
+        "sobre": "Financiamiento de proyectos de inversión",
+        "postura": "propone",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Pidió el financiamiento de proyectos de inversión.",
+        "proyecto": "",
+        "id": "diputados:sulca castillo"
+      },
+      {
+        "orador": "Jessica Pérez",
+        "cargo": "legislador",
+        "sobre": "Fortalecimiento del Ministerio Público",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Propuso incorporar recursos para el Ministerio Público.",
+        "proyecto": "",
+        "id": "diputados:perez quispe"
+      },
+      {
+        "orador": "Walter Gagó",
+        "cargo": "legislador",
+        "sobre": "Transferencias presupuestales para municipios",
+        "postura": "propone",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Pidió al MEF transferir presupuestos para obras.",
+        "proyecto": "",
+        "id": "senado:gago rodriguez"
+      },
+      {
+        "orador": "Analí Márquez",
+        "cargo": "legislador",
+        "sobre": "Distribución del crédito suplementario",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Cuestionó la prioridad del pago de aviones.",
+        "proyecto": "",
+        "id": "diputados:marquez huanca"
+      },
+      {
+        "orador": "Lourdes Alcorta",
+        "cargo": "legislador",
+        "sobre": "Gestión del crédito suplementario",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Cuestionó la gestión de los gobiernos regionales.",
+        "proyecto": "",
+        "id": "senado:alcorta suero"
+      },
+      {
+        "orador": "Marlon Aguirre",
+        "cargo": "legislador",
+        "sobre": "Prioridades presupuestales para Junín",
+        "postura": "propone",
+        "tema": "Transporte",
+        "dijo": "Pidió priorizar la carretera central para Junín.",
+        "proyecto": "",
+        "id": "diputados:aguirre ramos"
+      },
+      {
+        "orador": "Marta Moyano",
+        "cargo": "legislador",
+        "sobre": "Modificaciones presupuestales institucionales",
+        "postura": "propone",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Propuso autorizar modificaciones presupuestarias institucionales.",
+        "proyecto": "",
+        "id": "senado:moyano delgado"
+      },
+      {
+        "orador": "Edgar González",
+        "cargo": "legislador",
+        "sobre": "Crédito suplementario para el fenómeno del niño",
+        "postura": "con observaciones",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Cuestionó las deficiencias de la propuesta.",
+        "proyecto": "",
+        "id": "diputados:fernandez gonzalez"
+      },
+      {
+        "orador": "Edgar González",
+        "cargo": "legislador",
+        "sobre": "crédito para el fenómeno del niño",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Cuestionó la coherencia del proyecto de ley.",
+        "proyecto": "",
+        "id": "diputados:fernandez gonzalez"
+      },
+      {
+        "orador": "López Chao",
+        "cargo": "legislador",
+        "sobre": "dictamen de presupuesto y defensa nacional",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Manifestó la abstención de su bancada.",
+        "proyecto": "",
+        "id": "senado:lopez chau nava"
+      },
+      {
+        "orador": "Amalia Palomino",
+        "cargo": "legislador",
+        "sobre": "gestión del presupuesto y transparencia",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Denunció la falta de transparencia presupuestal.",
+        "proyecto": "",
+        "id": "diputados:palomino pacheco"
+      },
+      {
+        "orador": "Calisto Yampietri",
+        "cargo": "legislador",
+        "sobre": "presupuesto para buques logísticos",
+        "postura": "propone",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Propuso financiar buques logísticos para el fenómeno del niño.",
+        "proyecto": "",
+        "id": "senado:calisto giampietri"
+      },
+      {
+        "orador": "Lis Mendoza",
+        "cargo": "legislador",
+        "sobre": "crédito suplementario y apoyo a pymes",
+        "postura": "a favor",
+        "tema": "Mype",
+        "dijo": "Respaldó el crédito suplementario para las pymes.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Daniel Barragán",
+        "cargo": "legislador",
+        "sobre": "compra de material bélico",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Defendió la compra de material bélico nacional.",
+        "proyecto": "",
+        "id": "senado:barragan coloma"
+      },
+      {
+        "orador": "Luis Quispe",
+        "cargo": "legislador",
+        "sobre": "ejecución del presupuesto para el fenómeno del niño",
+        "postura": "con observaciones",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Advirtió sobre la vulnerabilidad de la infraestructura nacional.",
+        "proyecto": "",
+        "id": "diputados:quispe candia"
+      },
+      {
+        "orador": "Carlos Yalta",
+        "cargo": "legislador",
+        "sobre": "presupuesto para obras de agua y desagüe",
+        "postura": "a favor",
+        "tema": "Saneamiento",
+        "dijo": "Pidió aprobar el crédito para obras de saneamiento.",
+        "proyecto": "",
+        "id": "diputados:yalta sotelo"
+      },
+      {
+        "orador": "José Marcelo",
+        "cargo": "legislador",
+        "sobre": "presupuesto para proyectos de infraestructura regional",
+        "postura": "con observaciones",
+        "tema": "Infraestructura",
+        "dijo": "Cuestionó la asignación parcial de presupuestos regionales.",
+        "proyecto": "",
+        "id": "diputados:marcelo salazar"
+      },
+      {
+        "orador": "Persi Osorio",
+        "cargo": "legislador",
+        "sobre": "distribución del crédito suplementario",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Criticó la distribución inequitativa del presupuesto.",
+        "proyecto": "",
+        "id": "senado:osorio palpan"
+      },
+      {
+        "orador": "Roxana Rocha",
+        "cargo": "legislador",
+        "sobre": "crédito suplementario para necesidades urgentes",
+        "postura": "a favor",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Propuso mecanismos claros para la ejecución presupuestal.",
+        "proyecto": "",
+        "id": "diputados:rocha gallegos"
+      },
+      {
+        "orador": "José Chipana",
+        "cargo": "legislador",
+        "sobre": "prioridades del crédito suplementario",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Denunció la falta de prioridad en salud.",
+        "proyecto": "",
+        "id": "senado:chipana chipana"
+      },
+      {
+        "orador": "Henry Albañil",
+        "cargo": "legislador",
+        "sobre": "continuidad de obras de la ARCC",
+        "postura": "propone",
+        "tema": "Infraestructura",
+        "dijo": "Propuso incluir medidas para la continuidad de obras.",
+        "proyecto": "",
+        "id": "diputados:albanil carmona"
+      },
+      {
+        "orador": "Víctor Piñán",
+        "cargo": "legislador",
+        "sobre": "bonos de arrendamiento de vivienda para emergencia",
+        "postura": "propone",
+        "tema": "Construcción",
+        "dijo": "Propuso incluir bonos de arrendamiento para viviendas.",
+        "proyecto": "",
+        "id": "diputados:pinan mamani"
+      },
+      {
+        "orador": "Luis Gibja",
+        "cargo": "legislador",
+        "sobre": "prioridades del crédito suplementario",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Cuestionó la prioridad de la compra de aviones.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "César Vidaurre",
+        "cargo": "legislador",
+        "sobre": "aprobación del crédito suplementario",
+        "postura": "a favor",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Defendió la aprobación del crédito suplementario.",
+        "proyecto": "",
+        "id": "diputados:vidaurre floridas"
+      },
+      {
+        "orador": "Diego Basán",
+        "cargo": "legislador",
+        "sobre": "disposiciones complementarias al crédito suplementario",
+        "postura": "propone",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Propuso diversas disposiciones complementarias al proyecto.",
+        "proyecto": "",
+        "id": "diputados:bazan calderon"
+      },
+      {
+        "orador": "Gabriel González",
+        "cargo": "legislador",
+        "sobre": "asignación del crédito suplementario",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Denunció la baja asignación para educación y salud.",
+        "proyecto": "",
+        "id": "diputados:fernandez gonzalez"
+      },
+      {
+        "orador": "Ángel Meneces",
+        "cargo": "legislador",
+        "sobre": "reasignación del gasto de capital",
+        "postura": "con observaciones",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Advirtió sobre la necesidad de mayor inversión pública.",
+        "proyecto": "",
+        "id": "senado:ventura angel"
+      },
+      {
+        "orador": "Ángel Meneces",
+        "cargo": "legislador",
+        "sobre": "modificación del crédito suplementario",
+        "postura": "propone",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Propuso la modificación del crédito suplementario.",
+        "proyecto": "crédito suplementario",
+        "id": "senado:ventura angel"
+      },
+      {
+        "orador": "Marleni Arminta",
+        "cargo": "legislador",
+        "sobre": "recursos para gobiernos regionales",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Denunció la insuficiente asignación de recursos para regiones.",
+        "proyecto": "",
+        "id": "diputados:arminta valencia"
+      },
+      {
+        "orador": "Edgar Mancha",
+        "cargo": "legislador",
+        "sobre": "deuda y proyectos de inversión",
+        "postura": "con observaciones",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Propuso priorizar la inversión en salud y educación.",
+        "proyecto": "",
+        "id": "senado:mancha pineda"
+      },
+      {
+        "orador": "Jaime Aven",
+        "cargo": "legislador",
+        "sobre": "continuidad de proyectos de inversión",
+        "postura": "a favor",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Respaldó la continuidad de proyectos de inversión pública.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Absalón Vázquez",
+        "cargo": "legislador",
+        "sobre": "aprobación del crédito suplementario",
+        "postura": "a favor",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Respaldó el crédito para atender obras urgentes.",
+        "proyecto": "",
+        "id": "senado:vasquez villanueva"
+      },
+      {
+        "orador": "Víctor Flores",
+        "cargo": "legislador",
+        "sobre": "inversión en kits y mantenimiento",
+        "postura": "a favor",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Defendió la inversión en kits y mantenimiento de colegios.",
+        "proyecto": "",
+        "id": "senado:flores ruiz"
+      },
+      {
+        "orador": "Jack Rodrich",
+        "cargo": "legislador",
+        "sobre": "crédito suplementario",
+        "postura": "a favor",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Defendió el crédito suplementario ante la oposición.",
+        "proyecto": "",
+        "id": "senado:rodrich ackerman"
+      },
+      {
+        "orador": "Patricia Juárez",
+        "cargo": "legislador",
+        "sobre": "crédito suplementario y austeridad",
+        "postura": "a favor",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Defendió la incorporación del crédito suplementario.",
+        "proyecto": "",
+        "id": "senado:juarez gallegos"
+      },
+      {
+        "orador": "Aid Poma",
+        "cargo": "legislador",
+        "sobre": "proyectos en regiones",
+        "postura": "propone",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Pidió atención para proyectos en Madre de Dios.",
+        "proyecto": "",
+        "id": "diputados:poma huamani"
+      },
+      {
+        "orador": "Segura",
+        "cargo": "legislador",
+        "sobre": "compra de aviones",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Defendió la compra de aviones por seguridad.",
+        "proyecto": "",
+        "id": "diputados:segura figueroa"
+      },
+      {
+        "orador": "César Revía",
+        "cargo": "legislador",
+        "sobre": "modificación del crédito suplementario",
+        "postura": "propone",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Propuso la modificación del crédito suplementario.",
+        "proyecto": "crédito suplementario",
+        "id": "diputados:revilla villanueva"
+      },
+      {
+        "orador": "José Arista Arbildo",
+        "cargo": "legislador",
+        "sobre": "evaluación de propuestas presupuestarias",
+        "postura": "propone",
+        "tema": "Polítca y control político",
+        "dijo": "Propuso un cuarto intermedio para evaluar propuestas.",
+        "proyecto": "",
+        "id": "senado:arista arbildo"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=mJXvZAjW9To"
   }
 }
