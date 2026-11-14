@@ -4851,5 +4851,142 @@
       }
     ],
     "url": "https://www.facebook.com/watch/?v=1371732874992866"
+  },
+  "fb_1131318009859036": {
+    "fecha": "2026-10-28",
+    "organo": "Comisión de Educación",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Hugo Alexander Zapata Carpio",
+        "cargo": "invitado",
+        "sobre": "Reforma al Código de Economía del Conocimiento",
+        "postura": "con observaciones",
+        "tema": "Tecnología",
+        "dijo": "Cuestionó la normativa y la estructura institucional del Senadi y el Coesci.",
+        "proyecto": "Proyecto de Ley de Economía del Conocimiento",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1131318009859036"
+  },
+  "fb_1732346264494942": {
+    "fecha": "2026-10-27",
+    "organo": "Comisión de Relaciones Internacionales",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Daniel Narváez",
+        "cargo": "invitado",
+        "sobre": "Proyecto de Ley del Servicio Exterior",
+        "postura": "con observaciones",
+        "tema": "Otros",
+        "dijo": "Expuso observaciones técnicas sobre el proyecto de la ley del servicio exterior.",
+        "proyecto": "Ley Orgánica Reformatoria de la Ley Orgánica del Servicio Exterior",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1732346264494942"
+  },
+  "fb_2834144213646590": {
+    "fecha": "2026-10-27",
+    "organo": "Comisión de Derecho al Trabajo",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Juan Pablo Molina",
+        "cargo": "legislador",
+        "sobre": "Tercerización laboral en municipios",
+        "postura": "en contra",
+        "tema": "Trabajo",
+        "dijo": "Cuestionó la competencia de la Asamblea en municipios.",
+        "proyecto": "",
+        "id": "EC:molina saldana"
+      },
+      {
+        "orador": "Roberto Cuerro Medina",
+        "cargo": "legislador",
+        "sobre": "Tercerización laboral en municipios",
+        "postura": "en contra",
+        "tema": "Trabajo",
+        "dijo": "Rechazó la fiscalización por falta de competencia legal.",
+        "proyecto": "",
+        "id": "EC:cuero medina"
+      },
+      {
+        "orador": "Humberto Alvarado",
+        "cargo": "legislador",
+        "sobre": "Tercerización laboral en municipios",
+        "postura": "en contra",
+        "tema": "Trabajo",
+        "dijo": "Cuestionó la solidez del informe presentado.",
+        "proyecto": "",
+        "id": "EC:alvarado espinel"
+      },
+      {
+        "orador": "Egnerey de Recalde Álava",
+        "cargo": "legislador",
+        "sobre": "Tercerización laboral en municipios",
+        "postura": "a favor",
+        "tema": "Trabajo",
+        "dijo": "Defendió la fiscalización ante la vulneración de derechos.",
+        "proyecto": "",
+        "id": "EC:recalde alava"
+      },
+      {
+        "orador": "Nailya Quintana",
+        "cargo": "legislador",
+        "sobre": "Tercerización laboral en municipios",
+        "postura": "propone",
+        "tema": "Trabajo",
+        "dijo": "Propuso la aprobación del informe de fiscalización.",
+        "proyecto": "",
+        "id": "EC:quintana tapia"
+      },
+      {
+        "orador": "Elizabeth Vega",
+        "cargo": "legislador",
+        "sobre": "Tercerización laboral en municipios",
+        "postura": "a favor",
+        "tema": "Trabajo",
+        "dijo": "Respaldó la moción de aprobación del informe.",
+        "proyecto": "",
+        "id": "EC:vega segura"
+      },
+      {
+        "orador": "Juan Pablo Molina",
+        "cargo": "legislador",
+        "sobre": "Competencia de la Asamblea Nacional",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Reiteró que la fiscalización municipal no es competencia legislativa.",
+        "proyecto": "",
+        "id": "EC:molina saldana"
+      },
+      {
+        "orador": "Victoria Quintana Tápia",
+        "cargo": "legislador",
+        "sobre": "una moción legislativa",
+        "postura": "propone",
+        "tema": "Trabajo",
+        "dijo": "Propuso una moción conforme a la ley orgánica de la función legislativa.",
+        "proyecto": "",
+        "id": "EC:quintana tapia"
+      },
+      {
+        "orador": "Juan Pablo Molina",
+        "cargo": "legislador",
+        "sobre": "la tercerización laboral",
+        "postura": "en contra",
+        "tema": "Trabajo",
+        "dijo": "Cuestionó el uso político de la fiscalización en temas de salud.",
+        "proyecto": "",
+        "id": "EC:molina saldana"
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=2834144213646590"
   }
 }
