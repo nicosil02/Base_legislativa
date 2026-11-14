@@ -12672,5 +12672,102 @@
       }
     ],
     "url": "https://www.facebook.com/watch/?v=2376024616547641"
+  },
+  "l-2b95G29Zw": {
+    "fecha": "2026-10-21",
+    "organo": "Comisión de Economía",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Navas",
+        "cargo": "legislador",
+        "sobre": "implementación de zonas económicas especiales",
+        "postura": "con observaciones",
+        "tema": "Comercio",
+        "dijo": "Cuestionó la falta de investigación y desarrollo en el reglamento de zonas económicas.",
+        "proyecto": "Ley 3249",
+        "id": "diputados:navas sanchez"
+      },
+      {
+        "orador": "Marquez",
+        "cargo": "legislador",
+        "sobre": "exclusión de grandes empresas de beneficios",
+        "postura": "propone",
+        "tema": "Tributos",
+        "dijo": "Solicitó la exclusión de grandes empresas de beneficios tributarios agrarios.",
+        "proyecto": "PL 78-2026-2031-CD",
+        "id": "diputados:marquez huanca"
+      },
+      {
+        "orador": "González Delgado",
+        "cargo": "legislador",
+        "sobre": "sustentación de la política económica y fiscal",
+        "postura": "propone",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Pidió la sustentación de los ejes de la política económica y fiscal.",
+        "proyecto": "",
+        "id": "diputados:gonzales delgado"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=l-2b95G29Zw"
+  },
+  "fb_29083195037986270": {
+    "fecha": "2026-10-21",
+    "organo": "Comisión de Biodiversidad",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Andrea Gómez Arias",
+        "cargo": "invitado",
+        "sobre": "Fomento de la Biodiconomía y biocomercio",
+        "postura": "con observaciones",
+        "tema": "Ambiente",
+        "dijo": "Propuso fortalecer la gobernanza en la Orgánica de Fomento de la Biodiconomía.",
+        "proyecto": "Orgánica de Fomento de la Biodiconomía",
+        "id": null
+      },
+      {
+        "orador": "Casanova",
+        "cargo": "legislador",
+        "sobre": "Sobreexplotación de la biodiversidad",
+        "postura": "pregunta",
+        "tema": "Ambiente",
+        "dijo": "Preguntó cómo evitar la sobreexplotación en la Orgánica de Fomento de la Biodiconomía.",
+        "proyecto": "Orgánica de Fomento de la Biodiconomía",
+        "id": "EC:casanova montesino"
+      },
+      {
+        "orador": "Andrea Gómez Arias",
+        "cargo": "invitado",
+        "sobre": "Salvaguardas ambientales del proyecto",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Explicó la implementación de medidas de conservación en la Orgánica de Fomento de la Biodiconomía.",
+        "proyecto": "Orgánica de Fomento de la Biodiconomía",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=29083195037986270"
+  },
+  "fb_28957761680521250": {
+    "fecha": "2026-10-21",
+    "organo": "Comisión de Biodiversidad",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Carlos Miguel Cuesta Álvarez",
+        "cargo": "legislador",
+        "sobre": "Reforma al Código Orgánico del Ambiente",
+        "postura": "a favor",
+        "tema": "Ambiente",
+        "dijo": "Defendió la reforma para apoyar a los productores rurales y proteger los ecosistemas.",
+        "proyecto": "Ley Orgánica Reformatoria al Código Orgánico del Ambiente",
+        "id": "EC:cuesta alvarez"
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=28957761680521250"
   }
 }
