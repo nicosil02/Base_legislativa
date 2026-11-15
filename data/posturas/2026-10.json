@@ -19983,5 +19983,142 @@
       }
     ],
     "url": "https://www.facebook.com/watch/?v=3685108901655945"
+  },
+  "fb_1090068767140113": {
+    "fecha": "2026-10-15",
+    "organo": "Comisión de Régimen Económico",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Natalia Estefanía Farinango Delgado",
+        "cargo": "legislador",
+        "sobre": "Objeción al proyecto de reforma tributaria",
+        "postura": "comenta",
+        "tema": "Tributos",
+        "dijo": "Informó sobre la elaboración del informe técnico del veto.",
+        "proyecto": "Proyecto de ley orgánica reformatoria al Código Tributario",
+        "id": "EC:farinango delgado"
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1090068767140113"
+  },
+  "fb_1668464268128474": {
+    "fecha": "2026-10-14",
+    "organo": "Comisión de Transparencia y Participación Ciudadana",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Sebastián Sandovide Magullón",
+        "cargo": "invitado",
+        "sobre": "reforma a la Ley de Garantías Jurisdiccionales",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Cuestionó la suspensión de normas y la iniciativa legislativa de la Corte.",
+        "proyecto": "Ley de Garantías Jurisdiccionales y Control Constitucional",
+        "id": null
+      },
+      {
+        "orador": "Champa",
+        "cargo": "legislador",
+        "sobre": "responsabilidad de los jueces constitucionales",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Cuestionó la falta de control sobre los jueces de la Corte Constitucional.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Sebastián Sandovide Magullón",
+        "cargo": "invitado",
+        "sobre": "plazos de resolución de suspensiones normativas",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Propuso priorizar el orden cronológico de las causas en la Corte.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1668464268128474"
+  },
+  "fb_1639935074184937": {
+    "fecha": "2026-10-14",
+    "organo": "Comisión de Biodiversidad",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Santiago Gamboa",
+        "cargo": "invitado",
+        "sobre": "Historia de la empresa Gamboa Pellets",
+        "postura": "comenta",
+        "tema": "Energía",
+        "dijo": "Comentó la trayectoria de su empresa de biocombustibles en Baños.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Andrés Gamboa",
+        "cargo": "invitado",
+        "sobre": "Proceso de fabricación de pellets",
+        "postura": "comenta",
+        "tema": "Energía",
+        "dijo": "Comentó el proceso de secado del aserrín para producir pellets.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Cuesta",
+        "cargo": "legislador",
+        "sobre": "Desarrollo de emprendimientos en provincias",
+        "postura": "pregunta",
+        "tema": "Mype",
+        "dijo": "Preguntó cómo replicar el modelo de negocio en otras provincias.",
+        "proyecto": "",
+        "id": "EC:cuesta alvarez"
+      },
+      {
+        "orador": "Santiago Gamboa",
+        "cargo": "invitado",
+        "sobre": "Expansión de la producción de pellets",
+        "postura": "comenta",
+        "tema": "Energía",
+        "dijo": "Informó sobre la expansión de plantas a Cuenca y Quevedo.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Santiago Gamboa",
+        "cargo": "invitado",
+        "sobre": "Beneficios del uso de biocombustibles",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Comentó los beneficios económicos y la prevención de incendios.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Samaniec",
+        "cargo": "legislador",
+        "sobre": "Certificación de cumplimiento bioeconómico",
+        "postura": "pregunta",
+        "tema": "Ambiente",
+        "dijo": "Preguntó sobre la certificación de cumplimiento bioeconómico del proyecto.",
+        "proyecto": "Ley de Fomento de la Biocomercio Productivo",
+        "id": null
+      },
+      {
+        "orador": "Santiago Gamboa",
+        "cargo": "invitado",
+        "sobre": "Uso de la madera de piwe",
+        "postura": "a favor",
+        "tema": "Ambiente",
+        "dijo": "Defendió el uso de la especie invasora piwe en su producción.",
+        "proyecto": "Ley de Fomento de la Biocomercio Productivo",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1639935074184937"
   }
 }
