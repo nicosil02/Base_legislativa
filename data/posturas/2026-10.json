@@ -17578,5 +17578,122 @@
       }
     ],
     "url": "https://www.facebook.com/watch/?v=1009276272224478"
+  },
+  "fb_1788678658920501": {
+    "fecha": "2026-10-19",
+    "organo": "Comisión de Seguridad Integral",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Edwin Cañizárez Cisneros",
+        "cargo": "ministro o autoridad",
+        "sobre": "Ley anti-mafias",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Respaldó el proyecto de ley contra el crimen organizado.",
+        "proyecto": "Ley anti-mafias",
+        "id": null
+      },
+      {
+        "orador": "Marta Cecilia Lugo",
+        "cargo": "ministro o autoridad",
+        "sobre": "Observaciones a la ley anti-mafias",
+        "postura": "con observaciones",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso incluir los espacios acuáticos nacionales en la ley.",
+        "proyecto": "Ley anti-mafias",
+        "id": null
+      },
+      {
+        "orador": "Daniela Arazo",
+        "cargo": "invitado",
+        "sobre": "Observaciones a la ley anti-mafias",
+        "postura": "con observaciones",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Pidió precisiones técnicas sobre la responsabilidad de personas jurídicas.",
+        "proyecto": "Ley anti-mafias",
+        "id": null
+      },
+      {
+        "orador": "Luis G. García",
+        "cargo": "legislador",
+        "sobre": "Reforma de personal militar",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso reformar la carrera y disciplina de las fuerzas armadas.",
+        "proyecto": "Ley de personal y disciplina de las fuerzas armadas",
+        "id": "EC:garcia velasquez"
+      },
+      {
+        "orador": "Luigi García",
+        "cargo": "legislador",
+        "sobre": "Beneficios económicos para militares",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso la actualización de los beneficios económicos para militares.",
+        "proyecto": "",
+        "id": "EC:garcia velasquez"
+      },
+      {
+        "orador": "Urreste",
+        "cargo": "legislador",
+        "sobre": "Iniciativa de beneficios militares",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Respaldó la iniciativa presentada por el legislador García.",
+        "proyecto": "",
+        "id": "EC:urresta guzman"
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1788678658920501"
+  },
+  "fb_1114888161124450": {
+    "fecha": "2026-10-19",
+    "organo": "Comisión de Niñez y Adolescencia",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Viviana Velós Ramírez",
+        "cargo": "legislador",
+        "sobre": "Aportes del Ministerio de Trabajo al proyecto",
+        "postura": "pregunta",
+        "tema": "Tecnología",
+        "dijo": "Preguntó si el Ministerio de Trabajo envió aportes al proyecto de ley.",
+        "proyecto": "Ley de protección de niños y adolescentes",
+        "id": "EC:veloz ramirez"
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1114888161124450"
+  },
+  "fb_2663522467415565": {
+    "fecha": "2026-10-16",
+    "organo": "Comisión de Justicia",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Camila Calle",
+        "cargo": "invitado",
+        "sobre": "Cédula digital y protección de datos",
+        "postura": "con observaciones",
+        "tema": "Tecnología",
+        "dijo": "Propuso vincular la identidad digital con la física para evitar la separación de documentos.",
+        "proyecto": "Ley de gestión de la identidad y datos civiles",
+        "id": null
+      },
+      {
+        "orador": "Luis Tamawong",
+        "cargo": "invitado",
+        "sobre": "Seguridad de la información en cédula digital",
+        "postura": "con observaciones",
+        "tema": "Tecnología",
+        "dijo": "Pidió establecer protocolos técnicos para prevenir la suplantación de identidad en la cédula digital.",
+        "proyecto": "Ley de gestión de la identidad y datos civiles",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=2663522467415565"
   }
 }
