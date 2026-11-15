@@ -1,4 +1,6 @@
 {
-  "sin_correr:Quien habla (transcripciones por turnos)": "Quien habla (transcripciones por turnos): no corre desde 15/11 02:05 (tocaba 15/11 04:40)",
-  "sin_correr:Posturas de congresistas (Gemma)": "Posturas de congresistas (Gemma): no corre desde 15/11 01:49 (tocaba 15/11 04:20)"
+  "sin_correr:Backfill automatico (sesiones perdidas)": "Backfill automatico (sesiones perdidas): no corre desde 15/11 01:48 (tocaba 15/11 07:20)",
+  "sin_correr:Actualizar Ecuador (CSV + documentos)": "Actualizar Ecuador (CSV + documentos): no corre desde 15/11 05:34 (tocaba 15/11 08:00)",
+  "sin_correr:Actualizar Peru (PLs + snapshot)": "Actualizar Peru (PLs + snapshot): no corre desde 15/11 05:11 (tocaba 15/11 11:00)",
+  "sin_correr:Votaciones Pleno bicameral (OCR de escaneados)": "Votaciones Pleno bicameral (OCR de escaneados): no corre desde 14/11 13:24 (tocaba 15/11 07:30)"
 }
