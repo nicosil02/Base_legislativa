@@ -20367,5 +20367,202 @@
       }
     ],
     "url": "https://www.facebook.com/watch/?v=1615415227048928"
+  },
+  "fb_1113727501356429": {
+    "fecha": "2026-10-14",
+    "organo": "Comisión de Soberanía Alimentaria",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Carlos Romero",
+        "cargo": "invitado",
+        "sobre": "Informe para primer debate",
+        "postura": "comenta",
+        "tema": "Agricultura",
+        "dijo": "Informó sobre el contenido técnico del informe.",
+        "proyecto": "Ley para prevenir y reducir la pérdida y desperdicio de alimentos",
+        "id": null
+      },
+      {
+        "orador": "María Bécebel Mendoza Ibarra",
+        "cargo": "legislador",
+        "sobre": "Aprobación del informe para primer debate",
+        "postura": "propone",
+        "tema": "Agricultura",
+        "dijo": "Propuso la aprobación del informe para primer debate.",
+        "proyecto": "Ley para prevenir y reducir la pérdida y desperdicio de alimentos",
+        "id": "EC:mendoza ibarra"
+      },
+      {
+        "orador": "Lorena Rosado",
+        "cargo": "legislador",
+        "sobre": "Moción de aprobación del informe",
+        "postura": "a favor",
+        "tema": "Agricultura",
+        "dijo": "Respaldó la moción presentada por su colega.",
+        "proyecto": "Ley para prevenir y reducir la pérdida y desperdicio de alimentos",
+        "id": "EC:rosado sanchez"
+      },
+      {
+        "orador": "María Bécebel Mendoza Ibarra",
+        "cargo": "legislador",
+        "sobre": "Votación de la moción",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Pidió la reconsideración de la votación de la moción.",
+        "proyecto": "",
+        "id": "EC:mendoza ibarra"
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1113727501356429"
+  },
+  "fb_2183612953037001": {
+    "fecha": "2026-10-14",
+    "organo": "Comisión de Gobiernos Autónomos",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Pablo Jurado",
+        "cargo": "legislador",
+        "sobre": "Reconsideración del informe de fiscalización",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso que el equipo técnico use códigos en el informe.",
+        "proyecto": "",
+        "id": "EC:jurado moreno"
+      },
+      {
+        "orador": "Sandra Figueroa",
+        "cargo": "legislador",
+        "sobre": "Sigilo de la información del informe",
+        "postura": "con observaciones",
+        "tema": "Política y control político",
+        "dijo": "Expresó preocupación por el sigilo de la información manejada.",
+        "proyecto": "",
+        "id": "EC:figueroa aguilar"
+      },
+      {
+        "orador": "Pablo Jurado",
+        "cargo": "legislador",
+        "sobre": "Protección de la imagen de autoridades",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Aclaró que la moción busca proteger la imagen de autoridades.",
+        "proyecto": "",
+        "id": "EC:jurado moreno"
+      },
+      {
+        "orador": "Javier Lasso",
+        "cargo": "legislador",
+        "sobre": "Autonomía de los gobiernos locales",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Criticó que la comisión afecte la autonomía de los gobiernos.",
+        "proyecto": "",
+        "id": "EC:lasso mendoza"
+      },
+      {
+        "orador": "Patricia Núñez",
+        "cargo": "legislador",
+        "sobre": "Transparencia en la gestión de la comisión",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció la falta de transparencia en el manejo de información.",
+        "proyecto": "",
+        "id": "EC:nunez ramos"
+      },
+      {
+        "orador": "Samuel Celler",
+        "cargo": "legislador",
+        "sobre": "Sustento técnico de la fiscalización",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Defendió la trazabilidad técnica del informe de fiscalización.",
+        "proyecto": "",
+        "id": "EC:celleri gomez"
+      },
+      {
+        "orador": "Pablo Jurado",
+        "cargo": "legislador",
+        "sobre": "Uso de códigos en los anexos",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Reiteró que los anexos deben usar códigos y no nombres.",
+        "proyecto": "",
+        "id": "EC:jurado moreno"
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=2183612953037001"
+  },
+  "gq_zDWFiiaE": {
+    "fecha": "2026-10-13",
+    "organo": "Pleno de la Asamblea",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "María Paula Villacreses",
+        "cargo": "legislador",
+        "sobre": "Juicio político contra David Rosero",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Explicó las pruebas periciales y de rastreo satelital presentadas.",
+        "proyecto": "",
+        "id": "EC:villacreses herrera"
+      },
+      {
+        "orador": "Luigi García",
+        "cargo": "legislador",
+        "sobre": "Incumplimiento de funciones del consejero Rosero",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció el conflicto de intereses por la reunión privada.",
+        "proyecto": "",
+        "id": "EC:garcia velasquez"
+      },
+      {
+        "orador": "Sergio Peña",
+        "cargo": "legislador",
+        "sobre": "Pruebas de cargo en juicio político",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Defendió la validez de las pericias de metadatos presentadas.",
+        "proyecto": "",
+        "id": "EC:pena veloz"
+      },
+      {
+        "orador": "Josebeth Jaramillo",
+        "cargo": "legislador",
+        "sobre": "Loja como capital del café",
+        "postura": "a favor",
+        "tema": "Agricultura",
+        "dijo": "Propuso declarar a la provincia de Loja como capital cafetalera.",
+        "proyecto": "",
+        "id": "EC:jaramillo rodriguez"
+      },
+      {
+        "orador": "Verónica Yánez Mígues",
+        "cargo": "legislador",
+        "sobre": "Declaratoria de Loja capital del café",
+        "postura": "a favor",
+        "tema": "Agricultura",
+        "dijo": "Destacó el potencial económico y la identidad del café lojano.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Janina Rizzo",
+        "cargo": "legislador",
+        "sobre": "Reconocimiento de la producción de café lojano",
+        "postura": "a favor",
+        "tema": "Agricultura",
+        "dijo": "Respaldó la iniciativa para honrar a los caficultores lojanos.",
+        "proyecto": "",
+        "id": "EC:rizzo alvear"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=gq_zDWFiiaE"
   }
 }
