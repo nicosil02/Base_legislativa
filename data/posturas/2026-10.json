@@ -14883,5 +14883,112 @@
       }
     ],
     "url": "https://www.youtube.com/watch?v=zIgPORESkkQ"
+  },
+  "Nh1WjPVTzjE": {
+    "fecha": "2026-10-20",
+    "organo": "Comisión de Ética Parlamentaria",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Secretaria Técnica",
+        "cargo": "autoridad",
+        "sobre": "Denuncia contra Julián Luis Pérez Malqui",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Informó sobre el informe de calificación contra Julián Luis Pérez Malqui.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Secretaria Técnica",
+        "cargo": "autoridad",
+        "sobre": "Denuncia contra Catherine Norma Palomino Casavilca",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Informó sobre la denuncia de oficio contra Catherine Norma Palomino Casavilca.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Secretaria Técnica",
+        "cargo": "autoridad",
+        "sobre": "Informe final contra Julián Luis Pérez Malqui",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Informó sobre el preinforme final contra Julián Luis Pérez Malqui.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Secretaria Técnica",
+        "cargo": "ministro o autoridad",
+        "sobre": "Denuncia contra el diputado Julián Pérez Malky",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso la suspensión del diputado Julián Pérez Malky por conductas de violencia.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=Nh1WjPVTzjE"
+  },
+  "wvYF_OCf-8M": {
+    "fecha": "2026-10-20",
+    "organo": "Pleno de la Asamblea",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Nathalie Fariñango",
+        "cargo": "legislador",
+        "sobre": "objeción al proyecto de ley tributario",
+        "postura": "a favor",
+        "tema": "Tributos",
+        "dijo": "Defendió el allanarse a la objeción presidencial para garantizar la seguridad jurídica y proporcionalidad.",
+        "proyecto": "Proyecto de ley reformatoria al Código Tributario",
+        "id": "EC:farinango delgado"
+      },
+      {
+        "orador": "Nathalie Fariñango",
+        "cargo": "legislador",
+        "sobre": "Sanción por reporte de activos",
+        "postura": "a favor",
+        "tema": "Tributos",
+        "dijo": "Defendió el texto alternativo sobre la sanción por falta de reporte de activos.",
+        "proyecto": "Proyecto de ley orgánica reformatoria al Código Tributario",
+        "id": "EC:farinango delgado"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=wvYF_OCf-8M"
+  },
+  "fb_1443944621019762": {
+    "fecha": "2026-10-20",
+    "organo": "Comisión de Seguridad Integral",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Edwin Cañizares Isneros",
+        "cargo": "ministro o autoridad",
+        "sobre": "Reforma de la ley de personal militar",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Respaldó la reforma de la ley de personal militar.",
+        "proyecto": "Ley Orgánica de Personal y Disciplina de las Fuerzas Armadas",
+        "id": null
+      },
+      {
+        "orador": "Machado",
+        "cargo": "legislador",
+        "sobre": "Reforma de la ley de personal militar",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Destacó la necesidad de la reforma de la ley militar.",
+        "proyecto": "Ley Orgánica de Personal y Disciplina de las Fuerzas Armadas",
+        "id": "EC:machado clavijo"
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1443944621019762"
   }
 }
