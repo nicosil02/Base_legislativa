@@ -339,7 +339,27 @@
     "https://www.asambleanacional.gob.ec/sites/default/files/an-cfcp-2025-0165-m_merged.pdf",
     "https://www.asambleanacional.gob.ec/sites/default/files/ilovepdf_merged_-_2025-07-14t101339.640.pdf",
     "https://www.asambleanacional.gob.ec/sites/default/files/ilovepdf_merged_-_2025-07-14t100554.361.pdf",
-    "https://www.asambleanacional.gob.ec/sites/default/files/an-cfcp-2025-0126-m.pdf"
+    "https://www.asambleanacional.gob.ec/sites/default/files/an-cfcp-2025-0126-m.pdf",
+    "https://www.asambleanacional.gob.ec/sites/default/files/votacion_sesion_135_cjee.pdf",
+    "https://www.asambleanacional.gob.ec/sites/default/files/votacion_sesion_139.pdf",
+    "https://www.asambleanacional.gob.ec/sites/default/files/votacion_sesion_132_cret.pdf",
+    "https://www.asambleanacional.gob.ec/sites/default/files/votacion_sesion_129.pdf",
+    "https://www.asambleanacional.gob.ec/sites/default/files/votacion_sesion_127.pdf",
+    "https://www.asambleanacional.gob.ec/sites/default/files/votacion_sesion_126_sa.pdf",
+    "https://www.asambleanacional.gob.ec/sites/default/files/votacion_sesion_117.pdf",
+    "https://www.asambleanacional.gob.ec/sites/default/files/votacion_sesion_113.pdf",
+    "https://www.asambleanacional.gob.ec/sites/default/files/vtacion_sesion_112_cgad.pdf",
+    "https://www.asambleanacional.gob.ec/sites/default/files/votacion_sesion_176.pdf",
+    "https://www.asambleanacional.gob.ec/sites/default/files/votacion_sesion_124_ctpc.pdf",
+    "https://www.asambleanacional.gob.ec/sites/default/files/votacion_sesion_068_5.pdf",
+    "https://www.asambleanacional.gob.ec/sites/default/files/sesion_sesion_066.pdf",
+    "https://www.asambleanacional.gob.ec/sites/default/files/votacion_sesion_063_2.pdf",
+    "https://www.asambleanacional.gob.ec/sites/default/files/votacion_sesion_060_2.pdf",
+    "https://www.asambleanacional.gob.ec/sites/default/files/votacion_sesion_059_1.pdf",
+    "https://www.asambleanacional.gob.ec/sites/default/files/votacion_sesion_058_5.pdf",
+    "https://www.asambleanacional.gob.ec/sites/default/files/votacion_sesion_057_3.pdf",
+    "https://www.asambleanacional.gob.ec/sites/default/files/votacion_sesion_055_3.pdf",
+    "https://www.asambleanacional.gob.ec/sites/default/files/votacion_sesion_72_cfcp.pdf"
   ],
   "votaciones": [
     {
@@ -5895,6 +5915,57 @@
       }
     },
     {
+      "fecha": "2026-07-07",
+      "asunto": "Aprobar la RESOLUCIÓN DE INICIO DEL PROCESO DE FISCALIZACIÓN SOBRE EL TRASPASO DE LA ADMINISTRACIÓN, OPERACIÓN Y MANTENIMIENTO DE LA CENTRAL HIDROELÉCTRICA COCA CODO SINCLAIR A LA EMPRESA POWER CHINA, EN CUMPLIMIENTO DEL LAUDO ARBITRAL EJECUTADO POR MUTUO ACUERDO.",
+      "comision": "Comisión de Garantías Constitucionales",
+      "url": "https://www.asambleanacional.gob.ec/sites/default/files/votacion_sesion_055_3.pdf",
+      "votos": {
+        "EC:valladarez gonzalez": null,
+        "EC:rodriguez chavez": "SI",
+        "EC:barreto zambrano": "SI",
+        "EC:cedeno rivadeneira": "SI",
+        "EC:cordova diaz": "SI",
+        "EC:mateus acosta": "SI",
+        "EC:iniguez gallardo": "SI",
+        "EC:ordonez quezada": "SI",
+        "EC:tuala muntza": "SI"
+      }
+    },
+    {
+      "fecha": "2026-07-07",
+      "asunto": "Aprobar el INICIO DEL PROCESO DE FISCALIZACIÓN INTEGRAL A LOS ESTUDIOS, DISEÑO, CONTRATACIÓN, CONSTRUCCIÓN, FISCALIZACIÓN Y SUPERVISIÓN DEL DIQUE PERMEABLE UBICADO EN EL SECTOR SAN CARLOS, CANTÓN EL CHACO, QUE COLAPSÓ EL 21 DE MAYO DEL 2026",
+      "comision": "Comisión de Garantías Constitucionales",
+      "url": "https://www.asambleanacional.gob.ec/sites/default/files/votacion_sesion_055_3.pdf",
+      "votos": {
+        "EC:valladarez gonzalez": null,
+        "EC:mateus acosta": "SI",
+        "EC:rodriguez chavez": "SI",
+        "EC:iniguez gallardo": "SI",
+        "EC:tuala muntza": "SI",
+        "EC:cordova diaz": "SI",
+        "EC:barreto zambrano": "SI",
+        "EC:cedeno rivadeneira": "SI",
+        "EC:ordonez quezada": "SI"
+      }
+    },
+    {
+      "fecha": "2026-07-07",
+      "asunto": "AVOCAR CONOCIMIENTO del \"PROYECTO DE LEY ORGÁNICA DE RECONOCIMIENTO Y PROTECCIÓN DE LOS DERECHOS COLECTIVOS DEL PUEBLO AFROECUATORIANO\",",
+      "comision": "Comisión de Garantías Constitucionales",
+      "url": "https://www.asambleanacional.gob.ec/sites/default/files/votacion_sesion_055_3.pdf",
+      "votos": {
+        "EC:valladarez gonzalez": null,
+        "EC:iniguez gallardo": "SI",
+        "EC:mateus acosta": "SI",
+        "EC:cordova diaz": "SI",
+        "EC:cedeno rivadeneira": "SI",
+        "EC:tuala muntza": "SI",
+        "EC:ordonez quezada": "SI",
+        "EC:barreto zambrano": "SI",
+        "EC:rodriguez chavez": "SI"
+      }
+    },
+    {
       "fecha": "2026-07-08",
       "asunto": "APROBAR la Resolución Nro. 015-2025-2027 que unifica el “PROYECTO DE LEY ORGÁNICA PARA LA APLICACIÓN DEL DESARROLLO Y LA EVALUACIÓN DE POLÍTICAS PÚBLICAS COMO MÉTODO DE EFICIENCIA GUBERNAMENTAL” presentado por la ex asambleísta María Mercedes Cuesta Concari al “PROYECTO DE LEY ORGÁNICA REFORMATORIA…",
       "comision": "Comisión de Régimen Económico y Tributario",
@@ -6192,6 +6263,23 @@
       }
     },
     {
+      "fecha": "2026-08-07",
+      "asunto": "APROBAR EL INFORME PARA SEGUNDO DEBATE DEL “PROYECTO DE LEY ORGÁNICA DE VÍCTIMAS DE GRAVES VIOLACIONES A LOS DERECHOS HUMANOS”, en cumplimiento del procedimiento legislativo establecido en los artículos 26 y 27 de la Ley Orgánica de la Función Legislativa, INCLUYENDO LOS SIGUIENTES CAMBIOS AL TEXTO…",
+      "comision": "Comisión de Garantías Constitucionales",
+      "url": "https://www.asambleanacional.gob.ec/sites/default/files/votacion_sesion_057_3.pdf",
+      "votos": {
+        "EC:barreto zambrano": "SI",
+        "EC:valladarez gonzalez": "SI",
+        "EC:cedeno rivadeneira": "SI",
+        "EC:rodriguez chavez": "SI",
+        "EC:mateus acosta": "SI",
+        "EC:cordova diaz": "SI",
+        "EC:iniguez gallardo": "SI",
+        "EC:ordonez quezada": "SI",
+        "EC:tuala muntza": "SI"
+      }
+    },
+    {
       "fecha": "2026-08-12",
       "asunto": "Conforme el artículo 135 de la Ley Orgánica de la Función Legislativa, que establece que las y los asambleístas podrán presentar mociones a través del Sistema de Gestión Documental, me permito presentar la siguiente moción: “Se inicie un proceso de fiscalización respecto del presunto cierre,…",
       "comision": "Comisión de Niñas, Niños y Adolescentes",
@@ -6428,6 +6516,40 @@
       }
     },
     {
+      "fecha": "2026-08-26",
+      "asunto": "MOCIONO que esta Comisión resuelva elegir a la Ph.D. María Verónica Íñiguez Gallardo como Presidenta de la Comisión Especializada Permanente de Garantías Constitucionales, Derechos Humanos, Derechos Colectivos y la Interculturalidad",
+      "comision": "Comisión de Garantías Constitucionales",
+      "url": "https://www.asambleanacional.gob.ec/sites/default/files/votacion_sesion_058_5.pdf",
+      "votos": {
+        "EC:valladarez gonzalez": "SI",
+        "EC:rodriguez chavez": "SI",
+        "EC:cordova diaz": "SI",
+        "EC:iniguez gallardo": "SI",
+        "EC:mateus acosta": "SI",
+        "EC:cedeno rivadeneira": "SI",
+        "EC:zambrano rodriguez": "SI",
+        "EC:ordonez quezada": "SI",
+        "EC:tuala muntza": "SI"
+      }
+    },
+    {
+      "fecha": "2026-08-26",
+      "asunto": "MOCIONO que se designe al asambleísta Fernando Cedeño Rivadeneira como Presidente Ad- Hoc de la presente sesión, a fin de que dirija su instalación, desarrollo y el respectivo proceso de elección.",
+      "comision": "Comisión de Garantías Constitucionales",
+      "url": "https://www.asambleanacional.gob.ec/sites/default/files/votacion_sesion_058_5.pdf",
+      "votos": {
+        "EC:tuala muntza": null,
+        "EC:iniguez gallardo": "SI",
+        "EC:rodriguez chavez": "SI",
+        "EC:cordova diaz": "SI",
+        "EC:cedeno rivadeneira": "SI",
+        "EC:mateus acosta": "SI",
+        "EC:zambrano rodriguez": "SI",
+        "EC:ordonez quezada": "SI",
+        "EC:valladarez gonzalez": "SI"
+      }
+    },
+    {
       "fecha": "2026-08-28",
       "asunto": "Aprobación unificación de proyecto de ley",
       "comision": "Comisión de Transparencia y Participación Ciudadana",
@@ -6495,6 +6617,60 @@
         "EC:blacio carrion": "NO",
         "EC:tamayo trivino": "NO",
         "EC:munoz aroca": "ABST"
+      }
+    },
+    {
+      "fecha": "2026-09-01",
+      "asunto": "Designar como Vicepresidente de la Comisión Especializada Permanente de Garantías Constitucionales, Derechos Humanos, Derechos Colectivos y la Interculturalidad al Asambleísta Fernando Enrique Cedeño Rivadeneira",
+      "comision": "Comisión de Garantías Constitucionales",
+      "url": "https://www.asambleanacional.gob.ec/sites/default/files/votacion_sesion_059_1.pdf",
+      "votos": {
+        "EC:barreto zambrano": "SI",
+        "EC:rodriguez chavez": "SI",
+        "EC:cedeno rivadeneira": "SI",
+        "EC:iniguez gallardo": "SI",
+        "EC:valladarez gonzalez": "SI",
+        "EC:mateus acosta": "SI",
+        "EC:cordova diaz": "SI",
+        "EC:ordonez quezada": "SI",
+        "EC:tuala muntza": "SI",
+        "EC:zambrano rodriguez": "SI"
+      }
+    },
+    {
+      "fecha": "2026-09-03",
+      "asunto": "INICIAR UN PROCESO DE FISCALIZACIÓN Y SEGUIMIENTO, CON ENFOQUE DE DERECHOS HUMANOS,EN OBSERVANCIA DE LA CONVENCIÓN INTERAMERICANA PARA PREVENIR Y SANCIONAR LA TORTURA Y DEL PROTOCOLO FACULTATIVO DE LA CONVENCIÓN CONTRA LA TORTURA Y OTROS TRATOS O PENAS CRUELES, INHUMANOS O DEGRADANTES (OPCAT),…",
+      "comision": "Comisión de Garantías Constitucionales",
+      "url": "https://www.asambleanacional.gob.ec/sites/default/files/votacion_sesion_060_2.pdf",
+      "votos": {
+        "EC:valladarez gonzalez": "SI",
+        "EC:barreto zambrano": "SI",
+        "EC:rodriguez chavez": "SI",
+        "EC:iniguez gallardo": "SI",
+        "EC:tuala muntza": "SI",
+        "EC:zambrano rodriguez": "SI",
+        "EC:mateus acosta": "SI",
+        "EC:cordova diaz": "SI",
+        "EC:ordonez quezada": "SI",
+        "EC:cedeno rivadeneira": "SI"
+      }
+    },
+    {
+      "fecha": "2026-09-03",
+      "asunto": "Conocer y resolver sobre el oficio de 12 de junio de 2026 suscrito por el Consorcio para los Derechos Humanos en América Latina —CODHAL—, en ejercicio de las atribuciones de fiscalización y control político previstas en el artículo 26 numeral 3 de la Ley Orgánica de la Función Legislativa.",
+      "comision": "Comisión de Garantías Constitucionales",
+      "url": "https://www.asambleanacional.gob.ec/sites/default/files/votacion_sesion_060_2.pdf",
+      "votos": {
+        "EC:cedeno rivadeneira": null,
+        "EC:mateus acosta": "SI",
+        "EC:iniguez gallardo": "SI",
+        "EC:rodriguez chavez": "SI",
+        "EC:valladarez gonzalez": "SI",
+        "EC:tuala muntza": "SI",
+        "EC:barreto zambrano": "SI",
+        "EC:cordova diaz": "SI",
+        "EC:ordonez quezada": "SI",
+        "EC:zambrano rodriguez": "SI"
       }
     },
     {
@@ -6622,6 +6798,24 @@
       }
     },
     {
+      "fecha": "2026-09-17",
+      "asunto": "Se apruebe la resolución mediante la cual esta Comisión AVOCA conocimiento e INICIA UN PROCESO DE FISCALIZACIÓN respecto de la Resolución 187-2026 del Pleno del Consejo de la Judicatura, de 07 de septiembre de 2026, que suprimió la Unidad Judicial de Garantías Penales Especializada, el Tribunal de…",
+      "comision": "Comisión de Garantías Constitucionales",
+      "url": "https://www.asambleanacional.gob.ec/sites/default/files/votacion_sesion_063_2.pdf",
+      "votos": {
+        "EC:valladarez gonzalez": "SI",
+        "EC:iniguez gallardo": "SI",
+        "EC:barreto zambrano": "SI",
+        "EC:rodriguez chavez": "SI",
+        "EC:mateus acosta": "SI",
+        "EC:ordonez quezada": "SI",
+        "EC:zambrano rodriguez": "SI",
+        "EC:cordova diaz": "SI",
+        "EC:cedeno rivadeneira": "SI",
+        "EC:tuala muntza": "SI"
+      }
+    },
+    {
       "fecha": "2026-09-18",
       "asunto": "Mociono a la asambleísta Ana Cristina Guim Alfago para que sea designada Presidenta de la",
       "comision": "Comisión del Derecho a la Salud y Deporte",
@@ -6656,6 +6850,272 @@
       }
     },
     {
+      "fecha": "2026-09-24",
+      "asunto": "Aprobación de informe primer debate",
+      "comision": "Comisión de Transparencia y Participación Ciudadana",
+      "url": "https://www.asambleanacional.gob.ec/sites/default/files/votacion_sesion_124_ctpc.pdf",
+      "votos": {
+        "EC:guevara benavidez": "SI",
+        "EC:serrano molina": "SI",
+        "EC:cerda tapuy": "SI",
+        "EC:solano calle": "SI",
+        "EC:chamba cabanilla": "SI",
+        "EC:jacome silva": "SI",
+        "EC:pulley iturralde": "SI",
+        "EC:mendoza andrade": "ABST",
+        "EC:romero ponguillo": "ABST",
+        "EC:luna arevalo": "ABST"
+      }
+    },
+    {
+      "fecha": "2026-09-24",
+      "asunto": "Reconsideración de: Aprobación de informe primer debate",
+      "comision": "Comisión de Transparencia y Participación Ciudadana",
+      "url": "https://www.asambleanacional.gob.ec/sites/default/files/votacion_sesion_124_ctpc.pdf",
+      "votos": {
+        "EC:solano calle": "NO",
+        "EC:jacome silva": "NO",
+        "EC:cerda tapuy": "NO",
+        "EC:serrano molina": "NO",
+        "EC:guevara benavidez": "NO",
+        "EC:pulley iturralde": "NO",
+        "EC:chamba cabanilla": "NO",
+        "EC:mendoza andrade": "ABST",
+        "EC:romero ponguillo": "ABST",
+        "EC:luna arevalo": "ABST"
+      }
+    },
+    {
+      "fecha": "2026-10-01",
+      "asunto": "APROBAR el texto final del “PROYECTO DE LEY ORGÁNICA REFORMATORIA AL CÓDIGO TRIBUTARIO”; y, autorizar a la Secretaria Relatora de la Comisión Especializada Permanente de Régimen Económico y Tributario y su Regulación y Control para que realice las correcciones de estilo y forma que sean necesarias…",
+      "comision": "Comisión de Régimen Económico y Tributario",
+      "url": "https://www.asambleanacional.gob.ec/sites/default/files/votacion_sesion_132_cret.pdf",
+      "votos": {
+        "EC:villacres salazar": "SI",
+        "EC:molina coro": "SI",
+        "EC:farinango delgado": "SI",
+        "EC:acuna vaca": "SI",
+        "EC:castro piedra": "SI",
+        "EC:zapata rojas": "SI",
+        "EC:aleman marmol": "NO",
+        "EC:vallejo ayala": "NO",
+        "EC:guzman cruz": "NO",
+        "EC:duran aguilar": "NO"
+      }
+    },
+    {
+      "fecha": "2026-10-01",
+      "asunto": "RECONSIDERACIÓN DE LA MOCIÓN:APROBAR el texto final del “PROYECTO DE LEY ORGÁNICA REFORMATORIA AL CÓDIGO TRIBUTARIO”; y, autorizar a la Secretaria Relatora de la Comisión Especializada Permanente de Régimen Económico y Tributario y su Regulación y Control para que realice las correcciones de estilo…",
+      "comision": "Comisión de Régimen Económico y Tributario",
+      "url": "https://www.asambleanacional.gob.ec/sites/default/files/votacion_sesion_132_cret.pdf",
+      "votos": {
+        "EC:castro piedra": null,
+        "EC:guzman cruz": "SI",
+        "EC:vallejo ayala": "SI",
+        "EC:aleman marmol": "SI",
+        "EC:duran aguilar": "SI",
+        "EC:molina coro": "NO",
+        "EC:villacres salazar": "NO",
+        "EC:farinango delgado": "NO",
+        "EC:acuna vaca": "NO",
+        "EC:zapata rojas": "NO"
+      }
+    },
+    {
+      "fecha": "2026-10-05",
+      "asunto": "APROBAR el informe de sustanciación correspondiente a la “solicitud de enjuiciamiento político en contra del señor Ing. David Alejandro Rosero Minda”, aparejado a la convocatoria contenida en el Memorando Nro. AN-CFCP-2026-0377-M de 04 de octubre de 2026, a fin de que sea remitido de forma…",
+      "comision": "Comisión de Fiscalización y Control Político",
+      "url": "https://www.asambleanacional.gob.ec/sites/default/files/votacion_sesion_72_cfcp.pdf",
+      "votos": {
+        "EC:villacreses herrera": "SI",
+        "EC:erazo andi": "SI",
+        "EC:garcia velasquez": "SI",
+        "EC:sanmartin parra": "SI",
+        "EC:nango cuji": "SI",
+        "EC:herrera gomez": "ABST",
+        "EC:chica valencia": "ABST",
+        "EC:saant juank": "ABST",
+        "EC:ortiz chipre": "ABST"
+      }
+    },
+    {
+      "fecha": "2026-10-05",
+      "asunto": "Moción de reconsideración presentada por el As. Luigi García.",
+      "comision": "Comisión de Fiscalización y Control Político",
+      "url": "https://www.asambleanacional.gob.ec/sites/default/files/votacion_sesion_72_cfcp.pdf",
+      "votos": {
+        "EC:villacreses herrera": "NO",
+        "EC:garcia velasquez": "NO",
+        "EC:nango cuji": "NO",
+        "EC:erazo andi": "NO",
+        "EC:sanmartin parra": "NO",
+        "EC:ortiz chipre": "ABST",
+        "EC:herrera gomez": "ABST",
+        "EC:chica valencia": "ABST",
+        "EC:saant juank": "ABST"
+      }
+    },
+    {
+      "fecha": "2026-10-06",
+      "asunto": "Resolver la aprobación de la unificación del Proyecto de Ley Orgánica Reformatoria para una Caracterización Acuícola Pesquera a la Ley Orgánica para el Desarrollo de la Acuicultura y la Pesca, que cuenta con informe para primer debate, con el Proyecto de Ley Orgánica Reformatoria a la Ley Orgánica…",
+      "comision": "Comisión de Soberanía Alimentaria",
+      "url": "https://www.asambleanacional.gob.ec/sites/default/files/votacion_sesion_126_sa.pdf",
+      "votos": {
+        "EC:gavilanez munoz": "SI",
+        "EC:molina onofa": "SI",
+        "EC:gonzaga salazar": "SI",
+        "EC:rosado sanchez": "SI",
+        "EC:rizzo alvear": "SI",
+        "EC:butina martinez": "SI",
+        "EC:gonzalez alvear": "SI",
+        "EC:baez mera": "SI",
+        "EC:mendoza ibarra": "SI",
+        "EC:cordova diaz": "SI"
+      }
+    },
+    {
+      "fecha": "2026-10-06",
+      "asunto": "RECONSIDERACION - unificación del Proyecto de Ley Orgánica Reformatoria para una Caracterización Acuícola Pesquera a la Ley Orgánica para el Desarrollo de la Acuicultura y la Pesca, que cuenta con informe para primer debate, con el Proyecto de Ley Orgánica Reformatoria a la Ley Orgánica para el…",
+      "comision": "Comisión de Soberanía Alimentaria",
+      "url": "https://www.asambleanacional.gob.ec/sites/default/files/votacion_sesion_126_sa.pdf",
+      "votos": {
+        "EC:gavilanez munoz": "NO",
+        "EC:gonzaga salazar": "NO",
+        "EC:gonzalez alvear": "NO",
+        "EC:mendoza ibarra": "NO",
+        "EC:rizzo alvear": "NO",
+        "EC:butina martinez": "NO",
+        "EC:molina onofa": "NO",
+        "EC:cordova diaz": "NO",
+        "EC:rosado sanchez": "NO",
+        "EC:baez mera": "NO"
+      }
+    },
+    {
+      "fecha": "2026-10-07",
+      "asunto": "Presentada por la asambleísta Anelisse Josebeth Jaramillo Rodríguez, mediante memorando Nro.",
+      "comision": "Comisión de Justicia y Estructura del Estado",
+      "url": "https://www.asambleanacional.gob.ec/sites/default/files/votacion_sesion_135_cjee.pdf",
+      "votos": {
+        "EC:correa gonzalez": "SI",
+        "EC:gallardo ruiz": "SI",
+        "EC:jaramillo rodriguez": "SI",
+        "EC:molina menendez": "SI",
+        "EC:nantipia chumpi": null,
+        "EC:olmedo arias": "SI",
+        "EC:palacios alejandro": "SI",
+        "EC:torres cadena": "SI",
+        "EC:torres cobo": "SI",
+        "EC:vega morillo": "SI"
+      }
+    },
+    {
+      "fecha": "2026-10-09",
+      "asunto": "APROBACIÓN del Informe Final de Fiscalización dictado en cumplimiento de la Resolución RL-2025-2029-095.",
+      "comision": "Comisión de Gobiernos Autónomos",
+      "url": "https://www.asambleanacional.gob.ec/sites/default/files/vtacion_sesion_112_cgad.pdf",
+      "votos": {
+        "EC:aguas flores": "SI",
+        "EC:celleri gomez": "SI",
+        "EC:guillen rodriguez": "SI",
+        "EC:vargas quijano": "SI",
+        "EC:benavides fuentes": "SI",
+        "EC:choro duchi": "SI",
+        "EC:jurado moreno": "SI",
+        "EC:lasso mendoza": "NO",
+        "EC:nunez ramos": "NO",
+        "EC:figueroa aguilar": "NO"
+      }
+    },
+    {
+      "fecha": "2026-10-14",
+      "asunto": "Aprobar el \"Informe para Primer Debate del Proyecto de Ley Orgánica Reformatoria de la Ley para Prevenir y Reducir la Pérdida y Desperdicio de Alimentos y Mitigar el Hambre de las personas en situación de Vulnerabilidad Alimentaria\", elaborado por la Comisión Especializada Permanente de Soberanía…",
+      "comision": "Comisión de Soberanía Alimentaria",
+      "url": "https://www.asambleanacional.gob.ec/sites/default/files/votacion_sesion_127.pdf",
+      "votos": {
+        "EC:rosado sanchez": "SI",
+        "EC:rizzo alvear": "SI",
+        "EC:mendoza ibarra": "SI",
+        "EC:cordova diaz": "SI",
+        "EC:gonzaga salazar": "SI",
+        "EC:gavilanez munoz": "SI",
+        "EC:molina onofa": "ABST",
+        "EC:butina martinez": "ABST",
+        "EC:baez mera": "ABST"
+      }
+    },
+    {
+      "fecha": "2026-10-14",
+      "asunto": "RECONSIDERACION - Aprobar el \"Informe para Primer Debate del Proyecto de Ley Orgánica Reformatoria de la Ley para Prevenir y Reducir la Pérdida y Desperdicio de Alimentos y Mitigar el Hambre de las personas en situación de Vulnerabilidad Alimentaria",
+      "comision": "Comisión de Soberanía Alimentaria",
+      "url": "https://www.asambleanacional.gob.ec/sites/default/files/votacion_sesion_127.pdf",
+      "votos": {
+        "EC:rosado sanchez": "NO",
+        "EC:gonzaga salazar": "NO",
+        "EC:rizzo alvear": "NO",
+        "EC:cordova diaz": "NO",
+        "EC:gavilanez munoz": "NO",
+        "EC:mendoza ibarra": "NO",
+        "EC:molina onofa": "ABST",
+        "EC:butina martinez": "ABST",
+        "EC:baez mera": "ABST"
+      }
+    },
+    {
+      "fecha": "2026-10-14",
+      "asunto": "Documentación de la Moción de Reconsideración",
+      "comision": "Comisión de Gobiernos Autónomos",
+      "url": "https://www.asambleanacional.gob.ec/sites/default/files/votacion_sesion_113.pdf",
+      "votos": {
+        "EC:aguas flores": "SI",
+        "EC:benavides fuentes": "SI",
+        "EC:vargas quijano": "SI",
+        "EC:guillen rodriguez": "SI",
+        "EC:celleri gomez": "SI",
+        "EC:jurado moreno": "SI",
+        "EC:choro duchi": "SI",
+        "EC:lasso mendoza": "NO",
+        "EC:nunez ramos": "NO",
+        "EC:figueroa aguilar": "ABST"
+      }
+    },
+    {
+      "fecha": "2026-10-14",
+      "asunto": "MOCIONO que la Comisión Especializada Permanente de Gobiernos Autónomos, Descentralización, Competencias y Organización del Territorio, RECONSIDERE la moción aprobada en la sesión del viernes 9 de octubre de 2026.",
+      "comision": "Comisión de Gobiernos Autónomos",
+      "url": "https://www.asambleanacional.gob.ec/sites/default/files/votacion_sesion_113.pdf",
+      "votos": {
+        "EC:celleri gomez": "SI",
+        "EC:vargas quijano": "SI",
+        "EC:aguas flores": "SI",
+        "EC:guillen rodriguez": "SI",
+        "EC:choro duchi": "SI",
+        "EC:benavides fuentes": "SI",
+        "EC:jurado moreno": "SI",
+        "EC:nunez ramos": "ABST",
+        "EC:lasso mendoza": "ABST",
+        "EC:figueroa aguilar": "ABST"
+      }
+    },
+    {
+      "fecha": "2026-10-15",
+      "asunto": "Que esta Comisión Especializada Permanente de Relaciones Internacionales y Movilidad Humana APRUEBE EL INFORME PARA SEGUNDO DEBATE DEL PROYECTO DE LEY ORGÁNICA REFORMATORIA A LA LEY ORGÁNICA CONTRA LA TRATA DE PERSONAS Y EL TRÁFICO ILÍCITO DE MIGRANTES, UNIFICADO. a fin de que sea remitido al Pleno…",
+      "comision": "Comisión de Relaciones Internacionales y Movilidad Humana",
+      "url": "https://www.asambleanacional.gob.ec/sites/default/files/votacion_sesion_129.pdf",
+      "votos": {
+        "EC:ramirez chalen": "SI",
+        "EC:jaramillo zurita lucia": "SI",
+        "EC:jarrin rivadeneira": "SI",
+        "EC:ordonez fuentes": "SI",
+        "EC:lavayen tamayo": "SI",
+        "EC:velez velez": "SI",
+        "EC:cabrera chacon": "SI",
+        "EC:escobar galarza": "SI",
+        "EC:zuniga rocha": "SI",
+        "EC:parrales yagual": "SI"
+      }
+    },
+    {
       "fecha": "2026-10-16",
       "asunto": "APROBAR el INFORME AL “INFORME DE EJECUCIÓN DEL PRESUPUESTO GENERAL DEL ESTADO PERÍODO: ENERO – JUNIO 2026 Y ABRIL – JUNIO 2026”; y, autorizar a la Secretaria Relatora de la Comisión Especializada Permanente de Régimen Económico y Tributario y su Regulación y Control para que realice las…",
       "comision": "Comisión de Régimen Económico y Tributario",
@@ -6671,6 +7131,42 @@
         "EC:vallejo ayala": "NO",
         "EC:duran aguilar": "NO",
         "EC:guzman cruz": "NO"
+      }
+    },
+    {
+      "fecha": "2026-10-16",
+      "asunto": "APROBAR el Informe No Vinculante Respecto a la Objeción Parcial por Inconveniencia al “PROYECTO DE LEY ORGÁNICA REFORMATORIA AL CÓDIGO TRIBUTARIO”; y, autorizar a la Secretaria Relatora de la Comisión Especializada Permanente de Régimen Económico y Tributario y su Regulación y Control para que…",
+      "comision": "Comisión de Régimen Económico y Tributario",
+      "url": "https://www.asambleanacional.gob.ec/sites/default/files/votacion_sesion_139.pdf",
+      "votos": {
+        "EC:villacres salazar": "SI",
+        "EC:zapata rojas": "SI",
+        "EC:acuna vaca": "SI",
+        "EC:farinango delgado": "SI",
+        "EC:castro piedra": "SI",
+        "EC:molina coro": "SI",
+        "EC:aleman marmol": "NO",
+        "EC:vallejo ayala": "NO",
+        "EC:duran aguilar": "NO",
+        "EC:guzman cruz": "NO"
+      }
+    },
+    {
+      "fecha": "2026-10-16",
+      "asunto": "Reconsideración de la MOCIÓN: APROBAR el Informe No Vinculante Respecto a la Objeción Parcial por Inconveniencia al “PROYECTO DE LEY ORGÁNICA REFORMATORIA AL CÓDIGO TRIBUTARIO”; y, autorizar a la Secretaria Relatora de la Comisión Especializada Permanente de Régimen Económico y Tributario y su…",
+      "comision": "Comisión de Régimen Económico y Tributario",
+      "url": "https://www.asambleanacional.gob.ec/sites/default/files/votacion_sesion_139.pdf",
+      "votos": {
+        "EC:aleman marmol": "SI",
+        "EC:duran aguilar": "SI",
+        "EC:guzman cruz": "SI",
+        "EC:vallejo ayala": "SI",
+        "EC:villacres salazar": "NO",
+        "EC:farinango delgado": "NO",
+        "EC:acuna vaca": "NO",
+        "EC:zapata rojas": "NO",
+        "EC:castro piedra": "NO",
+        "EC:molina coro": "NO"
       }
     },
     {
@@ -6800,6 +7296,94 @@
       }
     },
     {
+      "fecha": "2026-10-28",
+      "asunto": "Aprobar la resolución de unificación del “Proyecto de Ley de Fomento a la Alimentación Saludable y al Consumo de Proteína de Alto Valor Biológico”, presentado por el asambleísta Andrés Felipe Castillo Maldonado, con el “Proyecto de Ley Orgánica para la Atención Integral de las Personas con…",
+      "comision": "Comisión del Derecho a la Salud y Deporte",
+      "url": "https://www.asambleanacional.gob.ec/sites/default/files/votacion_sesion_176.pdf",
+      "votos": {
+        "EC:campos tobar": null,
+        "EC:blacio carrion": "SI",
+        "EC:suarez morales": "SI",
+        "EC:becerra contreras": "SI",
+        "EC:munoz aroca": "SI",
+        "EC:azin arce": "SI",
+        "EC:tamayo trivino": "SI",
+        "EC:guim alfago": "SI",
+        "EC:jacome benitez": "ABST",
+        "EC:desintonio malave": "ABST"
+      }
+    },
+    {
+      "fecha": "2026-10-28",
+      "asunto": "Se apruebe la resolución mediante la cual esta Comisión INICIA UN PROCESO DE FISCALIZACIÓN respecto del ejercicio de las atribuciones administrativas, de vigilancia, evaluación y disciplina del Consejo de la Judicatura, así como de los mecanismos institucionales destinados a garantizar la…",
+      "comision": "Comisión de Garantías Constitucionales",
+      "url": "https://www.asambleanacional.gob.ec/sites/default/files/votacion_sesion_068_5.pdf",
+      "votos": {
+        "EC:valladarez gonzalez": "SI",
+        "EC:mateus acosta": "SI",
+        "EC:zambrano rodriguez": "SI",
+        "EC:iniguez gallardo": "SI",
+        "EC:cedeno rivadeneira": "SI",
+        "EC:barreto zambrano": "SI",
+        "EC:rodriguez chavez": "SI",
+        "EC:cordova diaz": "SI",
+        "EC:ordonez quezada": "SI",
+        "EC:tuala muntza": "SI"
+      }
+    },
+    {
+      "fecha": "2026-10-28",
+      "asunto": "Recibir en Comisión General al Dr. Julio César Cueva García, a fin de conocer sus aportes y observaciones sobre la independencia judicial, las posibles presiones e interferencias en las actuaciones administrativas y disciplinarias del Consejo de la Judicatura; y, Conocer, debatir y resolver sobre…",
+      "comision": "Comisión de Garantías Constitucionales",
+      "url": "https://www.asambleanacional.gob.ec/sites/default/files/votacion_sesion_068_5.pdf",
+      "votos": {
+        "EC:barreto zambrano": "SI",
+        "EC:valladarez gonzalez": "SI",
+        "EC:cedeno rivadeneira": "SI",
+        "EC:cordova diaz": "SI",
+        "EC:mateus acosta": "SI",
+        "EC:rodriguez chavez": "SI",
+        "EC:iniguez gallardo": "SI",
+        "EC:tuala muntza": "SI",
+        "EC:ordonez quezada": "SI",
+        "EC:zambrano rodriguez": "SI"
+      }
+    },
+    {
+      "fecha": "2026-10-28",
+      "asunto": "APROBACIÓN DEL TEXTO FINAL DE VOTACIÓN SUGERIDO DEL PROYECTO DE LEY ORGANICA PARA GARANTIZAR LOS DERECHOS Y PROMOVER EL EMPODERAMIENTO DE LAS MUJERES RURALES",
+      "comision": "Comisión de Garantías Constitucionales",
+      "url": "https://www.asambleanacional.gob.ec/sites/default/files/sesion_sesion_066.pdf",
+      "votos": {
+        "EC:cordova diaz": "SI",
+        "EC:mateus acosta": "SI",
+        "EC:valladarez gonzalez": "SI",
+        "EC:zambrano rodriguez": "SI",
+        "EC:ordonez quezada": "SI",
+        "EC:barreto zambrano": "SI",
+        "EC:iniguez gallardo": "SI",
+        "EC:cedeno rivadeneira": "SI",
+        "EC:rodriguez chavez": "SI"
+      }
+    },
+    {
+      "fecha": "2026-10-28",
+      "asunto": "Aprobar el texto final del Proyecto de Ley Orgánica para garantizar los derechos y promover el empoderamiento de las mujeres rurales, toda vez que han sido conocidos, analizados y debatidos por esta mesa legislativa los cambios sugeridos por las y los asambleístas al articulado que se debatió en la…",
+      "comision": "Comisión de Garantías Constitucionales",
+      "url": "https://www.asambleanacional.gob.ec/sites/default/files/sesion_sesion_066.pdf",
+      "votos": {
+        "EC:barreto zambrano": "SI",
+        "EC:valladarez gonzalez": "SI",
+        "EC:iniguez gallardo": "SI",
+        "EC:rodriguez chavez": "SI",
+        "EC:mateus acosta": "SI",
+        "EC:cedeno rivadeneira": "SI",
+        "EC:zambrano rodriguez": "SI",
+        "EC:cordova diaz": "SI",
+        "EC:ordonez quezada": "SI"
+      }
+    },
+    {
       "fecha": "2026-10-29",
       "asunto": "EMITIR requerimientos de información por parte del Pleno de la Comisión, en el marco del proceso de fiscalización correspondiente a la “ compra de 6 camiones recolectores de basura para la Empresa Pública Metropolitana de Aseo EMASEO EP”, en cumplimiento de la Resolución RL-2025-2029-125 del Pleno…",
       "comision": "Comisión de Fiscalización y Control Político",
@@ -6814,6 +7398,24 @@
         "EC:saant juank": "NO",
         "EC:herrera gomez": "NO",
         "EC:chica valencia": "NO"
+      }
+    },
+    {
+      "fecha": "2026-11-03",
+      "asunto": "Moción aprobación del Informe para Segundo Debate del Proyecto de Ley Organica Reformatoria al Código Orgánico de Organizacion Territorian, COOTAD Unificado",
+      "comision": "Comisión de Gobiernos Autónomos",
+      "url": "https://www.asambleanacional.gob.ec/sites/default/files/votacion_sesion_117.pdf",
+      "votos": {
+        "EC:nunez ramos": null,
+        "EC:aguas flores": "SI",
+        "EC:choro duchi": "SI",
+        "EC:vargas quijano": "SI",
+        "EC:celleri gomez": "SI",
+        "EC:jurado moreno": "SI",
+        "EC:guillen rodriguez": "SI",
+        "EC:benavides fuentes": "SI",
+        "EC:lasso mendoza": "NO",
+        "EC:figueroa aguilar": "ABST"
       }
     }
   ]
