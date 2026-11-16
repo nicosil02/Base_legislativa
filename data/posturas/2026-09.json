@@ -1,0 +1,151 @@
+{
+  "7_6irbY4z1Y": {
+    "fecha": "2026-09-30",
+    "organo": "Comisión de Constitución",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Palomino Casabilca",
+        "cargo": "legislador",
+        "sobre": "trámite de informe incidental",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Pidió que se dé trámite a la repartición de denuncias a los diputados delegados.",
+        "proyecto": "",
+        "id": "diputados:palomino casavilca"
+      },
+      {
+        "orador": "Aldo Bravo Quijpe",
+        "cargo": "legislador",
+        "sobre": "pedido de información de la senadora Luque",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Rechazó el acceso anticipado e integral a los expedientes de las denuncias.",
+        "proyecto": "",
+        "id": "diputados:bravo quispe"
+      },
+      {
+        "orador": "Gabriel González",
+        "cargo": "legislador",
+        "sobre": "cantidad de expedientes en trámite",
+        "postura": "pregunta",
+        "tema": "Política y control político",
+        "dijo": "Preguntó sobre la cantidad total de expedientes que la comisión tiene actualmente.",
+        "proyecto": "",
+        "id": "diputados:fernandez gonzalez"
+      },
+      {
+        "orador": "Columbus Murata",
+        "cargo": "legislador",
+        "sobre": "pedido de información de la senadora Luque",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó que se pretenda eludir el reglamento mediante pedidos de información anticipada.",
+        "proyecto": "",
+        "id": "diputados:columbus murata"
+      },
+      {
+        "orador": "Marlene Armita",
+        "cargo": "legislador",
+        "sobre": "pedido de información de la senadora Luque",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Propuso que el pedido de la senadora se evalúe según la normativa vigente.",
+        "proyecto": "",
+        "id": "diputados:arminta valencia"
+      },
+      {
+        "orador": "Columbus Murata",
+        "cargo": "legislador",
+        "sobre": "términos del pedido de la senadora Luque",
+        "postura": "pregunta",
+        "tema": "Política y control político",
+        "dijo": "Pidió que el secretario técnico lea textualmente los términos del pedido.",
+        "proyecto": "",
+        "id": "diputados:columbus murata"
+      },
+      {
+        "orador": "Caterina",
+        "cargo": "legislador",
+        "sobre": "pedido de información de la senadora Luque",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Pidió que se indique la norma que prohíba brindar información general.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Gabriel González",
+        "cargo": "legislador",
+        "sobre": "denuncias contra Dina Boluarte",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Propuso facilitar la información sobre los casos de Dina Boluarte.",
+        "proyecto": "",
+        "id": "diputados:fernandez gonzalez"
+      },
+      {
+        "orador": "José Baela",
+        "cargo": "legislador",
+        "sobre": "principio de discreción parlamentaria",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Pidió respetar la naturaleza reservada de la información según el reglamento.",
+        "proyecto": "",
+        "id": "diputados:baella malca"
+      },
+      {
+        "orador": "Javier Puchado",
+        "cargo": "legislador",
+        "sobre": "solicitud de datos generales",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Defendió la solicitud de datos generales frente al principio de reserva.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Colchado Huamani",
+        "cargo": "legislador",
+        "sobre": "copias de expedientes de denuncias",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció que el pedido busca facilitar la nulidad de procesos judiciales.",
+        "proyecto": "",
+        "id": "diputados:colchado huamani"
+      },
+      {
+        "orador": "Iván Rojas",
+        "cargo": "invitado",
+        "sobre": "denuncia contra Magali Ruiz Rodríguez",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Propuso la lectura de la propuesta de informe de calificación 00003.",
+        "proyecto": "00003",
+        "id": null
+      },
+      {
+        "orador": "Gabriel González",
+        "cargo": "legislador",
+        "sobre": "Revisión de casos de la señora Dina",
+        "postura": "pregunta",
+        "tema": "Política y control político",
+        "dijo": "Preguntó sobre el temor para revisar los casos de la señora Dina.",
+        "proyecto": "",
+        "id": "diputados:fernandez gonzalez"
+      },
+      {
+        "orador": "Iván Rojas",
+        "cargo": "invitado",
+        "sobre": "Denuncia contra Magali Ruiz Rodríguez",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso admitir a trámite la denuncia 00003 contra Magali Ruiz Rodríguez.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=7_6irbY4z1Y"
+  }
+}
