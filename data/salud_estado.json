@@ -1,6 +1,5 @@
 {
-  "sin_correr:Backfill automatico (sesiones perdidas)": "Backfill automatico (sesiones perdidas): no corre desde 15/11 13:57 (tocaba 15/11 19:20)",
-  "sin_correr:Quien habla (transcripciones por turnos)": "Quien habla (transcripciones por turnos): no corre desde 15/11 18:07 (tocaba 15/11 19:40)",
-  "falla:Quien habla (transcripciones por turnos)": "Quien habla (transcripciones por turnos): fallo 2 veces seguidas (https://github.com/nicosil02/Base_legislativa/actions/runs/43773044298)",
-  "sin_correr:Posturas de congresistas (Gemma)": "Posturas de congresistas (Gemma): no corre desde 15/11 17:58 (tocaba 15/11 19:20)"
+  "sin_correr:Quien habla (transcripciones por turnos)": "Quien habla (transcripciones por turnos): no corre desde 16/11 02:11 (tocaba 16/11 04:40)",
+  "falla:Quien habla (transcripciones por turnos)": "Quien habla (transcripciones por turnos): fallo 3 veces seguidas (https://github.com/nicosil02/Base_legislativa/actions/runs/43822003363)",
+  "sin_correr:Posturas de congresistas (Gemma)": "Posturas de congresistas (Gemma): no corre desde 16/11 01:48 (tocaba 16/11 04:20)"
 }
