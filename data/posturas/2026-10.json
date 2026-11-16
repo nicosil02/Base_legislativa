@@ -22582,5 +22582,122 @@
       }
     ],
     "url": "https://www.facebook.com/watch/?v=1646466936835911"
+  },
+  "fb_2195924931313847": {
+    "fecha": "2026-10-13",
+    "organo": "Comisión de Biodiversidad",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Hugo Uveche Berriávizago",
+        "cargo": "invitado",
+        "sobre": "Proyecto de ley de bioeconomía y biocomercio",
+        "postura": "con observaciones",
+        "tema": "Ambiente",
+        "dijo": "Sugerió armonizar la propuesta con el reglamento de investigación científica.",
+        "proyecto": "Ley de Bioeconomía y Biocomercio",
+        "id": null
+      },
+      {
+        "orador": "Casanova",
+        "cargo": "legislador",
+        "sobre": "Mecanismos de control y sanción",
+        "postura": "pregunta",
+        "tema": "Ambiente",
+        "dijo": "Preguntó sobre la claridad de los mecanismos de control y sanción.",
+        "proyecto": "Ley de Bioeconomía y Biocomercio",
+        "id": "EC:casanova montesino"
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=2195924931313847"
+  },
+  "fb_2149920189253836": {
+    "fecha": "2026-10-13",
+    "organo": "Comisión de Relaciones Internacionales",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Johnny Guerra",
+        "cargo": "ministro o autoridad",
+        "sobre": "Reforma a la Ley Orgánica del servicio exterior",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Explicó los objetivos de la reforma a la Ley Orgánica del servicio exterior.",
+        "proyecto": "Organica reformatoria al servicio exterior",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=2149920189253836"
+  },
+  "fb_1423770282549207": {
+    "fecha": "2026-10-13",
+    "organo": "Comisión de Relaciones Internacionales",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Johnny Alfredo Lavayenta Mayo",
+        "cargo": "legislador",
+        "sobre": "Reforma de la ley de movilidad humana",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Explicó que la reforma no incrementará el gasto público.",
+        "proyecto": "Ley de movilidad humana",
+        "id": "EC:lavayen tamayo"
+      },
+      {
+        "orador": "Carolina Escobar Galarza",
+        "cargo": "legislador",
+        "sobre": "Aprobación del informe de primer debate",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Propuso la aprobación del informe de primer debate.",
+        "proyecto": "Ley de movilidad humana",
+        "id": "EC:escobar galarza"
+      },
+      {
+        "orador": "Edwin Jarrín",
+        "cargo": "legislador",
+        "sobre": "Protección de ciudadanos en el exterior",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Respaldó el proyecto para proteger a los migrantes.",
+        "proyecto": "Ley de movilidad humana",
+        "id": "EC:jarrin rivadeneira"
+      },
+      {
+        "orador": "Zúñiga",
+        "cargo": "legislador",
+        "sobre": "Mejora de la normativa de movilidad",
+        "postura": "con observaciones",
+        "tema": "Otros",
+        "dijo": "Pidió incluir el desplazamiento interno en la ley.",
+        "proyecto": "Ley de movilidad humana",
+        "id": "EC:zuniga rocha"
+      },
+      {
+        "orador": "Parrales",
+        "cargo": "legislador",
+        "sobre": "Implementación de la reforma de movilidad",
+        "postura": "con observaciones",
+        "tema": "Otros",
+        "dijo": "Solicitó la realización de mesas técnicas legislativas.",
+        "proyecto": "Ley de movilidad humana",
+        "id": "EC:parrales yagual"
+      },
+      {
+        "orador": "Cabrera",
+        "cargo": "legislador",
+        "sobre": "Claridad en beneficios de la ley",
+        "postura": "con observaciones",
+        "tema": "Otros",
+        "dijo": "Cuestionó la falta de claridad en los beneficios.",
+        "proyecto": "Ley de movilidad humana",
+        "id": "EC:cabrera chacon"
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1423770282549207"
   }
 }
