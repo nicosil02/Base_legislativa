@@ -185,11 +185,38 @@ _METADATA_LINES = {
 }
 
 
+_SIN_NORMAS_RE = re.compile(r"^Edici[oó]n Jur[ií]dica", re.IGNORECASE)
+FEED_MAX_PAGINAS = 5  # 10 items por página
+
+
+def _filtrar_ediciones(items: list[dict]) -> list[dict]:
+    """Las Ediciones Jurídicas son sentencias de cortes: salen de a 20 por
+    tarde y empujaban las ediciones normativas fuera del feed (13/11/2026 se
+    perdió el RO 409 entero). No traen normas, se descartan."""
+    return [e for e in items if not _SIN_NORMAS_RE.match(e.get("titulo", ""))]
+
+
 def fetch_recent_editions(session, max_editions: int = 20) -> list[dict]:
-    """Últimas ediciones del RO desde el feed WP."""
-    r = session.get(FEED_URL, timeout=20)
-    r.raise_for_status()
-    return parse_rss_feed(r.text)[:max_editions]
+    """Últimas ediciones normativas del RO, paginando el feed WP hasta juntar
+    max_editions (o FEED_MAX_PAGINAS páginas)."""
+    out: list[dict] = []
+    for pagina in range(1, FEED_MAX_PAGINAS + 1):
+        url = FEED_URL if pagina == 1 else f"{FEED_URL}?paged={pagina}"
+        try:
+            r = session.get(url, timeout=20)
+            r.raise_for_status()
+        except Exception as e:
+            if pagina == 1:
+                raise
+            log.warning("RO feed página %d falló: %s", pagina, e)
+            break
+        items = parse_rss_feed(r.text)
+        if not items:
+            break
+        out.extend(_filtrar_ediciones(items))
+        if len(out) >= max_editions:
+            break
+    return out[:max_editions]
 
 
 def _extract_article_text(html: str) -> list[str]:
@@ -302,6 +329,33 @@ def _skip_metadata(lines: list[str]) -> list[str]:
     return out
 
 
+_ORDINALES = {"suplemento": 1, "segundo": 2, "tercer": 3, "tercero": 3, "cuarto": 4,
+              "quinto": 5, "sexto": 6, "séptimo": 7, "septimo": 7, "octavo": 8,
+              "noveno": 9, "décimo": 10, "decimo": 10}
+
+
+def _ordinal(titulo: str) -> int | None:
+    return _ORDINALES.get(titulo.strip().split(" ", 1)[0].lower())
+
+
+def _pdf_del_suplemento(urls: list[str] | None, titulo: str, numero: str,
+                        editions: list[dict]) -> str | None:
+    """El widget lista los suplementos de un número del más nuevo al más
+    viejo (Sexto, Quinto, ..., Suplemento; verificado con RO 409 y 410). Con
+    N = mayor ordinal de ese número en el feed, el k-ésimo está en N-k.
+    Contar desde el inicio aguanta que el widget corte los más viejos."""
+    if not urls:
+        return None
+    k = _ordinal(titulo)
+    ords = [_ordinal(e.get("titulo", "")) for e in editions
+            if "suplemento" in e.get("titulo", "").lower()
+            and (m := _PDF_NUMERO_RE.search(e.get("titulo", ""))) and m.group(1) == numero]
+    n = max((o for o in ords if o), default=None)
+    if not k or not n or not 0 <= n - k < len(urls):
+        return None  # mejor sin extracto que con el PDF de otro suplemento
+    return urls[n - k]
+
+
 def run_sync(db, max_editions: int = 20) -> dict:
     """Corre el sync: fetch feed → cada edición se clasifica y se guarda si
     matchea algún sector."""
@@ -348,14 +402,10 @@ def run_sync(db, max_editions: int = 20) -> dict:
             if m_num:
                 tipo = "suplemento" if "suplemento" in ed.get("titulo", "").lower() else "principal"
                 urls = pdf_index.get(tipo, {}).get(m_num.group(1))
-                if urls:
-                    # ponytail: si hubo >1 Suplemento el mismo día/número
-                    # (ej. "Segundo Suplemento No. 367", "Tercer Suplemento
-                    # No. 367"), el widget no distingue cuál PDF es cuál
-                    # ordinal - se usa el primero disponible sin asignación
-                    # fina. Mejorar si hace falta precisión por-suplemento.
+                url_pdf = _pdf_del_suplemento(urls, ed.get("titulo", ""), m_num.group(1), editions) if tipo == "suplemento" else (urls[0] if urls else None)
+                if url_pdf:
                     try:
-                        r_pdf = session.get(urls[0], timeout=30)
+                        r_pdf = session.get(url_pdf, timeout=30)
                         r_pdf.raise_for_status()
                         pdf_excerpt = extract_pdf_text(r_pdf.content) or None
                     except Exception as e:

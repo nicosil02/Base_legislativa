@@ -62,3 +62,19 @@ def test_extract_pdf_text_ocr_solo_en_pagina_vacia(monkeypatch):
     assert "Texto real de una norma" in text
     assert "TEXTO-OCR-SIMULADO" in text
     assert calls == [1]
+
+
+def test_filtrar_ediciones_saca_juridicas():
+    items = [{"titulo": "Edición Jurídica No. 440"}, {"titulo": "Segundo Suplemento No. 409"},
+             {"titulo": "Edición Constitucional No. 334"}]
+    assert [e["titulo"] for e in ro._filtrar_ediciones(items)] == [
+        "Segundo Suplemento No. 409", "Edición Constitucional No. 334"]
+
+
+def test_pdf_del_suplemento_por_ordinal():
+    eds = [{"titulo": t} for t in ("Quinto Suplemento No. 409", "Segundo Suplemento No. 409",
+                                   "Suplemento No. 409", "Registro Oficial No. 409")]
+    urls = ["q5", "q4", "q3", "q2", "q1"]
+    assert ro._pdf_del_suplemento(urls, "Segundo Suplemento No. 409", "409", eds) == "q2"
+    assert ro._pdf_del_suplemento(urls, "Suplemento No. 409", "409", eds) == "q1"
+    assert ro._pdf_del_suplemento(urls[:3], "Suplemento No. 409", "409", eds) is None
