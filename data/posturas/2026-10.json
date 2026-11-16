@@ -25570,5 +25570,73 @@
     "v": 4,
     "dichos": [],
     "url": "https://www.youtube.com/watch?v=RUaZt2rRNy0"
+  },
+  "fb_2236057790506787": {
+    "fecha": "2026-10-01",
+    "organo": "Comisión de Educación",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "María Cristina Cunhebaca",
+        "cargo": "legislador",
+        "sobre": "Reforma para fortalecer la participación cultural",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Propuso reformas legales para facilitar la participación cultural en ámbitos laborales y académicos.",
+        "proyecto": "Proyecto para fortalecer la participación cultural",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=2236057790506787"
+  },
+  "fb_1053603930990619": {
+    "fecha": "2026-10-01",
+    "organo": "Comisión de Derecho al Trabajo",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Verónica Jaramillo Will Cappi",
+        "cargo": "invitado",
+        "sobre": "Proyecto de inserción laboral juvenil",
+        "postura": "con observaciones",
+        "tema": "Trabajo",
+        "dijo": "Pidió ajustes técnicos al proyecto de la Ley Orgánica de Servicio Público.",
+        "proyecto": "Ley Orgánica de Servicio Público",
+        "id": null
+      },
+      {
+        "orador": "Alvarado",
+        "cargo": "legislador",
+        "sobre": "Equidad territorial en inserción laboral",
+        "postura": "pregunta",
+        "tema": "Trabajo",
+        "dijo": "Preguntó sobre la equidad de oportunidades en provincias periféricas.",
+        "proyecto": "Ley Orgánica de Servicio Público",
+        "id": "EC:alvarado espinel"
+      },
+      {
+        "orador": "Engner",
+        "cargo": "legislador",
+        "sobre": "Capacitación laboral en las provincias",
+        "postura": "propone",
+        "tema": "Trabajo",
+        "dijo": "Propuso que el Ministerio de Trabajo capacite a todas las provincias.",
+        "proyecto": "Ley Orgánica de Servicio Público",
+        "id": null
+      },
+      {
+        "orador": "Carlos Andrés Seballos de Espinoza",
+        "cargo": "legislador",
+        "sobre": "Inserción de graduados sin experiencia",
+        "postura": "comenta",
+        "tema": "Trabajo",
+        "dijo": "Comentó la dificultad de conseguir empleo sin experiencia previa.",
+        "proyecto": "Ley Orgánica de Servicio Público",
+        "id": "EC:de la"
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1053603930990619"
   }
 }
