@@ -14,6 +14,10 @@ on:
         description: 'Forzar sync completo (no incremental)'
         required: false
         default: 'false'
+      automatico:
+        description: 'Disparo del pulso horario (vigilar-congreso): se porta como el cron, sin pasos manuales'
+        required: false
+        default: 'false'
 
 permissions:
   contents: write
@@ -77,7 +81,7 @@ jobs:
       - name: Instalar dependencias de noticias (PDF/OCR Registro Oficial EC)
         # Ventana por hora real (steps.hora), no el string exacto del cron:
         # el cron nativo puede disparar tarde.
-        if: steps.hora.outputs.hour == '13' || steps.hora.outputs.hour == '14' || github.event_name == 'workflow_dispatch'
+        if: steps.hora.outputs.hour == '13' || steps.hora.outputs.hour == '14' || (github.event_name == 'workflow_dispatch' && inputs.automatico != 'true')
         run: |
           # Solo 8-9am Lima: el Registro Oficial EC sale 1x/dia.
           # paddlepaddle 3.2.2: 3.3.x rompe en CPU con oneDNN.
@@ -171,7 +175,7 @@ jobs:
       - name: Actualizar noticias y coyuntura (PE + EC)
         env:
           HOUR: ${{ steps.hora.outputs.hour }}
-          IS_DISPATCH: ${{ github.event_name == 'workflow_dispatch' }}
+          IS_DISPATCH: ${{ (github.event_name == 'workflow_dispatch' && inputs.automatico != 'true') }}
           GH_TOKEN_STORE: ${{ github.token }}
           CALLMEBOT_PHONE: ${{ secrets.CALLMEBOT_PHONE }}
           CALLMEBOT_APIKEY: ${{ secrets.CALLMEBOT_APIKEY }}
@@ -231,7 +235,7 @@ jobs:
       - name: Instalar Cloudflare WARP en modo proxy (SOCKS5 :40000)
         # Ventana por hora real (steps.hora), no el string exacto del cron:
         # el cron nativo puede disparar tarde.
-        if: steps.hora.outputs.hour == '13' || steps.hora.outputs.hour == '14' || github.event_name == 'workflow_dispatch'
+        if: steps.hora.outputs.hour == '13' || steps.hora.outputs.hour == '14' || (github.event_name == 'workflow_dispatch' && inputs.automatico != 'true')
         # Si WARP no conecta el paso queda en rojo (lo ve sistema/salud.py)
         # y la corrida sigue con lo que no depende de YouTube.
         continue-on-error: true
@@ -240,7 +244,7 @@ jobs:
       - name: Puente SOCKS5->HTTP para descargas de captions (privoxy :8118)
         # Ventana por hora real (steps.hora), no el string exacto del cron:
         # el cron nativo puede disparar tarde.
-        if: steps.hora.outputs.hour == '13' || steps.hora.outputs.hour == '14' || github.event_name == 'workflow_dispatch'
+        if: steps.hora.outputs.hour == '13' || steps.hora.outputs.hour == '14' || (github.event_name == 'workflow_dispatch' && inputs.automatico != 'true')
         run: |
           # Los captions se bajan con urllib, que respeta http_proxy pero no
           # habla SOCKS5: privoxy hace de puente.
@@ -253,7 +257,7 @@ jobs:
       - name: Transcripciones de sesiones (captions YouTube, Pleno/comisiones)
         # Ventana por hora real (steps.hora), no el string exacto del cron:
         # el cron nativo puede disparar tarde.
-        if: steps.hora.outputs.hour == '13' || steps.hora.outputs.hour == '14' || github.event_name == 'workflow_dispatch'
+        if: steps.hora.outputs.hour == '13' || steps.hora.outputs.hour == '14' || (github.event_name == 'workflow_dispatch' && inputs.automatico != 'true')
         env:
           YT_DLP_PROXY: socks5://127.0.0.1:40000
           http_proxy: http://127.0.0.1:8118
@@ -290,7 +294,7 @@ jobs:
 
       - name: Cargos en comisiones (PE) y votos nominales de comisiones (EC y PE)
         # Sin IA. Las posturas se leen aparte en posturas.yml.
-        if: steps.hora.outputs.hour == '14' || github.event_name == 'workflow_dispatch'
+        if: steps.hora.outputs.hour == '14' || (github.event_name == 'workflow_dispatch' && inputs.automatico != 'true')
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
@@ -308,7 +312,7 @@ jobs:
           ALERT_RECIPIENT: ${{ secrets.ALERT_RECIPIENT }}
           PYTHONIOENCODING: utf-8
           HOUR: ${{ steps.hora.outputs.hour }}
-          IS_DISPATCH: ${{ github.event_name == 'workflow_dispatch' }}
+          IS_DISPATCH: ${{ (github.event_name == 'workflow_dispatch' && inputs.automatico != 'true') }}
         run: |
           # 2 horarios fijos (ver alerts/cli.py), con ventana de 2 h por cron
           # atrasado; alerts/cli.py deduplica por dia y slot.

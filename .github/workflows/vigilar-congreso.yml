@@ -20,11 +20,6 @@ on:
 permissions:
   contents: write
 
-concurrency:
-  group: vigilar-congreso
-  cancel-in-progress: false
-
-
 env:
   # Abre los datos cifrados de clientes (clientes/privado.py). Secreto propio
   # (no es la clave de Gemini).
@@ -33,9 +28,45 @@ env:
   GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
 
 jobs:
+  # cron-job.org dispara este workflow cada 10 min y es el unico pulso confiable
+  # (el cron nativo de GitHub se atrasa horas). Se aprovecha para despertar a
+  # refrescar-pe (cada hora, 8am-10pm Lima) y backfill-auto (cada 6 h) sin
+  # depender de rutinas de Claude. Va en job aparte y sin concurrency para que
+  # corra aunque haya una sesion larga transcribiendose.
+  despertar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      actions: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - name: Disparar refrescar-pe y backfill-auto si se atrasaron
+        run: |
+          atraso_min() {  # minutos desde la ultima corrida (cualquier evento); 9999 si ninguna
+            local ult
+            ult=$(gh run list --workflow "$1" --limit 1 --json createdAt --jq '.[0].createdAt // empty')
+            [ -z "$ult" ] && { echo 9999; return; }
+            echo $(( ($(date -u +%s) - $(date -u -d "$ult" +%s)) / 60 ))
+          }
+          hora=$((10#$(date -u +%H)))
+          if [ "$hora" -le 3 ] || [ "$hora" -ge 13 ]; then
+            a=$(atraso_min refrescar-pe.yml)
+            echo "refrescar-pe: ultima corrida hace $a min"
+            [ "$a" -ge 55 ] && gh workflow run refrescar-pe.yml -f automatico=true && echo "disparada refrescar-pe"
+          fi
+          a=$(atraso_min backfill-auto.yml)
+          echo "backfill-auto: ultima corrida hace $a min"
+          [ "$a" -ge 360 ] && gh workflow run backfill-auto.yml && echo "disparada backfill-auto"
+          true
+
   vigilar:
     runs-on: ubuntu-latest
     timeout-minutes: 180
+    concurrency:
+      group: vigilar-congreso
+      cancel-in-progress: false
     steps:
       - uses: actions/checkout@v4
 
