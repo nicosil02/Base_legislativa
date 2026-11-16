@@ -22699,5 +22699,472 @@
       }
     ],
     "url": "https://www.facebook.com/watch/?v=1423770282549207"
+  },
+  "xYH34kbaFJ8": {
+    "fecha": "2026-10-20",
+    "organo": "Comisión de Medio Ambiente",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Poma Huamaní",
+        "cargo": "legislador",
+        "sobre": "Quema de residuos en hospital de Madre de Dios",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Denunció la quema de residuos biocontaminados en un hospital de Madre de Dios.",
+        "proyecto": "",
+        "id": "diputados:poma huamani"
+      },
+      {
+        "orador": "Poma Huamaní",
+        "cargo": "legislador",
+        "sobre": "Reconocimiento a joven conservacionista en Madre de Dios",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Destacó la labor de una joven conservacionista en la Amazonía.",
+        "proyecto": "",
+        "id": "diputados:poma huamani"
+      },
+      {
+        "orador": "Silupu Inga",
+        "cargo": "legislador",
+        "sobre": "Incendios forestales en Cusco",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Informó sobre los incendios forestales registrados en la región de Cusco.",
+        "proyecto": "",
+        "id": "diputados:silupu inga"
+      },
+      {
+        "orador": "Silupu Inga",
+        "cargo": "legislador",
+        "sobre": "Visita de OEFA al canal Vía de Suyana",
+        "postura": "con observaciones",
+        "tema": "Ambiente",
+        "dijo": "Cuestionó que las acciones de OEFA no tengan resultados concretos.",
+        "proyecto": "",
+        "id": "diputados:silupu inga"
+      },
+      {
+        "orador": "Silupu Inga",
+        "cargo": "legislador",
+        "sobre": "Instalación de base del IGP en Piura",
+        "postura": "comenta",
+        "tema": "Tecnología",
+        "dijo": "Gestionó la instalación de una base del IGP en Piura.",
+        "proyecto": "",
+        "id": "diputados:silupu inga"
+      },
+      {
+        "orador": "Silupu Inga",
+        "cargo": "legislador",
+        "sobre": "Uso del radar meteorológico Sofi",
+        "postura": "propone",
+        "tema": "Tecnología",
+        "dijo": "Propuso promover el uso del radar tecnológico Sofi.",
+        "proyecto": "",
+        "id": "diputados:silupu inga"
+      },
+      {
+        "orador": "Silupu Inga",
+        "cargo": "legislador",
+        "sobre": "Invitación al presidente del IGP",
+        "postura": "propone",
+        "tema": "Tecnología",
+        "dijo": "Pidió invitar al presidente del IGP para exponer tecnología.",
+        "proyecto": "",
+        "id": "diputados:silupu inga"
+      },
+      {
+        "orador": "Castro Cruz",
+        "cargo": "legislador",
+        "sobre": "Contaminación por desagües en Chiclayo",
+        "postura": "en contra",
+        "tema": "Saneamiento",
+        "dijo": "Denunció la contaminación por desagües en la provincia de Chiclayo.",
+        "proyecto": "",
+        "id": "diputados:castro cruz"
+      },
+      {
+        "orador": "Zulca Castillo",
+        "cargo": "legislador",
+        "sobre": "Incendios forestales en Ayacucho",
+        "postura": "en contra",
+        "tema": "Ambiente",
+        "dijo": "Denunció la falta de apoyo estatal ante incendios en Ayacucho.",
+        "proyecto": "",
+        "id": "diputados:sulca castillo"
+      },
+      {
+        "orador": "Andrade Salguero",
+        "cargo": "legislador",
+        "sobre": "Pesca ilegal en Cerro Azul",
+        "postura": "en contra",
+        "tema": "Pesca",
+        "dijo": "Denunció la pesca ilegal y con explosivos en Cerro Azul.",
+        "proyecto": "",
+        "id": "diputados:andrade salguero de alvarez"
+      },
+      {
+        "orador": "Andrade Salguero",
+        "cargo": "legislador",
+        "sobre": "Bloqueo de accesos a playas",
+        "postura": "en contra",
+        "tema": "Otros",
+        "dijo": "Denunció construcciones que bloquean el acceso a la playa.",
+        "proyecto": "",
+        "id": "diputados:andrade salguero de alvarez"
+      },
+      {
+        "orador": "Andrade Salguero",
+        "cargo": "legislador",
+        "sobre": "Gestión de desembarcadero en Cerro Azul",
+        "postura": "propone",
+        "tema": "Pesca",
+        "dijo": "Propuso gestionar un desembarcadero para los pescadores artesanales.",
+        "proyecto": "",
+        "id": "diputados:andrade salguero de alvarez"
+      },
+      {
+        "orador": "Andrade Salguero",
+        "cargo": "legislador",
+        "sobre": "Riesgo de pozo en colegio",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Denunció un pozo peligroso en un colegio de Jicamarca.",
+        "proyecto": "",
+        "id": "diputados:andrade salguero de alvarez"
+      },
+      {
+        "orador": "Pérez Alcahuamán",
+        "cargo": "legislador",
+        "sobre": "Falta de respuesta ante incendios",
+        "postura": "en contra",
+        "tema": "Ambiente",
+        "dijo": "Denunció la falta de respuesta estatal ante incendios forestales.",
+        "proyecto": "",
+        "id": "diputados:perez alccahuaman"
+      },
+      {
+        "orador": "Guevara Ramírez",
+        "cargo": "legislador",
+        "sobre": "Descolmatación del río Chaupe",
+        "postura": "propone",
+        "tema": "Saneamiento",
+        "dijo": "Pidió la descolmatación del río Chaupe en Cutervo.",
+        "proyecto": "",
+        "id": "diputados:guevara ramirez"
+      },
+      {
+        "orador": "Guevara Ramírez",
+        "cargo": "legislador",
+        "sobre": "Informes de OEFA en Cutervo",
+        "postura": "pregunta",
+        "tema": "Ambiente",
+        "dijo": "Solicitó los informes de OEFA sobre la provincia de Cutervo.",
+        "proyecto": "",
+        "id": "diputados:guevara ramirez"
+      },
+      {
+        "orador": "Yalta Sotelo",
+        "cargo": "legislador",
+        "sobre": "Protección de humedales de Puerto Viejo",
+        "postura": "propone",
+        "tema": "Ambiente",
+        "dijo": "Propuso oficiar a SERFOR para proteger los humedales.",
+        "proyecto": "",
+        "id": "diputados:yalta sotelo"
+      },
+      {
+        "orador": "Jaque Linares",
+        "cargo": "legislador",
+        "sobre": "Información sobre gas en Bahuajagua-Onene",
+        "postura": "propone",
+        "tema": "Energía",
+        "dijo": "Reiteró la solicitud de información sobre gas natural.",
+        "proyecto": "",
+        "id": "diputados:llaque linares"
+      },
+      {
+        "orador": "Jaque Linares",
+        "cargo": "legislador",
+        "sobre": "Contaminación por carbón en La Libertad",
+        "postura": "propone",
+        "tema": "Ambiente",
+        "dijo": "Pidió citar al MINAM por contaminación de carbón.",
+        "proyecto": "",
+        "id": "diputados:llaque linares"
+      },
+      {
+        "orador": "Jaque Linares",
+        "cargo": "legislador",
+        "sobre": "Monitoreo ambiental en Salaverry",
+        "postura": "propone",
+        "tema": "Transporte",
+        "dijo": "Solicitó citar al MTC sobre el monitoreo ambiental en Salaverry.",
+        "proyecto": "",
+        "id": "diputados:llaque linares"
+      },
+      {
+        "orador": "Sanés",
+        "cargo": "legislador",
+        "sobre": "Protección de barrancos en San Martín",
+        "postura": "propone",
+        "tema": "Ambiente",
+        "dijo": "Pidió apoyo para la protección de los barrancos en San Martín.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Pam",
+        "cargo": "legislador",
+        "sobre": "Remediación de áreas en Madre de Dios",
+        "postura": "propone",
+        "tema": "Ambiente",
+        "dijo": "Solicitó información completa sobre la remediación de áreas degradadas.",
+        "proyecto": "Oficio 353-26",
+        "id": null
+      },
+      {
+        "orador": "Zulka",
+        "cargo": "legislador",
+        "sobre": "Prevención de incendios forestales",
+        "postura": "propone",
+        "tema": "Ambiente",
+        "dijo": "Pidió citar al ministro del Ambiente por incendios forestales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Elio Tarazona",
+        "cargo": "invitado",
+        "sobre": "Sostenibilidad en el transporte terrestre",
+        "postura": "comenta",
+        "tema": "Transporte",
+        "dijo": "Informó sobre la contaminación y costos del transporte.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Saman",
+        "cargo": "legislador",
+        "sobre": "Implementación de movilidad activa",
+        "postura": "comenta",
+        "tema": "Transporte",
+        "dijo": "Informó sobre la importancia de incluir la movilidad activa.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Elio Tarazona",
+        "cargo": "invitado",
+        "sobre": "Renovación del parque automotor",
+        "postura": "comenta",
+        "tema": "Transporte",
+        "dijo": "Explicó la necesidad de renovar el parque automotor.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Elio Tarazona",
+        "cargo": "invitado",
+        "sobre": "Beneficios para vehículos eléctricos",
+        "postura": "propone",
+        "tema": "Transporte",
+        "dijo": "Propuso exonerar el IGV para la venta de vehículos eléctricos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Cabrero",
+        "cargo": "legislador",
+        "sobre": "Importación de vehículos usados",
+        "postura": "propone",
+        "tema": "Transporte",
+        "dijo": "Sugirió permitir la importación de vehículos usados para competir.",
+        "proyecto": "",
+        "id": "diputados:cabrera nieto"
+      },
+      {
+        "orador": "Semanes",
+        "cargo": "legislador",
+        "sobre": "Presupuesto para chatarreo vehicular",
+        "postura": "propone",
+        "tema": "Transporte",
+        "dijo": "Pidió que el presupuesto para chatarreo sea reasignado.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Elio Tarazón",
+        "cargo": "invitado",
+        "sobre": "Modelo de gestión de flotas",
+        "postura": "propone",
+        "tema": "Transporte",
+        "dijo": "Propuso el modelo de gestión de flotas de Chile y Colombia.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Semanes",
+        "cargo": "legislador",
+        "sobre": "Importación de vehículos usados",
+        "postura": "propone",
+        "tema": "Transporte",
+        "dijo": "Propuso abrir el mercado para importar vehículos usados menos contaminantes.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Pérez",
+        "cargo": "legislador",
+        "sobre": "Uso de fondos para chatarreo",
+        "postura": "propone",
+        "tema": "Transporte",
+        "dijo": "Pidió utilizar fondos no ejecutados para el chatarreo vehicular.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Pérez",
+        "cargo": "legislador",
+        "sobre": "Renovación del parque automotor",
+        "postura": "pregunta",
+        "tema": "Transporte",
+        "dijo": "Preguntó por la mejor propuesta para renovar el parque automotor.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Elio Tarazón",
+        "cargo": "invitado",
+        "sobre": "Medidas para renovación automotriz",
+        "postura": "comenta",
+        "tema": "Transporte",
+        "dijo": "Mencionó combustibles limpios e inspecciones para la renovación automotriz.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Marlena Arminta Valencia",
+        "cargo": "legislador",
+        "sobre": "Destrabe de proyectos sin certificación",
+        "postura": "propone",
+        "tema": "Infraestructura",
+        "dijo": "Sustentó la regularización de obras sin certificación ambiental.",
+        "proyecto": "PL 584-2026-2031-CD",
+        "id": "diputados:arminta valencia"
+      },
+      {
+        "orador": "Diputada P",
+        "cargo": "legislador",
+        "sobre": "Alcance de la ley de destrabe",
+        "postura": "pregunta",
+        "tema": "Infraestructura",
+        "dijo": "Preguntó si la norma incluiría la remediación por minería ilegal.",
+        "proyecto": "PL 584-2026-2031-CD",
+        "id": null
+      },
+      {
+        "orador": "Andrade",
+        "cargo": "legislador",
+        "sobre": "Regulación de la propuesta legislativa",
+        "postura": "con observaciones",
+        "tema": "Infraestructura",
+        "dijo": "Planteó reparos sobre los plazos y criterios de la propuesta.",
+        "proyecto": "PL 584-2026-2031-CD",
+        "id": "diputados:andrade salguero de alvarez"
+      },
+      {
+        "orador": "Marlena Arminta Valencia",
+        "cargo": "legislador",
+        "sobre": "Excepcionalidad de la ley de destrabe",
+        "postura": "a favor",
+        "tema": "Infraestructura",
+        "dijo": "Defendió que la medida sea excepcional y por única vez.",
+        "proyecto": "PL 584-2026-2031-CD",
+        "id": "diputados:arminta valencia"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=xYH34kbaFJ8"
+  },
+  "F_GAByuRCYY": {
+    "fecha": "2026-10-15",
+    "organo": "Comisión de Agraria",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Víctor Raúl Chundratá",
+        "cargo": "invitado",
+        "sobre": "protección de pequeños productores",
+        "postura": "comenta",
+        "tema": "Agricultura",
+        "dijo": "Informó sobre las medidas para proteger a los pequeños productores.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=F_GAByuRCYY"
+  },
+  "fb_936423472588680": {
+    "fecha": "2026-10-14",
+    "organo": "Comisión de Niñez y Adolescencia",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "María Rosa Cabrera",
+        "cargo": "autoridad",
+        "sobre": "Gestión de unidades de acogimiento institucional",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Informó sobre las 3947 actuaciones en acogimiento institucional.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ricardo Pateño",
+        "cargo": "legislador",
+        "sobre": "Resultados del acogimiento institucional",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Cuestionó la falta de resultados en acogimiento institucional.",
+        "proyecto": "",
+        "id": "EC:patino aroca"
+      },
+      {
+        "orador": "Darío Albuja",
+        "cargo": "autoridad",
+        "sobre": "Coordinación y tecnología judicial",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Explicó el uso de tecnología para la trazabilidad judicial.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Paula Cabello",
+        "cargo": "legislador",
+        "sobre": "Funcionamiento de las cámaras de Gessel",
+        "postura": "pregunta",
+        "tema": "Justicia",
+        "dijo": "Preguntó por los recursos para las cámaras de Gessel.",
+        "proyecto": "",
+        "id": "EC:levi cabello"
+      },
+      {
+        "orador": "Darío Albuja",
+        "cargo": "autoridad",
+        "sobre": "Repotenciación de las cámaras de Gessel",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Detalló la situación de las cámaras de Gessel.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=936423472588680"
   }
 }
