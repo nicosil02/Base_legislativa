@@ -24207,5 +24207,752 @@
       }
     ],
     "url": "https://www.youtube.com/watch?v=cEnzueyjs5Q"
+  },
+  "9noKK1K5ybU": {
+    "fecha": "2026-10-20",
+    "organo": "Comisión de Comercio Exterior",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Paz Lancho",
+        "cargo": "legislador",
+        "sobre": "Sistema de rescate para turismo",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Propuso crear un sistema nacional de rescate para el turismo.",
+        "proyecto": "",
+        "id": "diputados:de paz lancho"
+      },
+      {
+        "orador": "Paz Lancho",
+        "cargo": "legislador",
+        "sobre": "Destino turístico inteligente IMA",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Informó sobre el lanzamiento de IMA como destino turístico inteligente.",
+        "proyecto": "",
+        "id": "diputados:de paz lancho"
+      },
+      {
+        "orador": "Valquí",
+        "cargo": "legislador",
+        "sobre": "Situación de los pescadores",
+        "postura": "comenta",
+        "tema": "Pesca",
+        "dijo": "Denunció la preocupación de los pescadores por la situación del mar.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Valquí",
+        "cargo": "legislador",
+        "sobre": "Informe sobre el mar",
+        "postura": "propone",
+        "tema": "Pesca",
+        "dijo": "Pidió un informe sobre lo que sucede en nuestro mar.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Paz Lancho",
+        "cargo": "legislador",
+        "sobre": "Presencia del ministro de turismo",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Pidió agendar la presencia del ministro de Comercio Exterior y Turismo.",
+        "proyecto": "",
+        "id": "diputados:de paz lancho"
+      },
+      {
+        "orador": "Paz Lancho",
+        "cargo": "legislador",
+        "sobre": "Política nacional de turismo",
+        "postura": "en contra",
+        "tema": "Otros",
+        "dijo": "Cuestionó la demora en la aprobación de la política nacional de turismo.",
+        "proyecto": "",
+        "id": "diputados:de paz lancho"
+      },
+      {
+        "orador": "Eloy Barriento Ruiz",
+        "cargo": "ministro o autoridad",
+        "sobre": "Gestión del sector pesca",
+        "postura": "comenta",
+        "tema": "Pesca",
+        "dijo": "Informó sobre los avances y resultados de la gestión del sector pesca.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Eloy Barriento Ruiz",
+        "cargo": "ministro o autoridad",
+        "sobre": "Renovación de flota científica",
+        "postura": "propone",
+        "tema": "Pesca",
+        "dijo": "Propuso renovar la flota de investigación científica del Imarpe.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Eloy Barriento Ruiz",
+        "cargo": "ministro o autoridad",
+        "sobre": "Presupuesto de Fondepes",
+        "postura": "comenta",
+        "tema": "Pesca",
+        "dijo": "Informó sobre el presupuesto de Fondepes para la pesca artesanal.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Eloy Barriento Ruiz",
+        "cargo": "ministro o autoridad",
+        "sobre": "Programa Acomer Pescado",
+        "postura": "comenta",
+        "tema": "Pesca",
+        "dijo": "Respaldó el avance del programa Acomer Pescado en el país.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Eloy Barriento Ruiz",
+        "cargo": "ministro o autoridad",
+        "sobre": "Impulso a la acuicultura",
+        "postura": "comenta",
+        "tema": "Pesca",
+        "dijo": "Propuso un nuevo marco regulatorio para atraer inversiones acuícolas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Eloy Barriento Ruiz",
+        "cargo": "ministro o autoridad",
+        "sobre": "Infraestructura pesquera",
+        "postura": "comenta",
+        "tema": "Pesca",
+        "dijo": "Mencionó la necesidad de mejorar los desembarcaderos pesqueros artesanales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Eloy Barriento Ruiz",
+        "cargo": "ministro o autoridad",
+        "sobre": "Control de pesca ilegal",
+        "postura": "comenta",
+        "tema": "Pesca",
+        "dijo": "Denunció la necesidad de usar tecnología satelital para fiscalizar la pesca.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Eloy Barriento Ruiz",
+        "cargo": "ministro o autoridad",
+        "sobre": "Ley de Pesca Ancestral",
+        "postura": "comenta",
+        "tema": "Pesca",
+        "dijo": "Comentó la implementación de la Ley de Pesca Ancestral.",
+        "proyecto": "Ley de Pesca Ancestral",
+        "id": null
+      },
+      {
+        "orador": "Ministro de la Producción",
+        "cargo": "ministro o autoridad",
+        "sobre": "Monitoreo satelital y trazabilidad",
+        "postura": "comenta",
+        "tema": "Pesca",
+        "dijo": "Respaldó el uso de ocho sistemas de monitoreo satelital para la trazabilidad",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro de la Producción",
+        "cargo": "ministro o autoridad",
+        "sobre": "Formalización de la pesca artesanal",
+        "postura": "propone",
+        "tema": "Pesca",
+        "dijo": "Propuso sincerar la flota artesanal para fortalecer la formalidad y el control",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro de la Producción",
+        "cargo": "ministro o autoridad",
+        "sobre": "Impacto del fenómeno del Niño",
+        "postura": "comenta",
+        "tema": "Pesca",
+        "dijo": "Denunció la contracción de la producción pesquera por el fenómeno del Niño",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro de la Producción",
+        "cargo": "ministro o autoridad",
+        "sobre": "Medidas de emergencia para el sector",
+        "postura": "comenta",
+        "tema": "Pesca",
+        "dijo": "Respaldó la aplicación de descuentos en multas y beneficios para el sector",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro de la Producción",
+        "cargo": "ministro o autoridad",
+        "sobre": "Infraestructura y seguridad social",
+        "postura": "propone",
+        "tema": "Pesca",
+        "dijo": "Pidió asegurar la cobertura de salud para los pescadores",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=9noKK1K5ybU"
+  },
+  "5c-s423_LwI": {
+    "fecha": "2026-10-06",
+    "organo": "Comisión de Inclusión Social",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Presidenta",
+        "cargo": "legislador",
+        "sobre": "Sesión descentralizada en Loreto",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Informó sobre la realización de la sesión descentralizada en Loreto.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Presidenta",
+        "cargo": "legislador",
+        "sobre": "Protección de niños en orfandad",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Aprobó el dictamen para proteger a niños en situación de orfandad.",
+        "proyecto": "PL 07-8",
+        "id": null
+      },
+      {
+        "orador": "Presidenta",
+        "cargo": "legislador",
+        "sobre": "Concierto por la discapacidad",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Informó sobre el concierto por el día de la discapacidad.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Toma",
+        "cargo": "legislador",
+        "sobre": "Financiamiento para adultos mayores",
+        "postura": "en contra",
+        "tema": "Otros",
+        "dijo": "Denunció la falta de presupuesto para adultos mayores en Madre de Dios.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Benítez",
+        "cargo": "legislador",
+        "sobre": "Prevención del cáncer de mama",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Instó a promover la prevención del cáncer de mama.",
+        "proyecto": "",
+        "id": "diputados:benitez barrionuevo"
+      },
+      {
+        "orador": "Benítez",
+        "cargo": "legislador",
+        "sobre": "Reforma del sistema de discapacidad",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Propuso reformar el sistema nacional de la persona con discapacidad.",
+        "proyecto": "PL 160-2026",
+        "id": "diputados:benitez barrionuevo"
+      },
+      {
+        "orador": "Yufra",
+        "cargo": "legislador",
+        "sobre": "Uso de celulares en educación",
+        "postura": "comenta",
+        "tema": "Educación",
+        "dijo": "Saludó la reglamentación sobre el uso de celulares en educación.",
+        "proyecto": "Ley 32385",
+        "id": "diputados:yuffra lugo"
+      },
+      {
+        "orador": "Yufra",
+        "cargo": "legislador",
+        "sobre": "Gestión de programas en Loreto",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Informó sobre la visita de la ministra de inclusión en Loreto.",
+        "proyecto": "",
+        "id": "diputados:yuffra lugo"
+      },
+      {
+        "orador": "Abenso",
+        "cargo": "legislador",
+        "sobre": "Trámite de la propuesta de Benítez",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso que la comisión debata la propuesta de Benítez.",
+        "proyecto": "PL 160-2026",
+        "id": null
+      },
+      {
+        "orador": "Pinasco",
+        "cargo": "legislador",
+        "sobre": "Sesión descentralizada en Loreto",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Agradeció el éxito de la sesión descentralizada en Loreto.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Jang",
+        "cargo": "legislador",
+        "sobre": "Abandono de Loreto y Puno",
+        "postura": "en contra",
+        "tema": "Otros",
+        "dijo": "Denunció el abandono estatal en Loreto y Puno.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Romina",
+        "cargo": "legislador",
+        "sobre": "Grupo de trabajo en Amazonas",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Informó sobre la instalación de un grupo de trabajo en Amazonas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Romina",
+        "cargo": "legislador",
+        "sobre": "Autonomía económica de las mujeres",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Resaltó la necesidad de autonomía económica para las mujeres.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Romina",
+        "cargo": "legislador",
+        "sobre": "Caso de feminicidio de Rosario Ivar",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Lamentó el fallecimiento de la madre de una víctima de feminicidio.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Pilar Sulca",
+        "cargo": "legislador",
+        "sobre": "Servicios de acogida en Piura",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Pidió evaluar los servicios de acogida residencial en Piura.",
+        "proyecto": "",
+        "id": "diputados:sulca castillo"
+      },
+      {
+        "orador": "Pilar Sulca",
+        "cargo": "legislador",
+        "sobre": "Unidad de adopción en Piura",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Solicitó una unidad de adopción para la región de Piura.",
+        "proyecto": "",
+        "id": "diputados:sulca castillo"
+      },
+      {
+        "orador": "Me Dinastén",
+        "cargo": "legislador",
+        "sobre": "Plan de trabajo del MIDIS",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Solicitó la presencia de la ministra de inclusión social.",
+        "proyecto": "",
+        "id": "diputados:medina stein"
+      },
+      {
+        "orador": "Poma",
+        "cargo": "legislador",
+        "sobre": "Salud mental en Madre de Dios",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Pidió informes sobre salud mental en Madre de Dios.",
+        "proyecto": "",
+        "id": "diputados:poma huamani"
+      },
+      {
+        "orador": "Poma",
+        "cargo": "legislador",
+        "sobre": "Ejecución presupuestal de Cáritas",
+        "postura": "propone",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Solicitó información sobre la ejecución presupuestal de Cáritas.",
+        "proyecto": "",
+        "id": "diputados:poma huamani"
+      },
+      {
+        "orador": "Benites",
+        "cargo": "legislador",
+        "sobre": "Inclusión en políticas climáticas",
+        "postura": "propone",
+        "tema": "Ambiente",
+        "dijo": "Pidió oficiar al MINAM sobre inclusión en gestión climática.",
+        "proyecto": "",
+        "id": "diputados:benitez barrionuevo"
+      },
+      {
+        "orador": "Origa",
+        "cargo": "legislador",
+        "sobre": "Medición de la pobreza",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Solicitó explicar los criterios de medición de la pobreza.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Origa",
+        "cargo": "legislador",
+        "sobre": "Atención a la violencia de género",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Pidió información sobre la atención a la violencia de género.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Origa",
+        "cargo": "legislador",
+        "sobre": "Medición de la pobreza y programas",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Pidió informes sobre la medición de la pobreza.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Juan Carlos Pazco Herrera",
+        "cargo": "ministro o autoridad",
+        "sobre": "Ruta de acogimiento y adopción",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Informó sobre la ruta de acogimiento y adopción.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Nadia Villavicencio Gayo",
+        "cargo": "ministro o autoridad",
+        "sobre": "Procedimiento administrativo por adopción",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Informó sobre el procedimiento del Decreto Legislativo 1297.",
+        "proyecto": "Decreto Legislativo 1297",
+        "id": null
+      },
+      {
+        "orador": "Jones",
+        "cargo": "legislador",
+        "sobre": "Demoras en procesos de adopción",
+        "postura": "pregunta",
+        "tema": "Otros",
+        "dijo": "Preguntó qué causa la demora en las adopciones.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Romina Oribez",
+        "cargo": "legislador",
+        "sobre": "Idoneidad y adopción internacional",
+        "postura": "pregunta",
+        "tema": "Otros",
+        "dijo": "Preguntó sobre la idoneidad y adopción internacional.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Pilar Zulca",
+        "cargo": "legislador",
+        "sobre": "Centralismo en servicios de adopción",
+        "postura": "pregunta",
+        "tema": "Otros",
+        "dijo": "Cuestionó el centralismo en servicios de adopción.",
+        "proyecto": "",
+        "id": "diputados:sulca castillo"
+      },
+      {
+        "orador": "Figari",
+        "cargo": "legislador",
+        "sobre": "Prevención de delitos y apoyo psicológico",
+        "postura": "pregunta",
+        "tema": "Otros",
+        "dijo": "Preguntó sobre el apoyo psicológico para prevenir delitos.",
+        "proyecto": "",
+        "id": "diputados:figari mendoza"
+      },
+      {
+        "orador": "Abenzur",
+        "cargo": "legislador",
+        "sobre": "Resultados de la gestión de adopciones",
+        "postura": "pregunta",
+        "tema": "Otros",
+        "dijo": "Preguntó sobre los resultados de la gestión de adopciones.",
+        "proyecto": "",
+        "id": "diputados:abensur pinasco"
+      },
+      {
+        "orador": "Jango",
+        "cargo": "legislador",
+        "sobre": "Situación de adolescentes no adoptables",
+        "postura": "pregunta",
+        "tema": "Otros",
+        "dijo": "Preguntó sobre el futuro de los adolescentes no adoptables.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Juan Carlos Pazco Herrera",
+        "cargo": "ministro o autoridad",
+        "sobre": "Probabilidad de adopción según edad",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Informó que la probabilidad de adopción disminuye con la edad.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Finosa",
+        "cargo": "legislador",
+        "sobre": "Resultados de la gestión de adopciones",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Pidió cifras y acciones concretas sobre la gestión de adopciones.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Figari",
+        "cargo": "legislador",
+        "sobre": "Causas del problema de adopción",
+        "postura": "pregunta",
+        "tema": "Justicia",
+        "dijo": "Preguntó por las causas del problema y el perfil familiar.",
+        "proyecto": "",
+        "id": "diputados:figari mendoza"
+      },
+      {
+        "orador": "Carina Velorio",
+        "cargo": "invitado",
+        "sobre": "Celeridad en procesos judiciales de familia",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Explicó la falta de especialización y equipos en el Poder Judicial.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Carina Velorio",
+        "cargo": "ministro o autoridad",
+        "sobre": "Vacíos normativos en procesos de adopción",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Denunció vacíos normativos y falta de centros del Poder Judicial.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Jancón",
+        "cargo": "legislador",
+        "sobre": "Presupuesto para juzgados en Puno",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Criticó la falta de presupuesto para juzgados en Puno.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Espinosa",
+        "cargo": "legislador",
+        "sobre": "Adopción y presupuesto del programa 0067",
+        "postura": "pregunta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Preguntó sobre la reintegración familiar y el programa 0067.",
+        "proyecto": "",
+        "id": "diputados:espinoza huillca"
+      },
+      {
+        "orador": "Figari",
+        "cargo": "legislador",
+        "sobre": "Creación de una mesa de trabajo conjunta",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Propuso una mesa de trabajo para destrabar problemas sociales.",
+        "proyecto": "",
+        "id": "diputados:figari mendoza"
+      },
+      {
+        "orador": "Urbe",
+        "cargo": "legislador",
+        "sobre": "Creación de una mesa técnica de articulación",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Solicitó la creación de una mesa técnica de articulación.",
+        "proyecto": "",
+        "id": "diputados:uribe saenz"
+      },
+      {
+        "orador": "Rio",
+        "cargo": "legislador",
+        "sobre": "Mesa técnica para articular instituciones",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Propuso una mesa técnica para la articulación institucional.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Carina Velorio",
+        "cargo": "ministro o autoridad",
+        "sobre": "Ejecución del presupuesto del programa 0067",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Informó que casi todo el presupuesto es para planillas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Espinosa",
+        "cargo": "legislador",
+        "sobre": "Calidad de las próximas invitaciones",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Pidió que las invitaciones exijan propuestas de solución concretas.",
+        "proyecto": "",
+        "id": "diputados:espinoza huillca"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=5c-s423_LwI"
+  },
+  "l1zNB5Gj-a8": {
+    "fecha": "2026-10-06",
+    "organo": "Comisión de Constitución",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Lures Alcorta",
+        "cargo": "legislador",
+        "sobre": "división de la comisión actual",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Propuso dividir la comisión actual en dos comisiones ordinarias.",
+        "proyecto": "",
+        "id": "senado:alcorta suero"
+      },
+      {
+        "orador": "Lures Alcorta",
+        "cargo": "legislador",
+        "sobre": "gestión diplomática en Bolivia y Nicaragua",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Criticó la gestión diplomática peruana en Bolivia y Nicaragua.",
+        "proyecto": "",
+        "id": "senado:alcorta suero"
+      },
+      {
+        "orador": "Lures Alcorta",
+        "cargo": "legislador",
+        "sobre": "presidencia en la Comunidad Andina",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Informó sobre la asunción de la presidencia peruana.",
+        "proyecto": "",
+        "id": "senado:alcorta suero"
+      },
+      {
+        "orador": "Morales Ramírez",
+        "cargo": "legislador",
+        "sobre": "instalación de ligas parlamentarias",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Informó la instalación de las ligas Perú-Cuba y Perú-México.",
+        "proyecto": "",
+        "id": "senado:morales ramirez"
+      },
+      {
+        "orador": "Morales Ramírez",
+        "cargo": "legislador",
+        "sobre": "gestión de la Cancillería en Bolivia",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó la actuación del embajador peruano en Bolivia.",
+        "proyecto": "",
+        "id": "senado:morales ramirez"
+      },
+      {
+        "orador": "Morales Ramírez",
+        "cargo": "legislador",
+        "sobre": "explicación del ministro de Relaciones Exteriores",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Pidió explicaciones al ministro de Relaciones Exteriores.",
+        "proyecto": "",
+        "id": "senado:morales ramirez"
+      },
+      {
+        "orador": "Ruth Luque",
+        "cargo": "legislador",
+        "sobre": "facultades de revisión del Senado",
+        "postura": "con observaciones",
+        "tema": "Política y control político",
+        "dijo": "Propuso revisar opiniones consultivas para el debate técnico.",
+        "proyecto": "",
+        "id": "senado:luque ibarra"
+      },
+      {
+        "orador": "Ramaliz",
+        "cargo": "legislador",
+        "sobre": "postura de la bancada Juntos por el Perú",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Acusó de obstruccionista a la bancada Juntos por el Perú.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Morales Ramírez",
+        "cargo": "legislador",
+        "sobre": "consulta a especialistas en materia constitucional",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Solicitó que la comisión realice una consulta a especialistas.",
+        "proyecto": "",
+        "id": "senado:morales ramirez"
+      },
+      {
+        "orador": "Cuti Pacama",
+        "cargo": "legislador",
+        "sobre": "pronunciamiento oficial de la comisión",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Pidió un pronunciamiento oficial que brinde seguridad jurídica.",
+        "proyecto": "",
+        "id": "senado:cutipa ccama"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=l1zNB5Gj-a8"
   }
 }
