@@ -24130,5 +24130,82 @@
       }
     ],
     "url": "https://www.youtube.com/watch?v=RLA-kC1bZ38"
+  },
+  "Eg1EgY1LI20": {
+    "fecha": "2026-10-06",
+    "organo": "Pleno de la Asamblea",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Verónica Iniques",
+        "cargo": "legislador",
+        "sobre": "Derechos de las mujeres rurales",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Defendió la aprobación del proyecto de mujeres rurales.",
+        "proyecto": "Ley de mujeres rurales",
+        "id": null
+      },
+      {
+        "orador": "Mónica Salazar",
+        "cargo": "legislador",
+        "sobre": "Proyecto de ley para mujeres rurales",
+        "postura": "en contra",
+        "tema": "Otros",
+        "dijo": "Denunció que el proyecto es inconstitucional e inexecutable.",
+        "proyecto": "Ley de mujeres rurales",
+        "id": "EC:salazar hidalgo"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=Eg1EgY1LI20"
+  },
+  "fLpsqihx33U": {
+    "fecha": "2026-10-06",
+    "organo": "Pleno de la Asamblea",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Natalia Farinango",
+        "cargo": "legislador",
+        "sobre": "reforma al código orgánico tributario",
+        "postura": "a favor",
+        "tema": "Tributos",
+        "dijo": "Defendió la actualización del código tributario vigente desde 1975.",
+        "proyecto": "Ley orgánica reformatoria al código orgánico tributario",
+        "id": "EC:farinango delgado"
+      },
+      {
+        "orador": "Mónica Salazar",
+        "cargo": "legislador",
+        "sobre": "empoderamiento de las mujeres rurales",
+        "postura": "en contra",
+        "tema": "Otros",
+        "dijo": "Rechazó el proyecto por considerarlo inaplicable para las mujeres rurales.",
+        "proyecto": "Ley orgánica para garantizar los derechos y promover el empoderamiento de las mujeres rurales",
+        "id": "EC:salazar hidalgo"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=fLpsqihx33U"
+  },
+  "cEnzueyjs5Q": {
+    "fecha": "2026-10-06",
+    "organo": "Comisión de Ética Parlamentaria",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Yashiro Ashiro",
+        "cargo": "legislador",
+        "sobre": "Informe de calificación contra Ruth Luque",
+        "postura": "a favor",
+        "tema": "Minería",
+        "dijo": "Respaldó el informe de calificación contra la senadora Ruth Luque.",
+        "proyecto": "01-26-27",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=cEnzueyjs5Q"
   }
 }
