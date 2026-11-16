@@ -1,5 +1,7 @@
 {
-  "sin_correr:Quien habla (transcripciones por turnos)": "Quien habla (transcripciones por turnos): no corre desde 15/11 11:31 (tocaba 15/11 13:40)",
-  "sin_correr:Posturas de congresistas (Gemma)": "Posturas de congresistas (Gemma): no corre desde 15/11 11:27 (tocaba 15/11 16:20)",
-  "sin_correr:Actualizar Peru (PLs + snapshot)": "Actualizar Peru (PLs + snapshot): no corre desde 15/11 14:11 (tocaba 15/11 16:00)"
+  "sin_correr:Backfill automatico (sesiones perdidas)": "Backfill automatico (sesiones perdidas): no corre desde 15/11 13:57 (tocaba 15/11 19:20)",
+  "sin_correr:Quien habla (transcripciones por turnos)": "Quien habla (transcripciones por turnos): no corre desde 15/11 18:07 (tocaba 15/11 19:40)",
+  "falla:Quien habla (transcripciones por turnos)": "Quien habla (transcripciones por turnos): fallo 2 veces seguidas (https://github.com/nicosil02/Base_legislativa/actions/runs/43773044298)",
+  "sin_correr:Posturas de congresistas (Gemma)": "Posturas de congresistas (Gemma): no corre desde 15/11 17:58 (tocaba 15/11 19:20)",
+  "sin_correr:Actualizar Peru (PLs + snapshot)": "Actualizar Peru (PLs + snapshot): no corre desde 15/11 18:39 (tocaba 15/11 20:00)"
 }
