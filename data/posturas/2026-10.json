@@ -23166,5 +23166,722 @@
       }
     ],
     "url": "https://www.facebook.com/watch/?v=936423472588680"
+  },
+  "fb_1421392376025337": {
+    "fecha": "2026-10-08",
+    "organo": "Comisión de Seguridad Integral",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Andrés Castillo",
+        "cargo": "legislador",
+        "sobre": "Ley de personal y disciplina militar",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso analizar el proyecto para mejorar el régimen disciplinario militar.",
+        "proyecto": "Ley de personal y disciplina de las fuerzas armadas",
+        "id": "EC:castillo maldonado"
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1421392376025337"
+  },
+  "IOLK6U45SJQ": {
+    "fecha": "2026-10-07",
+    "organo": "Pleno de Diputados",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Esbieta Fernández",
+        "cargo": "legislador",
+        "sobre": "el pedido de facultades al Ejecutivo",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó la propuesta de facultades al Ejecutivo.",
+        "proyecto": "",
+        "id": "diputados:fernandez gonzalez"
+      },
+      {
+        "orador": "Jaime Abenzur Pinasco",
+        "cargo": "legislador",
+        "sobre": "las facultades delegadas al Ejecutivo",
+        "postura": "con observaciones",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Cuestionó la suficiencia de las facultades otorgadas.",
+        "proyecto": "",
+        "id": "diputados:abensur pinasco"
+      },
+      {
+        "orador": "César Armando Elías Vida Vida Auré Floridas",
+        "cargo": "legislador",
+        "sobre": "la modificación de la ley de recursos hídricos",
+        "postura": "propone",
+        "tema": "Ambiente",
+        "dijo": "Propuso modificar la ley de recursos hídricos.",
+        "proyecto": "Ley 29338",
+        "id": "diputados:vidaurre floridas"
+      },
+      {
+        "orador": "Aldo Bravo",
+        "cargo": "legislador",
+        "sobre": "el apoyo al consenso legislativo",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Propuso apoyar el consenso legislativo alcanzado.",
+        "proyecto": "",
+        "id": "diputados:bravo quispe"
+      },
+      {
+        "orador": "Verónica Jones",
+        "cargo": "legislador",
+        "sobre": "el beneficio de la población",
+        "postura": "a favor",
+        "tema": "Saneamiento",
+        "dijo": "Propuso legislar en beneficio de la población.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Luis Quispe Candia",
+        "cargo": "legislador",
+        "sobre": "el consenso sobre las facultades delegadas",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Respaldó el consenso sobre las facultades delegadas.",
+        "proyecto": "",
+        "id": "diputados:quispe candia"
+      },
+      {
+        "orador": "Mery Eliana Infantes Castañeda",
+        "cargo": "legislador",
+        "sobre": "subsidios cruzados en agua y saneamiento",
+        "postura": "propone",
+        "tema": "Saneamiento",
+        "dijo": "Pidió incluir subsidios cruzados en la ley.",
+        "proyecto": "DL 1280",
+        "id": "diputados:infantes castaneda"
+      },
+      {
+        "orador": "Eber López",
+        "cargo": "legislador",
+        "sobre": "ampliación de facultades a las fuerzas armadas",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Cuestionó la ampliación de facultades militares.",
+        "proyecto": "DL 1095",
+        "id": "diputados:lopez letona"
+      },
+      {
+        "orador": "Paola Martínez",
+        "cargo": "legislador",
+        "sobre": "medidas para combatir la criminalidad",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso medidas para combatir la criminalidad.",
+        "proyecto": "",
+        "id": "diputados:martinez paitan"
+      },
+      {
+        "orador": "Leo de Paz Lancho",
+        "cargo": "legislador",
+        "sobre": "delegación de facultades por noventa días",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Respaldó la delegación de facultades por noventa días.",
+        "proyecto": "",
+        "id": "diputados:de paz lancho"
+      },
+      {
+        "orador": "Caterín Palomino",
+        "cargo": "legislador",
+        "sobre": "la postura del fujimorismo",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció la actitud obstruccionista del fujimorismo.",
+        "proyecto": "",
+        "id": "diputados:palomino casavilca"
+      },
+      {
+        "orador": "Obando Morgan",
+        "cargo": "legislador",
+        "sobre": "modificación de la ley de barreras burocráticas",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Propuso modificar la definición de barreras burocráticas.",
+        "proyecto": "DL 1256",
+        "id": "diputados:obando morgan"
+      },
+      {
+        "orador": "Romina Urriba",
+        "cargo": "legislador",
+        "sobre": "modificación de la ley de fuerzas armadas",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso incluir la modificatoria de las fuerzas armadas.",
+        "proyecto": "DL 1095",
+        "id": null
+      },
+      {
+        "orador": "Liz Uli Mendoza Bernéz",
+        "cargo": "legislador",
+        "sobre": "Modificación de la Ley General de Turismo",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Propuso modificar la Ley 32392 para fortalecer el turismo.",
+        "proyecto": "Ley 32392",
+        "id": "diputados:mendoza bernedo"
+      },
+      {
+        "orador": "Liz Uli Mendoza Bernéz",
+        "cargo": "legislador",
+        "sobre": "Delegación de facultades al Ejecutivo",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Comentó sobre el temor de las bancadas a las facultades.",
+        "proyecto": "",
+        "id": "diputados:mendoza bernedo"
+      },
+      {
+        "orador": "Rosán Gela Marbaran Reyes",
+        "cargo": "legislador",
+        "sobre": "Votación de las facultades al Ejecutivo",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Defendió la votación de facultades para el país.",
+        "proyecto": "",
+        "id": "diputados:barbaran reyes"
+      },
+      {
+        "orador": "María del Carmen Gamarrapita",
+        "cargo": "legislador",
+        "sobre": "Privatización del agua",
+        "postura": "comenta",
+        "tema": "Saneamiento",
+        "dijo": "Desmintió la supuesta privatización del agua por el ministro.",
+        "proyecto": "",
+        "id": "diputados:gamarra pita"
+      },
+      {
+        "orador": "María del Carmen Gamarrapita",
+        "cargo": "legislador",
+        "sobre": "Modificación de la ley 27444",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Solicitó modificar la Ley 27444 para evitar cobros indebidos.",
+        "proyecto": "Ley 27444",
+        "id": "diputados:gamarra pita"
+      },
+      {
+        "orador": "Amalia Palomino",
+        "cargo": "legislador",
+        "sobre": "Deslealtad del gobierno con el pueblo",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció la deslealtad del gobierno con el pueblo peruano.",
+        "proyecto": "",
+        "id": "diputados:palomino pacheco"
+      },
+      {
+        "orador": "Edgar Polar",
+        "cargo": "legislador",
+        "sobre": "Consenso sobre las facultades delegadas",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso consensuar las facultades delegadas al gobierno.",
+        "proyecto": "",
+        "id": "diputados:gonzales polar"
+      },
+      {
+        "orador": "Alejandro Manai Piyaka",
+        "cargo": "legislador",
+        "sobre": "Confianza en la delegación de facultades",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó la confianza para delegar facultades al Ejecutivo.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Nari Benvinda Pinas",
+        "cargo": "legislador",
+        "sobre": "Uso de geolocalización contra la delincuencia",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso incorporar geolocalización para combatir la criminalidad.",
+        "proyecto": "Decreto Legislativo 1182",
+        "id": "diputados:pinasco montenegro"
+      },
+      {
+        "orador": "Norma Yarro",
+        "cargo": "legislador",
+        "sobre": "Consenso para la seguridad y el clima",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Instó a las bancadas a trabajar con consenso.",
+        "proyecto": "",
+        "id": "diputados:yarrow lumbreras"
+      },
+      {
+        "orador": "Ernesto Sunini",
+        "cargo": "legislador",
+        "sobre": "Gestión del presupuesto estatal",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Denunció el mal uso del presupuesto gubernamental.",
+        "proyecto": "",
+        "id": "diputados:zunini yerren"
+      },
+      {
+        "orador": "José Marcelo",
+        "cargo": "legislador",
+        "sobre": "Propuesta de consenso político",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Presentó una propuesta de consenso para el país.",
+        "proyecto": "",
+        "id": "diputados:marcelo salazar"
+      },
+      {
+        "orador": "Ángel Meneses",
+        "cargo": "legislador",
+        "sobre": "Atención a la seguridad y el clima",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Saludó el consenso sobre seguridad y el fenómeno del niño.",
+        "proyecto": "",
+        "id": "diputados:meneses crispin"
+      },
+      {
+        "orador": "Juan A. Milcar",
+        "cargo": "legislador",
+        "sobre": "Delegación de facultades legislativas",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó la entrega de facultades al gobierno.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Edwin Espinosa",
+        "cargo": "legislador",
+        "sobre": "Defensa de la institucionalidad democrática",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Defendió la importancia de la institucionalidad democrática.",
+        "proyecto": "",
+        "id": "diputados:espinoza huillca"
+      },
+      {
+        "orador": "Carina Yuliza Beteta Rubín",
+        "cargo": "legislador",
+        "sobre": "Herramientas contra el terrorismo",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Pidió herramientas normativas para combatir el terrorismo.",
+        "proyecto": "",
+        "id": "diputados:beteta rubin"
+      },
+      {
+        "orador": "Carina Yuliza Beteta Rubín",
+        "cargo": "legislador",
+        "sobre": "Pedido de facultades del Ejecutivo",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Respaldó el pedido de facultades para combatir la delincuencia.",
+        "proyecto": "",
+        "id": "diputados:beteta rubin"
+      },
+      {
+        "orador": "Yufra Lugo Ana Luisa",
+        "cargo": "legislador",
+        "sobre": "Protección en áreas naturales protegidas",
+        "postura": "con observaciones",
+        "tema": "Ambiente",
+        "dijo": "Apoyó el uso de herramientas no letales en áreas protegidas.",
+        "proyecto": "",
+        "id": "diputados:yuffra lugo"
+      },
+      {
+        "orador": "Graciela Chipana",
+        "cargo": "legislador",
+        "sobre": "Pedido de facultades del Ejecutivo",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció la actitud autoritaria de la bancada oficialista.",
+        "proyecto": "",
+        "id": "diputados:chipana condori"
+      },
+      {
+        "orador": "José Ataco",
+        "cargo": "legislador",
+        "sobre": "Sistema de inteligencia nacional",
+        "postura": "con observaciones",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Pidió establecer límites claros a la delegación de facultades.",
+        "proyecto": "Decreto Legislativo 1141",
+        "id": "diputados:yataco torrealva"
+      },
+      {
+        "orador": "César Manuel Revilla Villanueva",
+        "cargo": "legislador",
+        "sobre": "Dictamen de la comisión de Constitución",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Defendió la necesidad de las facultades ante el dictamen.",
+        "proyecto": "",
+        "id": "diputados:revilla villanueva"
+      },
+      {
+        "orador": "Ernesto Sunini",
+        "cargo": "legislador",
+        "sobre": "Delegación de facultades al gobierno",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó la delegación de facultades al equipo del gobierno.",
+        "proyecto": "",
+        "id": "diputados:zunini yerren"
+      },
+      {
+        "orador": "Cristian Aranta",
+        "cargo": "legislador",
+        "sobre": "Dictamen de facultades legislativas",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso aprobar el dictamen para ayudar a las familias.",
+        "proyecto": "",
+        "id": "diputados:aranda vasquez"
+      },
+      {
+        "orador": "Rosana Alaysa",
+        "cargo": "legislador",
+        "sobre": "Pedido de facultades del Ejecutivo",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Instó a la bancada de Fuerza Popular a votar.",
+        "proyecto": "",
+        "id": "diputados:alayza maccera"
+      },
+      {
+        "orador": "Chacón de Vitoris",
+        "cargo": "legislador",
+        "sobre": "Marco normativo de la criminalidad",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso equipar la criminalidad organizada con el delito de terrorismo.",
+        "proyecto": "",
+        "id": "diputados:chacon de vettori"
+      },
+      {
+        "orador": "Arturo Alegría García",
+        "cargo": "legislador",
+        "sobre": "Pedido de facultades del Ejecutivo",
+        "postura": "con observaciones",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Cuestionó la gestión de la comisión de Constitución.",
+        "proyecto": "",
+        "id": "diputados:alegria garcia"
+      },
+      {
+        "orador": "Fernando García",
+        "cargo": "legislador",
+        "sobre": "Delegación de facultades legislativas",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Rechazó la delegación de facultades por desconfianza histórica.",
+        "proyecto": "",
+        "id": "diputados:garcia huby"
+      },
+      {
+        "orador": "Oswarca Oasa Mithy Bidi",
+        "cargo": "legislador",
+        "sobre": "Falta de respuesta del Senado",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció la falta de respuesta de la cámara de senadores.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Harvey Colchado",
+        "cargo": "legislador",
+        "sobre": "Gestión y legislación de seguridad",
+        "postura": "con observaciones",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso mejorar la gestión y las políticas de seguridad.",
+        "proyecto": "",
+        "id": "diputados:colchado huamani"
+      },
+      {
+        "orador": "José Colchado",
+        "cargo": "legislador",
+        "sobre": "Seguridad y fenómeno del Niño",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Instó a la concertación para abordar la inseguridad ciudadana.",
+        "proyecto": "",
+        "id": "diputados:colchado huamani"
+      },
+      {
+        "orador": "Roxana Rocha",
+        "cargo": "legislador",
+        "sobre": "Dictamen de facultades legislativas",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Exhortó a las bancadas a apoyar el dictamen.",
+        "proyecto": "",
+        "id": "diputados:rocha gallegos"
+      },
+      {
+        "orador": "Ernesto Zunini",
+        "cargo": "legislador",
+        "sobre": "uso de facultades contra la delincuencia",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó el uso de facultades contra la delincuencia.",
+        "proyecto": "PL 98",
+        "id": "diputados:zunini yerren"
+      },
+      {
+        "orador": "José Marcelo",
+        "cargo": "legislador",
+        "sobre": "unión de todas las bancadas",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Hizo un llamado a la unión de las bancadas.",
+        "proyecto": "PL 98",
+        "id": "diputados:marcelo salazar"
+      },
+      {
+        "orador": "Espinosa",
+        "cargo": "legislador",
+        "sobre": "títulos de propiedad para agricultores",
+        "postura": "en contra",
+        "tema": "Agricultura",
+        "dijo": "Cuestionó la falta de títulos para agricultores.",
+        "proyecto": "PL 98",
+        "id": "diputados:espinoza huillca"
+      },
+      {
+        "orador": "Carina Beteta",
+        "cargo": "legislador",
+        "sobre": "pedido de facultades de Keiko Fujimori",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Informó sobre los puntos del pedido de facultades.",
+        "proyecto": "PL 98",
+        "id": "diputados:beteta rubin"
+      },
+      {
+        "orador": "Anna Yufra",
+        "cargo": "legislador",
+        "sobre": "herramientas para familias en bosques",
+        "postura": "con observaciones",
+        "tema": "Ambiente",
+        "dijo": "Explicó la necesidad de herramientas en bosques.",
+        "proyecto": "PL 98",
+        "id": "diputados:yuffra lugo"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=IOLK6U45SJQ"
+  },
+  "pv-mz5znyFY": {
+    "fecha": "2026-10-07",
+    "organo": "Pleno de Diputados",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Ernesto Sunini",
+        "cargo": "legislador",
+        "sobre": "Requisitos para el texto sustitutorio",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Explicó la necesidad de firmas de la mayoría.",
+        "proyecto": "",
+        "id": "diputados:zunini yerren"
+      },
+      {
+        "orador": "Jaime Abenzur",
+        "cargo": "legislador",
+        "sobre": "Naturaleza del dictamen en minoría",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Explicó que el dictamen es un texto singular.",
+        "proyecto": "",
+        "id": "diputados:abensur pinasco"
+      },
+      {
+        "orador": "Neri Fernández Nina",
+        "cargo": "legislador",
+        "sobre": "Consenso en seguridad y fenómeno del niño",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Denunció que los extremos impiden el acuerdo.",
+        "proyecto": "",
+        "id": "diputados:fernandez nina"
+      },
+      {
+        "orador": "José Marcelo",
+        "cargo": "legislador",
+        "sobre": "Rechazo a la propuesta de consenso",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Reiteró que la propuesta de consenso fue rechazada.",
+        "proyecto": "",
+        "id": "diputados:marcelo salazar"
+      },
+      {
+        "orador": "Ángel Meneses",
+        "cargo": "legislador",
+        "sobre": "Búsqueda de consensos legislativos",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Instó a las bancadas a buscar consensos.",
+        "proyecto": "",
+        "id": "diputados:meneses crispin"
+      },
+      {
+        "orador": "Eber López",
+        "cargo": "legislador",
+        "sobre": "Dictamen sobre seguridad y fenómeno del niño",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Criticó la militarización y la falta de debate.",
+        "proyecto": "",
+        "id": "diputados:lopez letona"
+      },
+      {
+        "orador": "Cabrera Nieto",
+        "cargo": "legislador",
+        "sobre": "Necesidades urgentes de la población",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Cuestionó el boicot a las necesidades ciudadanas.",
+        "proyecto": "",
+        "id": "diputados:cabrera nieto"
+      },
+      {
+        "orador": "Don Lutos",
+        "cargo": "legislador",
+        "sobre": "Dictamen de mayoría",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Respaldó el dictamen de mayoría solicitado.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ernesto Sunini",
+        "cargo": "legislador",
+        "sobre": "Interpretación del reglamento parlamentario",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció la mala interpretación del reglamento.",
+        "proyecto": "",
+        "id": "diputados:zunini yerren"
+      },
+      {
+        "orador": "Rosana Laisa",
+        "cargo": "legislador",
+        "sobre": "Falta de gestos políticos",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Criticó la falta de comunicación y consenso.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Cristian Arana",
+        "cargo": "legislador",
+        "sobre": "Integración de dictámenes",
+        "postura": "con observaciones",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso utilizar el dictamen de mayoría.",
+        "proyecto": "",
+        "id": "diputados:aranda vasquez"
+      },
+      {
+        "orador": "Arturo Alegría García",
+        "cargo": "legislador",
+        "sobre": "Nuevo texto sustitutorio propuesto",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Presentó nueve puntos adicionales al dictamen.",
+        "proyecto": "PL 98",
+        "id": "diputados:alegria garcia"
+      },
+      {
+        "orador": "Neri Fernández",
+        "cargo": "legislador",
+        "sobre": "dictamen en minoría",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Explicó que buscaron consensos trabajando con ministros y técnicos.",
+        "proyecto": "",
+        "id": "diputados:fernandez nina"
+      },
+      {
+        "orador": "Ángel Meneze",
+        "cargo": "legislador",
+        "sobre": "dictamen en minoría",
+        "postura": "con observaciones",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Pidió que se replanteen las propuestas del dictamen.",
+        "proyecto": "",
+        "id": "diputados:meneses crispin"
+      },
+      {
+        "orador": "Arturo Alegría",
+        "cargo": "legislador",
+        "sobre": "cuestión previa",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció malas prácticas parlamentarias en la Cámara de Diputados.",
+        "proyecto": "",
+        "id": "diputados:alegria garcia"
+      },
+      {
+        "orador": "Indira Huilca",
+        "cargo": "legislador",
+        "sobre": "dictamen en minoría",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Defendió el dictamen en minoría por respetar la ley.",
+        "proyecto": "",
+        "id": "diputados:huilca flores"
+      },
+      {
+        "orador": "Benzur",
+        "cargo": "legislador",
+        "sobre": "cuestión previa",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó la validez de la cuestión previa planteada.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Arturo Alegría",
+        "cargo": "legislador",
+        "sobre": "dictamen de cincuenta puntos",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Cuestionó la existencia del dictamen de cincuenta puntos.",
+        "proyecto": "",
+        "id": "diputados:alegria garcia"
+      },
+      {
+        "orador": "Víctor Piña",
+        "cargo": "legislador",
+        "sobre": "dictamen PL 98",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Informó el retiro de su firma del texto sustitutorio.",
+        "proyecto": "PL 98",
+        "id": "diputados:pinan mamani"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=pv-mz5znyFY"
   }
 }
