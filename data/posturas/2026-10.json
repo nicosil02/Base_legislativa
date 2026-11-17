@@ -25638,5 +25638,682 @@
       }
     ],
     "url": "https://www.facebook.com/watch/?v=1053603930990619"
+  },
+  "Gk2Nok9Chtw": {
+    "fecha": "2026-10-20",
+    "organo": "Comisión de Defensa del Consumidor",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Carlos Yalta",
+        "cargo": "legislador",
+        "sobre": "Riesgo de puentes concesionados",
+        "postura": "en contra",
+        "tema": "Infraestructura",
+        "dijo": "Denunció el riesgo de ochenta y tres puentes en vías concesionadas.",
+        "proyecto": "",
+        "id": "diputados:yalta sotelo"
+      },
+      {
+        "orador": "Oswar",
+        "cargo": "legislador",
+        "sobre": "Crisis de salud en Ucayali",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Denunció el desabastecimiento de medicinas y posibles desvíos de fondos en Ucayali.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Luis Quispe",
+        "cargo": "legislador",
+        "sobre": "Puentes en concesiones de carreteras",
+        "postura": "propone",
+        "tema": "Transporte",
+        "dijo": "Propuso incorporar los puentes en las concesiones de carreteras.",
+        "proyecto": "",
+        "id": "diputados:quispe candia"
+      },
+      {
+        "orador": "Columbus",
+        "cargo": "legislador",
+        "sobre": "Proyecto de medicamentos justos",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Cuestionó la demora del proyecto de medicamentos y los cobros en clínicas.",
+        "proyecto": "Medicamentos Justos",
+        "id": "diputados:columbus murata"
+      },
+      {
+        "orador": "Gladis",
+        "cargo": "legislador",
+        "sobre": "Servicios en comisaría de Jicamarca",
+        "postura": "propone",
+        "tema": "Saneamiento",
+        "dijo": "Pidió que Sedapal informe sobre la conexión de servicios en Jicamarca.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ángel Bodilla",
+        "cargo": "legislador",
+        "sobre": "Inspecciones de Sedapal",
+        "postura": "propone",
+        "tema": "Saneamiento",
+        "dijo": "Propuso solicitar información sobre la efectividad de las inspecciones de Sedapal.",
+        "proyecto": "",
+        "id": "senado:ventura angel"
+      },
+      {
+        "orador": "Barbán",
+        "cargo": "legislador",
+        "sobre": "Cobros de TUA y MigraCheck",
+        "postura": "propone",
+        "tema": "Transporte",
+        "dijo": "Pidió retomar la fiscalización del TUA y el uso de MigraCheck.",
+        "proyecto": "",
+        "id": "diputados:barbaran reyes"
+      },
+      {
+        "orador": "Gladis",
+        "cargo": "legislador",
+        "sobre": "Cobros de Mapaguaral",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Cuestionó los cobros de Mapaguaral al Hospital San Juan Bautista.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Orá",
+        "cargo": "legislador",
+        "sobre": "Citación de ministros",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso realizar pedidos de información antes de citar a ministros.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Osar",
+        "cargo": "legislador",
+        "sobre": "Salud en Ucayali",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Pidió citar al director de salud de Ucayali por la crisis sanitaria.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "R",
+        "cargo": "legislador",
+        "sobre": "Colegios en Madre de Dios",
+        "postura": "comenta",
+        "tema": "Educación",
+        "dijo": "Denunció el estado precario de los colegios en Madre de Dios.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Gladis",
+        "cargo": "legislador",
+        "sobre": "Responsabilidad de gobernadores regionales",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso convocar a gobernadores regionales para atender demandas locales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Albañil",
+        "cargo": "legislador",
+        "sobre": "Registro satelital de pescadores",
+        "postura": "pregunta",
+        "tema": "Pesca",
+        "dijo": "Preguntó cómo evitar sanciones injustas a pescadores por el registro satelital.",
+        "proyecto": "",
+        "id": "diputados:albanil carmona"
+      },
+      {
+        "orador": "César Golgisa",
+        "cargo": "legislador",
+        "sobre": "Inocuidad de alimentos",
+        "postura": "comenta",
+        "tema": "Consumo masivo",
+        "dijo": "Propuso la ley para fortalecer la inocuidad de alimentos.",
+        "proyecto": "001126",
+        "id": null
+      },
+      {
+        "orador": "César Olguín",
+        "cargo": "legislador",
+        "sobre": "Ley de inocuidad de alimentos",
+        "postura": "a favor",
+        "tema": "Salud",
+        "dijo": "Propuso la modificación al decreto 1062 para garantizar la inocuidad alimentaria.",
+        "proyecto": "PL 001126-2031",
+        "id": "diputados:holguin loaiza"
+      },
+      {
+        "orador": "Columbus",
+        "cargo": "legislador",
+        "sobre": "Proyecto de inocuidad alimentaria",
+        "postura": "con observaciones",
+        "tema": "Salud",
+        "dijo": "Propuso modular la mención de costo cero para evitar conflictos presupuestarios.",
+        "proyecto": "PL 001126-2031",
+        "id": "diputados:columbus murata"
+      },
+      {
+        "orador": "Gladis",
+        "cargo": "legislador",
+        "sobre": "Proyecto de inocuidad alimentaria",
+        "postura": "con observaciones",
+        "tema": "Salud",
+        "dijo": "Cuestionó la falta de gradualidad y el impacto en la canasta familiar.",
+        "proyecto": "PL 001126-2031",
+        "id": null
+      },
+      {
+        "orador": "Aguirre",
+        "cargo": "legislador",
+        "sobre": "Proyecto de inocuidad alimentaria",
+        "postura": "con observaciones",
+        "tema": "Salud",
+        "dijo": "Denunció deficiencias técnicas sobre trazabilidad, laboratorios y asistencia técnica.",
+        "proyecto": "PL 001126-2031",
+        "id": null
+      },
+      {
+        "orador": "César Olguín",
+        "cargo": "legislador",
+        "sobre": "Proyecto de inocuidad alimentaria",
+        "postura": "a favor",
+        "tema": "Salud",
+        "dijo": "Defendió la propuesta aclarando que busca la articulación de funciones existentes.",
+        "proyecto": "PL 001126-2031",
+        "id": "diputados:holguin loaiza"
+      },
+      {
+        "orador": "Rafael Eduardo Mueschaz",
+        "cargo": "invitado",
+        "sobre": "Plan de trabajo de OSIPTEL",
+        "postura": "comenta",
+        "tema": "Telecomunicaciones",
+        "dijo": "Explicó los avances en conectividad, competencia de mercado y atención al usuario.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ovarias",
+        "cargo": "invitado",
+        "sobre": "Venta callejera de chips",
+        "postura": "comenta",
+        "tema": "Telecomunicaciones",
+        "dijo": "Informó sobre la Ley 31839 y la venta de chips.",
+        "proyecto": "Ley 31839",
+        "id": null
+      },
+      {
+        "orador": "Ovarias",
+        "cargo": "invitado",
+        "sobre": "Registro RenteC de equipos",
+        "postura": "comenta",
+        "tema": "Telecomunicaciones",
+        "dijo": "Informó sobre el registro RenteC de equipos móviles.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ovarias",
+        "cargo": "invitado",
+        "sobre": "Medidas ante fenómeno del Niño",
+        "postura": "comenta",
+        "tema": "Telecomunicaciones",
+        "dijo": "Informó sobre las medidas ante el fenómeno del Niño.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ovarias",
+        "cargo": "invitado",
+        "sobre": "Institucionalidad de OSIPTEL",
+        "postura": "a favor",
+        "tema": "Telecomunicaciones",
+        "dijo": "Defendió la institucionalidad de OSIPTEL ante ataques.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Aguirre",
+        "cargo": "legislador",
+        "sobre": "Cobertura y calidad en Junín",
+        "postura": "pregunta",
+        "tema": "Telecomunicaciones",
+        "dijo": "Preguntó sobre la cobertura y calidad en Junín.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Luis Quispe",
+        "cargo": "legislador",
+        "sobre": "Venta de chips y Meta",
+        "postura": "pregunta",
+        "tema": "Telecomunicaciones",
+        "dijo": "Preguntó sobre la venta de chips y Meta.",
+        "proyecto": "",
+        "id": "diputados:quispe candia"
+      },
+      {
+        "orador": "Rafael Muez",
+        "cargo": "legislador",
+        "sobre": "Calidad del servicio telefónico",
+        "postura": "comenta",
+        "tema": "Telecomunicaciones",
+        "dijo": "Informó sobre los factores que afectan el servicio.",
+        "proyecto": "",
+        "id": "diputados:ticlla rafael"
+      },
+      {
+        "orador": "Presidente Ejecutivo de OSIPTEL",
+        "cargo": "ministro o autoridad",
+        "sobre": "Reducción de ingresos de OSIPTEL",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Denunció la reducción de ingresos de OSIPTEL.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Congresista",
+        "cargo": "legislador",
+        "sobre": "Respuesta a preguntas de la comisión",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó que sus preguntas no fueran respondidas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Gerente General de OSIPTEL",
+        "cargo": "ministro o autoridad",
+        "sobre": "Uso de Rentec para seguridad",
+        "postura": "comenta",
+        "tema": "Telecomunicaciones",
+        "dijo": "Informó sobre el uso de Rentec para la seguridad.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Congresista",
+        "cargo": "legislador",
+        "sobre": "Intervención de vendedores de chips",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Criticó la falta de acción ante la venta de chips.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Presidente Ejecutivo de OSIPTEL",
+        "cargo": "ministro o autoridad",
+        "sobre": "Invitación a visitar OSIPTEL",
+        "postura": "propone",
+        "tema": "Telecomunicaciones",
+        "dijo": "Invitó a los congresistas a visitar la institución.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Presidente de la Comisión",
+        "cargo": "legislador",
+        "sobre": "Entrega de informes de OSIPTEL",
+        "postura": "con observaciones",
+        "tema": "Política y control político",
+        "dijo": "Solicitó que los próximos informes sean completos.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=Gk2Nok9Chtw"
+  },
+  "fb_1659924448836040": {
+    "fecha": "2026-10-15",
+    "organo": "Comisión de Gobiernos Autónomos",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "William Daniel Elmíl García",
+        "cargo": "ministro o autoridad",
+        "sobre": "reformas a la ley de vivienda social",
+        "postura": "propone",
+        "tema": "Inmobiliario",
+        "dijo": "Propuso la digitalización de trámites y la creación de una ventanilla única para la vivienda.",
+        "proyecto": "Ley de Vivienda de Interés Social",
+        "id": null
+      },
+      {
+        "orador": "Milton Aguas",
+        "cargo": "legislador",
+        "sobre": "regímenes especiales para Galápagos y Amazonía",
+        "postura": "propone",
+        "tema": "Inmobiliario",
+        "dijo": "Propuso aplicar regímenes especiales de vivienda para Galápagos y la Amazonía.",
+        "proyecto": "Ley de Vivienda de Interés Social",
+        "id": "EC:aguas flores"
+      },
+      {
+        "orador": "Milton Aguas",
+        "cargo": "legislador",
+        "sobre": "Vivienda y tecnología en Galápagos",
+        "postura": "propone",
+        "tema": "Construcción",
+        "dijo": "Propuso regímenes especiales para Galápagos y sistemas tecnológicos para los GAD.",
+        "proyecto": "",
+        "id": "EC:aguas flores"
+      },
+      {
+        "orador": "Hermario David Cantos Salazar",
+        "cargo": "ministro o autoridad",
+        "sobre": "Régimen especial y catastro nacional",
+        "postura": "propone",
+        "tema": "Construcción",
+        "dijo": "Propuso un régimen especial en Galápagos y un catastro nacional centralizado.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Javier Lazo",
+        "cargo": "legislador",
+        "sobre": "Enfoque social de la vivienda",
+        "postura": "en contra",
+        "tema": "Construcción",
+        "dijo": "Cuestionó el enfoque económico de la vivienda y la falta de gestión.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Pablo Jurado",
+        "cargo": "legislador",
+        "sobre": "Burocracia y construcción vertical",
+        "postura": "propone",
+        "tema": "Construcción",
+        "dijo": "Propuso implementar ventanillas únicas y fomentar la construcción en altura.",
+        "proyecto": "",
+        "id": "EC:jurado moreno"
+      },
+      {
+        "orador": "Noelia Guillén",
+        "cargo": "legislador",
+        "sobre": "Reformas a la vivienda social",
+        "postura": "a favor",
+        "tema": "Construcción",
+        "dijo": "Respaldó las reformas a la ley de vivienda de interés social.",
+        "proyecto": "Ley de vivienda de interés social",
+        "id": "EC:guillen rodriguez"
+      },
+      {
+        "orador": "Hermario David Cantos Salazar",
+        "cargo": "ministro o autoridad",
+        "sobre": "Incentivos y digitalización de trámites",
+        "postura": "propone",
+        "tema": "Construcción",
+        "dijo": "Propuso incentivos para la inversión privada y digitalización de trámites.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1659924448836040"
+  },
+  "iyEO8b-JAwQ": {
+    "fecha": "2026-10-13",
+    "organo": "Comisión de Energía y Minas",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Laura Rodas",
+        "cargo": "invitado",
+        "sobre": "Bienvenida a la audiencia",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Saludó a las autoridades en la Universidad Nacional de San Antonio Abad del Cusco.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Iris Marlene Carrenas Pino",
+        "cargo": "ministro o autoridad",
+        "sobre": "Estado del Gasoducto Sur Peruano",
+        "postura": "comenta",
+        "tema": "Energía",
+        "dijo": "Informó sobre el avance del proyecto y los arbitrajes de Odebrecht.",
+        "proyecto": "Gasoducto Sur Peruano",
+        "id": null
+      },
+      {
+        "orador": "Iris Marlene Carrenas Pino",
+        "cargo": "ministro o autoridad",
+        "sobre": "Proyecto de transporte SITGAS",
+        "postura": "comenta",
+        "tema": "Energía",
+        "dijo": "Explicó los componentes de seguridad energética del proyecto SITGAS.",
+        "proyecto": "SITGAS",
+        "id": null
+      },
+      {
+        "orador": "Iris Marlene Carrenas Pino",
+        "cargo": "ministro o autoridad",
+        "sobre": "Propuesta de adenda Cálida",
+        "postura": "comenta",
+        "tema": "Energía",
+        "dijo": "Detalló las etapas de evaluación para la adenda Cálida.",
+        "proyecto": "Adenda Cálida",
+        "id": null
+      },
+      {
+        "orador": "Reynoso Rojas Jiménez",
+        "cargo": "ministro o autoridad",
+        "sobre": "Asistencia técnica de ProInversión",
+        "postura": "comenta",
+        "tema": "Energía",
+        "dijo": "Informó sobre la asistencia técnica brindada por ProInversión.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Reynoso Rojas Jiménez",
+        "cargo": "ministro o autoridad",
+        "sobre": "Definición de la alternativa técnica",
+        "postura": "comenta",
+        "tema": "Energía",
+        "dijo": "Explicó la necesidad de definir la alternativa técnica de SITGAS.",
+        "proyecto": "SITGAS",
+        "id": null
+      },
+      {
+        "orador": "Alejandro Narváez",
+        "cargo": "invitado",
+        "sobre": "Costo del gas en el sur",
+        "postura": "en contra",
+        "tema": "Energía",
+        "dijo": "Denunció el alto costo del gas en la región Cusco.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Alejandro Narváez",
+        "cargo": "invitado",
+        "sobre": "Contrato de la empresa TGP",
+        "postura": "en contra",
+        "tema": "Energía",
+        "dijo": "Cuestionó el contrato BOOT de la empresa TGP.",
+        "proyecto": "TGP",
+        "id": null
+      },
+      {
+        "orador": "Alejandro Narváez",
+        "cargo": "invitado",
+        "sobre": "Masificación de la adenda Cálida",
+        "postura": "en contra",
+        "tema": "Energía",
+        "dijo": "Advirtió que la adenda Cálida ofrece una masificación limitada.",
+        "proyecto": "Adenda Cálida",
+        "id": null
+      },
+      {
+        "orador": "Raúl Camargo Porta",
+        "cargo": "invitado",
+        "sobre": "Adenda de Cálida y desarrollo",
+        "postura": "en contra",
+        "tema": "Energía",
+        "dijo": "Cuestionó la adenda de Cálida y pidió un gasoducto surperuano.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Jesús Pérez",
+        "cargo": "legislador",
+        "sobre": "Novena adenda de Cálida",
+        "postura": "en contra",
+        "tema": "Energía",
+        "dijo": "Denunció que la adenda de Cálida bloquea la sana competencia.",
+        "proyecto": "",
+        "id": "diputados:perez alccahuaman"
+      },
+      {
+        "orador": "César Holguín",
+        "cargo": "legislador",
+        "sobre": "Adenda de Cálida y TGP",
+        "postura": "en contra",
+        "tema": "Energía",
+        "dijo": "Rechazó la adenda de Cálida y la propuesta de TGP.",
+        "proyecto": "",
+        "id": "diputados:holguin loaiza"
+      },
+      {
+        "orador": "Eber López",
+        "cargo": "legislador",
+        "sobre": "Contratos y adendas de gas",
+        "postura": "con observaciones",
+        "tema": "Energía",
+        "dijo": "Cuestionó la forma en que se realizan los contratos actuales.",
+        "proyecto": "",
+        "id": "diputados:lopez letona"
+      },
+      {
+        "orador": "Edwin Espinosa",
+        "cargo": "legislador",
+        "sobre": "Claridad en contratos de gas",
+        "postura": "con observaciones",
+        "tema": "Energía",
+        "dijo": "Pidió mayor claridad y reflexión sobre los contratos de gas.",
+        "proyecto": "",
+        "id": "diputados:espinoza huillca"
+      },
+      {
+        "orador": "Julián Pérez Malqui",
+        "cargo": "legislador",
+        "sobre": "Gasoducto del Sur",
+        "postura": "a favor",
+        "tema": "Energía",
+        "dijo": "Defendió el proyecto del Gasoducto del Sur para el Cusco.",
+        "proyecto": "",
+        "id": "diputados:perez mallqui"
+      },
+      {
+        "orador": "Colombo Murata",
+        "cargo": "legislador",
+        "sobre": "Ley de masificación del gas",
+        "postura": "propone",
+        "tema": "Energía",
+        "dijo": "Propuso modificar la ley para permitir subsidios desde Lima.",
+        "proyecto": "",
+        "id": "diputados:columbus murata"
+      },
+      {
+        "orador": "Susena Rojas",
+        "cargo": "invitado",
+        "sobre": "Precio del gas natural",
+        "postura": "en contra",
+        "tema": "Energía",
+        "dijo": "Expresó su desacuerdo con los altos costos del gas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Nari Pinasco",
+        "cargo": "legislador",
+        "sobre": "Soluciones para hidrocarburos",
+        "postura": "propone",
+        "tema": "Energía",
+        "dijo": "Instó a buscar soluciones técnicas para el sector hidrocarburos.",
+        "proyecto": "",
+        "id": "diputados:pinasco montenegro"
+      },
+      {
+        "orador": "Amilcar Romero",
+        "cargo": "invitado",
+        "sobre": "Industrialización y gas de Camisea",
+        "postura": "en contra",
+        "tema": "Energía",
+        "dijo": "Denunció la falta de propuestas para la industrialización regional.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Andrés Olivares Muñoz",
+        "cargo": "invitado",
+        "sobre": "Abandono del Gasoducto Surperuano",
+        "postura": "en contra",
+        "tema": "Energía",
+        "dijo": "Criticó el abandono del Gasoducto Surperuano por el Estado.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Tica Luisa Lóbregón",
+        "cargo": "invitado",
+        "sobre": "Fiscalización del gasoducto sur peruano",
+        "postura": "en contra",
+        "tema": "Energía",
+        "dijo": "Exigió la fiscalización del proyecto del gasoducto sur peruano.",
+        "proyecto": "Gasoducto Sur Peruano",
+        "id": null
+      },
+      {
+        "orador": "Jorge Pizfánio Pacheco",
+        "cargo": "invitado",
+        "sobre": "Reanudación del gasoducto sur peruano",
+        "postura": "propone",
+        "tema": "Energía",
+        "dijo": "Pidió la reanudación del gasoducto sur peruano al Ejecutivo.",
+        "proyecto": "Gasoducto Sur Peruano",
+        "id": null
+      },
+      {
+        "orador": "Jesús Córsio Milnoviza",
+        "cargo": "invitado",
+        "sobre": "Investigación de asignación de fondos",
+        "postura": "propone",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Propuso investigar la asignación de mil seiscientos millones de soles.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Boris Tomás",
+        "cargo": "invitado",
+        "sobre": "Adenda de Cálida y gasoducto",
+        "postura": "en contra",
+        "tema": "Energía",
+        "dijo": "Rechazó la adenda de Cálida y respaldó el gasoducto.",
+        "proyecto": "Gasoducto Sur Peruano",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=iyEO8b-JAwQ"
   }
 }
