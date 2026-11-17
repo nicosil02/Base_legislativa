@@ -26315,5 +26315,422 @@
       }
     ],
     "url": "https://www.youtube.com/watch?v=iyEO8b-JAwQ"
+  },
+  "fb_1278063438733508": {
+    "fecha": "2026-10-12",
+    "organo": "Comisión de Educación",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Fanny Alicia Salgado Macías",
+        "cargo": "invitado",
+        "sobre": "Reforma al código de conocimientos e innovación",
+        "postura": "con observaciones",
+        "tema": "Tecnología",
+        "dijo": "Presentó observaciones para equilibrar la protección de productores y licenciatarios.",
+        "proyecto": "COESCI",
+        "id": null
+      },
+      {
+        "orador": "Paul Alexander Guaranga Rochina",
+        "cargo": "invitado",
+        "sobre": "Ley de gobernanza de inteligencia artificial",
+        "postura": "con observaciones",
+        "tema": "Tecnología",
+        "dijo": "Propuso implementar un sandbox para fomentar la innovación académica.",
+        "proyecto": "Ley de Inteligencia Artificial",
+        "id": null
+      },
+      {
+        "orador": "Cristian René Benítez Moraíra",
+        "cargo": "invitado",
+        "sobre": "Regulación y riesgos de la inteligencia artificial",
+        "postura": "con observaciones",
+        "tema": "Tecnología",
+        "dijo": "Advirtió sobre el riesgo de eliminación de puestos de trabajo.",
+        "proyecto": "Ley de Inteligencia Artificial",
+        "id": null
+      },
+      {
+        "orador": "Ingeniero Paul",
+        "cargo": "invitado",
+        "sobre": "regulación de la inteligencia artificial",
+        "postura": "propone",
+        "tema": "Tecnología",
+        "dijo": "Propuso un proyecto de ley sobre inteligencia artificial con setenta y cinco puntos.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1278063438733508"
+  },
+  "9FlcWcokKBc": {
+    "fecha": "2026-10-09",
+    "organo": "Comisión de Presupuesto",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Sejismundo Cruzes-Ordinola",
+        "cargo": "ministro o autoridad",
+        "sobre": "Presupuesto institucional 2027 de Tumbes",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Sustentó el presupuesto del gobierno regional de Tumbes para el año 2027.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Absalom Vázquez",
+        "cargo": "legislador",
+        "sobre": "Ejecución presupuestal y riesgos climáticos",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Cuestionó la baja ejecución presupuestal y la falta de prevención ante el Niño.",
+        "proyecto": "",
+        "id": "senado:vasquez villanueva"
+      },
+      {
+        "orador": "Javier Castro",
+        "cargo": "legislador",
+        "sobre": "Distribución de gastos de capital y corriente",
+        "postura": "pregunta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Preguntó por la disminución de los gastos de capital en la región.",
+        "proyecto": "",
+        "id": "diputados:castro cruz"
+      },
+      {
+        "orador": "Héctor Ventura",
+        "cargo": "legislador",
+        "sobre": "Corrupción en obras del gobierno regional",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció la existencia de actos de corrupción en las obras regionales.",
+        "proyecto": "",
+        "id": "senado:ventura angel"
+      },
+      {
+        "orador": "Jorge Luis Pérez Flores",
+        "cargo": "ministro o autoridad",
+        "sobre": "Presupuesto institucional de Lambayeque 2027",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Presentó el presupuesto regional y los desafíos de inversión en Lambayeque.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Absalom Vázquez",
+        "cargo": "legislador",
+        "sobre": "Presupuesto para el proyecto Olmos Tinajones",
+        "postura": "con observaciones",
+        "tema": "Agricultura",
+        "dijo": "Criticó la baja ejecución presupuestal del proyecto Olmos Tinajones.",
+        "proyecto": "",
+        "id": "senado:vasquez villanueva"
+      },
+      {
+        "orador": "Segundo Tapia Bernal",
+        "cargo": "legislador",
+        "sobre": "Reducción presupuestaria y control de gestión",
+        "postura": "con observaciones",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Expresó su preocupación por la reducción del presupuesto regional.",
+        "proyecto": "",
+        "id": "senado:tapia bernal"
+      },
+      {
+        "orador": "Carlos Segarra Sánchez",
+        "cargo": "legislador",
+        "sobre": "Gestión hídrica y uso de Foncor",
+        "postura": "pregunta",
+        "tema": "Saneamiento",
+        "dijo": "Preguntó sobre la gestión del agua en la ciudad de Chiclayo.",
+        "proyecto": "",
+        "id": "diputados:zegarra sanchez"
+      },
+      {
+        "orador": "Héctor Guillén Valencia",
+        "cargo": "legislador",
+        "sobre": "Debilitamiento del proceso de descentralización",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció la debilidad del proceso de descentralización en las regiones.",
+        "proyecto": "",
+        "id": "diputados:guillen valencia"
+      },
+      {
+        "orador": "Javier Castro Cruz",
+        "cargo": "legislador",
+        "sobre": "Gasto en el dragado de la presa",
+        "postura": "en contra",
+        "tema": "Infraestructura",
+        "dijo": "Cuestionó el gasto realizado en el dragado de la presa Limón.",
+        "proyecto": "",
+        "id": "diputados:castro cruz"
+      },
+      {
+        "orador": "Javier Castro Cruz",
+        "cargo": "legislador",
+        "sobre": "Gestión de la presa Limón",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Cuestionó el uso de fondos en la presa Limón.",
+        "proyecto": "",
+        "id": "diputados:castro cruz"
+      },
+      {
+        "orador": "Gobernador de Lambayeque",
+        "cargo": "ministro o autoridad",
+        "sobre": "Gestión de obras en Lambayeque",
+        "postura": "a favor",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Defendió la ejecución de obras y la gestión regional.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Carlos Segarra",
+        "cargo": "legislador",
+        "sobre": "Acción del Ministerio de Vivienda",
+        "postura": "propone",
+        "tema": "Saneamiento",
+        "dijo": "Pidió una mesa técnica para coordinar con Vivienda.",
+        "proyecto": "",
+        "id": "diputados:zegarra sanchez"
+      },
+      {
+        "orador": "Gobernador de Lambayeque",
+        "cargo": "ministro o autoridad",
+        "sobre": "Inversión en obras desfinanciadas",
+        "postura": "a favor",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Explicó la inversión en obras desfinanciadas de Lambayeque.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Gobernador de Lambayeque",
+        "cargo": "ministro o autoridad",
+        "sobre": "Acusaciones de corrupción",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Rechazó las acusaciones de corrupción contra su gestión.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Gobernador de Lambayeque",
+        "cargo": "ministro o autoridad",
+        "sobre": "Apoyo presupuestal para Lambayeque",
+        "postura": "propone",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Solicitó apoyo presupuestal para la región Lambayeque.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Díaz Caradena Coronel",
+        "cargo": "ministro o autoridad",
+        "sobre": "Presupuesto 2027 de La Libertad",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Presentó la propuesta presupuestal para La Libertad.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ana Rosa Ramos de la Cruz",
+        "cargo": "ministro o autoridad",
+        "sobre": "Detalle del presupuesto de La Libertad",
+        "postura": "con observaciones",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Advirtió sobre la eliminación de plazas presupuestales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Catherine Ampueron",
+        "cargo": "legislador",
+        "sobre": "Gestión del Gobierno Regional de La Libertad",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Criticó la baja ejecución de obras en La Libertad.",
+        "proyecto": "",
+        "id": "senado:ampuero meza"
+      },
+      {
+        "orador": "Díaz Caradena Coronel",
+        "cargo": "ministro o autoridad",
+        "sobre": "Seguridad y obras en La Libertad",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Defendió la inversión en seguridad y obras regionales.",
+        "proyecto": "Colegio José Olaya",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=9FlcWcokKBc"
+  },
+  "KqEnB2t2Kts": {
+    "fecha": "2026-10-07",
+    "organo": "Comisión de Justicia",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Jorge Wagner Chavez-Potrina",
+        "cargo": "invitado",
+        "sobre": "resultados de las investigaciones",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Informó que existen setecientas cincuenta y cuatro investigaciones en trámite.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Jorge Wagner Chavez-Potrina",
+        "cargo": "invitado",
+        "sobre": "extorsión en el transporte",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Describió la modalidad de extorsión en las empresas de transporte.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Jorge Wagner Chavez-Potrina",
+        "cargo": "invitado",
+        "sobre": "extorsión desde los penales",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Denunció la extorsión mediante el uso de teléfonos en penales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Jorge Wagner Chavez-Potrina",
+        "cargo": "invitado",
+        "sobre": "trata de personas",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Explicó la modalidad de explotación del grupo Tren de Aragua.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Jorge Wagner Chavez-Potrina",
+        "cargo": "invitado",
+        "sobre": "albergues para víctimas",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso crear albergues especializados para las víctimas de trata.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Jorge Wagner Chavez-Potrina",
+        "cargo": "invitado",
+        "sobre": "efectividad de las leyes",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Cuestionó la efectividad de las leyes contra el crimen organizado.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Jorge Wagner Chavez-Potrina",
+        "cargo": "invitado",
+        "sobre": "falta de presupuesto y peritos",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Informó la falta de peritos y presupuesto para la fiscalía.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Jorge Wagner Chavez-Potrina",
+        "cargo": "invitado",
+        "sobre": "la colaboración eficaz",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Sugirió ajustar la norma de la colaboración eficaz.",
+        "proyecto": "Ley 31990",
+        "id": null
+      },
+      {
+        "orador": "Jorge Wagner Chavez-Potrina",
+        "cargo": "invitado",
+        "sobre": "contradicciones de la ley penal",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Señaló contradicciones en las penas de la ley penal.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Jorge Wagner Chavez-Potrina",
+        "cargo": "invitado",
+        "sobre": "abogados en los allanamientos",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Pidió derogar la exigencia de abogados en los allanamientos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Chávez Cotrina",
+        "cargo": "invitado",
+        "sobre": "carga procesal y fiscalías especializadas",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Informó sobre la carga procesal y la creación de nuevas fiscalías.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Chávez Cotrina",
+        "cargo": "invitado",
+        "sobre": "estadísticas de criminalidad en el país",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Detalló la incidencia de delitos en diversas regiones del país.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Chávez Cotrina",
+        "cargo": "invitado",
+        "sobre": "la organización criminal Los Pulpos",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Informó sobre la desarticulación de la organización Los Pulpos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Chávez Cotrina",
+        "cargo": "invitado",
+        "sobre": "extorsión desde centros penitenciarios",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso limitar el tiempo de comunicación de los internos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Chávez Cotrina",
+        "cargo": "invitado",
+        "sobre": "presencia del Tren de Aragua",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Informó sobre la modalidad delictiva del Tren de Aragua.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=KqEnB2t2Kts"
   }
 }
