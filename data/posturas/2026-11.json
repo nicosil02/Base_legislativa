@@ -10426,5 +10426,73 @@
       }
     ],
     "url": "https://www.youtube.com/watch?v=foqSQyBfXII"
+  },
+  "TJT7aARHWJM": {
+    "fecha": "2026-11-17",
+    "organo": "Pleno de Diputados",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Susana",
+        "cargo": "invitado",
+        "sobre": "Ahorro del presupuesto 2027",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Informó que el Congreso devolvió 300 millones al Tesoro Público.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Madeline",
+        "cargo": "invitado",
+        "sobre": "Reducción del presupuesto 2027",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Señaló que el presupuesto para el año 2027 será menor.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Madeline",
+        "cargo": "invitado",
+        "sobre": "Sustentación del presupuesto 2027",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Indicó que los ministros sustentarán el presupuesto esta tarde.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Susana",
+        "cargo": "invitado",
+        "sobre": "Ley de Presupuesto 2027",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Mencionó que se aprobará la Ley de Presupuesto del año 2027.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=TJT7aARHWJM"
+  },
+  "S4k2Bo2Bmig": {
+    "fecha": "2026-11-17",
+    "organo": "Pleno del Senado",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Muñante Barrios",
+        "cargo": "legislador",
+        "sobre": "Presupuesto del Congreso para el año fiscal 2027",
+        "postura": "a favor",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Defendió el presupuesto del Congreso para el año fiscal 2027 destacando la austeridad y la eficiencia.",
+        "proyecto": "",
+        "id": "senado:munante barrios"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=S4k2Bo2Bmig"
   }
 }
