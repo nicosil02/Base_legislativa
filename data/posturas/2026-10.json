@@ -27976,5 +27976,214 @@
       }
     ],
     "url": "https://www.youtube.com/watch?v=o6ocvV5iWIk"
+  },
+  "R5cUYC-e7dk": {
+    "fecha": "2026-10-15",
+    "organo": "Pleno de la Asamblea",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Jorge Chamba",
+        "cargo": "legislador",
+        "sobre": "Ley de infancia segura",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Defendió el proyecto de protección de la infancia.",
+        "proyecto": "Ley Infancia Segura",
+        "id": "EC:chamba cabanilla"
+      },
+      {
+        "orador": "Luis García",
+        "cargo": "legislador",
+        "sobre": "Proyecto de construcción Quito Pía",
+        "postura": "propone",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Pidió fiscalizar el proyecto Quito Pía.",
+        "proyecto": "",
+        "id": "EC:garcia velasquez"
+      },
+      {
+        "orador": "Nátaly Farinango",
+        "cargo": "legislador",
+        "sobre": "Programas de apoyo estudiantil",
+        "postura": "propone",
+        "tema": "Educación",
+        "dijo": "Propuso analizar los programas de ayuda estudiantil.",
+        "proyecto": "",
+        "id": "EC:farinango delgado"
+      },
+      {
+        "orador": "Milton Aguas",
+        "cargo": "legislador",
+        "sobre": "Crédito productivo 7 por 7",
+        "postura": "propone",
+        "tema": "Agricultura",
+        "dijo": "Pidió información sobre el crédito productivo.",
+        "proyecto": "",
+        "id": "EC:aguas flores"
+      },
+      {
+        "orador": "Rosa María Cisalima",
+        "cargo": "invitado",
+        "sobre": "Reconocimiento a mujeres rurales",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Agradeció la condecoración a las mujeres rurales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "José Betjaramillo",
+        "cargo": "legislador",
+        "sobre": "Día Nacional de la Literatura",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Propuso reconocer la importancia de la literatura.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Gerardo Machado",
+        "cargo": "legislador",
+        "sobre": "Día Nacional de la Literatura",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Resaltó el valor de la memoria literaria.",
+        "proyecto": "",
+        "id": "EC:machado clavijo"
+      },
+      {
+        "orador": "Gerardo Machado",
+        "cargo": "legislador",
+        "sobre": "Ley de cultura y resoluciones",
+        "postura": "con observaciones",
+        "tema": "Otros",
+        "dijo": "Pidió reformar la ley para declarar fechas conmemorativas.",
+        "proyecto": "",
+        "id": "EC:machado clavijo"
+      },
+      {
+        "orador": "Miguel Salazar",
+        "cargo": "invitado",
+        "sobre": "Ley de infancia segura",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Denunció la explotación de niños mediante tecnología.",
+        "proyecto": "Ley de infancia segura",
+        "id": null
+      },
+      {
+        "orador": "Diana Hakome",
+        "cargo": "legislador",
+        "sobre": "Proyecto Ley de infancia segura",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Defendió el proyecto para proteger a la niñez.",
+        "proyecto": "Ley de infancia segura",
+        "id": null
+      },
+      {
+        "orador": "Jorge Chamba",
+        "cargo": "legislador",
+        "sobre": "Ley de infancia segura",
+        "postura": "con observaciones",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso fortalecer la prevención y la reparación integral.",
+        "proyecto": "Ley de infancia segura",
+        "id": "EC:chamba cabanilla"
+      },
+      {
+        "orador": "Noemí Cabrera",
+        "cargo": "legislador",
+        "sobre": "prevención de violencia sexual digital",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Pidió establecer indicadores verificables en la Ley Infancia Segura.",
+        "proyecto": "Ley Infancia Segura",
+        "id": "EC:cabrera chacon"
+      },
+      {
+        "orador": "Diana Hakome",
+        "cargo": "legislador",
+        "sobre": "sanciones para delitos de abuso sexual",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Pidió normativa clara en la Ley Infancia Segura.",
+        "proyecto": "Ley Infancia Segura",
+        "id": null
+      },
+      {
+        "orador": "Ricardo Patiño",
+        "cargo": "legislador",
+        "sobre": "vacíos en la ley infancia segura",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Denunció vacíos sustantivos en la Ley Infancia Segura.",
+        "proyecto": "Ley Infancia Segura",
+        "id": "EC:patino aroca"
+      },
+      {
+        "orador": "Dina Farinango",
+        "cargo": "legislador",
+        "sobre": "protección contra delitos de abuso sexual",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Propuso un procedimiento judicial en la Ley Infancia Segura.",
+        "proyecto": "Ley Infancia Segura",
+        "id": "EC:farinango quilumbaquin"
+      },
+      {
+        "orador": "Luigye García",
+        "cargo": "legislador",
+        "sobre": "planificación de la obra Quito Pía",
+        "postura": "en contra",
+        "tema": "Construcción",
+        "dijo": "Cuestionó la falta de planificación en Quito Pía.",
+        "proyecto": "Quito Pía",
+        "id": "EC:garcia velasquez"
+      },
+      {
+        "orador": "Viviana Veloz",
+        "cargo": "legislador",
+        "sobre": "uso de la Asamblea como distractor",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó el uso de la Asamblea como distractor.",
+        "proyecto": "",
+        "id": "EC:veloz ramirez"
+      },
+      {
+        "orador": "Javier Ordoñez",
+        "cargo": "legislador",
+        "sobre": "irregularidades en el proyecto Quito Pía",
+        "postura": "en contra",
+        "tema": "Construcción",
+        "dijo": "Denunció irregularidades en los contratos de Quito Pía.",
+        "proyecto": "Quito Pía",
+        "id": "EC:ordonez fuentes"
+      },
+      {
+        "orador": "Andrés Castillo",
+        "cargo": "legislador",
+        "sobre": "declive de la ciudad de Quito",
+        "postura": "en contra",
+        "tema": "Otros",
+        "dijo": "Denunció el declive de la ciudad de Quito.",
+        "proyecto": "",
+        "id": "EC:castillo maldonado"
+      },
+      {
+        "orador": "Jorge Chamba",
+        "cargo": "legislador",
+        "sobre": "Proyecto de ley Infancia Segura",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Defendió el proyecto para prevenir y sancionar delitos de abuso sexual infantil.",
+        "proyecto": "Ley infancia segura",
+        "id": "EC:chamba cabanilla"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=R5cUYC-e7dk"
   }
 }
