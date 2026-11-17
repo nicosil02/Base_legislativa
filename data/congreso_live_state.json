@@ -263,7 +263,9 @@
   "I8tDQiZPfT8",
   "2kTRrHDvmpk",
   "DmiGxqblADo",
-  "tvaaOwXQQ20"
+  "tvaaOwXQQ20",
+  "dshnFuVJDtI",
+  "MyZpXkSMt-Y"
  ],
  "sesiones": [
   {
@@ -2348,6 +2350,22 @@
    "pais": "PE",
    "url": "https://www.youtube.com/watch?v=tvaaOwXQQ20",
    "visto_at": "2026-11-12T14:24:33Z"
+  },
+  {
+   "id": "dshnFuVJDtI",
+   "titulo": "🔴EN VIVO: Sesión de la Comisión de Salud de la Cámara de Diputados l 17/11/2026",
+   "tipo": "Comision: Salud",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=dshnFuVJDtI",
+   "visto_at": "2026-11-17T13:17:21Z"
+  },
+  {
+   "id": "MyZpXkSMt-Y",
+   "titulo": "🔴EN VIVO: Comisión de Infraestructura, Vivienda y Transportes de la Cámara de Diputados | 17/11/2026",
+   "tipo": "Comision: Transportes",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=MyZpXkSMt-Y",
+   "visto_at": "2026-11-17T13:18:22Z"
   }
  ],
  "avisado": {
