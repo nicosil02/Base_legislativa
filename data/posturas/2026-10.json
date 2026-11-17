@@ -29489,5 +29489,942 @@
       }
     ],
     "url": "https://www.youtube.com/watch?v=7uWszM8UMnw"
+  },
+  "OLQlsR2M-zM": {
+    "fecha": "2026-10-01",
+    "organo": "Comisión de Gestión del Estado",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Manrique",
+        "cargo": "legislador",
+        "sobre": "Autoridad Nacional Digital",
+        "postura": "en contra",
+        "tema": "Tecnología",
+        "dijo": "Cuestionó la conveniencia de crear la Autoridad Nacional Digital.",
+        "proyecto": "",
+        "id": "diputados:manrique olivera"
+      },
+      {
+        "orador": "Selys",
+        "cargo": "legislador",
+        "sobre": "Orden de la sesión",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Aclaró que los pedidos deben realizarse en la sección correspondiente.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Aguirre",
+        "cargo": "legislador",
+        "sobre": "Obras paralizadas en Junín",
+        "postura": "en contra",
+        "tema": "Infraestructura",
+        "dijo": "Denunció la paralización de casi 28 obras en Junín.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Albanín",
+        "cargo": "legislador",
+        "sobre": "Fiscalización en Piura",
+        "postura": "en contra",
+        "tema": "Otros",
+        "dijo": "Criticó la falta de aporte técnico de la Contraloría en Piura.",
+        "proyecto": "",
+        "id": "diputados:albanil carmona"
+      },
+      {
+        "orador": "García",
+        "cargo": "legislador",
+        "sobre": "Gestión pública en Cayao",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Informó sobre la precariedad de los servicios en Cayao.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Quispe",
+        "cargo": "legislador",
+        "sobre": "Modernización del transporte en Lima",
+        "postura": "propone",
+        "tema": "Transporte",
+        "dijo": "Propuso modernizar el transporte mediante semáforos inteligentes en Lima.",
+        "proyecto": "Ley 3900",
+        "id": null
+      },
+      {
+        "orador": "Mesa",
+        "cargo": "legislador",
+        "sobre": "Empadronamiento de programas sociales",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Pidió priorizar el empadronamiento de beneficiarios de programas sociales.",
+        "proyecto": "",
+        "id": "senado:mesia ramirez"
+      },
+      {
+        "orador": "Fernández",
+        "cargo": "legislador",
+        "sobre": "Hospital en Tacna",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Denunció que un hospital en Tacna lleva seis años paralizado.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ebanyi",
+        "cargo": "legislador",
+        "sobre": "Capacidad de la ANIN",
+        "postura": "propone",
+        "tema": "Infraestructura",
+        "dijo": "Sugirió mejorar la capacidad de respuesta de la ANIN.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "García",
+        "cargo": "legislador",
+        "sobre": "Sesión descentralizada en el Callao",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Propuso realizar una sesión descentralizada en el Callao.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Aguirre",
+        "cargo": "legislador",
+        "sobre": "Obras en Satipo",
+        "postura": "propone",
+        "tema": "Infraestructura",
+        "dijo": "Solicitó una sesión descentralizada en la provincia de Satipo.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Albanín",
+        "cargo": "legislador",
+        "sobre": "Obras de protección en Piura",
+        "postura": "propone",
+        "tema": "Infraestructura",
+        "dijo": "Solicitó una sesión descentralizada en la región de Piura.",
+        "proyecto": "",
+        "id": "diputados:albanil carmona"
+      },
+      {
+        "orador": "Chipana",
+        "cargo": "legislador",
+        "sobre": "Proyecto de delegación de facultades",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Pidió derivar literales específicos del proyecto de delegación.",
+        "proyecto": "PL de delegación de facultades",
+        "id": null
+      },
+      {
+        "orador": "Bando",
+        "cargo": "legislador",
+        "sobre": "Gestión de salud en Tumbes",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Denunció el mal uso del presupuesto en Tumbes.",
+        "proyecto": "",
+        "id": "diputados:obando morgan"
+      },
+      {
+        "orador": "Bando",
+        "cargo": "legislador",
+        "sobre": "Barreras burocráticas e Indecopi",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Propuso invitar a Indecopi para eliminar barreras burocráticas.",
+        "proyecto": "",
+        "id": "diputados:obando morgan"
+      },
+      {
+        "orador": "Obando",
+        "cargo": "legislador",
+        "sobre": "Sesiones descentralizadas en regiones",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Respaldó la realización de sesiones descentralizadas en regiones.",
+        "proyecto": "",
+        "id": "diputados:obando morgan"
+      },
+      {
+        "orador": "García",
+        "cargo": "legislador",
+        "sobre": "Fracaso de la descentralización",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó la ineficacia del proceso de descentralización nacional.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Trujillo",
+        "cargo": "legislador",
+        "sobre": "Plan de trabajo de la comisión",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Sugirió aprobar el plan de trabajo de la comisión.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Trujillo",
+        "cargo": "legislador",
+        "sobre": "Creación de distritos",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Pidió convocar a la PCM sobre demarcación territorial.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Aguirre",
+        "cargo": "legislador",
+        "sobre": "Sesión en Junín",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Insistió en realizar una sesión descentralizada en Junín.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Domínguez",
+        "cargo": "legislador",
+        "sobre": "Fortalecimiento de la Contraloría",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso dar facultades imperativas a informes de la Contraloría.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Manrique",
+        "cargo": "legislador",
+        "sobre": "Interoperabilidad del Estado",
+        "postura": "comenta",
+        "tema": "Tecnología",
+        "dijo": "Explicó la importancia de la interoperabilidad en la modernización.",
+        "proyecto": "",
+        "id": "diputados:manrique olivera"
+      },
+      {
+        "orador": "Domínguez",
+        "cargo": "legislador",
+        "sobre": "Fortalecer la Contraloría y obras paralizadas",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso dar carácter imperativo a los informes de la Contraloría.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Manrique",
+        "cargo": "legislador",
+        "sobre": "Interoperabilidad y gobierno de datos",
+        "postura": "propone",
+        "tema": "Tecnología",
+        "dijo": "Propuso implementar un gobierno de datos y la interoperabilidad estatal.",
+        "proyecto": "",
+        "id": "diputados:manrique olivera"
+      },
+      {
+        "orador": "Abenzur",
+        "cargo": "legislador",
+        "sobre": "Citación del Contralor General",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Pidió convocar al Contralor para conocer las obras paralizadas.",
+        "proyecto": "",
+        "id": "diputados:abensur pinasco"
+      },
+      {
+        "orador": "Kispecandia",
+        "cargo": "legislador",
+        "sobre": "Visitas territoriales y barreras burocráticas",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso realizar visitas preparadas para resolver problemas en las regiones.",
+        "proyecto": "",
+        "id": "diputados:quispe candia"
+      },
+      {
+        "orador": "Presidenta",
+        "cargo": "legislador",
+        "sobre": "Aprobación del plan de trabajo",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Informó sobre los ejes del plan de trabajo de la comisión.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Jibaja",
+        "cargo": "legislador",
+        "sobre": "Supervisión de obras y corrupción",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso priorizar la supervisión de obras y la lucha anticorrupción.",
+        "proyecto": "",
+        "id": "diputados:jibaja ramos"
+      },
+      {
+        "orador": "Presidenta",
+        "cargo": "legislador",
+        "sobre": "Asistencia técnica de la Contraloría",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Pidió que la Contraloría envíe especialistas técnicos para las visitas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Abenzur",
+        "cargo": "legislador",
+        "sobre": "Saneamiento de distritos fronterizos",
+        "postura": "propone",
+        "tema": "Saneamiento",
+        "dijo": "Pidió poner énfasis en el saneamiento de distritos de frontera.",
+        "proyecto": "",
+        "id": "diputados:abensur pinasco"
+      },
+      {
+        "orador": "García",
+        "cargo": "legislador",
+        "sobre": "Observaciones al plan de trabajo",
+        "postura": "con observaciones",
+        "tema": "Política y control político",
+        "dijo": "Pidió incorporar la Ley de Contrataciones al marco normativo.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Presidenta",
+        "cargo": "legislador",
+        "sobre": "Plazos de pedidos de información",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Aclaró que los pedidos de información se rigen por el reglamento.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Mesa",
+        "cargo": "legislador",
+        "sobre": "Inteligencia artificial en administración pública",
+        "postura": "propone",
+        "tema": "Tecnología",
+        "dijo": "Propuso instalar una mesa técnica sobre el uso de inteligencia artificial.",
+        "proyecto": "",
+        "id": "senado:mesia ramirez"
+      },
+      {
+        "orador": "Manrique",
+        "cargo": "legislador",
+        "sobre": "Fortalecimiento del gobierno de datos",
+        "postura": "propone",
+        "tema": "Tecnología",
+        "dijo": "Propuso fortalecer el gobierno de datos y la interoperabilidad estatal.",
+        "proyecto": "",
+        "id": "diputados:manrique olivera"
+      },
+      {
+        "orador": "Trujillo",
+        "cargo": "legislador",
+        "sobre": "Observaciones estructurales al plan",
+        "postura": "con observaciones",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó la coherencia y estructura técnica del plan de trabajo.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Trujillo",
+        "cargo": "legislador",
+        "sobre": "Competencia para creación de distritos",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Precisó que la creación de distritos es competencia del Ejecutivo.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Chipana",
+        "cargo": "legislador",
+        "sobre": "Delegación de facultades a la comisión",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Pidió que la comisión requiera facultades para abordar la corrupción.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Presidenta",
+        "cargo": "legislador",
+        "sobre": "Trámite de delegación de facultades",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Informó que la primera vicepresidencia derivará las propuestas de delegación.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Abenzur",
+        "cargo": "legislador",
+        "sobre": "Procedimiento de la comisión de constitución",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Explicó el mecanismo de derivación de proyectos desde la comisión.",
+        "proyecto": "",
+        "id": "diputados:abensur pinasco"
+      },
+      {
+        "orador": "Trujillo",
+        "cargo": "legislador",
+        "sobre": "Interrelación entre comisiones legislativas",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Explicó la interrelación entre comisiones para solicitar informes técnicos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Fernández",
+        "cargo": "legislador",
+        "sobre": "Fortalecimiento del sistema de control",
+        "postura": "con observaciones",
+        "tema": "Política y control político",
+        "dijo": "Pidió precisar la autonomía de los órganos de control institucional.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Albañil",
+        "cargo": "legislador",
+        "sobre": "Mitigación de riesgos y obras paralizadas",
+        "postura": "propone",
+        "tema": "Infraestructura",
+        "dijo": "Pidió implementar control concurrente para viabilizar proyectos de inversión.",
+        "proyecto": "",
+        "id": "diputados:albanil carmona"
+      },
+      {
+        "orador": "Presidenta",
+        "cargo": "legislador",
+        "sobre": "Inclusión de precisiones al plan",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Respaldó la inclusión de las precisiones en el plan de trabajo.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Marcelo",
+        "cargo": "legislador",
+        "sobre": "Control concurrente en proyectos de inversión",
+        "postura": "propone",
+        "tema": "Infraestructura",
+        "dijo": "Propuso que la Contraloría participe antes de aprobar expedientes técnicos.",
+        "proyecto": "",
+        "id": "diputados:marcelo salazar"
+      },
+      {
+        "orador": "Presidenta",
+        "cargo": "legislador",
+        "sobre": "Avances en transformación digital",
+        "postura": "comenta",
+        "tema": "Tecnología",
+        "dijo": "Informó que el plan abordará la interoperabilidad y gobierno de datos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Paola Martínez Paytán",
+        "cargo": "legislador",
+        "sobre": "inasistencia del jefe del INPE",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Informó sobre la inasistencia del presidente del INPE.",
+        "proyecto": "",
+        "id": "diputados:martinez paitan"
+      },
+      {
+        "orador": "Obando",
+        "cargo": "legislador",
+        "sobre": "inasistencia del funcionario del INPE",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Pidió la comparecencia del viceministro de Justicia.",
+        "proyecto": "",
+        "id": "diputados:obando morgan"
+      },
+      {
+        "orador": "Benzón",
+        "cargo": "legislador",
+        "sobre": "oficio de inasistencia",
+        "postura": "pregunta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Preguntó sobre el documento enviado por el funcionario.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Secretaria Técnica",
+        "cargo": "ministro o autoridad",
+        "sobre": "oficio 2477-2026-JUS",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Leyó el oficio de reprogramación del Ministerio de Justicia.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "García",
+        "cargo": "legislador",
+        "sobre": "gestión del INPE",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Cuestionó la gestión interna del Instituto Nacional Penitenciario.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Aguirre",
+        "cargo": "legislador",
+        "sobre": "organización de la comisión",
+        "postura": "en contra",
+        "tema": "Otros",
+        "dijo": "Criticó la falta de seriedad en la comisión.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Trujillo",
+        "cargo": "legislador",
+        "sobre": "designación del jefe del INPE",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Precisó la fecha de designación del jefe del INPE.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Domínguez",
+        "cargo": "legislador",
+        "sobre": "votación sobre la inasistencia",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso realizar una votación final sobre el asunto.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Fernández",
+        "cargo": "legislador",
+        "sobre": "inasistencia del jefe del INPE",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Pidió tomar acciones ante la inasistencia del funcionario.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=OLQlsR2M-zM"
+  },
+  "_g8iB60yKC8": {
+    "fecha": "2026-10-01",
+    "organo": "Comisión de Defensa Nacional",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Alcorfa",
+        "cargo": "legislador",
+        "sobre": "Bullying en colegios militares",
+        "postura": "en contra",
+        "tema": "Educación",
+        "dijo": "Denunció la situación de bullying en colegios militares.",
+        "proyecto": "",
+        "id": "senado:alcorta suero"
+      },
+      {
+        "orador": "Alcorfa",
+        "cargo": "legislador",
+        "sobre": "Inteligencia artificial en defensa nacional",
+        "postura": "propone",
+        "tema": "Tecnología",
+        "dijo": "Propuso invitar expertos para explicar la inteligencia artificial.",
+        "proyecto": "",
+        "id": "senado:alcorta suero"
+      },
+      {
+        "orador": "Alcorfa",
+        "cargo": "legislador",
+        "sobre": "Presencia estatal contra el terrorismo",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Cuestionó la falta de presencia estatal frente al terrorismo.",
+        "proyecto": "",
+        "id": "senado:alcorta suero"
+      },
+      {
+        "orador": "Alcorfa",
+        "cargo": "legislador",
+        "sobre": "Reactivación de fiscalías especializadas",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Informó sobre la reactivación de fiscalías especializadas.",
+        "proyecto": "",
+        "id": "senado:alcorta suero"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=_g8iB60yKC8"
+  },
+  "TuiZAwqngDw": {
+    "fecha": "2026-10-01",
+    "organo": "Pleno de la Asamblea",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Esteban Torres",
+        "cargo": "legislador",
+        "sobre": "reforma a la ley de inquilinato",
+        "postura": "comenta",
+        "tema": "Inmobiliario",
+        "dijo": "Explicó el alcance de la reforma a la ley de inquilinato.",
+        "proyecto": "Ley de Inquilinato",
+        "id": "EC:torres cobo"
+      },
+      {
+        "orador": "Samuel Saleriel",
+        "cargo": "legislador",
+        "sobre": "reforma a la ley de inquilinato",
+        "postura": "comenta",
+        "tema": "Inmobiliario",
+        "dijo": "Detalló la necesidad de modernizar la ley de inquilinato.",
+        "proyecto": "Ley de Inquilinato",
+        "id": null
+      },
+      {
+        "orador": "Rosa Torres",
+        "cargo": "legislador",
+        "sobre": "reforma a la ley de inquilinato",
+        "postura": "comenta",
+        "tema": "Inmobiliario",
+        "dijo": "Informó sobre las nuevas reglas de la ley de inquilinato.",
+        "proyecto": "Ley de Inquilinato",
+        "id": "EC:torres cadena"
+      },
+      {
+        "orador": "Marco Olmedo",
+        "cargo": "legislador",
+        "sobre": "reforma a la ley de inquilinato",
+        "postura": "comenta",
+        "tema": "Inmobiliario",
+        "dijo": "Resaltó la importancia de digitalizar los contratos de arrendamiento.",
+        "proyecto": "Ley de Inquilinato",
+        "id": "EC:olmedo arias"
+      },
+      {
+        "orador": "Lucía Jaramillo",
+        "cargo": "legislador",
+        "sobre": "cooperación contra el crimen organizado",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso fortalecer la cooperación internacional contra el crimen organizado.",
+        "proyecto": "",
+        "id": "EC:jaramillo zurita lucia"
+      },
+      {
+        "orador": "Javier Ordóñez",
+        "cargo": "legislador",
+        "sobre": "cobros en el peaje Guayasamín",
+        "postura": "propone",
+        "tema": "Transporte",
+        "dijo": "Denunció cobros duplicados en el peaje del túnel Guayasamín.",
+        "proyecto": "",
+        "id": "EC:ordonez fuentes"
+      },
+      {
+        "orador": "Mónica Salazar",
+        "cargo": "legislador",
+        "sobre": "identidad del pueblo montubio",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Defendió la importancia de la identidad montubia en Ecuador.",
+        "proyecto": "",
+        "id": "EC:salazar hidalgo"
+      },
+      {
+        "orador": "Mónica Salazar",
+        "cargo": "legislador",
+        "sobre": "Identidad del pueblo montubio",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Destacó la importancia de la identidad montubia en la educación.",
+        "proyecto": "",
+        "id": "EC:salazar hidalgo"
+      },
+      {
+        "orador": "Gabriela García Ureta",
+        "cargo": "invitado",
+        "sobre": "Ley de protección al pueblo montubio",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Presentó un anteproyecto de ley para el pueblo montubio.",
+        "proyecto": "Anteproyecto de ley para el pueblo Montubio",
+        "id": null
+      },
+      {
+        "orador": "Marco Olmedo",
+        "cargo": "legislador",
+        "sobre": "Ley de Inquilinato",
+        "postura": "a favor",
+        "tema": "Inmobiliario",
+        "dijo": "Apoyó la reforma para establecer reglas claras de arrendamiento.",
+        "proyecto": "Ley de Inquilinato",
+        "id": "EC:olmedo arias"
+      },
+      {
+        "orador": "Samuel Celeri",
+        "cargo": "legislador",
+        "sobre": "Ley de Inquilinato",
+        "postura": "con observaciones",
+        "tema": "Inmobiliario",
+        "dijo": "Propuso incluir protección especial para inquilinos en situación de vulnerabilidad.",
+        "proyecto": "Ley de Inquilinato",
+        "id": "EC:celleri gomez"
+      },
+      {
+        "orador": "Mariana Jung",
+        "cargo": "legislador",
+        "sobre": "Ley de Inquilinato",
+        "postura": "con observaciones",
+        "tema": "Inmobiliario",
+        "dijo": "Planteó establecer plazos para la devolución de las garantías.",
+        "proyecto": "Ley de Inquilinato",
+        "id": null
+      },
+      {
+        "orador": "Catherine Pacheco",
+        "cargo": "legislador",
+        "sobre": "Ley de Inquilinato",
+        "postura": "a favor",
+        "tema": "Inmobiliario",
+        "dijo": "Defendió la formalización de los contratos de arrendamiento mediante escritos.",
+        "proyecto": "Ley de Inquilinato",
+        "id": "EC:pacheco machuca"
+      },
+      {
+        "orador": "Luis Fernando Molina",
+        "cargo": "legislador",
+        "sobre": "Ley de Inquilinato",
+        "postura": "con observaciones",
+        "tema": "Inmobiliario",
+        "dijo": "Solicitó que la reforma regrese a la Comisión de Justicia.",
+        "proyecto": "Ley de Inquilinato",
+        "id": "EC:molina onofa"
+      },
+      {
+        "orador": "Esteban Torres",
+        "cargo": "legislador",
+        "sobre": "Ley de Inquilinato",
+        "postura": "a favor",
+        "tema": "Inmobiliario",
+        "dijo": "Defendió la regulación de las garantías y el canon.",
+        "proyecto": "Ley de Inquilinato",
+        "id": "EC:torres cobo"
+      },
+      {
+        "orador": "Luis Fernando Molina",
+        "cargo": "legislador",
+        "sobre": "Mejora de la ley de inquilinato",
+        "postura": "propone",
+        "tema": "Inmobiliario",
+        "dijo": "Propuso que el proyecto de ley retorne a la comisión de justicia.",
+        "proyecto": "Ley de Inquilinato",
+        "id": "EC:molina onofa"
+      },
+      {
+        "orador": "Esteban Torres",
+        "cargo": "legislador",
+        "sobre": "Regulación de arrendamientos y desahucios",
+        "postura": "con observaciones",
+        "tema": "Inmobiliario",
+        "dijo": "Sugirió incorporar una disposición transitoria para los municipios.",
+        "proyecto": "Ley de Inquilinato",
+        "id": "EC:torres cobo"
+      },
+      {
+        "orador": "Mónica Salazar",
+        "cargo": "legislador",
+        "sobre": "Proyecto de ley de inquilinato",
+        "postura": "con observaciones",
+        "tema": "Inmobiliario",
+        "dijo": "Presentó cinco observaciones puntuales para mejorar el proyecto de ley.",
+        "proyecto": "Ley de Inquilinato",
+        "id": "EC:salazar hidalgo"
+      },
+      {
+        "orador": "Ana María Rafa",
+        "cargo": "legislador",
+        "sobre": "Reforma a la ley de inquilinato",
+        "postura": "con observaciones",
+        "tema": "Inmobiliario",
+        "dijo": "Solicitó que el proyecto regrese a la comisión para perfeccionarlo.",
+        "proyecto": "Ley de Inquilinato",
+        "id": null
+      },
+      {
+        "orador": "Juan Gonzaga",
+        "cargo": "legislador",
+        "sobre": "Proyecto de ley de inquilinato",
+        "postura": "con observaciones",
+        "tema": "Inmobiliario",
+        "dijo": "Planteó que la facultad municipal sea un deber jurídico.",
+        "proyecto": "Ley de Inquilinato",
+        "id": "EC:gonzaga salazar"
+      },
+      {
+        "orador": "Ana Herrera",
+        "cargo": "legislador",
+        "sobre": "Reforma a la ley de inquilinato",
+        "postura": "a favor",
+        "tema": "Inmobiliario",
+        "dijo": "Respaldo la modernización de la ley de inquilinato.",
+        "proyecto": "Ley de Inquilinato",
+        "id": "EC:herrera gomez"
+      },
+      {
+        "orador": "José Betjaramillo",
+        "cargo": "legislador",
+        "sobre": "Proyecto de ley de inquilinato",
+        "postura": "con observaciones",
+        "tema": "Inmobiliario",
+        "dijo": "Explicó los nuevos límites para la garantía de arrendamiento.",
+        "proyecto": "Ley de Inquilinato",
+        "id": null
+      },
+      {
+        "orador": "Rosa Torres",
+        "cargo": "legislador",
+        "sobre": "Reforma a la ley de inquilinato",
+        "postura": "propone",
+        "tema": "Inmobiliario",
+        "dijo": "Solicitó que el proyecto retorne a la comisión de justicia.",
+        "proyecto": "Ley de Inquilinato",
+        "id": "EC:torres cadena"
+      },
+      {
+        "orador": "Adrián Castro",
+        "cargo": "legislador",
+        "sobre": "Día nacional contra el crimen organizado",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso declarar el día nacional contra el crimen organizado.",
+        "proyecto": "Resolución día nacional contra crimen organizado",
+        "id": "EC:castro piedra"
+      },
+      {
+        "orador": "Noemía Cabrera",
+        "cargo": "legislador",
+        "sobre": "Inseguridad en la provincia de El Oro",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Cuestionó los resultados del toque de queda en El Oro.",
+        "proyecto": "",
+        "id": "EC:cabrera chacon"
+      },
+      {
+        "orador": "Diana Hacome",
+        "cargo": "legislador",
+        "sobre": "Resultados del toque de queda",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Informó sobre las detenciones realizadas durante el toque de queda.",
+        "proyecto": "",
+        "id": "EC:jacome silva"
+      },
+      {
+        "orador": "Mónica LeMán",
+        "cargo": "legislador",
+        "sobre": "Día nacional contra el crimen organizado",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Denunció la eliminación de las unidades judiciales especializadas.",
+        "proyecto": "",
+        "id": "EC:aleman marmol"
+      },
+      {
+        "orador": "Diana Hacome",
+        "cargo": "legislador",
+        "sobre": "Resultados de operativos de seguridad",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Informó sobre las detenciones y decomisos de droga durante el toque de queda.",
+        "proyecto": "",
+        "id": "EC:jacome silva"
+      },
+      {
+        "orador": "Mónica Lehmann",
+        "cargo": "legislador",
+        "sobre": "Declaratoria del día contra el crimen organizado",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Cuestionó la declaratoria por el desmantelamiento de las unidades judiciales especializadas.",
+        "proyecto": "",
+        "id": "EC:aleman marmol"
+      },
+      {
+        "orador": "Héctor Vaya Dares",
+        "cargo": "legislador",
+        "sobre": "Cobros indebidos en el peaje Guayasamín",
+        "postura": "en contra",
+        "tema": "Transporte",
+        "dijo": "Denunció irregularidades y posibles actos de corrupción en el peaje Guayasamín.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Viviana Veloz",
+        "cargo": "legislador",
+        "sobre": "Fiscalización de la alcaldía de Quito",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Rechazó la facultad de la Asamblea para fiscalizar a los municipios.",
+        "proyecto": "",
+        "id": "EC:veloz ramirez"
+      },
+      {
+        "orador": "Javier Ordoñez",
+        "cargo": "legislador",
+        "sobre": "Fiscalización de cobros en el peaje Guayasamín",
+        "postura": "propone",
+        "tema": "Transporte",
+        "dijo": "Propuso fiscalizar los presuntos cobros duplicados en el peaje Guayasamín.",
+        "proyecto": "",
+        "id": "EC:ordonez fuentes"
+      },
+      {
+        "orador": "Samuel Celleri",
+        "cargo": "legislador",
+        "sobre": "Reforma a la Ley de Inquilinato",
+        "postura": "comenta",
+        "tema": "Inmobiliario",
+        "dijo": "Explicó que la reforma busca modernizar las reglas del arrendamiento.",
+        "proyecto": "Ley de Inquilinato",
+        "id": "EC:celleri gomez"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=TuiZAwqngDw"
   }
 }
