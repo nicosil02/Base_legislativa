@@ -28185,5 +28185,602 @@
       }
     ],
     "url": "https://www.youtube.com/watch?v=R5cUYC-e7dk"
+  },
+  "s3EGAcpYP4s": {
+    "fecha": "2026-10-13",
+    "organo": "Comisión de Presupuesto",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Ángel Meneses",
+        "cargo": "legislador",
+        "sobre": "observaciones a la cuenta general",
+        "postura": "propone",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Propuso incluir precisiones técnicas en la proposición legislativa.",
+        "proyecto": "00001-2026-2031-CR",
+        "id": "diputados:meneses crispin"
+      },
+      {
+        "orador": "Gustavo Núñez del Arco Mendoza",
+        "cargo": "ministro o autoridad",
+        "sobre": "la cuenta general de la República",
+        "postura": "a favor",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Respaldó el análisis técnico y legal de la comisión.",
+        "proyecto": "00001-2026-2031-CR",
+        "id": null
+      },
+      {
+        "orador": "Juan Luis Chombo",
+        "cargo": "ministro o autoridad",
+        "sobre": "Presupuesto de la región Pasco",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Explicó la evolución del presupuesto y el impacto del crédito suplementario.",
+        "proyecto": "Ley 32732",
+        "id": null
+      },
+      {
+        "orador": "Afsalón Vázquez Villanueva",
+        "cargo": "legislador",
+        "sobre": "Baja capacidad de gasto en Pasco",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Cuestionó la baja capacidad de ejecución presupuestal del gobierno de Pasco.",
+        "proyecto": "",
+        "id": "senado:vasquez villanueva"
+      },
+      {
+        "orador": "Juan Luis Chombo",
+        "cargo": "ministro o autoridad",
+        "sobre": "Capacidad de gasto de Pasco",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Justificó la capacidad de gasto tras la reciente aprobación de la ley.",
+        "proyecto": "Ley 32732",
+        "id": null
+      },
+      {
+        "orador": "Sósimo Cárdenas Mujica",
+        "cargo": "ministro o autoridad",
+        "sobre": "Recortes presupuestales en Junín",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Denunció los recortes presupuestales que afectan la continuidad de proyectos en Junín.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Héctor Guillén Valencia",
+        "cargo": "legislador",
+        "sobre": "Obra educativa Tupacamaro",
+        "postura": "pregunta",
+        "tema": "Educación",
+        "dijo": "Preguntó por la demora en la resolución de consultas técnicas de la obra.",
+        "proyecto": "",
+        "id": "diputados:guillen valencia"
+      },
+      {
+        "orador": "Sósimo Cárdenas Mujica",
+        "cargo": "ministro o autoridad",
+        "sobre": "Culminación de obras en Junín",
+        "postura": "comenta",
+        "tema": "Construcción",
+        "dijo": "Aseguró que su gestión está concluyendo diversos proyectos de infraestructura regional.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Pérsigo Doy Medina",
+        "cargo": "ministro o autoridad",
+        "sobre": "Presupuesto de la región Apurímac",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Presentó la situación presupuestal de Apurímac y solicitó recursos para su hospital.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Pérsigo Doy Medina",
+        "cargo": "ministro o autoridad",
+        "sobre": "Proyectos de riego y agricultura",
+        "postura": "comenta",
+        "tema": "Agricultura",
+        "dijo": "Mencionó los proyectos de riego y el potencial de la agricultura regional.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Pérsigo Doy Medina",
+        "cargo": "ministro o autoridad",
+        "sobre": "Turismo en la región Apurímac",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Informó sobre las acciones para promover el turismo en su región.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=s3EGAcpYP4s"
+  },
+  "GTShjieQP9Q": {
+    "fecha": "2026-10-13",
+    "organo": "Pleno de la Asamblea",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Secretario",
+        "cargo": "ministro o autoridad",
+        "sobre": "Declaración de Loja capital del café",
+        "postura": "comenta",
+        "tema": "Agricultura",
+        "dijo": "Informó la aprobación unánime de la declaración de Loja como capital del café.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Secretario",
+        "cargo": "ministro o autoridad",
+        "sobre": "Notificación al consejero David Rosero",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Informó que el consejero David Rosero fue notificado mediante el sistema de gestión.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Secretaria Relatora",
+        "cargo": "ministro o autoridad",
+        "sobre": "Juicio político contra David Rosero",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Expuso los antecedentes del juicio político contra el consejero David Rosero.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Sergio Jesús Peñabelos",
+        "cargo": "legislador",
+        "sobre": "Juicio político contra David Rosero Minda",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Defendió la validez de las pericias en el juicio político contra Rosero.",
+        "proyecto": "",
+        "id": "EC:pena veloz"
+      },
+      {
+        "orador": "Sergio Peña",
+        "cargo": "legislador",
+        "sobre": "Juicio político contra David Rosero",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Denunció la reunión no autorizada del consejero Rosero.",
+        "proyecto": "",
+        "id": "EC:pena veloz"
+      },
+      {
+        "orador": "David Rosero",
+        "cargo": "ministro o autoridad",
+        "sobre": "Juicio político en su contra",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Rechazó las acusaciones de conflicto de intereses.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Carlos Pobel",
+        "cargo": "legislador",
+        "sobre": "Validez de la metapericia",
+        "postura": "pregunta",
+        "tema": "Política y control político",
+        "dijo": "Preguntó sobre la veracidad de la metapericia.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "David Rosero",
+        "cargo": "ministro o autoridad",
+        "sobre": "la reunión con la doctora Romero",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Negó la existencia de una reunión con la doctora Romero.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Edwin Guevara",
+        "cargo": "invitado",
+        "sobre": "el peritaje de las imágenes",
+        "postura": "comenta",
+        "tema": "Tecnología",
+        "dijo": "Explicó las limitaciones técnicas de la pericia realizada.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "David Rosero",
+        "cargo": "ministro o autoridad",
+        "sobre": "la falta de nexo causal",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó la falta de pruebas del nexo causal.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "David Rosero",
+        "cargo": "ministro o autoridad",
+        "sobre": "su itinerario de viaje",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Presentó pruebas sobre su ubicación el cinco de junio.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "David Rosero",
+        "cargo": "ministro o autoridad",
+        "sobre": "Juicio político en su contra",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Defendió su inocencia ante las acusaciones presentadas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Sergio Peña",
+        "cargo": "legislador",
+        "sobre": "Juicio político contra David Rosero",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Denunció un posible conflicto de intereses del consejero.",
+        "proyecto": "",
+        "id": "EC:pena veloz"
+      },
+      {
+        "orador": "David Rosero",
+        "cargo": "ministro o autoridad",
+        "sobre": "Validez de las pruebas periciales",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó la legalidad de las pruebas presentadas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Luigi García",
+        "cargo": "legislador",
+        "sobre": "Informe de fiscalización de la comisión",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Respaldó el informe y la censura del consejero.",
+        "proyecto": "",
+        "id": "EC:garcia velasquez"
+      },
+      {
+        "orador": "María Paula Villacresa",
+        "cargo": "legislador",
+        "sobre": "Conflicto de intereses en el concurso",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Denunció la falta de transparencia institucional.",
+        "proyecto": "",
+        "id": "EC:villacreses herrera"
+      },
+      {
+        "orador": "Amable",
+        "cargo": "legislador",
+        "sobre": "Informe de fiscalización presentado",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó la falta de pruebas en el informe.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Amable Chica",
+        "cargo": "legislador",
+        "sobre": "Juicio político contra David Rosero",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció la falta de motivaciones en el proceso.",
+        "proyecto": "",
+        "id": "EC:chica valencia"
+      },
+      {
+        "orador": "Herrera",
+        "cargo": "legislador",
+        "sobre": "juicio político a David Rosero",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció la falta de causales en el juicio político contra Rosero.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Victoria Desintonio",
+        "cargo": "legislador",
+        "sobre": "gestión del gobierno nacional",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Criticó la gestión del gobierno por no atender las necesidades ciudadanas.",
+        "proyecto": "",
+        "id": "EC:desintonio malave"
+      },
+      {
+        "orador": "Andrés Castillo",
+        "cargo": "legislador",
+        "sobre": "ética de la oposición",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó la moralidad de los asambleístas que votan en abstención.",
+        "proyecto": "",
+        "id": "EC:castillo maldonado"
+      },
+      {
+        "orador": "Herrera",
+        "cargo": "legislador",
+        "sobre": "objetividad en el juicio político",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Defendió la objetividad en el proceso de fiscalización política.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=GTShjieQP9Q"
+  },
+  "__ikA2OV6n0": {
+    "fecha": "2026-10-12",
+    "organo": "Comisión de Presupuesto",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Luis Alberto Vallejos Portal",
+        "cargo": "invitado",
+        "sobre": "Presupuesto institucional 2027 de Cajamarca",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Sustentó el presupuesto institucional del Gobierno Regional de Cajamarca para el año 2027.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Daniel Hugo Barragán",
+        "cargo": "legislador",
+        "sobre": "Objetivos logrados con presupuesto 2026",
+        "postura": "pregunta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Preguntó sobre los objetivos alcanzados en la región Cajamarca con el presupuesto del año 2026.",
+        "proyecto": "",
+        "id": "senado:barragan coloma"
+      },
+      {
+        "orador": "Caterina Ampuero",
+        "cargo": "legislador",
+        "sobre": "Gestión y ejecución presupuestal de Cajamarca",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Denunció la baja ejecución presupuestal y el gasto excesivo en viajes en Cajamarca.",
+        "proyecto": "",
+        "id": "senado:ampuero meza"
+      },
+      {
+        "orador": "Natalí Meligros Molina",
+        "cargo": "legislador",
+        "sobre": "Financiamiento del proyecto de presupuesto",
+        "postura": "pregunta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Preguntó sobre las modalidades de financiamiento aplicadas al proyecto de presupuesto.",
+        "proyecto": "",
+        "id": "diputados:molina soto"
+      },
+      {
+        "orador": "Vázquez Villanueva",
+        "cargo": "legislador",
+        "sobre": "Desigualdad en la distribución de riqueza",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Comentó que las regiones se empobrecen pese al extractivismo de sus recursos.",
+        "proyecto": "",
+        "id": "senado:vasquez villanueva"
+      },
+      {
+        "orador": "Azucuri",
+        "cargo": "legislador",
+        "sobre": "Obras paralizadas y gestión en Cajamarca",
+        "postura": "en contra",
+        "tema": "Infraestructura",
+        "dijo": "Denunció las obras paralizadas y la deficiente gestión de infraestructura en Cajamarca.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Senadora",
+        "cargo": "legislador",
+        "sobre": "La distribución de la riqueza",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Denunció la distribución injusta de la riqueza en las regiones.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Azucuri",
+        "cargo": "legislador",
+        "sobre": "Gestión del Gobierno Regional de Cajamarca",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Denunció la deficiente gestión de obras en Cajamarca.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Astucuri",
+        "cargo": "legislador",
+        "sobre": "Presupuesto 2027 de Cajamarca",
+        "postura": "pregunta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Preguntó sobre el sustento de gastos en saneamiento y seguridad.",
+        "proyecto": "",
+        "id": "senado:astucuri laura"
+      },
+      {
+        "orador": "Gobernador de Cajamarca",
+        "cargo": "ministro o autoridad",
+        "sobre": "Gestión del Gobierno Regional de Cajamarca",
+        "postura": "a favor",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Defendió su gestión y criticó al sistema Perú Compras.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Senador",
+        "cargo": "legislador",
+        "sobre": "Respuesta a los cuestionamientos",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Pidió al gobernador responder las preguntas formuladas a la nación.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Senador",
+        "cargo": "legislador",
+        "sobre": "Procedimiento de la sesión",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso que el gobernador se ciña a las preguntas formuladas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Gobernador de Cajamarca",
+        "cargo": "ministro o autoridad",
+        "sobre": "Ejecución de obras en Cajamarca",
+        "postura": "a favor",
+        "tema": "Infraestructura",
+        "dijo": "Defendió la ejecución de proyectos de infraestructura en Cajamarca.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Wilfredo Scorimanuña",
+        "cargo": "ministro o autoridad",
+        "sobre": "Presupuesto 2027 de Ayacucho",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Denunció la reducción drástica del presupuesto para Ayacucho.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Astucuri",
+        "cargo": "legislador",
+        "sobre": "Reducción del presupuesto en Ayacucho",
+        "postura": "pregunta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Cuestionó la drástica reducción del presupuesto para Ayacucho.",
+        "proyecto": "",
+        "id": "senado:astucuri laura"
+      },
+      {
+        "orador": "Wilfredo Oscorima",
+        "cargo": "ministro o autoridad",
+        "sobre": "Recorte presupuestal para Ayacucho",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Denunció que el recorte presupuestal afectará gravemente la economía de Ayacucho.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Vasquez Villanueva",
+        "cargo": "legislador",
+        "sobre": "Gasto y mantenimiento en Ayacucho",
+        "postura": "pregunta",
+        "tema": "Salud",
+        "dijo": "Preguntó sobre el gasto proyectado y el mantenimiento de la infraestructura.",
+        "proyecto": "",
+        "id": "senado:vasquez villanueva"
+      },
+      {
+        "orador": "Absalom Vázquez",
+        "cargo": "legislador",
+        "sobre": "Ejecución presupuestal en Ayacucho",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Cuestionó la baja ejecución en transporte y el desuso de ambulancias.",
+        "proyecto": "",
+        "id": "senado:vasquez villanueva"
+      },
+      {
+        "orador": "Wilfredo Oscorima",
+        "cargo": "ministro o autoridad",
+        "sobre": "Gestión presupuestal de Ayacucho",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Informó sobre la alta ejecución de proyectos y la construcción de hospitales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "José Antonio Leonías Pulgar Lucas",
+        "cargo": "ministro o autoridad",
+        "sobre": "Presupuesto institucional de Huánuco",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Informó sobre el marco estratégico y los objetivos de inversión de Huánuco.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Barragán",
+        "cargo": "legislador",
+        "sobre": "Brechas de agua y saneamiento",
+        "postura": "con observaciones",
+        "tema": "Saneamiento",
+        "dijo": "Cuestionó la falta de proyectos de saneamiento en la exposición presentada.",
+        "proyecto": "",
+        "id": "senado:barragan coloma"
+      },
+      {
+        "orador": "Pedro Alfredo Hernández Chávez",
+        "cargo": "invitado",
+        "sobre": "Presupuesto institucional del Tribunal Constitucional 2027",
+        "postura": "propone",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Pidió una demanda adicional para el Tribunal Constitucional.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Astucuri",
+        "cargo": "legislador",
+        "sobre": "Incremento de presupuesto para recursos humanos",
+        "postura": "pregunta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Preguntó sobre la justificación del aumento de personal.",
+        "proyecto": "",
+        "id": "senado:astucuri laura"
+      },
+      {
+        "orador": "Pedro Alfredo Hernández Chávez",
+        "cargo": "invitado",
+        "sobre": "Fortalecimiento de plazas y personal",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Informó sobre la necesidad de fortalecer plazas jurisdiccionales.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=__ikA2OV6n0"
   }
 }
