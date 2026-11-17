@@ -28782,5 +28782,712 @@
       }
     ],
     "url": "https://www.youtube.com/watch?v=__ikA2OV6n0"
+  },
+  "l9yfl2bNSnc": {
+    "fecha": "2026-10-07",
+    "organo": "Comisión de Presupuesto",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Tomás Aladino Gálvez Villegas",
+        "cargo": "ministro o autoridad",
+        "sobre": "Presupuesto institucional 2027",
+        "postura": "propone",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Propuso 3,561 millones de soles para el Ministerio Público.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Coa la Juana",
+        "cargo": "legislador",
+        "sobre": "Cámaras Gesell en Tacna",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Denunció la falta de cámaras Gesell en Tacna.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Tapia Bernal",
+        "cargo": "legislador",
+        "sobre": "Gestión del Ministerio Público",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Cuestionó la meritocracia del Ministerio Público.",
+        "proyecto": "",
+        "id": "senado:tapia bernal"
+      },
+      {
+        "orador": "Gloria Irache",
+        "cargo": "legislador",
+        "sobre": "Implementación de la carpeta electrónica",
+        "postura": "pregunta",
+        "tema": "Tecnología",
+        "dijo": "Preguntó sobre la implementación de la carpeta electrónica.",
+        "proyecto": "",
+        "id": "diputados:hirache pizarro"
+      },
+      {
+        "orador": "Trujillo Segarra Silver",
+        "cargo": "legislador",
+        "sobre": "Presupuesto para La Libertad",
+        "postura": "pregunta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Pidió presupuesto para la región La Libertad.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Vázquez Villanueva",
+        "cargo": "legislador",
+        "sobre": "Digitalización del Ministerio Público",
+        "postura": "a favor",
+        "tema": "Tecnología",
+        "dijo": "Respaldó la gestión y la digitalización tecnológica.",
+        "proyecto": "",
+        "id": "senado:vasquez villanueva"
+      },
+      {
+        "orador": "Vázquez Villanueva",
+        "cargo": "legislador",
+        "sobre": "Gestión y tecnología del Ministerio Público",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Señaló que la tecnología de la Fiscalía tiene un desfase de diez años.",
+        "proyecto": "",
+        "id": "senado:vasquez villanueva"
+      },
+      {
+        "orador": "Fiscal de la Nación",
+        "cargo": "ministro o autoridad",
+        "sobre": "Tráfico de tierras y cifra negra",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Explicó la situación del tráfico de tierras y la impunidad existente.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Fiscal de la Nación",
+        "cargo": "ministro o autoridad",
+        "sobre": "Nombramiento de fiscales titulares",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Solicitó a la JNJ el nombramiento de 480 fiscales titulares.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Fiscal de la Nación",
+        "cargo": "ministro o autoridad",
+        "sobre": "Uso de tecnología y cámaras",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Reconoció la necesidad de mejorar la articulación de las cámaras.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Gerente General del Ministerio Público",
+        "cargo": "ministro o autoridad",
+        "sobre": "Ejecución de la carpeta fiscal electrónica",
+        "postura": "comenta",
+        "tema": "Tecnología",
+        "dijo": "Informó que la ejecución de la carpeta electrónica llegará al 100%.",
+        "proyecto": "Carpeta fiscal electrónica",
+        "id": null
+      },
+      {
+        "orador": "Gerente General del Ministerio Público",
+        "cargo": "ministro o autoridad",
+        "sobre": "Implementación de perfiles genéticos",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Detalló la implementación de perfiles genéticos mediante inversión internacional.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Fiscal de la Nación",
+        "cargo": "ministro o autoridad",
+        "sobre": "Programa de ética para fiscales",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Propuso implementar un programa de ética en la escuela del Ministerio Público.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Fiscal de la Nación",
+        "cargo": "ministro o autoridad",
+        "sobre": "Presupuesto del sistema anticorrupción",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Precisó que el incremento presupuestal para la lucha anticorrupción es mínimo.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Fiscal de la Nación",
+        "cargo": "ministro o autoridad",
+        "sobre": "Investigación policial sin presencia fiscal",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Rechazó la ley que permite la investigación policial sin fiscal.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Fiscal de la Nación",
+        "cargo": "ministro o autoridad",
+        "sobre": "Casos de violación en Tacna",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Pidió información por escrito sobre los casos de Tacna.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Fiscal de la Nación",
+        "cargo": "ministro o autoridad",
+        "sobre": "Capacitación de los fiscales",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Propuso reformar la escuela del Ministerio Público para capacitar fiscales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Fiscal de la Nación",
+        "cargo": "ministro o autoridad",
+        "sobre": "Estado de las sedes fiscales",
+        "postura": "comenta",
+        "tema": "Infraestructura",
+        "dijo": "Informó que el 73% de las sedes fiscales son vulnerables.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Fiscal de la Nación",
+        "cargo": "ministro o autoridad",
+        "sobre": "Politización del Ministerio Público",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Aseguró que se han cerrado los equipos con manipulación política.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Fiscal de la Nación",
+        "cargo": "ministro o autoridad",
+        "sobre": "Tecnología para peritajes",
+        "postura": "propone",
+        "tema": "Tecnología",
+        "dijo": "Pidió presupuesto para adquirir nuevos instrumentos tecnológicos de punta.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Fiscal de la Nación",
+        "cargo": "ministro o autoridad",
+        "sobre": "Nueva Ley Orgánica del Ministerio Público",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Anunció que presentará un nuevo proyecto de ley orgánica.",
+        "proyecto": "Ley Orgánica del Ministerio Público",
+        "id": null
+      },
+      {
+        "orador": "Karina Beteta Rubín",
+        "cargo": "legislador",
+        "sobre": "Infraestructura de medicina legal",
+        "postura": "con observaciones",
+        "tema": "Salud",
+        "dijo": "Cuestionó el abandono de las morgues en la región Huánuco.",
+        "proyecto": "",
+        "id": "diputados:beteta rubin"
+      },
+      {
+        "orador": "Karina Beteta Rubín",
+        "cargo": "legislador",
+        "sobre": "Recursos en el caso LaVallito",
+        "postura": "pregunta",
+        "tema": "Justicia",
+        "dijo": "Preguntó por los recursos destinados a los fiscales del caso LaVallito.",
+        "proyecto": "Caso LaVallito",
+        "id": "diputados:beteta rubin"
+      },
+      {
+        "orador": "Gillian Infa",
+        "cargo": "ministro o autoridad",
+        "sobre": "Presupuesto de Moquegua 2027",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Denunció el recorte presupuestal para la región Moquegua.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Gillian Infa",
+        "cargo": "ministro o autoridad",
+        "sobre": "Recursos ordinarios para inversión",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Criticó la asignación de cero recursos ordinarios para inversión.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Gillian Infa",
+        "cargo": "ministro o autoridad",
+        "sobre": "Paralización de obras en Moquegua",
+        "postura": "comenta",
+        "tema": "Infraestructura",
+        "dijo": "Advirtió que la falta de presupuesto paralizará obras regionales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Gillian Infa",
+        "cargo": "ministro o autoridad",
+        "sobre": "Carretera Moquegua - Arequipa",
+        "postura": "comenta",
+        "tema": "Transporte",
+        "dijo": "Señaló que la carretera Moquegua-Arequipa lleva diez años abandonada.",
+        "proyecto": "Carretera Moquegua - Arequipa",
+        "id": null
+      },
+      {
+        "orador": "Gerente General del Gobierno Regional de Moquegua",
+        "cargo": "ministro o autoridad",
+        "sobre": "Ejecución presupuestal en Moquegua",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Informó que la región ejecutó el 96% de sus recursos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "María Gutiérrez Ayala",
+        "cargo": "autoridad",
+        "sobre": "Presupuesto y obras para Moquegua",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Denunció la falta de ejecución de obras del gobierno central en Moquegua.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Segundo Leucario Tapia Bernal",
+        "cargo": "legislador",
+        "sobre": "Ejecución presupuestal de Moquegua",
+        "postura": "con observaciones",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Cuestionó la baja ejecución de inversiones y el aumento del gasto corriente en Moquegua.",
+        "proyecto": "",
+        "id": "senado:tapia bernal"
+      },
+      {
+        "orador": "María Gutiérrez Ayala",
+        "cargo": "autoridad",
+        "sobre": "Proyecto Lomas de Hilo",
+        "postura": "a favor",
+        "tema": "Agricultura",
+        "dijo": "Defendió la operatividad próxima del proyecto de irrigación Lomas de Hilo.",
+        "proyecto": "Lomas de Hilo",
+        "id": null
+      },
+      {
+        "orador": "Juan Carlos del Águila",
+        "cargo": "legislador",
+        "sobre": "Apoyo a la gestión de Moquegua",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Respaldó la gestión de la gobernadora frente a las dificultades regionales.",
+        "proyecto": "",
+        "id": "senado:del aguila cardenas"
+      },
+      {
+        "orador": "María Gutiérrez Ayala",
+        "cargo": "autoridad",
+        "sobre": "Asignación de recursos Foncor",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Denunció la falta de asignación de recursos Foncor para Moquegua.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Karina Beteta",
+        "cargo": "legislador",
+        "sobre": "Obras en Moquegua",
+        "postura": "pregunta",
+        "tema": "Infraestructura",
+        "dijo": "Preguntó por las obras de envergadura que se ejecutan con el canon.",
+        "proyecto": "",
+        "id": "diputados:beteta rubin"
+      },
+      {
+        "orador": "María Gutiérrez Ayala",
+        "cargo": "autoridad",
+        "sobre": "Proyectos de infraestructura en Moquegua",
+        "postura": "a favor",
+        "tema": "Infraestructura",
+        "dijo": "Defendió la ejecución de obras de salud, educación y carreteras en la región.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Leóncio Guayanani",
+        "cargo": "autoridad",
+        "sobre": "Presupuesto para Huancavelica 2027",
+        "postura": "propone",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Pidió una demanda presupuestal adicional para la región Huancavelica.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Karina Beteta",
+        "cargo": "legislador",
+        "sobre": "Carreteras en Huancavelica",
+        "postura": "propone",
+        "tema": "Transporte",
+        "dijo": "Propuso la conclusión de carreteras estratégicas en la región Huancavelica.",
+        "proyecto": "Carretera Wankavelica Santines",
+        "id": "diputados:beteta rubin"
+      },
+      {
+        "orador": "Carlos Alberto Cegarra Sanchez",
+        "cargo": "legislador",
+        "sobre": "Proyectos de desarrollo en Huancavelica",
+        "postura": "pregunta",
+        "tema": "Otros",
+        "dijo": "Preguntó sobre la situación de proyectos de desarrollo en Huancavelica.",
+        "proyecto": "",
+        "id": "diputados:zegarra sanchez"
+      },
+      {
+        "orador": "Leoncio Guayani",
+        "cargo": "ministro o autoridad",
+        "sobre": "infraestructura vial y cierre de brechas",
+        "postura": "propone",
+        "tema": "Transporte",
+        "dijo": "Pidió la conclusión de carreteras y atención a brechas sociales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Carlos Alberto Cegarra Sanchez",
+        "cargo": "legislador",
+        "sobre": "situación de proyectos y denuncias",
+        "postura": "pregunta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Preguntó sobre proyectos dependientes y denuncias ante el PTAC.",
+        "proyecto": "",
+        "id": "diputados:zegarra sanchez"
+      },
+      {
+        "orador": "Héctor Guillén Valencia",
+        "cargo": "legislador",
+        "sobre": "presupuesto y ejecución hospitalaria",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Cuestionó la reducción del presupuesto y la ejecución hospitalaria.",
+        "proyecto": "",
+        "id": "diputados:guillen valencia"
+      },
+      {
+        "orador": "Leoncio Guayani",
+        "cargo": "ministro o autoridad",
+        "sobre": "mantenimiento de vías departamentales",
+        "postura": "comenta",
+        "tema": "Transporte",
+        "dijo": "Informó sobre la transferencia de carreteras de Proregión.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Víctor Mudillo",
+        "cargo": "invitado",
+        "sobre": "ejecución de obras por impuestos",
+        "postura": "comenta",
+        "tema": "Infraestructura",
+        "dijo": "Detalló la inversión en proyectos de obras por impuestos.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=l9yfl2bNSnc"
+  },
+  "zJLB9vf7Ycs": {
+    "fecha": "2026-10-06",
+    "organo": "Comisión de Salud",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Dietel Columbus Borata",
+        "cargo": "legislador",
+        "sobre": "precios de medicamentos en clínicas",
+        "postura": "propone",
+        "tema": "Farma",
+        "dijo": "Denunció el sobrecosto de medicamentos en farmacias de clínicas.",
+        "proyecto": "",
+        "id": "diputados:columbus murata"
+      },
+      {
+        "orador": "Poma Guamani",
+        "cargo": "legislador",
+        "sobre": "vigilancia por metales pesados",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Propuso vigilancia epidemiológica por contaminación con metales pesados.",
+        "proyecto": "PL 0230-2026-2031",
+        "id": "diputados:poma huamani"
+      },
+      {
+        "orador": "Gil de Brandes",
+        "cargo": "ministro o autoridad",
+        "sobre": "transparencia de precios de medicamentos",
+        "postura": "a favor",
+        "tema": "Farma",
+        "dijo": "Respaldó la transparencia de precios desde la Dijemid.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Representante del Ministerio de Salud",
+        "cargo": "ministro o autoridad",
+        "sobre": "vigilancia de metales pesados",
+        "postura": "con observaciones",
+        "tema": "Salud",
+        "dijo": "Sugirió evitar la duplicidad en la normativa de salud.",
+        "proyecto": "PL 0230-2026-2031",
+        "id": null
+      },
+      {
+        "orador": "Victor Don José Garna",
+        "cargo": "invitado",
+        "sobre": "control de precios de medicamentos",
+        "postura": "a favor",
+        "tema": "Farma",
+        "dijo": "Apoyó el proyecto de ley con ciertas modificaciones.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Hernán Ramos Romero",
+        "cargo": "invitado",
+        "sobre": "distorsión de precios de medicamentos",
+        "postura": "con observaciones",
+        "tema": "Farma",
+        "dijo": "Cuestionó que el proyecto no atacara la causa real de la distorsión de precios.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Alas González",
+        "cargo": "ministro o autoridad",
+        "sobre": "vigilancia epidemiológica de la población",
+        "postura": "a favor",
+        "tema": "Salud",
+        "dijo": "Respaldó la vigilancia epidemiológica basada en información científica.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=zJLB9vf7Ycs"
+  },
+  "7uWszM8UMnw": {
+    "fecha": "2026-10-06",
+    "organo": "Comisión de Gestión del Estado",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Héctor Ventura",
+        "cargo": "legislador",
+        "sobre": "Inseguridad en la pesca artesanal",
+        "postura": "propone",
+        "tema": "Pesca",
+        "dijo": "Propuso citar autoridades para atender la pesca artesanal.",
+        "proyecto": "",
+        "id": "senado:ventura angel"
+      },
+      {
+        "orador": "Giovanni Forno Flores",
+        "cargo": "invitado",
+        "sobre": "Contratación de obras del Congreso",
+        "postura": "comenta",
+        "tema": "Construcción",
+        "dijo": "Informó sobre los procesos de contratación de obras.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Tapia",
+        "cargo": "legislador",
+        "sobre": "Retrasos y supervisión de obras",
+        "postura": "pregunta",
+        "tema": "Construcción",
+        "dijo": "Preguntó sobre las trabas técnicas y la supervisión.",
+        "proyecto": "",
+        "id": "senado:tapia bernal"
+      },
+      {
+        "orador": "Carterín Ampud",
+        "cargo": "legislador",
+        "sobre": "Seguridad en edificios remodelados",
+        "postura": "en contra",
+        "tema": "Construcción",
+        "dijo": "Denunció la falta de medidas de seguridad en el edificio.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Nora Bonifaz",
+        "cargo": "legislador",
+        "sobre": "Equipamiento de oficinas parlamentarias",
+        "postura": "en contra",
+        "tema": "Infraestructura",
+        "dijo": "Denunció la falta de mobiliario y condiciones en oficinas.",
+        "proyecto": "",
+        "id": "senado:bonifaz carmona"
+      },
+      {
+        "orador": "Giovanni Forno Flores",
+        "cargo": "invitado",
+        "sobre": "Gestión de seguridad en obras",
+        "postura": "comenta",
+        "tema": "Construcción",
+        "dijo": "Informó sobre la seguridad y eficiencia del edificio.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Giovanni Forno",
+        "cargo": "autoridad",
+        "sobre": "Gestión de obras y contratos edilicios",
+        "postura": "comenta",
+        "tema": "Infraestructura",
+        "dijo": "Defendió la gestión de contratos y las medidas de seguridad.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Segundo Tapia",
+        "cargo": "legislador",
+        "sobre": "Deficiencias en las oficinas del Congreso",
+        "postura": "en contra",
+        "tema": "Infraestructura",
+        "dijo": "Cuestionó la mala distribución y precariedad de las oficinas.",
+        "proyecto": "",
+        "id": "senado:tapia bernal"
+      },
+      {
+        "orador": "Catrina",
+        "cargo": "legislador",
+        "sobre": "Seguridad y presupuesto de las obras",
+        "postura": "pregunta",
+        "tema": "Infraestructura",
+        "dijo": "Pidió el plan de seguridad y detalles del presupuesto.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Virta",
+        "cargo": "legislador",
+        "sobre": "Aforo y ventilación en oficinas",
+        "postura": "con observaciones",
+        "tema": "Infraestructura",
+        "dijo": "Denunció riesgos por el exceso de aforo y ventilación.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Giovanni Forno",
+        "cargo": "autoridad",
+        "sobre": "Monto de gastos adicionales en obras",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Informó que los costos adicionales ascienden a 42 millones.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Cecilia",
+        "cargo": "autoridad",
+        "sobre": "Implementación de la Ley del Servicio Civil",
+        "postura": "comenta",
+        "tema": "Trabajo",
+        "dijo": "Informó sobre el avance de la implementación de la ley.",
+        "proyecto": "Ley 30.057",
+        "id": null
+      },
+      {
+        "orador": "Mirna",
+        "cargo": "legislador",
+        "sobre": "Crecimiento y profesionalización del personal",
+        "postura": "pregunta",
+        "tema": "Trabajo",
+        "dijo": "Preguntó por la profesionalización ante el incremento de personal.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Senadora Mierta",
+        "cargo": "legislador",
+        "sobre": "Crecimiento de personal en el Congreso",
+        "postura": "pregunta",
+        "tema": "Trabajo",
+        "dijo": "Preguntó sobre el incremento de personal congresal.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Senadora Nora Buenpaso",
+        "cargo": "legislador",
+        "sobre": "Implementación del régimen de servicio civil",
+        "postura": "pregunta",
+        "tema": "Trabajo",
+        "dijo": "Consultó sobre los obstáculos de la reforma civil.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Senador Joaquín Villajoy",
+        "cargo": "legislador",
+        "sobre": "Régimen CAS y tránsito al servicio civil",
+        "postura": "pregunta",
+        "tema": "Trabajo",
+        "dijo": "Cuestionó las distorsiones del régimen CAS.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Senador Segundo Tapia",
+        "cargo": "legislador",
+        "sobre": "Quejas sobre la implementación de SERVIR",
+        "postura": "comenta",
+        "tema": "Trabajo",
+        "dijo": "Expuso las quejas sobre el sistema SERVIR.",
+        "proyecto": "",
+        "id": "senado:tapia bernal"
+      },
+      {
+        "orador": "Cecilia",
+        "cargo": "ministro o autoridad",
+        "sobre": "Implementación de la ley de servicio civil",
+        "postura": "a favor",
+        "tema": "Trabajo",
+        "dijo": "Defendió la implementación del servicio civil.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=7uWszM8UMnw"
   }
 }
