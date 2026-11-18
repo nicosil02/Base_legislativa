@@ -1105,5 +1105,972 @@
       }
     ],
     "url": "https://www.youtube.com/watch?v=Yq67qNJ6M_g"
+  },
+  "lAWaIH4-PzU": {
+    "fecha": "2026-10-01",
+    "organo": "Comisión de Control Político",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Embajadora",
+        "cargo": "ministro o autoridad",
+        "sobre": "Vía constitucional de los tratados",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Informó sobre la vía de perfeccionamiento de los tratados.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Claudia Guevara",
+        "cargo": "ministro o autoridad",
+        "sobre": "Optimización del TLC con China",
+        "postura": "a favor",
+        "tema": "Comercio",
+        "dijo": "Defendió la optimización del protocolo del TLC con China.",
+        "proyecto": "TLC Perú-China",
+        "id": null
+      },
+      {
+        "orador": "Waldo Ortega",
+        "cargo": "ministro o autoridad",
+        "sobre": "Segundo protocolo de la OTCA",
+        "postura": "a favor",
+        "tema": "Ambiente",
+        "dijo": "Defendió la institucionalización de la reunión de la OTCA.",
+        "proyecto": "OTCA",
+        "id": null
+      },
+      {
+        "orador": "Luis Enrique Gamero",
+        "cargo": "ministro o autoridad",
+        "sobre": "Criterios de ratificación de tratados",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Informó sobre los criterios jurídicos de la Cancillería.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Senadora Luque",
+        "cargo": "legislador",
+        "sobre": "Entrega de informe jurídico",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Pidió el informe jurídico de la Cancillería.",
+        "proyecto": "",
+        "id": "senado:luque ibarra"
+      },
+      {
+        "orador": "Senadora Luque",
+        "cargo": "legislador",
+        "sobre": "Trámite de la enmienda OTCA",
+        "postura": "pregunta",
+        "tema": "Ambiente",
+        "dijo": "Preguntó por el trámite de la enmienda de la OTCA.",
+        "proyecto": "OTCA",
+        "id": "senado:luque ibarra"
+      },
+      {
+        "orador": "Roxana Castro",
+        "cargo": "ministro o autoridad",
+        "sobre": "Participación de pueblos indígenas",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Informó sobre la participación de los pueblos indígenas.",
+        "proyecto": "OTCA",
+        "id": null
+      },
+      {
+        "orador": "Senadora Bonifaz",
+        "cargo": "legislador",
+        "sobre": "Seguridad en la Amazonía",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Comentó sobre la seguridad en la zona amazónica.",
+        "proyecto": "",
+        "id": "senado:bonifaz carmona"
+      },
+      {
+        "orador": "Senadora Luque",
+        "cargo": "legislador",
+        "sobre": "Paso Colpa-Tolacoyo",
+        "postura": "pregunta",
+        "tema": "Transporte",
+        "dijo": "Preguntó sobre las coordinaciones del paso Colpa-Tolacoyo.",
+        "proyecto": "",
+        "id": "senado:luque ibarra"
+      },
+      {
+        "orador": "Roxana Castro",
+        "cargo": "ministro o autoridad",
+        "sobre": "Control en Colpa-Tolacoyo",
+        "postura": "comenta",
+        "tema": "Transporte",
+        "dijo": "Informó sobre las coordinaciones de la Cancillería con Bolivia.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Senador Velázquez",
+        "cargo": "legislador",
+        "sobre": "Control migratorio en Colpa",
+        "postura": "pregunta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Preguntó por el control migratorio en Colpa.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Roxana Castro",
+        "cargo": "ministro o autoridad",
+        "sobre": "Control biométrico fronterizo",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Informó sobre el control biométrico de Migraciones.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Senador Mesías",
+        "cargo": "legislador",
+        "sobre": "Constitucionalidad del TLC China",
+        "postura": "en contra",
+        "tema": "Comercio",
+        "dijo": "Cuestionó la ratificación directa del TLC con China.",
+        "proyecto": "TLC Perú-China",
+        "id": "senado:mesia ramirez"
+      },
+      {
+        "orador": "Roxana Castro",
+        "cargo": "ministro o autoridad",
+        "sobre": "Ratificación del TLC China",
+        "postura": "a favor",
+        "tema": "Comercio",
+        "dijo": "Defendió la ratificación del TLC con China.",
+        "proyecto": "TLC Perú-China",
+        "id": null
+      },
+      {
+        "orador": "Senador Chipán",
+        "cargo": "legislador",
+        "sobre": "Flujo comercial en frontera",
+        "postura": "comenta",
+        "tema": "Comercio",
+        "dijo": "Informó sobre el incremento del flujo comercial.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Embajadora",
+        "cargo": "invitado",
+        "sobre": "entrega de documentos sobre el TLC China",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Aseguró que remitirá la documentación requerida por los senadores.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Andrés Luján",
+        "cargo": "legislador",
+        "sobre": "donaciones en el decreto DS 117",
+        "postura": "con observaciones",
+        "tema": "Otros",
+        "dijo": "Cuestionó la mención de juguetes en las donaciones.",
+        "proyecto": "DS 117",
+        "id": "senado:andres lujan"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=lAWaIH4-PzU"
+  },
+  "4D9U7qdV0bY": {
+    "fecha": "2026-10-01",
+    "organo": "Comisión de Justicia",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Marta Chávez",
+        "cargo": "legislador",
+        "sobre": "Grupo de trabajo sobre protestas",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó la creación de un grupo de trabajo sobre protestas.",
+        "proyecto": "",
+        "id": "senado:chavez cossio"
+      },
+      {
+        "orador": "Héctor Ventura",
+        "cargo": "legislador",
+        "sobre": "Investigaciones de responsabilidad penal",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Rechazó que la comisión realice investigaciones de carácter penal.",
+        "proyecto": "",
+        "id": "senado:ventura angel"
+      },
+      {
+        "orador": "Andrés Avelino",
+        "cargo": "legislador",
+        "sobre": "Seguimiento de fallecimientos",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Defendió la creación de un grupo de trabajo sobre fallecimientos.",
+        "proyecto": "",
+        "id": "senado:andres lujan"
+      },
+      {
+        "orador": "Alejandro Aguinaga",
+        "cargo": "legislador",
+        "sobre": "Competencia del grupo de trabajo",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Argumentó que el tema se encuentra actualmente judicializado.",
+        "proyecto": "",
+        "id": "senado:aguinaga recuenco"
+      },
+      {
+        "orador": "Mirta Vázquez",
+        "cargo": "legislador",
+        "sobre": "Control político de investigaciones",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Defendió la formación de la comisión para realizar control político.",
+        "proyecto": "",
+        "id": "senado:vasquez chuquilin"
+      },
+      {
+        "orador": "Maraví",
+        "cargo": "legislador",
+        "sobre": "Grupo de trabajo sobre protestas",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó la necesidad del grupo de trabajo solicitado.",
+        "proyecto": "",
+        "id": "senado:maravi olarte"
+      },
+      {
+        "orador": "Cúttipa",
+        "cargo": "legislador",
+        "sobre": "Efecto jurisdiccional del grupo",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Rechazó la moción por no tener efecto jurisdiccional.",
+        "proyecto": "",
+        "id": "senado:cutipa ccama"
+      },
+      {
+        "orador": "Ramos Wilcas",
+        "cargo": "legislador",
+        "sobre": "Instalación del grupo de trabajo",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Solicitó que el pedido pase al orden del día.",
+        "proyecto": "",
+        "id": "senado:ramos huillcas"
+      },
+      {
+        "orador": "Jorge Gavidia",
+        "cargo": "legislador",
+        "sobre": "Subjetividad en la comisión",
+        "postura": "con observaciones",
+        "tema": "Política y control político",
+        "dijo": "Advirtió que la subjetividad podría desvirtuar la justicia.",
+        "proyecto": "",
+        "id": "senado:gavidia rodriguez"
+      },
+      {
+        "orador": "Juan Antonio Fernández Geri",
+        "cargo": "invitado",
+        "sobre": "Gestión de la Autoridad Nacional de Control",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Informó sobre el funcionamiento de la Autoridad Nacional de Control.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Maraví",
+        "cargo": "legislador",
+        "sobre": "Carta de agradecimiento a especialistas",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Solicitó la emisión de una carta de agradecimiento para los especialistas.",
+        "proyecto": "",
+        "id": "senado:maravi olarte"
+      },
+      {
+        "orador": "Juan Antonio Fernández Geri",
+        "cargo": "invitado",
+        "sobre": "Gestión de la Autoridad Nacional de Control",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Informó sobre la gestión de la Autoridad Nacional de Control.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Akinaga",
+        "cargo": "legislador",
+        "sobre": "Capacidad operativa del control fiscal",
+        "postura": "pregunta",
+        "tema": "Justicia",
+        "dijo": "Preguntó sobre la efectividad del control con pocos fiscales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Juan Antonio Fernández Geri",
+        "cargo": "invitado",
+        "sobre": "Limitaciones presupuestales de la autoridad",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Explicó que el déficit presupuestal limita la capacidad operativa.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Vasquez",
+        "cargo": "legislador",
+        "sobre": "Denuncias contra el jefe de control",
+        "postura": "pregunta",
+        "tema": "Justicia",
+        "dijo": "Cuestionó las denuncias de corrupción y falta de integridad del jefe.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Juan Antonio Fernández Geri",
+        "cargo": "invitado",
+        "sobre": "Denuncias contra su gestión",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Rechazó las acusaciones sobre su integridad y sus diplomados.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Fernández Geri",
+        "cargo": "ministro o autoridad",
+        "sobre": "descentralización de investigaciones del Ministerio Público",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Explicó que las investigaciones se realizan de manera descentralizada en cuatro unidades.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Fernández Geri",
+        "cargo": "ministro o autoridad",
+        "sobre": "amonestación disciplinaria en su contra",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Denunció que la amonestación disciplinaria que recibió ha sido impugnada.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Fernández Geri",
+        "cargo": "ministro o autoridad",
+        "sobre": "modelo de integridad de la PCM",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Informó que ha cumplido siete de las trece acciones del plan de integridad.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Alejandro Guinaj",
+        "cargo": "legislador",
+        "sobre": "gasto en papel de la Autoridad Nacional de Control",
+        "postura": "propone",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Propuso la digitalización de procesos para reducir el gasto en papel.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Fernández Geri",
+        "cargo": "ministro o autoridad",
+        "sobre": "gasto en papel de la Autoridad Nacional de Control",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Explicó que el rubro de papel fue diseñado en la gestión anterior.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Marta Chávez",
+        "cargo": "legislador",
+        "sobre": "concurso para fiscales de la Autoridad Nacional de Control",
+        "postura": "pregunta",
+        "tema": "Justicia",
+        "dijo": "Preguntó por qué no se realiza el concurso para fiscales titulares.",
+        "proyecto": "",
+        "id": "senado:chavez cossio"
+      },
+      {
+        "orador": "Fernández Geri",
+        "cargo": "ministro o autoridad",
+        "sobre": "presupuesto y plazas de fiscales de control",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Explicó la falta de presupuesto para cubrir las plazas de fiscales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Marta Chávez",
+        "cargo": "legislador",
+        "sobre": "fondos de la Contraloría para el control concurrente",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Señaló que los fondos provienen de la Contraloría General de la República.",
+        "proyecto": "",
+        "id": "senado:chavez cossio"
+      },
+      {
+        "orador": "Fernández Geri",
+        "cargo": "ministro o autoridad",
+        "sobre": "apoyo de la Contraloría al Ministerio Público",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Detalló que el apoyo de la Contraloría se cortó por política económica.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Roberto Alejandro Palacios-Bram",
+        "cargo": "ministro o autoridad",
+        "sobre": "gestión de la Autoridad Nacional de Control",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Informó sobre la gestión de la Autoridad Nacional de Control del Poder Judicial.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Roberto Alejandro Palacios-Bram",
+        "cargo": "ministro o autoridad",
+        "sobre": "reclutamiento de jueces de control",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Explicó el proceso de concurso público para jueces de control.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Roberto Alejandro Palacios-Bram",
+        "cargo": "ministro o autoridad",
+        "sobre": "herramientas tecnológicas de la autoridad",
+        "postura": "comenta",
+        "tema": "Tecnología",
+        "dijo": "Presentó herramientas como el expediente disciplinario electrónico y el sistema SIDI.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Roberto Alejandro Palacios-Bram",
+        "cargo": "ministro o autoridad",
+        "sobre": "presupuesto de la Autoridad Nacional de Control",
+        "postura": "propone",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Propuso incrementar el presupuesto para mejorar la eficiencia institucional.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Alejandro Guinaj",
+        "cargo": "legislador",
+        "sobre": "proyecto de Markov y propuesta de la JNJ",
+        "postura": "pregunta",
+        "tema": "Política y control político",
+        "dijo": "Preguntó sobre el proyecto de Markov y la propuesta de adscripción a la JNJ.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Roberto Alejandro Palacios-Bram",
+        "cargo": "ministro o autoridad",
+        "sobre": "proyecto de Markov y propuesta de la JNJ",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Explicó el proyecto de Markov y opinó sobre la propuesta de la JNJ.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Alejandro Guinaj",
+        "cargo": "legislador",
+        "sobre": "suspensión de un juez por medida cautelar",
+        "postura": "pregunta",
+        "tema": "Justicia",
+        "dijo": "Consultó sobre la suspensión de un juez en un caso reciente.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Marta Chávez",
+        "cargo": "legislador",
+        "sobre": "tiempos de resolución de casos disciplinarios",
+        "postura": "pregunta",
+        "tema": "Justicia",
+        "dijo": "Preguntó sobre el tiempo promedio de resolución de casos disciplinarios.",
+        "proyecto": "",
+        "id": "senado:chavez cossio"
+      },
+      {
+        "orador": "Marta Chávez",
+        "cargo": "legislador",
+        "sobre": "independencia judicial y control difuso",
+        "postura": "pregunta",
+        "tema": "Justicia",
+        "dijo": "Cuestionó cómo diferenciar una conducta sancionable de una decisión jurisdiccional.",
+        "proyecto": "",
+        "id": "senado:chavez cossio"
+      },
+      {
+        "orador": "Jorge Gavidia",
+        "cargo": "legislador",
+        "sobre": "gestión digital y transparencia",
+        "postura": "pregunta",
+        "tema": "Tecnología",
+        "dijo": "Preguntó sobre la utilidad de los sistemas digitales para la transparencia.",
+        "proyecto": "",
+        "id": "senado:gavidia rodriguez"
+      },
+      {
+        "orador": "Roberto Alejandro Valacios Bram",
+        "cargo": "invitado",
+        "sobre": "Gestión digital y predictibilidad judicial",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Explicó la utilidad de la gestión digital para la predictibilidad.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Roberto Alejandro Valacios Bram",
+        "cargo": "invitado",
+        "sobre": "Proyecto de ley del Defensor del Pueblo",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Informó que el proyecto requiere un mayor análisis.",
+        "proyecto": "Defensor del Pueblo",
+        "id": null
+      },
+      {
+        "orador": "Roberto Alejandro Valacios Bram",
+        "cargo": "invitado",
+        "sobre": "Suspensión y auditoría de un juez",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Informó sobre la suspensión de un juez por inconducta.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Roberto Alejandro Valacios Bram",
+        "cargo": "invitado",
+        "sobre": "Plazos de procesos disciplinarios",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Informó que los plazos promedio son de catorce meses.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Roberto Alejandro Valacios Bram",
+        "cargo": "invitado",
+        "sobre": "Independencia del Poder Judicial",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Defendió la importancia de la independencia e integridad judicial.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Roberto Alejandro Valacios Bram",
+        "cargo": "invitado",
+        "sobre": "Investigación de la Autoridad Nacional de Control",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Explicó la función de la Autoridad Nacional de Control.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Roberto Alejandro Valacios Bram",
+        "cargo": "invitado",
+        "sobre": "Inaplicación de leyes inconstitucionales",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Recordó la facultad de inaplicar leyes inconstitucionales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Alejandro Aguinaga",
+        "cargo": "legislador",
+        "sobre": "Situación del juez Martínez Vargas",
+        "postura": "pregunta",
+        "tema": "Justicia",
+        "dijo": "Preguntó por la situación del juez Martínez Vargas.",
+        "proyecto": "",
+        "id": "senado:aguinaga recuenco"
+      },
+      {
+        "orador": "Roberto Alejandro Valacios Bram",
+        "cargo": "invitado",
+        "sobre": "Caso del juez Martínez Vargas",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Informó que verificará el caso solicitado.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=4D9U7qdV0bY"
+  },
+  "T2HWWS6Xfvk": {
+    "fecha": "2026-10-01",
+    "organo": "Comisión de Constitución",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Abendaño Vilca",
+        "cargo": "legislador",
+        "sobre": "Archivo del proyecto de delegación",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Respaldó el archivo del proyecto de delegación.",
+        "proyecto": "PL 0098",
+        "id": "diputados:avendano vilca"
+      },
+      {
+        "orador": "García Júvi",
+        "cargo": "legislador",
+        "sobre": "Archivo del proyecto de delegación",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Rechazó el archivo del proyecto de delegación.",
+        "proyecto": "PL 0098",
+        "id": null
+      },
+      {
+        "orador": "Beteta Rubín",
+        "cargo": "legislador",
+        "sobre": "Archivo del proyecto de delegación",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Rechazó el archivo del proyecto de delegación.",
+        "proyecto": "PL 0098",
+        "id": "diputados:beteta rubin"
+      },
+      {
+        "orador": "Pacheco Quispe",
+        "cargo": "legislador",
+        "sobre": "Archivo del proyecto de delegación",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Rechazó el archivo del proyecto de delegación.",
+        "proyecto": "PL 0098",
+        "id": "diputados:pacheco quispe"
+      },
+      {
+        "orador": "Figuari Mendoza",
+        "cargo": "legislador",
+        "sobre": "Archivo del proyecto de delegación",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Rechazó el archivo del proyecto de delegación.",
+        "proyecto": "PL 0098",
+        "id": "diputados:figari mendoza"
+      },
+      {
+        "orador": "Pérez Quispe",
+        "cargo": "legislador",
+        "sobre": "Archivo del proyecto de delegación",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Rechazó el archivo del proyecto de delegación.",
+        "proyecto": "PL 0098",
+        "id": "diputados:perez quispe"
+      },
+      {
+        "orador": "Caguá Samiti Vire",
+        "cargo": "legislador",
+        "sobre": "Archivo del proyecto de delegación",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Respaldó el archivo del proyecto de delegación.",
+        "proyecto": "PL 0098",
+        "id": null
+      },
+      {
+        "orador": "Duarte Patiño",
+        "cargo": "legislador",
+        "sobre": "Archivo del proyecto de delegación",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Respaldó el archivo del proyecto de delegación.",
+        "proyecto": "PL 0098",
+        "id": null
+      },
+      {
+        "orador": "Romina Uribe",
+        "cargo": "legislador",
+        "sobre": "Archivo del proyecto de delegación",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Rechazó el archivo del proyecto de delegación.",
+        "proyecto": "PL 0098",
+        "id": "diputados:uribe saenz"
+      },
+      {
+        "orador": "Abendaño Vilca",
+        "cargo": "legislador",
+        "sobre": "Fórmula de seguridad y fenómeno del niño",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Rechazó la nueva fórmula legislativa.",
+        "proyecto": "",
+        "id": "diputados:avendano vilca"
+      },
+      {
+        "orador": "García Júbi",
+        "cargo": "legislador",
+        "sobre": "Fórmula de seguridad y fenómeno del niño",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Respaldó la nueva fórmula legislativa.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "López Letona",
+        "cargo": "legislador",
+        "sobre": "Fórmula de seguridad y fenómeno del niño",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Respaldó la nueva fórmula legislativa.",
+        "proyecto": "",
+        "id": "diputados:lopez letona"
+      },
+      {
+        "orador": "Rocha",
+        "cargo": "legislador",
+        "sobre": "Autoritarismo en la comisión",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció el autoritarismo de la presidenta de comisión.",
+        "proyecto": "",
+        "id": "diputados:rocha gallegos"
+      },
+      {
+        "orador": "García",
+        "cargo": "legislador",
+        "sobre": "Facultades de seguridad y fenómeno del niño",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Comentó la posición de Buen Gobierno sobre facultades.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Berzaúr",
+        "cargo": "legislador",
+        "sobre": "Falta de debate en la comisión",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció la irresponsabilidad de votar sin debate.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Huitrón",
+        "cargo": "legislador",
+        "sobre": "Análisis del texto sustitutorio",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Pidió un tiempo prudencial para analizar el texto.",
+        "proyecto": "",
+        "id": "diputados:buitron martinez"
+      },
+      {
+        "orador": "Beteta",
+        "cargo": "legislador",
+        "sobre": "Insuficiencia de la fórmula de seguridad",
+        "postura": "con observaciones",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Cuestionó la insuficiencia de la fórmula de seguridad.",
+        "proyecto": "",
+        "id": "diputados:beteta rubin"
+      },
+      {
+        "orador": "López",
+        "cargo": "legislador",
+        "sobre": "Calidad del debate legislativo",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó la demagogia política durante el debate.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Unin",
+        "cargo": "legislador",
+        "sobre": "Narrativa de Fuerza Popular",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció la narrativa de la bancada fujimorista.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Uribe",
+        "cargo": "legislador",
+        "sobre": "Consenso de las cuatro bancadas",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Respaldó el consenso de las cuatro bancadas.",
+        "proyecto": "",
+        "id": "diputados:uribe saenz"
+      },
+      {
+        "orador": "García",
+        "cargo": "legislador",
+        "sobre": "Fortalecimiento de la inteligencia nacional",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Defendió el fortalecimiento de la inteligencia nacional.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Kekle",
+        "cargo": "legislador",
+        "sobre": "Aprobación del dictamen de consenso",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso votar a favor del dictamen de consenso.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Duarte",
+        "cargo": "legislador",
+        "sobre": "Consenso legislativo por el país",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Pidió valorar el consenso de las bancadas.",
+        "proyecto": "",
+        "id": "diputados:duarte"
+      },
+      {
+        "orador": "Duarte",
+        "cargo": "legislador",
+        "sobre": "Dictamen de facultades delegadas",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Defendió el dictamen de consenso logrado entre las bancadas.",
+        "proyecto": "",
+        "id": "diputados:duarte"
+      },
+      {
+        "orador": "Rocha",
+        "cargo": "legislador",
+        "sobre": "Texto sustitutorio de facultades",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Resaltó la importancia del texto sustitutorio acotado y preciso.",
+        "proyecto": "",
+        "id": "diputados:rocha gallegos"
+      },
+      {
+        "orador": "Marquez",
+        "cargo": "legislador",
+        "sobre": "Facultades legislativas generales",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Rechazó el otorgamiento de facultades sin mayor especificidad.",
+        "proyecto": "",
+        "id": "diputados:marquez huanca"
+      },
+      {
+        "orador": "Laísa",
+        "cargo": "legislador",
+        "sobre": "Dictamen de facultades legislativas",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Explicó que su bloque no votará por el dictamen.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Kawasa",
+        "cargo": "legislador",
+        "sobre": "Opinión consultiva al Senado",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Informó sobre la falta de respuesta del Senado peruano.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Pigari",
+        "cargo": "legislador",
+        "sobre": "Participación de las fuerzas armadas",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Cuestionó la reducción de facultades para las fuerzas armadas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Chipana",
+        "cargo": "legislador",
+        "sobre": "Estrategia de la bancada fujimorista",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció la estrategia política de la bancada fujimorista.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Buitrón",
+        "cargo": "legislador",
+        "sobre": "Debate del texto sustitutorio",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Llamó a los diputados a enfocarse en el fondo.",
+        "proyecto": "",
+        "id": "diputados:buitron martinez"
+      },
+      {
+        "orador": "García",
+        "cargo": "legislador",
+        "sobre": "Votación del dictamen de consenso",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Solicitó que se proceda a la votación inmediata.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Muedas",
+        "cargo": "legislador",
+        "sobre": "Deliberación del texto sustitutorio",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Instó a las bancadas a actuar con responsabilidad constitucional.",
+        "proyecto": "",
+        "id": "diputados:muedas balbiese"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=T2HWWS6Xfvk"
   }
 }
