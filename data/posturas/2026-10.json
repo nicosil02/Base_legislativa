@@ -5761,5 +5761,892 @@
       }
     ],
     "url": "https://www.youtube.com/watch?v=VSF1rifH-j4"
+  },
+  "TRJfUC5qxY8": {
+    "fecha": "2026-10-26",
+    "organo": "Comisión de Inclusión Social",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Uribe Saens",
+        "cargo": "legislador",
+        "sobre": "informe Convención Belém do Pará",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Informó sobre hallazgos de la Convención en Condorcanqui.",
+        "proyecto": "",
+        "id": "diputados:uribe saenz"
+      },
+      {
+        "orador": "Uribe Saens",
+        "cargo": "legislador",
+        "sobre": "presupuesto para Condorcanqui",
+        "postura": "propone",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Solicitó 22 millones de soles para la provincia de Condorcanqui.",
+        "proyecto": "",
+        "id": "diputados:uribe saenz"
+      },
+      {
+        "orador": "Uribe Saens",
+        "cargo": "legislador",
+        "sobre": "recomendaciones de la CEDAW",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Presentó la recomendación 41 de la CEDAW sobre género.",
+        "proyecto": "",
+        "id": "diputados:uribe saenz"
+      },
+      {
+        "orador": "Uribe Saens",
+        "cargo": "legislador",
+        "sobre": "casos de discriminación LGTBI",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Denunció agresiones homofóbicas en espacios de Lima.",
+        "proyecto": "",
+        "id": "diputados:uribe saenz"
+      },
+      {
+        "orador": "Uribe Saens",
+        "cargo": "legislador",
+        "sobre": "consulta Mi voz importa",
+        "postura": "comenta",
+        "tema": "Educación",
+        "dijo": "Promovió la consulta sobre las opiniones de las infancias.",
+        "proyecto": "",
+        "id": "diputados:uribe saenz"
+      },
+      {
+        "orador": "Jones Núñez",
+        "cargo": "legislador",
+        "sobre": "convenio para centros infantiles en Ica",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Informó sobre un convenio para centros de atención infantil.",
+        "proyecto": "",
+        "id": "diputados:yonz nunez"
+      },
+      {
+        "orador": "Jones Núñez",
+        "cargo": "legislador",
+        "sobre": "proyecto de hogar refugio en Ica",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Informó sobre el estado de un hogar refugio para mujeres.",
+        "proyecto": "",
+        "id": "diputados:yonz nunez"
+      },
+      {
+        "orador": "Arminta Valencia",
+        "cargo": "legislador",
+        "sobre": "exposición a metales pesados",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Denunció la alta exposición de niños a metales pesados.",
+        "proyecto": "",
+        "id": "diputados:arminta valencia"
+      },
+      {
+        "orador": "Benítez Barrionuevo",
+        "cargo": "legislador",
+        "sobre": "plan para personas con discapacidad",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Presentó el plan de trabajo para personas con discapacidad.",
+        "proyecto": "",
+        "id": "diputados:benitez barrionuevo"
+      },
+      {
+        "orador": "Benítez Barrionuevo",
+        "cargo": "legislador",
+        "sobre": "ruta de pacientes con cáncer",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Informó sobre las barreras que enfrentan las pacientes con cáncer.",
+        "proyecto": "",
+        "id": "diputados:benitez barrionuevo"
+      },
+      {
+        "orador": "Benítez Barrionuevo",
+        "cargo": "legislador",
+        "sobre": "mesa de salud mental",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Destacó la participación en la mesa de salud mental.",
+        "proyecto": "",
+        "id": "diputados:benitez barrionuevo"
+      },
+      {
+        "orador": "Benítez Barrionuevo",
+        "cargo": "legislador",
+        "sobre": "terapias para niños fisurados",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Mencionó un proyecto de terapias de canto para niños.",
+        "proyecto": "",
+        "id": "diputados:benitez barrionuevo"
+      },
+      {
+        "orador": "Silupú Inga",
+        "cargo": "legislador",
+        "sobre": "encuentro cultural en Yapatera",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Informó sobre un encuentro de la cultura afroperuana.",
+        "proyecto": "",
+        "id": "diputados:silupu inga"
+      },
+      {
+        "orador": "Silupú Inga",
+        "cargo": "legislador",
+        "sobre": "visita al hogar Santa Rosa",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Acompañó al presidente del Senado a un hogar infantil.",
+        "proyecto": "",
+        "id": "diputados:silupu inga"
+      },
+      {
+        "orador": "Clerker Torres",
+        "cargo": "legislador",
+        "sobre": "restitución del Día de la Familia",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Propuso restituir el Día de la Familia mediante ley.",
+        "proyecto": "PL 502",
+        "id": null
+      },
+      {
+        "orador": "Maritza Canales",
+        "cargo": "ministro o autoridad",
+        "sobre": "política general del MIDIS",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Expuso la política nacional de desarrollo e inclusión social.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Maritza Canales",
+        "cargo": "ministro o autoridad",
+        "sobre": "Optimización de programas sociales y presupuesto",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Detalló la gestión y requerimientos presupuestales de los programas del MIDIS.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Poma",
+        "cargo": "legislador",
+        "sobre": "Pobreza y anemia en Madre de Dios",
+        "postura": "pregunta",
+        "tema": "Salud",
+        "dijo": "Cuestionó la medición de pobreza y la anemia en Madre de Dios.",
+        "proyecto": "",
+        "id": "diputados:poma huamani"
+      },
+      {
+        "orador": "Hanco",
+        "cargo": "legislador",
+        "sobre": "Gestión de Cunamás y estipendios",
+        "postura": "pregunta",
+        "tema": "Otros",
+        "dijo": "Preguntó sobre la gestión de Cunamás y los estipendios de cuidadoras.",
+        "proyecto": "",
+        "id": "diputados:hancco hancco"
+      },
+      {
+        "orador": "Arminta",
+        "cargo": "legislador",
+        "sobre": "Metas de cobertura y Tambos",
+        "postura": "pregunta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Solicitó metas de cobertura social y mayor difusión de Tambos.",
+        "proyecto": "",
+        "id": "diputados:arminta valencia"
+      },
+      {
+        "orador": "Beníz",
+        "cargo": "legislador",
+        "sobre": "Riesgos climáticos y programa Contigo",
+        "postura": "pregunta",
+        "tema": "Otros",
+        "dijo": "Consultó sobre la atención ante riesgos climáticos y programa Contigo.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Uribe",
+        "cargo": "legislador",
+        "sobre": "Política de cuidados y pobreza",
+        "postura": "pregunta",
+        "tema": "Otros",
+        "dijo": "Preguntó sobre la política de cuidados y tiempos de espera.",
+        "proyecto": "",
+        "id": "diputados:uribe saenz"
+      },
+      {
+        "orador": "Yufra",
+        "cargo": "legislador",
+        "sobre": "Programas sociales en Loreto",
+        "postura": "pregunta",
+        "tema": "Salud",
+        "dijo": "Consultó sobre la operatividad de PIAS y la anemia en Loreto.",
+        "proyecto": "",
+        "id": "diputados:yuffra lugo"
+      },
+      {
+        "orador": "Zulca",
+        "cargo": "legislador",
+        "sobre": "Calidad de alimentos en escuelas",
+        "postura": "pregunta",
+        "tema": "Educación",
+        "dijo": "Cuestionó la calidad alimentaria y la selección de proveedores escolares.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Zulca",
+        "cargo": "legislador",
+        "sobre": "Selección de proveedores y calidad alimentaria",
+        "postura": "propone",
+        "tema": "Educación",
+        "dijo": "Propuso dotar galletas de sangrecita en lugar de cereales para mejorar la nutrición.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Espinoza",
+        "cargo": "legislador",
+        "sobre": "Índices de anemia y desnutrición infantil",
+        "postura": "pregunta",
+        "tema": "Salud",
+        "dijo": "Preguntó sobre el enfoque del MIDIS para reducir la anemia y desnutrición.",
+        "proyecto": "",
+        "id": "diputados:espinoza huillca"
+      },
+      {
+        "orador": "Ministra",
+        "cargo": "ministro o autoridad",
+        "sobre": "Estrategia contra la anemia infantil",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Explicó el rol articulador del MIDIS para realizar el seguimiento nominal de la anemia.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ulises Cabanel García",
+        "cargo": "ministro o autoridad",
+        "sobre": "Gestión de tambos y plataformas Pías",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Informó sobre la operatividad de los tambos y el uso de plataformas móviles.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Claudia",
+        "cargo": "ministro o autoridad",
+        "sobre": "Gestión del programa Contigo",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Detalló la articulación y los procesos de atención del programa Contigo.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Benítez",
+        "cargo": "legislador",
+        "sobre": "Cobertura presupuestal del programa Contigo",
+        "postura": "pregunta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Preguntó por las estrategias de apoyo ante posibles brechas en la cobertura.",
+        "proyecto": "",
+        "id": "diputados:benitez barrionuevo"
+      },
+      {
+        "orador": "Claudia",
+        "cargo": "ministro o autoridad",
+        "sobre": "Limitaciones presupuestales en Contigo",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Explicó que se reevaluaría el padrón si el presupuesto fuera insuficiente.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministra",
+        "cargo": "ministro o autoridad",
+        "sobre": "Ampliación de la cobertura de beneficios",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Mencionó la depuración de padrones para mejorar la cobertura de beneficios.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Sergio Antonio Ríos",
+        "cargo": "ministro o autoridad",
+        "sobre": "Procesos de contratación del PAE",
+        "postura": "comenta",
+        "tema": "Educación",
+        "dijo": "Explicó que las compras del PAE se gestionan mediante comités regionales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministra",
+        "cargo": "ministro o autoridad",
+        "sobre": "Control social en programas alimentarios",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Subrayó la importancia de fortalecer la vigilancia ciudadana en los programas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Zulka",
+        "cargo": "legislador",
+        "sobre": "Selección de proveedores del PAE",
+        "postura": "en contra",
+        "tema": "Educación",
+        "dijo": "Cuestionó la transparencia en la selección de proveedores de productos escolares.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Sergio Antonio Ríos",
+        "cargo": "ministro o autoridad",
+        "sobre": "Capacitación de comités de compra",
+        "postura": "comenta",
+        "tema": "Educación",
+        "dijo": "Detalló el proceso de capacitación para los comités de gestión de compras.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministra",
+        "cargo": "ministro o autoridad",
+        "sobre": "Medición de la pobreza multidimensional",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Explicó el trabajo con el INEI para implementar mediciones multidimensionales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Benítez",
+        "cargo": "legislador",
+        "sobre": "Cumplimiento de la cuota laboral",
+        "postura": "pregunta",
+        "tema": "Trabajo",
+        "dijo": "Consultó sobre el cumplimiento de la cuota laboral en el sector.",
+        "proyecto": "",
+        "id": "diputados:benitez barrionuevo"
+      },
+      {
+        "orador": "Ministra",
+        "cargo": "ministro o autoridad",
+        "sobre": "Oferta de empleo público",
+        "postura": "comenta",
+        "tema": "Trabajo",
+        "dijo": "Informó sobre una feria laboral con miles de plazas vacantes disponibles.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Espinoza",
+        "cargo": "legislador",
+        "sobre": "Eficacia de la inversión social",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Cuestionó que el incremento presupuestal no reduzca la anemia infantil.",
+        "proyecto": "",
+        "id": "diputados:espinoza huillca"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=TRJfUC5qxY8"
+  },
+  "bAnGPWSJmxY": {
+    "fecha": "2026-10-26",
+    "organo": "Comisión de Medio Ambiente",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Celupú",
+        "cargo": "legislador",
+        "sobre": "Ejecución del relleno sanitario de Piura",
+        "postura": "propone",
+        "tema": "Ambiente",
+        "dijo": "Pidió un informe sobre el avance del relleno sanitario.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Quesada",
+        "cargo": "legislador",
+        "sobre": "Prevención de incendios forestales en Puno",
+        "postura": "propone",
+        "tema": "Ambiente",
+        "dijo": "Solicitó información sobre la prevención de incendios forestales.",
+        "proyecto": "",
+        "id": "diputados:quezada castro"
+      },
+      {
+        "orador": "Nora",
+        "cargo": "legislador",
+        "sobre": "Registro de plaguicidas de uso agrícola",
+        "postura": "en contra",
+        "tema": "Agricultura",
+        "dijo": "Cuestionó la eliminación del registro de riesgos de plaguicidas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Andrade",
+        "cargo": "legislador",
+        "sobre": "Sentencia del Tribunal Constitucional sobre plaguicidas",
+        "postura": "pregunta",
+        "tema": "Agricultura",
+        "dijo": "Preguntó si se había solicitado información al ministro.",
+        "proyecto": "",
+        "id": "diputados:andrade salguero de alvarez"
+      },
+      {
+        "orador": "Yacá",
+        "cargo": "legislador",
+        "sobre": "Estándares de inocuidad alimentaria en Perú",
+        "postura": "en contra",
+        "tema": "Agricultura",
+        "dijo": "Denunció la baja calidad de los estándares de inocuidad.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Yalta",
+        "cargo": "legislador",
+        "sobre": "Gestión de los bonos de carbono",
+        "postura": "propone",
+        "tema": "Ambiente",
+        "dijo": "Pidió información sobre la gestión de bonos de carbono.",
+        "proyecto": "",
+        "id": "diputados:yalta sotelo"
+      },
+      {
+        "orador": "Castro",
+        "cargo": "legislador",
+        "sobre": "Contaminación por vehículos antiguos en Lima",
+        "postura": "pregunta",
+        "tema": "Transporte",
+        "dijo": "Consultó sobre la contaminación por vehículos antiguos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Jeremy Mil Lázaro Alegre",
+        "cargo": "ministro o autoridad",
+        "sobre": "Mitigación de ruido en el aeropuerto",
+        "postura": "comenta",
+        "tema": "Transporte",
+        "dijo": "Informó sobre la mitigación del ruido aeroportuario.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Yulisa Salvatierra",
+        "cargo": "invitado",
+        "sobre": "Normativa de ruido y estándares ambientales",
+        "postura": "comenta",
+        "tema": "Transporte",
+        "dijo": "Explicó la normativa sobre ruido y estándares ambientales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Jeremy Lázaro",
+        "cargo": "ministro o autoridad",
+        "sobre": "Gestión y mitigación del ruido",
+        "postura": "comenta",
+        "tema": "Transporte",
+        "dijo": "Informó sobre el diagnóstico y mitigación del ruido.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Yulisa Salvatierra",
+        "cargo": "invitado",
+        "sobre": "Normativa y gestión de ruido",
+        "postura": "comenta",
+        "tema": "Transporte",
+        "dijo": "Explicó la normativa y la gestión del ruido.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Nora Yaque",
+        "cargo": "legislador",
+        "sobre": "Impacto del ruido en niños",
+        "postura": "pregunta",
+        "tema": "Salud",
+        "dijo": "Preguntó cómo mitigar el ruido en los niños.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Carlos Yalta",
+        "cargo": "legislador",
+        "sobre": "Inasistencia del ministro de Transportes",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó la inasistencia del ministro de Transportes.",
+        "proyecto": "",
+        "id": "diputados:yalta sotelo"
+      },
+      {
+        "orador": "Carlos Yalta",
+        "cargo": "legislador",
+        "sobre": "Realidad de los asentamientos humanos",
+        "postura": "en contra",
+        "tema": "Transporte",
+        "dijo": "Denunció la antigüedad de los asentamientos humanos.",
+        "proyecto": "",
+        "id": "diputados:yalta sotelo"
+      },
+      {
+        "orador": "Cabrera",
+        "cargo": "legislador",
+        "sobre": "Plan de tráfico para Lima",
+        "postura": "pregunta",
+        "tema": "Transporte",
+        "dijo": "Preguntó por un plan de tráfico para Lima.",
+        "proyecto": "",
+        "id": "diputados:cabrera nieto"
+      },
+      {
+        "orador": "Silupú",
+        "cargo": "legislador",
+        "sobre": "Procedimientos de atenuación de ruidos",
+        "postura": "pregunta",
+        "tema": "Transporte",
+        "dijo": "Preguntó por los procedimientos de atenuación.",
+        "proyecto": "",
+        "id": "diputados:silupu inga"
+      },
+      {
+        "orador": "Guevara",
+        "cargo": "legislador",
+        "sobre": "Control político al ministro",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso invitar nuevamente al ministro de Transportes.",
+        "proyecto": "",
+        "id": "diputados:guevara ramirez"
+      },
+      {
+        "orador": "Zulca",
+        "cargo": "legislador",
+        "sobre": "Ruido en zonas escolares",
+        "postura": "propone",
+        "tema": "Educación",
+        "dijo": "Pidió atender el ruido en colegios.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Celupo",
+        "cargo": "legislador",
+        "sobre": "Planes ante el fenómeno del niño",
+        "postura": "pregunta",
+        "tema": "Transporte",
+        "dijo": "Preguntó por planes ante el fenómeno del niño.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Luis Benito Sánchez",
+        "cargo": "invitado",
+        "sobre": "Fuentes y rutas de ruido",
+        "postura": "comenta",
+        "tema": "Transporte",
+        "dijo": "Informó las fuentes y las rutas de ruido.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Guevara",
+        "cargo": "legislador",
+        "sobre": "formalización agraria en la Amazonía",
+        "postura": "propone",
+        "tema": "Ambiente",
+        "dijo": "Propuso plantear una cuestión previa para obtener opiniones técnicas.",
+        "proyecto": "",
+        "id": "diputados:guevara ramirez"
+      },
+      {
+        "orador": "Cabrera",
+        "cargo": "legislador",
+        "sobre": "ley de formalización de productores",
+        "postura": "con observaciones",
+        "tema": "Ambiente",
+        "dijo": "Cuestionó que la ley pueda incentivar la deforestación ilegal.",
+        "proyecto": "",
+        "id": "diputados:cabrera nieto"
+      },
+      {
+        "orador": "Arturo Alegría",
+        "cargo": "legislador",
+        "sobre": "reglas claras para la Amazonía",
+        "postura": "a favor",
+        "tema": "Ambiente",
+        "dijo": "Respaldó la propuesta para establecer reglas claras en la Amazonía.",
+        "proyecto": "",
+        "id": "diputados:alegria garcia"
+      },
+      {
+        "orador": "Jaime Abensur",
+        "cargo": "legislador",
+        "sobre": "dictamen de formalización agraria",
+        "postura": "propone",
+        "tema": "Ambiente",
+        "dijo": "Propuso crear una mesa técnica con todos los actores.",
+        "proyecto": "",
+        "id": "diputados:abensur pinasco"
+      },
+      {
+        "orador": "Bendaño",
+        "cargo": "legislador",
+        "sobre": "ley de desarrollo sostenible",
+        "postura": "en contra",
+        "tema": "Ambiente",
+        "dijo": "Denunció la falta de opiniones y la omisión de consulta.",
+        "proyecto": "PL 0088",
+        "id": null
+      },
+      {
+        "orador": "Yalta",
+        "cargo": "legislador",
+        "sobre": "texto sustitutorio de la propuesta",
+        "postura": "con observaciones",
+        "tema": "Ambiente",
+        "dijo": "Observó inconsistencias en las fechas del texto sustitutorio.",
+        "proyecto": "",
+        "id": "diputados:yalta sotelo"
+      },
+      {
+        "orador": "Jesús Pérez",
+        "cargo": "legislador",
+        "sobre": "análisis de la propuesta legislativa",
+        "postura": "propone",
+        "tema": "Ambiente",
+        "dijo": "Pidió instalar una mesa técnica para un estudio exhaustivo.",
+        "proyecto": "",
+        "id": "diputados:perez alccahuaman"
+      },
+      {
+        "orador": "Castrejón",
+        "cargo": "legislador",
+        "sobre": "dictaminación de la norma",
+        "postura": "con observaciones",
+        "tema": "Política y control político",
+        "dijo": "Advirtió sobre la posible desnaturalización de la norma.",
+        "proyecto": "",
+        "id": "diputados:castrejon fernandez"
+      },
+      {
+        "orador": "Aide Poma",
+        "cargo": "legislador",
+        "sobre": "proyecto de formalización agraria",
+        "postura": "en contra",
+        "tema": "Ambiente",
+        "dijo": "Denunció que la norma premia la deforestación ilegal.",
+        "proyecto": "régimen repaz",
+        "id": "diputados:poma huamani"
+      },
+      {
+        "orador": "Castro",
+        "cargo": "legislador",
+        "sobre": "protección de bosques amazónicos",
+        "postura": "a favor",
+        "tema": "Ambiente",
+        "dijo": "Defendió la propuesta y recomendó realizar una mesa técnica.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=bAnGPWSJmxY"
+  },
+  "C9L24osaBhw": {
+    "fecha": "2026-10-26",
+    "organo": "Comisión de Defensa del Consumidor",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Secretaria Técnica",
+        "cargo": "ministro o autoridad",
+        "sobre": "Documentos y proposición 184",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Informó sobre la remisión de documentos y la proposición 184-2026-2031.",
+        "proyecto": "PL 184",
+        "id": null
+      },
+      {
+        "orador": "Gladys",
+        "cargo": "legislador",
+        "sobre": "Cobros en Hospital de Guaral",
+        "postura": "en contra",
+        "tema": "Saneamiento",
+        "dijo": "Denunció cobros excesivos de agua y alcantarillado en el hospital de Guaral.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Holguín",
+        "cargo": "legislador",
+        "sobre": "Cierre de botica regional",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Denunció el cierre de una botica regional en Madre de Dios.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Columbus",
+        "cargo": "legislador",
+        "sobre": "Opiniones sobre el proyecto 184",
+        "postura": "propone",
+        "tema": "Farma",
+        "dijo": "Informó sobre las opiniones técnicas relativas al proyecto de ley 184.",
+        "proyecto": "PL 184",
+        "id": "diputados:columbus murata"
+      },
+      {
+        "orador": "Guillén",
+        "cargo": "legislador",
+        "sobre": "Atención condicionada en clínica",
+        "postura": "en contra",
+        "tema": "Seguros",
+        "dijo": "Denunció la atención médica condicionada al pago en una clínica privada.",
+        "proyecto": "",
+        "id": "diputados:guillen valencia"
+      },
+      {
+        "orador": "Rosangela",
+        "cargo": "legislador",
+        "sobre": "Información sobre pedido de Yalta",
+        "postura": "pregunta",
+        "tema": "Transporte",
+        "dijo": "Preguntó por los funcionarios responsables del pedido del diputado Carlos Yalta.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Carlos Yalta",
+        "cargo": "legislador",
+        "sobre": "Invitación al ministro de Transportes",
+        "postura": "propone",
+        "tema": "Transporte",
+        "dijo": "Pidió la presencia del ministro de Transportes para tratar puentes críticos.",
+        "proyecto": "",
+        "id": "diputados:yalta sotelo"
+      },
+      {
+        "orador": "Columbus",
+        "cargo": "legislador",
+        "sobre": "Sustitución de ministro por viceministros",
+        "postura": "propone",
+        "tema": "Transporte",
+        "dijo": "Propuso la asistencia de viceministros en caso de ausencia del ministro.",
+        "proyecto": "",
+        "id": "diputados:columbus murata"
+      },
+      {
+        "orador": "Basán",
+        "cargo": "legislador",
+        "sobre": "Presencia del ministro de Transportes",
+        "postura": "propone",
+        "tema": "Transporte",
+        "dijo": "Propuso la presencia necesaria del ministro de Transportes ante la comisión.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Barbarán",
+        "cargo": "legislador",
+        "sobre": "Acuerdo para el puente Chancay",
+        "postura": "comenta",
+        "tema": "Transporte",
+        "dijo": "Informó sobre el acuerdo para la construcción del nuevo puente Chancay.",
+        "proyecto": "",
+        "id": "diputados:barbaran reyes"
+      },
+      {
+        "orador": "Milagros Pozo",
+        "cargo": "ministro o autoridad",
+        "sobre": "Gestión y estado de Indecopi",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Informó sobre el estado situacional y la gestión del Indecopi.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Representante de Indecopi",
+        "cargo": "ministro o autoridad",
+        "sobre": "Gestión y ejes de Indecopi",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Informó sobre la gestión y los ejes de Indecopi.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Columbus",
+        "cargo": "legislador",
+        "sobre": "Barreras burocráticas en gobiernos locales",
+        "postura": "pregunta",
+        "tema": "Otros",
+        "dijo": "Preguntó sobre la persistencia de barreras burocráticas.",
+        "proyecto": "",
+        "id": "diputados:columbus murata"
+      },
+      {
+        "orador": "Kawasa",
+        "cargo": "legislador",
+        "sobre": "Atención en provincias alejadas",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Pidió mecanismos de atención para provincias alejadas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Representante de Indecopi",
+        "cargo": "ministro o autoridad",
+        "sobre": "Respuesta a las consultas de la comisión",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Informó que enviarán la información solicitada.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ángel Meneses",
+        "cargo": "legislador",
+        "sobre": "Alimentos en eventos masivos",
+        "postura": "propone",
+        "tema": "Consumo masivo",
+        "dijo": "Propuso permitir el ingreso de alimentos a eventos.",
+        "proyecto": "00116-2026-2031",
+        "id": "diputados:meneses crispin"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=C9L24osaBhw"
   }
 }
