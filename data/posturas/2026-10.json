@@ -4602,5 +4602,122 @@
       }
     ],
     "url": "https://www.facebook.com/watch/?v=1732346264494942"
+  },
+  "fb_2834144213646590": {
+    "fecha": "2026-10-27",
+    "organo": "Comisión de Derecho al Trabajo",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Juan Pablo Molina",
+        "cargo": "legislador",
+        "sobre": "Informe de tercerización laboral",
+        "postura": "en contra",
+        "tema": "Trabajo",
+        "dijo": "Denunció que la Asamblea no tiene competencia para fiscalizar municipios.",
+        "proyecto": "Resolución RL-2025-2029-090",
+        "id": "EC:molina saldana"
+      },
+      {
+        "orador": "Roberto Cuerromedina",
+        "cargo": "legislador",
+        "sobre": "Informe de tercerización laboral",
+        "postura": "en contra",
+        "tema": "Trabajo",
+        "dijo": "Rechazó el informe argumentando que no es competencia de la Asamblea.",
+        "proyecto": "Resolución RL-2025-2029-090",
+        "id": "EC:cuero medina"
+      },
+      {
+        "orador": "Humberto Alvarado",
+        "cargo": "legislador",
+        "sobre": "Informe de tercerización laboral",
+        "postura": "en contra",
+        "tema": "Trabajo",
+        "dijo": "Cuestionó la falta de solidez del informe de fiscalización presentado.",
+        "proyecto": "Resolución RL-2025-2029-090",
+        "id": "EC:alvarado espinel"
+      },
+      {
+        "orador": "Egnerey de Recalde Álava",
+        "cargo": "legislador",
+        "sobre": "Fiscalización de tercerización laboral",
+        "postura": "a favor",
+        "tema": "Trabajo",
+        "dijo": "Defendió la labor de fiscalización para proteger a los trabajadores.",
+        "proyecto": "Resolución RL-2025-2029-090",
+        "id": "EC:recalde alava"
+      },
+      {
+        "orador": "Nayeli Quintana Tapia",
+        "cargo": "legislador",
+        "sobre": "Aprobación del informe de fiscalización",
+        "postura": "propone",
+        "tema": "Trabajo",
+        "dijo": "Propuso la aprobación del informe de fiscalización laboral.",
+        "proyecto": "Resolución RL-2025-2029-090",
+        "id": "EC:quintana tapia"
+      },
+      {
+        "orador": "Juan Pablo Molina",
+        "cargo": "legislador",
+        "sobre": "Informe de tercerización laboral",
+        "postura": "en contra",
+        "tema": "Trabajo",
+        "dijo": "Rechazó la competencia de la Asamblea en asuntos municipales.",
+        "proyecto": "Resolución RL-2025-2029-090",
+        "id": "EC:molina saldana"
+      },
+      {
+        "orador": "Juan Pablo Molina",
+        "cargo": "legislador",
+        "sobre": "eliminación de la tercerización",
+        "postura": "a favor",
+        "tema": "Trabajo",
+        "dijo": "Defendió la eliminación de la tercerización laboral.",
+        "proyecto": "",
+        "id": "EC:molina saldana"
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=2834144213646590"
+  },
+  "fb_1694348782203358": {
+    "fecha": "2026-10-27",
+    "organo": "Comisión de Relaciones Internacionales",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Estefanía Martínez",
+        "cargo": "invitado",
+        "sobre": "Reforma de la Ley del Servicio Exterior",
+        "postura": "con observaciones",
+        "tema": "Otros",
+        "dijo": "Propuso mejoras técnicas para la reforma de la Ley del Servicio Exterior.",
+        "proyecto": "Ley del Servicio Exterior",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1694348782203358"
+  },
+  "fb_1801729931033388": {
+    "fecha": "2026-10-27",
+    "organo": "Comisión de Soberanía Alimentaria",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Jorge Hugo Tituánea Calapiña",
+        "cargo": "invitado",
+        "sobre": "reforma de la ley acuícola y pesquera",
+        "postura": "propone",
+        "tema": "Pesca",
+        "dijo": "Presentó una propuesta de reforma para la Ley Orgánica para el Desarrollo de la Acuicultura y Pesca.",
+        "proyecto": "Ley Orgánica para el Desarrollo de la Acuicultura y Pesca",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1801729931033388"
   }
 }
