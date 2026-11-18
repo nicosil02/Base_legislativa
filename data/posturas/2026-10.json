@@ -7332,5 +7332,402 @@
       }
     ],
     "url": "https://www.facebook.com/watch/?v=28770012369326509"
+  },
+  "MynXZyWG3CA": {
+    "fecha": "2026-10-23",
+    "organo": "Comisión de Transportes",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Daniel Jefferson Baraseguín",
+        "cargo": "legislador",
+        "sobre": "Cambio de horario de la comisión",
+        "postura": "en contra",
+        "tema": "Otros",
+        "dijo": "Rechazó el cambio de horario debido a la agenda de los diputados.",
+        "proyecto": "",
+        "id": "diputados:varas seguin"
+      },
+      {
+        "orador": "Liliana Takayama Jiménez",
+        "cargo": "legislador",
+        "sobre": "Cambio de local y horario de sesiones",
+        "postura": "con observaciones",
+        "tema": "Otros",
+        "dijo": "Sugirió que las sesiones se realicen a las once de la mañana.",
+        "proyecto": "",
+        "id": "diputados:takayama jimenez"
+      },
+      {
+        "orador": "Raúl Camargo Porta",
+        "cargo": "legislador",
+        "sobre": "Propuesta de nuevo horario de sesiones",
+        "postura": "con observaciones",
+        "tema": "Otros",
+        "dijo": "Propuso buscar un horario que no interfiera con otras comisiones.",
+        "proyecto": "",
+        "id": "diputados:camargo porta"
+      },
+      {
+        "orador": "César Muedas Valvies",
+        "cargo": "legislador",
+        "sobre": "Invitación a gobernadores regionales",
+        "postura": "con observaciones",
+        "tema": "Política y control político",
+        "dijo": "Sugirió reconsiderar las fechas de los gobernadores regionales.",
+        "proyecto": "",
+        "id": "diputados:muedas balbiese"
+      },
+      {
+        "orador": "Manuel Fernando Muñoz-Quiros",
+        "cargo": "invitado",
+        "sobre": "Fiscalización de infraestructura de saneamiento",
+        "postura": "comenta",
+        "tema": "Saneamiento",
+        "dijo": "Informó sobre la fiscalización de infraestructura de saneamiento en el norte.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Liliana Takayama Jiménez",
+        "cargo": "legislador",
+        "sobre": "Situación del saneamiento por fenómeno del niño",
+        "postura": "pregunta",
+        "tema": "Saneamiento",
+        "dijo": "Preguntó sobre la situación del saneamiento ante el fenómeno del niño.",
+        "proyecto": "",
+        "id": "diputados:takayama jimenez"
+      },
+      {
+        "orador": "Manuel Muñoz",
+        "cargo": "invitado",
+        "sobre": "Acciones preventivas ante El Niño",
+        "postura": "comenta",
+        "tema": "Saneamiento",
+        "dijo": "Presentó las acciones realizadas en las regiones del norte.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Liliana Milagros",
+        "cargo": "legislador",
+        "sobre": "Riesgos de infraestructura en el norte",
+        "postura": "pregunta",
+        "tema": "Saneamiento",
+        "dijo": "Preguntó sobre la situación de las infraestructuras de agua.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "César Augusto Muedas",
+        "cargo": "legislador",
+        "sobre": "Matriz de vulnerabilidades para SUNASS",
+        "postura": "propone",
+        "tema": "Saneamiento",
+        "dijo": "Solicitó una matriz nacional de vulnerabilidades para seguimiento.",
+        "proyecto": "",
+        "id": "diputados:muedas balbiese"
+      },
+      {
+        "orador": "César Augusto Muedas",
+        "cargo": "legislador",
+        "sobre": "Biodigestores colapsados en Satipo",
+        "postura": "en contra",
+        "tema": "Saneamiento",
+        "dijo": "Denunció la contaminación del agua por biodigestores en Junín.",
+        "proyecto": "",
+        "id": "diputados:muedas balbiese"
+      },
+      {
+        "orador": "Daniel Jefferson Barrasiguin",
+        "cargo": "legislador",
+        "sobre": "Plantas de tratamiento en Áncash",
+        "postura": "pregunta",
+        "tema": "Saneamiento",
+        "dijo": "Consultó la situación de las plantas de tratamiento en Áncash.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Diputado no identificado",
+        "cargo": "legislador",
+        "sobre": "Nuevo reporte de diagnóstico de SUNASS",
+        "postura": "pregunta",
+        "tema": "Saneamiento",
+        "dijo": "Pidió un nuevo reporte de diagnóstico sobre el abastecimiento.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Manuel Muñoz",
+        "cargo": "invitado",
+        "sobre": "Respuesta a consultas de la comisión",
+        "postura": "comenta",
+        "tema": "Saneamiento",
+        "dijo": "Respondió las preguntas sobre las medidas y fondos de SUNASS.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Roxana Rocha Gallegos",
+        "cargo": "legislador",
+        "sobre": "Proyecto Alquila, ahorra y compra",
+        "postura": "propone",
+        "tema": "Inmobiliario",
+        "dijo": "Propuso un proyecto para facilitar el acceso a la vivienda.",
+        "proyecto": "PL 058-2026-31",
+        "id": "diputados:rocha gallegos"
+      },
+      {
+        "orador": "Bodea",
+        "cargo": "legislador",
+        "sobre": "Consultas sobre el proyecto de vivienda",
+        "postura": "pregunta",
+        "tema": "Inmobiliario",
+        "dijo": "Cuestionó el rango de edad y el gasto del proyecto.",
+        "proyecto": "PL 058-2026-31",
+        "id": null
+      },
+      {
+        "orador": "Javier Cipriani Torne",
+        "cargo": "legislador",
+        "sobre": "Simplificación de inversiones en saneamiento",
+        "postura": "propone",
+        "tema": "Saneamiento",
+        "dijo": "Sustentó la simplificación de inversiones en infraestructura de agua.",
+        "proyecto": "PL 064-2026-31",
+        "id": "diputados:cipriani thorne"
+      },
+      {
+        "orador": "Diputado no identificado",
+        "cargo": "legislador",
+        "sobre": "Inconsistencia en proyecto de saneamiento",
+        "postura": "con observaciones",
+        "tema": "Saneamiento",
+        "dijo": "Señaló una inconsistencia técnica en la propuesta de ley.",
+        "proyecto": "PL 064-2026-31",
+        "id": null
+      },
+      {
+        "orador": "Ciprián",
+        "cargo": "legislador",
+        "sobre": "Modificación de la Ley de Aguas y Saneamiento",
+        "postura": "propone",
+        "tema": "Saneamiento",
+        "dijo": "Propuso incorporar el silencio administrativo positivo en la Ley de Aguas y Saneamiento.",
+        "proyecto": "Decreto Legislativo 280",
+        "id": "diputados:cipriani thorne"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=MynXZyWG3CA"
+  },
+  "fb_1098786769592386": {
+    "fecha": "2026-10-23",
+    "organo": "Comisión de Biodiversidad",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Alex Rojas",
+        "cargo": "invitado",
+        "sobre": "Alcance de la unificación de proyectos",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Explicó la unificación del proyecto ambiental.",
+        "proyecto": "Reformatoria al Código Orgánico del Ambiente",
+        "id": null
+      },
+      {
+        "orador": "Carlos Miguel Cuesta Álvarez",
+        "cargo": "legislador",
+        "sobre": "Unificación de proyectos de ley",
+        "postura": "propone",
+        "tema": "Ambiente",
+        "dijo": "Propuso la unificación de proyectos ambientales.",
+        "proyecto": "Reformatoria al Código Orgánico del Ambiente",
+        "id": "EC:cuesta alvarez"
+      },
+      {
+        "orador": "Carlos Miguel Cuesta Álvarez",
+        "cargo": "legislador",
+        "sobre": "Reconsideración de la votación",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Pidió la reconsideración de la votación por un error.",
+        "proyecto": "",
+        "id": "EC:cuesta alvarez"
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1098786769592386"
+  },
+  "7hbNGfyiJJw": {
+    "fecha": "2026-10-22",
+    "organo": "Comisión de Presupuesto",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Elmer Rafael Cuba Bustinza",
+        "cargo": "ministro o autoridad",
+        "sobre": "Crédito suplementario para el fenómeno del niño",
+        "postura": "a favor",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Defendió la propuesta de incorporar 8228 millones para enfrentar el fenómeno del niño.",
+        "proyecto": "PL 005-2026-2031 CR",
+        "id": null
+      },
+      {
+        "orador": "José Moisés Chipano Chipana",
+        "cargo": "legislador",
+        "sobre": "Prioridades del gasto y deuda pública",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Cuestionó la compra de aviones mientras faltan hospitales en la región de Puno.",
+        "proyecto": "PL 005-2026-2031 CR",
+        "id": "senado:chipana chipana"
+      },
+      {
+        "orador": "Carlos Caballero León",
+        "cargo": "legislador",
+        "sobre": "Conectividad satelital en escuelas rurales",
+        "postura": "con observaciones",
+        "tema": "Telecomunicaciones",
+        "dijo": "Propuso la creación de un satélite propio para garantizar la conectividad nacional.",
+        "proyecto": "PL 005-2026-2031 CR",
+        "id": "senado:caballero leon"
+      },
+      {
+        "orador": "Catherine Ampuero Mesa",
+        "cargo": "legislador",
+        "sobre": "Intereses de deuda y bonificaciones",
+        "postura": "con observaciones",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Preguntó sobre los intereses de los bonos y las bonificaciones al personal.",
+        "proyecto": "PL 005-2026-2031 CR",
+        "id": "senado:ampuero meza"
+      },
+      {
+        "orador": "Henry Arbañel",
+        "cargo": "legislador",
+        "sobre": "Financiamiento para obras de reconstrucción",
+        "postura": "propone",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Propuso una disposición para facilitar el financiamiento de obras de reconstrucción regional.",
+        "proyecto": "PL 005-2026-2031 CR",
+        "id": null
+      },
+      {
+        "orador": "Carlos Alberto Segarra Sánchez",
+        "cargo": "legislador",
+        "sobre": "Proyectos de infraestructura hídrica",
+        "postura": "con observaciones",
+        "tema": "Infraestructura",
+        "dijo": "Pidió la inclusión de proyectos de infraestructura hídrica en Ica y Huancavelica.",
+        "proyecto": "PL 005-2026-2031 CR",
+        "id": "diputados:zegarra sanchez"
+      },
+      {
+        "orador": "César Revía",
+        "cargo": "legislador",
+        "sobre": "Aprobación del crédito por emergencia",
+        "postura": "a favor",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Respaldó la aprobación del crédito para atender las emergencias regionales.",
+        "proyecto": "PL 005-2026-2031 CR",
+        "id": "diputados:revilla villanueva"
+      },
+      {
+        "orador": "Nava Sánchez",
+        "cargo": "legislador",
+        "sobre": "Proyectos de saneamiento en la Amazonía",
+        "postura": "propone",
+        "tema": "Saneamiento",
+        "dijo": "Denunció la falta de recursos para proyectos de saneamiento en la Amazonía.",
+        "proyecto": "PL 005-2026-2031 CR",
+        "id": "diputados:navas sanchez"
+      },
+      {
+        "orador": "Tito Rojas",
+        "cargo": "legislador",
+        "sobre": "Compra de aviones con presupuesto suplementario",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Rechazó destinar 1197 millones para la compra de aviones.",
+        "proyecto": "PL 005-2026",
+        "id": "diputados:tito rojas"
+      },
+      {
+        "orador": "Guillén Valencia",
+        "cargo": "legislador",
+        "sobre": "Continuidad de proyectos de inversión pública",
+        "postura": "propone",
+        "tema": "Infraestructura",
+        "dijo": "Solicitó incorporar cinco proyectos en el texto sustitutorio.",
+        "proyecto": "PL 005-2026",
+        "id": "diputados:guillen valencia"
+      },
+      {
+        "orador": "Fernández González",
+        "cargo": "legislador",
+        "sobre": "Partidas de gasto del crédito suplementario",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Cuestionó el presupuesto para aviones y publicidad.",
+        "proyecto": "PL 005-2026",
+        "id": "diputados:fernandez gonzalez"
+      },
+      {
+        "orador": "Paucará Axi Carmela",
+        "cargo": "legislador",
+        "sobre": "Necesidades de infraestructura en Piura",
+        "postura": "propone",
+        "tema": "Infraestructura",
+        "dijo": "Informó sobre las necesidades de obras en Piura.",
+        "proyecto": "PL 005-2026",
+        "id": "diputados:paucara paxi"
+      },
+      {
+        "orador": "Víctor Piñán",
+        "cargo": "legislador",
+        "sobre": "Modificaciones presupuestarias para vivienda",
+        "postura": "propone",
+        "tema": "Construcción",
+        "dijo": "Propuso modificaciones presupuestarias para el sector Vivienda.",
+        "proyecto": "PL 005-2026",
+        "id": "diputados:pinan mamani"
+      },
+      {
+        "orador": "Francisco Gatica",
+        "cargo": "legislador",
+        "sobre": "Infraestructura vial en Papaplaya",
+        "postura": "propone",
+        "tema": "Infraestructura",
+        "dijo": "Pidió considerar el mejoramiento vial en Papaplaya.",
+        "proyecto": "PL 005-2026",
+        "id": "diputados:gatica vega"
+      },
+      {
+        "orador": "Jorge Velázquez",
+        "cargo": "legislador",
+        "sobre": "Presupuesto para el Ministerio Público",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Requirió transferir fondos para el Ministerio Público.",
+        "proyecto": "PL 005-2026",
+        "id": "senado:velasquez portocarrero"
+      },
+      {
+        "orador": "Ministro de Economía y Finanzas",
+        "cargo": "ministro o autoridad",
+        "sobre": "Explicación sobre el crédito suplementario",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Explicó la compra de aviones por seguridad nacional.",
+        "proyecto": "PL 005-2026",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=7hbNGfyiJJw"
   }
 }
