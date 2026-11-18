@@ -2884,5 +2884,542 @@
       }
     ],
     "url": "https://www.facebook.com/watch/?v=1776864057373287"
+  },
+  "fb_1689813039378836": {
+    "fecha": "2026-10-29",
+    "organo": "Comisión de Soberanía Alimentaria",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Lizarro Mauricio Reina-Bowen",
+        "cargo": "invitado",
+        "sobre": "proyecto de ley de INEAP",
+        "postura": "con observaciones",
+        "tema": "Agricultura",
+        "dijo": "Propuso cambios para mejorar la articulación de INEAP con universidades.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Baez",
+        "cargo": "legislador",
+        "sobre": "viabilidad presupuestaria del proyecto",
+        "postura": "pregunta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Preguntó sobre la viabilidad de las propuestas ante los recortes.",
+        "proyecto": "",
+        "id": "EC:baez mera"
+      },
+      {
+        "orador": "Lizarro Mauricio Reina-Bowen",
+        "cargo": "invitado",
+        "sobre": "alianzas estratégicas con universidades",
+        "postura": "comenta",
+        "tema": "Agricultura",
+        "dijo": "Explicó que las alianzas permitirán optimizar los recursos existentes.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Vicepresidente",
+        "cargo": "legislador",
+        "sobre": "prácticas estudiantiles en territorio",
+        "postura": "pregunta",
+        "tema": "Educación",
+        "dijo": "Consultó sobre la reglamentación de la participación estudiantil.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Lizarro Mauricio Reina-Bowen",
+        "cargo": "invitado",
+        "sobre": "mesas regionales y fondos FIA",
+        "postura": "comenta",
+        "tema": "Agricultura",
+        "dijo": "Indicó que las mesas regionales fortalecerían la investigación científica.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1689813039378836"
+  },
+  "fb_1181017327599992": {
+    "fecha": "2026-10-29",
+    "organo": "Comisión de Relaciones Internacionales",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Lucía Lizved Jaramillo Solita",
+        "cargo": "legislador",
+        "sobre": "Tratado de extradición con Costa Rica",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Explicó la importancia de los tratados de extradición para la cooperación judicial internacional.",
+        "proyecto": "",
+        "id": "EC:jaramillo zurita lucia"
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1181017327599992"
+  },
+  "BGnG_EJ88tg": {
+    "fecha": "2026-10-28",
+    "organo": "Comisión de Transportes",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Normallar",
+        "cargo": "legislador",
+        "sobre": "Mantenimiento del puente Huampaní",
+        "postura": "en contra",
+        "tema": "Infraestructura",
+        "dijo": "Denunció la falta de mantenimiento en el puente Huampaní.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Normallar",
+        "cargo": "legislador",
+        "sobre": "Desfinanciamiento de Techo Propio",
+        "postura": "en contra",
+        "tema": "Construcción",
+        "dijo": "Cuestionó la falta de recursos para el programa Techo Propio.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "John Valqui Ordóñez",
+        "cargo": "legislador",
+        "sobre": "Seguimiento de infraestructura pública",
+        "postura": "comenta",
+        "tema": "Infraestructura",
+        "dijo": "Informó sobre proyectos de infraestructura con problemas de financiamiento.",
+        "proyecto": "",
+        "id": "diputados:valqui ordonez"
+      },
+      {
+        "orador": "John Valqui Ordóñez",
+        "cargo": "legislador",
+        "sobre": "Derivación de la PL 0642",
+        "postura": "propone",
+        "tema": "Construcción",
+        "dijo": "Propuso derivar la proposición legislativa 0642 a su comisión.",
+        "proyecto": "PL 0642",
+        "id": "diputados:valqui ordonez"
+      },
+      {
+        "orador": "Verónica Jones",
+        "cargo": "legislador",
+        "sobre": "Supervisión de Ositrán",
+        "postura": "propone",
+        "tema": "Transporte",
+        "dijo": "Pidió citar a Ositrán para supervisar vías concesionadas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Neri Fernández Nina",
+        "cargo": "legislador",
+        "sobre": "Citación por desfinanciamiento habitacional",
+        "postura": "propone",
+        "tema": "Construcción",
+        "dijo": "Pidió citar a ministros por desfinanciamiento de Techo Propio.",
+        "proyecto": "",
+        "id": "diputados:fernandez nina"
+      },
+      {
+        "orador": "Mauricio Fernando Díaz González",
+        "cargo": "ministro o autoridad",
+        "sobre": "Brechas de agua y saneamiento",
+        "postura": "comenta",
+        "tema": "Saneamiento",
+        "dijo": "Informó sobre las brechas de agua y alcantarillado.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Mauricio Fernando Díaz González",
+        "cargo": "ministro o autoridad",
+        "sobre": "Modelo Ciudad de Oportunidades",
+        "postura": "propone",
+        "tema": "Construcción",
+        "dijo": "Presentó el nuevo modelo de vivienda Ciudad de Oportunidades.",
+        "proyecto": "Ciudad de Oportunidades",
+        "id": null
+      },
+      {
+        "orador": "Mauricio Fernando Díaz González",
+        "cargo": "ministro o autoridad",
+        "sobre": "Ejecución presupuestal sectorial",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Expuso el nivel de ejecución del presupuesto sectorial.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Mauricio Fernando Díaz González",
+        "cargo": "ministro o autoridad",
+        "sobre": "Destrabe de obras de inversión",
+        "postura": "comenta",
+        "tema": "Construcción",
+        "dijo": "Reportó el destrabe de diversas obras de inversión.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Mauricio Ornillas",
+        "cargo": "ministro o autoridad",
+        "sobre": "Ejecución presupuestal y destrave de obras",
+        "postura": "comenta",
+        "tema": "Infraestructura",
+        "dijo": "Informó sobre el avance presupuestal y el destrave de obras sectoriales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Mauricio Ornillas",
+        "cargo": "ministro o autoridad",
+        "sobre": "Uso de la plataforma Génesis R",
+        "postura": "comenta",
+        "tema": "Tecnología",
+        "dijo": "Presentó la plataforma tecnológica Génesis R para la gestión de emergencias.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Mauricio Ornillas",
+        "cargo": "ministro o autoridad",
+        "sobre": "Prevención ante el fenómeno del Niño",
+        "postura": "comenta",
+        "tema": "Saneamiento",
+        "dijo": "Detalló la capacidad operativa para enfrentar el fenómeno del Niño.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Muedas",
+        "cargo": "legislador",
+        "sobre": "Obras paralizadas en la región Junín",
+        "postura": "en contra",
+        "tema": "Infraestructura",
+        "dijo": "Denunció la falta de atención a familias damnificadas en Junín.",
+        "proyecto": "",
+        "id": "diputados:muedas balbiese"
+      },
+      {
+        "orador": "Liliana Tacayama",
+        "cargo": "legislador",
+        "sobre": "Prevención de ocupación en zonas de riesgo",
+        "postura": "pregunta",
+        "tema": "Saneamiento",
+        "dijo": "Preguntó sobre medidas para evitar ocupaciones informales en zonas de riesgo.",
+        "proyecto": "",
+        "id": "diputados:takayama jimenez"
+      },
+      {
+        "orador": "Milagro Santana",
+        "cargo": "legislador",
+        "sobre": "Reducción de brechas de agua potable",
+        "postura": "pregunta",
+        "tema": "Saneamiento",
+        "dijo": "Preguntó sobre las metas de reducción de brechas de agua potable.",
+        "proyecto": "",
+        "id": "diputados:santana vera"
+      },
+      {
+        "orador": "Norma Yar",
+        "cargo": "legislador",
+        "sobre": "Reglamentación de la ley de agua",
+        "postura": "en contra",
+        "tema": "Saneamiento",
+        "dijo": "Cuestionó la falta de reglamentación de la ley de agua de emergencia.",
+        "proyecto": "Ley 32349",
+        "id": null
+      },
+      {
+        "orador": "Pilar Zulca",
+        "cargo": "legislador",
+        "sobre": "Financiamiento de proyectos de saneamiento",
+        "postura": "pregunta",
+        "tema": "Saneamiento",
+        "dijo": "Preguntó sobre el financiamiento continuo para obras de saneamiento.",
+        "proyecto": "",
+        "id": "diputados:sulca castillo"
+      },
+      {
+        "orador": "John Valqui",
+        "cargo": "legislador",
+        "sobre": "Reactivación de obras de saneamiento",
+        "postura": "pregunta",
+        "tema": "Saneamiento",
+        "dijo": "Preguntó por la cantidad de obras de saneamiento reactivadas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ángel Bobadía",
+        "cargo": "legislador",
+        "sobre": "Obras por impuestos para vivienda",
+        "postura": "pregunta",
+        "tema": "Construcción",
+        "dijo": "Preguntó sobre la aplicación de obras por impuestos en vivienda.",
+        "proyecto": "",
+        "id": "senado:ventura angel"
+      },
+      {
+        "orador": "Gerald Sonco",
+        "cargo": "legislador",
+        "sobre": "Atención de emergencia en Puno",
+        "postura": "pregunta",
+        "tema": "Saneamiento",
+        "dijo": "Pidió apoyo con módulos temporales para las víctimas en Puno.",
+        "proyecto": "",
+        "id": "diputados:sonco villanueva"
+      },
+      {
+        "orador": "Gilmer Trujillo",
+        "cargo": "legislador",
+        "sobre": "Detalle de proyectos por región",
+        "postura": "propone",
+        "tema": "Saneamiento",
+        "dijo": "Pidió información detallada de los proyectos de agua por región.",
+        "proyecto": "",
+        "id": "diputados:trujillo zegarra"
+      },
+      {
+        "orador": "Verónica",
+        "cargo": "legislador",
+        "sobre": "Compromisos ante el fenómeno del Niño en Ica",
+        "postura": "pregunta",
+        "tema": "Infraestructura",
+        "dijo": "Preguntó cuándo se ejecutará una solución definitiva para la quebrada de Yauca de Rosario.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Olber Peña Córdoba",
+        "cargo": "legislador",
+        "sobre": "Presupuesto para construcción en sitio propio",
+        "postura": "pregunta",
+        "tema": "Construcción",
+        "dijo": "Preguntó sobre el presupuesto asignado para la modalidad de construcción en sitio propio.",
+        "proyecto": "",
+        "id": "diputados:pena cordova"
+      },
+      {
+        "orador": "Sadit Pérez",
+        "cargo": "legislador",
+        "sobre": "Recorte de subsidios y emergencia en vivienda",
+        "postura": "pregunta",
+        "tema": "Construcción",
+        "dijo": "Preguntó por el recorte de subsidios y los alcances de la declaratoria de emergencia.",
+        "proyecto": "",
+        "id": "diputados:perez quispe"
+      },
+      {
+        "orador": "Sadit Pérez",
+        "cargo": "legislador",
+        "sobre": "Situación de damnificados en Puno",
+        "postura": "pregunta",
+        "tema": "Construcción",
+        "dijo": "Pidió atención estatal para las familias damnificadas por heladas y desastres en Puno.",
+        "proyecto": "",
+        "id": "diputados:perez quispe"
+      },
+      {
+        "orador": "Mauricio Arnías",
+        "cargo": "ministro o autoridad",
+        "sobre": "Gestión de módulos térmicos y vivienda",
+        "postura": "comenta",
+        "tema": "Construcción",
+        "dijo": "Informó sobre la instalación de módulos térmicos y el uso de obras por impuestos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Sóimo Cárdenas Muge",
+        "cargo": "ministro o autoridad",
+        "sobre": "Estado de proyectos en la región Junín",
+        "postura": "comenta",
+        "tema": "Infraestructura",
+        "dijo": "Explicó las deficiencias presupuestales y los problemas en proyectos de la región Junín.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Sóimo Cárdenas Muge",
+        "cargo": "ministro o autoridad",
+        "sobre": "Situación del Hospital Iga Aracaqui",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Detalló la situación contractual y los procesos de selección del Hospital Iga Aracaqui.",
+        "proyecto": "Hospital Iga Aracaqui",
+        "id": null
+      },
+      {
+        "orador": "Sóimo Cárdenas Muge",
+        "cargo": "ministro o autoridad",
+        "sobre": "Avance del Hospital El Carmen",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Informó que el Hospital El Carmen tiene un avance físico del ochenta y siete por ciento.",
+        "proyecto": "Hospital El Carmen",
+        "id": null
+      },
+      {
+        "orador": "Sóimo Cárdenas Muge",
+        "cargo": "ministro o autoridad",
+        "sobre": "Proyecto de la Universidad Juan Santos Atahualpa",
+        "postura": "comenta",
+        "tema": "Educación",
+        "dijo": "Señaló que el campus de la universidad presenta un avance cercano al ochenta por ciento.",
+        "proyecto": "Universidad Juan Santos Atahualpa",
+        "id": null
+      },
+      {
+        "orador": "Sóimo Cárdenas Muge",
+        "cargo": "ministro o autoridad",
+        "sobre": "Estado de la vía JU 103",
+        "postura": "comenta",
+        "tema": "Transporte",
+        "dijo": "Detalló los problemas técnicos y el estado de ejecución de la vía JU 103.",
+        "proyecto": "JU 103",
+        "id": null
+      },
+      {
+        "orador": "Sóimo Cárdenas Muge",
+        "cargo": "ministro o autoridad",
+        "sobre": "Construcción del Puente Noruega",
+        "postura": "comenta",
+        "tema": "Infraestructura",
+        "dijo": "Indicó que la construcción del Puente Noruega continúa avanzando tras la conciliación del convenio.",
+        "proyecto": "Puente Noruega",
+        "id": null
+      },
+      {
+        "orador": "Cárdenas",
+        "cargo": "ministro o autoridad",
+        "sobre": "estado del Puente Noruega",
+        "postura": "comenta",
+        "tema": "Infraestructura",
+        "dijo": "Informó sobre el avance físico del 54% en el puente.",
+        "proyecto": "Puente Noruega",
+        "id": null
+      },
+      {
+        "orador": "Cárdenas",
+        "cargo": "ministro o autoridad",
+        "sobre": "contrato de la JU 100",
+        "postura": "comenta",
+        "tema": "Transporte",
+        "dijo": "Explicó la resolución del contrato por falta de capacidad empresarial.",
+        "proyecto": "JU 100",
+        "id": null
+      },
+      {
+        "orador": "Cárdenas",
+        "cargo": "ministro o autoridad",
+        "sobre": "ejecución de la carretera JU 1",
+        "postura": "comenta",
+        "tema": "Transporte",
+        "dijo": "Detalló que los conflictos sociales retrasan la carretera JU 1.",
+        "proyecto": "JU 1",
+        "id": null
+      },
+      {
+        "orador": "Cárdenas",
+        "cargo": "ministro o autoridad",
+        "sobre": "recorte del presupuesto 2027",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Denunció un recorte de más de 157 millones de soles.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Muedas",
+        "cargo": "legislador",
+        "sobre": "gestión del Hospital Manuel Aracaqui",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Cuestionó la ubicación y el avance del hospital en Satipo.",
+        "proyecto": "Hospital Manuel Aracaqui",
+        "id": "diputados:muedas balbiese"
+      },
+      {
+        "orador": "Muedas",
+        "cargo": "legislador",
+        "sobre": "licitación del hospital de Junín",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Denunció una licitación irregular por 290 millones de soles.",
+        "proyecto": "Hospital de Junín",
+        "id": "diputados:muedas balbiese"
+      },
+      {
+        "orador": "Muedas",
+        "cargo": "legislador",
+        "sobre": "adelanto en la carretera JU 1",
+        "postura": "pregunta",
+        "tema": "Transporte",
+        "dijo": "Preguntó por el adelanto de 8 millones sin obras ejecutadas.",
+        "proyecto": "JU 1",
+        "id": "diputados:muedas balbiese"
+      },
+      {
+        "orador": "Muedas",
+        "cargo": "legislador",
+        "sobre": "omisiones en la JU 100",
+        "postura": "pregunta",
+        "tema": "Transporte",
+        "dijo": "Consultó sobre la falta de implementación de recomendaciones de Contraloría.",
+        "proyecto": "JU 100",
+        "id": "diputados:muedas balbiese"
+      },
+      {
+        "orador": "Muedas",
+        "cargo": "legislador",
+        "sobre": "ejecución de la JU 108",
+        "postura": "pregunta",
+        "tema": "Transporte",
+        "dijo": "Cuestionó el desembolso del 70% con solo 40% de avance.",
+        "proyecto": "JU 108",
+        "id": "diputados:muedas balbiese"
+      },
+      {
+        "orador": "Muedas",
+        "cargo": "legislador",
+        "sobre": "paralización de la JU 103",
+        "postura": "pregunta",
+        "tema": "Transporte",
+        "dijo": "Preguntó sobre la efectividad del control preventivo de Contraloría.",
+        "proyecto": "JU 103",
+        "id": "diputados:muedas balbiese"
+      },
+      {
+        "orador": "Muedas",
+        "cargo": "legislador",
+        "sobre": "avance del Puente Quimiri",
+        "postura": "pregunta",
+        "tema": "Transporte",
+        "dijo": "Reclamó explicaciones por el nulo avance financiero del puente.",
+        "proyecto": "Puente Quimiri",
+        "id": "diputados:muedas balbiese"
+      },
+      {
+        "orador": "Muedas",
+        "cargo": "legislador",
+        "sobre": "inversión en agua para riego",
+        "postura": "pregunta",
+        "tema": "Saneamiento",
+        "dijo": "Solicitó información sobre la inversión sin avance financiero.",
+        "proyecto": "",
+        "id": "diputados:muedas balbiese"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=BGnG_EJ88tg"
   }
 }
