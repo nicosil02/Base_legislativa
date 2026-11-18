@@ -9,7 +9,12 @@ VISTAS.panel = (() => {
   const igual = (a, b) => !!a && !!b && a.titulo === b.titulo && a.url === b.url;
   // Bandeja: cada alerta queda por revisar hasta que se alerta, se deja para despues o se descarta
   const clave = (a) => (a.id != null ? `n${a.id}` : `${a.tipo}:${a.url || a.titulo}`);
-  const estado = (a) => App.bandeja[clave(a)]?.estado ?? (App.fuera.has(a.id) ? "descartar" : null);
+  // ya alertada a todos los clientes que la marcaron (o al filtrado): va sola a Alertadas
+  const yaAlertada = (a) => {
+    const cs = Object.keys(a.porque).filter((c) => !s().cli || c === s().cli);
+    return cs.length > 0 && cs.every((c) => (a.ya ?? []).includes(c));
+  };
+  const estado = (a) => App.bandeja[clave(a)]?.estado ?? (App.fuera.has(a.id) ? "descartar" : yaAlertada(a) ? "alertar" : null);
   const CAJAS = { "Por revisar": (e) => !e, "Para después": (e) => e === "despues", Alertadas: (e) => e === "alertar", Interesantes: (e) => e === "interesante", Descartadas: (e) => e === "descartar" };
 
   function filtrar() {

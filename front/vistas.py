@@ -174,7 +174,15 @@ def panel() -> dict | None:
     ventanas = {v: _datos(d, pe, cerebro) for v, d in _ventanas().items()}
     tramite, agenda = _tramite(), _agenda(cerebro)
     datos = next(iter(ventanas.values()))
-    atraso = (datetime.now(timezone.utc)
+    alertas = {v: _alertas(d) for v, d in ventanas.items()}
+    if cerebro is not None:  # lo ya alertado a un cliente pasa a "Alertadas" con el titulo de la alerta
+        from cerebro.embeddings import ya_alertadas
+        ya = ya_alertadas({a["id"] for lista in alertas.values() for a in lista if a["id"] is not None}, cerebro)
+        for a in (a for lista in alertas.values() for a in lista):
+            a["ya"] = [c for c in ya.get(a["id"], {}) if c in a["porque"]]
+            for c in a["ya"]:
+                a["porque"][c] = f"Ya alertada: {ya[a['id']][c]}"
+    atraso =(datetime.now(timezone.utc)
               - datetime.fromisoformat(datos["ultimo"].replace("Z", "+00:00")).astimezone(timezone.utc)).total_seconds() / 3600
     return {
         "ahora": q._lima_ahora().strftime("%d/%m/%Y, %H:%M"), "atrasada": atraso > MAX_ATRASO_H,
@@ -183,7 +191,7 @@ def panel() -> dict | None:
         "agenda": [{**a, "cuando": _cuando(a)} for a in agenda],
         "proyectos": [_proyecto(p) for p in tramite if p["clientes"]],
         "total_tramite": {p: sum(x["pais"] == p for x in tramite) for p in legislativo.PAISES},
-        "ventanas": {v: {"alertas": _alertas(d), "sesiones": _sesiones(d), "entradas": d["entradas"]}
+        "ventanas": {v: {"alertas": alertas[v], "sesiones": _sesiones(d), "entradas": d["entradas"]}
                      for v, d in ventanas.items()},
     }
 

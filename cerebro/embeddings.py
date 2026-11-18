@@ -514,6 +514,33 @@ def vectores_noticias(ids, conn: sqlite3.Connection) -> dict:
     return out
 
 
+# Noticia vs alerta enviada (cuerpo entero): el mismo hecho da 0.80-0.91; temas
+# vecinos sin ser el mismo hecho llegan a 0.75 (MTC conectividad vs CSIRT MTC).
+# ponytail: umbral a ojo con las alertas de nov 2026, recalibrar si oculta de mas.
+UMBRAL_YA_ALERTADA = 0.78
+
+
+def ya_alertadas(ids, conn: sqlite3.Connection, dias: int = 30,
+                 umbral: float = UMBRAL_YA_ALERTADA) -> dict[int, dict[str, str]]:
+    """{id de noticia: {cliente: titulo de la alerta}} para las noticias que
+    cuentan un hecho ya alertado a ese cliente en los ultimos `dias`. Solo ve
+    las alertas que el cerebro ya embebio (cerebro.yml)."""
+    import numpy as np
+    from datetime import date, timedelta
+    desde = (date.today() - timedelta(days=dias)).isoformat()
+    filas = conn.execute("""SELECT i.clave, i.titulo, v.embedding FROM items i JOIN vec_items v ON v.rowid = i.id
+                            WHERE i.tipo = 'alerta' AND i.fecha >= ?""", (desde,)).fetchall()
+    if not filas:
+        return {}
+    alertas = np.stack([np.frombuffer(f[2], dtype=np.float32) for f in filas])
+    out: dict[int, dict[str, str]] = {}
+    for i, v in vectores_noticias(ids, conn).items():
+        for j in np.flatnonzero(alertas @ v >= umbral):
+            slug = filas[j][0][len("alerta_"):].rsplit("_", 1)[0]
+            out.setdefault(i, {}).setdefault(slug, filas[j][1].split(": ", 1)[-1])
+    return out
+
+
 def afinidad_vector(claves: list[str], vector: list[float],
                     conn: sqlite3.Connection | None = None) -> dict[str, float]:
     """{clave: similitud} de cada clave contra un vector cualquiera."""
