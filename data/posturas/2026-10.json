@@ -4719,5 +4719,163 @@
       }
     ],
     "url": "https://www.facebook.com/watch/?v=1801729931033388"
+  },
+  "8lRpH6p4htU": {
+    "fecha": "2026-10-30",
+    "organo": "Comisión de Salud",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Lady Sine",
+        "cargo": "invitado",
+        "sobre": "registro de sustancias modelantes",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Informó sobre la actualización del listado de sustancias autorizadas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Juan Rosario",
+        "cargo": "invitado",
+        "sobre": "proyecto de ley de medicina estética",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Rechazó la propuesta por considerarla inconstitucional y riesgosa.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Emerson Chávez",
+        "cargo": "invitado",
+        "sobre": "alternativas para el proyecto legislativo",
+        "postura": "pregunta",
+        "tema": "Salud",
+        "dijo": "Preguntó por alternativas para proteger al paciente adecuadamente.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Osvino Maraví",
+        "cargo": "invitado",
+        "sobre": "riesgos de sustancias modelantes",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Denunció el aumento de complicaciones por el uso de sustancias.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Fernando Neyda",
+        "cargo": "invitado",
+        "sobre": "complicaciones por rellenos estéticos",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Explicó los peligros de los rellenos estéticos mal aplicados.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Rosana Girón",
+        "cargo": "invitado",
+        "sobre": "Complicaciones por sustancias modelantes",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Expuso las graves complicaciones médicas causadas por sustancias modelantes.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "María Luiz Yauri Rimachi",
+        "cargo": "legislador",
+        "sobre": "Normativa de sustancias modelantes",
+        "postura": "a favor",
+        "tema": "Salud",
+        "dijo": "Respaldó la necesidad de ajustar la normativa sobre procedimientos.",
+        "proyecto": "",
+        "id": "senado:yauri tunque"
+      },
+      {
+        "orador": "Mervi Benavides Mendoza",
+        "cargo": "invitado",
+        "sobre": "Impacto en la Ley Universitaria",
+        "postura": "con observaciones",
+        "tema": "Educación",
+        "dijo": "Señaló el impacto de la propuesta en la Ley Universitaria.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Joana Bernedo",
+        "cargo": "invitado",
+        "sobre": "Certificación en procedimientos estéticos",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Propuso una certificación para procedimientos estéticos mínimamente invasivos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Vladimir Medina Victorio",
+        "cargo": "invitado",
+        "sobre": "Intrusismo en medicina estética",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Informó sobre la falta de regulación en medicina estética.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=8lRpH6p4htU"
+  },
+  "fb_1628798448691134": {
+    "fecha": "2026-10-30",
+    "organo": "Comisión de Educación",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Janet Paola Cabezas Castillo",
+        "cargo": "legislador",
+        "sobre": "Protección de la voz ante la IA",
+        "postura": "propone",
+        "tema": "Tecnología",
+        "dijo": "Presentó el proyecto de ley para proteger la voz humana frente a la inteligencia artificial.",
+        "proyecto": "Proyecto de protección de la voz humana",
+        "id": "EC:cabezas castillo"
+      },
+      {
+        "orador": "Maria Paula Villacresa Herrera",
+        "cargo": "legislador",
+        "sobre": "Regulación de simulaciones generadas por IA",
+        "postura": "propone",
+        "tema": "Tecnología",
+        "dijo": "Expuso la propuesta para regular el uso de simulaciones mediante inteligencia artificial.",
+        "proyecto": "Proyecto de regulación de simulaciones por IA",
+        "id": "EC:villacreses herrera"
+      },
+      {
+        "orador": "María Paula Villacreses",
+        "cargo": "legislador",
+        "sobre": "Regulación de simulaciones por inteligencia artificial",
+        "postura": "a favor",
+        "tema": "Tecnología",
+        "dijo": "Defendió la regulación de contenidos generados por inteligencia artificial para proteger derechos fundamentales.",
+        "proyecto": "Proyecto de ley de simulaciones por IA",
+        "id": "EC:villacreses herrera"
+      },
+      {
+        "orador": "Secretario",
+        "cargo": "ministro o autoridad",
+        "sobre": "Unificación de proyectos de inteligencia artificial",
+        "postura": "comenta",
+        "tema": "Tecnología",
+        "dijo": "Informó sobre la moción para unificar los proyectos de inteligencia artificial.",
+        "proyecto": "Proyecto de ley de gobernanza de la IA",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1628798448691134"
   }
 }
