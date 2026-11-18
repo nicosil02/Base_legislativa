@@ -3868,5 +3868,282 @@
       }
     ],
     "url": "https://www.facebook.com/watch/?v=2069061627147448"
+  },
+  "_PVFlHwcNtc": {
+    "fecha": "2026-10-28",
+    "organo": "Pleno del Congreso",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Luis Hibaja",
+        "cargo": "legislador",
+        "sobre": "obras del aeropuerto de Jaén",
+        "postura": "propone",
+        "tema": "Infraestructura",
+        "dijo": "Propuso priorizar la ejecución de las obras del aeropuerto de Jaén.",
+        "proyecto": "PL 5",
+        "id": "diputados:jibaja ramos"
+      },
+      {
+        "orador": "Absalom Vázquez",
+        "cargo": "legislador",
+        "sobre": "naturaleza del crédito suplementario",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Explicó la definición y el monto del crédito suplementario.",
+        "proyecto": "PL 5",
+        "id": "senado:vasquez villanueva"
+      },
+      {
+        "orador": "César Revilla",
+        "cargo": "legislador",
+        "sobre": "anexo de inversiones locales",
+        "postura": "propone",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Solicitó agregar un anexo de inversiones para gobiernos locales.",
+        "proyecto": "PL 5",
+        "id": "diputados:revilla villanueva"
+      },
+      {
+        "orador": "José Arista",
+        "cargo": "legislador",
+        "sobre": "elaboración de texto sustitutorio",
+        "postura": "propone",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Pidió tiempo para elaborar un texto sustitutorio con el Ministerio.",
+        "proyecto": "PL 5",
+        "id": "senado:arista arbildo"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=_PVFlHwcNtc"
+  },
+  "fb_1325990186228080": {
+    "fecha": "2026-10-28",
+    "organo": "Comisión de Seguridad Integral",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Daisy Terán",
+        "cargo": "ministro o autoridad",
+        "sobre": "Observaciones a la Ley de Personal",
+        "postura": "a favor",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Ratificó la viabilidad financiera del proyecto para el Ministerio de Defensa.",
+        "proyecto": "Ley de Personal y Disciplina de las Fuerzas Armadas",
+        "id": null
+      },
+      {
+        "orador": "Guillermo Pabón",
+        "cargo": "invitado",
+        "sobre": "Contrabando en la Ley Antimafias",
+        "postura": "a favor",
+        "tema": "Comercio",
+        "dijo": "Respaldó la inclusión del contrabando en la Ley Antimafias.",
+        "proyecto": "Ley Antimafias",
+        "id": null
+      },
+      {
+        "orador": "Gerardo Machado",
+        "cargo": "legislador",
+        "sobre": "Contrabando y lavado de activos",
+        "postura": "pregunta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Preguntó cómo la ley puede prevenir el lavado de activos.",
+        "proyecto": "Ley Antimafias",
+        "id": "EC:machado clavijo"
+      },
+      {
+        "orador": "Mauricio Alejandro Nágera",
+        "cargo": "invitado",
+        "sobre": "Observaciones técnicas a la Ley Antimafias",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Sugirió revisar la desproporcionalidad de las penas y garantías procesales.",
+        "proyecto": "Ley Antimafias",
+        "id": null
+      },
+      {
+        "orador": "Mario Asambrán",
+        "cargo": "legislador",
+        "sobre": "Penas para delitos hidrocarburíferos",
+        "postura": "pregunta",
+        "tema": "Energía",
+        "dijo": "Consultó por una propuesta de sanciones más coherente.",
+        "proyecto": "Ley Antimafias",
+        "id": "EC:zambrano vera"
+      },
+      {
+        "orador": "Machado",
+        "cargo": "legislador",
+        "sobre": "Aplicación de la Ley Antimafias",
+        "postura": "pregunta",
+        "tema": "Justicia",
+        "dijo": "Preguntó cómo aplicar la ley sin vulnerar el debido proceso.",
+        "proyecto": "Ley Antimafias",
+        "id": "EC:machado clavijo"
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1325990186228080"
+  },
+  "fb_1371732874992866": {
+    "fecha": "2026-10-28",
+    "organo": "Comisión de Régimen Económico",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Andrea Pamela Saúd",
+        "cargo": "invitado",
+        "sobre": "Reforma de la Ley de Contratación Pública",
+        "postura": "con observaciones",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Propuso establecer porcentajes mínimos y mecanismos de verificación en la reforma.",
+        "proyecto": "Ley de Contratación Pública",
+        "id": null
+      },
+      {
+        "orador": "Vallejo",
+        "cargo": "legislador",
+        "sobre": "Dinamización de la economía local",
+        "postura": "con observaciones",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Cuestionó la efectividad de los incentivos para la economía local.",
+        "proyecto": "Ley de Contratación Pública",
+        "id": "EC:vallejo ayala"
+      },
+      {
+        "orador": "Dura",
+        "cargo": "legislador",
+        "sobre": "Verificación de la contratación local",
+        "postura": "pregunta",
+        "tema": "Trabajo",
+        "dijo": "Preguntó sobre metodologías para evitar la intermediación comercial.",
+        "proyecto": "Ley de Contratación Pública",
+        "id": "EC:duran aguilar"
+      },
+      {
+        "orador": "Andrea Pamela Saúd",
+        "cargo": "invitado",
+        "sobre": "Control de la intermediación laboral",
+        "postura": "comenta",
+        "tema": "Trabajo",
+        "dijo": "Propuso utilizar el domicilio para verificar la residencia laboral.",
+        "proyecto": "Ley de Contratación Pública",
+        "id": null
+      },
+      {
+        "orador": "Invitada experta",
+        "cargo": "invitado",
+        "sobre": "Metodologías de verificación contractual",
+        "postura": "propone",
+        "tema": "Trabajo",
+        "dijo": "Propuso metodologías técnicas para verificar la ejecución de contratos y la mano de obra local.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Asambleísta",
+        "cargo": "legislador",
+        "sobre": "Precarización laboral en contratos públicos",
+        "postura": "en contra",
+        "tema": "Trabajo",
+        "dijo": "Denunció la precarización de trabajadores en contratos de limpieza y falta de control.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Asambleísta",
+        "cargo": "legislador",
+        "sobre": "Fortalecimiento de modelos de pliegos",
+        "postura": "propone",
+        "tema": "Trabajo",
+        "dijo": "Propuso fortalecer los modelos de pliegos para proteger los derechos laborales ciudadanos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Asambleísta",
+        "cargo": "legislador",
+        "sobre": "Confiabilidad de estadísticas del INEG",
+        "postura": "pregunta",
+        "tema": "Otros",
+        "dijo": "Cuestionó la confiabilidad y la oportunidad de los datos entregados por el INEG.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Invitada experta",
+        "cargo": "invitado",
+        "sobre": "Actualización anual de indicadores territoriales",
+        "postura": "propone",
+        "tema": "Trabajo",
+        "dijo": "Propuso que el INEG actualice los indicadores de territorios rezagados anualmente.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Asambleísta",
+        "cargo": "legislador",
+        "sobre": "Límites de mano de obra local",
+        "postura": "con observaciones",
+        "tema": "Trabajo",
+        "dijo": "Cuestionó el límite del sesenta por ciento para la contratación de mano de obra.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Asambleísta",
+        "cargo": "legislador",
+        "sobre": "Riesgos de cuotas de empleo amazónicas",
+        "postura": "pregunta",
+        "tema": "Trabajo",
+        "dijo": "Preguntó sobre los riesgos de aplicar porcentajes de empleo en provincias con poca oferta.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Invitada experta",
+        "cargo": "invitado",
+        "sobre": "Mitigación de riesgos mediante capacitación",
+        "postura": "propone",
+        "tema": "Trabajo",
+        "dijo": "Explicó que la capacitación técnica puede mitigar riesgos en la ejecución de contratos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Maldonado",
+        "cargo": "legislador",
+        "sobre": "Participación de MiPYMES en contratación",
+        "postura": "pregunta",
+        "tema": "Mype",
+        "dijo": "Preguntó sobre mecanismos para que las MiPYMES compitan en la contratación pública.",
+        "proyecto": "",
+        "id": "EC:castillo maldonado"
+      },
+      {
+        "orador": "Invitada experta",
+        "cargo": "invitado",
+        "sobre": "Socialización para nuevos proveedores",
+        "postura": "propone",
+        "tema": "Mype",
+        "dijo": "Propuso realizar socializaciones y capacitaciones para fomentar la participación de pequeños proveedores.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Karen Anahí Chihuahua",
+        "cargo": "invitado",
+        "sobre": "Reforma de contratación pública para empleo",
+        "postura": "con observaciones",
+        "tema": "Trabajo",
+        "dijo": "Cuestionó la metodología de verificación de empleo y propuso establecer porcentajes de trabajadores sin experiencia.",
+        "proyecto": "reforma de contratación pública",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1371732874992866"
   }
 }
