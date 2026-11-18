@@ -147,5 +147,842 @@
       }
     ],
     "url": "https://www.youtube.com/watch?v=7_6irbY4z1Y"
+  },
+  "sCHBjXPFuN8": {
+    "fecha": "2026-09-30",
+    "organo": "Comisión de Gestión del Estado",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Héctor Ventura",
+        "cargo": "legislador",
+        "sobre": "Corrupción en la Universidad San Agustín",
+        "postura": "propone",
+        "tema": "Educación",
+        "dijo": "Pidió convocar a exrectores de la Universidad San Agustín por presuntos robos.",
+        "proyecto": "",
+        "id": "senado:ventura angel"
+      },
+      {
+        "orador": "Hugo Cahuana",
+        "cargo": "legislador",
+        "sobre": "Proyectos de Agrorural en Madre de Dios",
+        "postura": "propone",
+        "tema": "Agricultura",
+        "dijo": "Solicitó citar al ministro de agricultura por irregularidades en pozos tubulares.",
+        "proyecto": "",
+        "id": "senado:ccahuana aymachoque"
+      },
+      {
+        "orador": "Catherine Ampuero",
+        "cargo": "legislador",
+        "sobre": "Obras en el aeródromo de Yurimaguas",
+        "postura": "propone",
+        "tema": "Transporte",
+        "dijo": "Solicitó citar al presidente de Corpac por el abandono de obras.",
+        "proyecto": "",
+        "id": "senado:ampuero meza"
+      },
+      {
+        "orador": "Héctor Ventura",
+        "cargo": "legislador",
+        "sobre": "Funcionarios de la Universidad San Agustín",
+        "postura": "propone",
+        "tema": "Educación",
+        "dijo": "Pidió la citación de exfuncionarios para esclarecer el robo de fondos.",
+        "proyecto": "",
+        "id": "senado:ventura angel"
+      },
+      {
+        "orador": "Luis Fernández",
+        "cargo": "ministro o autoridad",
+        "sobre": "Infraestructura y servicios de salud",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Informó sobre el estado crítico de la infraestructura hospitalaria nacional.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Luis Derer Fernández",
+        "cargo": "ministro o autoridad",
+        "sobre": "Gestión de la salud e infraestructura",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Informó sobre las medidas para reducir brechas de infraestructura hospitalaria.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Segundo Tapia",
+        "cargo": "legislador",
+        "sobre": "Deficiencias en la gestión de hospitales",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Criticó la mala gestión de obras y la crisis sanitaria nacional.",
+        "proyecto": "",
+        "id": "senado:tapia bernal"
+      },
+      {
+        "orador": "Nora Bonifas",
+        "cargo": "legislador",
+        "sobre": "Enfoque de salud integral",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Manifestó que la salud debe ser un servicio integral.",
+        "proyecto": "",
+        "id": "senado:bonifaz carmona"
+      },
+      {
+        "orador": "Segundo Tapia",
+        "cargo": "legislador",
+        "sobre": "Descentralización e inversión en salud",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Denunció la obsolescencia de equipos médicos y la falta de rectoría estatal.",
+        "proyecto": "",
+        "id": "senado:tapia bernal"
+      },
+      {
+        "orador": "Nora Bonifas",
+        "cargo": "legislador",
+        "sobre": "Salud integral y brechas de servicios",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Preguntó sobre la brecha de profesionales y la salud mental infantil.",
+        "proyecto": "",
+        "id": "senado:bonifaz carmona"
+      },
+      {
+        "orador": "Mirta Vázquez",
+        "cargo": "legislador",
+        "sobre": "Reorganización y abastecimiento de medicamentos",
+        "postura": "con observaciones",
+        "tema": "Salud",
+        "dijo": "Cuestionó el abastecimiento de medicamentos y la atención en zonas vulnerables.",
+        "proyecto": "",
+        "id": "senado:vasquez chuquilin"
+      },
+      {
+        "orador": "Walter Gagón",
+        "cargo": "legislador",
+        "sobre": "Fragmentación del sistema de salud",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Propuso migrar hacia un sistema único de salud para mayor eficiencia.",
+        "proyecto": "",
+        "id": "senado:gago rodriguez"
+      },
+      {
+        "orador": "Catherine Ampuero",
+        "cargo": "legislador",
+        "sobre": "Corrupción y costos de medicinas",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Denunció la corrupción en el sector y el alto costo farmacéutico.",
+        "proyecto": "",
+        "id": "senado:ampuero meza"
+      },
+      {
+        "orador": "Miguel Velázquez",
+        "cargo": "legislador",
+        "sobre": "Salud de peruanos en el exterior",
+        "postura": "pregunta",
+        "tema": "Salud",
+        "dijo": "Preguntó sobre las políticas de salud para peruanos residentes en el extranjero.",
+        "proyecto": "",
+        "id": "senado:velasquez garcia"
+      },
+      {
+        "orador": "Hugo Cahuana",
+        "cargo": "legislador",
+        "sobre": "Crisis sanitaria en Madre de Dios",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Denunció la falta de equipamiento médico y de guardias en regiones.",
+        "proyecto": "",
+        "id": "senado:ccahuana aymachoque"
+      },
+      {
+        "orador": "Hugo Cahuana",
+        "cargo": "legislador",
+        "sobre": "Situación del Hospital Santa Rosa",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Denunció la precariedad del Hospital Santa Rosa en Madre de Dios.",
+        "proyecto": "",
+        "id": "senado:ccahuana aymachoque"
+      },
+      {
+        "orador": "Héctor Ventura",
+        "cargo": "legislador",
+        "sobre": "Gestión de salud en Tumbes",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Cuestionó la gestión de salud y la corrupción en Tumbes.",
+        "proyecto": "",
+        "id": "senado:ventura angel"
+      },
+      {
+        "orador": "Jorge Velázquez",
+        "cargo": "legislador",
+        "sobre": "Diseño de infraestructura hospitalaria",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Propuso el uso de diseños modulares para hospitales.",
+        "proyecto": "",
+        "id": "senado:velasquez portocarrero"
+      },
+      {
+        "orador": "Joaquín Yaorí",
+        "cargo": "legislador",
+        "sobre": "Hospital Zacarías Correa Valdivia",
+        "postura": "pregunta",
+        "tema": "Salud",
+        "dijo": "Preguntó por el estado del hospital Zacarías Correa Valdivia.",
+        "proyecto": "",
+        "id": "senado:yauri tunque"
+      },
+      {
+        "orador": "Joaquín Yauri",
+        "cargo": "legislador",
+        "sobre": "equipamiento de laboratorios y ambulancias",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Pidió la dotación de laboratorios y ambulancias.",
+        "proyecto": "",
+        "id": "senado:yauri tunque"
+      },
+      {
+        "orador": "Joaquín Yauri",
+        "cargo": "legislador",
+        "sobre": "expedientes técnicos de salud",
+        "postura": "en contra",
+        "tema": "Construcción",
+        "dijo": "Cuestionó el gasto excesivo en nuevos expedientes.",
+        "proyecto": "",
+        "id": "senado:yauri tunque"
+      },
+      {
+        "orador": "Joaquín Yauri",
+        "cargo": "legislador",
+        "sobre": "fortalecimiento del primer nivel de atención",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Propuso enfocar la política en atención primaria.",
+        "proyecto": "",
+        "id": "senado:yauri tunque"
+      },
+      {
+        "orador": "Luis Derer Fernández",
+        "cargo": "ministro o autoridad",
+        "sobre": "destrabe de ambulancias",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Informó el destrabe de ochenta y seis ambulancias.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Luis Derer Fernández",
+        "cargo": "ministro o autoridad",
+        "sobre": "deficiencias en expedientes técnicos",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Reconoció problemas en la elaboración de expedientes.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Luis Derer Fernández",
+        "cargo": "ministro o autoridad",
+        "sobre": "pagos de médicos en Cajamarca",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Explicó la situación de los pagos médicos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Luis Derer Fernández",
+        "cargo": "ministro o autoridad",
+        "sobre": "presupuesto del proyecto Loreto",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Detalló el incremento de costos del proyecto.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Luis Derer Fernández",
+        "cargo": "ministro o autoridad",
+        "sobre": "abastecimiento de medicamentos por Senares",
+        "postura": "comenta",
+        "tema": "Farma",
+        "dijo": "Indicó que Senares provee pocos medicamentos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Luis Derer Fernández",
+        "cargo": "ministro o autoridad",
+        "sobre": "modelo de compras de medicamentos",
+        "postura": "propone",
+        "tema": "Farma",
+        "dijo": "Planteó usar un sistema de outsourcing logístico.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Luis Derer Fernández",
+        "cargo": "ministro o autoridad",
+        "sobre": "vacunación y anemia en Loreto",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Mencionó la resistencia a la vacunación local.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Luis Derer Fernández",
+        "cargo": "ministro o autoridad",
+        "sobre": "contaminación por metales pesados",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Reportó la atención de niños contaminados.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Luis Derer Fernández",
+        "cargo": "ministro o autoridad",
+        "sobre": "estrategia de salud mental",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Anunció el lanzamiento de la megacomisión salud.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Luis Derer Fernández",
+        "cargo": "ministro o autoridad",
+        "sobre": "control del dengue",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Informó sobre los contagios de dengue.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Luis Derer Fernández",
+        "cargo": "ministro o autoridad",
+        "sobre": "corrupción en compra de insulina",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Informó sobre irregularidades en la compra de insulina.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Luis Derer Fernández",
+        "cargo": "ministro o autoridad",
+        "sobre": "mantenimiento del robot Da Vinci",
+        "postura": "comenta",
+        "tema": "Tecnología",
+        "dijo": "Explicó los altos costos de sus insumos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Luis Derer Fernández",
+        "cargo": "ministro o autoridad",
+        "sobre": "emergencia sanitaria en Tumbes",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Gestionó un hospital de campaña para Tumbes.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Luis Derer Fernández",
+        "cargo": "ministro o autoridad",
+        "sobre": "certificaciones de aislamiento sísmico",
+        "postura": "comenta",
+        "tema": "Construcción",
+        "dijo": "Explicó retrasos por certificaciones de aislamiento.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Luis Derer Fernández",
+        "cargo": "ministro o autoridad",
+        "sobre": "implementación de receta digital",
+        "postura": "propone",
+        "tema": "Farma",
+        "dijo": "Planteó el uso de la receta digital.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Luis Derer Fernández",
+        "cargo": "ministro o autoridad",
+        "sobre": "descentralización de centros de imágenes",
+        "postura": "propone",
+        "tema": "Tecnología",
+        "dijo": "Propuso crear centros de imágenes regionales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Luis Tayer Fernández",
+        "cargo": "ministro o autoridad",
+        "sobre": "atención médica en provincias",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Explicó la necesidad de llevar atención médica a provincias.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Luis Tayer Fernández",
+        "cargo": "ministro o autoridad",
+        "sobre": "gestión de Pronis",
+        "postura": "en contra",
+        "tema": "Infraestructura",
+        "dijo": "Denunció la irresponsabilidad financiera y las obras de Pronis.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Luis Tayer Fernández",
+        "cargo": "ministro o autoridad",
+        "sobre": "centros de imágenes médicos",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Propuso descentralizar centros de imágenes mediante obras por impuestos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Luis Tayer Fernández",
+        "cargo": "ministro o autoridad",
+        "sobre": "atención a legisladores",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Informó la atención de sesenta y siete pedidos de reunión.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Luis Tayer Fernández",
+        "cargo": "ministro o autoridad",
+        "sobre": "entrega de ambulancias",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Informó el destrabe de ochenta ambulancias a la fecha.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Luis Tayer Fernández",
+        "cargo": "ministro o autoridad",
+        "sobre": "expedientes técnicos de obras",
+        "postura": "a favor",
+        "tema": "Infraestructura",
+        "dijo": "Respaldó que el sector privado elabore los expedientes técnicos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Luis Tayer Fernández",
+        "cargo": "ministro o autoridad",
+        "sobre": "sistema modular de salud",
+        "postura": "a favor",
+        "tema": "Salud",
+        "dijo": "Defendió la implementación de sistemas modulares de salud.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Luis Tayer Fernández",
+        "cargo": "ministro o autoridad",
+        "sobre": "prioridades del ministerio",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Mencionó la transformación digital y la anemia como prioridades.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=sCHBjXPFuN8"
+  },
+  "SdVCXptXx5E": {
+    "fecha": "2026-09-30",
+    "organo": "Comisión de Agraria",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "María Filipu Inga",
+        "cargo": "legislador",
+        "sobre": "necesidades de agricultores en Suyana",
+        "postura": "comenta",
+        "tema": "Agricultura",
+        "dijo": "Denunció las dificultades de los agricultores en Piura.",
+        "proyecto": "",
+        "id": "diputados:silupu inga"
+      },
+      {
+        "orador": "Gloria Girachi Pizarro",
+        "cargo": "legislador",
+        "sobre": "modernización de investigación en Arequipa",
+        "postura": "comenta",
+        "tema": "Tecnología",
+        "dijo": "Pidió modernizar los equipos de investigación en Arequipa.",
+        "proyecto": "",
+        "id": "diputados:hirache pizarro"
+      },
+      {
+        "orador": "Jesús Pérez Alcahuamán",
+        "cargo": "legislador",
+        "sobre": "insuficiencia de asistencia técnica en Apurímac",
+        "postura": "comenta",
+        "tema": "Agricultura",
+        "dijo": "Denunció la falta de asistencia técnica en Apurímac.",
+        "proyecto": "",
+        "id": "diputados:perez alccahuaman"
+      },
+      {
+        "orador": "Balqui Calderón Demetrio Flavio",
+        "cargo": "legislador",
+        "sobre": "crisis de las azucareras en Lambayeque",
+        "postura": "comenta",
+        "tema": "Agricultura",
+        "dijo": "Denunció la crisis de las azucareras en Lambayeque.",
+        "proyecto": "",
+        "id": "diputados:valqui calderon"
+      },
+      {
+        "orador": "Aldo Grado Quispe",
+        "cargo": "legislador",
+        "sobre": "fecha para la sesión descentralizada",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Propuso realizar la sesión en octubre de 2026.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Jenny Paredes Navarro",
+        "cargo": "legislador",
+        "sobre": "fecha para la sesión descentralizada",
+        "postura": "con observaciones",
+        "tema": "Otros",
+        "dijo": "Pidió realizar la sesión en semana de representación.",
+        "proyecto": "",
+        "id": "diputados:paredes navarro"
+      },
+      {
+        "orador": "Gloria Pizar",
+        "cargo": "legislador",
+        "sobre": "reunión de la comisión en Arequipa",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Pidió una reunión en la región de Arequipa.",
+        "proyecto": "",
+        "id": "diputados:hirache pizarro"
+      },
+      {
+        "orador": "Aldo Bravo",
+        "cargo": "legislador",
+        "sobre": "inocuidad agroalimentaria y funciones del SENASA",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Pidió citar a la jefa nacional del SENASA.",
+        "proyecto": "",
+        "id": "diputados:bravo quispe"
+      },
+      {
+        "orador": "María Silupú Inga",
+        "cargo": "legislador",
+        "sobre": "sesión descentralizada en Piura",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Pidió realizar la sesión descentralizada en Piura.",
+        "proyecto": "",
+        "id": "diputados:silupu inga"
+      },
+      {
+        "orador": "Jesús Pérez Alcahuamán",
+        "cargo": "legislador",
+        "sobre": "ejecución de proyectos de riego",
+        "postura": "propone",
+        "tema": "Infraestructura",
+        "dijo": "Pidió priorizar proyectos de riego en Apurímac.",
+        "proyecto": "",
+        "id": "diputados:perez alccahuaman"
+      },
+      {
+        "orador": "Analí Márquez Huanca",
+        "cargo": "legislador",
+        "sobre": "exclusión de grandes empresas de beneficios",
+        "postura": "propone",
+        "tema": "Tributos",
+        "dijo": "Propuso modificar la ley para excluir empresas.",
+        "proyecto": "PL 0078-2026-CD",
+        "id": "diputados:marquez huanca"
+      },
+      {
+        "orador": "Gloria Irache",
+        "cargo": "legislador",
+        "sobre": "tasa de impuesto a la renta",
+        "postura": "pregunta",
+        "tema": "Tributos",
+        "dijo": "Preguntó sobre la aplicación de la tasa impositiva.",
+        "proyecto": "PL 0078-2026-CD",
+        "id": "diputados:hirache pizarro"
+      },
+      {
+        "orador": "Analí Márquez Huanca",
+        "cargo": "legislador",
+        "sobre": "tasa de impuesto a la renta",
+        "postura": "comenta",
+        "tema": "Tributos",
+        "dijo": "Defendió la aplicación de la tasa del 29.5%.",
+        "proyecto": "PL 0078-2026-CD",
+        "id": "diputados:marquez huanca"
+      },
+      {
+        "orador": "Ricer Castro Grandes",
+        "cargo": "legislador",
+        "sobre": "desarrollo de la agricultura amazónica",
+        "postura": "propone",
+        "tema": "Agricultura",
+        "dijo": "Propuso el desarrollo sostenible de la agricultura amazónica.",
+        "proyecto": "PL 0088-2026-CD",
+        "id": null
+      },
+      {
+        "orador": "Ricer Castro Grandes",
+        "cargo": "legislador",
+        "sobre": "Ley de desarrollo sostenible amazónico",
+        "postura": "a favor",
+        "tema": "Agricultura",
+        "dijo": "Sustentó la propuesta de desarrollo agrario sostenible en la Amazonía.",
+        "proyecto": "PL 008-2026-D",
+        "id": null
+      },
+      {
+        "orador": "María Silipú",
+        "cargo": "legislador",
+        "sobre": "Sesión descentralizada en Piura",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Pidió que la sesión en Piura se realice en semana de representación.",
+        "proyecto": "",
+        "id": "diputados:silupu inga"
+      },
+      {
+        "orador": "Aldo Bravo Quispe",
+        "cargo": "legislador",
+        "sobre": "Fecha de la sesión en Piura",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Sugirió realizar la sesión el martes 13 o miércoles 14 de octubre.",
+        "proyecto": "",
+        "id": "diputados:bravo quispe"
+      },
+      {
+        "orador": "Peña Córdoba",
+        "cargo": "legislador",
+        "sobre": "Fecha de la sesión en Piura",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Coincidió en que la sesión debería ser en semana de representación.",
+        "proyecto": "",
+        "id": "diputados:pena cordova"
+      },
+      {
+        "orador": "Luzmila Gamarra",
+        "cargo": "legislador",
+        "sobre": "Fecha de la sesión en Piura",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Propuso que la sesión descentralizada se realice el viernes 16.",
+        "proyecto": "",
+        "id": "diputados:gamarra pita"
+      },
+      {
+        "orador": "Jennifer Paredes Navarro",
+        "cargo": "legislador",
+        "sobre": "Fecha de la sesión en Piura",
+        "postura": "en contra",
+        "tema": "Otros",
+        "dijo": "Rechazó la propuesta del viernes 16 por tener agenda de bancada.",
+        "proyecto": "",
+        "id": "diputados:paredes navarro"
+      },
+      {
+        "orador": "Gloria Irachi",
+        "cargo": "legislador",
+        "sobre": "Fecha de la sesión en Piura",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Sugirió realizar la sesión un sábado de forma excepcional.",
+        "proyecto": "",
+        "id": "diputados:hirache pizarro"
+      },
+      {
+        "orador": "Rafael Celis Castillo",
+        "cargo": "legislador",
+        "sobre": "Sesiones descentralizadas",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Respaldó la realización de la sesión descentralizada según la mayoría.",
+        "proyecto": "",
+        "id": "diputados:celiz castillo"
+      },
+      {
+        "orador": "Aldo Bravo Quispe",
+        "cargo": "legislador",
+        "sobre": "Fecha de la sesión en Piura",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Explicó que los martes se cruzan todas las comisiones del Congreso.",
+        "proyecto": "",
+        "id": "diputados:bravo quispe"
+      },
+      {
+        "orador": "Carlos Segarra",
+        "cargo": "legislador",
+        "sobre": "Fecha de la sesión en Piura",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Propuso realizar la sesión el jueves 15 de octubre.",
+        "proyecto": "",
+        "id": "diputados:zegarra sanchez"
+      },
+      {
+        "orador": "Milagros Santana",
+        "cargo": "legislador",
+        "sobre": "Fecha de la sesión en Piura",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Sugirió realizar la sesión un sábado para evitar afectaciones.",
+        "proyecto": "",
+        "id": "diputados:santana vera"
+      },
+      {
+        "orador": "Rafael Celis Castillo",
+        "cargo": "legislador",
+        "sobre": "Sesiones descentralizadas",
+        "postura": "en contra",
+        "tema": "Otros",
+        "dijo": "Advirtió sobre la prohibición de sesiones descentralizadas en semana de representación.",
+        "proyecto": "",
+        "id": "diputados:celiz castillo"
+      },
+      {
+        "orador": "Demetrio Valqui",
+        "cargo": "legislador",
+        "sobre": "Sesiones descentralizadas",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Sugirió que las visitas descentralizadas se realicen sábados y domingos.",
+        "proyecto": "",
+        "id": "diputados:valqui calderon"
+      },
+      {
+        "orador": "Aldo Bravo Quispe",
+        "cargo": "legislador",
+        "sobre": "Sesiones descentralizadas",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Señaló que los funcionarios de Piura no trabajan los fines de semana.",
+        "proyecto": "",
+        "id": "diputados:bravo quispe"
+      },
+      {
+        "orador": "Ricer Castro Grandes",
+        "cargo": "legislador",
+        "sobre": "Fecha de la sesión en Piura",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Apoyó la propuesta de sesionar el jueves 15 de octubre.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "María Silipú",
+        "cargo": "legislador",
+        "sobre": "Fecha de la sesión en Piura",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Solicitó que se someta a votación la fecha del jueves 15.",
+        "proyecto": "",
+        "id": "diputados:silupu inga"
+      },
+      {
+        "orador": "Aldo Bravo Quispe",
+        "cargo": "legislador",
+        "sobre": "Fecha de la sesión en Piura",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Pidió al presidente someter a votación la fecha del jueves 15.",
+        "proyecto": "",
+        "id": "diputados:bravo quispe"
+      },
+      {
+        "orador": "Luzmila Gamarra",
+        "cargo": "legislador",
+        "sobre": "Fecha de la sesión en Piura",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Instó al presidente a votar la fecha del jueves 15.",
+        "proyecto": "",
+        "id": "diputados:gamarra pita"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=SdVCXptXx5E"
+  },
+  "K8BI2XXMRsQ": {
+    "fecha": "2026-09-30",
+    "organo": "Comisión de Ética Parlamentaria",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Secretario Técnico",
+        "cargo": "ministro o autoridad",
+        "sobre": "Jornada de ética parlamentaria",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Expuso los detalles de la jornada de ética parlamentaria.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Roger Miguel Charles",
+        "cargo": "legislador",
+        "sobre": "Compromiso ético y guía de conducta",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso incluir un compromiso ético y una guía de conducta.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Secretario Técnico",
+        "cargo": "ministro o autoridad",
+        "sobre": "Presupuesto para la jornada de ética",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Informó que la comisión no cuenta con presupuesto asignado.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=K8BI2XXMRsQ"
   }
 }
