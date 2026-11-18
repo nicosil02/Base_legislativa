@@ -2767,5 +2767,122 @@
       }
     ],
     "url": "https://www.youtube.com/watch?v=XGv0b_4rffs"
+  },
+  "5sgiZ9XT0NE": {
+    "fecha": "2026-10-29",
+    "organo": "Comisión de Justicia",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Marta Chávez",
+        "cargo": "legislador",
+        "sobre": "Sesiones no ordinarias",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso no realizar sesiones no ordinarias sin dictámenes de la Cámara de Diputados.",
+        "proyecto": "",
+        "id": "senado:chavez cossio"
+      },
+      {
+        "orador": "Marta Chávez",
+        "cargo": "legislador",
+        "sobre": "Presencia de la presidenta del Poder Judicial",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Pidió la reprogramación de la presidenta del Poder Judicial.",
+        "proyecto": "",
+        "id": "senado:chavez cossio"
+      },
+      {
+        "orador": "Andrés Ramos Wilka",
+        "cargo": "legislador",
+        "sobre": "Apertura de escuela policial",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Pidió la apertura de una escuela policial para los alumnos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Gavidia",
+        "cargo": "legislador",
+        "sobre": "Sesión de la procuradora general",
+        "postura": "a favor",
+        "tema": "Justicia",
+        "dijo": "Respaldó la citación de la procuradora general.",
+        "proyecto": "",
+        "id": "senado:gavidia rodriguez"
+      },
+      {
+        "orador": "Aguinaga",
+        "cargo": "legislador",
+        "sobre": "Jerarquía de los poderes",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Comentó la importancia de recibir a los poderes del Estado.",
+        "proyecto": "",
+        "id": "senado:aguinaga recuenco"
+      },
+      {
+        "orador": "María Dolores Péchez Becerra",
+        "cargo": "invitado",
+        "sobre": "Presupuesto del Poder Judicial",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Informó sobre los temas presupuestales del Poder Judicial.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=5sgiZ9XT0NE"
+  },
+  "LL2GxtowMAA": {
+    "fecha": "2026-10-29",
+    "organo": "Comisión de Control Político",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Muñante",
+        "cargo": "legislador",
+        "sobre": "error en el dictamen del tratado",
+        "postura": "con observaciones",
+        "tema": "Comercio",
+        "dijo": "Advirtió un error material en el artículo 157 del dictamen.",
+        "proyecto": "TIE 001-2026",
+        "id": "senado:munante barrios"
+      },
+      {
+        "orador": "Guido",
+        "cargo": "legislador",
+        "sobre": "estado de emergencia en Ático y el sur",
+        "postura": "con observaciones",
+        "tema": "Transporte",
+        "dijo": "Señaló la importancia de la carretera para el sur del país.",
+        "proyecto": "DS 118-2026-PCM",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=LL2GxtowMAA"
+  },
+  "fb_1776864057373287": {
+    "fecha": "2026-10-29",
+    "organo": "Comisión de Relaciones Internacionales",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "David Fernando Carrón",
+        "cargo": "invitado",
+        "sobre": "Reforma a la Ley del Servicio Exterior",
+        "postura": "con observaciones",
+        "tema": "Política y control político",
+        "dijo": "Analizó la reforma de la Ley del Servicio Exterior aportando observaciones técnicas y constitucionales.",
+        "proyecto": "Orgánica Reformatoria a la Ley Orgánica del Servicio Exterior",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1776864057373287"
   }
 }
