@@ -6945,5 +6945,392 @@
       }
     ],
     "url": "https://www.facebook.com/watch/?v=917802611270919"
+  },
+  "fb_1691327106041298": {
+    "fecha": "2026-10-26",
+    "organo": "Comisión de Biodiversidad",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Gina María Andrade García",
+        "cargo": "invitado",
+        "sobre": "Proyecto de gestión costera integrada",
+        "postura": "con observaciones",
+        "tema": "Ambiente",
+        "dijo": "Propuso ajustes técnicos al proyecto costero.",
+        "proyecto": "Proyecto de ley orgánica de gestión costera integrada",
+        "id": null
+      },
+      {
+        "orador": "Camila León",
+        "cargo": "legislador",
+        "sobre": "Elementos de la ley costera",
+        "postura": "pregunta",
+        "tema": "Ambiente",
+        "dijo": "Preguntó sobre el proyecto de gestión costera.",
+        "proyecto": "Proyecto de ley orgánica de gestión costera integrada",
+        "id": "EC:leon cueva"
+      },
+      {
+        "orador": "Gina María Andrade García",
+        "cargo": "invitado",
+        "sobre": "Contenido de la ley costera",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Propuso incluir financiamiento en la ley costera.",
+        "proyecto": "Proyecto de ley orgánica de gestión costera integrada",
+        "id": null
+      },
+      {
+        "orador": "Casanado",
+        "cargo": "legislador",
+        "sobre": "Plazos de la ley costera",
+        "postura": "pregunta",
+        "tema": "Ambiente",
+        "dijo": "Preguntó sobre los plazos del proyecto costero.",
+        "proyecto": "Proyecto de ley orgánica de gestión costera integrada",
+        "id": null
+      },
+      {
+        "orador": "Gina María Andrade García",
+        "cargo": "invitado",
+        "sobre": "Capacidad técnica municipal",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Propuso fortalecer la capacidad técnica municipal.",
+        "proyecto": "Proyecto de ley orgánica de gestión costera integrada",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1691327106041298"
+  },
+  "LVnsorptGO4": {
+    "fecha": "2026-10-23",
+    "organo": "Comisión de Constitución",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Marta Chávez Cosío",
+        "cargo": "legislador",
+        "sobre": "Naturaleza normativa del reglamento especial",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Propuso modificar el artículo cuarto para evitar que el reglamento se interprete como ley orgánica.",
+        "proyecto": "0011-2026-2031-S",
+        "id": "senado:chavez cossio"
+      },
+      {
+        "orador": "Hugo Cahuana",
+        "cargo": "legislador",
+        "sobre": "Puntaje de la entrevista y sanciones",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Propuso reducir el puntaje de la entrevista para evitar la subjetividad en la elección.",
+        "proyecto": "0011-2026-2031-S",
+        "id": "senado:ccahuana aymachoque"
+      },
+      {
+        "orador": "Rut Luque",
+        "cargo": "legislador",
+        "sobre": "Reglamento de elección de magistrados del TC",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Propuso elevar la evaluación curricular para asegurar un proceso de selección más objetivo.",
+        "proyecto": "0011-2026-2031-S",
+        "id": "senado:luque ibarra"
+      },
+      {
+        "orador": "Lquez",
+        "cargo": "legislador",
+        "sobre": "Puntajes de evaluación de candidatos",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Propuso ajustar la ponderación de los grados académicos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Marta Chávez",
+        "cargo": "legislador",
+        "sobre": "Criterios de selección de magistrados",
+        "postura": "a favor",
+        "tema": "Justicia",
+        "dijo": "Respaldó las ponderaciones establecidas en el dictamen.",
+        "proyecto": "",
+        "id": "senado:chavez cossio"
+      },
+      {
+        "orador": "Morales Alcorta y Matute",
+        "cargo": "legislador",
+        "sobre": "Modificaciones al reglamento de elección",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Propuso reformas técnicas al reglamento de elección.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Al corta",
+        "cargo": "legislador",
+        "sobre": "Evaluación de la trayectoria de candidatos",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Comentó la importancia de valorar la experiencia profesional.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Matute",
+        "cargo": "legislador",
+        "sobre": "Reglamento para elección de magistrados",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Propuso un puntaje mínimo para ser considerado apto.",
+        "proyecto": "",
+        "id": "senado:matute charun"
+      },
+      {
+        "orador": "Cutipa",
+        "cargo": "legislador",
+        "sobre": "Puntajes para evaluación de candidatos",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Cuestionó la asignación de puntajes para bachilleres.",
+        "proyecto": "",
+        "id": "senado:cutipa ccama"
+      },
+      {
+        "orador": "Maravín",
+        "cargo": "legislador",
+        "sobre": "Politización del Tribunal Constitucional",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció la politización del actual Tribunal Constitucional.",
+        "proyecto": "",
+        "id": "senado:maravi olarte"
+      },
+      {
+        "orador": "Cahuana",
+        "cargo": "legislador",
+        "sobre": "mecanismos de justicia constitucional",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Citó a Kelsen sobre la función de los tribunales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Marta Chávez",
+        "cargo": "legislador",
+        "sobre": "impedimentos para la elección de magistrados",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Pidió incluir impedimentos por falta grave.",
+        "proyecto": "",
+        "id": "senado:chavez cossio"
+      },
+      {
+        "orador": "Cahuana",
+        "cargo": "legislador",
+        "sobre": "puntaje de la evaluación subjetiva",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Propuso reducir la evaluación subjetiva al quince por ciento.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Marta Chávez",
+        "cargo": "legislador",
+        "sobre": "naturaleza de la Constitución de 1993",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó el carácter social de la economía actual.",
+        "proyecto": "",
+        "id": "senado:chavez cossio"
+      },
+      {
+        "orador": "Patricia Juárez",
+        "cargo": "legislador",
+        "sobre": "validez de grados académicos",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Cuestionó la veracidad de ciertos grados académicos.",
+        "proyecto": "",
+        "id": "senado:juarez gallegos"
+      },
+      {
+        "orador": "Marta Chávez",
+        "cargo": "legislador",
+        "sobre": "reconocimiento de estudios concluidos",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Exigió reconocer los estudios de maestría concluidos.",
+        "proyecto": "",
+        "id": "senado:chavez cossio"
+      },
+      {
+        "orador": "Marta Chávez",
+        "cargo": "legislador",
+        "sobre": "proceso de decisión de la comisión",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Informó que la valoración fue un consenso colectivo.",
+        "proyecto": "",
+        "id": "senado:chavez cossio"
+      },
+      {
+        "orador": "César Ochoa",
+        "cargo": "legislador",
+        "sobre": "resultados electorales de partidos",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Expuso resultados electorales de partidos políticos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Patricia Juárez",
+        "cargo": "legislador",
+        "sobre": "normativa de elección de magistrados",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Denunció incoherencias en la normativa de elección.",
+        "proyecto": "",
+        "id": "senado:juarez gallegos"
+      },
+      {
+        "orador": "Maravín",
+        "cargo": "legislador",
+        "sobre": "requisitos para el Tribunal Constitucional",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Rechazó comparaciones sobre los requisitos del TC.",
+        "proyecto": "",
+        "id": "senado:maravi olarte"
+      },
+      {
+        "orador": "Luque",
+        "cargo": "legislador",
+        "sobre": "criterios de idoneidad para magistrados",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Pidió mayor transparencia en la independencia política.",
+        "proyecto": "",
+        "id": "senado:luque ibarra"
+      },
+      {
+        "orador": "Alcorta",
+        "cargo": "legislador",
+        "sobre": "Observaciones al predictamen de elección",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Presentó observaciones detalladas sobre el predictamen de elección.",
+        "proyecto": "",
+        "id": "senado:alcorta suero"
+      },
+      {
+        "orador": "Matute",
+        "cargo": "legislador",
+        "sobre": "La ley 31996 y la meritocracia",
+        "postura": "en contra",
+        "tema": "Educación",
+        "dijo": "Criticó la falta de meritocracia en la ley 31996.",
+        "proyecto": "Ley 31996",
+        "id": "senado:matute charun"
+      },
+      {
+        "orador": "Matute",
+        "cargo": "legislador",
+        "sobre": "Registro de títulos extranjeros",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Propuso omitir el registro de títulos extranjeros.",
+        "proyecto": "",
+        "id": "senado:matute charun"
+      },
+      {
+        "orador": "Chávez",
+        "cargo": "legislador",
+        "sobre": "Homologación de títulos extranjeros",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Rechazó la omisión del registro de títulos extranjeros.",
+        "proyecto": "",
+        "id": "senado:chavez cossio"
+      },
+      {
+        "orador": "Matute",
+        "cargo": "legislador",
+        "sobre": "Excepción para títulos antiguos",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Explicó la excepción para títulos con antigüedad considerable.",
+        "proyecto": "",
+        "id": "senado:matute charun"
+      },
+      {
+        "orador": "Luque",
+        "cargo": "legislador",
+        "sobre": "Errores en el texto sustitutorio",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Señaló discrepancias en los puntajes del texto sustitutorio.",
+        "proyecto": "",
+        "id": "senado:luque ibarra"
+      },
+      {
+        "orador": "Matute",
+        "cargo": "legislador",
+        "sobre": "Error de referencia en el artículo",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Corrigió una errata en la referencia del artículo.",
+        "proyecto": "",
+        "id": "senado:matute charun"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=LVnsorptGO4"
+  },
+  "fb_28770012369326509": {
+    "fecha": "2026-10-23",
+    "organo": "Comisión de Seguridad Integral",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Pablo Punín Tandazo",
+        "cargo": "invitado",
+        "sobre": "Ley anti-mafias",
+        "postura": "con observaciones",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso ajustes al proyecto Ley anti-mafias para evitar inconstitucionalidades.",
+        "proyecto": "Ley anti-mafias",
+        "id": null
+      },
+      {
+        "orador": "Diego Cárdenas Alazar",
+        "cargo": "ministro o autoridad",
+        "sobre": "Presupuesto para reforma de Fuerzas Armadas",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Denunció falta de presupuesto para la reforma de Fuerzas Armadas.",
+        "proyecto": "Ley de Personal y Disciplina de las Fuerzas Armadas",
+        "id": null
+      },
+      {
+        "orador": "Diego Cárdenas Alazar",
+        "cargo": "ministro o autoridad",
+        "sobre": "Diálogos con Ministerio de Defensa",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Informó que no hubo diálogos con el Ministerio de Defensa.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=28770012369326509"
   }
 }
