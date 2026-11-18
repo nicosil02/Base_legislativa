@@ -5564,5 +5564,202 @@
       }
     ],
     "url": "https://www.youtube.com/watch?v=_SU9vwpIvLs"
+  },
+  "LvsY8hVx-ec": {
+    "fecha": "2026-10-28",
+    "organo": "Comisión de Economía",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Roger Marín Valencia Espinosa",
+        "cargo": "ministro o autoridad",
+        "sobre": "Modelos de zonas económicas especiales",
+        "postura": "comenta",
+        "tema": "Comercio",
+        "dijo": "Informó sobre los modelos de zonas económicas especiales en el Perú.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Martín Españitán",
+        "cargo": "legislador",
+        "sobre": "Avances de las zonas económicas",
+        "postura": "pregunta",
+        "tema": "Comercio",
+        "dijo": "Preguntó sobre los avances específicos de las zonas económicas especiales.",
+        "proyecto": "",
+        "id": "diputados:martinez paitan"
+      },
+      {
+        "orador": "Roger Marín Valencia Espinosa",
+        "cargo": "ministro o autoridad",
+        "sobre": "Estado de las zonas económicas",
+        "postura": "comenta",
+        "tema": "Comercio",
+        "dijo": "Informó que aún no existen conversaciones directas con interesados.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Vice-ministro",
+        "cargo": "ministro o autoridad",
+        "sobre": "Expectativa por las zonas económicas",
+        "postura": "comenta",
+        "tema": "Comercio",
+        "dijo": "Informó que existe mucha expectativa por parte de diversos actores.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Directora general",
+        "cargo": "ministro o autoridad",
+        "sobre": "Normativa de las zonas económicas",
+        "postura": "comenta",
+        "tema": "Comercio",
+        "dijo": "Informó que es necesaria la normativa completa para la promoción.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Fernández de la Torre",
+        "cargo": "legislador",
+        "sobre": "Modernización de zonas económicas públicas",
+        "postura": "pregunta",
+        "tema": "Comercio",
+        "dijo": "Preguntó sobre la estrategia para modernizar las zonas económicas públicas.",
+        "proyecto": "",
+        "id": "diputados:fernandez de la torre"
+      },
+      {
+        "orador": "Roger Marín Valencia Espinosa",
+        "cargo": "ministro o autoridad",
+        "sobre": "Diferencias entre zonas económicas",
+        "postura": "comenta",
+        "tema": "Comercio",
+        "dijo": "Informó las ventajas de las regulaciones en zonas públicas.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=LvsY8hVx-ec"
+  },
+  "fb_1158945019806075": {
+    "fecha": "2026-10-28",
+    "organo": "Comisión de Biodiversidad",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Tarsicio Granizo Tamayo",
+        "cargo": "invitado",
+        "sobre": "Proyecto de Ley de Bioeconomía",
+        "postura": "con observaciones",
+        "tema": "Ambiente",
+        "dijo": "Presentó ajustes técnicos para mejorar el proyecto de ley.",
+        "proyecto": "Ley de Bioeconomía",
+        "id": null
+      },
+      {
+        "orador": "Franklin Samañego",
+        "cargo": "legislador",
+        "sobre": "Definición de la bioeconomía",
+        "postura": "en contra",
+        "tema": "Ambiente",
+        "dijo": "Cuestionó la base científica y técnica del proyecto de ley.",
+        "proyecto": "Ley de Bioeconomía",
+        "id": "EC:samaniego maigua"
+      },
+      {
+        "orador": "Tarsicio Granizo Tamayo",
+        "cargo": "invitado",
+        "sobre": "Pilares y monitoreo de la bioeconomía",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Explicó los conceptos fundamentales y la importancia del monitoreo.",
+        "proyecto": "Ley de Bioeconomía",
+        "id": null
+      },
+      {
+        "orador": "Camila León",
+        "cargo": "legislador",
+        "sobre": "Innovación y apoyo a pequeños productores",
+        "postura": "pregunta",
+        "tema": "Ambiente",
+        "dijo": "Consultó sobre mecanismos de innovación y apoyo a productores.",
+        "proyecto": "Ley de Bioeconomía",
+        "id": "EC:leon cueva"
+      },
+      {
+        "orador": "Tarsicio Granizo Tamayo",
+        "cargo": "invitado",
+        "sobre": "Apoyo a pequeños y medianos productores",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Informó sobre la necesidad de crédito y asistencia técnica.",
+        "proyecto": "Ley de Bioeconomía",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1158945019806075"
+  },
+  "VSF1rifH-j4": {
+    "fecha": "2026-10-27",
+    "organo": "Comisión de Defensa Nacional",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Amalia Palomino",
+        "cargo": "legislador",
+        "sobre": "Participación de fuerzas armadas en infraestructura",
+        "postura": "en contra",
+        "tema": "Infraestructura",
+        "dijo": "Cuestionó el riesgo de desnaturalización de funciones militares y la elusión de contrataciones públicas.",
+        "proyecto": "PL 00067-2031-CD",
+        "id": "diputados:palomino pacheco"
+      },
+      {
+        "orador": "Andrea Meina",
+        "cargo": "legislador",
+        "sobre": "Participación de fuerzas armadas en infraestructura",
+        "postura": "a favor",
+        "tema": "Infraestructura",
+        "dijo": "Respaldó el uso de la ingeniería militar para cerrar brechas de infraestructura en zonas alejadas.",
+        "proyecto": "PL 00067-2031-CD",
+        "id": "diputados:medina stein"
+      },
+      {
+        "orador": "Pes Marquis",
+        "cargo": "legislador",
+        "sobre": "Participación de fuerzas armadas en infraestructura",
+        "postura": "comenta",
+        "tema": "Infraestructura",
+        "dijo": "Comentó que la propuesta representa una modalidad de intervención interesante para el país.",
+        "proyecto": "PL 00067-2031-CD",
+        "id": null
+      },
+      {
+        "orador": "Javier Colchado",
+        "cargo": "legislador",
+        "sobre": "Participación de fuerzas armadas en infraestructura",
+        "postura": "propone",
+        "tema": "Infraestructura",
+        "dijo": "Propuso que el predictamen retorne a comisión para recibir opiniones técnicas de diversas entidades.",
+        "proyecto": "PL 00067-2031-CD",
+        "id": "diputados:colchado huamani"
+      },
+      {
+        "orador": "José Bahía",
+        "cargo": "legislador",
+        "sobre": "Gestión de riesgos de desastres",
+        "postura": "con observaciones",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Sugirió estandarizar la redacción de artículos y exigir experiencia específica en gestión de riesgos.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=VSF1rifH-j4"
   }
 }
