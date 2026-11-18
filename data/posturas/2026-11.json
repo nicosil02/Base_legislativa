@@ -10812,5 +10812,44 @@
       }
     ],
     "url": "https://www.youtube.com/watch?v=dshnFuVJDtI"
+  },
+  "zihTxrtcM-Q": {
+    "fecha": "2026-11-18",
+    "organo": "Comisión de Gestión del Estado",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Arminta",
+        "cargo": "legislador",
+        "sobre": "Reconsideración de la sesión",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Pidió la reconsideración de la sesión tras presentar el oficio.",
+        "proyecto": "",
+        "id": "diputados:arminta valencia"
+      },
+      {
+        "orador": "Arminta",
+        "cargo": "legislador",
+        "sobre": "El predictamen 0504",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Informó que presentaría el predictamen 0504 por escrito.",
+        "proyecto": "0504",
+        "id": "diputados:arminta valencia"
+      },
+      {
+        "orador": "Marcelo",
+        "cargo": "legislador",
+        "sobre": "Reconsideración de la diputada Arminta",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso que se acepte la reconsideración de la diputada.",
+        "proyecto": "",
+        "id": "diputados:marcelo salazar"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=zihTxrtcM-Q"
   }
 }
