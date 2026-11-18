@@ -2072,5 +2072,203 @@
       }
     ],
     "url": "https://www.youtube.com/watch?v=T2HWWS6Xfvk"
+  },
+  "W6-prMhAZNc": {
+    "fecha": "2026-10-30",
+    "organo": "Comisión de Seguimiento Legislativo",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Meneses Crespin",
+        "cargo": "legislador",
+        "sobre": "sistema digital con inteligencia artificial",
+        "postura": "comenta",
+        "tema": "Tecnología",
+        "dijo": "Comentó las coordinaciones para implementar un sistema con inteligencia artificial.",
+        "proyecto": "",
+        "id": "diputados:meneses crispin"
+      },
+      {
+        "orador": "Kerke",
+        "cargo": "legislador",
+        "sobre": "estado de reglamentación de leyes",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Solicitó información sobre el estado actual de la reglamentación de leyes.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Meneses Crespin",
+        "cargo": "legislador",
+        "sobre": "informe de gestión del primer trimestre",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Informó sobre el cumplimiento de las metas de la comisión.",
+        "proyecto": "",
+        "id": "diputados:meneses crispin"
+      },
+      {
+        "orador": "Camargo Porta",
+        "cargo": "legislador",
+        "sobre": "informe de gestión de la comisión",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Felicitó a la mesa por el cumplimiento de los objetivos.",
+        "proyecto": "",
+        "id": "diputados:camargo porta"
+      },
+      {
+        "orador": "Meneses Crespin",
+        "cargo": "legislador",
+        "sobre": "reglamentación y derogación de leyes",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Resaltó la importancia de reglamentar las leyes y sus derogatorias.",
+        "proyecto": "",
+        "id": "diputados:meneses crispin"
+      },
+      {
+        "orador": "Espinosa Wilka",
+        "cargo": "legislador",
+        "sobre": "compromiso institucional con leyes pendientes",
+        "postura": "pregunta",
+        "tema": "Política y control político",
+        "dijo": "Preguntó sobre el compromiso de las instituciones con la reglamentación.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Kerke",
+        "cargo": "legislador",
+        "sobre": "información sobre leyes no reglamentadas",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Pidió citar a responsables y enviar oficios sobre leyes pendientes.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=W6-prMhAZNc"
+  },
+  "fb_1717147663302606": {
+    "fecha": "2026-10-30",
+    "organo": "Comisión de Régimen Económico",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Carla María Ulloa Maldonado",
+        "cargo": "invitado",
+        "sobre": "Reforma a la contratación pública",
+        "postura": "con observaciones",
+        "tema": "Trabajo",
+        "dijo": "Propuso cambios técnicos al proyecto de reforma de contratación pública.",
+        "proyecto": "Proyecto de Ley de Contratación Pública",
+        "id": null
+      },
+      {
+        "orador": "Antonella Wechel Cabrera",
+        "cargo": "invitado",
+        "sobre": "Implementación de la reforma de contratación",
+        "postura": "con observaciones",
+        "tema": "Trabajo",
+        "dijo": "Propuso actualizar los modelos de pliegos y la ejecución contractual.",
+        "proyecto": "Proyecto de Ley de Contratación Pública",
+        "id": null
+      },
+      {
+        "orador": "Juan Carlos Isnero Sánchez",
+        "cargo": "ministro o autoridad",
+        "sobre": "Liquidación de la cooperativa Crean",
+        "postura": "comenta",
+        "tema": "Banca",
+        "dijo": "Informó sobre el proceso de liquidación de la cooperativa de ahorro y crédito Crean.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Fernando Meniz",
+        "cargo": "ministro o autoridad",
+        "sobre": "Recuperación de la cartera de Crean",
+        "postura": "comenta",
+        "tema": "Banca",
+        "dijo": "Detalló la recuperación de cartera de la cooperativa Crean.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "San Mista Cuin",
+        "cargo": "legislador",
+        "sobre": "Perspectivas de pago a los socios",
+        "postura": "pregunta",
+        "tema": "Banca",
+        "dijo": "Preguntó sobre las perspectivas de pago y dificultades en la prelación.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Julia Shukoshanai",
+        "cargo": "ministro o autoridad",
+        "sobre": "Aplicación del orden de prelación",
+        "postura": "comenta",
+        "tema": "Banca",
+        "dijo": "Informó que no existen dificultades con la distribución de fondos disponibles.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "San Vista Castro",
+        "cargo": "legislador",
+        "sobre": "Metodología de venta de inmuebles",
+        "postura": "pregunta",
+        "tema": "Banca",
+        "dijo": "Consultó sobre la metodología y transparencia en la venta de bienes.",
+        "proyecto": "",
+        "id": "EC:castro piedra"
+      },
+      {
+        "orador": "Julia Shukoshanai",
+        "cargo": "ministro o autoridad",
+        "sobre": "Venta de bienes muebles e inmuebles",
+        "postura": "comenta",
+        "tema": "Banca",
+        "dijo": "Explicó que la venta de activos se realiza bajo la resolución 208.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "San Vista Castro",
+        "cargo": "legislador",
+        "sobre": "Acción de protección de socios",
+        "postura": "pregunta",
+        "tema": "Justicia",
+        "dijo": "Solicitó información sobre la ejecución de la acción de protección en Cuenca.",
+        "proyecto": "",
+        "id": "EC:castro piedra"
+      },
+      {
+        "orador": "Asambleísta Cunha",
+        "cargo": "legislador",
+        "sobre": "Prevención de riesgos en cooperativas",
+        "postura": "pregunta",
+        "tema": "Banca",
+        "dijo": "Consultó sobre las acciones preventivas para identificar riesgos financieros.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Iván Guayaquil",
+        "cargo": "invitado",
+        "sobre": "Caso de la cooperativa INCOP",
+        "postura": "comenta",
+        "tema": "Banca",
+        "dijo": "Informó sobre el cumplimiento de las medidas provisionales en el caso INCOP.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1717147663302606"
   }
 }
