@@ -10494,5 +10494,64 @@
       }
     ],
     "url": "https://www.youtube.com/watch?v=S4k2Bo2Bmig"
+  },
+  "6u5gxvF11oc": {
+    "fecha": "2026-11-17",
+    "organo": "Pleno del Congreso",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Aristo Arvildo",
+        "cargo": "legislador",
+        "sobre": "Presupuesto del sector público 2027",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Informó sobre el presupuesto de doscientos sesenta y seis mil millones de soles.",
+        "proyecto": "PL 2",
+        "id": "senado:arista arbildo"
+      },
+      {
+        "orador": "Aristo Arvildo",
+        "cargo": "legislador",
+        "sobre": "Ley de endeudamiento del sector público 2027",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Informó sobre los límites de endeudamiento para el año fiscal 2027.",
+        "proyecto": "PL 4",
+        "id": "senado:arista arbildo"
+      },
+      {
+        "orador": "José Arista",
+        "cargo": "legislador",
+        "sobre": "Dictámenes de presupuesto, endeudamiento y equilibrio 2027",
+        "postura": "a favor",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Propuso la aprobación de los dictámenes para el 2027.",
+        "proyecto": "PL 002, 004, 003, 2026, 2031, CR",
+        "id": "senado:arista arbildo"
+      },
+      {
+        "orador": "Rafael Jorge Belagón de Iosa",
+        "cargo": "ministro o autoridad",
+        "sobre": "Dictámenes de presupuesto, equilibrio y endeudamiento 2027",
+        "postura": "a favor",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Respaldó los proyectos de ley de presupuesto para 2027.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Elmer Rafael Cuadra Austinza",
+        "cargo": "ministro o autoridad",
+        "sobre": "Ingresos y supuestos macroeconómicos para el presupuesto 2027",
+        "postura": "a favor",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Informó los supuestos macroeconómicos para el presupuesto del 2027.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=6u5gxvF11oc"
   }
 }
