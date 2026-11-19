@@ -10851,5 +10851,54 @@
       }
     ],
     "url": "https://www.youtube.com/watch?v=zihTxrtcM-Q"
+  },
+  "LcjqgI-KnzM": {
+    "fecha": "2026-11-19",
+    "organo": "Comisión de Justicia",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Guinaga Recuenco",
+        "cargo": "legislador",
+        "sobre": "Sesión permanente de la comisión",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso declarar la comisión en sesión permanente para agilizar los dictámenes.",
+        "proyecto": "",
+        "id": "senado:aguinaga recuenco"
+      },
+      {
+        "orador": "Guinaga Recuenco",
+        "cargo": "legislador",
+        "sobre": "Citación de altos funcionarios",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Pidió la presencia de altos funcionarios para que rindan cuentas a la comisión.",
+        "proyecto": "",
+        "id": "senado:aguinaga recuenco"
+      },
+      {
+        "orador": "Guinaga Recuenco",
+        "cargo": "legislador",
+        "sobre": "Ley de extinción de dominio",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Informó sobre la modificación de la ley de extinción de dominio.",
+        "proyecto": "Ley de extinción de dominio",
+        "id": "senado:aguinaga recuenco"
+      },
+      {
+        "orador": "Guinaga Recuenco",
+        "cargo": "legislador",
+        "sobre": "Prescripción de la acción penal",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Informó sobre la modificación de las reglas de prescripción penal.",
+        "proyecto": "",
+        "id": "senado:aguinaga recuenco"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=LcjqgI-KnzM"
   }
 }
