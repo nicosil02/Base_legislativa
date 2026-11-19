@@ -10962,5 +10962,202 @@
       }
     ],
     "url": "https://www.facebook.com/watch/?v=2366758590820159"
+  },
+  "fb_1362073759338536": {
+    "fecha": "2026-10-21",
+    "organo": "Comisión de Educación",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Ana Belén",
+        "cargo": "legislador",
+        "sobre": "Mitigación del fenómeno del niño en escuelas",
+        "postura": "en contra",
+        "tema": "Educación",
+        "dijo": "Cuestionó la ausencia de ministerios responsables ante el fenómeno del niño.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Erika Mora",
+        "cargo": "invitado",
+        "sobre": "Monitoreo del fenómeno del niño",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Informó sobre el monitoreo del fenómeno del niño realizado por Inami.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Adriana Rodríguez",
+        "cargo": "invitado",
+        "sobre": "Información técnica meteorológica",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Informó sobre la provisión de datos técnicos y climáticos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ana María Rafa",
+        "cargo": "legislador",
+        "sobre": "Fiscalización de la gestión de autoridades",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció la falta de compromiso de las instituciones convocadas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Sofía Estefanía León Sánchez",
+        "cargo": "invitado",
+        "sobre": "Resultados de la evaluación PISA 2025",
+        "postura": "comenta",
+        "tema": "Educación",
+        "dijo": "Informó los resultados y la metodología de la evaluación PISA.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Autoridad de Ineval",
+        "cargo": "ministro o autoridad",
+        "sobre": "los resultados de la evaluación PISA",
+        "postura": "comenta",
+        "tema": "Educación",
+        "dijo": "Comentó la metodología y los resultados de la prueba PISA.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Anna María Ron",
+        "cargo": "legislador",
+        "sobre": "el rendimiento educativo en Ecuador",
+        "postura": "en contra",
+        "tema": "Educación",
+        "dijo": "Denunció los bajos puntajes obtenidos en la evaluación PISA.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Autoridad de Ineval",
+        "cargo": "ministro o autoridad",
+        "sobre": "las competencias del Ineval",
+        "postura": "comenta",
+        "tema": "Educación",
+        "dijo": "Comentó que el Ineval no tiene competencias presupuestarias.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Autoridad de Ineval",
+        "cargo": "ministro o autoridad",
+        "sobre": "la política de evaluación educativa",
+        "postura": "propone",
+        "tema": "Educación",
+        "dijo": "Propuso coordinar la evaluación con el Ministerio de Educación.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1362073759338536"
+  },
+  "fb_28957761680521250": {
+    "fecha": "2026-10-21",
+    "organo": "Comisión de Biodiversidad",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Carlos Miguel Cuesta Álvarez",
+        "cargo": "legislador",
+        "sobre": "Reforma al Código Orgánico del Ambiente",
+        "postura": "propone",
+        "tema": "Ambiente",
+        "dijo": "Propuso reformar el Código Orgánico del Ambiente para brindar apoyo a las comunidades rurales.",
+        "proyecto": "Ley Orgánica Reformatoria al Código Orgánico del Ambiente",
+        "id": "EC:cuesta alvarez"
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=28957761680521250"
+  },
+  "fb_1020012634445195": {
+    "fecha": "2026-10-21",
+    "organo": "Comisión de Transparencia y Participación Ciudadana",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Karen Cecilia Burbano Salazar",
+        "cargo": "invitado",
+        "sobre": "Reforma a la ley de adultos mayores",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Propuso incluir la omisión de cuidado en la ley de adultos mayores.",
+        "proyecto": "Ley de adultos mayores",
+        "id": null
+      },
+      {
+        "orador": "Chamba",
+        "cargo": "legislador",
+        "sobre": "Proyecto de ley de adultos mayores",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Respaldó los aportes realizados para el proyecto de ley.",
+        "proyecto": "Ley de adultos mayores",
+        "id": "EC:chamba cabanilla"
+      },
+      {
+        "orador": "Dominique Serrano",
+        "cargo": "legislador",
+        "sobre": "Cobro del bono y protección",
+        "postura": "pregunta",
+        "tema": "Pensiones",
+        "dijo": "Preguntó cómo evitar el cobro indebido del bono en la ley.",
+        "proyecto": "Ley de adultos mayores",
+        "id": "EC:serrano molina"
+      },
+      {
+        "orador": "Luna",
+        "cargo": "legislador",
+        "sobre": "Políticas públicas para adultos mayores",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Respaldó la necesidad de políticas públicas en la ley de adultos mayores.",
+        "proyecto": "Ley de adultos mayores",
+        "id": "EC:luna arevalo"
+      },
+      {
+        "orador": "Solano",
+        "cargo": "legislador",
+        "sobre": "Desnutrición en adultos mayores",
+        "postura": "pregunta",
+        "tema": "Salud",
+        "dijo": "Preguntó cómo combatir la desnutrición en la ley de adultos mayores.",
+        "proyecto": "Ley de adultos mayores",
+        "id": "EC:solano calle"
+      },
+      {
+        "orador": "Karen Cecilia Burbano Salazar",
+        "cargo": "invitado",
+        "sobre": "Control del uso del bono",
+        "postura": "propone",
+        "tema": "Pensiones",
+        "dijo": "Pidió que el uso del bono sea documentado obligatoriamente.",
+        "proyecto": "Ley de adultos mayores",
+        "id": null
+      },
+      {
+        "orador": "Karen Cecilia Bourbano Salazar",
+        "cargo": "invitado",
+        "sobre": "Situación de los adultos mayores",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Denunció la falta de datos reales sobre la situación de los adultos mayores.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1020012634445195"
   }
 }
