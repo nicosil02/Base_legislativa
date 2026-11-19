@@ -11159,5 +11159,101 @@
       }
     ],
     "url": "https://www.facebook.com/watch/?v=1020012634445195"
+  },
+  "7xb1vH1EPfQ": {
+    "fecha": "2026-10-21",
+    "organo": "Comisión de Trabajo",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [],
+    "url": "https://www.youtube.com/watch?v=7xb1vH1EPfQ"
+  },
+  "1GkSZl09wVw": {
+    "fecha": "2026-10-21",
+    "organo": "Pleno del Senado",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Cabuana Aymachoque",
+        "cargo": "legislador",
+        "sobre": "Informe de candidatos al BCR",
+        "postura": "comenta",
+        "tema": "Banca",
+        "dijo": "Presentó el informe con los candidatos para el directorio del Banco Central.",
+        "proyecto": "",
+        "id": "senado:ccahuana aymachoque"
+      },
+      {
+        "orador": "Flavio Fialo",
+        "cargo": "legislador",
+        "sobre": "Candidatos al directorio del BCR",
+        "postura": "a favor",
+        "tema": "Banca",
+        "dijo": "Defendió la experiencia y reputación de los candidatos propuestos.",
+        "proyecto": "",
+        "id": "senado:figallo rivadeneyra"
+      },
+      {
+        "orador": "Alfón",
+        "cargo": "legislador",
+        "sobre": "Candidatos y procesos de evaluación",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Expresó su respaldo a la trayectoria de los candidatos mencionados.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Cabuana Aymachoque",
+        "cargo": "legislador",
+        "sobre": "Votación del informe de la comisión",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Solicitó que se proceda a la votación del informe presentado.",
+        "proyecto": "",
+        "id": "senado:ccahuana aymachoque"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=1GkSZl09wVw"
+  },
+  "Nh1WjPVTzjE": {
+    "fecha": "2026-10-20",
+    "organo": "Comisión de Ética Parlamentaria",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Secretaria Técnica",
+        "cargo": "autoridad",
+        "sobre": "Denuncia contra Julián Luis Pérez Malqui",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso declarar procedente la denuncia contra Julián Luis Pérez Malqui.",
+        "proyecto": "Expediente 0052026202",
+        "id": null
+      },
+      {
+        "orador": "Secretaria Técnica",
+        "cargo": "autoridad",
+        "sobre": "Informe final contra Julián Luis Pérez Malqui",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Propuso el informe final contra Julián Luis Pérez Malqui.",
+        "proyecto": "Expediente 001 2026202",
+        "id": null
+      },
+      {
+        "orador": "Secretaria Técnica",
+        "cargo": "autoridad",
+        "sobre": "Informe contra Julián Pérez Malky",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso sancionar al diputado Pérez Malky con ciento veinte días de suspensión.",
+        "proyecto": "0012026202",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=Nh1WjPVTzjE"
   }
 }
