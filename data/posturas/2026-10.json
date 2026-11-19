@@ -10654,5 +10654,313 @@
       }
     ],
     "url": "https://www.facebook.com/watch/?v=29083195037986270"
+  },
+  "CVI6JYhpN4I": {
+    "fecha": "2026-10-21",
+    "organo": "Comisión de Ciencia",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Ana Patiño",
+        "cargo": "legislador",
+        "sobre": "Hackathon tecnológico en la Universidad Continental",
+        "postura": "comenta",
+        "tema": "Tecnología",
+        "dijo": "Informó sobre un hackathon tecnológico en la Universidad Continental",
+        "proyecto": "",
+        "id": "diputados:patino urco"
+      },
+      {
+        "orador": "Amalia Palomino Pacheco",
+        "cargo": "legislador",
+        "sobre": "Proyecto de hidrógeno verde",
+        "postura": "comenta",
+        "tema": "Energía",
+        "dijo": "Reportó preocupaciones de pescadores sobre el hidrógeno verde",
+        "proyecto": "",
+        "id": "diputados:palomino pacheco"
+      },
+      {
+        "orador": "Máximo Peralta",
+        "cargo": "legislador",
+        "sobre": "Audiencia pública en Huancayo",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Informó sobre la realización de la audiencia pública en Huancayo",
+        "proyecto": "",
+        "id": "diputados:peralta jorpa"
+      },
+      {
+        "orador": "Yair Yataco",
+        "cargo": "legislador",
+        "sobre": "Red de fibra óptica",
+        "postura": "comenta",
+        "tema": "Telecomunicaciones",
+        "dijo": "Informó sobre la subutilización de la red de fibra óptica",
+        "proyecto": "",
+        "id": "diputados:yataco torrealva"
+      },
+      {
+        "orador": "Yair Yataco",
+        "cargo": "legislador",
+        "sobre": "Reunión con transformación digital",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció dificultades para reunirse con el sector de transformación digital",
+        "proyecto": "",
+        "id": "diputados:yataco torrealva"
+      },
+      {
+        "orador": "Judit",
+        "cargo": "legislador",
+        "sobre": "Uso de drones contra incendios",
+        "postura": "propone",
+        "tema": "Ambiente",
+        "dijo": "Propuso el uso de drones para combatir incendios forestales",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Frank Fernández de la Torre",
+        "cargo": "legislador",
+        "sobre": "Audiencia pública en Quilca",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Propuso realizar la próxima audiencia pública en Quilca",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Frank Fernández de la Torre",
+        "cargo": "legislador",
+        "sobre": "Convenios tecnológicos en Arequipa",
+        "postura": "propone",
+        "tema": "Tecnología",
+        "dijo": "Solicitó información sobre convenios tecnológicos en la región Arequipa",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Amalia Palomino Pacheco",
+        "cargo": "legislador",
+        "sobre": "Estudio de impacto ambiental",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Mencionó que el estudio de impacto ambiental fue realizado por Produce",
+        "proyecto": "",
+        "id": "diputados:palomino pacheco"
+      },
+      {
+        "orador": "Frank Fernández de la Torre",
+        "cargo": "legislador",
+        "sobre": "Reglamentación de la ley de hidrógeno",
+        "postura": "propone",
+        "tema": "Energía",
+        "dijo": "Pidió reglamentar la ley de fomento del hidrógeno verde",
+        "proyecto": "Ley 3199",
+        "id": null
+      },
+      {
+        "orador": "Roel Sánchez Sánchez",
+        "cargo": "invitado",
+        "sobre": "Proyecto de hidrógeno verde en Arequipa",
+        "postura": "comenta",
+        "tema": "Energía",
+        "dijo": "Expuso el proyecto de hidrógeno verde que promueve Arequipa",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Amalia Palomino Pacheco",
+        "cargo": "legislador",
+        "sobre": "Impacto de la salmuera en el mar",
+        "postura": "con observaciones",
+        "tema": "Pesca",
+        "dijo": "Cuestionó el impacto de la salmuera en el mar peruano",
+        "proyecto": "",
+        "id": "diputados:palomino pacheco"
+      },
+      {
+        "orador": "Palomino",
+        "cargo": "legislador",
+        "sobre": "Proyecto de hidrógeno verde",
+        "postura": "con observaciones",
+        "tema": "Ambiente",
+        "dijo": "Cuestionó el manejo de la salmuera en el proyecto.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Yair",
+        "cargo": "legislador",
+        "sobre": "Reglamentación de la ley de hidrógeno",
+        "postura": "pregunta",
+        "tema": "Energía",
+        "dijo": "Preguntó sobre la reglamentación de la ley 31992.",
+        "proyecto": "Ley 31992",
+        "id": null
+      },
+      {
+        "orador": "Ana",
+        "cargo": "legislador",
+        "sobre": "Iniciativas de desarrollo regional",
+        "postura": "a favor",
+        "tema": "Tecnología",
+        "dijo": "Felicitó la implementación de proyectos tecnológicos en Arequipa.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "María",
+        "cargo": "legislador",
+        "sobre": "Desarrollo tecnológico en Arequipa",
+        "postura": "a favor",
+        "tema": "Tecnología",
+        "dijo": "Resaltó el avance científico de la región Arequipa.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Rojas",
+        "cargo": "ministro o autoridad",
+        "sobre": "Implementación de hidrógeno verde",
+        "postura": "comenta",
+        "tema": "Energía",
+        "dijo": "Explicó los avances en proyectos de energía limpia.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=CVI6JYhpN4I"
+  },
+  "fb_2366758590820159": {
+    "fecha": "2026-10-21",
+    "organo": "Comisión de Seguridad Integral",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Maura Janette Chulbe",
+        "cargo": "invitado",
+        "sobre": "Proyecto de ley antimafias",
+        "postura": "con observaciones",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso excluir menciones de inteligencia en la ley.",
+        "proyecto": "Ley antimafias",
+        "id": null
+      },
+      {
+        "orador": "Gerardo Machado",
+        "cargo": "legislador",
+        "sobre": "Conocimiento de movimientos de mafias",
+        "postura": "pregunta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Preguntó sobre la posibilidad de conocer movimientos de mafias.",
+        "proyecto": "Ley antimafias",
+        "id": "EC:machado clavijo"
+      },
+      {
+        "orador": "Maura Janette Chulbe",
+        "cargo": "invitado",
+        "sobre": "Uso de información reservada",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Informó que la información reservada se entrega al presidente.",
+        "proyecto": "Ley antimafias",
+        "id": null
+      },
+      {
+        "orador": "Jair Endorio",
+        "cargo": "legislador",
+        "sobre": "Detección de economías criminales",
+        "postura": "pregunta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Preguntó sobre la detección de economías criminales.",
+        "proyecto": "Ley antimafias",
+        "id": null
+      },
+      {
+        "orador": "Maura Janette Chulbe",
+        "cargo": "invitado",
+        "sobre": "Rol de la UAFE",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Informó que la UAFE es un subsistema de inteligencia.",
+        "proyecto": "Ley antimafias",
+        "id": null
+      },
+      {
+        "orador": "Jair Endorio",
+        "cargo": "legislador",
+        "sobre": "Lavado de activos en Ecuador",
+        "postura": "pregunta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Preguntó por qué los niveles de lavado de activos son altos.",
+        "proyecto": "Ley antimafias",
+        "id": null
+      },
+      {
+        "orador": "Maura Janette Chulbe",
+        "cargo": "invitado",
+        "sobre": "Artículos suspendidos de la ley",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Informó la existencia de artículos de la ley suspendidos.",
+        "proyecto": "Ley antimafias",
+        "id": null
+      },
+      {
+        "orador": "Jaeger Auresta",
+        "cargo": "legislador",
+        "sobre": "Seguridad nacional y pública",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Informó sobre la diferencia entre seguridad nacional y pública.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Gerardo Machado",
+        "cargo": "legislador",
+        "sobre": "Derecho de los asambleístas",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Defendió su derecho a realizar preguntas en la sesión.",
+        "proyecto": "Ley antimafias",
+        "id": "EC:machado clavijo"
+      },
+      {
+        "orador": "Natalia Estefanía Molla Chávez",
+        "cargo": "invitado",
+        "sobre": "Acuerdo comercial con Canadá",
+        "postura": "comenta",
+        "tema": "Comercio",
+        "dijo": "Informó sobre la importancia del acuerdo con Canadá.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Natalia Estefanía Molla Chávez",
+        "cargo": "invitado",
+        "sobre": "Trazabilidad de carga aérea",
+        "postura": "comenta",
+        "tema": "Comercio",
+        "dijo": "Informó que la carga hacia Canadá es mayormente aérea.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Roberto Calderón",
+        "cargo": "invitado",
+        "sobre": "Reformas al Código Penal",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Propuso ajustar las penas y agregar análisis de datos.",
+        "proyecto": "Ley antimafias",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=2366758590820159"
   }
 }
