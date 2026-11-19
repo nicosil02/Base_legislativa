@@ -9330,5 +9330,242 @@
       }
     ],
     "url": "https://www.youtube.com/watch?v=l8UbrJtD6oQ"
+  },
+  "lwiO_paYRPk": {
+    "fecha": "2026-10-22",
+    "organo": "Pleno de la Asamblea",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Yanina Rizo",
+        "cargo": "legislador",
+        "sobre": "Ley contra el desperdicio de alimentos",
+        "postura": "comenta",
+        "tema": "Agricultura",
+        "dijo": "Comentó el proyecto para reducir la vulnerabilidad alimentaria.",
+        "proyecto": "Ley para prevenir y reducir la pérdida y desperdicio de alimentos",
+        "id": "EC:rizzo alvear"
+      },
+      {
+        "orador": "Carlos Gavilanes",
+        "cargo": "legislador",
+        "sobre": "Informe del proyecto de alimentos",
+        "postura": "a favor",
+        "tema": "Agricultura",
+        "dijo": "Respaldó el informe para ayudar a personas vulnerables.",
+        "proyecto": "Ley para prevenir y reducir la pérdida y desperdicio de alimentos",
+        "id": "EC:gavilanez munoz"
+      },
+      {
+        "orador": "Andrés Castillo",
+        "cargo": "legislador",
+        "sobre": "Investigación de cobros indebidos en Quito",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso investigar presuntos cobros en el municipio de Quito.",
+        "proyecto": "",
+        "id": "EC:castillo maldonado"
+      },
+      {
+        "orador": "Gabriela Rivadeneira",
+        "cargo": "invitado",
+        "sobre": "Concientización sobre el cáncer de mama",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Comentó su experiencia tras recibir un diagnóstico de cáncer.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Gabriela Riva de Neira",
+        "cargo": "invitado",
+        "sobre": "Lucha contra el cáncer de mama",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Informó sobre su experiencia con el cáncer y la importancia de la prevención.",
+        "proyecto": "Ley de atención integral al cáncer",
+        "id": null
+      },
+      {
+        "orador": "Nora Mejía",
+        "cargo": "invitado",
+        "sobre": "Proyecto para reducir el desperdicio de alimentos",
+        "postura": "a favor",
+        "tema": "Agricultura",
+        "dijo": "Respaldó la reforma para asegurar la transparencia en la donación de alimentos.",
+        "proyecto": "Ley para reducir la pérdida de alimentos",
+        "id": null
+      },
+      {
+        "orador": "Yanina Rizo",
+        "cargo": "legislador",
+        "sobre": "Informe de la comisión sobre desperdicio de alimentos",
+        "postura": "propone",
+        "tema": "Agricultura",
+        "dijo": "Propuso el informe para el primer debate de la reforma alimentaria.",
+        "proyecto": "Ley para reducir la pérdida de alimentos",
+        "id": "EC:rizzo alvear"
+      },
+      {
+        "orador": "Carlos Gavilanes",
+        "cargo": "legislador",
+        "sobre": "Reforma sobre la donación de alimentos",
+        "postura": "a favor",
+        "tema": "Agricultura",
+        "dijo": "Respaldó la reforma para garantizar la gratuidad de las donaciones.",
+        "proyecto": "Ley para reducir la pérdida de alimentos",
+        "id": "EC:gavilanez munoz"
+      },
+      {
+        "orador": "Becibel Mendoza",
+        "cargo": "legislador",
+        "sobre": "Proyecto de ley sobre pérdida de alimentos",
+        "postura": "a favor",
+        "tema": "Agricultura",
+        "dijo": "Defendió la reforma para proteger la salud y asegurar la gratuidad.",
+        "proyecto": "Ley para reducir la pérdida de alimentos",
+        "id": "EC:mendoza ibarra"
+      },
+      {
+        "orador": "Becibel Mendoza",
+        "cargo": "legislador",
+        "sobre": "Donación segura y gratuita de alimentos",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Defendió la reforma para asegurar la gratuidad de las donaciones.",
+        "proyecto": "Proyecto de ley desperdicio de alimentos",
+        "id": "EC:mendoza ibarra"
+      },
+      {
+        "orador": "Anaguín",
+        "cargo": "legislador",
+        "sobre": "Fortalecimiento de la ley de desperdicio de alimentos",
+        "postura": "con observaciones",
+        "tema": "Otros",
+        "dijo": "Propuso incluir las actividades pesqueras y acuícolas en la ley.",
+        "proyecto": "Proyecto de ley desperdicio de alimentos",
+        "id": null
+      },
+      {
+        "orador": "Camila Cueva",
+        "cargo": "legislador",
+        "sobre": "Reducción del desperdicio y el hambre",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Respaldó el proyecto para combatir la desnutrición y el hambre.",
+        "proyecto": "Proyecto de ley desperdicio de alimentos",
+        "id": null
+      },
+      {
+        "orador": "Andrés Castillo",
+        "cargo": "legislador",
+        "sobre": "Monopolios en bancos de alimentos",
+        "postura": "con observaciones",
+        "tema": "Comercio",
+        "dijo": "Denunció la intermediación lucrativa de los bancos de alimentos.",
+        "proyecto": "Proyecto de ley desperdicio de alimentos",
+        "id": "EC:castillo maldonado"
+      },
+      {
+        "orador": "Mariana Yumbai",
+        "cargo": "legislador",
+        "sobre": "Observaciones a la ley de desperdicio de alimentos",
+        "postura": "con observaciones",
+        "tema": "Otros",
+        "dijo": "Propuso corregir el régimen sancionatorio de la normativa.",
+        "proyecto": "Proyecto de ley desperdicio de alimentos",
+        "id": "EC:yumbay yallico"
+      },
+      {
+        "orador": "Guadalupe Vélez",
+        "cargo": "legislador",
+        "sobre": "Gratuidad en la donación de alimentos",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Respaldó la importancia de que las donaciones sean gratuitas.",
+        "proyecto": "Proyecto de ley desperdicio de alimentos",
+        "id": "EC:velez velez"
+      },
+      {
+        "orador": "Natalie Farinango",
+        "cargo": "legislador",
+        "sobre": "Proyecto de ley de lavado de activos",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Propuso el archivo del proyecto de ley sobre lavado de activos por su inconstitucionalidad.",
+        "proyecto": "Ley de lavado de activos",
+        "id": "EC:farinango delgado"
+      },
+      {
+        "orador": "Maritza",
+        "cargo": "invitado",
+        "sobre": "Resumen de la sesión legislativa",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Informó sobre la aprobación del archivo del proyecto de ley de lavado de activos.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=lwiO_paYRPk"
+  },
+  "Qnb9swCU3Jg": {
+    "fecha": "2026-10-22",
+    "organo": "Comisión de Defensa Nacional",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Carlos Abrellos Tomavana",
+        "cargo": "ministro o autoridad",
+        "sobre": "internacionalización de las fuerzas armadas",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Destacó la importancia de la internacionalización de las fuerzas armadas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro de Defensa",
+        "cargo": "ministro o autoridad",
+        "sobre": "puntos críticos de seguridad",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Informó sobre la existencia de ocho puntos críticos de seguridad.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro de Defensa",
+        "cargo": "ministro o autoridad",
+        "sobre": "beneficios del servicio militar",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Explicó los beneficios que el Estado otorga por el servicio militar.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=Qnb9swCU3Jg"
+  },
+  "fb_1158120466564694": {
+    "fecha": "2026-10-22",
+    "organo": "Comisión de Derecho al Trabajo",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Secretaria",
+        "cargo": "autoridad",
+        "sobre": "Condiciones técnicas del proyecto Quito Pía",
+        "postura": "comenta",
+        "tema": "Infraestructura",
+        "dijo": "Informó sobre la resolución para analizar las condiciones técnicas de Quito Pía.",
+        "proyecto": "Resolución RL-2025-2029-123",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1158120466564694"
   }
 }
