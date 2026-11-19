@@ -68,7 +68,8 @@
     "a2ebc821-5f6c-49e2-b2d7-a61bb0b231ac",
     "9333a725-a7ef-4e93-846e-de8bdfb8e98c",
     "1e932fb1-9e86-434f-bc59-fd400eed70d6",
-    "8aa0a57c-2920-4956-baa9-9f44d42d36a5"
+    "8aa0a57c-2920-4956-baa9-9f44d42d36a5",
+    "59150d98-7046-4447-b58d-a109240a40b1"
   ],
   "votaciones": [
     {
@@ -277,6 +278,83 @@
       "comision": "Defensa Nacional y Orden Interno",
       "sesion": 3625,
       "url": "https://wb2server.congreso.gob.pe/service-alfresco/alfresko/detalle/preview/file?idDocument=6f9502c2-1ae9-477c-89c4-de9cfad25a0d&key=47j6sp1KH2elP2IphiOp78e"
+    },
+    {
+      "pl": "2",
+      "camara_pl": "D",
+      "asunto": "el extremo referido al límite de la suspensión del plazo de prescripción de la acción penal establecido por la Ley 31751 y precisado por la Ley 32104, que, con texto sustitutorio, proponen la Ley que modifica el Código Penal y el Código Procesal Penal, y deroga la Ley 32104, para establecer un límite proporcional a la suspensión del plazo de prescripción de la acción penal. En consecuencia, los votos quedaron con 12",
+      "no": 6,
+      "abst": 2,
+      "si": 11,
+      "votos": {},
+      "fecha": "2026-10-27",
+      "camara": "diputados",
+      "comision": "Justicia y Derechos Humanos",
+      "sesion": 3666,
+      "url": "https://wb2server.congreso.gob.pe/service-alfresco/alfresko/detalle/preview/file?idDocument=59150d98-7046-4447-b58d-a109240a40b1&key=47j6sp1KH2elP2IphiOp78e"
+    },
+    {
+      "pl": "2",
+      "camara_pl": "D",
+      "asunto": "ontra), Manay Pillaca Alejandro José (en contra), Masco Cáceres Luis Aurelio (a favor), Muñóz Yurivilca Kim Tami (a favor), César Tito Rojas (en contra), Quezada Castro Geanmarco Antonio (suplente del diputado Alegría García Luis Arturo (a favor)), Rocha Gallegos Roxana María (a favor), Uribe Sáenz Romina Alejandra (en contra) y Varas Seguín Daniel Jefferson (en contra). En principio la votación fue un empate con 10",
+      "no": 10,
+      "abst": 0,
+      "si": 10,
+      "votos": {},
+      "fecha": "2026-10-27",
+      "camara": "diputados",
+      "comision": "Justicia y Derechos Humanos",
+      "sesion": 3666,
+      "url": "https://wb2server.congreso.gob.pe/service-alfresco/alfresko/detalle/preview/file?idDocument=59150d98-7046-4447-b58d-a109240a40b1&key=47j6sp1KH2elP2IphiOp78e"
+    },
+    {
+      "pl": "2",
+      "camara_pl": "D",
+      "asunto": "y 00611-2026-2031-CD, acumulados en el extremo referido al límite de la suspensión del plazo de prescripción de la acción penal establecido por la Ley 31751 y precisado por la Ley 32104, que, con texto sustitutorio, proponen la Ley que modifica el Código Penal y el Código Procesal Penal, y deroga la Ley 32104, para establecer un límite proporcional a la suspensión del plazo de prescripción de la acción penal, siendo",
+      "si": 12,
+      "no": 6,
+      "abst": 2,
+      "votos": {
+        "diputados:palomino casavilca": "SI",
+        "diputados:gonzales polar": "SI",
+        "diputados:huilca flores": "SI",
+        "diputados:alayza maccera": "SI",
+        "diputados:baella malca": "ABST",
+        "diputados:beteta rubin": "NO",
+        "diputados:bobadilla galindo": "NO",
+        "diputados:castro cruz": "NO",
+        "diputados:condori flores": "SI",
+        "diputados:dominguez herrera": "NO",
+        "diputados:lopez letona": "SI",
+        "diputados:holguin loaiza": "SI",
+        "diputados:manay pillaca": "SI",
+        "diputados:masco caceres": "SI",
+        "diputados:munoz yurivilca": "NO",
+        "diputados:tito rojas": "SI",
+        "diputados:quezada castro": "NO",
+        "diputados:rocha gallegos": "ABST",
+        "diputados:uribe saenz": "SI",
+        "diputados:varas seguin": "SI"
+      },
+      "fecha": "2026-10-27",
+      "camara": "diputados",
+      "comision": "Justicia y Derechos Humanos",
+      "sesion": 3666,
+      "url": "https://wb2server.congreso.gob.pe/service-alfresco/alfresko/detalle/preview/file?idDocument=59150d98-7046-4447-b58d-a109240a40b1&key=47j6sp1KH2elP2IphiOp78e"
+    },
+    {
+      "pl": "13",
+      "camara_pl": "D",
+      "asunto": "habiendo más intervenciones se somete a votación la aprobación del predictamen recaído en las Proposiciones Legislativas 00013/2026-2031-CD, 00017/2026-2031-CD, 00477/2026-2031-CD, 00540/2026-2031-CD y 00612/2026-2031-CD, acumuladas, que propone la Ley que modifica el Decreto Legislativo 1373, Decreto Legislativo sobre Extinción de Dominio, para restablecer la autonomía del proceso y fortalecer sus garantías, siendo",
+      "no": 8,
+      "abst": 1,
+      "si": 11,
+      "votos": {},
+      "fecha": "2026-10-27",
+      "camara": "diputados",
+      "comision": "Justicia y Derechos Humanos",
+      "sesion": 3666,
+      "url": "https://wb2server.congreso.gob.pe/service-alfresco/alfresko/detalle/preview/file?idDocument=59150d98-7046-4447-b58d-a109240a40b1&key=47j6sp1KH2elP2IphiOp78e"
     }
   ]
 }
