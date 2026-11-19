@@ -11255,5 +11255,242 @@
       }
     ],
     "url": "https://www.youtube.com/watch?v=Nh1WjPVTzjE"
+  },
+  "wvYF_OCf-8M": {
+    "fecha": "2026-10-20",
+    "organo": "Pleno de la Asamblea",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Diana Arboleda",
+        "cargo": "ministro o autoridad",
+        "sobre": "informe de la Comisión de Régimen Económico",
+        "postura": "comenta",
+        "tema": "Tributos",
+        "dijo": "Leyó el informe de la Comisión de Régimen Económico sobre la objeción al proyecto tributario.",
+        "proyecto": "proyecto de ley orgánica reformatoria al Código Tributario",
+        "id": null
+      },
+      {
+        "orador": "Nathalie Fariñango",
+        "cargo": "legislador",
+        "sobre": "objeción al proyecto de ley tributaria",
+        "postura": "a favor",
+        "tema": "Tributos",
+        "dijo": "Defendió el allanamiento a la objeción presidencial sobre el Código Tributario.",
+        "proyecto": "proyecto de ley orgánica reformatoria al Código Tributario",
+        "id": "EC:farinango delgado"
+      },
+      {
+        "orador": "Nathalie Fariñango",
+        "cargo": "legislador",
+        "sobre": "objeción al Código Tributario",
+        "postura": "a favor",
+        "tema": "Tributos",
+        "dijo": "Defendió el texto alternativo para la reforma al Código Tributario.",
+        "proyecto": "Proyecto de ley orgánica reformatoria al Código Tributario",
+        "id": "EC:farinango delgado"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=wvYF_OCf-8M"
+  },
+  "fb_1443944621019762": {
+    "fecha": "2026-10-20",
+    "organo": "Comisión de Seguridad Integral",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Edwin Cañizares Isneros",
+        "cargo": "ministro o autoridad",
+        "sobre": "Reforma a la Ley de Personal y Disciplina",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Respaldó la reforma a la ley de las Fuerzas Armadas.",
+        "proyecto": "Ley Orgánica de Personal y Disciplina de las Fuerzas Armadas",
+        "id": null
+      },
+      {
+        "orador": "Machado",
+        "cargo": "legislador",
+        "sobre": "Seguridad interna y rol de las fuerzas armadas",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Comentó la importancia de la seguridad interna para las fuerzas armadas.",
+        "proyecto": "",
+        "id": "EC:machado clavijo"
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1443944621019762"
+  },
+  "2EIYKlqJBT8": {
+    "fecha": "2026-10-20",
+    "organo": "Comisión de Energía y Minas",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Nari Pinasco",
+        "cargo": "legislador",
+        "sobre": "Modificación del contrato de hidrocarburos OT 192",
+        "postura": "en contra",
+        "tema": "Energía",
+        "dijo": "Cuestionó la modificación del contrato de hidrocarburos OT 192.",
+        "proyecto": "DS 021-2026-EM",
+        "id": "diputados:pinasco montenegro"
+      },
+      {
+        "orador": "Nari Pinasco",
+        "cargo": "legislador",
+        "sobre": "Servicio de energía eléctrica en Iquitos",
+        "postura": "propone",
+        "tema": "Energía",
+        "dijo": "Propuso la coordinación de sistemas aislados en Iquitos.",
+        "proyecto": "",
+        "id": "diputados:pinasco montenegro"
+      },
+      {
+        "orador": "Frank Licker Torres",
+        "cargo": "legislador",
+        "sobre": "Grupo de trabajo sobre seguridad energética",
+        "postura": "propone",
+        "tema": "Energía",
+        "dijo": "Propuso crear un grupo de trabajo sobre seguridad energética.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Raúl Camargo",
+        "cargo": "legislador",
+        "sobre": "Potencial petrolero y gestión energética",
+        "postura": "comenta",
+        "tema": "Energía",
+        "dijo": "Respaldó la necesidad de fortalecer las políticas energéticas.",
+        "proyecto": "",
+        "id": "diputados:camargo porta"
+      },
+      {
+        "orador": "Nari Pinasco",
+        "cargo": "legislador",
+        "sobre": "Traslado de documento para el sistema de Iquitos",
+        "postura": "propone",
+        "tema": "Energía",
+        "dijo": "Pidió agilizar el traslado del documento a Electroriente.",
+        "proyecto": "",
+        "id": "diputados:pinasco montenegro"
+      },
+      {
+        "orador": "Malki",
+        "cargo": "legislador",
+        "sobre": "Petróleo en fronteras costeras",
+        "postura": "propone",
+        "tema": "Energía",
+        "dijo": "Pidió reforzar el seguimiento sobre petróleo en fronteras costeras.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Raúl Camargo",
+        "cargo": "legislador",
+        "sobre": "Alumbrado público y decreto supremo 019-2026-EM",
+        "postura": "en contra",
+        "tema": "Energía",
+        "dijo": "Cuestionó el incremento en la facturación del alumbrado público.",
+        "proyecto": "DS 019-2026-EM",
+        "id": "diputados:camargo porta"
+      },
+      {
+        "orador": "Anna Yufra",
+        "cargo": "legislador",
+        "sobre": "Lucha contra la minería ilegal en Cajamarca",
+        "postura": "propone",
+        "tema": "Minería",
+        "dijo": "Pidió una intervención urgente contra la minería ilegal en Cajamarca.",
+        "proyecto": "",
+        "id": "diputados:yuffra lugo"
+      },
+      {
+        "orador": "Jesús Pérez Alcahuamán",
+        "cargo": "legislador",
+        "sobre": "Citación al presidente de Ingemmet",
+        "postura": "propone",
+        "tema": "Minería",
+        "dijo": "Reiteró la solicitud de citar al presidente de Ingemmet.",
+        "proyecto": "",
+        "id": "diputados:perez alccahuaman"
+      },
+      {
+        "orador": "Frank Licker Torres",
+        "cargo": "legislador",
+        "sobre": "Declaración de posibles conflictos de intereses",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso la declaración de posibles conflictos de intereses.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Kim Muñoz",
+        "cargo": "legislador",
+        "sobre": "Definición de vínculos en la propuesta de transparencia",
+        "postura": "con observaciones",
+        "tema": "Política y control político",
+        "dijo": "Observó que el término amical es demasiado amplio.",
+        "proyecto": "",
+        "id": "diputados:munoz yurivilca"
+      },
+      {
+        "orador": "Jaime Abenzur",
+        "cargo": "legislador",
+        "sobre": "Declaración de vínculos por escrito",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Sugirió que la manifestación de vínculos sea por escrito.",
+        "proyecto": "",
+        "id": "diputados:abensur pinasco"
+      },
+      {
+        "orador": "Frank Licker",
+        "cargo": "legislador",
+        "sobre": "Eliminación del término amical de la propuesta",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso eliminar el término amical de su propuesta.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Jaime Abenzur",
+        "cargo": "legislador",
+        "sobre": "Abstención ante conflictos de intereses",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Explicó que lo natural es abstenerse ante conflictos de intereses.",
+        "proyecto": "",
+        "id": "diputados:abensur pinasco"
+      },
+      {
+        "orador": "Mayra Mercedes Elizabeth Figuero Figueredo Valderrama",
+        "cargo": "ministro o autoridad",
+        "sobre": "nuevo marco legal de la pequeña minería",
+        "postura": "comenta",
+        "tema": "Minería",
+        "dijo": "Explicó las propuestas para el nuevo marco legal minero.",
+        "proyecto": "Ley MAPE",
+        "id": null
+      },
+      {
+        "orador": "Ben Sur",
+        "cargo": "legislador",
+        "sobre": "suspensión de la sesión de comisión",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso suspender la sesión de la comisión.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=2EIYKlqJBT8"
   }
 }
