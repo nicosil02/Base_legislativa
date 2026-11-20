@@ -59,6 +59,9 @@ jobs:
           a=$(atraso_min backfill-auto.yml)
           echo "backfill-auto: ultima corrida hace $a min"
           [ "$a" -ge 360 ] && gh workflow run backfill-auto.yml && echo "disparada backfill-auto"
+          a=$(atraso_min posturas.yml)
+          echo "posturas (resumenes + posturas): ultima corrida hace $a min"
+          [ "$a" -ge 90 ] && gh workflow run posturas.yml && echo "disparada posturas"
           true
 
   vigilar:
