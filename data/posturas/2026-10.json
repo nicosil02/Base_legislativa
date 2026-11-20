@@ -16919,5 +16919,252 @@
       }
     ],
     "url": "https://www.facebook.com/watch/?v=1788678658920501"
+  },
+  "fb_1884021106100236": {
+    "fecha": "2026-10-19",
+    "organo": "Comisión de Justicia",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Giovanni Debolli",
+        "cargo": "invitado",
+        "sobre": "lucha contra mafias transnacionales",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Respaldó la lucha contra las mafias transnacionales.",
+        "proyecto": "Ley 0 Impunidad",
+        "id": null
+      },
+      {
+        "orador": "Rosa Legria Torres",
+        "cargo": "legislador",
+        "sobre": "armonización de la estrategia de seguridad",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Respaldó la armonización de la estrategia de seguridad integral.",
+        "proyecto": "Ley 0 Impunidad",
+        "id": "EC:torres cadena"
+      },
+      {
+        "orador": "Paolo DiSiuva",
+        "cargo": "invitado",
+        "sobre": "reformas penitenciarias y procesales",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Propuso ampliar los plazos de notificación en delitos de mafia.",
+        "proyecto": "Ley 0 Impunidad",
+        "id": null
+      },
+      {
+        "orador": "Rosa Legria Torres",
+        "cargo": "legislador",
+        "sobre": "plazos de notificación para delitos de mafia",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Cuestionó el plazo de notificación por el riesgo patrimonial.",
+        "proyecto": "Ley 0 Impunidad",
+        "id": "EC:torres cadena"
+      },
+      {
+        "orador": "Rosa Legria Torres",
+        "cargo": "legislador",
+        "sobre": "enfoque integral contra el crimen organizado",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Defendió el enfoque integral contra la criminalidad organizada.",
+        "proyecto": "Ley 0 Impunidad",
+        "id": "EC:torres cadena"
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1884021106100236"
+  },
+  "fb_1114888161124450": {
+    "fecha": "2026-10-19",
+    "organo": "Comisión de Niñez y Adolescencia",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Viviana Velós Ramírez",
+        "cargo": "legislador",
+        "sobre": "Proyecto de protección de niñas y niños",
+        "postura": "pregunta",
+        "tema": "Otros",
+        "dijo": "Preguntó si el Ministerio de Trabajo había remitido aportes por escrito.",
+        "proyecto": "Proyecto de protección integral de niñas, niños y adolescentes",
+        "id": "EC:veloz ramirez"
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1114888161124450"
+  },
+  "v9GiYDQ1Nw8": {
+    "fecha": "2026-10-16",
+    "organo": "Comisión de Presupuesto",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Walter Grundel",
+        "cargo": "autoridad",
+        "sobre": "Presupuesto de San Martín",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Expuso la necesidad de 154.7 millones para San Martín.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Equipo técnico del GORE San Martín",
+        "cargo": "autoridad",
+        "sobre": "Planificación de San Martín",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Presentó la planificación estratégica del gobierno de San Martín.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Calisto Jean Pietri",
+        "cargo": "legislador",
+        "sobre": "Presupuesto para el dengue",
+        "postura": "pregunta",
+        "tema": "Salud",
+        "dijo": "Preguntó sobre el presupuesto para combatir el dengue.",
+        "proyecto": "",
+        "id": "senado:calisto giampietri"
+      },
+      {
+        "orador": "Gobernador de Loreto",
+        "cargo": "autoridad",
+        "sobre": "Presupuesto de Loreto",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Expuso el presupuesto de Loreto para el año 2027.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Juan Carlos de la Aguila",
+        "cargo": "legislador",
+        "sobre": "Agua potable en Iquitos",
+        "postura": "pregunta",
+        "tema": "Saneamiento",
+        "dijo": "Preguntó por el proyecto de agua potable en Iquitos.",
+        "proyecto": "",
+        "id": "senado:del aguila cardenas"
+      },
+      {
+        "orador": "Gobernador de Loreto",
+        "cargo": "autoridad",
+        "sobre": "Gestión de agua en Loreto",
+        "postura": "comenta",
+        "tema": "Saneamiento",
+        "dijo": "Informó sobre el convenio con el Ministerio de Vivienda.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Juan Carlos de la Aguila",
+        "cargo": "legislador",
+        "sobre": "Inversión privada en Loreto",
+        "postura": "pregunta",
+        "tema": "Otros",
+        "dijo": "Cuestionó la falta de promoción de la inversión privada.",
+        "proyecto": "",
+        "id": "senado:del aguila cardenas"
+      },
+      {
+        "orador": "Gobernador de Loreto",
+        "cargo": "autoridad",
+        "sobre": "Economía y energía en Loreto",
+        "postura": "comenta",
+        "tema": "Energía",
+        "dijo": "Explicó la importancia de reactivar los lotes petroleros.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Manuel Gambini",
+        "cargo": "autoridad",
+        "sobre": "Presupuesto de Ucayali",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Presentó la propuesta presupuestal de la región Ucayali.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Manuel Gambini Urupaya",
+        "cargo": "ministro o autoridad",
+        "sobre": "Presupuesto 2027 de Ucayali",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Expuso la programación presupuestal y las necesidades de Ucayali.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Calisto Jean Pietre",
+        "cargo": "legislador",
+        "sobre": "Proyecto de piscinas y deforestación",
+        "postura": "propone",
+        "tema": "Pesca",
+        "dijo": "Propuso retomar el proyecto de piscinas para dinamizar la economía.",
+        "proyecto": "",
+        "id": "senado:calisto giampietri"
+      },
+      {
+        "orador": "Hilmer Wilson Orna Corrales",
+        "cargo": "ministro o autoridad",
+        "sobre": "Presupuesto 2027 de Amazonas",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Denunció un recorte del treinta y tres por ciento en inversiones.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Caballero León",
+        "cargo": "legislador",
+        "sobre": "Obstrucción de la fiscalización en Amazonas",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció que impidieron la labor de fiscalización de una obra.",
+        "proyecto": "",
+        "id": "senado:caballero leon"
+      },
+      {
+        "orador": "Caballero León David",
+        "cargo": "legislador",
+        "sobre": "Obstaculización de la fiscalización en Amazonas",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció la obstrucción de fiscalización y un pago de 190 millones.",
+        "proyecto": "",
+        "id": "senado:caballero leon"
+      },
+      {
+        "orador": "Calisto Jean Pietri",
+        "cargo": "legislador",
+        "sobre": "Protocolos de acceso a obras públicas",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Defendió la facultad de fiscalización del Senado de la República.",
+        "proyecto": "",
+        "id": "senado:calisto giampietri"
+      },
+      {
+        "orador": "Hilmer Horna Corrales",
+        "cargo": "ministro o autoridad",
+        "sobre": "Gestión de la obra en Amazonas",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Rechazó las acusaciones de desfalco en la obra de Amazonas.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=v9GiYDQ1Nw8"
   }
 }
