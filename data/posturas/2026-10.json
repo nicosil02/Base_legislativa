@@ -13787,5 +13787,1432 @@
       }
     ],
     "url": "https://www.youtube.com/watch?v=LLkxXj_QJyw"
+  },
+  "xcDBBOyQSpI": {
+    "fecha": "2026-10-22",
+    "organo": "Comisión de Justicia",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Katherine Ampuero",
+        "cargo": "legislador",
+        "sobre": "agenda de la sesión descentralizada",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Informó los temas que se tratarán en Trujillo.",
+        "proyecto": "",
+        "id": "senado:ampuero meza"
+      },
+      {
+        "orador": "Katherine Ampuero",
+        "cargo": "legislador",
+        "sobre": "situación del penal El Milagro",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Mencionó la sobrepoblación en los establecimientos penitenciarios.",
+        "proyecto": "",
+        "id": "senado:ampuero meza"
+      },
+      {
+        "orador": "Katherine Ampuero",
+        "cargo": "legislador",
+        "sobre": "reformas contra el crimen organizado",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Informó sobre la revisión de leyes contra la criminalidad.",
+        "proyecto": "",
+        "id": "senado:ampuero meza"
+      },
+      {
+        "orador": "Katherine Ampuero",
+        "cargo": "legislador",
+        "sobre": "extorsión en La Libertad",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Denunció el alto índice de extorsión en la región.",
+        "proyecto": "",
+        "id": "senado:ampuero meza"
+      },
+      {
+        "orador": "Katherine Ampuero",
+        "cargo": "legislador",
+        "sobre": "aprobación de las actas",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso la aprobación de las actas de sesiones anteriores.",
+        "proyecto": "",
+        "id": "senado:ampuero meza"
+      },
+      {
+        "orador": "Decano de la Facultad de Derecho de la Universidad Nacional de Trujillo",
+        "cargo": "invitado",
+        "sobre": "diagnóstico de la inseguridad",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Presentó un diagnóstico sobre la inseguridad y el crimen.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Decano de la Facultad de Derecho de la Universidad Nacional de Trujillo",
+        "cargo": "invitado",
+        "sobre": "propuestas contra el crimen organizado",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso la creación de un observatorio contra el crimen.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Katherine Ampuero",
+        "cargo": "legislador",
+        "sobre": "asistencia de autoridades",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Informó sobre los invitados para la próxima sesión.",
+        "proyecto": "",
+        "id": "senado:ampuero meza"
+      },
+      {
+        "orador": "Alcalde de Trujillo",
+        "cargo": "ministro o autoridad",
+        "sobre": "gestión de la seguridad en Trujillo",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Informó la reducción de la criminalidad en Trujillo.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministra",
+        "cargo": "ministro o autoridad",
+        "sobre": "trabajo de campo en La Libertad",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Mencionó el trabajo de campo realizado en la región.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Rafael Jorge Velaúnde Llosa",
+        "cargo": "ministro o autoridad",
+        "sobre": "Seguridad en penales y minería ilegal",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Detalló las acciones militares en penales y Pataz.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Edgar Man",
+        "cargo": "legislador",
+        "sobre": "Implementación de facultades delegadas",
+        "postura": "pregunta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Preguntó sobre la implementación de facultades delegadas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Jorge Gavidia",
+        "cargo": "legislador",
+        "sobre": "Coordinación entre ministerios de seguridad",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso coordinar esfuerzos entre Defensa e Interior.",
+        "proyecto": "",
+        "id": "senado:gavidia rodriguez"
+      },
+      {
+        "orador": "Henry Albañil",
+        "cargo": "legislador",
+        "sobre": "Iniciativas legislativas para el Ejecutivo",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Aseguró que los diputados impulsarán nuevas leyes.",
+        "proyecto": "",
+        "id": "diputados:albanil carmona"
+      },
+      {
+        "orador": "Marcionila Serna",
+        "cargo": "invitado",
+        "sobre": "Inseguridad en Florencia de Mora",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Denunció la falta de seguridad en su distrito.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "José Rosario Venturo",
+        "cargo": "invitado",
+        "sobre": "Necesidad de facultades legislativas",
+        "postura": "pregunta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Cuestionó la necesidad de solicitar facultades al Ejecutivo.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "César Campaña",
+        "cargo": "invitado",
+        "sobre": "Estrategia integral contra la criminalidad",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Pidió un abordaje integral contra la criminalidad.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "José Rosario Venturo",
+        "cargo": "invitado",
+        "sobre": "facultades legislativas para el Ejecutivo",
+        "postura": "pregunta",
+        "tema": "Política y control político",
+        "dijo": "Preguntó sobre la necesidad de otorgar facultades legislativas al Ejecutivo.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "César Campaña",
+        "cargo": "invitado",
+        "sobre": "abordaje integral de la inseguridad ciudadana",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso un abordaje integral contra la trata y el narcotráfico.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Esteban Palomino",
+        "cargo": "invitado",
+        "sobre": "influencia de la Escuela de las Américas",
+        "postura": "pregunta",
+        "tema": "Política y control político",
+        "dijo": "Preguntó sobre la articulación de la Escuela de las Américas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Enrique Poma Gil",
+        "cargo": "invitado",
+        "sobre": "efectividad en la lucha contra el crimen",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Cuestionó la falta de medidas efectivas contra la inseguridad.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro de Defensa",
+        "cargo": "ministro o autoridad",
+        "sobre": "facultades para el control de penales",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Defendió la necesidad de facultades para controlar los penales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro de Defensa",
+        "cargo": "ministro o autoridad",
+        "sobre": "marco legal contra organizaciones criminales",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso un marco legal contra organizaciones criminales hostiles.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ministro de Defensa",
+        "cargo": "ministro o autoridad",
+        "sobre": "beneficios de la Escuela de las Américas",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Respaldó la importancia de la inteligencia compartida regional.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "César Astudillo",
+        "cargo": "ministro o autoridad",
+        "sobre": "operativos en el penal de Trujillo",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Denunció el hallazgo de dispositivos en los penales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "César Astudillo",
+        "cargo": "ministro o autoridad",
+        "sobre": "situación delictiva en Florencia de Mora",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Denunció la situación criminal en Florencia de Mora.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "César Astudillo",
+        "cargo": "ministro o autoridad",
+        "sobre": "rol de la Policía Nacional en investigaciones",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Defendió la hegemonía de la Policía en investigaciones.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "César Astudillo",
+        "cargo": "ministro o autoridad",
+        "sobre": "extorsión en instituciones educativas",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Denunció la extorsión en colegios del país.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "César Astudillo",
+        "cargo": "ministro o autoridad",
+        "sobre": "cambio en la criminalidad por migración",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Denunció el cambio en la criminalidad nacional.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "César Astudillo",
+        "cargo": "ministro o autoridad",
+        "sobre": "reducción de delitos a nivel nacional",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Respaldó la reducción de delitos como homicidios y extorsiones.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Luis Gustavo Guillermo Bringas",
+        "cargo": "invitado",
+        "sobre": "especialización de la fiscalía contra extorsión",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Propuso mejorar la especialización del Ministerio Público.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Eric Waldir Ángeles Fuentes",
+        "cargo": "ministro o autoridad",
+        "sobre": "Incidencia delictiva en La Libertad",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Informó sobre la reducción de homicidios y extorsiones en la región.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Jennifer Ludeña Meléndez",
+        "cargo": "invitado",
+        "sobre": "Subsistema contra la extorsión",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Explicó el funcionamiento del nuevo subsistema fiscal contra extorsiones.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Jennifer Ludeña",
+        "cargo": "ministro o autoridad",
+        "sobre": "Ampliación de competencia y tecnología fiscal",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Pidió la ampliación de competencia y mayor tecnología fiscal.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Eder Cadenillas",
+        "cargo": "ministro o autoridad",
+        "sobre": "Inversión en seguridad en La Libertad",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Informó sobre la inversión en seguridad y equipamiento regional.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Delia Vega",
+        "cargo": "invitado",
+        "sobre": "Propuesta de prevención sociofamiliar",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso implementar intervenciones sociofamiliares para prevenir la criminalidad.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Jorge Vázquez",
+        "cargo": "invitado",
+        "sobre": "Presupuesto del Instituto Médico Legal",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Denunció la falta de presupuesto y peritos en medicina legal.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Jacqueline Castañeda Muñoz",
+        "cargo": "invitado",
+        "sobre": "Instalación de antena en parque",
+        "postura": "en contra",
+        "tema": "Telecomunicaciones",
+        "dijo": "Rechazó la instalación de una antena en el parque.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "José Rosario Venturo",
+        "cargo": "invitado",
+        "sobre": "Modernización tecnológica y seguridad ciudadana",
+        "postura": "pregunta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Preguntó por proyectos para la modernización tecnológica y seguridad.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Paola Vaca Estandia",
+        "cargo": "invitado",
+        "sobre": "Corrupción y extorsión en la región",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Denunció la extorsión y la corrupción en La Libertad.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Paola Vaca Estandia",
+        "cargo": "invitado",
+        "sobre": "acciones para la seguridad en La Libertad",
+        "postura": "pregunta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Pidió conocer las acciones ante la criminalidad en La Libertad.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Lourdes Tuesta Collantes",
+        "cargo": "invitado",
+        "sobre": "inseguridad y formación estudiantil",
+        "postura": "comenta",
+        "tema": "Educación",
+        "dijo": "Informó cómo la inseguridad afecta la formación de estudiantes.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Mirta Vázquez",
+        "cargo": "legislador",
+        "sobre": "impacto de las leyes 32130 y 32108",
+        "postura": "pregunta",
+        "tema": "Justicia",
+        "dijo": "Preguntó sobre el impacto de las leyes en la fiscalía.",
+        "proyecto": "Leyes 32130 y 32108",
+        "id": "senado:vasquez chuquilin"
+      },
+      {
+        "orador": "Mirta Vázquez",
+        "cargo": "legislador",
+        "sobre": "cifras de homicidios en el Sinadef",
+        "postura": "pregunta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Cuestionó la veracidad de los datos registrados por Sinadef.",
+        "proyecto": "",
+        "id": "senado:vasquez chuquilin"
+      },
+      {
+        "orador": "Mirta Vázquez",
+        "cargo": "legislador",
+        "sobre": "organizaciones criminales con empresas fachada",
+        "postura": "pregunta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Preguntó sobre investigaciones de organizaciones con empresas fachada.",
+        "proyecto": "",
+        "id": "senado:vasquez chuquilin"
+      },
+      {
+        "orador": "Mirta Vázquez",
+        "cargo": "legislador",
+        "sobre": "estrategia contra mafias en Trujillo",
+        "postura": "pregunta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Preguntó sobre la estrategia contra mafias en Trujillo.",
+        "proyecto": "",
+        "id": "senado:vasquez chuquilin"
+      },
+      {
+        "orador": "Jennifer Ludeña",
+        "cargo": "ministro o autoridad",
+        "sobre": "allanamientos y conducción operativa",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Informó que el defensor de oficio evita retrasos en allanamientos.",
+        "proyecto": "Ley 32130",
+        "id": null
+      },
+      {
+        "orador": "Jennifer Ludeña",
+        "cargo": "ministro o autoridad",
+        "sobre": "delito de minería ilegal",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Denunció que la ley de minería ilegal generó impunidad.",
+        "proyecto": "Ley 32108",
+        "id": null
+      },
+      {
+        "orador": "Jennifer Ludeña",
+        "cargo": "ministro o autoridad",
+        "sobre": "proceso de colaboración eficaz",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Cuestionó la presencia de abogados en la colaboración eficaz.",
+        "proyecto": "Ley 31990",
+        "id": null
+      },
+      {
+        "orador": "Jennifer Ludeña",
+        "cargo": "ministro o autoridad",
+        "sobre": "funcionamiento de unidades de flagrancia",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Informó sobre la unificación de las unidades de flagrancia.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Jennifer Ludeña",
+        "cargo": "ministro o autoridad",
+        "sobre": "trazabilidad de los explosivos",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Aseguró que se investiga la trazabilidad de los explosivos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Jorge Gaviria",
+        "cargo": "legislador",
+        "sobre": "Estrategia de seguridad y recursos",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso fortalecer la estrategia de seguridad con inversión en tecnología y capacitación.",
+        "proyecto": "",
+        "id": "senado:gavidia rodriguez"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=xcDBBOyQSpI"
+  },
+  "SHSVUEeVePs": {
+    "fecha": "2026-10-21",
+    "organo": "Comisión de Agraria",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "María Luisa Silupú Inga",
+        "cargo": "legislador",
+        "sobre": "Riesgos de inundaciones en Piura",
+        "postura": "comenta",
+        "tema": "Agricultura",
+        "dijo": "Informó sobre los riesgos de inundaciones en el distrito de Mariscal Castilla.",
+        "proyecto": "",
+        "id": "diputados:silupu inga"
+      },
+      {
+        "orador": "María Luisa Silupú Inga",
+        "cargo": "legislador",
+        "sobre": "Crisis económica de los arroceros",
+        "postura": "comenta",
+        "tema": "Agricultura",
+        "dijo": "Denunció la crisis económica que enfrentan los productores de arroz.",
+        "proyecto": "",
+        "id": "diputados:silupu inga"
+      },
+      {
+        "orador": "Analí Márquez Huanca",
+        "cargo": "legislador",
+        "sobre": "Incendios forestales en el Cusco",
+        "postura": "propone",
+        "tema": "Ambiente",
+        "dijo": "Pidió la intervención inmediata del gobierno central ante los incendios.",
+        "proyecto": "",
+        "id": "diputados:marquez huanca"
+      },
+      {
+        "orador": "Cristian Aranda Vázquez",
+        "cargo": "legislador",
+        "sobre": "Integración de juntas de usuarios en COER",
+        "postura": "propone",
+        "tema": "Agricultura",
+        "dijo": "Propuso integrar a las juntas de usuarios de agua en los COER.",
+        "proyecto": "",
+        "id": "diputados:aranda vasquez"
+      },
+      {
+        "orador": "Aldo Antonio Bravo Quispe",
+        "cargo": "legislador",
+        "sobre": "Situación de los arroceros en Piura",
+        "postura": "comenta",
+        "tema": "Agricultura",
+        "dijo": "Informó sobre la gestión de reprogramación de créditos con Agrobanco.",
+        "proyecto": "",
+        "id": "diputados:bravo quispe"
+      },
+      {
+        "orador": "Gloria Irachi Pizarro",
+        "cargo": "legislador",
+        "sobre": "Incendios forestales en Arequipa",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Reportó la afectación de pastizales por incendios en Arequipa.",
+        "proyecto": "",
+        "id": "diputados:hirache pizarro"
+      },
+      {
+        "orador": "Cristian Aranda Vázquez",
+        "cargo": "legislador",
+        "sobre": "Gestión de emergencias y juntas de usuarios",
+        "postura": "propone",
+        "tema": "Agricultura",
+        "dijo": "Solicitó información al Ejecutivo sobre la gestión de emergencias.",
+        "proyecto": "",
+        "id": "diputados:aranda vasquez"
+      },
+      {
+        "orador": "Jennifer Paredes Navarro",
+        "cargo": "legislador",
+        "sobre": "Obras de prevención en Piura",
+        "postura": "propone",
+        "tema": "Agricultura",
+        "dijo": "Exigió un informe sobre la ejecución de obras en Piura.",
+        "proyecto": "",
+        "id": "diputados:paredes navarro"
+      },
+      {
+        "orador": "Jesús Pérez Alcahuamán",
+        "cargo": "legislador",
+        "sobre": "Daños por incendios en el sur",
+        "postura": "propone",
+        "tema": "Agricultura",
+        "dijo": "Pidió un inventario detallado de daños por incendios forestales.",
+        "proyecto": "",
+        "id": "diputados:perez alccahuaman"
+      },
+      {
+        "orador": "Aldo Antonio Bravo Quispe",
+        "cargo": "legislador",
+        "sobre": "Control de incendios en Ayacucho",
+        "postura": "propone",
+        "tema": "Ambiente",
+        "dijo": "Solicitó informes sobre los esfuerzos para controlar incendios forestales.",
+        "proyecto": "",
+        "id": "diputados:bravo quispe"
+      },
+      {
+        "orador": "Analí Márquez Huanca",
+        "cargo": "legislador",
+        "sobre": "Subvención económica por incendios forestales",
+        "postura": "propone",
+        "tema": "Ambiente",
+        "dijo": "Propuso reforzar el pedido de subvención para los damnificados.",
+        "proyecto": "",
+        "id": "diputados:marquez huanca"
+      },
+      {
+        "orador": "Rafael Aldo Celis Castillo",
+        "cargo": "legislador",
+        "sobre": "Causas de los incendios forestales",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Señaló que las prácticas ancestrales provocan muchos incendios.",
+        "proyecto": "",
+        "id": "diputados:celiz castillo"
+      },
+      {
+        "orador": "Analí Márquez Huanca",
+        "cargo": "legislador",
+        "sobre": "Causas de los incendios forestales",
+        "postura": "en contra",
+        "tema": "Ambiente",
+        "dijo": "Rechazó que los incendios se deban solo a prácticas ancestrales.",
+        "proyecto": "",
+        "id": "diputados:marquez huanca"
+      },
+      {
+        "orador": "Edgar Adrián Alvarón de la Cruz",
+        "cargo": "legislador",
+        "sobre": "Ausencia de titulares del Ejecutivo",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Rechazó la ausencia de los titulares del Poder Ejecutivo en la sesión.",
+        "proyecto": "",
+        "id": "diputados:alvaron de la cruz"
+      },
+      {
+        "orador": "Aldo Bravo",
+        "cargo": "legislador",
+        "sobre": "Falta de respeto del Ejecutivo",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Propuso enviar un documento formal al presidente del Consejo de Ministros.",
+        "proyecto": "",
+        "id": "diputados:bravo quispe"
+      },
+      {
+        "orador": "Rafael Aldo Céis Castillo",
+        "cargo": "legislador",
+        "sobre": "Atención a funcionarios de SENASA",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso escuchar a los funcionarios delegados de SENASA para optimizar el tiempo.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Demetrio Valquí",
+        "cargo": "legislador",
+        "sobre": "Citación del Ministro de Economía",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Pidió una reunión extraordinaria para citar al ministro de Economía.",
+        "proyecto": "",
+        "id": "diputados:valqui calderon"
+      },
+      {
+        "orador": "Gladis Griselda Andrade Salguero de Álvarez",
+        "cargo": "legislador",
+        "sobre": "Modificación de la Ley de Recursos Hídricos",
+        "postura": "a favor",
+        "tema": "Agricultura",
+        "dijo": "Defendió la modificación de la ley de recursos hídricos con el PL 0095.",
+        "proyecto": "PL 0095",
+        "id": "diputados:andrade salguero de alvarez"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=SHSVUEeVePs"
+  },
+  "5xxUrBBfdCY": {
+    "fecha": "2026-10-21",
+    "organo": "Comisión de Salud",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Liliana Milagros Tacayama",
+        "cargo": "legislador",
+        "sobre": "Contaminación de agua en Eureca",
+        "postura": "en contra",
+        "tema": "Saneamiento",
+        "dijo": "Denunció la presencia de arsénico en el agua de Eureca.",
+        "proyecto": "",
+        "id": "diputados:takayama jimenez"
+      },
+      {
+        "orador": "María Luisa Silupoinga",
+        "cargo": "legislador",
+        "sobre": "Infraestructura de salud en Piura",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Denunció el colapso de centros de salud en Piura.",
+        "proyecto": "",
+        "id": "diputados:silupu inga"
+      },
+      {
+        "orador": "Yufra",
+        "cargo": "legislador",
+        "sobre": "Construcción del Hospital de Bellavista",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Propuso agilizar la construcción del hospital de Bellavista.",
+        "proyecto": "",
+        "id": "diputados:yuffra lugo"
+      },
+      {
+        "orador": "Aldo Gravo",
+        "cargo": "legislador",
+        "sobre": "Propiedad del Hospital Víctor Larco Herrera",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Cuestionó la propiedad del terreno en el hospital.",
+        "proyecto": "",
+        "id": "diputados:bravo quispe"
+      },
+      {
+        "orador": "Aldo Gravo",
+        "cargo": "legislador",
+        "sobre": "Internos en el Hospital Víctor Larco Herrera",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Denunció la presencia de internos en el hospital.",
+        "proyecto": "",
+        "id": "diputados:bravo quispe"
+      },
+      {
+        "orador": "Arminta",
+        "cargo": "legislador",
+        "sobre": "Unidades de diálisis en Camaná",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Propuso implementar una unidad de diálisis en Camaná.",
+        "proyecto": "",
+        "id": "diputados:arminta valencia"
+      },
+      {
+        "orador": "Arminta",
+        "cargo": "legislador",
+        "sobre": "Atención sanitaria para población LGBTQ",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Denunció la falta de atención para el movimiento LGBTQ.",
+        "proyecto": "",
+        "id": "diputados:arminta valencia"
+      },
+      {
+        "orador": "Arminta",
+        "cargo": "legislador",
+        "sobre": "Educación en el Instituto Iren Sur",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Pidió aulas adecuadas para niños en el Iren Sur.",
+        "proyecto": "",
+        "id": "diputados:arminta valencia"
+      },
+      {
+        "orador": "Elvita Fernández",
+        "cargo": "legislador",
+        "sobre": "Situación del Hospital Hipólito Unanue",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Denunció la precariedad del hospital en Tacna.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Elvita Fernández",
+        "cargo": "legislador",
+        "sobre": "Proyecto del nuevo hospital en Tacna",
+        "postura": "con observaciones",
+        "tema": "Salud",
+        "dijo": "Cuestionó la viabilidad técnica del nuevo hospital.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Elvita Fernández",
+        "cargo": "legislador",
+        "sobre": "Huelga de trabajadores CASC COVID",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Denunció la falta de diálogo con los trabajadores.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Balizán",
+        "cargo": "legislador",
+        "sobre": "Hospital en construcción en Leoncio Prado",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Cuestionó las condiciones del hospital en Leoncio Prado.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Balizán",
+        "cargo": "legislador",
+        "sobre": "Traslado del centro de salud",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Denunció el traslado de un centro de salud.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ambrosio",
+        "cargo": "legislador",
+        "sobre": "Infraestructura del puesto de salud Yicua",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Denunció el mal estado del puesto de salud Yicua.",
+        "proyecto": "",
+        "id": "diputados:ambrosio dominguez"
+      },
+      {
+        "orador": "Jessica Benítez",
+        "cargo": "legislador",
+        "sobre": "Registro de diagnósticos para el SIS",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Cuestionó el registro de diagnósticos para obtener medicinas.",
+        "proyecto": "",
+        "id": "diputados:benitez barrionuevo"
+      },
+      {
+        "orador": "Julia Ambrosio",
+        "cargo": "legislador",
+        "sobre": "Situación del centro de salud de Yicua",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Denunció el mal estado del centro de salud Yicua.",
+        "proyecto": "",
+        "id": "diputados:ambrosio dominguez"
+      },
+      {
+        "orador": "Jessica Benítez",
+        "cargo": "legislador",
+        "sobre": "Registro de diagnósticos en hospitales psiquiátricos",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Cuestionó el registro de diagnósticos falsos en hospitales.",
+        "proyecto": "",
+        "id": "diputados:benitez barrionuevo"
+      },
+      {
+        "orador": "Jessica Benítez",
+        "cargo": "legislador",
+        "sobre": "Ley de salud mental",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Informó sobre la aplicación de la Ley 30947.",
+        "proyecto": "Ley 30947",
+        "id": "diputados:benitez barrionuevo"
+      },
+      {
+        "orador": "Jessica Benítez",
+        "cargo": "legislador",
+        "sobre": "Citación al jefe del SIS",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Pidió citar al jefe del SIS.",
+        "proyecto": "",
+        "id": "diputados:benitez barrionuevo"
+      },
+      {
+        "orador": "Edgar Alvarón de la Cruz",
+        "cargo": "legislador",
+        "sobre": "Gestión del ministro de salud",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó la gestión del ministro de salud.",
+        "proyecto": "",
+        "id": "diputados:alvaron de la cruz"
+      },
+      {
+        "orador": "Edgar Alvarón de la Cruz",
+        "cargo": "legislador",
+        "sobre": "Deficiencias en el Hospital Regional de Ancash",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Denunció la inoperatividad de equipos en Ancash.",
+        "proyecto": "",
+        "id": "diputados:alvaron de la cruz"
+      },
+      {
+        "orador": "Edgar Alvarón de la Cruz",
+        "cargo": "legislador",
+        "sobre": "Brote de dengue en Ancash",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Denunció el aumento de casos de dengue.",
+        "proyecto": "",
+        "id": "diputados:alvaron de la cruz"
+      },
+      {
+        "orador": "Edgar Alvarón de la Cruz",
+        "cargo": "legislador",
+        "sobre": "Falta de agua potable en Ancash",
+        "postura": "en contra",
+        "tema": "Saneamiento",
+        "dijo": "Denunció la falta de agua potable en Ancash.",
+        "proyecto": "",
+        "id": "diputados:alvaron de la cruz"
+      },
+      {
+        "orador": "Edgar Alvarón de la Cruz",
+        "cargo": "legislador",
+        "sobre": "Citación al gobernador de Ancash",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Pidió citar al gobernador de Ancash.",
+        "proyecto": "",
+        "id": "diputados:alvaron de la cruz"
+      },
+      {
+        "orador": "Yanina Avendaño Virca",
+        "cargo": "legislador",
+        "sobre": "Centro de salud José Carlos Mariátegui",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Denunció la precariedad del centro de salud Mariátegui.",
+        "proyecto": "",
+        "id": "diputados:avendano vilca"
+      },
+      {
+        "orador": "Yanina Avendaño Virca",
+        "cargo": "legislador",
+        "sobre": "Centro de salud Carlos Protel",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Denunció el abandono del centro de salud Protel.",
+        "proyecto": "",
+        "id": "diputados:avendano vilca"
+      },
+      {
+        "orador": "Yanina Avendaño Virca",
+        "cargo": "legislador",
+        "sobre": "Centro Materno Infantil Taguantinsullo Bajo",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Denunció la infraestructura precaria de Taguantinsullo Bajo.",
+        "proyecto": "",
+        "id": "diputados:avendano vilca"
+      },
+      {
+        "orador": "Yanina Avendaño Virca",
+        "cargo": "legislador",
+        "sobre": "Acceso al agua potable",
+        "postura": "propone",
+        "tema": "Saneamiento",
+        "dijo": "Propuso analizar el acceso al agua potable.",
+        "proyecto": "",
+        "id": "diputados:avendano vilca"
+      },
+      {
+        "orador": "Mary Infantes Castañeda",
+        "cargo": "legislador",
+        "sobre": "Hospital Santiago Apóstol en Amazonas",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Cuestionó la gestión del hospital Santiago Apóstol.",
+        "proyecto": "",
+        "id": "diputados:infantes castaneda"
+      },
+      {
+        "orador": "Mary Infantes Castañeda",
+        "cargo": "legislador",
+        "sobre": "Centro oncológico en Chachapoyas",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Denunció la inoperatividad del centro oncológico en Chachapoyas.",
+        "proyecto": "",
+        "id": "diputados:infantes castaneda"
+      },
+      {
+        "orador": "Mary Infantes Castañeda",
+        "cargo": "legislador",
+        "sobre": "Falta de agua en hospitales de Amazonas",
+        "postura": "en contra",
+        "tema": "Saneamiento",
+        "dijo": "Denunció la falta de agua en hospitales de Amazonas.",
+        "proyecto": "",
+        "id": "diputados:infantes castaneda"
+      },
+      {
+        "orador": "Mary Infantes Castañeda",
+        "cargo": "legislador",
+        "sobre": "Contaminación en Condorcanqui",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Denunció la contaminación por mercurio en Condorcanqui.",
+        "proyecto": "",
+        "id": "diputados:infantes castaneda"
+      },
+      {
+        "orador": "Mary Infantes Castañeda",
+        "cargo": "legislador",
+        "sobre": "Hospital de Rodríguez de Mendoza",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Cuestionó la entrega del hospital de Rodríguez de Mendoza.",
+        "proyecto": "",
+        "id": "diputados:infantes castaneda"
+      },
+      {
+        "orador": "Mary Infantes Castañeda",
+        "cargo": "legislador",
+        "sobre": "Citación al gobernador de Amazonas",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Pidió citar al gobernador de Amazonas.",
+        "proyecto": "",
+        "id": "diputados:infantes castaneda"
+      },
+      {
+        "orador": "Atacayama",
+        "cargo": "legislador",
+        "sobre": "Sesión descentralizada en Lambayeque",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Propuso una sesión descentralizada en Lambayeque.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Atacayama",
+        "cargo": "legislador",
+        "sobre": "Agua segura en Cancas Ureca",
+        "postura": "propone",
+        "tema": "Saneamiento",
+        "dijo": "Propuso garantizar agua segura en Cancas Ureca.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Julia Ambrosio",
+        "cargo": "legislador",
+        "sobre": "Situación del puesto de salud de Yicua",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Pidió información sobre el puesto de salud Yicua.",
+        "proyecto": "",
+        "id": "diputados:ambrosio dominguez"
+      },
+      {
+        "orador": "Ana Luisa Yufra Lugo",
+        "cargo": "legislador",
+        "sobre": "Hospital de Bellavista en Cajamarca",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Pidió gestionar el hospital de Bellavista.",
+        "proyecto": "",
+        "id": "diputados:yuffra lugo"
+      },
+      {
+        "orador": "Ana Luisa Yufra Lugo",
+        "cargo": "legislador",
+        "sobre": "Obra en Chontalí",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Denunció la paralización de obras en Chontalí.",
+        "proyecto": "",
+        "id": "diputados:yuffra lugo"
+      },
+      {
+        "orador": "Ana Luisa Yufra Lugo",
+        "cargo": "legislador",
+        "sobre": "Puesto de salud en Gualatán",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Pidió concluir la construcción en Gualatán.",
+        "proyecto": "",
+        "id": "diputados:yuffra lugo"
+      },
+      {
+        "orador": "Ana Luisa Yufra Lugo",
+        "cargo": "legislador",
+        "sobre": "Plan contra la anemia en Loreto",
+        "postura": "pregunta",
+        "tema": "Salud",
+        "dijo": "Preguntó sobre la inversión contra la anemia.",
+        "proyecto": "",
+        "id": "diputados:yuffra lugo"
+      },
+      {
+        "orador": "Fernández",
+        "cargo": "legislador",
+        "sobre": "Sesión descentralizada en Tacna",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Propuso una sesión descentralizada en Tacna.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Fernández",
+        "cargo": "legislador",
+        "sobre": "Profesionales CAS COVID",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Pidió recibir a profesionales CAS COVID.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Jessica Benítez",
+        "cargo": "legislador",
+        "sobre": "Presencia de la jefa del SIS",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Pidió la presencia de la jefa del SIS.",
+        "proyecto": "",
+        "id": "diputados:benitez barrionuevo"
+      },
+      {
+        "orador": "Jessica Benítez",
+        "cargo": "legislador",
+        "sobre": "Petitorio farmacológico y DIGEMIT",
+        "postura": "propone",
+        "tema": "Farma",
+        "dijo": "Pidió la presencia de la directora de DIGEMIT.",
+        "proyecto": "",
+        "id": "diputados:benitez barrionuevo"
+      },
+      {
+        "orador": "Carlos Alberto Domínguez Herrera",
+        "cargo": "legislador",
+        "sobre": "Gestión de obras de la ANI",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Cuestionó la gestión de obras de la ANI.",
+        "proyecto": "",
+        "id": "diputados:dominguez herrera"
+      },
+      {
+        "orador": "Carlos Alberto Domínguez Herrera",
+        "cargo": "legislador",
+        "sobre": "Hospitales paralizados en Ancash",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Pidió un diagnóstico de hospitales en Ancash.",
+        "proyecto": "",
+        "id": "diputados:dominguez herrera"
+      },
+      {
+        "orador": "Carlos Alberto Domínguez Herrera",
+        "cargo": "legislador",
+        "sobre": "Resonancia magnética en Chimbote",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Denunció la inoperatividad de la resonancia en Chimbote.",
+        "proyecto": "",
+        "id": "diputados:dominguez herrera"
+      },
+      {
+        "orador": "Mary Infantes Castañeda",
+        "cargo": "legislador",
+        "sobre": "Primera reunión descentralizada en Amazonas",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Pidió que la primera reunión descentralizada sea en Amazonas.",
+        "proyecto": "",
+        "id": "diputados:infantes castaneda"
+      },
+      {
+        "orador": "Columbus",
+        "cargo": "legislador",
+        "sobre": "Proyectos de salud en Arequipa",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Solicitó la presencia de autoridades para explicar proyectos hospitalarios en Arequipa.",
+        "proyecto": "",
+        "id": "diputados:columbus murata"
+      },
+      {
+        "orador": "Edgar Alvarón de la Cruz",
+        "cargo": "legislador",
+        "sobre": "Citación al gobernador de Áncash",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Pidió citar al gobernador de Áncash para que rinda cuentas.",
+        "proyecto": "",
+        "id": "diputados:alvaron de la cruz"
+      },
+      {
+        "orador": "Leo de Paz Lancho",
+        "cargo": "legislador",
+        "sobre": "Sesión descentralizada en Lambayeque",
+        "postura": "propone",
+        "tema": "Saneamiento",
+        "dijo": "Propuso realizar una sesión descentralizada en Lambayeque por la emergencia.",
+        "proyecto": "",
+        "id": "diputados:de paz lancho"
+      },
+      {
+        "orador": "Columbus",
+        "cargo": "legislador",
+        "sobre": "Predictamen sobre precios de medicamentos",
+        "postura": "en contra",
+        "tema": "Farma",
+        "dijo": "Cuestionó el predictamen que no regula los precios de medicamentos.",
+        "proyecto": "001842631",
+        "id": "diputados:columbus murata"
+      },
+      {
+        "orador": "Yanina Avendaño Virca",
+        "cargo": "legislador",
+        "sobre": "Presupuesto para salud y mitigación de El Niño",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Solicitó presupuesto para el centro materno y mitigación de El Niño.",
+        "proyecto": "",
+        "id": "diputados:avendano vilca"
+      },
+      {
+        "orador": "Aldo Bravo Quispe",
+        "cargo": "legislador",
+        "sobre": "Cuestión previa al predictamen de farmacia",
+        "postura": "propone",
+        "tema": "Farma",
+        "dijo": "Propuso que el predictamen retorne a la comisión para mayor estudio.",
+        "proyecto": "001842631",
+        "id": "diputados:bravo quispe"
+      },
+      {
+        "orador": "Liliana Tacayama Jiménez",
+        "cargo": "legislador",
+        "sobre": "Cuestión previa al predictamen de farmacia",
+        "postura": "a favor",
+        "tema": "Farma",
+        "dijo": "Respaldó la cuestión previa al predictamen sobre precios farmacéuticos.",
+        "proyecto": "001842631",
+        "id": "diputados:takayama jimenez"
+      },
+      {
+        "orador": "Aid Poma",
+        "cargo": "legislador",
+        "sobre": "Vigilancia epidemiológica y metales pesados",
+        "postura": "a favor",
+        "tema": "Salud",
+        "dijo": "Defendió el predictamen para mejorar la vigilancia de metales pesados.",
+        "proyecto": "PL 00230",
+        "id": "diputados:poma huamani"
+      },
+      {
+        "orador": "Aldo Bravo Quispe",
+        "cargo": "legislador",
+        "sobre": "Predictamen de vigilancia epidemiológica",
+        "postura": "a favor",
+        "tema": "Salud",
+        "dijo": "Respaldó el predictamen de la diputada Poma sobre vigilancia epidemiológica.",
+        "proyecto": "PL 00230",
+        "id": "diputados:bravo quispe"
+      },
+      {
+        "orador": "Nerfantes",
+        "cargo": "legislador",
+        "sobre": "Minería ilegal en la Amazonía",
+        "postura": "a favor",
+        "tema": "Ambiente",
+        "dijo": "Respaldó el proyecto para combatir la minería ilegal en Amazonas.",
+        "proyecto": "PL 00230",
+        "id": null
+      },
+      {
+        "orador": "Leo de Paz Lancho",
+        "cargo": "legislador",
+        "sobre": "Vigilancia epidemiológica y contaminación",
+        "postura": "a favor",
+        "tema": "Salud",
+        "dijo": "Apoyó el predictamen para enfrentar la contaminación por metales pesados.",
+        "proyecto": "PL 00230",
+        "id": "diputados:de paz lancho"
+      },
+      {
+        "orador": "Jessica Benítez Barrientos",
+        "cargo": "legislador",
+        "sobre": "Predictamen de vigilancia epidemiológica",
+        "postura": "a favor",
+        "tema": "Salud",
+        "dijo": "Respaldó el predictamen para atender la salud ante la contaminación.",
+        "proyecto": "PL 00230",
+        "id": "diputados:benitez barrionuevo"
+      },
+      {
+        "orador": "Leo de Paz Lancho",
+        "cargo": "legislador",
+        "sobre": "predictamen de la diputada Poma",
+        "postura": "a favor",
+        "tema": "Salud",
+        "dijo": "Defendió la propuesta para atender la contaminación.",
+        "proyecto": "PL 00230-2026-301-CD",
+        "id": "diputados:de paz lancho"
+      },
+      {
+        "orador": "Jessica Benítez",
+        "cargo": "legislador",
+        "sobre": "predictamen de la diputada Poma",
+        "postura": "a favor",
+        "tema": "Salud",
+        "dijo": "Respaldó la propuesta para establecer plazos de atención.",
+        "proyecto": "PL 00230-2026-301-CD",
+        "id": "diputados:benitez barrionuevo"
+      },
+      {
+        "orador": "Ana Yufra",
+        "cargo": "legislador",
+        "sobre": "predictamen de la diputada Poma",
+        "postura": "a favor",
+        "tema": "Salud",
+        "dijo": "Pidió presupuesto para laboratorios especializados en Loreto.",
+        "proyecto": "PL 00230-2026-301-CD",
+        "id": "diputados:yuffra lugo"
+      },
+      {
+        "orador": "Wils Hilmer Orna",
+        "cargo": "ministro o autoridad",
+        "sobre": "gestión del hospital de Utcubamba",
+        "postura": "a favor",
+        "tema": "Infraestructura",
+        "dijo": "Defendió la gestión y los avances del hospital.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Aldo Bravo Quispe",
+        "cargo": "legislador",
+        "sobre": "gestión del hospital de Utcubamba",
+        "postura": "en contra",
+        "tema": "Infraestructura",
+        "dijo": "Cuestionó la veracidad de la información del gobernador.",
+        "proyecto": "",
+        "id": "diputados:bravo quispe"
+      },
+      {
+        "orador": "Mary Infantes Castañeda",
+        "cargo": "legislador",
+        "sobre": "fiscalización del hospital de Utcubamba",
+        "postura": "en contra",
+        "tema": "Infraestructura",
+        "dijo": "Denunció la falta de avances en la obra.",
+        "proyecto": "",
+        "id": "diputados:infantes castaneda"
+      },
+      {
+        "orador": "Álvaro",
+        "cargo": "legislador",
+        "sobre": "gestión de salud en Amazonas",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Pidió una investigación sobre la gestión regional.",
+        "proyecto": "",
+        "id": "diputados:alvaron de la cruz"
+      },
+      {
+        "orador": "Mary Infantes",
+        "cargo": "legislador",
+        "sobre": "Fiscalización de la obra de Bahuarde",
+        "postura": "en contra",
+        "tema": "Infraestructura",
+        "dijo": "Denunció la falta de acceso a la obra de Bahuarde durante la fiscalización.",
+        "proyecto": "",
+        "id": "diputados:infantes castaneda"
+      },
+      {
+        "orador": "Aldo",
+        "cargo": "legislador",
+        "sobre": "Pedido de información a la Contraloría",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso solicitar información formal a la Contraloría sobre la obra.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=5xxUrBBfdCY"
   }
 }
