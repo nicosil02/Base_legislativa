@@ -10900,5 +10900,134 @@
       }
     ],
     "url": "https://www.youtube.com/watch?v=LcjqgI-KnzM"
+  },
+  "VbleEaeZo4E": {
+    "fecha": "2026-11-19",
+    "organo": "Comisión de Trabajo",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Presidente de la Comisión",
+        "cargo": "legislador",
+        "sobre": "Gestión de la empresa CITASERPOST",
+        "postura": "comenta",
+        "tema": "Trabajo",
+        "dijo": "Informó sobre la complicada situación administrativa de la empresa CITASERPOST.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Presidente de la Comisión",
+        "cargo": "legislador",
+        "sobre": "Licencias para acompañar familiares enfermos",
+        "postura": "comenta",
+        "tema": "Trabajo",
+        "dijo": "Presentó el dictamen para ampliar licencias de acompañamiento familiar.",
+        "proyecto": "PL 0031",
+        "id": null
+      },
+      {
+        "orador": "Aranda Vasquez Cristian",
+        "cargo": "legislador",
+        "sobre": "Dictamen de licencias para familiares",
+        "postura": "a favor",
+        "tema": "Trabajo",
+        "dijo": "Respaldó la propuesta que equilibra obligaciones laborales y familiares.",
+        "proyecto": "PL 0031",
+        "id": "diputados:aranda vasquez"
+      },
+      {
+        "orador": "Presidente de la Comisión",
+        "cargo": "legislador",
+        "sobre": "Intercambio prestacional en salud",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Explicó la necesidad de optimizar el intercambio prestacional en salud.",
+        "proyecto": "PL 00150",
+        "id": null
+      },
+      {
+        "orador": "Presidente de la Comisión",
+        "cargo": "legislador",
+        "sobre": "Protección para trabajadores con cáncer",
+        "postura": "comenta",
+        "tema": "Trabajo",
+        "dijo": "Sustentó la protección de trabajadores CAS diagnosticados con cáncer.",
+        "proyecto": "PL 00157",
+        "id": null
+      },
+      {
+        "orador": "García",
+        "cargo": "legislador",
+        "sobre": "Protección para trabajadores con cáncer",
+        "postura": "con observaciones",
+        "tema": "Trabajo",
+        "dijo": "Sugirió incluir la protección para trabajadores por locación de servicios.",
+        "proyecto": "PL 00157",
+        "id": null
+      },
+      {
+        "orador": "Aranda Vasquez Cristian",
+        "cargo": "legislador",
+        "sobre": "Ampliación de la licencia de paternidad",
+        "postura": "propone",
+        "tema": "Trabajo",
+        "dijo": "Propuso ampliar la licencia de paternidad a veintiocho días.",
+        "proyecto": "",
+        "id": "diputados:aranda vasquez"
+      },
+      {
+        "orador": "Aldo Selys",
+        "cargo": "legislador",
+        "sobre": "Fortalecimiento de la inspección laboral",
+        "postura": "propone",
+        "tema": "Trabajo",
+        "dijo": "Planteó fortalecer la inspección del trabajo en las regiones.",
+        "proyecto": "PL 00572",
+        "id": null
+      },
+      {
+        "orador": "Aldo Selys",
+        "cargo": "legislador",
+        "sobre": "Fortalecimiento de la inspección laboral",
+        "postura": "propone",
+        "tema": "Trabajo",
+        "dijo": "Propuso extender la competencia de SUNAFIL por ocho años.",
+        "proyecto": "Ley de fortalecimiento de inspección laboral",
+        "id": null
+      },
+      {
+        "orador": "Carlos Andaliot",
+        "cargo": "legislador",
+        "sobre": "Consolidación de la inspección laboral nacional",
+        "postura": "propone",
+        "tema": "Trabajo",
+        "dijo": "Propuso consolidar la inspección laboral únicamente en la SUNAFIL.",
+        "proyecto": "PL 271",
+        "id": null
+      },
+      {
+        "orador": "Leo Miguel de Paz-Lancho",
+        "cargo": "legislador",
+        "sobre": "Igualdad en pensión de viudez",
+        "postura": "propone",
+        "tema": "Pensiones",
+        "dijo": "Propuso igualar los requisitos para las pensiones de viudez.",
+        "proyecto": "PL 179",
+        "id": "diputados:de paz lancho"
+      },
+      {
+        "orador": "García",
+        "cargo": "legislador",
+        "sobre": "Protección de dependientes con discapacidad",
+        "postura": "propone",
+        "tema": "Pensiones",
+        "dijo": "Propuso proteger a dependientes con discapacidad absoluta en pensiones.",
+        "proyecto": "PL 179",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=VbleEaeZo4E"
   }
 }
