@@ -17166,5 +17166,152 @@
       }
     ],
     "url": "https://www.youtube.com/watch?v=v9GiYDQ1Nw8"
+  },
+  "fb_2663522467415565": {
+    "fecha": "2026-10-16",
+    "organo": "Comisión de Justicia",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Camila Calle",
+        "cargo": "invitado",
+        "sobre": "Reforma de la gestión de identidad",
+        "postura": "con observaciones",
+        "tema": "Tecnología",
+        "dijo": "Sugirió vincular la cédula digital con la identidad física.",
+        "proyecto": "Ley de Gestión de Identidad y Datos Civiles",
+        "id": null
+      },
+      {
+        "orador": "Luis Tamawong",
+        "cargo": "invitado",
+        "sobre": "Seguridad de la cédula digital",
+        "postura": "con observaciones",
+        "tema": "Tecnología",
+        "dijo": "Propuso establecer protocolos técnicos para la verificación de identidad.",
+        "proyecto": "Ley de Gestión de Identidad y Datos Civiles",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=2663522467415565"
+  },
+  "fb_1101448635579214": {
+    "fecha": "2026-10-16",
+    "organo": "Comisión de Régimen Económico",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Duran",
+        "cargo": "legislador",
+        "sobre": "objeción al proyecto de reforma tributaria",
+        "postura": "en contra",
+        "tema": "Tributos",
+        "dijo": "Rechazó la reforma tributaria por no distinguir la gravedad de la omisión de activos.",
+        "proyecto": "Reforma al Código Tributario",
+        "id": "EC:duran aguilar"
+      },
+      {
+        "orador": "San Cristalema",
+        "cargo": "legislador",
+        "sobre": "veto al proyecto de reforma tributaria",
+        "postura": "en contra",
+        "tema": "Tributos",
+        "dijo": "Cuestionó que el veto mantenga injusticias y beneficie a grupos de poder.",
+        "proyecto": "Reforma al Código Tributario",
+        "id": null
+      },
+      {
+        "orador": "Castro",
+        "cargo": "legislador",
+        "sobre": "paraísos fiscales y corrupción",
+        "postura": "en contra",
+        "tema": "Tributos",
+        "dijo": "Denunció que la falta de control en paraísos fiscales facilita la corrupción.",
+        "proyecto": "",
+        "id": "EC:castro piedra"
+      },
+      {
+        "orador": "Zapata",
+        "cargo": "legislador",
+        "sobre": "aprobación del informe de la comisión",
+        "postura": "a favor",
+        "tema": "Tributos",
+        "dijo": "Apoyó el informe por considerar que el Ejecutivo corrige errores técnicos.",
+        "proyecto": "Reforma al Código Tributario",
+        "id": "EC:zapata rojas"
+      },
+      {
+        "orador": "Zapata",
+        "cargo": "legislador",
+        "sobre": "reconsideración de la votación",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Pidió la reconsideración de la votación sobre el informe no vinculante.",
+        "proyecto": "",
+        "id": "EC:zapata rojas"
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1101448635579214"
+  },
+  "fb_2308694766598677": {
+    "fecha": "2026-10-16",
+    "organo": "Comisión de Régimen Económico",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Gustavo Pérez",
+        "cargo": "invitado",
+        "sobre": "Informe de ejecución presupuestaria 2026",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Informó sobre el proceso de elaboración y la ejecución del presupuesto estatal.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Liliana Durán",
+        "cargo": "legislador",
+        "sobre": "Informe de ejecución presupuestaria 2026",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Denunció la inasistencia de ministros y la inconsistencia de las cifras presentadas.",
+        "proyecto": "",
+        "id": "EC:duran aguilar"
+      },
+      {
+        "orador": "Alemán",
+        "cargo": "legislador",
+        "sobre": "Informe de ejecución presupuestaria 2026",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Cuestionó la veracidad de los datos y los errores en los cuadros.",
+        "proyecto": "",
+        "id": "EC:aleman marmol"
+      },
+      {
+        "orador": "María del Cisna Molina Coro",
+        "cargo": "legislador",
+        "sobre": "Aprobación del informe presupuestario",
+        "postura": "propone",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Propuso la aprobación del informe de ejecución del presupuesto general.",
+        "proyecto": "",
+        "id": "EC:molina coro"
+      },
+      {
+        "orador": "Boye",
+        "cargo": "legislador",
+        "sobre": "Metodología del informe presupuestario",
+        "postura": "con observaciones",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Cuestionó la metodología y la falta de conexión técnica en el informe.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=2308694766598677"
   }
 }
