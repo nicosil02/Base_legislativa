@@ -16545,5 +16545,152 @@
       }
     ],
     "url": "https://www.youtube.com/watch?v=9noKK1K5ybU"
+  },
+  "nG7VW9Mgmss": {
+    "fecha": "2026-10-20",
+    "organo": "Pleno de la Asamblea",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Carlos Costa",
+        "cargo": "legislador",
+        "sobre": "Prevención de la violencia sexual infantil",
+        "postura": "a favor",
+        "tema": "Justicia",
+        "dijo": "Defendió el proyecto de ley para proteger a la infancia.",
+        "proyecto": "Infancia Segura",
+        "id": null
+      },
+      {
+        "orador": "Esteban Torres",
+        "cargo": "legislador",
+        "sobre": "Garantías constitucionales en la ley",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Cuestionó posibles riesgos de inconstitucionalidad en el proyecto.",
+        "proyecto": "Infancia Segura",
+        "id": "EC:torres cobo"
+      },
+      {
+        "orador": "Juan Gonzaga",
+        "cargo": "legislador",
+        "sobre": "Construcción de la norma penal",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Comentó la construcción de los elementos del tipo penal.",
+        "proyecto": "Infancia Segura",
+        "id": "EC:gonzaga salazar"
+      },
+      {
+        "orador": "Viviana Belón",
+        "cargo": "legislador",
+        "sobre": "Registros de agresores y justicia especializada",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Propuso crear registros provisionales y definitivos para agresores.",
+        "proyecto": "Infancia Segura",
+        "id": null
+      },
+      {
+        "orador": "Naila Quintana",
+        "cargo": "legislador",
+        "sobre": "Garantías de protección y prevención",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Propuso incluir principios de confidencialidad y no revictimización.",
+        "proyecto": "Infancia Segura",
+        "id": "EC:quintana tapia"
+      },
+      {
+        "orador": "Mariana Yonbaín",
+        "cargo": "legislador",
+        "sobre": "Necesidad de la nueva ley penal",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Cuestionó la necesidad de una ley ante el COIP vigente.",
+        "proyecto": "Infancia Segura",
+        "id": null
+      },
+      {
+        "orador": "Maite Levy",
+        "cargo": "legislador",
+        "sobre": "Ley de prevención de abuso sexual infantil",
+        "postura": "a favor",
+        "tema": "Justicia",
+        "dijo": "Respaldó la ley para proteger la integridad de la niñez.",
+        "proyecto": "Ley de Prevención de abuso sexual infantil",
+        "id": "EC:levi cabello"
+      },
+      {
+        "orador": "Blas Coluna",
+        "cargo": "legislador",
+        "sobre": "Ley de prevención de abuso sexual infantil",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Cuestionó la exhibición de rostros de sospechosos para evitar riesgos a las víctimas.",
+        "proyecto": "Ley de Prevención de abuso sexual infantil",
+        "id": "EC:luna arevalo"
+      },
+      {
+        "orador": "Pamela Aguirre",
+        "cargo": "legislador",
+        "sobre": "Registro de posibles agresores",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Propuso que el registro de agresores sea de acceso público.",
+        "proyecto": "Ley de Prevención de abuso sexual infantil",
+        "id": "EC:aguirre zambonino"
+      },
+      {
+        "orador": "Bruno Pino",
+        "cargo": "legislador",
+        "sobre": "Ley de prevención de abuso sexual infantil",
+        "postura": "a favor",
+        "tema": "Justicia",
+        "dijo": "Instó a actualizar la legislación frente a los nuevos delitos tecnológicos.",
+        "proyecto": "Ley de Prevención de abuso sexual infantil",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=nG7VW9Mgmss"
+  },
+  "fb_1644292137195316": {
+    "fecha": "2026-10-20",
+    "organo": "Comisión de Biodiversidad",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Cristóbal Leonardo Dominguez Borbor",
+        "cargo": "invitado",
+        "sobre": "Proyecto de gestión costera integrada",
+        "postura": "con observaciones",
+        "tema": "Ambiente",
+        "dijo": "Propuso incorporar rutas metagenómicas, zonificación y mecanismos de fiscalización al proyecto.",
+        "proyecto": "Ley de Gestión Costera Integrada",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1644292137195316"
+  },
+  "fb_1092095570488188": {
+    "fecha": "2026-10-20",
+    "organo": "Comisión de Soberanía Alimentaria",
+    "pais": "EC",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Nancy Herrera",
+        "cargo": "invitado",
+        "sobre": "Reforma al NAP",
+        "postura": "a favor",
+        "tema": "Agricultura",
+        "dijo": "Respaldó la reforma al NAP y destacó los beneficios de la adaptación tecnológica.",
+        "proyecto": "NAP",
+        "id": null
+      }
+    ],
+    "url": "https://www.facebook.com/watch/?v=1092095570488188"
   }
 }
