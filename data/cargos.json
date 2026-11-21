@@ -1,1704 +1,1708 @@
 {
-"senado:mesia ramirez": [
-{
-"cargo": "Presidente",
-"organo": "Comisión de constitución, reglamento y relaciones exteriores"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión de justicia y derechos humanos"
-},
-{
-"cargo": "Titular",
-"organo": "Comisión de procedimientos especiales"
-},
-{
-"cargo": "Titular",
-"organo": "Comisión de control político sobre actos normativos del poder ejecutivo y regímenes de excepción"
-}
-],
-"senado:astucuri laura": [
-{
-"cargo": "Vicepresidente",
-"organo": "Comisión de constitución, reglamento y relaciones exteriores"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión de defensa nacional y orden interno"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión en asuntos de desarrollo productivo, energía y minas, infraestructura y trabajo"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión de economía, medio ambiente y defensa del consumidor"
-},
-{
-"cargo": "Titular",
-"organo": "Comisión de ética parlamentaria"
-}
-],
-"senado:ampuero meza": [
-{
-"cargo": "Secretaria",
-"organo": "Comisión de constitución, reglamento y relaciones exteriores"
-},
-{
-"cargo": "Presidente",
-"organo": "Comisión de justicia y derechos humanos"
-},
-{
-"cargo": "Titular",
-"organo": "Comisión en asuntos de gestión del estado y contraloría"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión de procedimientos especiales"
-}
-],
-"senado:calisto giampietri": [
-{
-"cargo": "Presidente",
-"organo": "Comisión de defensa nacional y orden interno"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión de constitución, reglamento y relaciones exteriores"
-},
-{
-"cargo": "Titular",
-"organo": "Comisión en asuntos de desarrollo productivo, energía y minas, infraestructura y trabajo"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión de economía, medio ambiente y defensa del consumidor"
-},
-{
-"cargo": "Titular",
-"organo": "Comisión de inteligencia"
-}
-],
-"senado:gago rodriguez": [
-{
-"cargo": "Vicepresidente",
-"organo": "Comisión de defensa nacional y orden interno"
-},
-{
-"cargo": "Titular",
-"organo": "Comisión de economía, medio ambiente y defensa del consumidor"
-},
-{
-"cargo": "Titular",
-"organo": "Comisión en asuntos de gestión del estado y contraloría"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión de justicia y derechos humanos"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión de procedimientos especiales"
-}
-],
-"senado:melgar valdez": [
-{
-"cargo": "Secretario",
-"organo": "Comisión de defensa nacional y orden interno"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión en asuntos de desarrollo productivo, energía y minas, infraestructura y trabajo"
-},
-{
-"cargo": "Titular",
-"organo": "Comisión de procedimientos especiales"
-}
-],
-"senado:barragan coloma": [
-{
-"cargo": "Presidente",
-"organo": "Comisión en asuntos de desarrollo productivo, energía y minas, infraestructura y trabajo"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión de control político sobre actos normativos del poder ejecutivo y regímenes de excepción"
-}
-],
-"senado:flores suarez": [
-{
-"cargo": "Vicepresidente",
-"organo": "Comisión en asuntos de desarrollo productivo, energía y minas, infraestructura y trabajo"
-},
-{
-"cargo": "Secretario",
-"organo": "Comisión bicameral de presupuesto y cuenta general de la república"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión de constitución, reglamento y relaciones exteriores"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión de defensa nacional y orden interno"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión en asuntos de gestión del estado y contraloría"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión de justicia y derechos humanos"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión de control político sobre actos normativos del poder ejecutivo y regímenes de excepción"
-}
-],
-"senado:schaefer cuculiza": [
-{
-"cargo": "Secretaria",
-"organo": "Comisión en asuntos de desarrollo productivo, energía y minas, infraestructura y trabajo"
-},
-{
-"cargo": "Titular",
-"organo": "Comisión de defensa nacional y orden interno"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión en asuntos de salud, educación, cultura, mujer y desarrollo social y digital"
-},
-{
-"cargo": "Titular",
-"organo": "Comisión de control político sobre actos normativos del poder ejecutivo y regímenes de excepción"
-}
-],
-"senado:lopez chau nava": [
-{
-"cargo": "Presidente",
-"organo": "Comisión de economía, medio ambiente y defensa del consumidor"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión de defensa nacional y orden interno"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión en asuntos de desarrollo productivo, energía y minas, infraestructura y trabajo"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión en asuntos de salud, educación, cultura, mujer y desarrollo social y digital"
-},
-{
-"cargo": "Titular",
-"organo": "Comisión de procedimientos especiales"
-}
-],
-"senado:noriega reategui": [
-{
-"cargo": "Vicepresidente",
-"organo": "Comisión de economía, medio ambiente y defensa del consumidor"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión de defensa nacional y orden interno"
-},
-{
-"cargo": "Titular",
-"organo": "Comisión en asuntos de desarrollo productivo, energía y minas, infraestructura y trabajo"
-},
-{
-"cargo": "Titular",
-"organo": "Comisión en asuntos de salud, educación, cultura, mujer y desarrollo social y digital"
-}
-],
-"senado:iturregui byrne": [
-{
-"cargo": "Secretaria",
-"organo": "Comisión de economía, medio ambiente y defensa del consumidor"
-},
-{
-"cargo": "Titular",
-"organo": "Comisión de constitución, reglamento y relaciones exteriores"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión de defensa nacional y orden interno"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión en asuntos de desarrollo productivo, energía y minas, infraestructura y trabajo"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión de procedimientos especiales"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión de control político sobre actos normativos del poder ejecutivo y regímenes de excepción"
-}
-],
-"senado:matute charun": [
-{
-"cargo": "Presidente",
-"organo": "Comisión en asuntos de salud, educación, cultura, mujer y desarrollo social y digital"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión de constitución, reglamento y relaciones exteriores"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión de economía, medio ambiente y defensa del consumidor"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión de justicia y derechos humanos"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión de procedimientos especiales"
-}
-],
-"senado:chipana chipana": [
-{
-"cargo": "Vicepresidente",
-"organo": "Comisión en asuntos de salud, educación, cultura, mujer y desarrollo social y digital"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión en asuntos de desarrollo productivo, energía y minas, infraestructura y trabajo"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión en asuntos de gestión del estado y contraloría"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión de procedimientos especiales"
-},
-{
-"cargo": "Titular",
-"organo": "Comisión de control político sobre actos normativos del poder ejecutivo y regímenes de excepción"
-}
-],
-"senado:tapia bernal": [
-{
-"cargo": "Secretario",
-"organo": "Comisión en asuntos de salud, educación, cultura, mujer y desarrollo social y digital"
-},
-{
-"cargo": "Titular",
-"organo": "Comisión en asuntos de gestión del estado y contraloría"
-}
-],
-"senado:osorio palpan": [
-{
-"cargo": "Presidente",
-"organo": "Comisión en asuntos de gestión del estado y contraloría"
-},
-{
-"cargo": "Titular",
-"organo": "Comisión de economía, medio ambiente y defensa del consumidor"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión de procedimientos especiales"
-}
-],
-"senado:ventura angel": [
-{
-"cargo": "Vicepresidente",
-"organo": "Comisión en asuntos de gestión del estado y contraloría"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión de constitución, reglamento y relaciones exteriores"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión en asuntos de desarrollo productivo, energía y minas, infraestructura y trabajo"
-},
-{
-"cargo": "Titular",
-"organo": "Comisión de justicia y derechos humanos"
-},
-{
-"cargo": "Titular",
-"organo": "Comisión de procedimientos especiales"
-}
-],
-"senado:vasquez chuquilin": [
-{
-"cargo": "Secretario",
-"organo": "Comisión en asuntos de gestión del estado y contraloría"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión de constitución, reglamento y relaciones exteriores"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión en asuntos de salud, educación, cultura, mujer y desarrollo social y digital"
-},
-{
-"cargo": "Titular",
-"organo": "Comisión de justicia y derechos humanos"
-},
-{
-"cargo": "Titular",
-"organo": "Comisión de ética parlamentaria"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión de control político sobre actos normativos del poder ejecutivo y regímenes de excepción"
-}
-],
-"senado:gavidia rodriguez": [
-{
-"cargo": "Vicepresidente",
-"organo": "Comisión de justicia y derechos humanos"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión de defensa nacional y orden interno"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión en asuntos de desarrollo productivo, energía y minas, infraestructura y trabajo"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión de economía, medio ambiente y defensa del consumidor"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión de procedimientos especiales"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión de control político sobre actos normativos del poder ejecutivo y regímenes de excepción"
-}
-],
-"senado:aguinaga recuenco": [
-{
-"cargo": "Secretario",
-"organo": "Comisión de justicia y derechos humanos"
-},
-{
-"cargo": "Titular",
-"organo": "Comisión de constitución, reglamento y relaciones exteriores"
-},
-{
-"cargo": "Titular",
-"organo": "Comisión en asuntos de salud, educación, cultura, mujer y desarrollo social y digital"
-}
-],
-"senado:ramos huillcas": [
-{
-"cargo": "Presidente",
-"organo": "Comisión de ética parlamentaria"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión en asuntos de desarrollo productivo, energía y minas, infraestructura y trabajo"
-},
-{
-"cargo": "Titular",
-"organo": "Comisión de economía, medio ambiente y defensa del consumidor"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión en asuntos de salud, educación, cultura, mujer y desarrollo social y digital"
-},
-{
-"cargo": "Titular",
-"organo": "Comisión de justicia y derechos humanos"
-}
-],
-"senado:miyashiro arashiro": [
-{
-"cargo": "Vicepresidente",
-"organo": "Comisión de ética parlamentaria"
-},
-{
-"cargo": "Titular",
-"organo": "Comisión de defensa nacional y orden interno"
-},
-{
-"cargo": "Titular",
-"organo": "Comisión de inteligencia"
-}
-],
-"senado:velasquez garcia": [
-{
-"cargo": "Secretario",
-"organo": "Comisión de ética parlamentaria"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión de constitución, reglamento y relaciones exteriores"
-},
-{
-"cargo": "Titular",
-"organo": "Comisión en asuntos de gestión del estado y contraloría"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión de procedimientos especiales"
-},
-{
-"cargo": "Titular",
-"organo": "Comisión de control político sobre actos normativos del poder ejecutivo y regímenes de excepción"
-}
-],
-"senado:rospigliosi capurro": [
-{
-"cargo": "Presidente",
-"organo": "Comisión de inteligencia"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión de defensa nacional y orden interno"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión de justicia y derechos humanos"
-}
-],
-"senado:caballero leon": [
-{
-"cargo": "Vicepresidente",
-"organo": "Comisión de inteligencia"
-},
-{
-"cargo": "Titular",
-"organo": "Comisión de defensa nacional y orden interno"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión en asuntos de salud, educación, cultura, mujer y desarrollo social y digital"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión en asuntos de gestión del estado y contraloría"
-},
-{
-"cargo": "Titular",
-"organo": "Comisión de ética parlamentaria"
-}
-],
-"senado:morales ramirez": [
-{
-"cargo": "Secretario",
-"organo": "Comisión de inteligencia"
-},
-{
-"cargo": "Titular",
-"organo": "Comisión de constitución, reglamento y relaciones exteriores"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión de economía, medio ambiente y defensa del consumidor"
-},
-{
-"cargo": "Titular",
-"organo": "Comisión de procedimientos especiales"
-}
-],
-"senado:ccahuana aymachoque": [
-{
-"cargo": "Presidente",
-"organo": "Comisión de procedimientos especiales"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión de constitución, reglamento y relaciones exteriores"
-},
-{
-"cargo": "Titular",
-"organo": "Comisión de defensa nacional y orden interno"
-},
-{
-"cargo": "Titular",
-"organo": "Comisión en asuntos de gestión del estado y contraloría"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión de justicia y derechos humanos"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión de control político sobre actos normativos del poder ejecutivo y regímenes de excepción"
-}
-],
-"senado:vasquez villanueva": [
-{
-"cargo": "Vicepresidente",
-"organo": "Comisión de procedimientos especiales"
-},
-{
-"cargo": "Titular",
-"organo": "Comisión en asuntos de desarrollo productivo, energía y minas, infraestructura y trabajo"
-},
-{
-"cargo": "Titular",
-"organo": "Comisión de economía, medio ambiente y defensa del consumidor"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión en asuntos de salud, educación, cultura, mujer y desarrollo social y digital"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión en asuntos de gestión del estado y contraloría"
-}
-],
-"senado:moyano delgado": [
-{
-"cargo": "Secretario",
-"organo": "Comisión de procedimientos especiales"
-},
-{
-"cargo": "Presidente",
-"organo": "Comisión de control político sobre actos normativos del poder ejecutivo y regímenes de excepción"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión de constitución, reglamento y relaciones exteriores"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión en asuntos de salud, educación, cultura, mujer y desarrollo social y digital"
-},
-{
-"cargo": "Titular",
-"organo": "Comisión de justicia y derechos humanos"
-}
-],
-"senado:munante barrios": [
-{
-"cargo": "Vicepresidente",
-"organo": "Comisión de control político sobre actos normativos del poder ejecutivo y regímenes de excepción"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión de constitución, reglamento y relaciones exteriores"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión de defensa nacional y orden interno"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión en asuntos de desarrollo productivo, energía y minas, infraestructura y trabajo"
-},
-{
-"cargo": "Titular",
-"organo": "Comisión de justicia y derechos humanos"
-},
-{
-"cargo": "Primer Vicepresidente",
-"organo": "Mesa Directiva del Senado"
-}
-],
-"senado:arista arbildo": [
-{
-"cargo": "Presidente",
-"organo": "Comisión bicameral de presupuesto y cuenta general de la república"
-},
-{
-"cargo": "Titular",
-"organo": "Comisión de economía, medio ambiente y defensa del consumidor"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión en asuntos de gestión del estado y contraloría"
-}
-],
-"diputados:zunini yerren": [
-{
-"cargo": "Vicepresidente",
-"organo": "Comisión bicameral de presupuesto y cuenta general de la república"
-}
-],
-"senado:alcorta suero": [
-{
-"cargo": "Titular",
-"organo": "Comisión de constitución, reglamento y relaciones exteriores"
-},
-{
-"cargo": "Titular",
-"organo": "Comisión de defensa nacional y orden interno"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión en asuntos de desarrollo productivo, energía y minas, infraestructura y trabajo"
-}
-],
-"senado:chavez cossio": [
-{
-"cargo": "Titular",
-"organo": "Comisión de constitución, reglamento y relaciones exteriores"
-},
-{
-"cargo": "Titular",
-"organo": "Comisión de justicia y derechos humanos"
-}
-],
-"senado:cutipa ccama": [
-{
-"cargo": "Titular",
-"organo": "Comisión de constitución, reglamento y relaciones exteriores"
-},
-{
-"cargo": "Titular",
-"organo": "Comisión de defensa nacional y orden interno"
-},
-{
-"cargo": "Titular",
-"organo": "Comisión de justicia y derechos humanos"
-}
-],
-"senado:juarez gallegos": [
-{
-"cargo": "Titular",
-"organo": "Comisión de constitución, reglamento y relaciones exteriores"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión de defensa nacional y orden interno"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión en asuntos de desarrollo productivo, energía y minas, infraestructura y trabajo"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión de economía, medio ambiente y defensa del consumidor"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión en asuntos de salud, educación, cultura, mujer y desarrollo social y digital"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión en asuntos de gestión del estado y contraloría"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión de justicia y derechos humanos"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión de procedimientos especiales"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión de control político sobre actos normativos del poder ejecutivo y regímenes de excepción"
-}
-],
-"senado:maravi olarte": [
-{
-"cargo": "Titular",
-"organo": "Comisión de constitución, reglamento y relaciones exteriores"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión en asuntos de salud, educación, cultura, mujer y desarrollo social y digital"
-},
-{
-"cargo": "Titular",
-"organo": "Comisión de justicia y derechos humanos"
-}
-],
-"senado:luque ibarra": [
-{
-"cargo": "Titular",
-"organo": "Comisión de constitución, reglamento y relaciones exteriores"
-},
-{
-"cargo": "Titular",
-"organo": "Comisión en asuntos de desarrollo productivo, energía y minas, infraestructura y trabajo"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión de economía, medio ambiente y defensa del consumidor"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión de justicia y derechos humanos"
-},
-{
-"cargo": "Titular",
-"organo": "Comisión de control político sobre actos normativos del poder ejecutivo y regímenes de excepción"
-}
-],
-"senado:del aguila cardenas": [
-{
-"cargo": "Suplente",
-"organo": "Comisión de constitución, reglamento y relaciones exteriores"
-},
-{
-"cargo": "Titular",
-"organo": "Comisión de defensa nacional y orden interno"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión en asuntos de desarrollo productivo, energía y minas, infraestructura y trabajo"
-}
-],
-"senado:flores ruiz": [
-{
-"cargo": "Suplente",
-"organo": "Comisión de constitución, reglamento y relaciones exteriores"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión de defensa nacional y orden interno"
-},
-{
-"cargo": "Titular",
-"organo": "Comisión en asuntos de desarrollo productivo, energía y minas, infraestructura y trabajo"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión de economía, medio ambiente y defensa del consumidor"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión en asuntos de salud, educación, cultura, mujer y desarrollo social y digital"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión en asuntos de gestión del estado y contraloría"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión de justicia y derechos humanos"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión de procedimientos especiales"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión de control político sobre actos normativos del poder ejecutivo y regímenes de excepción"
-}
-],
-"senado:rodrich ackerman": [
-{
-"cargo": "Suplente",
-"organo": "Comisión de constitución, reglamento y relaciones exteriores"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión en asuntos de desarrollo productivo, energía y minas, infraestructura y trabajo"
-},
-{
-"cargo": "Titular",
-"organo": "Comisión de economía, medio ambiente y defensa del consumidor"
-}
-],
-"senado:castillo terrones": [
-{
-"cargo": "Suplente",
-"organo": "Comisión de constitución, reglamento y relaciones exteriores"
-},
-{
-"cargo": "Titular",
-"organo": "Comisión en asuntos de desarrollo productivo, energía y minas, infraestructura y trabajo"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión de justicia y derechos humanos"
-}
-],
-"senado:robles araujo": [
-{
-"cargo": "Suplente",
-"organo": "Comisión de constitución, reglamento y relaciones exteriores"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión de defensa nacional y orden interno"
-},
-{
-"cargo": "Titular",
-"organo": "Comisión en asuntos de salud, educación, cultura, mujer y desarrollo social y digital"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión de procedimientos especiales"
-}
-],
-"senado:jauregui martinez de aguayo": [
-{
-"cargo": "Suplente",
-"organo": "Comisión de constitución, reglamento y relaciones exteriores"
-},
-{
-"cargo": "Titular",
-"organo": "Comisión en asuntos de salud, educación, cultura, mujer y desarrollo social y digital"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión de justicia y derechos humanos"
-},
-{
-"cargo": "Titular",
-"organo": "Comisión de procedimientos especiales"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión de control político sobre actos normativos del poder ejecutivo y regímenes de excepción"
-}
-],
-"senado:bonifaz carmona": [
-{
-"cargo": "Suplente",
-"organo": "Comisión de constitución, reglamento y relaciones exteriores"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión en asuntos de salud, educación, cultura, mujer y desarrollo social y digital"
-},
-{
-"cargo": "Titular",
-"organo": "Comisión en asuntos de gestión del estado y contraloría"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión de justicia y derechos humanos"
-},
-{
-"cargo": "Titular",
-"organo": "Comisión de control político sobre actos normativos del poder ejecutivo y regímenes de excepción"
-}
-],
-"senado:ticona cohaila": [
-{
-"cargo": "Suplente",
-"organo": "Comisión de constitución, reglamento y relaciones exteriores"
-},
-{
-"cargo": "Titular",
-"organo": "Comisión en asuntos de salud, educación, cultura, mujer y desarrollo social y digital"
-},
-{
-"cargo": "Titular",
-"organo": "Comisión de procedimientos especiales"
-}
-],
-"senado:andres lujan": [
-{
-"cargo": "Titular",
-"organo": "Comisión de defensa nacional y orden interno"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión en asuntos de desarrollo productivo, energía y minas, infraestructura y trabajo"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión de economía, medio ambiente y defensa del consumidor"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión en asuntos de gestión del estado y contraloría"
-},
-{
-"cargo": "Titular",
-"organo": "Comisión de control político sobre actos normativos del poder ejecutivo y regímenes de excepción"
-}
-],
-"senado:delgado zegarra": [
-{
-"cargo": "Titular",
-"organo": "Comisión de defensa nacional y orden interno"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión en asuntos de desarrollo productivo, energía y minas, infraestructura y trabajo"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión de economía, medio ambiente y defensa del consumidor"
-},
-{
-"cargo": "Titular",
-"organo": "Comisión en asuntos de salud, educación, cultura, mujer y desarrollo social y digital"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión en asuntos de gestión del estado y contraloría"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión de procedimientos especiales"
-}
-],
-"senado:jimenez heredia": [
-{
-"cargo": "Suplente",
-"organo": "Comisión de defensa nacional y orden interno"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión de economía, medio ambiente y defensa del consumidor"
-},
-{
-"cargo": "Titular",
-"organo": "Comisión en asuntos de gestión del estado y contraloría"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión de justicia y derechos humanos"
-}
-],
-"senado:yamashiro ore": [
-{
-"cargo": "Suplente",
-"organo": "Comisión de defensa nacional y orden interno"
-},
-{
-"cargo": "Titular",
-"organo": "Comisión en asuntos de desarrollo productivo, energía y minas, infraestructura y trabajo"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión de economía, medio ambiente y defensa del consumidor"
-},
-{
-"cargo": "Titular",
-"organo": "Comisión en asuntos de salud, educación, cultura, mujer y desarrollo social y digital"
-}
-],
-"senado:quito sarmiento": [
-{
-"cargo": "Titular",
-"organo": "Comisión en asuntos de desarrollo productivo, energía y minas, infraestructura y trabajo"
-},
-{
-"cargo": "Titular",
-"organo": "Comisión de control político sobre actos normativos del poder ejecutivo y regímenes de excepción"
-}
-],
-"senado:yauri tunque": [
-{
-"cargo": "Titular",
-"organo": "Comisión en asuntos de desarrollo productivo, energía y minas, infraestructura y trabajo"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión de economía, medio ambiente y defensa del consumidor"
-},
-{
-"cargo": "Titular",
-"organo": "Comisión en asuntos de gestión del estado y contraloría"
-}
-],
-"senado:figallo rivadeneyra": [
-{
-"cargo": "Suplente",
-"organo": "Comisión en asuntos de desarrollo productivo, energía y minas, infraestructura y trabajo"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión de economía, medio ambiente y defensa del consumidor"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión en asuntos de salud, educación, cultura, mujer y desarrollo social y digital"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión en asuntos de gestión del estado y contraloría"
-},
-{
-"cargo": "Titular",
-"organo": "Comisión de procedimientos especiales"
-}
-],
-"senado:velasquez portocarrero": [
-{
-"cargo": "Suplente",
-"organo": "Comisión en asuntos de desarrollo productivo, energía y minas, infraestructura y trabajo"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión en asuntos de salud, educación, cultura, mujer y desarrollo social y digital"
-},
-{
-"cargo": "Titular",
-"organo": "Comisión en asuntos de gestión del estado y contraloría"
-}
-],
-"senado:chacon trujillo": [
-{
-"cargo": "Titular",
-"organo": "Comisión de economía, medio ambiente y defensa del consumidor"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión en asuntos de gestión del estado y contraloría"
-},
-{
-"cargo": "Titular",
-"organo": "Comisión de control político sobre actos normativos del poder ejecutivo y regímenes de excepción"
-},
-{
-"cargo": "Segunda Vicepresidenta",
-"organo": "Mesa Directiva del Senado"
-}
-],
-"senado:armacanqui morales": [
-{
-"cargo": "Titular",
-"organo": "Comisión de economía, medio ambiente y defensa del consumidor"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión en asuntos de salud, educación, cultura, mujer y desarrollo social y digital"
-},
-{
-"cargo": "Titular",
-"organo": "Comisión de procedimientos especiales"
-}
-],
-"senado:mancha pineda": [
-{
-"cargo": "Titular",
-"organo": "Comisión de economía, medio ambiente y defensa del consumidor"
-},
-{
-"cargo": "Titular",
-"organo": "Comisión en asuntos de salud, educación, cultura, mujer y desarrollo social y digital"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión de justicia y derechos humanos"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión de procedimientos especiales"
-},
-{
-"cargo": "Tercer Vicepresidente",
-"organo": "Mesa Directiva del Senado"
-}
-],
-"senado:verano saravia": [
-{
-"cargo": "Titular",
-"organo": "Comisión en asuntos de salud, educación, cultura, mujer y desarrollo social y digital"
-}
-],
-"senado:flores cordova": [
-{
-"cargo": "Suplente",
-"organo": "Comisión en asuntos de salud, educación, cultura, mujer y desarrollo social y digital"
-},
-{
-"cargo": "Suplente",
-"organo": "Comisión en asuntos de gestión del estado y contraloría"
-},
-{
-"cargo": "Titular",
-"organo": "Comisión de justicia y derechos humanos"
-}
-],
-"senado:torres morales": [
-{
-"cargo": "Presidente",
-"organo": "Mesa Directiva del Senado"
-}
-],
-"diputados:columbus murata": [
-{
-"cargo": "Presidente",
-"organo": "Comisión de ciencia, innovación, tecnología y sociedad digital"
-}
-],
-"diputados:fernandez de la torre": [
-{
-"cargo": "Vicepresidente",
-"organo": "Comisión de ciencia, innovación, tecnología y sociedad digital"
-},
-{
-"cargo": "Secretario",
-"organo": "Comisión de constitución, reglamento y relaciones exteriores"
-},
-{
-"cargo": "Secretario",
-"organo": "Comisión de defensa nacional y orden interno"
-},
-{
-"cargo": "Secretario",
-"organo": "Comisión de desarrollo agrario"
-},
-{
-"cargo": "Secretario",
-"organo": "Comisión de medio ambiente y sostenibilidad"
-},
-{
-"cargo": "Secretario",
-"organo": "Comisión de modernización de la gestión del estado y contraloría"
-},
-{
-"cargo": "Secretario",
-"organo": "Comisión de ordenamiento y seguimiento legislativo"
-}
-],
-"diputados:leiva baylon": [
-{
-"cargo": "Secretario",
-"organo": "Comisión de ciencia, innovación, tecnología y sociedad digital"
-}
-],
-"diputados:avendano vilca": [
-{
-"cargo": "Presidente",
-"organo": "Comisión de constitución, reglamento y relaciones exteriores"
-}
-],
-"diputados:garcia huby": [
-{
-"cargo": "Vicepresidente",
-"organo": "Comisión de constitución, reglamento y relaciones exteriores"
-}
-],
-"diputados:masco caceres": [
-{
-"cargo": "Presidente",
-"organo": "Comisión de defensa del consumidor y regulación de los servicios públicos"
-}
-],
-"diputados:meneses crispin": [
-{
-"cargo": "Vicepresidente",
-"organo": "Comisión de defensa del consumidor y regulación de los servicios públicos"
-}
-],
-"diputados:llaque linares": [
-{
-"cargo": "Secretario",
-"organo": "Comisión de defensa del consumidor y regulación de los servicios públicos"
-}
-],
-"diputados:segura figueroa": [
-{
-"cargo": "Presidente",
-"organo": "Comisión de defensa nacional y orden interno"
-}
-],
-"diputados:gatica vega": [
-{
-"cargo": "Vicepresidente",
-"organo": "Comisión de defensa nacional y orden interno"
-}
-],
-"diputados:alvaron de la cruz": [
-{
-"cargo": "Presidente",
-"organo": "Comisión de desarrollo agrario"
-}
-],
-"diputados:jibaja ramos": [
-{
-"cargo": "Vicepresidente",
-"organo": "Comisión de desarrollo agrario"
-}
-],
-"diputados:marcelo salazar": [
-{
-"cargo": "Presidente",
-"organo": "Comisión de economía, banca, finanzas e inteligencia financiera"
-}
-],
-"diputados:barbaran reyes": [
-{
-"cargo": "Vicepresidente",
-"organo": "Comisión de economía, banca, finanzas e inteligencia financiera"
-}
-],
-"diputados:cabrera nieto": [
-{
-"cargo": "Secretario",
-"organo": "Comisión de economía, banca, finanzas e inteligencia financiera"
-}
-],
-"diputados:castrejon fernandez": [
-{
-"cargo": "Presidente",
-"organo": "Comisión de educación, cultura y deporte"
-}
-],
-"diputados:tito rojas": [
-{
-"cargo": "Vicepresidente",
-"organo": "Comisión de educación, cultura y deporte"
-}
-],
-"diputados:pacheco quispe": [
-{
-"cargo": "Secretario",
-"organo": "Comisión de educación, cultura y deporte"
-}
-],
-"diputados:paredes navarro": [
-{
-"cargo": "Presidente",
-"organo": "Comisión de energía y minas"
-}
-],
-"diputados:camargo porta": [
-{
-"cargo": "Vicepresidente",
-"organo": "Comisión de energía y minas"
-}
-],
-"diputados:santana vera": [
-{
-"cargo": "Secretario",
-"organo": "Comisión de energía y minas"
-}
-],
-"diputados:meza rivera": [
-{
-"cargo": "Presidente",
-"organo": "Comisión de inclusión social, familia, mujer, pueblos andinos, amazónicos y afroperuanos"
-}
-],
-"diputados:pinasco montenegro": [
-{
-"cargo": "Vicepresidente",
-"organo": "Comisión de inclusión social, familia, mujer, pueblos andinos, amazónicos y afroperuanos"
-}
-],
-"diputados:isla rojas": [
-{
-"cargo": "Secretario",
-"organo": "Comisión de inclusión social, familia, mujer, pueblos andinos, amazónicos y afroperuanos"
-}
-],
-"diputados:quispe candia": [
-{
-"cargo": "Presidente",
-"organo": "Comisión de infraestructura, vivienda y transportes"
-}
-],
-"diputados:pena cordova": [
-{
-"cargo": "Vicepresidente",
-"organo": "Comisión de infraestructura, vivienda y transportes"
-}
-],
-"diputados:valqui ordonez": [
-{
-"cargo": "Secretario",
-"organo": "Comisión de infraestructura, vivienda y transportes"
-}
-],
-"diputados:palomino casavilca": [
-{
-"cargo": "Presidente",
-"organo": "Comisión de justicia y derechos humanos"
-}
-],
-"diputados:gonzales polar": [
-{
-"cargo": "Vicepresidente",
-"organo": "Comisión de justicia y derechos humanos"
-}
-],
-"diputados:huilca flores": [
-{
-"cargo": "Secretario",
-"organo": "Comisión de justicia y derechos humanos"
-}
-],
-"diputados:alegria garcia": [
-{
-"cargo": "Presidente",
-"organo": "Comisión de medio ambiente y sostenibilidad"
-}
-],
-"diputados:quezada castro": [
-{
-"cargo": "Vicepresidente",
-"organo": "Comisión de medio ambiente y sostenibilidad"
-}
-],
-"diputados:martinez paitan": [
-{
-"cargo": "Presidente",
-"organo": "Comisión de modernización de la gestión del estado y contraloría"
-}
-],
-"diputados:obando morgan": [
-{
-"cargo": "Vicepresidente",
-"organo": "Comisión de modernización de la gestión del estado y contraloría"
-}
-],
-"diputados:palma mendoza": [
-{
-"cargo": "Presidente",
-"organo": "Comisión de producción, comercio exterior y turismo"
-}
-],
-"diputados:medina stein": [
-{
-"cargo": "Vicepresidente",
-"organo": "Comisión de producción, comercio exterior y turismo"
-}
-],
-"diputados:guevara ramirez": [
-{
-"cargo": "Secretario",
-"organo": "Comisión de producción, comercio exterior y turismo"
-}
-],
-"diputados:huaman cornejo": [
-{
-"cargo": "Presidente",
-"organo": "Comisión de salud"
-}
-],
-"diputados:fernandez gonzalez": [
-{
-"cargo": "Vicepresidente",
-"organo": "Comisión de salud"
-}
-],
-"diputados:yuffra lugo": [
-{
-"cargo": "Secretario",
-"organo": "Comisión de salud"
-}
-],
-"diputados:castillo rivas": [
-{
-"cargo": "Presidente",
-"organo": "Comisión de trabajo y seguridad social"
-}
-],
-"diputados:yalta sotelo": [
-{
-"cargo": "Vicepresidente",
-"organo": "Comisión de trabajo y seguridad social"
-}
-],
-"diputados:tapullima insapillo": [
-{
-"cargo": "Secretario",
-"organo": "Comisión de trabajo y seguridad social"
-}
-],
-"diputados:varas seguin": [
-{
-"cargo": "Presidente",
-"organo": "Comisión de acusaciones constitucionales"
-}
-],
-"diputados:beteta rubin": [
-{
-"cargo": "Vicepresidente",
-"organo": "Comisión de acusaciones constitucionales"
-}
-],
-"diputados:bravo quispe": [
-{
-"cargo": "Secretario",
-"organo": "Comisión de acusaciones constitucionales"
-}
-],
-"diputados:albanil carmona": [
-{
-"cargo": "Presidente",
-"organo": "Comisión de ética parlamentaria"
-}
-],
-"diputados:perez quispe": [
-{
-"cargo": "Vicepresidente",
-"organo": "Comisión de ética parlamentaria"
-}
-],
-"diputados:colchado huamani": [
-{
-"cargo": "Secretario",
-"organo": "Comisión de ética parlamentaria"
-},
-{
-"cargo": "Segundo Vicepresidente",
-"organo": "Mesa Directiva de la Cámara de Diputados"
-}
-],
-"diputados:abensur pinasco": [
-{
-"cargo": "Presidente",
-"organo": "Comisión de ordenamiento y seguimiento legislativo"
-}
-],
-"diputados:krklec torres": [
-{
-"cargo": "Vicepresidente",
-"organo": "Comisión de ordenamiento y seguimiento legislativo"
-}
-],
-"diputados:reto otero": [
-{
-"cargo": "Presidente",
-"organo": "Mesa Directiva de la Cámara de Diputados"
-}
-],
-"diputados:marquez huanca": [
-{
-"cargo": "Primera Vicepresidenta",
-"organo": "Mesa Directiva de la Cámara de Diputados"
-}
-],
-"diputados:yataco torrealva": [
-{
-"cargo": "Tercer Vicepresidente",
-"organo": "Mesa Directiva de la Cámara de Diputados"
-}
-],
-"EC:mancheno davila": [
-{
-"cargo": "Presidenta",
-"organo": "Asamblea Nacional y Consejo de Administración Legislativa (CAL)"
-}
-],
-"EC:torres cobo": [
-{
-"cargo": "Primer Vicepresidente",
-"organo": "Asamblea Nacional y CAL"
-}
-],
-"EC:tiupul urquizo": [
-{
-"cargo": "Segunda Vicepresidenta",
-"organo": "Asamblea Nacional y CAL"
-}
-],
-"EC:fritschi naranjo": [
-{
-"cargo": "Primera Vocal",
-"organo": "Consejo de Administración Legislativa (CAL)"
-}
-],
-"EC:celleri gomez": [
-{
-"cargo": "Segundo Vocal",
-"organo": "Consejo de Administración Legislativa (CAL)"
-}
-],
-"EC:salazar hidalgo": [
-{
-"cargo": "Tercera Vocal",
-"organo": "Consejo de Administración Legislativa (CAL)"
-}
-],
-"EC:pacheco machuca": [
-{
-"cargo": "Cuarta Vocal",
-"organo": "Consejo de Administración Legislativa (CAL)"
-}
-],
-"EC:torres cadena": [
-{
-"cargo": "Presidente",
-"organo": "Comisión de Justicia y Estructura del Estado"
-}
-],
-"EC:nantipia chumpi": [
-{
-"cargo": "Vicepresidente",
-"organo": "Comisión de Justicia y Estructura del Estado"
-}
-],
-"EC:recalde alava": [
-{
-"cargo": "Presidente",
-"organo": "Comisión del Derecho al Trabajo y a la Seguridad Social"
-}
-],
-"EC:jaramillo zurita paola": [
-{
-"cargo": "Vicepresidenta",
-"organo": "Comisión del Derecho al Trabajo y a la Seguridad Social"
-}
-],
-"EC:farinango delgado": [
-{
-"cargo": "Presidente",
-"organo": "Comisión del Régimen Económico y Tributario y su Regulación y Control"
-}
-],
-"EC:castro piedra": [
-{
-"cargo": "Vicepresidente",
-"organo": "Comisión del Régimen Económico y Tributario y su Regulación y Control"
-}
-],
-"EC:centeno arteaga": [
-{
-"cargo": "Presidente",
-"organo": "Comisión del Desarrollo Económico, Productivo y la Microempresa"
-}
-],
-"EC:franco hanze": [
-{
-"cargo": "Vicepresidente",
-"organo": "Comisión del Desarrollo Económico, Productivo y la Microempresa"
-}
-],
-"EC:jaramillo zurita lucia": [
-{
-"cargo": "Presidente",
-"organo": "Comisión de Relaciones Internacionales y Movilidad Humana"
-}
-],
-"EC:jarrin rivadeneira": [
-{
-"cargo": "Vicepresidente",
-"organo": "Comisión de Relaciones Internacionales y Movilidad Humana"
-}
-],
-"EC:leon cueva": [
-{
-"cargo": "Presidente",
-"organo": "Comisión de Biodiversidad y Recursos Naturales"
-}
-],
-"EC:jaramillo martinez": [
-{
-"cargo": "Vicepresidente",
-"organo": "Comisión de Biodiversidad y Recursos Naturales"
-}
-],
-"EC:rizzo alvear": [
-{
-"cargo": "Presidente",
-"organo": "Comisión de Soberanía Alimentaria y Desarrollo del Sector Agropecuario y Pesquero"
-}
-],
-"EC:gonzaga salazar": [
-{
-"cargo": "Vicepresidente",
-"organo": "Comisión de Soberanía Alimentaria y Desarrollo del Sector Agropecuario y Pesquero"
-}
-],
-"EC:benavides fuentes": [
-{
-"cargo": "Presidente",
-"organo": "Comisión de Gobiernos Autónomos, Descentralización, Competencias y Organización del Territorio"
-}
-],
-"EC:guillen rodriguez": [
-{
-"cargo": "Vicepresidenta",
-"organo": "Comisión de Gobiernos Autónomos, Descentralización, Competencias y Organización del Territorio"
-}
-],
-"EC:baltazar yucailla": [
-{
-"cargo": "Presidente",
-"organo": "Comisión de Educación, Cultura, Ciencia y Tecnología, Innovación y Saberes Ancestrales"
-}
-],
-"EC:polanco lara": [
-{
-"cargo": "Vicepresidente",
-"organo": "Comisión de Educación, Cultura, Ciencia y Tecnología, Innovación y Saberes Ancestrales"
-}
-],
-"EC:guim alfago": [
-{
-"cargo": "Presidente",
-"organo": "Comisión del Derecho a la Salud y Deporte"
-}
-],
-"EC:becerra contreras": [
-{
-"cargo": "Vicepresidente",
-"organo": "Comisión del Derecho a la Salud y Deporte"
-}
-],
-"EC:jacome silva": [
-{
-"cargo": "Presidente",
-"organo": "Comisión de Transparencia, Participación Ciudadana y Control Social"
-}
-],
-"EC:cerda tapuy": [
-{
-"cargo": "Vicepresidente",
-"organo": "Comisión de Transparencia, Participación Ciudadana y Control Social"
-}
-],
-"EC:iniguez gallardo": [
-{
-"cargo": "Presidente",
-"organo": "Comisión de Garantías Constitucionales, Derechos Humanos, Derechos Colectivos y la Interculturalidad"
-}
-],
-"EC:cedeno rivadeneira": [
-{
-"cargo": "Vicepresidente",
-"organo": "Comisión de Garantías Constitucionales, Derechos Humanos, Derechos Colectivos y la Interculturalidad"
-}
-],
-"EC:alarcon bueno": [
-{
-"cargo": "Presidente",
-"organo": "Comisión de Soberanía, Integración y Seguridad Integral"
-}
-],
-"EC:castillo maldonado": [
-{
-"cargo": "Vicepresidente",
-"organo": "Comisión de Soberanía, Integración y Seguridad Integral"
-}
-],
-"EC:veloz ramirez": [
-{
-"cargo": "Presidente",
-"organo": "Comisión de Protección Integral a Niñas, Niños y Adolescentes"
-}
-],
-"EC:chavez nunez": [
-{
-"cargo": "Vicepresidente",
-"organo": "Comisión de Protección Integral a Niñas, Niños y Adolescentes"
-}
-],
-"EC:alvarez zambrano": [
-{
-"cargo": "Presidente",
-"organo": "Comisión de Fiscalización y Control Político"
-}
-],
-"EC:villacreses herrera": [
-{
-"cargo": "Vicepresidenta",
-"organo": "Comisión de Fiscalización y Control Político"
-}
-],
-"EC:lavayen tamayo": [
-{
-"cargo": "Presidente",
-"organo": "Comité de Ética"
-}
-],
-"EC:mendoza ibarra": [
-{
-"cargo": "Vicepresidenta",
-"organo": "Comité de Ética"
-}
-]
+  "senado:mesia ramirez": [
+    {
+      "cargo": "Presidente",
+      "organo": "Comisión de constitución, reglamento y relaciones exteriores"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de justicia y derechos humanos"
+    },
+    {
+      "cargo": "Titular",
+      "organo": "Comisión de procedimientos especiales"
+    },
+    {
+      "cargo": "Titular",
+      "organo": "Comisión de control político sobre actos normativos del poder ejecutivo y regímenes de excepción"
+    }
+  ],
+  "senado:astucuri laura": [
+    {
+      "cargo": "Vicepresidente",
+      "organo": "Comisión de constitución, reglamento y relaciones exteriores"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de defensa nacional y orden interno"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión en asuntos de desarrollo productivo, energía y minas, infraestructura y trabajo"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de economía, medio ambiente y defensa del consumidor"
+    },
+    {
+      "cargo": "Titular",
+      "organo": "Comisión de ética parlamentaria"
+    }
+  ],
+  "senado:ampuero meza": [
+    {
+      "cargo": "Secretaria",
+      "organo": "Comisión de constitución, reglamento y relaciones exteriores"
+    },
+    {
+      "cargo": "Presidente",
+      "organo": "Comisión de justicia y derechos humanos"
+    },
+    {
+      "cargo": "Titular",
+      "organo": "Comisión en asuntos de gestión del estado y contraloría"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de procedimientos especiales"
+    }
+  ],
+  "senado:calisto giampietri": [
+    {
+      "cargo": "Presidente",
+      "organo": "Comisión de defensa nacional y orden interno"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de constitución, reglamento y relaciones exteriores"
+    },
+    {
+      "cargo": "Titular",
+      "organo": "Comisión en asuntos de desarrollo productivo, energía y minas, infraestructura y trabajo"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de economía, medio ambiente y defensa del consumidor"
+    },
+    {
+      "cargo": "Titular",
+      "organo": "Comisión de inteligencia"
+    }
+  ],
+  "senado:gago rodriguez": [
+    {
+      "cargo": "Vicepresidente",
+      "organo": "Comisión de defensa nacional y orden interno"
+    },
+    {
+      "cargo": "Titular",
+      "organo": "Comisión de economía, medio ambiente y defensa del consumidor"
+    },
+    {
+      "cargo": "Titular",
+      "organo": "Comisión en asuntos de gestión del estado y contraloría"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de justicia y derechos humanos"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de procedimientos especiales"
+    }
+  ],
+  "senado:melgar valdez": [
+    {
+      "cargo": "Secretario",
+      "organo": "Comisión de defensa nacional y orden interno"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión en asuntos de desarrollo productivo, energía y minas, infraestructura y trabajo"
+    },
+    {
+      "cargo": "Titular",
+      "organo": "Comisión de procedimientos especiales"
+    }
+  ],
+  "senado:barragan coloma": [
+    {
+      "cargo": "Presidente",
+      "organo": "Comisión en asuntos de desarrollo productivo, energía y minas, infraestructura y trabajo"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de control político sobre actos normativos del poder ejecutivo y regímenes de excepción"
+    }
+  ],
+  "senado:flores suarez": [
+    {
+      "cargo": "Vicepresidente",
+      "organo": "Comisión en asuntos de desarrollo productivo, energía y minas, infraestructura y trabajo"
+    },
+    {
+      "cargo": "Secretario",
+      "organo": "Comisión bicameral de presupuesto y cuenta general de la república"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de constitución, reglamento y relaciones exteriores"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de defensa nacional y orden interno"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión en asuntos de gestión del estado y contraloría"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de justicia y derechos humanos"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de control político sobre actos normativos del poder ejecutivo y regímenes de excepción"
+    }
+  ],
+  "senado:schaefer cuculiza": [
+    {
+      "cargo": "Secretaria",
+      "organo": "Comisión en asuntos de desarrollo productivo, energía y minas, infraestructura y trabajo"
+    },
+    {
+      "cargo": "Titular",
+      "organo": "Comisión de defensa nacional y orden interno"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión en asuntos de salud, educación, cultura, mujer y desarrollo social y digital"
+    },
+    {
+      "cargo": "Titular",
+      "organo": "Comisión de control político sobre actos normativos del poder ejecutivo y regímenes de excepción"
+    }
+  ],
+  "senado:lopez chau nava": [
+    {
+      "cargo": "Presidente",
+      "organo": "Comisión de economía, medio ambiente y defensa del consumidor"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de defensa nacional y orden interno"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión en asuntos de desarrollo productivo, energía y minas, infraestructura y trabajo"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión en asuntos de salud, educación, cultura, mujer y desarrollo social y digital"
+    },
+    {
+      "cargo": "Titular",
+      "organo": "Comisión de procedimientos especiales"
+    }
+  ],
+  "senado:noriega reategui": [
+    {
+      "cargo": "Vicepresidente",
+      "organo": "Comisión de economía, medio ambiente y defensa del consumidor"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de defensa nacional y orden interno"
+    },
+    {
+      "cargo": "Titular",
+      "organo": "Comisión en asuntos de desarrollo productivo, energía y minas, infraestructura y trabajo"
+    },
+    {
+      "cargo": "Titular",
+      "organo": "Comisión en asuntos de salud, educación, cultura, mujer y desarrollo social y digital"
+    }
+  ],
+  "senado:iturregui byrne": [
+    {
+      "cargo": "Secretaria",
+      "organo": "Comisión de economía, medio ambiente y defensa del consumidor"
+    },
+    {
+      "cargo": "Titular",
+      "organo": "Comisión de constitución, reglamento y relaciones exteriores"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de defensa nacional y orden interno"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión en asuntos de desarrollo productivo, energía y minas, infraestructura y trabajo"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de procedimientos especiales"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de control político sobre actos normativos del poder ejecutivo y regímenes de excepción"
+    }
+  ],
+  "senado:matute charun": [
+    {
+      "cargo": "Presidente",
+      "organo": "Comisión en asuntos de salud, educación, cultura, mujer y desarrollo social y digital"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de constitución, reglamento y relaciones exteriores"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de economía, medio ambiente y defensa del consumidor"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de justicia y derechos humanos"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de procedimientos especiales"
+    }
+  ],
+  "senado:chipana chipana": [
+    {
+      "cargo": "Vicepresidente",
+      "organo": "Comisión en asuntos de salud, educación, cultura, mujer y desarrollo social y digital"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión en asuntos de desarrollo productivo, energía y minas, infraestructura y trabajo"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión en asuntos de gestión del estado y contraloría"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de procedimientos especiales"
+    },
+    {
+      "cargo": "Titular",
+      "organo": "Comisión de control político sobre actos normativos del poder ejecutivo y regímenes de excepción"
+    }
+  ],
+  "senado:tapia bernal": [
+    {
+      "cargo": "Secretario",
+      "organo": "Comisión en asuntos de salud, educación, cultura, mujer y desarrollo social y digital"
+    },
+    {
+      "cargo": "Titular",
+      "organo": "Comisión en asuntos de gestión del estado y contraloría"
+    }
+  ],
+  "senado:osorio palpan": [
+    {
+      "cargo": "Presidente",
+      "organo": "Comisión en asuntos de gestión del estado y contraloría"
+    },
+    {
+      "cargo": "Titular",
+      "organo": "Comisión de economía, medio ambiente y defensa del consumidor"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de procedimientos especiales"
+    }
+  ],
+  "senado:ventura angel": [
+    {
+      "cargo": "Vicepresidente",
+      "organo": "Comisión en asuntos de gestión del estado y contraloría"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de constitución, reglamento y relaciones exteriores"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión en asuntos de desarrollo productivo, energía y minas, infraestructura y trabajo"
+    },
+    {
+      "cargo": "Titular",
+      "organo": "Comisión de justicia y derechos humanos"
+    },
+    {
+      "cargo": "Titular",
+      "organo": "Comisión de procedimientos especiales"
+    }
+  ],
+  "senado:vasquez chuquilin": [
+    {
+      "cargo": "Secretario",
+      "organo": "Comisión en asuntos de gestión del estado y contraloría"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de constitución, reglamento y relaciones exteriores"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión en asuntos de salud, educación, cultura, mujer y desarrollo social y digital"
+    },
+    {
+      "cargo": "Titular",
+      "organo": "Comisión de justicia y derechos humanos"
+    },
+    {
+      "cargo": "Titular",
+      "organo": "Comisión de ética parlamentaria"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de control político sobre actos normativos del poder ejecutivo y regímenes de excepción"
+    }
+  ],
+  "senado:gavidia rodriguez": [
+    {
+      "cargo": "Vicepresidente",
+      "organo": "Comisión de justicia y derechos humanos"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de defensa nacional y orden interno"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión en asuntos de desarrollo productivo, energía y minas, infraestructura y trabajo"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de economía, medio ambiente y defensa del consumidor"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de procedimientos especiales"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de control político sobre actos normativos del poder ejecutivo y regímenes de excepción"
+    }
+  ],
+  "senado:aguinaga recuenco": [
+    {
+      "cargo": "Secretario",
+      "organo": "Comisión de justicia y derechos humanos"
+    },
+    {
+      "cargo": "Titular",
+      "organo": "Comisión de constitución, reglamento y relaciones exteriores"
+    },
+    {
+      "cargo": "Titular",
+      "organo": "Comisión en asuntos de salud, educación, cultura, mujer y desarrollo social y digital"
+    }
+  ],
+  "senado:ramos huillcas": [
+    {
+      "cargo": "Presidente",
+      "organo": "Comisión de ética parlamentaria"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión en asuntos de desarrollo productivo, energía y minas, infraestructura y trabajo"
+    },
+    {
+      "cargo": "Titular",
+      "organo": "Comisión de economía, medio ambiente y defensa del consumidor"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión en asuntos de salud, educación, cultura, mujer y desarrollo social y digital"
+    },
+    {
+      "cargo": "Titular",
+      "organo": "Comisión de justicia y derechos humanos"
+    }
+  ],
+  "senado:miyashiro arashiro": [
+    {
+      "cargo": "Vicepresidente",
+      "organo": "Comisión de ética parlamentaria"
+    },
+    {
+      "cargo": "Titular",
+      "organo": "Comisión de defensa nacional y orden interno"
+    },
+    {
+      "cargo": "Titular",
+      "organo": "Comisión de inteligencia"
+    }
+  ],
+  "senado:velasquez garcia": [
+    {
+      "cargo": "Secretario",
+      "organo": "Comisión de ética parlamentaria"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de constitución, reglamento y relaciones exteriores"
+    },
+    {
+      "cargo": "Titular",
+      "organo": "Comisión en asuntos de gestión del estado y contraloría"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de procedimientos especiales"
+    },
+    {
+      "cargo": "Titular",
+      "organo": "Comisión de control político sobre actos normativos del poder ejecutivo y regímenes de excepción"
+    }
+  ],
+  "senado:rospigliosi capurro": [
+    {
+      "cargo": "Presidente",
+      "organo": "Comisión de inteligencia"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de defensa nacional y orden interno"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de justicia y derechos humanos"
+    }
+  ],
+  "senado:caballero leon": [
+    {
+      "cargo": "Vicepresidente",
+      "organo": "Comisión de inteligencia"
+    },
+    {
+      "cargo": "Titular",
+      "organo": "Comisión de defensa nacional y orden interno"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión en asuntos de salud, educación, cultura, mujer y desarrollo social y digital"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión en asuntos de gestión del estado y contraloría"
+    },
+    {
+      "cargo": "Titular",
+      "organo": "Comisión de ética parlamentaria"
+    }
+  ],
+  "senado:morales ramirez": [
+    {
+      "cargo": "Secretario",
+      "organo": "Comisión de inteligencia"
+    },
+    {
+      "cargo": "Titular",
+      "organo": "Comisión de constitución, reglamento y relaciones exteriores"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de economía, medio ambiente y defensa del consumidor"
+    },
+    {
+      "cargo": "Titular",
+      "organo": "Comisión de procedimientos especiales"
+    }
+  ],
+  "senado:ccahuana aymachoque": [
+    {
+      "cargo": "Presidente",
+      "organo": "Comisión de procedimientos especiales"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de constitución, reglamento y relaciones exteriores"
+    },
+    {
+      "cargo": "Titular",
+      "organo": "Comisión de defensa nacional y orden interno"
+    },
+    {
+      "cargo": "Titular",
+      "organo": "Comisión en asuntos de gestión del estado y contraloría"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de justicia y derechos humanos"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de control político sobre actos normativos del poder ejecutivo y regímenes de excepción"
+    }
+  ],
+  "senado:vasquez villanueva": [
+    {
+      "cargo": "Vicepresidente",
+      "organo": "Comisión de procedimientos especiales"
+    },
+    {
+      "cargo": "Titular",
+      "organo": "Comisión en asuntos de desarrollo productivo, energía y minas, infraestructura y trabajo"
+    },
+    {
+      "cargo": "Titular",
+      "organo": "Comisión de economía, medio ambiente y defensa del consumidor"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión en asuntos de salud, educación, cultura, mujer y desarrollo social y digital"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión en asuntos de gestión del estado y contraloría"
+    }
+  ],
+  "senado:moyano delgado": [
+    {
+      "cargo": "Secretario",
+      "organo": "Comisión de procedimientos especiales"
+    },
+    {
+      "cargo": "Presidente",
+      "organo": "Comisión de control político sobre actos normativos del poder ejecutivo y regímenes de excepción"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de constitución, reglamento y relaciones exteriores"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión en asuntos de salud, educación, cultura, mujer y desarrollo social y digital"
+    },
+    {
+      "cargo": "Titular",
+      "organo": "Comisión de justicia y derechos humanos"
+    }
+  ],
+  "senado:munante barrios": [
+    {
+      "cargo": "Vicepresidente",
+      "organo": "Comisión de control político sobre actos normativos del poder ejecutivo y regímenes de excepción"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de constitución, reglamento y relaciones exteriores"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de defensa nacional y orden interno"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión en asuntos de desarrollo productivo, energía y minas, infraestructura y trabajo"
+    },
+    {
+      "cargo": "Titular",
+      "organo": "Comisión de justicia y derechos humanos"
+    },
+    {
+      "cargo": "Primer Vicepresidente",
+      "organo": "Mesa Directiva del Senado"
+    }
+  ],
+  "senado:ticona cohaila": [
+    {
+      "cargo": "Secretario",
+      "organo": "Comisión de control político sobre actos normativos del poder ejecutivo y regímenes de excepción"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de constitución, reglamento y relaciones exteriores"
+    },
+    {
+      "cargo": "Titular",
+      "organo": "Comisión en asuntos de salud, educación, cultura, mujer y desarrollo social y digital"
+    },
+    {
+      "cargo": "Titular",
+      "organo": "Comisión de procedimientos especiales"
+    }
+  ],
+  "senado:arista arbildo": [
+    {
+      "cargo": "Presidente",
+      "organo": "Comisión bicameral de presupuesto y cuenta general de la república"
+    },
+    {
+      "cargo": "Titular",
+      "organo": "Comisión de economía, medio ambiente y defensa del consumidor"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión en asuntos de gestión del estado y contraloría"
+    }
+  ],
+  "diputados:zunini yerren": [
+    {
+      "cargo": "Vicepresidente",
+      "organo": "Comisión bicameral de presupuesto y cuenta general de la república"
+    }
+  ],
+  "senado:alcorta suero": [
+    {
+      "cargo": "Titular",
+      "organo": "Comisión de constitución, reglamento y relaciones exteriores"
+    },
+    {
+      "cargo": "Titular",
+      "organo": "Comisión de defensa nacional y orden interno"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión en asuntos de desarrollo productivo, energía y minas, infraestructura y trabajo"
+    }
+  ],
+  "senado:chavez cossio": [
+    {
+      "cargo": "Titular",
+      "organo": "Comisión de constitución, reglamento y relaciones exteriores"
+    },
+    {
+      "cargo": "Titular",
+      "organo": "Comisión de justicia y derechos humanos"
+    }
+  ],
+  "senado:cutipa ccama": [
+    {
+      "cargo": "Titular",
+      "organo": "Comisión de constitución, reglamento y relaciones exteriores"
+    },
+    {
+      "cargo": "Titular",
+      "organo": "Comisión de defensa nacional y orden interno"
+    },
+    {
+      "cargo": "Titular",
+      "organo": "Comisión de justicia y derechos humanos"
+    }
+  ],
+  "senado:juarez gallegos": [
+    {
+      "cargo": "Titular",
+      "organo": "Comisión de constitución, reglamento y relaciones exteriores"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de defensa nacional y orden interno"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión en asuntos de desarrollo productivo, energía y minas, infraestructura y trabajo"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de economía, medio ambiente y defensa del consumidor"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión en asuntos de salud, educación, cultura, mujer y desarrollo social y digital"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión en asuntos de gestión del estado y contraloría"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de justicia y derechos humanos"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de procedimientos especiales"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de control político sobre actos normativos del poder ejecutivo y regímenes de excepción"
+    }
+  ],
+  "senado:maravi olarte": [
+    {
+      "cargo": "Titular",
+      "organo": "Comisión de constitución, reglamento y relaciones exteriores"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión en asuntos de salud, educación, cultura, mujer y desarrollo social y digital"
+    },
+    {
+      "cargo": "Titular",
+      "organo": "Comisión de justicia y derechos humanos"
+    }
+  ],
+  "senado:luque ibarra": [
+    {
+      "cargo": "Titular",
+      "organo": "Comisión de constitución, reglamento y relaciones exteriores"
+    },
+    {
+      "cargo": "Titular",
+      "organo": "Comisión en asuntos de desarrollo productivo, energía y minas, infraestructura y trabajo"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de economía, medio ambiente y defensa del consumidor"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de justicia y derechos humanos"
+    },
+    {
+      "cargo": "Titular",
+      "organo": "Comisión de control político sobre actos normativos del poder ejecutivo y regímenes de excepción"
+    }
+  ],
+  "senado:del aguila cardenas": [
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de constitución, reglamento y relaciones exteriores"
+    },
+    {
+      "cargo": "Titular",
+      "organo": "Comisión de defensa nacional y orden interno"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión en asuntos de desarrollo productivo, energía y minas, infraestructura y trabajo"
+    }
+  ],
+  "senado:flores ruiz": [
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de constitución, reglamento y relaciones exteriores"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de defensa nacional y orden interno"
+    },
+    {
+      "cargo": "Titular",
+      "organo": "Comisión en asuntos de desarrollo productivo, energía y minas, infraestructura y trabajo"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de economía, medio ambiente y defensa del consumidor"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión en asuntos de salud, educación, cultura, mujer y desarrollo social y digital"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión en asuntos de gestión del estado y contraloría"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de justicia y derechos humanos"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de procedimientos especiales"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de control político sobre actos normativos del poder ejecutivo y regímenes de excepción"
+    }
+  ],
+  "senado:rodrich ackerman": [
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de constitución, reglamento y relaciones exteriores"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión en asuntos de desarrollo productivo, energía y minas, infraestructura y trabajo"
+    },
+    {
+      "cargo": "Titular",
+      "organo": "Comisión de economía, medio ambiente y defensa del consumidor"
+    }
+  ],
+  "senado:castillo terrones": [
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de constitución, reglamento y relaciones exteriores"
+    },
+    {
+      "cargo": "Titular",
+      "organo": "Comisión en asuntos de desarrollo productivo, energía y minas, infraestructura y trabajo"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de justicia y derechos humanos"
+    }
+  ],
+  "senado:robles araujo": [
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de constitución, reglamento y relaciones exteriores"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de defensa nacional y orden interno"
+    },
+    {
+      "cargo": "Titular",
+      "organo": "Comisión en asuntos de salud, educación, cultura, mujer y desarrollo social y digital"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de procedimientos especiales"
+    }
+  ],
+  "senado:jauregui martinez de aguayo": [
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de constitución, reglamento y relaciones exteriores"
+    },
+    {
+      "cargo": "Titular",
+      "organo": "Comisión en asuntos de salud, educación, cultura, mujer y desarrollo social y digital"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de justicia y derechos humanos"
+    },
+    {
+      "cargo": "Titular",
+      "organo": "Comisión de procedimientos especiales"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de control político sobre actos normativos del poder ejecutivo y regímenes de excepción"
+    }
+  ],
+  "senado:bonifaz carmona": [
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de constitución, reglamento y relaciones exteriores"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión en asuntos de salud, educación, cultura, mujer y desarrollo social y digital"
+    },
+    {
+      "cargo": "Titular",
+      "organo": "Comisión en asuntos de gestión del estado y contraloría"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de justicia y derechos humanos"
+    },
+    {
+      "cargo": "Titular",
+      "organo": "Comisión de control político sobre actos normativos del poder ejecutivo y regímenes de excepción"
+    }
+  ],
+  "senado:andres lujan": [
+    {
+      "cargo": "Titular",
+      "organo": "Comisión de defensa nacional y orden interno"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión en asuntos de desarrollo productivo, energía y minas, infraestructura y trabajo"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de economía, medio ambiente y defensa del consumidor"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión en asuntos de gestión del estado y contraloría"
+    },
+    {
+      "cargo": "Titular",
+      "organo": "Comisión de control político sobre actos normativos del poder ejecutivo y regímenes de excepción"
+    }
+  ],
+  "senado:delgado zegarra": [
+    {
+      "cargo": "Titular",
+      "organo": "Comisión de defensa nacional y orden interno"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión en asuntos de desarrollo productivo, energía y minas, infraestructura y trabajo"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de economía, medio ambiente y defensa del consumidor"
+    },
+    {
+      "cargo": "Titular",
+      "organo": "Comisión en asuntos de salud, educación, cultura, mujer y desarrollo social y digital"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión en asuntos de gestión del estado y contraloría"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de procedimientos especiales"
+    }
+  ],
+  "senado:jimenez heredia": [
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de defensa nacional y orden interno"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de economía, medio ambiente y defensa del consumidor"
+    },
+    {
+      "cargo": "Titular",
+      "organo": "Comisión en asuntos de gestión del estado y contraloría"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de justicia y derechos humanos"
+    }
+  ],
+  "senado:yamashiro ore": [
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de defensa nacional y orden interno"
+    },
+    {
+      "cargo": "Titular",
+      "organo": "Comisión en asuntos de desarrollo productivo, energía y minas, infraestructura y trabajo"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de economía, medio ambiente y defensa del consumidor"
+    },
+    {
+      "cargo": "Titular",
+      "organo": "Comisión en asuntos de salud, educación, cultura, mujer y desarrollo social y digital"
+    }
+  ],
+  "senado:quito sarmiento": [
+    {
+      "cargo": "Titular",
+      "organo": "Comisión en asuntos de desarrollo productivo, energía y minas, infraestructura y trabajo"
+    },
+    {
+      "cargo": "Titular",
+      "organo": "Comisión de control político sobre actos normativos del poder ejecutivo y regímenes de excepción"
+    }
+  ],
+  "senado:yauri tunque": [
+    {
+      "cargo": "Titular",
+      "organo": "Comisión en asuntos de desarrollo productivo, energía y minas, infraestructura y trabajo"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de economía, medio ambiente y defensa del consumidor"
+    },
+    {
+      "cargo": "Titular",
+      "organo": "Comisión en asuntos de gestión del estado y contraloría"
+    }
+  ],
+  "senado:figallo rivadeneyra": [
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión en asuntos de desarrollo productivo, energía y minas, infraestructura y trabajo"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de economía, medio ambiente y defensa del consumidor"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión en asuntos de salud, educación, cultura, mujer y desarrollo social y digital"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión en asuntos de gestión del estado y contraloría"
+    },
+    {
+      "cargo": "Titular",
+      "organo": "Comisión de procedimientos especiales"
+    }
+  ],
+  "senado:velasquez portocarrero": [
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión en asuntos de desarrollo productivo, energía y minas, infraestructura y trabajo"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión en asuntos de salud, educación, cultura, mujer y desarrollo social y digital"
+    },
+    {
+      "cargo": "Titular",
+      "organo": "Comisión en asuntos de gestión del estado y contraloría"
+    }
+  ],
+  "senado:chacon trujillo": [
+    {
+      "cargo": "Titular",
+      "organo": "Comisión de economía, medio ambiente y defensa del consumidor"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión en asuntos de gestión del estado y contraloría"
+    },
+    {
+      "cargo": "Titular",
+      "organo": "Comisión de control político sobre actos normativos del poder ejecutivo y regímenes de excepción"
+    },
+    {
+      "cargo": "Segunda Vicepresidenta",
+      "organo": "Mesa Directiva del Senado"
+    }
+  ],
+  "senado:armacanqui morales": [
+    {
+      "cargo": "Titular",
+      "organo": "Comisión de economía, medio ambiente y defensa del consumidor"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión en asuntos de salud, educación, cultura, mujer y desarrollo social y digital"
+    },
+    {
+      "cargo": "Titular",
+      "organo": "Comisión de procedimientos especiales"
+    }
+  ],
+  "senado:mancha pineda": [
+    {
+      "cargo": "Titular",
+      "organo": "Comisión de economía, medio ambiente y defensa del consumidor"
+    },
+    {
+      "cargo": "Titular",
+      "organo": "Comisión en asuntos de salud, educación, cultura, mujer y desarrollo social y digital"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de justicia y derechos humanos"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión de procedimientos especiales"
+    },
+    {
+      "cargo": "Tercer Vicepresidente",
+      "organo": "Mesa Directiva del Senado"
+    }
+  ],
+  "senado:verano saravia": [
+    {
+      "cargo": "Titular",
+      "organo": "Comisión en asuntos de salud, educación, cultura, mujer y desarrollo social y digital"
+    }
+  ],
+  "senado:flores cordova": [
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión en asuntos de salud, educación, cultura, mujer y desarrollo social y digital"
+    },
+    {
+      "cargo": "Suplente",
+      "organo": "Comisión en asuntos de gestión del estado y contraloría"
+    },
+    {
+      "cargo": "Titular",
+      "organo": "Comisión de justicia y derechos humanos"
+    }
+  ],
+  "senado:torres morales": [
+    {
+      "cargo": "Presidente",
+      "organo": "Mesa Directiva del Senado"
+    }
+  ],
+  "diputados:columbus murata": [
+    {
+      "cargo": "Presidente",
+      "organo": "Comisión de ciencia, innovación, tecnología y sociedad digital"
+    }
+  ],
+  "diputados:fernandez de la torre": [
+    {
+      "cargo": "Vicepresidente",
+      "organo": "Comisión de ciencia, innovación, tecnología y sociedad digital"
+    },
+    {
+      "cargo": "Secretario",
+      "organo": "Comisión de constitución, reglamento y relaciones exteriores"
+    },
+    {
+      "cargo": "Secretario",
+      "organo": "Comisión de defensa nacional y orden interno"
+    },
+    {
+      "cargo": "Secretario",
+      "organo": "Comisión de desarrollo agrario"
+    },
+    {
+      "cargo": "Secretario",
+      "organo": "Comisión de medio ambiente y sostenibilidad"
+    },
+    {
+      "cargo": "Secretario",
+      "organo": "Comisión de modernización de la gestión del estado y contraloría"
+    },
+    {
+      "cargo": "Secretario",
+      "organo": "Comisión de ordenamiento y seguimiento legislativo"
+    }
+  ],
+  "diputados:leiva baylon": [
+    {
+      "cargo": "Secretario",
+      "organo": "Comisión de ciencia, innovación, tecnología y sociedad digital"
+    }
+  ],
+  "diputados:avendano vilca": [
+    {
+      "cargo": "Presidente",
+      "organo": "Comisión de constitución, reglamento y relaciones exteriores"
+    }
+  ],
+  "diputados:garcia huby": [
+    {
+      "cargo": "Vicepresidente",
+      "organo": "Comisión de constitución, reglamento y relaciones exteriores"
+    }
+  ],
+  "diputados:masco caceres": [
+    {
+      "cargo": "Presidente",
+      "organo": "Comisión de defensa del consumidor y regulación de los servicios públicos"
+    }
+  ],
+  "diputados:meneses crispin": [
+    {
+      "cargo": "Vicepresidente",
+      "organo": "Comisión de defensa del consumidor y regulación de los servicios públicos"
+    }
+  ],
+  "diputados:llaque linares": [
+    {
+      "cargo": "Secretario",
+      "organo": "Comisión de defensa del consumidor y regulación de los servicios públicos"
+    }
+  ],
+  "diputados:segura figueroa": [
+    {
+      "cargo": "Presidente",
+      "organo": "Comisión de defensa nacional y orden interno"
+    }
+  ],
+  "diputados:gatica vega": [
+    {
+      "cargo": "Vicepresidente",
+      "organo": "Comisión de defensa nacional y orden interno"
+    }
+  ],
+  "diputados:alvaron de la cruz": [
+    {
+      "cargo": "Presidente",
+      "organo": "Comisión de desarrollo agrario"
+    }
+  ],
+  "diputados:jibaja ramos": [
+    {
+      "cargo": "Vicepresidente",
+      "organo": "Comisión de desarrollo agrario"
+    }
+  ],
+  "diputados:marcelo salazar": [
+    {
+      "cargo": "Presidente",
+      "organo": "Comisión de economía, banca, finanzas e inteligencia financiera"
+    }
+  ],
+  "diputados:barbaran reyes": [
+    {
+      "cargo": "Vicepresidente",
+      "organo": "Comisión de economía, banca, finanzas e inteligencia financiera"
+    }
+  ],
+  "diputados:cabrera nieto": [
+    {
+      "cargo": "Secretario",
+      "organo": "Comisión de economía, banca, finanzas e inteligencia financiera"
+    }
+  ],
+  "diputados:castrejon fernandez": [
+    {
+      "cargo": "Presidente",
+      "organo": "Comisión de educación, cultura y deporte"
+    }
+  ],
+  "diputados:tito rojas": [
+    {
+      "cargo": "Vicepresidente",
+      "organo": "Comisión de educación, cultura y deporte"
+    }
+  ],
+  "diputados:pacheco quispe": [
+    {
+      "cargo": "Secretario",
+      "organo": "Comisión de educación, cultura y deporte"
+    }
+  ],
+  "diputados:paredes navarro": [
+    {
+      "cargo": "Presidente",
+      "organo": "Comisión de energía y minas"
+    }
+  ],
+  "diputados:camargo porta": [
+    {
+      "cargo": "Vicepresidente",
+      "organo": "Comisión de energía y minas"
+    }
+  ],
+  "diputados:santana vera": [
+    {
+      "cargo": "Secretario",
+      "organo": "Comisión de energía y minas"
+    }
+  ],
+  "diputados:meza rivera": [
+    {
+      "cargo": "Presidente",
+      "organo": "Comisión de inclusión social, familia, mujer, pueblos andinos, amazónicos y afroperuanos"
+    }
+  ],
+  "diputados:pinasco montenegro": [
+    {
+      "cargo": "Vicepresidente",
+      "organo": "Comisión de inclusión social, familia, mujer, pueblos andinos, amazónicos y afroperuanos"
+    }
+  ],
+  "diputados:isla rojas": [
+    {
+      "cargo": "Secretario",
+      "organo": "Comisión de inclusión social, familia, mujer, pueblos andinos, amazónicos y afroperuanos"
+    }
+  ],
+  "diputados:quispe candia": [
+    {
+      "cargo": "Presidente",
+      "organo": "Comisión de infraestructura, vivienda y transportes"
+    }
+  ],
+  "diputados:pena cordova": [
+    {
+      "cargo": "Vicepresidente",
+      "organo": "Comisión de infraestructura, vivienda y transportes"
+    }
+  ],
+  "diputados:valqui ordonez": [
+    {
+      "cargo": "Secretario",
+      "organo": "Comisión de infraestructura, vivienda y transportes"
+    }
+  ],
+  "diputados:palomino casavilca": [
+    {
+      "cargo": "Presidente",
+      "organo": "Comisión de justicia y derechos humanos"
+    }
+  ],
+  "diputados:gonzales polar": [
+    {
+      "cargo": "Vicepresidente",
+      "organo": "Comisión de justicia y derechos humanos"
+    }
+  ],
+  "diputados:huilca flores": [
+    {
+      "cargo": "Secretario",
+      "organo": "Comisión de justicia y derechos humanos"
+    }
+  ],
+  "diputados:alegria garcia": [
+    {
+      "cargo": "Presidente",
+      "organo": "Comisión de medio ambiente y sostenibilidad"
+    }
+  ],
+  "diputados:quezada castro": [
+    {
+      "cargo": "Vicepresidente",
+      "organo": "Comisión de medio ambiente y sostenibilidad"
+    }
+  ],
+  "diputados:martinez paitan": [
+    {
+      "cargo": "Presidente",
+      "organo": "Comisión de modernización de la gestión del estado y contraloría"
+    }
+  ],
+  "diputados:obando morgan": [
+    {
+      "cargo": "Vicepresidente",
+      "organo": "Comisión de modernización de la gestión del estado y contraloría"
+    }
+  ],
+  "diputados:palma mendoza": [
+    {
+      "cargo": "Presidente",
+      "organo": "Comisión de producción, comercio exterior y turismo"
+    }
+  ],
+  "diputados:medina stein": [
+    {
+      "cargo": "Vicepresidente",
+      "organo": "Comisión de producción, comercio exterior y turismo"
+    }
+  ],
+  "diputados:guevara ramirez": [
+    {
+      "cargo": "Secretario",
+      "organo": "Comisión de producción, comercio exterior y turismo"
+    }
+  ],
+  "diputados:huaman cornejo": [
+    {
+      "cargo": "Presidente",
+      "organo": "Comisión de salud"
+    }
+  ],
+  "diputados:fernandez gonzalez": [
+    {
+      "cargo": "Vicepresidente",
+      "organo": "Comisión de salud"
+    }
+  ],
+  "diputados:yuffra lugo": [
+    {
+      "cargo": "Secretario",
+      "organo": "Comisión de salud"
+    }
+  ],
+  "diputados:castillo rivas": [
+    {
+      "cargo": "Presidente",
+      "organo": "Comisión de trabajo y seguridad social"
+    }
+  ],
+  "diputados:yalta sotelo": [
+    {
+      "cargo": "Vicepresidente",
+      "organo": "Comisión de trabajo y seguridad social"
+    }
+  ],
+  "diputados:tapullima insapillo": [
+    {
+      "cargo": "Secretario",
+      "organo": "Comisión de trabajo y seguridad social"
+    }
+  ],
+  "diputados:varas seguin": [
+    {
+      "cargo": "Presidente",
+      "organo": "Comisión de acusaciones constitucionales"
+    }
+  ],
+  "diputados:beteta rubin": [
+    {
+      "cargo": "Vicepresidente",
+      "organo": "Comisión de acusaciones constitucionales"
+    }
+  ],
+  "diputados:bravo quispe": [
+    {
+      "cargo": "Secretario",
+      "organo": "Comisión de acusaciones constitucionales"
+    }
+  ],
+  "diputados:albanil carmona": [
+    {
+      "cargo": "Presidente",
+      "organo": "Comisión de ética parlamentaria"
+    }
+  ],
+  "diputados:perez quispe": [
+    {
+      "cargo": "Vicepresidente",
+      "organo": "Comisión de ética parlamentaria"
+    }
+  ],
+  "diputados:colchado huamani": [
+    {
+      "cargo": "Secretario",
+      "organo": "Comisión de ética parlamentaria"
+    },
+    {
+      "cargo": "Segundo Vicepresidente",
+      "organo": "Mesa Directiva de la Cámara de Diputados"
+    }
+  ],
+  "diputados:abensur pinasco": [
+    {
+      "cargo": "Presidente",
+      "organo": "Comisión de ordenamiento y seguimiento legislativo"
+    }
+  ],
+  "diputados:krklec torres": [
+    {
+      "cargo": "Vicepresidente",
+      "organo": "Comisión de ordenamiento y seguimiento legislativo"
+    }
+  ],
+  "diputados:reto otero": [
+    {
+      "cargo": "Presidente",
+      "organo": "Mesa Directiva de la Cámara de Diputados"
+    }
+  ],
+  "diputados:marquez huanca": [
+    {
+      "cargo": "Primera Vicepresidenta",
+      "organo": "Mesa Directiva de la Cámara de Diputados"
+    }
+  ],
+  "diputados:yataco torrealva": [
+    {
+      "cargo": "Tercer Vicepresidente",
+      "organo": "Mesa Directiva de la Cámara de Diputados"
+    }
+  ],
+  "EC:mancheno davila": [
+    {
+      "cargo": "Presidenta",
+      "organo": "Asamblea Nacional y Consejo de Administración Legislativa (CAL)"
+    }
+  ],
+  "EC:torres cobo": [
+    {
+      "cargo": "Primer Vicepresidente",
+      "organo": "Asamblea Nacional y CAL"
+    }
+  ],
+  "EC:tiupul urquizo": [
+    {
+      "cargo": "Segunda Vicepresidenta",
+      "organo": "Asamblea Nacional y CAL"
+    }
+  ],
+  "EC:fritschi naranjo": [
+    {
+      "cargo": "Primera Vocal",
+      "organo": "Consejo de Administración Legislativa (CAL)"
+    }
+  ],
+  "EC:celleri gomez": [
+    {
+      "cargo": "Segundo Vocal",
+      "organo": "Consejo de Administración Legislativa (CAL)"
+    }
+  ],
+  "EC:salazar hidalgo": [
+    {
+      "cargo": "Tercera Vocal",
+      "organo": "Consejo de Administración Legislativa (CAL)"
+    }
+  ],
+  "EC:pacheco machuca": [
+    {
+      "cargo": "Cuarta Vocal",
+      "organo": "Consejo de Administración Legislativa (CAL)"
+    }
+  ],
+  "EC:torres cadena": [
+    {
+      "cargo": "Presidente",
+      "organo": "Comisión de Justicia y Estructura del Estado"
+    }
+  ],
+  "EC:nantipia chumpi": [
+    {
+      "cargo": "Vicepresidente",
+      "organo": "Comisión de Justicia y Estructura del Estado"
+    }
+  ],
+  "EC:recalde alava": [
+    {
+      "cargo": "Presidente",
+      "organo": "Comisión del Derecho al Trabajo y a la Seguridad Social"
+    }
+  ],
+  "EC:jaramillo zurita paola": [
+    {
+      "cargo": "Vicepresidenta",
+      "organo": "Comisión del Derecho al Trabajo y a la Seguridad Social"
+    }
+  ],
+  "EC:farinango delgado": [
+    {
+      "cargo": "Presidente",
+      "organo": "Comisión del Régimen Económico y Tributario y su Regulación y Control"
+    }
+  ],
+  "EC:castro piedra": [
+    {
+      "cargo": "Vicepresidente",
+      "organo": "Comisión del Régimen Económico y Tributario y su Regulación y Control"
+    }
+  ],
+  "EC:centeno arteaga": [
+    {
+      "cargo": "Presidente",
+      "organo": "Comisión del Desarrollo Económico, Productivo y la Microempresa"
+    }
+  ],
+  "EC:franco hanze": [
+    {
+      "cargo": "Vicepresidente",
+      "organo": "Comisión del Desarrollo Económico, Productivo y la Microempresa"
+    }
+  ],
+  "EC:jaramillo zurita lucia": [
+    {
+      "cargo": "Presidente",
+      "organo": "Comisión de Relaciones Internacionales y Movilidad Humana"
+    }
+  ],
+  "EC:jarrin rivadeneira": [
+    {
+      "cargo": "Vicepresidente",
+      "organo": "Comisión de Relaciones Internacionales y Movilidad Humana"
+    }
+  ],
+  "EC:leon cueva": [
+    {
+      "cargo": "Presidente",
+      "organo": "Comisión de Biodiversidad y Recursos Naturales"
+    }
+  ],
+  "EC:jaramillo martinez": [
+    {
+      "cargo": "Vicepresidente",
+      "organo": "Comisión de Biodiversidad y Recursos Naturales"
+    }
+  ],
+  "EC:rizzo alvear": [
+    {
+      "cargo": "Presidente",
+      "organo": "Comisión de Soberanía Alimentaria y Desarrollo del Sector Agropecuario y Pesquero"
+    }
+  ],
+  "EC:gonzaga salazar": [
+    {
+      "cargo": "Vicepresidente",
+      "organo": "Comisión de Soberanía Alimentaria y Desarrollo del Sector Agropecuario y Pesquero"
+    }
+  ],
+  "EC:benavides fuentes": [
+    {
+      "cargo": "Presidente",
+      "organo": "Comisión de Gobiernos Autónomos, Descentralización, Competencias y Organización del Territorio"
+    }
+  ],
+  "EC:guillen rodriguez": [
+    {
+      "cargo": "Vicepresidenta",
+      "organo": "Comisión de Gobiernos Autónomos, Descentralización, Competencias y Organización del Territorio"
+    }
+  ],
+  "EC:baltazar yucailla": [
+    {
+      "cargo": "Presidente",
+      "organo": "Comisión de Educación, Cultura, Ciencia y Tecnología, Innovación y Saberes Ancestrales"
+    }
+  ],
+  "EC:polanco lara": [
+    {
+      "cargo": "Vicepresidente",
+      "organo": "Comisión de Educación, Cultura, Ciencia y Tecnología, Innovación y Saberes Ancestrales"
+    }
+  ],
+  "EC:guim alfago": [
+    {
+      "cargo": "Presidente",
+      "organo": "Comisión del Derecho a la Salud y Deporte"
+    }
+  ],
+  "EC:becerra contreras": [
+    {
+      "cargo": "Vicepresidente",
+      "organo": "Comisión del Derecho a la Salud y Deporte"
+    }
+  ],
+  "EC:jacome silva": [
+    {
+      "cargo": "Presidente",
+      "organo": "Comisión de Transparencia, Participación Ciudadana y Control Social"
+    }
+  ],
+  "EC:cerda tapuy": [
+    {
+      "cargo": "Vicepresidente",
+      "organo": "Comisión de Transparencia, Participación Ciudadana y Control Social"
+    }
+  ],
+  "EC:iniguez gallardo": [
+    {
+      "cargo": "Presidente",
+      "organo": "Comisión de Garantías Constitucionales, Derechos Humanos, Derechos Colectivos y la Interculturalidad"
+    }
+  ],
+  "EC:cedeno rivadeneira": [
+    {
+      "cargo": "Vicepresidente",
+      "organo": "Comisión de Garantías Constitucionales, Derechos Humanos, Derechos Colectivos y la Interculturalidad"
+    }
+  ],
+  "EC:alarcon bueno": [
+    {
+      "cargo": "Presidente",
+      "organo": "Comisión de Soberanía, Integración y Seguridad Integral"
+    }
+  ],
+  "EC:castillo maldonado": [
+    {
+      "cargo": "Vicepresidente",
+      "organo": "Comisión de Soberanía, Integración y Seguridad Integral"
+    }
+  ],
+  "EC:veloz ramirez": [
+    {
+      "cargo": "Presidente",
+      "organo": "Comisión de Protección Integral a Niñas, Niños y Adolescentes"
+    }
+  ],
+  "EC:chavez nunez": [
+    {
+      "cargo": "Vicepresidente",
+      "organo": "Comisión de Protección Integral a Niñas, Niños y Adolescentes"
+    }
+  ],
+  "EC:alvarez zambrano": [
+    {
+      "cargo": "Presidente",
+      "organo": "Comisión de Fiscalización y Control Político"
+    }
+  ],
+  "EC:villacreses herrera": [
+    {
+      "cargo": "Vicepresidenta",
+      "organo": "Comisión de Fiscalización y Control Político"
+    }
+  ],
+  "EC:lavayen tamayo": [
+    {
+      "cargo": "Presidente",
+      "organo": "Comité de Ética"
+    }
+  ],
+  "EC:mendoza ibarra": [
+    {
+      "cargo": "Vicepresidenta",
+      "organo": "Comité de Ética"
+    }
+  ]
 }
