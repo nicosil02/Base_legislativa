@@ -11436,5 +11436,172 @@
       }
     ],
     "url": "https://www.youtube.com/watch?v=31tE_dVi_ws"
+  },
+  "06OjnAJB7do": {
+    "fecha": "2026-11-21",
+    "organo": "Pleno del Congreso",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [],
+    "url": "https://www.youtube.com/watch?v=06OjnAJB7do"
+  },
+  "8Y0xOagvmlQ": {
+    "fecha": "2026-11-19",
+    "organo": "Comisión de Defensa Nacional",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Lures Alcorta",
+        "cargo": "legislador",
+        "sobre": "Inmigración e islamismo",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Cuestionó la entrada de inmigrantes islamistas.",
+        "proyecto": "",
+        "id": "senado:alcorta suero"
+      },
+      {
+        "orador": "Presidente de la Comisión",
+        "cargo": "legislador",
+        "sobre": "Sesión en la región Loreto",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Comentó la programación de la sesión en Loreto.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Lures Alcorta",
+        "cargo": "legislador",
+        "sobre": "Centro de flagrancia en Lima",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Denunció que la información sobre flagrancia era falsa.",
+        "proyecto": "",
+        "id": "senado:alcorta suero"
+      },
+      {
+        "orador": "Lures Alcorta",
+        "cargo": "legislador",
+        "sobre": "Inmigración ilegal en fronteras",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Denunció la existencia de bandas fronterizas.",
+        "proyecto": "",
+        "id": "senado:alcorta suero"
+      },
+      {
+        "orador": "Lures Alcorta",
+        "cargo": "legislador",
+        "sobre": "Gestión de riesgos ante desastres",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Cuestionó la gestión de riesgos en Indeci.",
+        "proyecto": "",
+        "id": "senado:alcorta suero"
+      },
+      {
+        "orador": "Lures Alcorta",
+        "cargo": "legislador",
+        "sobre": "Escuela de defensa civil",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso crear una escuela de defensa civil.",
+        "proyecto": "",
+        "id": "senado:alcorta suero"
+      },
+      {
+        "orador": "Delgado",
+        "cargo": "legislador",
+        "sobre": "Respuesta ante lluvias en Máncora",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Denunció la mala gestión en Máncora.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Delgado",
+        "cargo": "legislador",
+        "sobre": "Prevención contra el dengue",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Cuestionó la prevención contra el dengue.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Hugo Cahuana",
+        "cargo": "legislador",
+        "sobre": "Responsabilidad de gobernadores regionales",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso denunciar penalmente a gobernadores regionales.",
+        "proyecto": "",
+        "id": "senado:ccahuana aymachoque"
+      },
+      {
+        "orador": "Hugo Cahuana",
+        "cargo": "legislador",
+        "sobre": "Minería ilegal en La Pampa",
+        "postura": "en contra",
+        "tema": "Minería",
+        "dijo": "Rechazó la gestión estatal en La Pampa.",
+        "proyecto": "",
+        "id": "senado:ccahuana aymachoque"
+      },
+      {
+        "orador": "Agago",
+        "cargo": "legislador",
+        "sobre": "Inseguridad y delincuencia extranjera",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Pidió la deportación de delincuentes extranjeros.",
+        "proyecto": "",
+        "id": "senado:gago rodriguez"
+      },
+      {
+        "orador": "Andrés",
+        "cargo": "legislador",
+        "sobre": "Bonificación para ex dirigentes",
+        "postura": "pregunta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Preguntó sobre bonificaciones para ex dirigentes.",
+        "proyecto": "Proyecto de ley sobre bonificación económica",
+        "id": "senado:andres lujan"
+      },
+      {
+        "orador": "Miguel Garo",
+        "cargo": "legislador",
+        "sobre": "Combustible para patrulleros policiales",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Denunció la falta de combustible policial.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Omar Flores",
+        "cargo": "invitado",
+        "sobre": "Inteligencia artificial en defensa",
+        "postura": "comenta",
+        "tema": "Tecnología",
+        "dijo": "Comentó el uso de inteligencia artificial agéntica.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Raji",
+        "cargo": "invitado",
+        "sobre": "Riesgos de la inteligencia artificial en defensa",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso la creación de modelos de inteligencia artificial soberanos para el Estado.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=8Y0xOagvmlQ"
   }
 }
