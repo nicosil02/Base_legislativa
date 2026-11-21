@@ -1,3 +1,4 @@
 {
-  "falla:Quien habla (transcripciones por turnos)": "Quien habla (transcripciones por turnos): fallo 2 veces seguidas (https://github.com/nicosil02/Base_legislativa/actions/runs/44732923486)"
+  "sin_correr:Backfill automatico (sesiones perdidas)": "Backfill automatico (sesiones perdidas): no corre desde 20/11 15:31 (tocaba 20/11 19:20)",
+  "sin_correr:Quien habla (transcripciones por turnos)": "Quien habla (transcripciones por turnos): no corre desde 20/11 15:40 (tocaba 20/11 16:40)"
 }
