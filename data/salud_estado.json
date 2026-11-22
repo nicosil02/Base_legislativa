@@ -1,4 +1,6 @@
 {
-  "sin_correr:Quien habla (transcripciones por turnos)": "Quien habla (transcripciones por turnos): no corre desde 21/11 14:43 (tocaba 21/11 16:40)",
-  "falla:Quien habla (transcripciones por turnos)": "Quien habla (transcripciones por turnos): fallo 2 veces seguidas (https://github.com/nicosil02/Base_legislativa/actions/runs/44942458012)"
+  "sin_correr:Actualizar Ecuador (CSV + documentos)": "Actualizar Ecuador (CSV + documentos): no corre desde 21/11 19:56 (tocaba 21/11 22:00)",
+  "sin_correr:Re-entrenar clasificador ML (weekly)": "Re-entrenar clasificador ML (weekly): no corre desde 15/11 03:31 (tocaba 21/11 21:00)",
+  "sin_correr:Quien habla (transcripciones por turnos)": "Quien habla (transcripciones por turnos): no corre desde 21/11 20:31 (tocaba 21/11 22:40)",
+  "falla:Quien habla (transcripciones por turnos)": "Quien habla (transcripciones por turnos): fallo 3 veces seguidas (https://github.com/nicosil02/Base_legislativa/actions/runs/44971881938)"
 }
