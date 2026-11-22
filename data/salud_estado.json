@@ -1,5 +1,4 @@
 {
-  "sin_correr:Actualizar Ecuador (CSV + documentos)": "Actualizar Ecuador (CSV + documentos): no corre desde 21/11 05:48 (tocaba 21/11 12:00)",
-  "sin_correr:Quien habla (transcripciones por turnos)": "Quien habla (transcripciones por turnos): no corre desde 21/11 06:40 (tocaba 21/11 10:40)",
-  "sin_correr:Votaciones Pleno bicameral (OCR de escaneados)": "Votaciones Pleno bicameral (OCR de escaneados): no corre desde 20/11 15:38 (tocaba 21/11 07:30)"
+  "sin_correr:Quien habla (transcripciones por turnos)": "Quien habla (transcripciones por turnos): no corre desde 21/11 14:43 (tocaba 21/11 16:40)",
+  "falla:Quien habla (transcripciones por turnos)": "Quien habla (transcripciones por turnos): fallo 2 veces seguidas (https://github.com/nicosil02/Base_legislativa/actions/runs/44942458012)"
 }
