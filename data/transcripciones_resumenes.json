@@ -8114,17 +8114,32 @@
   },
   {
     "video_id": "U7hgJHLM9zM",
-    "resumen": "La octava sesión ordinaria de la Comisión de Medio Ambiente y Sostenibilidad abordó diversas denuncias sobre contaminación y deficiencias en la gestión de servicios básicos en varias regiones. Los diputados presentaron informes sobre minería en Ayacucho, acumulación de residuos en Sullana, saneamiento en Tacna y la situación ambiental en el Callao, solicitando la intervención de ministerios y organismos reguladores.",
+    "resumen": "La sesión abordó denuncias sobre la contaminación por aguas residuales en Carquín y la falta de infraestructura de saneamiento, así como preocupaciones por la actividad minera en Ayacucho. Asimismo, se debatió la proposición legislativa para la gestión de incendios forestales, la cual fue sometida a modificaciones tras rechazarse una moción de postergación.",
     "ideas_clave": [
-      "Aprobación de las actas de la octava sesión ordinaria del 9 de noviembre y de la primera sesión no ordinaria del 10 de noviembre.",
-      "Solicitud de informe al Ministerio de Energía y Minas, OFA, ANA y CEM sobre la planta de beneficios TAMBO Colorado en Ayacucho, que tiene una capacidad proyectada de 350 toneladas diarias.",
-      "Pedido de información a la Municipalidad de Sullana, OEFA y MINAM sobre la gestión de residuos sólidos en la carretera que conecta Bellavista con Sullana.",
-      "Solicitud de invitación a funcionarios de INPE, OEFA, ANA, la Dirección Regional de Salud de Tacna y la Municipalidad de Tarata para informar sobre la contaminación en un establecimiento penitenciario de Tacna.",
-      "Programación de una visita de inspección para el 24 de noviembre a las 9:00 horas en el Callao, que incluirá el embarcadero de Pachacútec, La Pampilla y el terminal APM.",
-      "Reporte sobre la falta de aprobación de 17 informes y planes de remediación por parte del Ministerio de Energía y Minas en la zona de La Pampilla."
+      "Proposición legislativa 683.2026.2031 sobre el fortalecimiento de la prevención y gestión integral de los incendios forestales.",
+      "Se rechazó la cuestión previa para postergar la votación del dictamen de incendios forestales con 7 votos a favor, 8 en contra y una abstención.",
+      "Al 13 de octubre de 2026, el COEN reportó 401 emergencias por incendios forestales y la pérdida de 8,600 hectáreas de cobertura natural.",
+      "El gerente general de la EPS Aguas del Norte informó sobre un proyecto de PETAR en Proinversión con un presupuesto de 539.5 millones de soles proyectado para los años 2028 o 2029.",
+      "Proyecto con CUI 254-5106 para alcantarillado y tratamiento de aguas residuales en Végatas, San Isidro y Primavera por un monto de 49 millones de soles.",
+      "La planta de beneficio de minerales TAMBO Colorado en Ayacucho tiene una capacidad de 350 toneladas diarias y utiliza lixiviación con cianuro."
     ],
-    "generated_at": "2026-11-23T14:21:53Z",
-    "duracion_seg": 798,
+    "generated_at": "2026-11-23T16:08:42Z",
+    "duracion_seg": 6223,
+    "agenda_cumplida": null
+  },
+  {
+    "video_id": "57dRFU-QLfs",
+    "resumen": "La presidenta de la Comisión de Energía y Minas, Jennifer Paredes Navarro, instaló la quinta audiencia pública descentralizada en Cajamarca para abordar la minería, la protección de recursos hídricos y la electrificación regional. Durante la sesión, representantes de Electro Oriente y Distriluz presentaron diversos proyectos de infraestructura y planes de inversión para mejorar la calidad del servicio eléctrico en la zona norte de la región.",
+    "ideas_clave": [
+      "Proyecto de la línea de transmisión de 60 kV Jaén-San Ignacio financiado por el Ministerio de Energía y Minas.",
+      "Proyecto de mejoramiento del enlace de subestación La Pelota-Nueva Jaén por 4 millones.",
+      "Proyecto de la línea de transmisión 60 kV Buyo-Chiricoaco con inversión de 64 millones para la elaboración de expediente técnico.",
+      "Proyecto de remodelación de 37 subestaciones en Jaén y 7 en Chachapoyas con inversión de 80 millones para el primer trimestre de 2027.",
+      "El diputado Raúl Camargo declaró que el precio del galón de petróleo en Perú es de 24 a 25 soles.",
+      "Distriluz presentó 16 proyectos por ejecutar con una inversión de 134 millones de soles."
+    ],
+    "generated_at": "2026-11-23T16:11:23Z",
+    "duracion_seg": 1873,
     "agenda_cumplida": null
   }
 ]
