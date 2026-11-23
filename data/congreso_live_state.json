@@ -284,7 +284,9 @@
   "U7hgJHLM9zM",
   "57dRFU-QLfs",
   "agG4AauBdMI",
-  "9veN9zbq7YY"
+  "9veN9zbq7YY",
+  "64sEuAlonj4",
+  "B_xScqQEOdA"
  ],
  "sesiones": [
   {
@@ -2537,6 +2539,22 @@
    "pais": "PE",
    "url": "https://www.youtube.com/watch?v=9veN9zbq7YY",
    "visto_at": "2026-11-23T16:15:09Z"
+  },
+  {
+   "id": "64sEuAlonj4",
+   "titulo": "🔴EN VIVO: Comisión de Constitución, Reglamento y Relaciones Exteriores l 23/11/2026",
+   "tipo": "Comision: Constitucion",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=64sEuAlonj4",
+   "visto_at": "2026-11-23T19:35:02Z"
+  },
+  {
+   "id": "B_xScqQEOdA",
+   "titulo": "🔴EN VIVO: Comisión de Justicia y Derechos Humanos  23/11/2026",
+   "tipo": "Comision: Justicia",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=B_xScqQEOdA",
+   "visto_at": "2026-11-23T19:35:02Z"
   }
  ],
  "avisado": {
