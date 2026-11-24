@@ -135,7 +135,7 @@ def _cuando(a: dict) -> str:
 def _alertas(datos: dict) -> list[dict]:
     """Todo junto y con la misma forma: normas y proyectos primero, son hechos oficiales."""
     out = [{"tipo": "norma", "titulo": n["titulo"], "url": n["url"], "pais": n["pais"], "fecha": None,
-            "porque": {}, "resumen": n["resumen"], "fuente": "Norma publicada", "otras": [], "id": None, "tema": None}
+            "porque": {}, "resumen": n["resumen"], "fuente": "Norma publicada", "otras": [], "id": n.get("id"), "tema": None}
            for n in datos["normas"]]
     out += [{"tipo": "pl", "titulo": f"Proyecto {p['numero']}: {p['titulo']}", "url": p["url"], "pais": p["pais"],
              "fecha": p["fecha"], "porque": {c: f"Pasó a {p['valor']}" for c in p["clientes"]},
@@ -179,7 +179,8 @@ def panel() -> dict | None:
         from cerebro.embeddings import ya_alertadas
         ya = ya_alertadas({a["id"] for lista in alertas.values() for a in lista if a["id"] is not None}, cerebro)
         for a in (a for lista in alertas.values() for a in lista):
-            a["ya"] = [c for c in ya.get(a["id"], {}) if c in a["porque"]]
+            # una norma no trae clientes de antemano: la marca cualquier alerta que la cuente
+            a["ya"] = [c for c in ya.get(a["id"], {}) if c in a["porque"] or a["tipo"] == "norma"]
             for c in a["ya"]:
                 a["porque"][c] = f"Ya alertada: {ya[a['id']][c]}"
     atraso =(datetime.now(timezone.utc)

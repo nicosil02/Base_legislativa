@@ -265,12 +265,12 @@ def normas_datos(pe: sqlite3.Connection, desde: str) -> list[dict]:
     from noticias.temas import es_normativa_de_interes
     out = []
     for r in pe.execute(
-            """SELECT n.titulo, n.resumen, n.url, n.tags, n.fecha_pub, f.pais FROM noticias n
+            """SELECT n.id, n.titulo, n.resumen, n.url, n.tags, n.fecha_pub, f.pais FROM noticias n
                JOIN noticias_fuentes f ON f.id = n.fuente_id
                WHERE n.first_seen_at >= ? AND (n.tags LIKE '%normativa%' OR n.tags LIKE '%normas%')""",
             (desde,)):
         if _fresca(r) and es_normativa_de_interes(r["tags"], r["resumen"]) and not _pdf_viejo(r["url"]):
-            out.append({"titulo": r["titulo"], "resumen": r["resumen"] or "", "url": _url(r["url"]), "pais": r["pais"]})
+            out.append({"id": r["id"], "titulo": r["titulo"], "resumen": r["resumen"] or "", "url": _url(r["url"]), "pais": r["pais"]})
     return out[:MAX["normas"]]
 
 
