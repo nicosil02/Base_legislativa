@@ -292,7 +292,8 @@
   "xekH1j-jZr0",
   "-ipwj6waDu0",
   "ZgrW0Z-P5BE",
-  "QUTN9eTbbIY"
+  "QUTN9eTbbIY",
+  "78eEpNBPWC8"
  ],
  "sesiones": [
   {
@@ -2609,6 +2610,14 @@
    "pais": "PE",
    "url": "https://www.youtube.com/watch?v=QUTN9eTbbIY",
    "visto_at": "2026-11-24T15:07:02Z"
+  },
+  {
+   "id": "78eEpNBPWC8",
+   "titulo": "Comisión de Infraestructura, Vivienda y Transportes l 24/11/2026",
+   "tipo": "Comision: Transportes",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=78eEpNBPWC8",
+   "visto_at": "2026-11-24T17:08:11Z"
   }
  ],
  "avisado": {
@@ -2745,8 +2754,7 @@
    "Digemid informa sobre las acciones de control, inspecciones de buenas prácticas de manufactura y la inmovilización de lotes de sueros tras reportes de fallas de calidad."
   ],
   "ZgrW0Z-P5BE": [
-   "La Comision de Constitucion del Senado discutio la participacion del Peru en la iniciativa Escudo de las Americas y los informes presentados por el Ministerio de Relaciones Exteriores.",
-   "La Comision de Constitucion del Senado aprobo por unanimidad citar al ministro de Relaciones Exteriores para el martes 1 de diciembre."
+   "La Comision de Constitucion del Senado discutio la participacion del Peru en la iniciativa Escudo de las Americas y los informes presentados por el Ministerio de Relaciones Exteriores."
   ]
  }
 }
