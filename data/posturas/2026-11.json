@@ -11603,5 +11603,622 @@
       }
     ],
     "url": "https://www.youtube.com/watch?v=8Y0xOagvmlQ"
+  },
+  "64sEuAlonj4": {
+    "fecha": "2026-11-23",
+    "organo": "Comisión de Constitución",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Leo Migue",
+        "cargo": "legislador",
+        "sobre": "Implementación de oficial de integridad partidaria",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso crear un oficial de integridad partidario.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Pérez",
+        "cargo": "legislador",
+        "sobre": "Independencia del oficial de integridad",
+        "postura": "pregunta",
+        "tema": "Política y control político",
+        "dijo": "Preguntó sobre las garantías del nuevo oficial.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Pacheco",
+        "cargo": "legislador",
+        "sobre": "Obligatoriedad de oficial de cumplimiento",
+        "postura": "pregunta",
+        "tema": "Política y control político",
+        "dijo": "Preguntó sobre la obligatoriedad en partidos privados.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Pacheco",
+        "cargo": "legislador",
+        "sobre": "Duplicidad de funciones con la ONPE",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció duplicidad de funciones con la ONPE.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Rocha",
+        "cargo": "legislador",
+        "sobre": "Independencia del oficial de cumplimiento",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Rechazó la propuesta por falta de independencia.",
+        "proyecto": "",
+        "id": "diputados:rocha gallegos"
+      },
+      {
+        "orador": "Piñán",
+        "cargo": "legislador",
+        "sobre": "Fortalecimiento de las organizaciones políticas",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Defendió la propuesta para fortalecer los partidos.",
+        "proyecto": "",
+        "id": "diputados:pinan mamani"
+      },
+      {
+        "orador": "Duarte",
+        "cargo": "legislador",
+        "sobre": "Derecho fundamental a la alimentación",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Propuso reformar la Constitución mediante el PL 00536.",
+        "proyecto": "PL 00536",
+        "id": "diputados:duarte"
+      },
+      {
+        "orador": "Chacón",
+        "cargo": "legislador",
+        "sobre": "Sobrerregulación del derecho a la alimentación",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Cuestionó el PL 00536 por su posible rigidez.",
+        "proyecto": "PL 00536",
+        "id": null
+      },
+      {
+        "orador": "Crecle",
+        "cargo": "legislador",
+        "sobre": "Reconocimiento constitucional del derecho alimentario",
+        "postura": "a favor",
+        "tema": "Salud",
+        "dijo": "Respaldó el PL 00536 sobre el derecho alimentario.",
+        "proyecto": "PL 00536",
+        "id": null
+      },
+      {
+        "orador": "Pérez",
+        "cargo": "legislador",
+        "sobre": "Soberanía y seguridad alimentaria",
+        "postura": "con observaciones",
+        "tema": "Salud",
+        "dijo": "Propuso incluir la soberanía alimentaria en el PL 00536.",
+        "proyecto": "PL 00536",
+        "id": null
+      },
+      {
+        "orador": "García",
+        "cargo": "legislador",
+        "sobre": "Responsabilidad estatal en alimentación",
+        "postura": "a favor",
+        "tema": "Salud",
+        "dijo": "Defendió el PL 00536 para obligar al Estado.",
+        "proyecto": "PL 00536",
+        "id": null
+      },
+      {
+        "orador": "Ben Sur",
+        "cargo": "legislador",
+        "sobre": "Inversión privada frente a reformas",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Rechazó el PL 00536 sugiriendo inversión privada.",
+        "proyecto": "PL 00536",
+        "id": null
+      },
+      {
+        "orador": "Ben Sur",
+        "cargo": "legislador",
+        "sobre": "El derecho a la alimentación",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Defendió el reconocimiento del derecho a la alimentación.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Bercillo",
+        "cargo": "legislador",
+        "sobre": "El derecho a la alimentación",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Respaldó la inclusión del derecho alimentario en la Constitución.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Víctor",
+        "cargo": "legislador",
+        "sobre": "Gestión de programas de alimentación",
+        "postura": "con observaciones",
+        "tema": "Salud",
+        "dijo": "Cuestionó la gestión de recursos por parte de ONGs.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Rocha",
+        "cargo": "legislador",
+        "sobre": "El derecho a la alimentación",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Explicó el respaldo de tratados internacionales al derecho alimentario.",
+        "proyecto": "",
+        "id": "diputados:rocha gallegos"
+      },
+      {
+        "orador": "Wytron",
+        "cargo": "legislador",
+        "sobre": "El derecho a la alimentación",
+        "postura": "con observaciones",
+        "tema": "Otros",
+        "dijo": "Advirtió sobre posibles riesgos de activismo judicial.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Figuero",
+        "cargo": "legislador",
+        "sobre": "Cambio constitucional para alimentación",
+        "postura": "con observaciones",
+        "tema": "Otros",
+        "dijo": "Sugerió fortalecer los programas sociales existentes sin cambios constitucionales.",
+        "proyecto": "",
+        "id": "diputados:segura figueroa"
+      },
+      {
+        "orador": "Arte",
+        "cargo": "legislador",
+        "sobre": "Derecho a la alimentación",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Propuso profundizar el debate sobre el derecho a la alimentación.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Leo de Paz",
+        "cargo": "legislador",
+        "sobre": "Atención a enfermedades terminales",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Sustentó la reforma para pacientes oncológicos y catastróficos.",
+        "proyecto": "PL 00506-2026",
+        "id": "diputados:de paz lancho"
+      },
+      {
+        "orador": "Rocha",
+        "cargo": "legislador",
+        "sobre": "Enfermedades catastróficas",
+        "postura": "a favor",
+        "tema": "Salud",
+        "dijo": "Apoyó la prioridad para el cáncer y enfermedades catastróficas.",
+        "proyecto": "",
+        "id": "diputados:rocha gallegos"
+      },
+      {
+        "orador": "Víctor",
+        "cargo": "legislador",
+        "sobre": "Categorización de enfermedades",
+        "postura": "con observaciones",
+        "tema": "Salud",
+        "dijo": "Preguntó sobre la posible creación de subcategorías constitucionales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "García",
+        "cargo": "legislador",
+        "sobre": "Implementación del derecho a la salud",
+        "postura": "con observaciones",
+        "tema": "Salud",
+        "dijo": "Denunció la falta de medicamentos y especialistas en el sistema.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "De Paz",
+        "cargo": "legislador",
+        "sobre": "Reforma para enfermedades terminales",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Aclaró la naturaleza de las enfermedades incluidas en la propuesta.",
+        "proyecto": "",
+        "id": "diputados:de paz lancho"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=64sEuAlonj4"
+  },
+  "pHkI8vW1yIs": {
+    "fecha": "2026-11-23",
+    "organo": "Comisión de Defensa del Consumidor",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Ana María Lila Lobón Palta",
+        "cargo": "invitado",
+        "sobre": "Adhesión de Perú a la OCDE",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Explicó los beneficios y desafíos de la adhesión a la OCDE.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Mancha",
+        "cargo": "legislador",
+        "sobre": "Calidad regulatoria e informalidad laboral",
+        "postura": "pregunta",
+        "tema": "Informalidad",
+        "dijo": "Consultó sobre la calidad regulatoria y la informalidad laboral.",
+        "proyecto": "",
+        "id": "senado:mancha pineda"
+      },
+      {
+        "orador": "Noriega",
+        "cargo": "legislador",
+        "sobre": "Compromisos y coordinación ante la OCDE",
+        "postura": "pregunta",
+        "tema": "Otros",
+        "dijo": "Preguntó sobre los compromisos y la coordinación interinstitucional.",
+        "proyecto": "",
+        "id": "senado:noriega reategui"
+      },
+      {
+        "orador": "Secretaria Técnica",
+        "cargo": "invitado",
+        "sobre": "Análisis de impacto regulatorio",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Informó sobre el avance del análisis de impacto regulatorio.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Secretaria Técnica",
+        "cargo": "invitado",
+        "sobre": "Duración del proceso de adhesión",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Explicó los tiempos y la naturaleza técnica del proceso.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Yauri",
+        "cargo": "legislador",
+        "sobre": "Desafíos de la adhesión y mercado laboral",
+        "postura": "pregunta",
+        "tema": "Trabajo",
+        "dijo": "Consultó sobre los retos institucionales y el mercado laboral.",
+        "proyecto": "",
+        "id": "senado:yauri tunque"
+      },
+      {
+        "orador": "Arista",
+        "cargo": "legislador",
+        "sobre": "Reformas para la adhesión a la OCDE",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Comentó sobre la complejidad de las reformas necesarias.",
+        "proyecto": "",
+        "id": "senado:arista arbildo"
+      },
+      {
+        "orador": "Rumbacha",
+        "cargo": "legislador",
+        "sobre": "Corrupción y crecimiento económico",
+        "postura": "pregunta",
+        "tema": "Otros",
+        "dijo": "Preguntó sobre las propuestas para combatir la corrupción.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ana María Lila Lobón Palta",
+        "cargo": "invitado",
+        "sobre": "Modelos de integridad en el Estado",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Respondió sobre los modelos de integridad en el Estado.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ana María Lila Lobón Palta",
+        "cargo": "invitado",
+        "sobre": "Estándares y política ambiental",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Comentó sobre los retos en materia de política ambiental.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Jaime Delgado",
+        "cargo": "legislador",
+        "sobre": "Protección al consumidor y competencia",
+        "postura": "en contra",
+        "tema": "Consumo masivo",
+        "dijo": "Criticó la debilidad de Indecopi en protección al consumidor.",
+        "proyecto": "",
+        "id": "senado:delgado zegarra"
+      },
+      {
+        "orador": "Camila",
+        "cargo": "legislador",
+        "sobre": "Allanamiento en la SBS",
+        "postura": "comenta",
+        "tema": "Banca",
+        "dijo": "Mencionó un allanamiento en la Superintendencia de Banca y Seguros.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Camila",
+        "cargo": "legislador",
+        "sobre": "investigación de empresas de seguridad",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso invitar a la SBS e Indecopi para investigar.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Rodrich Ackerman",
+        "cargo": "legislador",
+        "sobre": "investigación de la SBS y la competencia",
+        "postura": "propone",
+        "tema": "Banca",
+        "dijo": "Propuso invitar a los representantes de la SBS e Indecopi.",
+        "proyecto": "",
+        "id": "senado:rodrich ackerman"
+      },
+      {
+        "orador": "Rodrich Ackerman",
+        "cargo": "legislador",
+        "sobre": "debilidad de las funciones de Indecopi",
+        "postura": "en contra",
+        "tema": "Banca",
+        "dijo": "Cuestionó la falta de fuerza de Indecopi en el mercado.",
+        "proyecto": "",
+        "id": "senado:rodrich ackerman"
+      },
+      {
+        "orador": "Paulo de la Portaleza",
+        "cargo": "legislador",
+        "sobre": "competencia en el transporte de caudales",
+        "postura": "propone",
+        "tema": "Banca",
+        "dijo": "Sugirió fomentar la competencia para bajar las tasas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Yamashiro",
+        "cargo": "legislador",
+        "sobre": "presupuesto para el fenómeno del Niño",
+        "postura": "propone",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Pidió que el ministro de Economía explique la situación presupuestal.",
+        "proyecto": "",
+        "id": "senado:yamashiro ore"
+      },
+      {
+        "orador": "Figalo",
+        "cargo": "legislador",
+        "sobre": "incentivos para libros y educación",
+        "postura": "comenta",
+        "tema": "Educación",
+        "dijo": "Defendió la importancia de incentivar la lectura en el país.",
+        "proyecto": "",
+        "id": "senado:figallo rivadeneyra"
+      },
+      {
+        "orador": "Larista",
+        "cargo": "legislador",
+        "sobre": "impuestos a los intereses de ahorros",
+        "postura": "comenta",
+        "tema": "Banca",
+        "dijo": "Explicó la necesidad de un sistema tributario homologado.",
+        "proyecto": "",
+        "id": "senado:arista arbildo"
+      },
+      {
+        "orador": "Rodrich Ackerman",
+        "cargo": "legislador",
+        "sobre": "exoneración en seguros de vida",
+        "postura": "propone",
+        "tema": "Seguros",
+        "dijo": "Propuso que la discusión sobre seguros se deje aparte.",
+        "proyecto": "",
+        "id": "senado:rodrich ackerman"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=pHkI8vW1yIs"
+  },
+  "1najhfC3Ygs": {
+    "fecha": "2026-11-23",
+    "organo": "Comisión de Inclusión Social",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Yufra Lugo",
+        "cargo": "legislador",
+        "sobre": "violencia contra la mujer",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Informó sobre el aumento de la violencia contra la mujer.",
+        "proyecto": "",
+        "id": "diputados:yuffra lugo"
+      },
+      {
+        "orador": "Hanco",
+        "cargo": "legislador",
+        "sobre": "cancelación de la festividad de la Candelaria",
+        "postura": "en contra",
+        "tema": "Otros",
+        "dijo": "Denunció la cancelación de la festividad de la Candelaria en Puno.",
+        "proyecto": "",
+        "id": "diputados:hancco hancco"
+      },
+      {
+        "orador": "Benítez",
+        "cargo": "legislador",
+        "sobre": "barreras para personas con discapacidad",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Informó sobre reuniones para abordar barreras de personas con discapacidad.",
+        "proyecto": "",
+        "id": "diputados:benitez barrionuevo"
+      },
+      {
+        "orador": "Marlene Arminta",
+        "cargo": "legislador",
+        "sobre": "atención para adultos mayores",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Denunció la insuficiencia de centros para la atención de adultos mayores.",
+        "proyecto": "",
+        "id": "diputados:arminta valencia"
+      },
+      {
+        "orador": "Janes Edgardo Rodríguez López",
+        "cargo": "invitado",
+        "sobre": "control de recursos para la discapacidad",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Informó sobre las acciones de control de la Contraloría.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "María Ramos Rosales",
+        "cargo": "legislador",
+        "sobre": "atención domiciliaria para personas con discapacidad",
+        "postura": "a favor",
+        "tema": "Salud",
+        "dijo": "Defendió la modificación de la Ley 29973.",
+        "proyecto": "PL 00201",
+        "id": "diputados:ramos rosales"
+      },
+      {
+        "orador": "Mintak",
+        "cargo": "legislador",
+        "sobre": "atención domiciliaria para personas con discapacidad",
+        "postura": "a favor",
+        "tema": "Salud",
+        "dijo": "Respaldó el proyecto de atención domiciliaria.",
+        "proyecto": "PL 00201",
+        "id": null
+      },
+      {
+        "orador": "Penosa",
+        "cargo": "legislador",
+        "sobre": "atención domiciliaria para personas con discapacidad",
+        "postura": "con observaciones",
+        "tema": "Salud",
+        "dijo": "Pidió informes ministeriales sobre la propuesta legislativa.",
+        "proyecto": "PL 00201",
+        "id": null
+      },
+      {
+        "orador": "Espinosa",
+        "cargo": "legislador",
+        "sobre": "base de datos de cumplimiento",
+        "postura": "pregunta",
+        "tema": "Otros",
+        "dijo": "Preguntó por la existencia de una base de datos de cumplimiento.",
+        "proyecto": "",
+        "id": "diputados:espinoza huillca"
+      },
+      {
+        "orador": "Poma",
+        "cargo": "legislador",
+        "sobre": "incumplimiento de gasto para la discapacidad",
+        "postura": "pregunta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Preguntó sobre sanciones por incumplir la ley de discapacidad.",
+        "proyecto": "",
+        "id": "diputados:poma huamani"
+      },
+      {
+        "orador": "Yufra",
+        "cargo": "legislador",
+        "sobre": "subsanación de observaciones de contraloría",
+        "postura": "pregunta",
+        "tema": "Otros",
+        "dijo": "Preguntó sobre la subsanación de las observaciones de la Contraloría.",
+        "proyecto": "",
+        "id": "diputados:yuffra lugo"
+      },
+      {
+        "orador": "Janco",
+        "cargo": "legislador",
+        "sobre": "asignación presupuestaria regional",
+        "postura": "pregunta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Preguntó sobre la asignación de presupuesto en gobiernos regionales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Janes Edgardo Rodríguez López",
+        "cargo": "ministro o autoridad",
+        "sobre": "Subsanación de observaciones normativas",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Explicó que la Contraloría evalúa si las observaciones no son subsanadas por las entidades.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Janco",
+        "cargo": "legislador",
+        "sobre": "Asignación de presupuesto regional",
+        "postura": "pregunta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Preguntó qué gobiernos regionales cumplen con la asignación del 0.5% del presupuesto inicial.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Martínez",
+        "cargo": "legislador",
+        "sobre": "Atención domiciliaria para personas con discapacidad",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Pidió someter a votación la ley de atención domiciliaria para personas con discapacidad.",
+        "proyecto": "Ley de atención domiciliaria",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=1najhfC3Ygs"
   }
 }
