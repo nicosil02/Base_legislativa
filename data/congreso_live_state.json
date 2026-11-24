@@ -298,7 +298,8 @@
   "rbv1rp75xCo",
   "hCTZ0g2Nxpg",
   "ZMr3CZw7pV4",
-  "7WvVaADE8OE"
+  "7WvVaADE8OE",
+  "WEwFqIm43GE"
  ],
  "sesiones": [
   {
@@ -2663,6 +2664,14 @@
    "pais": "PE",
    "url": "https://www.youtube.com/watch?v=7WvVaADE8OE",
    "visto_at": "2026-11-24T20:26:13Z"
+  },
+  {
+   "id": "WEwFqIm43GE",
+   "titulo": "🔴EN VIVO: Comisión de Ética Parlamentaria  24/11/2026",
+   "tipo": "Comision: Etica Parlamentaria",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=WEwFqIm43GE",
+   "visto_at": "2026-11-24T21:33:35Z"
   }
  ],
  "avisado": {
@@ -2800,7 +2809,9 @@
   ],
   "ZMr3CZw7pV4": [
    "El presidente ejecutivo del INIA, Cristian Alfredo Barrantes, expuso las funciones de la entidad en **investigación, desarrollo de variedades mejoradas, genética animal y conservación de recursos genéticos**.",
-   "El INIA informó la publicación del **primer mapa nacional de fertilidades de suelos**."
+   "El INIA informó la publicación del **primer mapa nacional de fertilidades de suelos**.",
+   "El INIA distribuirá la **papa biofortificada** con mayor biodisponibilidad de hierro a semilleristas en 2027 y estará disponible en 2028",
+   "El **proyecto PRET** con financiamiento del Banco Interamericano de Desarrollo capacitará a 6200 extensionistas en Cajamarca, Lambayeque, Junín, San Martín, Puno y Cusco"
   ]
  }
 }
