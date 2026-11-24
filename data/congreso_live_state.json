@@ -290,7 +290,9 @@
   "pHkI8vW1yIs",
   "1najhfC3Ygs",
   "xekH1j-jZr0",
-  "-ipwj6waDu0"
+  "-ipwj6waDu0",
+  "ZgrW0Z-P5BE",
+  "QUTN9eTbbIY"
  ],
  "sesiones": [
   {
@@ -2591,6 +2593,22 @@
    "pais": "PE",
    "url": "https://www.youtube.com/watch?v=-ipwj6waDu0",
    "visto_at": "2026-11-24T14:21:09Z"
+  },
+  {
+   "id": "ZgrW0Z-P5BE",
+   "titulo": "🔴EN VIVO: Comisión de Constitución y Reglamento y Relaciones Exteriores del Senado | 24/11/2026",
+   "tipo": "Comision: Constitucion",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=ZgrW0Z-P5BE",
+   "visto_at": "2026-11-24T15:06:01Z"
+  },
+  {
+   "id": "QUTN9eTbbIY",
+   "titulo": "🔴EN VIVO: Comisión de Defensa Nacional y Orden Interno de la Cámara de Diputados | 24/11/2026",
+   "tipo": "Comision: Defensa Nacional",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=QUTN9eTbbIY",
+   "visto_at": "2026-11-24T15:07:02Z"
   }
  ],
  "avisado": {
