@@ -294,7 +294,10 @@
   "ZgrW0Z-P5BE",
   "QUTN9eTbbIY",
   "78eEpNBPWC8",
-  "dpkY5a52I6c"
+  "dpkY5a52I6c",
+  "rbv1rp75xCo",
+  "hCTZ0g2Nxpg",
+  "ZMr3CZw7pV4"
  ],
  "sesiones": [
   {
@@ -2627,6 +2630,30 @@
    "pais": "PE",
    "url": "https://www.youtube.com/watch?v=dpkY5a52I6c",
    "visto_at": "2026-11-24T17:18:15Z"
+  },
+  {
+   "id": "rbv1rp75xCo",
+   "titulo": "🔴EN VIVO: Comisión de Desarrollo Agrario  24/11/2026",
+   "tipo": "Comision: Agrario",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=rbv1rp75xCo",
+   "visto_at": "2026-11-24T20:09:57Z"
+  },
+  {
+   "id": "hCTZ0g2Nxpg",
+   "titulo": "🔴EN VIVO: Comisión de Justicia y Derechos Humanos  24/11/2026",
+   "tipo": "Comision: Justicia",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=hCTZ0g2Nxpg",
+   "visto_at": "2026-11-24T20:09:57Z"
+  },
+  {
+   "id": "ZMr3CZw7pV4",
+   "titulo": "🔴EN VIVO: Comisión de Ciencia, Innovación, Tecnología y Sociedad Digital  24/11/2026",
+   "tipo": "Comision: Ciencia",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=ZMr3CZw7pV4",
+   "visto_at": "2026-11-24T20:13:45Z"
   }
  ],
  "avisado": {
