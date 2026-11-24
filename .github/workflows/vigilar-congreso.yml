@@ -62,6 +62,12 @@ jobs:
           a=$(atraso_min posturas.yml)
           echo "posturas (resumenes + posturas): ultima corrida hace $a min"
           [ "$a" -ge 90 ] && gh workflow run posturas.yml && echo "disparada posturas"
+          # cerebro espera el workflow_run de refrescar-pe, pero las corridas que
+          # dispara este pulso (GITHUB_TOKEN) no generan workflow_run: sin esto
+          # solo corria tras los cron nativos y la bandeja no veia alertas nuevas.
+          a=$(atraso_min cerebro.yml)
+          echo "cerebro: ultima corrida hace $a min"
+          [ "$a" -ge 55 ] && gh workflow run cerebro.yml && echo "disparada cerebro"
           true
 
   vigilar:
