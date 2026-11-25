@@ -8114,18 +8114,17 @@
   },
   {
     "video_id": "U7hgJHLM9zM",
-    "resumen": "La sesión abordó la gestión de incendios forestales, la contaminación por aguas residuales en la caleta de Carquín y denuncias sobre la actividad minera en Ayacucho. Los diputados, la presidenta de la OEFA y funcionarios de la EPS debatieron sobre la falta de instrumentos de gestión ambiental y la necesidad de proyectos de saneamiento. Finalmente, la comisión aprobó por mayoría la propuesta legislativa 683.2026.2031 sobre la prevención de incendios forestales.",
+    "resumen": "La sesión abordó la gestión de incendios forestales y la contaminación por aguas residuales en la Caleta de Carquín, contando con la participación de funcionarios de OEFA, el INPE y la EPS Aguas del Norte. Se aprobó por mayoría la proposición legislativa 68326 2031/CD sobre incendios forestales y se declaró un cuarto intermedio para la redacción final del dictamen.",
     "ideas_clave": [
-      "Proposición legislativa 683.2026.2031, de autoría no especificada, sobre la ley que fortalece la prevención y gestión integral de los incendios forestales.",
-      "Votación de la proposición legislativa 683.2026.2031, aprobada por mayoría con cuatro votos en contra y una abstención.",
-      "La votación de la cuestión previa para postergar la votación del proyecto de incendios forestales fue rechazada con 7 votos a favor y 8 votos en contra.",
-      "La presidenta de la OEFA informó que el penal San Judas Tadeo no cuenta con un Instrumento de Gestión Ambiental (IGA).",
-      "El gerente general de la EPS Aguas del Norte informó sobre un proyecto de PETAR en Proinversión con un presupuesto de 539.5 millones de soles.",
-      "Se mencionó el proyecto de alcantarillado y tratamiento de aguas residuales con CUI 254-5106 por un monto de 49 millones de soles.",
-      "El representante de la EPS informó que el caudal promedio de descarga al río Guauora es de 240 litros por segundo."
+      "Proposición legislativa 68326 2031/CD para la gestión de incendios forestales, aprobada con 12 votos a favor, 4 en contra y 1 abstención.",
+      "El informe de INDECI al 19 de octubre de 2026 reportó 12 fallecidos y 832 personas afectadas por quemaduras a causa de incendios forestales.",
+      "El proyecto de planta de tratamiento (PETAR) de la EPS Aguas del Norte tiene un costo de 579.55 millones de soles para una población de 342,000 habitantes.",
+      "El caudal de descarga de aguas residuales en el río Huaura es de 340 litros por segundo en promedio.",
+      "El penal San Judas Tadeo no contará con un Instrumento de Gestión Ambiental (IGA) hasta octubre de 2027.",
+      "La empresa Tambo Colorado opera en Ayacucho una planta de beneficio de minerales con capacidad de 350 toneladas diarias."
     ],
-    "generated_at": "2026-11-23T19:35:23Z",
-    "duracion_seg": 7279,
+    "generated_at": "2026-11-25T06:01:58Z",
+    "duracion_seg": 8480,
     "agenda_cumplida": null
   },
   {
@@ -8303,6 +8302,35 @@
     ],
     "generated_at": "2026-11-25T04:35:52Z",
     "duracion_seg": 2543,
+    "agenda_cumplida": null
+  },
+  {
+    "video_id": "hCTZ0g2Nxpg",
+    "resumen": "La Comisión de Justicia y Derechos Humanos sesionó para debatir sobre la gestión registral de la Sunarp y diversas reformas al Código Penal. Durante la sesión se aprobaron por unanimidad tres proyectos de ley relacionados con procesos de alimentos, delitos de extorsión y falsificación de placas de rodaje.",
+    "ideas_clave": [
+      "Proposición legislativa 188-2026-2031-CD, que busca regular la ejecución de obligaciones alimentarias en actas de conciliación, aprobada por unanimidad con 17 votos a favor.",
+      "Proposición legislativa 28-2026-2031-CD, que propone sancionar la producción o posesión de material destinado a la extorsión con penas de cinco a ocho años, aprobada por unanimidad con 16 votos a favor.",
+      "Proposición legislativa 170-2026-2031-CD, que busca sancionar la falsificación y uso fraudulento de la Placa Única Nacional de Rodaje, aprobada por unanimidad con 15 votos a favor.",
+      "El superintendente nacional de registros públicos informó que se trabaja en el saneamiento de las primeras 30 mil escuelas en un periodo de seis meses mediante mesas técnicas.",
+      "Las proposiciones legislativas 480, 679 y 25-2026-ADP-JP/CD se tramitarán bajo el procedimiento de urgencias con un plazo de hasta 15 días hábiles."
+    ],
+    "generated_at": "2026-11-25T06:10:11Z",
+    "duracion_seg": 6832,
+    "agenda_cumplida": null
+  },
+  {
+    "video_id": "7WvVaADE8OE",
+    "resumen": "La sesión abordó la fiscalización de deficiencias en obras hospitalarias y la crisis sanitaria en Madre de Dios, además de la exposición de la viceministra de Interculturalidad sobre el desarrollo de la provincia de Purús. Se decidió aprobar la invitación al Ministro de Salud para comparecer ante la comisión y se programó una segunda mesa técnica para el 3 de diciembre.",
+    "ideas_clave": [
+      "Votación: Se aprobó con 10 votos a favor y un voto en contra la invitación al Ministro de Salud para comparecer ante la comisión.",
+      "Ley 31-98-2: sobre la fiscalización contra la construcción ilegal de embarcaciones.",
+      "Proyecto 1749: sobre la implementación de la Ley de Protección de las 5 MIGAS.",
+      "Cifra: La viceministra de Interculturalidad informó que, según el censo de 2025, el 83.8% de la población de la provincia de Purús se identifica como indígena.",
+      "Fecha: La Agenda Territorial para el Desarrollo Integral de la provincia de Purús 2026-2030 fue aprobada el 13 de noviembre.",
+      "Cifra: Se prevén 15 vuelos para la provincia de Purús durante el año 2026."
+    ],
+    "generated_at": "2026-11-25T06:15:16Z",
+    "duracion_seg": 4894,
     "agenda_cumplida": null
   }
 ]
