@@ -14895,5 +14895,782 @@
       }
     ],
     "url": "https://www.youtube.com/watch?v=LWXE0J_rB7E"
+  },
+  "U7hgJHLM9zM": {
+    "fecha": "2026-11-24",
+    "organo": "Comisión de Medio Ambiente",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Silupú",
+        "cargo": "legislador",
+        "sobre": "Gestión de residuos en Suyana",
+        "postura": "en contra",
+        "tema": "Ambiente",
+        "dijo": "Denunció la acumulación de residuos en la provincia de Suyana.",
+        "proyecto": "",
+        "id": "diputados:silupu inga"
+      },
+      {
+        "orador": "Yalta",
+        "cargo": "legislador",
+        "sobre": "Contaminación en el penal de Chayapalca",
+        "postura": "propone",
+        "tema": "Ambiente",
+        "dijo": "Pidió citar a autoridades por la contaminación en Chayapalca.",
+        "proyecto": "",
+        "id": "diputados:yalta sotelo"
+      },
+      {
+        "orador": "Yalta",
+        "cargo": "legislador",
+        "sobre": "Situación ambiental en Callao y Tumbes",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Comentó la falta de agua en la región de Tumbes.",
+        "proyecto": "",
+        "id": "diputados:yalta sotelo"
+      },
+      {
+        "orador": "Cabrera",
+        "cargo": "legislador",
+        "sobre": "Ley de prevención de incendios forestales",
+        "postura": "con observaciones",
+        "tema": "Ambiente",
+        "dijo": "Cuestionó la falta de brigadas y presupuesto en el PL 683.",
+        "proyecto": "PL 683",
+        "id": "diputados:cabrera nieto"
+      },
+      {
+        "orador": "Guara",
+        "cargo": "legislador",
+        "sobre": "Opiniones técnicas para la ley forestal",
+        "postura": "con observaciones",
+        "tema": "Ambiente",
+        "dijo": "Pidió opiniones técnicas de las entidades sobre el PL 683.",
+        "proyecto": "PL 683",
+        "id": null
+      },
+      {
+        "orador": "Gá",
+        "cargo": "legislador",
+        "sobre": "Postergación del debate forestal",
+        "postura": "propone",
+        "tema": "Ambiente",
+        "dijo": "Propuso postergar el debate de la propuesta PL 683.",
+        "proyecto": "PL 683",
+        "id": null
+      },
+      {
+        "orador": "Guevara",
+        "cargo": "legislador",
+        "sobre": "Información técnica para la decisión",
+        "postura": "en contra",
+        "tema": "Ambiente",
+        "dijo": "Denunció la falta de información técnica en el PL 683.",
+        "proyecto": "PL 683",
+        "id": "diputados:guevara ramirez"
+      },
+      {
+        "orador": "Yaque",
+        "cargo": "legislador",
+        "sobre": "Cambios técnicos en la ley forestal",
+        "postura": "con observaciones",
+        "tema": "Ambiente",
+        "dijo": "Propuso cambios técnicos en la propuesta PL 683.",
+        "proyecto": "PL 683",
+        "id": null
+      },
+      {
+        "orador": "Andrade",
+        "cargo": "legislador",
+        "sobre": "Prevención de incendios forestales",
+        "postura": "a favor",
+        "tema": "Ambiente",
+        "dijo": "Respaldó la propuesta de prevención de incendios PL 683.",
+        "proyecto": "PL 683",
+        "id": "diputados:andrade salguero de alvarez"
+      },
+      {
+        "orador": "Poma",
+        "cargo": "legislador",
+        "sobre": "Votación de la cuestión previa",
+        "postura": "propone",
+        "tema": "Ambiente",
+        "dijo": "Propuso postergar la votación de la propuesta PL 683.",
+        "proyecto": "PL 683",
+        "id": "diputados:poma huamani"
+      },
+      {
+        "orador": "Jesús Pérez",
+        "cargo": "legislador",
+        "sobre": "Financiamiento de la ley forestal",
+        "postura": "pregunta",
+        "tema": "Ambiente",
+        "dijo": "Preguntó sobre el financiamiento de la propuesta PL 683.",
+        "proyecto": "PL 683",
+        "id": "diputados:perez alccahuaman"
+      },
+      {
+        "orador": "Quesada",
+        "cargo": "legislador",
+        "sobre": "Prioridad del debate forestal",
+        "postura": "a favor",
+        "tema": "Ambiente",
+        "dijo": "Pidió que avance el debate de la propuesta PL 683.",
+        "proyecto": "PL 683",
+        "id": "diputados:quezada castro"
+      },
+      {
+        "orador": "Derú",
+        "cargo": "legislador",
+        "sobre": "Incendios forestales y sequías",
+        "postura": "a favor",
+        "tema": "Ambiente",
+        "dijo": "Respaldó la propuesta ante el riesgo de incendios.",
+        "proyecto": "PL 683",
+        "id": null
+      },
+      {
+        "orador": "Alegría",
+        "cargo": "legislador",
+        "sobre": "Gestión de los incendios forestales",
+        "postura": "a favor",
+        "tema": "Ambiente",
+        "dijo": "Defendió la necesidad de mando en la propuesta PL 683.",
+        "proyecto": "PL 683",
+        "id": "diputados:alegria garcia"
+      },
+      {
+        "orador": "Amanece",
+        "cargo": "legislador",
+        "sobre": "el proyecto de incendios forestales",
+        "postura": "a favor",
+        "tema": "Ambiente",
+        "dijo": "Respaldó el proyecto de incendios forestales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Colchado",
+        "cargo": "legislador",
+        "sobre": "la cobertura vegetal en incendios",
+        "postura": "propone",
+        "tema": "Ambiente",
+        "dijo": "Propuso precisar la cobertura vegetal previa.",
+        "proyecto": "",
+        "id": "diputados:colchado huamani"
+      },
+      {
+        "orador": "Yaltam",
+        "cargo": "legislador",
+        "sobre": "un informe anual de incendios",
+        "postura": "propone",
+        "tema": "Ambiente",
+        "dijo": "Propuso incluir un informe anual sobre incendios.",
+        "proyecto": "",
+        "id": "diputados:yalta sotelo"
+      },
+      {
+        "orador": "Guevara",
+        "cargo": "legislador",
+        "sobre": "la falta de opiniones técnicas",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó la falta de informes técnicos previos.",
+        "proyecto": "",
+        "id": "diputados:guevara ramirez"
+      },
+      {
+        "orador": "Avendaño",
+        "cargo": "legislador",
+        "sobre": "la iniciativa de incendios forestales",
+        "postura": "en contra",
+        "tema": "Ambiente",
+        "dijo": "Rechazó la aprobación de la iniciativa legislativa.",
+        "proyecto": "",
+        "id": "diputados:avendano vilca"
+      },
+      {
+        "orador": "Andrade",
+        "cargo": "legislador",
+        "sobre": "la contaminación en Caleta de Carquín",
+        "postura": "propone",
+        "tema": "Ambiente",
+        "dijo": "Denunció la contaminación en la Caleta de Carquín.",
+        "proyecto": "",
+        "id": "diputados:andrade salguero de alvarez"
+      },
+      {
+        "orador": "Hugo Carlos Bedón Vega",
+        "cargo": "invitado",
+        "sobre": "la contaminación en Caleta de Carquín",
+        "postura": "propone",
+        "tema": "Saneamiento",
+        "dijo": "Pidió la construcción de una planta de tratamiento.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Joana Fishro",
+        "cargo": "invitado",
+        "sobre": "la supervisión en el penal",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Informó sobre la supervisión en el penal.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "César Ballón",
+        "cargo": "invitado",
+        "sobre": "el tratamiento de aguas residuales",
+        "postura": "comenta",
+        "tema": "Saneamiento",
+        "dijo": "Informó sobre el tratamiento de aguas residuales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Presidente",
+        "cargo": "legislador",
+        "sobre": "la falta de soluciones alternativas",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó la falta de soluciones alternativas presentadas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Abram Lescano",
+        "cargo": "invitado",
+        "sobre": "el sistema del establecimiento penal",
+        "postura": "comenta",
+        "tema": "Saneamiento",
+        "dijo": "Informó sobre el sistema del establecimiento penal.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Abraham Lescano",
+        "cargo": "ministro o autoridad",
+        "sobre": "Sistema de aguas del penal de Huacho",
+        "postura": "comenta",
+        "tema": "Saneamiento",
+        "dijo": "Explicó la situación del sistema de aguas residuales del penal.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Cabrero",
+        "cargo": "legislador",
+        "sobre": "Fiscalización ambiental del penal",
+        "postura": "pregunta",
+        "tema": "Ambiente",
+        "dijo": "Preguntó sobre las obligaciones ambientales y planes de contingencia.",
+        "proyecto": "",
+        "id": "diputados:cabrera nieto"
+      },
+      {
+        "orador": "Andrade",
+        "cargo": "legislador",
+        "sobre": "Contaminación de la EPS Aguas de Lima Norte",
+        "postura": "en contra",
+        "tema": "Saneamiento",
+        "dijo": "Cuestionó la responsabilidad de la EPS en la contaminación.",
+        "proyecto": "CUIN 2545106",
+        "id": "diputados:andrade salguero de alvarez"
+      },
+      {
+        "orador": "Bendaño",
+        "cargo": "legislador",
+        "sobre": "Gestión de aguas residuales de la EPS",
+        "postura": "en contra",
+        "tema": "Saneamiento",
+        "dijo": "Denunció la falta de planes de tratamiento de aguas residuales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Pérez",
+        "cargo": "legislador",
+        "sobre": "Responsabilidad del Ministerio de Vivienda",
+        "postura": "propone",
+        "tema": "Saneamiento",
+        "dijo": "Propuso citar al Ministerio de Vivienda para que brinde explicaciones.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Poma",
+        "cargo": "legislador",
+        "sobre": "Contaminación en la caleta de Chinquín",
+        "postura": "en contra",
+        "tema": "Ambiente",
+        "dijo": "Denunció la contaminación por aguas servidas en la caleta.",
+        "proyecto": "",
+        "id": "diputados:poma huamani"
+      },
+      {
+        "orador": "De Alta",
+        "cargo": "legislador",
+        "sobre": "Supervisión de la calidad del agua",
+        "postura": "pregunta",
+        "tema": "Ambiente",
+        "dijo": "Preguntó por los programas de supervisión de OEFA.",
+        "proyecto": "",
+        "id": "diputados:yalta sotelo"
+      },
+      {
+        "orador": "Cabrera",
+        "cargo": "legislador",
+        "sobre": "Sistema de bombeo del penal",
+        "postura": "pregunta",
+        "tema": "Saneamiento",
+        "dijo": "Cuestionó la capacidad del sistema de bombeo del penal.",
+        "proyecto": "",
+        "id": "diputados:cabrera nieto"
+      },
+      {
+        "orador": "Andrade",
+        "cargo": "legislador",
+        "sobre": "Gestión de la contaminación en Chinquín",
+        "postura": "propone",
+        "tema": "Ambiente",
+        "dijo": "Solicitó informes a la ANA y Sanipes sobre la contaminación.",
+        "proyecto": "",
+        "id": "diputados:andrade salguero de alvarez"
+      },
+      {
+        "orador": "Billo",
+        "cargo": "legislador",
+        "sobre": "Hacinamiento y traslado del penal",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso el traslado del penal y crear una comisión permanente.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Bedón",
+        "cargo": "ministro o autoridad",
+        "sobre": "Contaminación minera en el río Hura",
+        "postura": "en contra",
+        "tema": "Ambiente",
+        "dijo": "Denunció la contaminación causada por las mineras en el río.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Joana Fitcher",
+        "cargo": "ministro o autoridad",
+        "sobre": "Supervisión ambiental de las cuencas",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Informó sobre las supervisiones y los acuerdos con el INPE.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Bailón",
+        "cargo": "ministro o autoridad",
+        "sobre": "Proyecto de Proinversión para la caleta",
+        "postura": "comenta",
+        "tema": "Saneamiento",
+        "dijo": "Explicó la ejecución de proyectos para descontaminar la caleta.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Abraham Lescano",
+        "cargo": "ministro o autoridad",
+        "sobre": "Funcionamiento del sistema del penal",
+        "postura": "comenta",
+        "tema": "Saneamiento",
+        "dijo": "Aclaró el funcionamiento de la red y el bombeo del penal.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=U7hgJHLM9zM"
+  },
+  "agG4AauBdMI": {
+    "fecha": "2026-11-23",
+    "organo": "Comisión de Educación",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Coordinadora del Grupo de Trabajo",
+        "cargo": "legislador",
+        "sobre": "evento sobre violencia escolar",
+        "postura": "comenta",
+        "tema": "Educación",
+        "dijo": "Propuso la participación en un evento sobre violencia escolar.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Senador Delgado",
+        "cargo": "legislador",
+        "sobre": "presupuesto de la universidad de música",
+        "postura": "en contra",
+        "tema": "Educación",
+        "dijo": "Cuestionó el presupuesto de la Universidad Nacional de Música.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Senador Chipana",
+        "cargo": "legislador",
+        "sobre": "presupuesto para hospitales en Puno",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Denunció la falta de presupuesto para hospitales en Puno.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Senador Fialo",
+        "cargo": "legislador",
+        "sobre": "situación de las escuelas de arte",
+        "postura": "en contra",
+        "tema": "Educación",
+        "dijo": "Cuestionó la infraestructura de las escuelas de arte.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Autoridad",
+        "cargo": "ministro o autoridad",
+        "sobre": "gestión de la festividad de la Candelaria",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Denunció la falta de trámites de la federación.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Senadora María de los Milagros Jáuregui Martínez de Aguayo",
+        "cargo": "legislador",
+        "sobre": "sustitución del enfoque de género",
+        "postura": "en contra",
+        "tema": "Otros",
+        "dijo": "Rechazó la sustitución del enfoque de género.",
+        "proyecto": "",
+        "id": "senado:jauregui martinez de aguayo"
+      },
+      {
+        "orador": "Senador Verano",
+        "cargo": "legislador",
+        "sobre": "diversidad de modelos de familia",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Defendió la diversidad de los modelos de familia.",
+        "proyecto": "",
+        "id": "senado:verano saravia"
+      },
+      {
+        "orador": "Senadora María de los Milagros Jáuregui Martínez de Aguayo",
+        "cargo": "legislador",
+        "sobre": "vigencia del enfoque de género",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Defendió la aplicación legal del enfoque de género.",
+        "proyecto": "",
+        "id": "senado:jauregui martinez de aguayo"
+      },
+      {
+        "orador": "Senador Dario Machiro",
+        "cargo": "legislador",
+        "sobre": "corrección del plan de trabajo",
+        "postura": "con observaciones",
+        "tema": "Otros",
+        "dijo": "Pidió corregir el plan de trabajo.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Absalom Vázquez",
+        "cargo": "legislador",
+        "sobre": "Incorporar el enfoque de familia al Plan de Trabajo",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Defendió la incorporación del enfoque de familia en el Plan de Trabajo.",
+        "proyecto": "",
+        "id": "senado:vasquez villanueva"
+      },
+      {
+        "orador": "Norriega",
+        "cargo": "legislador",
+        "sobre": "Incorporar el enfoque de familia al Plan de Trabajo",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Defendió la importancia de la familia como base de la sociedad.",
+        "proyecto": "",
+        "id": "senado:noriega reategui"
+      },
+      {
+        "orador": "Flores Ruiz",
+        "cargo": "legislador",
+        "sobre": "Incorporar el enfoque de familia al Plan de Trabajo",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Respaldó la propuesta de incluir el enfoque de familia en el Plan de Trabajo.",
+        "proyecto": "",
+        "id": "senado:flores ruiz"
+      },
+      {
+        "orador": "Ticona Coaila",
+        "cargo": "legislador",
+        "sobre": "Incorporar el enfoque de familia al Plan de Trabajo",
+        "postura": "en contra",
+        "tema": "Otros",
+        "dijo": "Consideró irrelevante añadir el enfoque de familia al Plan de Trabajo.",
+        "proyecto": "",
+        "id": "senado:ticona cohaila"
+      },
+      {
+        "orador": "Tapia Bernal",
+        "cargo": "legislador",
+        "sobre": "Derogación de la Ley 32645",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Respaldó la derogación de la ley que crea el Colegio de Artistas.",
+        "proyecto": "PL 18",
+        "id": "senado:tapia bernal"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=agG4AauBdMI"
+  },
+  "9veN9zbq7YY": {
+    "fecha": "2026-11-23",
+    "organo": "Comisión de Defensa del Consumidor",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Yalta",
+        "cargo": "legislador",
+        "sobre": "Deficiencias de servicios de saneamiento",
+        "postura": "propone",
+        "tema": "Saneamiento",
+        "dijo": "Pidió información a SUNASS sobre la calidad del agua.",
+        "proyecto": "",
+        "id": "diputados:yalta sotelo"
+      },
+      {
+        "orador": "Columbus",
+        "cargo": "legislador",
+        "sobre": "Ley de inocuidad de alimentos",
+        "postura": "a favor",
+        "tema": "Salud",
+        "dijo": "Respaldó el proyecto para fortalecer la vigilancia sanitaria.",
+        "proyecto": "PL 11-2026-2031",
+        "id": "diputados:columbus murata"
+      },
+      {
+        "orador": "Guillén",
+        "cargo": "legislador",
+        "sobre": "Fortalecimiento del control de inocuidad",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Propuso un texto sustitutorio para otorgar rectoría a Senasa.",
+        "proyecto": "PL 11-2026-2031",
+        "id": "diputados:guillen valencia"
+      },
+      {
+        "orador": "Beladise",
+        "cargo": "legislador",
+        "sobre": "Inclusión de la Compiál en alertas",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Pidió la incorporación de la Compiál en las alertas.",
+        "proyecto": "PL 11-2026-2031",
+        "id": null
+      },
+      {
+        "orador": "Barbara",
+        "cargo": "legislador",
+        "sobre": "Libre ingreso de agua en espectáculos",
+        "postura": "con observaciones",
+        "tema": "Consumo masivo",
+        "dijo": "Propuso la instalación de bebederos en los espectáculos públicos.",
+        "proyecto": "PL 116-2026-2031",
+        "id": "diputados:barbaran reyes"
+      },
+      {
+        "orador": "Adalo",
+        "cargo": "legislador",
+        "sobre": "Libre ingreso de agua en espectáculos",
+        "postura": "en contra",
+        "tema": "Consumo masivo",
+        "dijo": "Cuestionó la operatividad y fiscalización del proyecto.",
+        "proyecto": "PL 116-2026-2031",
+        "id": null
+      },
+      {
+        "orador": "Columbus",
+        "cargo": "legislador",
+        "sobre": "Libre ingreso de agua en espectáculos",
+        "postura": "a favor",
+        "tema": "Consumo masivo",
+        "dijo": "Defendió la importancia de la hidratación en eventos masivos.",
+        "proyecto": "PL 116-2026-2031",
+        "id": "diputados:columbus murata"
+      },
+      {
+        "orador": "Menezes",
+        "cargo": "legislador",
+        "sobre": "Libre ingreso de agua en espectáculos",
+        "postura": "a favor",
+        "tema": "Consumo masivo",
+        "dijo": "Respaldó la iniciativa para proteger al consumidor.",
+        "proyecto": "PL 116-2026-2031",
+        "id": "diputados:meneses crispin"
+      },
+      {
+        "orador": "Secretaría Técnica",
+        "cargo": "ministro o autoridad",
+        "sobre": "Dictamen sobre ingreso de agua",
+        "postura": "comenta",
+        "tema": "Consumo masivo",
+        "dijo": "Leyó el texto sobre el ingreso de agua en espectáculos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Barbarán",
+        "cargo": "legislador",
+        "sobre": "Ajustes al dictamen de agua",
+        "postura": "propone",
+        "tema": "Consumo masivo",
+        "dijo": "Solicitó una cuestión previa para mejorar el texto del proyecto.",
+        "proyecto": "",
+        "id": "diputados:barbaran reyes"
+      },
+      {
+        "orador": "Secretaría Técnica",
+        "cargo": "ministro o autoridad",
+        "sobre": "Ley de protección contra la diabetes",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Sustentó la modificación de la ley para prevenir la diabetes.",
+        "proyecto": "PL 279-2026-2031",
+        "id": null
+      },
+      {
+        "orador": "Columbus",
+        "cargo": "legislador",
+        "sobre": "Calidad del agua para diabéticos",
+        "postura": "con observaciones",
+        "tema": "Salud",
+        "dijo": "Sugirió especificar que el agua sea tratada o filtrada.",
+        "proyecto": "PL 279-2026-2031",
+        "id": "diputados:columbus murata"
+      },
+      {
+        "orador": "Aldo",
+        "cargo": "legislador",
+        "sobre": "Agua gratuita en locales de comida",
+        "postura": "a favor",
+        "tema": "Salud",
+        "dijo": "Felicitó la iniciativa de ofrecer agua gratuita a los consumidores.",
+        "proyecto": "PL 279-2026-2031",
+        "id": null
+      },
+      {
+        "orador": "Secretaría Técnica",
+        "cargo": "ministro o autoridad",
+        "sobre": "Transparencia de precios en farmacias",
+        "postura": "comenta",
+        "tema": "Farma",
+        "dijo": "Sustentó la comparabilidad de precios en establecimientos de salud.",
+        "proyecto": "PL 184-0-2026-2031",
+        "id": null
+      },
+      {
+        "orador": "Barbarán",
+        "cargo": "legislador",
+        "sobre": "Precios de medicamentos en clínicas",
+        "postura": "a favor",
+        "tema": "Farma",
+        "dijo": "Defendió la transparencia para evitar abusos en precios farmacéuticos.",
+        "proyecto": "PL 184-0-2026-2031",
+        "id": "diputados:barbaran reyes"
+      },
+      {
+        "orador": "Secretaría Técnica",
+        "cargo": "ministro o autoridad",
+        "sobre": "Ajustes técnicos al dictamen",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Explicó que los cambios en el texto fueron de forma.",
+        "proyecto": "PL 184-0-2026-2031",
+        "id": null
+      },
+      {
+        "orador": "Carros y Alta",
+        "cargo": "legislador",
+        "sobre": "Alcance de la ley de farmacias",
+        "postura": "con observaciones",
+        "tema": "Farma",
+        "dijo": "Pidió que la norma cubra también a pacientes hospitalizados.",
+        "proyecto": "PL 184-0-2026-2031",
+        "id": "diputados:yalta sotelo"
+      },
+      {
+        "orador": "Columbus",
+        "cargo": "legislador",
+        "sobre": "Sinceramiento de precios farmacéuticos",
+        "postura": "con observaciones",
+        "tema": "Farma",
+        "dijo": "Propuso usar la mediana de precios para evitar inflaciones.",
+        "proyecto": "PL 184-0-2026-2031",
+        "id": "diputados:columbus murata"
+      },
+      {
+        "orador": "Dital Columbus",
+        "cargo": "legislador",
+        "sobre": "Sinceramiento de precios de medicamentos",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Propuso usar los precios de la Digemid como referencia.",
+        "proyecto": "",
+        "id": "diputados:columbus murata"
+      },
+      {
+        "orador": "Aldo",
+        "cargo": "legislador",
+        "sobre": "Proyecto de regulación de medicamentos",
+        "postura": "a favor",
+        "tema": "Salud",
+        "dijo": "Respaldó la postura de su colega contra el mercantilismo.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Nora",
+        "cargo": "legislador",
+        "sobre": "Cobertura de medicina homeopática",
+        "postura": "comenta",
+        "tema": "Salud",
+        "dijo": "Informó que las clínicas no cubren medicinas homeopáticas.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Barbara",
+        "cargo": "legislador",
+        "sobre": "Abuso de precios en clínicas",
+        "postura": "a favor",
+        "tema": "Salud",
+        "dijo": "Defendió la regulación para evitar abusos en los precios.",
+        "proyecto": "",
+        "id": "diputados:barbaran reyes"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=9veN9zbq7YY"
   }
 }
