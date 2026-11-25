@@ -13861,5 +13861,422 @@
       }
     ],
     "url": "https://www.youtube.com/watch?v=ZgrW0Z-P5BE"
+  },
+  "QUTN9eTbbIY": {
+    "fecha": "2026-11-24",
+    "organo": "Comisión de Defensa Nacional",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "González Polar Edgar",
+        "cargo": "legislador",
+        "sobre": "Visita a la Escuela de la PNP",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Informó sobre las deficiencias de infraestructura en la escuela de La Joya.",
+        "proyecto": "",
+        "id": "diputados:gonzales polar"
+      },
+      {
+        "orador": "María Ramón",
+        "cargo": "legislador",
+        "sobre": "Gestión del riesgo de desastres",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Cuestionó la falta de presupuesto para la capacitación de funcionarios.",
+        "proyecto": "PL 00169-2031-CD",
+        "id": "diputados:ramos rosales"
+      },
+      {
+        "orador": "César Augusto Asturios Alcedo",
+        "cargo": "ministro o autoridad",
+        "sobre": "Fallecimiento de Ronald Coaquira",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Relató los hechos ocurridos en la comisaría de Sicuani.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=QUTN9eTbbIY"
+  },
+  "78eEpNBPWC8": {
+    "fecha": "2026-11-24",
+    "organo": "Comisión de Transportes",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Liliana Milagros Takayama Jiménez",
+        "cargo": "legislador",
+        "sobre": "Colapso de puente en su región",
+        "postura": "comenta",
+        "tema": "Infraestructura",
+        "dijo": "Informó sobre el colapso de un puente que dejó aisladas a trece comunidades.",
+        "proyecto": "",
+        "id": "diputados:takayama jimenez"
+      },
+      {
+        "orador": "James Oguin",
+        "cargo": "legislador",
+        "sobre": "Bloqueo de carretera en Madre de Dios",
+        "postura": "comenta",
+        "tema": "Transporte",
+        "dijo": "Informó sobre un bloqueo en la carretera interoceánica por falta de hospitales.",
+        "proyecto": "",
+        "id": "diputados:holguin aguirre"
+      },
+      {
+        "orador": "Muedas",
+        "cargo": "legislador",
+        "sobre": "Daños por sismo en Junín",
+        "postura": "comenta",
+        "tema": "Infraestructura",
+        "dijo": "Reportó daños en vías y viviendas tras un sismo en la provincia de Junín.",
+        "proyecto": "",
+        "id": "diputados:muedas balbiese"
+      },
+      {
+        "orador": "Oliver Peña",
+        "cargo": "legislador",
+        "sobre": "Construcción de carreteras en Amazonas",
+        "postura": "comenta",
+        "tema": "Transporte",
+        "dijo": "Informó sobre la preocupación de comunidades fronterizas por la construcción de carreteras.",
+        "proyecto": "",
+        "id": "diputados:pena cordova"
+      },
+      {
+        "orador": "Presidente",
+        "cargo": "legislador",
+        "sobre": "Proyecto Vía Expresa Santa Rosa",
+        "postura": "comenta",
+        "tema": "Transporte",
+        "dijo": "Informó sobre las dudas técnicas y riesgos de la Vía Expresa Santa Rosa.",
+        "proyecto": "Vía Expresa Santa Rosa",
+        "id": null
+      },
+      {
+        "orador": "Presidente",
+        "cargo": "legislador",
+        "sobre": "Diseño de la Vía Expresa Santa Rosa",
+        "postura": "en contra",
+        "tema": "Transporte",
+        "dijo": "Criticó que el proyecto favorece el transporte privado sobre la movilidad sostenible.",
+        "proyecto": "Vía Expresa Santa Rosa",
+        "id": null
+      },
+      {
+        "orador": "Buñezvinosa",
+        "cargo": "legislador",
+        "sobre": "Derivación de la propuesta 423-2026",
+        "postura": "propone",
+        "tema": "Transporte",
+        "dijo": "Solicitó derivar el proyecto sobre competencias municipales a esta comisión.",
+        "proyecto": "PL 423-2026",
+        "id": null
+      },
+      {
+        "orador": "Raúl Camargo Porta",
+        "cargo": "legislador",
+        "sobre": "Sustentación de proyecto de conductores",
+        "postura": "propone",
+        "tema": "Transporte",
+        "dijo": "Pidió programar la sustentación de su proyecto sobre rehabilitación de conductores.",
+        "proyecto": "PL 00566-2026-2031-CD",
+        "id": "diputados:camargo porta"
+      },
+      {
+        "orador": "Muedas",
+        "cargo": "legislador",
+        "sobre": "Sesión descentralizada en Junín",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Propuso realizar una sesión descentralizada en las regiones de Junín o Pasco.",
+        "proyecto": "",
+        "id": "diputados:muedas balbiese"
+      },
+      {
+        "orador": "Norma Yarr",
+        "cargo": "legislador",
+        "sobre": "Corrupción en Vía Expresa Santa Rosa",
+        "postura": "en contra",
+        "tema": "Transporte",
+        "dijo": "Denunció presuntos actos de corrupción en el proyecto de la vía expresa.",
+        "proyecto": "Vía Expresa Santa Rosa",
+        "id": "diputados:yarrow lumbreras"
+      },
+      {
+        "orador": "Gilmer Trujillo",
+        "cargo": "legislador",
+        "sobre": "Problemas en el litoral de Trujillo",
+        "postura": "propone",
+        "tema": "Infraestructura",
+        "dijo": "Solicitó realizar una visita de inspección al borde costero de Trujillo.",
+        "proyecto": "",
+        "id": "diputados:trujillo zegarra"
+      },
+      {
+        "orador": "Presidente",
+        "cargo": "legislador",
+        "sobre": "Inhibición de la propuesta 00721-2026",
+        "postura": "comenta",
+        "tema": "Trabajo",
+        "dijo": "Planteó la inhibición de la comisión por ser materia laboral.",
+        "proyecto": "PL 00721-2026-2031",
+        "id": null
+      },
+      {
+        "orador": "Andarro",
+        "cargo": "legislador",
+        "sobre": "Asistencia de autoridades al Congreso",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó la falta de asistencia de ministros a la sesión.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Jaqueline Incarvajal",
+        "cargo": "invitado",
+        "sobre": "Redirección de fondos de CEDAPAL",
+        "postura": "comenta",
+        "tema": "Saneamiento",
+        "dijo": "Explicó la necesidad de redireccionar fondos hacia proyectos de inversión.",
+        "proyecto": "PL 390-2026-2031",
+        "id": null
+      },
+      {
+        "orador": "César Bedón",
+        "cargo": "invitado",
+        "sobre": "Proyectos de infraestructura hidráulica",
+        "postura": "comenta",
+        "tema": "Saneamiento",
+        "dijo": "Detalló los proyectos necesarios para ampliar la cobertura de agua potable.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Camargo",
+        "cargo": "legislador",
+        "sobre": "Amnistía tributaria para SEDAPAL",
+        "postura": "propone",
+        "tema": "Tributos",
+        "dijo": "Propuso evaluar una amnistía tributaria para SEDAPAL.",
+        "proyecto": "",
+        "id": "diputados:camargo porta"
+      },
+      {
+        "orador": "Cesar Muedas Valviese",
+        "cargo": "legislador",
+        "sobre": "Gestión vial descentralizada",
+        "postura": "propone",
+        "tema": "Transporte",
+        "dijo": "Propuso fortalecer la gestión vial descentralizada.",
+        "proyecto": "PL 015-2026-2031",
+        "id": "diputados:muedas balbiese"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=78eEpNBPWC8"
+  },
+  "dpkY5a52I6c": {
+    "fecha": "2026-11-24",
+    "organo": "Comisión de Producción",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Mary Eliana Infantes Castañeda",
+        "cargo": "legislador",
+        "sobre": "Apoyo para productores de café, cacao y arroz",
+        "postura": "propone",
+        "tema": "Agricultura",
+        "dijo": "Pidió apoyo técnico y capacitaciones para los productores de café, cacao y arroz.",
+        "proyecto": "",
+        "id": "diputados:infantes castaneda"
+      },
+      {
+        "orador": "Secretario Técnico",
+        "cargo": "ministro o autoridad",
+        "sobre": "Síntesis del predictamen sobre productos hidrobiológicos",
+        "postura": "comenta",
+        "tema": "Pesca",
+        "dijo": "Explicó los fundamentos y la fórmula legal del proyecto de ley.",
+        "proyecto": "PL 213",
+        "id": null
+      },
+      {
+        "orador": "Diego Alonso Fernando Bazán Calderón",
+        "cargo": "legislador",
+        "sobre": "Consumo de productos hidrobiológicos nacionales",
+        "postura": "a favor",
+        "tema": "Pesca",
+        "dijo": "Defendió la compra mínima de productos hidrobiológicos a pescadores artesanales.",
+        "proyecto": "PL 213",
+        "id": "diputados:bazan calderon"
+      },
+      {
+        "orador": "Tapuyima Isapillo",
+        "cargo": "legislador",
+        "sobre": "Corrección de referencia legal en el dictamen",
+        "postura": "con observaciones",
+        "tema": "Pesca",
+        "dijo": "Solicitó corregir una referencia normativa en el texto sustitutorio.",
+        "proyecto": "PL 213",
+        "id": "diputados:tapullima insapillo"
+      },
+      {
+        "orador": "Medina Stein",
+        "cargo": "legislador",
+        "sobre": "Fomento del consumo de productos hidrobiológicos",
+        "postura": "a favor",
+        "tema": "Pesca",
+        "dijo": "Respaldó la ley para fortalecer la seguridad alimentaria nacional.",
+        "proyecto": "PL 213",
+        "id": "diputados:medina stein"
+      },
+      {
+        "orador": "De Paz Lancho",
+        "cargo": "legislador",
+        "sobre": "Apoyo a los pescadores artesanales",
+        "postura": "a favor",
+        "tema": "Pesca",
+        "dijo": "Resaltó los beneficios de la ley para los pescadores.",
+        "proyecto": "PL 213",
+        "id": "diputados:de paz lancho"
+      },
+      {
+        "orador": "Guillén Valencia Héctor",
+        "cargo": "legislador",
+        "sobre": "Observaciones al proyecto de productos hidrobiológicos",
+        "postura": "en contra",
+        "tema": "Pesca",
+        "dijo": "Cuestionó la viabilidad y los vacíos técnicos del proyecto presentado.",
+        "proyecto": "PL 213",
+        "id": "diputados:guillen valencia"
+      },
+      {
+        "orador": "Lavado Valdivia Marino",
+        "cargo": "legislador",
+        "sobre": "Beneficios para los pescadores artesanales",
+        "postura": "a favor",
+        "tema": "Pesca",
+        "dijo": "Respaldó la iniciativa para facilitar el acceso de pescadores al Estado.",
+        "proyecto": "PL 213",
+        "id": "diputados:lavado valdivia"
+      },
+      {
+        "orador": "Vidaurre Floridas César",
+        "cargo": "legislador",
+        "sobre": "Dinamización del sector pesquero",
+        "postura": "a favor",
+        "tema": "Pesca",
+        "dijo": "Felicitó el proyecto para dinamizar la economía del sector.",
+        "proyecto": "PL 213",
+        "id": "diputados:vidaurre floridas"
+      },
+      {
+        "orador": "Huitrón Martínez",
+        "cargo": "legislador",
+        "sobre": "Inclusión de la acuicultura andina y amazónica",
+        "postura": "con observaciones",
+        "tema": "Pesca",
+        "dijo": "Propuso incluir a los productores de acuicultura de la sierra y selva.",
+        "proyecto": "PL 213",
+        "id": "diputados:buitron martinez"
+      },
+      {
+        "orador": "Ceballos Aponte Jorge Arturo",
+        "cargo": "legislador",
+        "sobre": "Incentivo a la pesquería artesanal",
+        "postura": "a favor",
+        "tema": "Pesca",
+        "dijo": "Felicitó la iniciativa para brindar nuevas oportunidades a pescadores.",
+        "proyecto": "PL 213",
+        "id": "diputados:zeballos aponte"
+      },
+      {
+        "orador": "Diego Alonso Fernando Bazán Calderón",
+        "cargo": "legislador",
+        "sobre": "Ampliación de productos en el proyecto",
+        "postura": "comenta",
+        "tema": "Pesca",
+        "dijo": "Explicó que la reglamentación permitirá incluir otros productos.",
+        "proyecto": "PL 213",
+        "id": "diputados:bazan calderon"
+      },
+      {
+        "orador": "Soto Ferrari Luz",
+        "cargo": "legislador",
+        "sobre": "Extensión de la iniciativa a otras áreas",
+        "postura": "con observaciones",
+        "tema": "Pesca",
+        "dijo": "Pidió que la propuesta abarque otras áreas productivas.",
+        "proyecto": "PL 213",
+        "id": "diputados:soto ferrari"
+      },
+      {
+        "orador": "Fernández de la Torre Hilda",
+        "cargo": "legislador",
+        "sobre": "Informes anuales de ventas por región",
+        "postura": "propone",
+        "tema": "Pesca",
+        "dijo": "Sugirió incluir cifras de ventas por región en informes anuales.",
+        "proyecto": "PL 213",
+        "id": "diputados:fernandez de la torre"
+      },
+      {
+        "orador": "Diego Alonso Fernando Bazán Calderón",
+        "cargo": "legislador",
+        "sobre": "Formalización de parques industriales",
+        "postura": "a favor",
+        "tema": "Mype",
+        "dijo": "Sustentó la necesidad de saneamiento físico legal para parques industriales.",
+        "proyecto": "PL 128",
+        "id": "diputados:bazan calderon"
+      },
+      {
+        "orador": "Edwin Espinosa Wilka",
+        "cargo": "legislador",
+        "sobre": "Alcance y costos de parques industriales",
+        "postura": "pregunta",
+        "tema": "Mype",
+        "dijo": "Preguntó sobre la cantidad de predios y su valor comercial.",
+        "proyecto": "PL 128",
+        "id": null
+      },
+      {
+        "orador": "Valki Calderón de Metro",
+        "cargo": "legislador",
+        "sobre": "Inclusión de pescadores en la formalización",
+        "postura": "pregunta",
+        "tema": "Pesca",
+        "dijo": "Consultó si los pescadores artesanales están incluidos en la propuesta.",
+        "proyecto": "PL 128",
+        "id": "diputados:valqui calderon"
+      },
+      {
+        "orador": "Diego Alonso Fernando Bazán Calderón",
+        "cargo": "legislador",
+        "sobre": "Requisitos para pescadores en parques industriales",
+        "postura": "comenta",
+        "tema": "Mype",
+        "dijo": "Explicó los requisitos de permanencia para acceder al beneficio.",
+        "proyecto": "PL 128",
+        "id": "diputados:bazan calderon"
+      },
+      {
+        "orador": "Medina Stein",
+        "cargo": "legislador",
+        "sobre": "Impulso a la industria nacional",
+        "postura": "a favor",
+        "tema": "Mype",
+        "dijo": "Resaltó la importancia de fortalecer la industria nacional.",
+        "proyecto": "PL 128",
+        "id": "diputados:medina stein"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=dpkY5a52I6c"
   }
 }
