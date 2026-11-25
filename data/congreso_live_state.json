@@ -1,6 +1,5 @@
 {
  "alertados": [
-  "Q3wJxoDbbiA",
   "FrFSBATdaV4",
   "8qHNLFw3JUw",
   "HCzqFEPumnI",
@@ -299,16 +298,10 @@
   "jvIgByZctvg",
   "fzmH5T1uMu4",
   "tZJuRfhvVxk",
-  "aMfQSb_N7F8"
+  "aMfQSb_N7F8",
+  "LWXE0J_rB7E"
  ],
  "sesiones": [
-  {
-   "id": "Q3wJxoDbbiA",
-   "titulo": "🔴EN VIVO: Comisión Bicameral de Presupuesto y Cuenta General de la República | 15/09/2026",
-   "tipo": "Comision: Presupuesto",
-   "url": "https://www.youtube.com/watch?v=Q3wJxoDbbiA",
-   "visto_at": "2026-09-15T15:05:15Z"
-  },
   {
    "id": "FrFSBATdaV4",
    "titulo": "🔴EN VIVO: Comisión de Infraestructura, Vivienda y Transportes de la Cámara de Diputados | 15/09/2026",
@@ -2676,6 +2669,14 @@
    "pais": "PE",
    "url": "https://www.youtube.com/watch?v=aMfQSb_N7F8",
    "visto_at": "2026-11-25T16:18:35Z"
+  },
+  {
+   "id": "LWXE0J_rB7E",
+   "titulo": "🔴EN VIVO: Comisión de Economía, Banca, Finanzas e Inteligencia Financiera | 25/11/2026",
+   "tipo": "Comision: Economia",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=LWXE0J_rB7E",
+   "visto_at": "2026-11-25T18:14:13Z"
   }
  ],
  "avisado": {
