@@ -12387,5 +12387,522 @@
       }
     ],
     "url": "https://www.youtube.com/watch?v=rbv1rp75xCo"
+  },
+  "-ipwj6waDu0": {
+    "fecha": "2026-11-24",
+    "organo": "Comisión de Energía y Minas",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Jaime Abenzur",
+        "cargo": "legislador",
+        "sobre": "participación de gobernadores regionales",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Pidió la participación de los gobernadores regionales en la sesión.",
+        "proyecto": "",
+        "id": "diputados:abensur pinasco"
+      },
+      {
+        "orador": "Frank Leiker",
+        "cargo": "legislador",
+        "sobre": "deficiencias del proyecto REINFO",
+        "postura": "en contra",
+        "tema": "Minería",
+        "dijo": "Cuestionó las deficiencias técnicas del proyecto de ley REINFO.",
+        "proyecto": "REINFO",
+        "id": null
+      },
+      {
+        "orador": "Raúl Camargo",
+        "cargo": "legislador",
+        "sobre": "sustentación del proyecto de promoción formal",
+        "postura": "propone",
+        "tema": "Minería",
+        "dijo": "Pidió la sustentación del proyecto de ley 005-2026-30-2031.",
+        "proyecto": "PL 005-2026-30-2031",
+        "id": "diputados:camargo porta"
+      },
+      {
+        "orador": "Luis Masco Cáceres",
+        "cargo": "legislador",
+        "sobre": "presencia del ministro de Energía",
+        "postura": "pregunta",
+        "tema": "Otros",
+        "dijo": "Preguntó sobre la presencia del ministro de Energía y Minas.",
+        "proyecto": "",
+        "id": "diputados:masco caceres"
+      },
+      {
+        "orador": "Guillermo Shinohwamani",
+        "cargo": "ministro o autoridad",
+        "sobre": "novena adenda de distribución de gas",
+        "postura": "a favor",
+        "tema": "Energía",
+        "dijo": "Defendió la suscripción de la novena adenda de Callia.",
+        "proyecto": "Novena Adenda Callia",
+        "id": null
+      },
+      {
+        "orador": "Guillermo Shinohwamani",
+        "cargo": "ministro o autoridad",
+        "sobre": "reactivación del Lote 192",
+        "postura": "a favor",
+        "tema": "Energía",
+        "dijo": "Defendió la reactivación de los pozos del Lote 192.",
+        "proyecto": "Lote 192",
+        "id": null
+      },
+      {
+        "orador": "Guillermo Shinoguamaní",
+        "cargo": "ministro o autoridad",
+        "sobre": "Explotación del Lote 192",
+        "postura": "comenta",
+        "tema": "Energía",
+        "dijo": "Informó sobre la inversión y producción del Lote 192.",
+        "proyecto": "Lote 192",
+        "id": null
+      },
+      {
+        "orador": "Daniel Diez Yacucho",
+        "cargo": "invitado",
+        "sobre": "Masificación del gas en Cusco",
+        "postura": "propone",
+        "tema": "Energía",
+        "dijo": "Pidió que la masificación sea una política de Estado.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Juan Cabelica",
+        "cargo": "invitado",
+        "sobre": "Masificación de gas en Ayacucho",
+        "postura": "a favor",
+        "tema": "Energía",
+        "dijo": "Celebró la suscripción de la adenda para Ayacucho.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Gobernador de Junín",
+        "cargo": "invitado",
+        "sobre": "Masificación de gas en Junín",
+        "postura": "a favor",
+        "tema": "Energía",
+        "dijo": "Pidió celeridad para la firma de la adenda en Junín.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Gobernador de Puno",
+        "cargo": "invitado",
+        "sobre": "Adenda de gas para Puno",
+        "postura": "a favor",
+        "tema": "Energía",
+        "dijo": "Respaldó la firma de la adenda para Puno.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "César Acastro",
+        "cargo": "legislador",
+        "sobre": "Masificación del gas en el sur",
+        "postura": "a favor",
+        "tema": "Energía",
+        "dijo": "Respaldó la decisión de masificar el gas en el sur.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Andrés Ramos",
+        "cargo": "legislador",
+        "sobre": "Adenda económica de Cálida",
+        "postura": "pregunta",
+        "tema": "Energía",
+        "dijo": "Cuestionó los fundamentos económicos de la adenda de Cálida.",
+        "proyecto": "",
+        "id": "senado:ramos huillcas"
+      },
+      {
+        "orador": "Edwin Espinoza",
+        "cargo": "legislador",
+        "sobre": "Implementación del proyecto SIDGAS",
+        "postura": "con observaciones",
+        "tema": "Energía",
+        "dijo": "Denunció la falta de plazos para el proyecto SIDGAS.",
+        "proyecto": "SIDGAS",
+        "id": "diputados:espinoza huillca"
+      },
+      {
+        "orador": "Jesús Guamán",
+        "cargo": "legislador",
+        "sobre": "Detalles de la adenda Cálida",
+        "postura": "pregunta",
+        "tema": "Energía",
+        "dijo": "Preguntó por los beneficiarios de la adenda de Cálida.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Marco Flores Valdizán",
+        "cargo": "legislador",
+        "sobre": "Exclusión de la región Huánuco",
+        "postura": "pregunta",
+        "tema": "Energía",
+        "dijo": "Preguntó por la exclusión de Huánuco en el proyecto.",
+        "proyecto": "",
+        "id": "diputados:flores valdizan"
+      },
+      {
+        "orador": "César Holguín",
+        "cargo": "legislador",
+        "sobre": "Transparencia en masificación de gas",
+        "postura": "en contra",
+        "tema": "Energía",
+        "dijo": "Denunció la falta de transparencia en la masificación.",
+        "proyecto": "SITGAS",
+        "id": "diputados:holguin loaiza"
+      },
+      {
+        "orador": "Wilfredo Verano",
+        "cargo": "legislador",
+        "sobre": "Mesa de trabajo en Cusco",
+        "postura": "propone",
+        "tema": "Energía",
+        "dijo": "Propuso instalar una mesa de trabajo en Cusco.",
+        "proyecto": "",
+        "id": "senado:verano saravia"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=-ipwj6waDu0"
+  },
+  "hCTZ0g2Nxpg": {
+    "fecha": "2026-11-24",
+    "organo": "Comisión de Justicia",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Beteta",
+        "cargo": "legislador",
+        "sobre": "Incorporación de juristas al Comité Consultivo",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Pidió la incorporación de destacados juristas al Comité Consultivo de la comisión.",
+        "proyecto": "",
+        "id": "diputados:beteta rubin"
+      },
+      {
+        "orador": "Armando Miguel Subauste Brancesco",
+        "cargo": "ministro o autoridad",
+        "sobre": "Demoras en la calificación registral",
+        "postura": "comenta",
+        "tema": "Saneamiento",
+        "dijo": "Informó sobre las causas de la demora en la calificación de títulos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Gino César Yarleque Oliva",
+        "cargo": "ministro o autoridad",
+        "sobre": "Situación de procesos registrales en Chiclayo",
+        "postura": "comenta",
+        "tema": "Saneamiento",
+        "dijo": "Detalló la problemática de los procesos registrales y comunidades en Chiclayo.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Marino Alonso",
+        "cargo": "legislador",
+        "sobre": "Gestión de Registros Públicos en Chiclayo",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Cuestionó la gestión y la falta de respuesta en Registros Públicos de Chiclayo.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Armando Miguel Subauste Brancesco",
+        "cargo": "ministro o autoridad",
+        "sobre": "Lucha contra la corrupción en registros",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Defendió la integridad de la institución frente a la corrupción.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Gino César Yarleque Oliva",
+        "cargo": "ministro o autoridad",
+        "sobre": "Investigaciones fiscales contra registradores",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Informó sobre su situación respecto a las investigaciones fiscales en su contra.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Muñoz",
+        "cargo": "legislador",
+        "sobre": "Saneamiento de instituciones educativas",
+        "postura": "propone",
+        "tema": "Educación",
+        "dijo": "Pidió apoyo para el saneamiento físico legal de instituciones educativas.",
+        "proyecto": "",
+        "id": "diputados:munoz yurivilca"
+      },
+      {
+        "orador": "Armando Miguel Subauste Brancesco",
+        "cargo": "ministro o autoridad",
+        "sobre": "Saneamiento de instituciones educativas",
+        "postura": "comenta",
+        "tema": "Educación",
+        "dijo": "Informó sobre el trabajo de saneamiento de escuelas con el Ministerio de Educación.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Beteta",
+        "cargo": "legislador",
+        "sobre": "Predisposición de los funcionarios públicos",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Respaldó la predisposición de los funcionarios para acudir al Parlamento.",
+        "proyecto": "",
+        "id": "diputados:beteta rubin"
+      },
+      {
+        "orador": "Edgar González",
+        "cargo": "legislador",
+        "sobre": "Corrupción y tráfico de terrenos",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Cuestionó la relación entre la corrupción y el tráfico de terrenos.",
+        "proyecto": "",
+        "id": "diputados:fernandez gonzalez"
+      },
+      {
+        "orador": "Armando Miguel Subauste Brancesco",
+        "cargo": "ministro o autoridad",
+        "sobre": "Medidas contra el tráfico de terrenos",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Informó sobre la implementación de un visor gráfico para combatir irregularidades.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Armando Miguel Subauste Brancesco",
+        "cargo": "invitado",
+        "sobre": "Saneamiento de escuelas mediante mesas técnicas",
+        "postura": "comenta",
+        "tema": "Saneamiento",
+        "dijo": "Explicó la implementación de mesas técnicas para el saneamiento.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Presidenta de la Comisión",
+        "cargo": "legislador",
+        "sobre": "Ejecución de obligaciones alimentarias",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Propuso la aprobación del texto sustitutorio de alimentos.",
+        "proyecto": "PL 188-2026-2031",
+        "id": null
+      },
+      {
+        "orador": "Muñoz",
+        "cargo": "legislador",
+        "sobre": "Delito de omisión a la asistencia familiar",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Preguntó sobre la compatibilidad con el Código Penal.",
+        "proyecto": "PL 188-2026-2031",
+        "id": "diputados:munoz yurivilca"
+      },
+      {
+        "orador": "Roxana Rocha",
+        "cargo": "legislador",
+        "sobre": "Ejecución de actas de conciliación",
+        "postura": "a favor",
+        "tema": "Justicia",
+        "dijo": "Defendió la eficacia de las actas de conciliación.",
+        "proyecto": "PL 188-2026-2031",
+        "id": "diputados:rocha gallegos"
+      },
+      {
+        "orador": "Carlos Domínguez",
+        "cargo": "legislador",
+        "sobre": "Creación de Cortes Superiores de Familia",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Sugirió la creación de Cortes Superiores de Familia.",
+        "proyecto": "",
+        "id": "diputados:dominguez herrera"
+      },
+      {
+        "orador": "Carlos Domínguez",
+        "cargo": "legislador",
+        "sobre": "Respaldo de constitucionalistas al proyecto",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Pidió mayor respaldo de especialistas en la propuesta.",
+        "proyecto": "PL 188-2026-2031",
+        "id": "diputados:dominguez herrera"
+      },
+      {
+        "orador": "Kim",
+        "cargo": "legislador",
+        "sobre": "Definición de resolución judicial",
+        "postura": "con observaciones",
+        "tema": "Justicia",
+        "dijo": "Observó la diferencia entre mandato y sentencia.",
+        "proyecto": "PL 188-2026-2031",
+        "id": null
+      },
+      {
+        "orador": "Romina",
+        "cargo": "legislador",
+        "sobre": "Remisión de copias al fiscal",
+        "postura": "a favor",
+        "tema": "Justicia",
+        "dijo": "Apoyó la propuesta de ejecución de alimentos.",
+        "proyecto": "PL 188-2026-2031",
+        "id": null
+      },
+      {
+        "orador": "Presidenta de la Comisión",
+        "cargo": "legislador",
+        "sobre": "Material destinado a la extorsión",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso sancionar la posesión de material extorsivo.",
+        "proyecto": "PL 28-2026-2031",
+        "id": null
+      },
+      {
+        "orador": "Presidenta de la Comisión",
+        "cargo": "legislador",
+        "sobre": "Falsificación de placas de rodaje",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso sancionar la clonación de placas vehiculares.",
+        "proyecto": "PL 170-2026-2031",
+        "id": null
+      },
+      {
+        "orador": "Javier Alejandro Castro Cruz",
+        "cargo": "legislador",
+        "sobre": "Retiro de pedido de citación al Fiscal",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Retiró el pedido de citación al Fiscal de la Nación.",
+        "proyecto": "",
+        "id": "diputados:castro cruz"
+      },
+      {
+        "orador": "Marino Lavado Valdivia",
+        "cargo": "legislador",
+        "sobre": "Protección del personal educativo",
+        "postura": "propone",
+        "tema": "Educación",
+        "dijo": "Sustentó la protección legal del personal educativo.",
+        "proyecto": "PL 364-2026-2031",
+        "id": "diputados:lavado valdivia"
+      },
+      {
+        "orador": "Marino Lavado",
+        "cargo": "legislador",
+        "sobre": "protección del personal de instituciones educativas",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Propuso modificar el Código Penal para proteger al personal educativo.",
+        "proyecto": "",
+        "id": "diputados:lavado valdivia"
+      },
+      {
+        "orador": "Everlope Letona",
+        "cargo": "legislador",
+        "sobre": "derogación del segundo párrafo del artículo 418",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Propuso derogar el segundo párrafo del artículo sobre prevaricato.",
+        "proyecto": "PL 518-2026",
+        "id": "diputados:lopez letona"
+      },
+      {
+        "orador": "Romina",
+        "cargo": "legislador",
+        "sobre": "material destinado a extorsionar",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Expresó su voto a favor del proyecto PLS-028.",
+        "proyecto": "PLS-028",
+        "id": null
+      },
+      {
+        "orador": "Romina",
+        "cargo": "legislador",
+        "sobre": "falsificación y uso de placas de rodaje",
+        "postura": "a favor",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Respaldó el proyecto contra la falsificación de placas de rodaje.",
+        "proyecto": "PLS-028 C-000-170",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=hCTZ0g2Nxpg"
+  },
+  "WEwFqIm43GE": {
+    "fecha": "2026-11-24",
+    "organo": "Comisión de Ética Parlamentaria",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Secretario Técnico",
+        "cargo": "ministro o autoridad",
+        "sobre": "Denuncia contra Ruth Luque Ibarra",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Informó la recomendación de archivar la denuncia contra la senadora Luque.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Marco Tinos",
+        "cargo": "legislador",
+        "sobre": "Informe de calificación de la denuncia",
+        "postura": "con observaciones",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó la insuficiencia de las investigaciones sobre los nuevos hechos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Marco Tinos",
+        "cargo": "legislador",
+        "sobre": "Procedimiento de la Comisión de Ética",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó el incumplimiento de las normas reglamentarias de la comisión.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Secretario Técnico",
+        "cargo": "ministro o autoridad",
+        "sobre": "Procedimiento de la Comisión de Ética",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Defendió la legalidad del procedimiento realizado por la comisión.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=WEwFqIm43GE"
   }
 }
