@@ -1,6 +1,5 @@
 {
  "alertados": [
-  "uawItrs3E9U",
   "hxPvILSygpc",
   "cc_4eBy0KjU",
   "Nkx03JALOXE",
@@ -299,16 +298,10 @@
   "hCTZ0g2Nxpg",
   "ZMr3CZw7pV4",
   "7WvVaADE8OE",
-  "WEwFqIm43GE"
+  "WEwFqIm43GE",
+  "jvIgByZctvg"
  ],
  "sesiones": [
-  {
-   "id": "uawItrs3E9U",
-   "titulo": "🔴 EN VIVO: Sesión de la Comisión de Salud de la Cámara de Diputados | 15/09/2026",
-   "tipo": "Comision: Salud",
-   "url": "https://www.youtube.com/watch?v=uawItrs3E9U",
-   "visto_at": "2026-09-15T13:01:15Z"
-  },
   {
    "id": "hxPvILSygpc",
    "titulo": "🔴EN VIVO: Comisión de Defensa Nacional y Orden Interno de la Cámara de Diputados | 15/09/2026",
@@ -2672,6 +2665,14 @@
    "pais": "PE",
    "url": "https://www.youtube.com/watch?v=WEwFqIm43GE",
    "visto_at": "2026-11-24T21:33:35Z"
+  },
+  {
+   "id": "jvIgByZctvg",
+   "titulo": "🔴EN VIVO: Comisión de Justicia y Derechos Humanos del Senado de la República | 25/11/2026",
+   "tipo": "Comision: Justicia",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=jvIgByZctvg",
+   "visto_at": "2026-11-25T13:35:35Z"
   }
  ],
  "avisado": {
