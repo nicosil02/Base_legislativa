@@ -1,6 +1,5 @@
 {
  "alertados": [
-  "cc_4eBy0KjU",
   "Nkx03JALOXE",
   "Q3wJxoDbbiA",
   "FrFSBATdaV4",
@@ -299,16 +298,10 @@
   "7WvVaADE8OE",
   "WEwFqIm43GE",
   "jvIgByZctvg",
-  "fzmH5T1uMu4"
+  "fzmH5T1uMu4",
+  "tZJuRfhvVxk"
  ],
  "sesiones": [
-  {
-   "id": "cc_4eBy0KjU",
-   "titulo": "🔴 EN VIVO: Comisión de Constitución, Reglamento y Relaciones Exteriores del Senado |15/09/2025",
-   "tipo": "Comision: Constitucion",
-   "url": "https://www.youtube.com/watch?v=cc_4eBy0KjU",
-   "visto_at": "2026-09-15T15:05:15Z"
-  },
   {
    "id": "Nkx03JALOXE",
    "titulo": "🔴EN VIVO: Sesión de la Comisión de Energía y Minas de la Cámara de Diputados | 15/09/2026",
@@ -2674,6 +2667,14 @@
    "pais": "PE",
    "url": "https://www.youtube.com/watch?v=fzmH5T1uMu4",
    "visto_at": "2026-11-25T14:14:26Z"
+  },
+  {
+   "id": "tZJuRfhvVxk",
+   "titulo": "🔴EN VIVO: Audiencia pública descentralizada de la Comisión de Energía y Minas | 25/11/2026",
+   "tipo": "Comision: Energia Y Minas",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=tZJuRfhvVxk",
+   "visto_at": "2026-11-25T14:36:59Z"
   }
  ],
  "avisado": {
