@@ -520,6 +520,27 @@ def vectores_noticias(ids, conn: sqlite3.Connection) -> dict:
 UMBRAL_YA_ALERTADA = 0.78
 
 
+_VEC_ALERTA: dict[str, list[float]] = {}  # hash del texto -> vector, para no re-embeber
+
+
+def _alertas_sin_cerebro(hashes: set[str], desde: str) -> list[tuple]:
+    """Alertas del historial que el cerebro bajado todavia no tiene. La app
+    baja el cerebro cada 3 h: sin esto, una alerta guardada a las 9:16 seguia
+    "por revisar" hasta la tarde (24/11/2026). Se embeben aparte y una vez."""
+    import numpy as np
+    try:
+        nuevas = [a for a in alertas() if (a["fecha"] or "") >= desde and _hash(a["texto"]) not in hashes]
+        faltan = [a for a in nuevas if _hash(a["texto"]) not in _VEC_ALERTA]
+        if faltan:
+            textos = [a["texto"] for a in faltan]
+            vecs = embeber_aparte(textos) if _en_app_web() else embeber(textos)
+            _VEC_ALERTA.update({_hash(a["texto"]): v for a, v in zip(faltan, vecs)})
+    except Exception as e:
+        print(f"[cerebro] alertas nuevas sin embeber: {e}")
+        return []
+    return [(a["clave"], a["titulo"], np.asarray(_VEC_ALERTA[_hash(a["texto"])], dtype=np.float32)) for a in nuevas]
+
+
 def ya_alertadas(ids, conn: sqlite3.Connection, dias: int = 30,
                  umbral: float = UMBRAL_YA_ALERTADA) -> dict[int, dict[str, str]]:
     """{id de noticia: {cliente: titulo de la alerta}} para las noticias que
@@ -528,11 +549,13 @@ def ya_alertadas(ids, conn: sqlite3.Connection, dias: int = 30,
     import numpy as np
     from datetime import date, timedelta
     desde = (date.today() - timedelta(days=dias)).isoformat()
-    filas = conn.execute("""SELECT i.clave, i.titulo, v.embedding FROM items i JOIN vec_items v ON v.rowid = i.id
+    filas = conn.execute("""SELECT i.clave, i.titulo, i.hash, v.embedding FROM items i JOIN vec_items v ON v.rowid = i.id
                             WHERE i.tipo = 'alerta' AND i.fecha >= ?""", (desde,)).fetchall()
+    filas = ([(f[0], f[1], np.frombuffer(f[3], dtype=np.float32)) for f in filas]
+             + _alertas_sin_cerebro({f[2] for f in filas}, desde))
     if not filas:
         return {}
-    alertas = np.stack([np.frombuffer(f[2], dtype=np.float32) for f in filas])
+    alertas = np.stack([f[2] for f in filas])
     out: dict[int, dict[str, str]] = {}
     for i, v in vectores_noticias(ids, conn).items():
         for j in np.flatnonzero(alertas @ v >= umbral):
