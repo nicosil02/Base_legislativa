@@ -1,6 +1,5 @@
 {
  "alertados": [
-  "Nkx03JALOXE",
   "Q3wJxoDbbiA",
   "FrFSBATdaV4",
   "8qHNLFw3JUw",
@@ -299,16 +298,10 @@
   "WEwFqIm43GE",
   "jvIgByZctvg",
   "fzmH5T1uMu4",
-  "tZJuRfhvVxk"
+  "tZJuRfhvVxk",
+  "aMfQSb_N7F8"
  ],
  "sesiones": [
-  {
-   "id": "Nkx03JALOXE",
-   "titulo": "🔴EN VIVO: Sesión de la Comisión de Energía y Minas de la Cámara de Diputados | 15/09/2026",
-   "tipo": "Comision: Energia Y Minas",
-   "url": "https://www.youtube.com/watch?v=Nkx03JALOXE",
-   "visto_at": "2026-09-15T15:05:15Z"
-  },
   {
    "id": "Q3wJxoDbbiA",
    "titulo": "🔴EN VIVO: Comisión Bicameral de Presupuesto y Cuenta General de la República | 15/09/2026",
@@ -2675,6 +2668,14 @@
    "pais": "PE",
    "url": "https://www.youtube.com/watch?v=tZJuRfhvVxk",
    "visto_at": "2026-11-25T14:36:59Z"
+  },
+  {
+   "id": "aMfQSb_N7F8",
+   "titulo": "🔴EN VIVO: Comisión de Modernización de la Gestión del Estado de la Cámara de Diputados | 25/11/2026",
+   "tipo": "Comision: Gestion Del Estado",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=aMfQSb_N7F8",
+   "visto_at": "2026-11-25T16:18:35Z"
   }
  ],
  "avisado": {
