@@ -1,7 +1,5 @@
 {
  "alertados": [
-  "FrFSBATdaV4",
-  "8qHNLFw3JUw",
   "HCzqFEPumnI",
   "xag-BVcHbB4",
   "GjvpEAcW8KU",
@@ -299,23 +297,11 @@
   "fzmH5T1uMu4",
   "tZJuRfhvVxk",
   "aMfQSb_N7F8",
-  "LWXE0J_rB7E"
+  "LWXE0J_rB7E",
+  "v4qwyKX3ots",
+  "Isy7yU0E-Iw"
  ],
  "sesiones": [
-  {
-   "id": "FrFSBATdaV4",
-   "titulo": "🔴EN VIVO: Comisión de Infraestructura, Vivienda y Transportes de la Cámara de Diputados | 15/09/2026",
-   "tipo": "Comision: Transportes",
-   "url": "https://www.youtube.com/watch?v=FrFSBATdaV4",
-   "visto_at": "2026-09-15T18:01:49Z"
-  },
-  {
-   "id": "8qHNLFw3JUw",
-   "titulo": "🔴EN VIVO: Comisión de Justicia y Derechos Humanos 15/09/2026",
-   "tipo": "Comision: Justicia",
-   "url": "https://www.youtube.com/watch?v=8qHNLFw3JUw",
-   "visto_at": "2026-09-15T23:00:34Z"
-  },
   {
    "id": "HCzqFEPumnI",
    "titulo": "🔴EN VIVO: Mesa de trabajo de la Comisión de Justicia y Derechos Humanos | 16/09/2026",
@@ -2677,6 +2663,22 @@
    "pais": "PE",
    "url": "https://www.youtube.com/watch?v=LWXE0J_rB7E",
    "visto_at": "2026-11-25T18:14:13Z"
+  },
+  {
+   "id": "v4qwyKX3ots",
+   "titulo": "🔴EN VIVO: Comisión de Educación, Cultura y Deporte | 25/11/2026",
+   "tipo": "Comision: Cultura",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=v4qwyKX3ots",
+   "visto_at": "2026-11-25T20:07:51Z"
+  },
+  {
+   "id": "Isy7yU0E-Iw",
+   "titulo": "🔴EN VIVO: Comisión de Trabajo y Seguridad Social | 25/11/2026",
+   "tipo": "Comision: Trabajo",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=Isy7yU0E-Iw",
+   "visto_at": "2026-11-25T20:07:51Z"
   }
  ],
  "avisado": {
