@@ -1,6 +1,5 @@
 {
  "alertados": [
-  "hxPvILSygpc",
   "cc_4eBy0KjU",
   "Nkx03JALOXE",
   "Q3wJxoDbbiA",
@@ -299,16 +298,10 @@
   "ZMr3CZw7pV4",
   "7WvVaADE8OE",
   "WEwFqIm43GE",
-  "jvIgByZctvg"
+  "jvIgByZctvg",
+  "fzmH5T1uMu4"
  ],
  "sesiones": [
-  {
-   "id": "hxPvILSygpc",
-   "titulo": "🔴EN VIVO: Comisión de Defensa Nacional y Orden Interno de la Cámara de Diputados | 15/09/2026",
-   "tipo": "Comision: Defensa Nacional",
-   "url": "https://www.youtube.com/watch?v=hxPvILSygpc",
-   "visto_at": "2026-09-15T15:05:15Z"
-  },
   {
    "id": "cc_4eBy0KjU",
    "titulo": "🔴 EN VIVO: Comisión de Constitución, Reglamento y Relaciones Exteriores del Senado |15/09/2025",
@@ -2673,6 +2666,14 @@
    "pais": "PE",
    "url": "https://www.youtube.com/watch?v=jvIgByZctvg",
    "visto_at": "2026-11-25T13:35:35Z"
+  },
+  {
+   "id": "fzmH5T1uMu4",
+   "titulo": "🔴EN VIVO: Comisión de Acusaciones Constitucionales de la Cámara de Diputados | 25/11/2026",
+   "tipo": "Comision: Constitucion",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=fzmH5T1uMu4",
+   "visto_at": "2026-11-25T14:14:26Z"
   }
  ],
  "avisado": {
