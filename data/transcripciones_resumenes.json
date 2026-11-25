@@ -8233,18 +8233,17 @@
   },
   {
     "video_id": "xekH1j-jZr0",
-    "resumen": "La sesión abordó la crisis por la deficiente calidad del suero fisiológico, donde el exministro César Vásquez Sánchez expuso irregularidades en la compra de 31.2 millones de soles a la empresa AlcoFarma. Asimismo, se debatieron diversos proyectos de ley sobre salud pública, bienestar digital y vacunación. Se aprobó la reprogramación de la comparecencia de la directora de CENARES y se fijó la próxima sesión para el 15 de diciembre.",
+    "resumen": "La sesión se centró en la investigación por fallas de calidad en el suero fisiológico de la empresa Alcofarma, cuya compra superó los 31 millones de soles. Asimismo, autoridades y diputados debatieron sobre la crisis de dengue en diversas regiones y la reducción del presupuesto para salud proyectada para el año 2027.",
     "ideas_clave": [
-      "Aprobación por unanimidad del acta de la novena sesión ordinaria realizada el 17 de noviembre de 2026.",
-      "Proposición legislativa 7.3.9-2026-2031-CD: busca modificar la Ley General de Salud para la evaluación previa de la habilitación sanitaria de establecimientos de alimentos y bebidas.",
-      "Proposición legislativa 7.80-2026-2031-CD: trata sobre la protección de la salud mental y bienestar digital de niños y adolescentes en entornos digitales.",
-      "Proposición legislativa 855-2026-2031-CD: pretende ampliar la vacunación contra el virus del papiloma humano hasta los 26 años.",
-      "El exministro de Salud informó que el contrato 313-2025-CENARES por un monto de 31.2 millones de soles fue suscrito para la adquisición de suero fisiológico.",
-      "Aprobación por unanimidad de la reprogramación de la comparecencia de la directora de CENARES para la siguiente sesión.",
-      "La tercera sesión no ordinaria de la Comisión de Salud se realizará el martes 15 de diciembre en la ciudad de Chiclayo."
+      "Se aprobó por unanimidad con 13 votos a favor el acta de la novena sesión ordinaria realizada el 17 de noviembre de 2026.",
+      "El ministro de Salud informó la adquisición de 7,176,336 frascos de cloruro de sodio a la empresa Alcofarma por un monto aproximado de 31 millones de soles.",
+      "La directora de Digemid comunicó que la empresa tiene un plazo de 10 días, que vence la primera semana de diciembre, para presentar la metodología de evaluación de hermeticidad.",
+      "La diputada Benítez informó que el presupuesto para la función salud en 2027 disminuirá 648 millones de soles respecto al año 2026.",
+      "Proposición legislativa 855-2026-2031-CD: busca ampliar la vacunación contra el virus del papiloma humano hasta los 26 años.",
+      "La diputada Tacayama informó 17,824 casos de dengue y 43 fallecidos en Lambayeque hasta el 17 de noviembre."
     ],
-    "generated_at": "2026-11-24T17:40:55Z",
-    "duracion_seg": 9055,
+    "generated_at": "2026-11-25T20:45:45Z",
+    "duracion_seg": 12685,
     "agenda_cumplida": null
   },
   {
@@ -8390,6 +8389,35 @@
     ],
     "generated_at": "2026-11-25T07:43:40Z",
     "duracion_seg": 2389,
+    "agenda_cumplida": null
+  },
+  {
+    "video_id": "fzmH5T1uMu4",
+    "resumen": "La sesión de la Comisión de Acusaciones Constitucionales se centró en la calificación y decisión sobre diversas denuncias constitucionales presentadas contra altos funcionarios y miembros de organismos del Estado. Durante la jornada, se aprobaron informes para admitir a trámite denuncias contra la presidenta de la República y ex miembros de la Junta Nacional de Justicia, mientras que otras fueron declaradas improcedentes.",
+    "ideas_clave": [
+      "Se aprobó por unanimidad con 18 votos a favor la improcedencia de la denuncia 004-2026-2031 contra el diputado Cristian Aranda Vázquez.",
+      "Se aprobó por unanimidad con 19 votos a favor la admisión a trámite de la denuncia 019-X-591 contra Dina Boluarte Segarra por presunta colusión.",
+      "Se aprobó por unanimidad con 16 votos a favor la improcedencia de la denuncia 039-X-451 contra Jorge Luis Salas Arenas.",
+      "Se aprobó la admisión a trámite de la denuncia 041-X-508 contra ex miembros de la Junta Nacional de Justicia con 13 votos a favor y 2 en contra.",
+      "Se aprobaron las designaciones de delegados para las denuncias constitucionales 003, 014 y 109."
+    ],
+    "generated_at": "2026-11-25T20:52:00Z",
+    "duracion_seg": 6004,
+    "agenda_cumplida": null
+  },
+  {
+    "video_id": "jvIgByZctvg",
+    "resumen": "La sesión de la Comisión de Justicia y Derechos Humanos se centró en el debate sobre la modificación del plazo de prescripción de la acción penal y la extinción de dominio. Participaron jueces, senadores y especialistas que discutieron el impacto de la norma en la persecución del delito y la recuperación de activos.",
+    "ideas_clave": [
+      "El juez supremo Manuel Lujan Tupes informó que la recaudación por extinción de dominio descendió de más de 80 millones de dólares en 2024 a 39 millones de dólares en 2025.",
+      "Proposición 023-26 de la Cámara de Diputados, que trata sobre la modificación del segundo párrafo del artículo 1-84 del Código Penal.",
+      "Proyecto de la Presidencia Legislativa N° 1230-2031-S, que trata sobre la revisión de sentencias para casos firmes desde el 1 de enero de 2017.",
+      "El juez supremo Manuel Lujan Tupes señaló que se han transferido aproximadamente 227 millones de dólares al Estado a través de 2,171 casos firmes.",
+      "El representante del Ministerio de Justicia se comprometió a enviar un documento con su propuesta formal durante la semana.",
+      "La Procuraduría informó que tiene aproximadamente 60,000 casos a nivel nacional."
+    ],
+    "generated_at": "2026-11-25T20:58:56Z",
+    "duracion_seg": 7634,
     "agenda_cumplida": null
   }
 ]
