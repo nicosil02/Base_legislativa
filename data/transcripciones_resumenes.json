@@ -8408,17 +8408,16 @@
   },
   {
     "video_id": "jvIgByZctvg",
-    "resumen": "La sesión de la Comisión de Justicia y Derechos Humanos se centró en el debate sobre la modificación del plazo de prescripción de la acción penal y la extinción de dominio. Participaron jueces, senadores y especialistas que discutieron el impacto de la norma en la persecución del delito y la recuperación de activos.",
+    "resumen": "La Comisión de Justicia y Derechos Humanos del Senado debatió dictámenes sobre la extinción de dominio y la suspensión de la prescripción de la acción penal. El representante del Poder Judicial presentó cifras sobre la recaudación y efectividad de la extinción de dominio, mientras que la comisión analizó la constitucionalidad de la propuesta de la Cámara de Diputados para modificar los plazos de prescripción.",
     "ideas_clave": [
-      "El juez supremo Manuel Lujan Tupes informó que la recaudación por extinción de dominio descendió de más de 80 millones de dólares en 2024 a 39 millones de dólares en 2025.",
-      "Proposición 023-26 de la Cámara de Diputados, que trata sobre la modificación del segundo párrafo del artículo 1-84 del Código Penal.",
-      "Proyecto de la Presidencia Legislativa N° 1230-2031-S, que trata sobre la revisión de sentencias para casos firmes desde el 1 de enero de 2017.",
-      "El juez supremo Manuel Lujan Tupes señaló que se han transferido aproximadamente 227 millones de dólares al Estado a través de 2,171 casos firmes.",
-      "El representante del Ministerio de Justicia se comprometió a enviar un documento con su propuesta formal durante la semana.",
-      "La Procuraduría informó que tiene aproximadamente 60,000 casos a nivel nacional."
+      "El Dr. Manuel Lujantupez (Poder Judicial) informó que los ingresos por extinción de dominio fueron de más de 80 millones de dólares en 2024 y 39 millones en 2025.",
+      "El Dr. Manuel Lujantupez indicó que el tiempo de resolución en primera instancia bajó de un promedio de 700 a 800 días a una media de 6 meses.",
+      "Proposición 02326 de la Cámara de Diputados: busca modificar el artículo 84 del Código Penal para regular la suspensión del plazo de prescripción.",
+      "El representante del Ministerio de Justicia se comprometió a entregar un documento con la propuesta formal de su institución durante la semana.",
+      "El Dr. Manuel Lujantupez señaló que en los últimos 7 años y medio se transfirieron 227 millones de dólares al Estado mediante aproximadamente 2,710 casos firmes."
     ],
-    "generated_at": "2026-11-25T20:58:56Z",
-    "duracion_seg": 7634,
+    "generated_at": "2026-11-26T19:35:43Z",
+    "duracion_seg": 11065,
     "agenda_cumplida": null
   },
   {
@@ -8522,6 +8521,34 @@
     ],
     "generated_at": "2026-11-26T08:02:14Z",
     "duracion_seg": 2109,
+    "agenda_cumplida": null
+  },
+  {
+    "video_id": "7FLPQt9SDJM",
+    "resumen": "La Comisión de Economía, Medio Ambiente y Defensa del Consumidor del Senado sesionó para debatir la propuesta de ley que otorga temporalmente el reintegro del IGV para la compra de libros. El viceministro de Economía y el director de cultura sustentaron la importancia de la medida para fomentar la lectura y apoyar el ecosistema editorial. El dictamen fue aprobado por unanimidad con ocho votos a favor y ningún voto en contra.",
+    "ideas_clave": [
+      "Votación del dictamen: aprobado por unanimidad con 8 votos a favor y 0 votos en contra.",
+      "Propuesta de ley: dictamen para otorgar temporalmente el reintegro del IGV por la compra de libros.",
+      "Declaración del viceministro de Economía: el 41.2% del padrón vigente accedió al beneficio por primera vez en el año 2025.",
+      "Dato sectorial: solo el 7.5% de las editoriales se han acogido al mecanismo de reintegro actual.",
+      "Referencia a la Ley 31193: establece que la Biblioteca Nacional del Perú debe verificar la formalidad de las empresas y los códigos ISBN de los libros."
+    ],
+    "generated_at": "2026-11-26T19:37:47Z",
+    "duracion_seg": 1746,
+    "agenda_cumplida": null
+  },
+  {
+    "video_id": "LzGTmgxZcyA",
+    "resumen": "La Comisión de Control Político evaluó la prórroga de los estados de emergencia en diversas regiones ante la persistencia de la inseguridad y el crimen organizado. Se debatieron los Decretos Supremos 120, 121 y 123-2026-PCM, centrando la discusión en la efectividad de estas medidas frente a la minería ilegal y el narcotráfico. Los Decretos 120 y 121 fueron aprobados por la comisión.",
+    "ideas_clave": [
+      "Votación del Decreto Supremo 120-2026-PCM para el estado de emergencia en el distrito de Encañada y otros distritos de Cajamarca, aprobado.",
+      "Votación del Decreto Supremo 121-2026-PCM para el estado de emergencia en distritos de la provincia de Tampopata, aprobado.",
+      "Debate sobre los Decretos Supremos 120, 121 y 123-2026-PCM referidos a la declaratoria de estados de emergencia por perturbación del orden interno.",
+      "Solicitud de informe detallado sobre las contrataciones realizadas durante los estados de emergencia, incluyendo montos, proveedores y cumplimiento de prestaciones.",
+      "Solicitud para que los dictámenes se remitan a los integrantes de la comisión con una anticipación mínima de 48 horas respecto al inicio de la sesión."
+    ],
+    "generated_at": "2026-11-26T19:42:52Z",
+    "duracion_seg": 2343,
     "agenda_cumplida": null
   }
 ]
