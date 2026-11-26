@@ -1,5 +1,8 @@
 {
-  "sin_correr:Quien habla (transcripciones por turnos)": "Quien habla (transcripciones por turnos): no corre desde 25/11 22:44 (tocaba 26/11 01:40)",
-  "falla:Quien habla (transcripciones por turnos)": "Quien habla (transcripciones por turnos): fallo 2 veces seguidas (https://github.com/nicosil02/Base_legislativa/actions/runs/45750812580)",
-  "falla:TV en vivo (RPP, America, Willax, Exitosa)": "TV en vivo (RPP, America, Willax, Exitosa): fallo 10 veces seguidas (https://github.com/nicosil02/Base_legislativa/actions/runs/45798365654)"
+  "sin_correr:Backfill automatico (sesiones perdidas)": "Backfill automatico (sesiones perdidas): no corre desde 26/11 09:40 (tocaba 26/11 13:20)",
+  "sin_correr:Actualizar Ecuador (CSV + documentos)": "Actualizar Ecuador (CSV + documentos): no corre desde 26/11 07:05 (tocaba 26/11 12:00)",
+  "sin_correr:Quien habla (transcripciones por turnos)": "Quien habla (transcripciones por turnos): no corre desde 26/11 12:15 (tocaba 26/11 13:40)",
+  "falla:Quien habla (transcripciones por turnos)": "Quien habla (transcripciones por turnos): fallo 3 veces seguidas (https://github.com/nicosil02/Base_legislativa/actions/runs/45866165944)",
+  "falla:TV en vivo (RPP, America, Willax, Exitosa)": "TV en vivo (RPP, America, Willax, Exitosa): fallo 10 veces seguidas (https://github.com/nicosil02/Base_legislativa/actions/runs/45888030262)",
+  "sin_correr:Votaciones Pleno bicameral (OCR de escaneados)": "Votaciones Pleno bicameral (OCR de escaneados): no corre desde 25/11 16:55 (tocaba 26/11 07:30)"
 }
