@@ -1,6 +1,5 @@
 {
  "alertados": [
-  "6FM4tpVETaw",
   "5HiVff-ilkA",
   "HtWXfK0Zd8Y",
   "Qyaeb9PW3rI",
@@ -299,16 +298,10 @@
   "Isy7yU0E-Iw",
   "7FLPQt9SDJM",
   "NtzGm7ShWn4",
-  "ZfHT-80TR2Q"
+  "ZfHT-80TR2Q",
+  "LzGTmgxZcyA"
  ],
  "sesiones": [
-  {
-   "id": "6FM4tpVETaw",
-   "titulo": "🔴EN VIVO: Comisión de Trabajo y Seguridad Social de la Cámara de Diputados | 16/09/2026",
-   "tipo": "Comision: Trabajo",
-   "url": "https://www.youtube.com/watch?v=6FM4tpVETaw",
-   "visto_at": "2026-09-16T22:05:50Z"
-  },
   {
    "id": "5HiVff-ilkA",
    "titulo": "🔴EN VIVO: Sesión del Pleno del Senado de la República | 16 DE SEPTIEMBRE DEL 2026",
@@ -2682,6 +2675,14 @@
    "pais": "PE",
    "url": "https://www.youtube.com/watch?v=ZfHT-80TR2Q",
    "visto_at": "2026-11-26T16:03:30Z"
+  },
+  {
+   "id": "LzGTmgxZcyA",
+   "titulo": "🔴EN VIVO: Comisión de Control Político sobre Actos Normativos del Poder Ejecutivo | 26/11/2026",
+   "tipo": "Comision: Control Politico",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=LzGTmgxZcyA",
+   "visto_at": "2026-11-26T16:14:47Z"
   }
  ],
  "avisado": {
