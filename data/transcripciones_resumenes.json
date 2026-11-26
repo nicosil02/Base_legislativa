@@ -8568,15 +8568,31 @@
   },
   {
     "video_id": "vZgadmzf5wI",
-    "resumen": "La sesión de la Cámara de Diputados ratificó la citación del ministro de Relaciones Exteriores, Carlos Espaque, para el 1 de diciembre de 2026 con el fin de informar sobre el Escudo de las Américas. Asimismo, se debatió la proposición legislativa 230, orientada a mejorar la respuesta estatal ante la contaminación por metales pesados en la población.",
+    "resumen": "La sesión abordó la citación del ministro de Relaciones Exteriores para el 1 de diciembre y el debate de propuestas sobre salud y gestión pública. Se aprobó la modificación de la Ley 31189 para atender la salud afectada por metales pesados y la reforma del Decreto Legislativo 1401 para incluir incentivos meritocráticos en el sector público.",
     "ideas_clave": [
-      "Se ratificó mediante votación (67 votos a favor, 36 en contra y 1 abstención) la moción 1105 para que el ministro de Relaciones Exteriores, Carlos Espaque, compare ante el Pleno el martes 1 de diciembre de 2026 a las 15:00 horas.",
-      "Proposición legislativa 22, del Grupo Parlamentario Junto con el Perú, que propone derogar la ley que modifica el código Procesal Penal (Decreto Legislativo 957) para agilizar los procesos penales.",
-      "Proposición legislativa 230, de la diputada Aide Poma-Wamaní, que propone modificar la Ley 31189 para obligar a las autoridades a notificar en 10 días hábiles y responder en 30 días hábiles ante la detección de población expuesta a metales pesados.",
-      "Según datos del Ministerio de Salud expuestos en la sesión, existen 22,115 personas expuestas a metales pesados en 235 distritos del país, siendo el 54.7% de los casos menores de edad."
+      "Moción 11-05: Citación del ministro de Relaciones Exteriores para el 1 de diciembre de 2026, aprobada con 67 votos a favor, 36 en contra y 1 abstención.",
+      "Proposición Legislativa 230, de la diputada Aide Poma-Wamani, para modificar la Ley 31189 y fortalecer la prevención y atención de la salud por metales pesados, aprobada con 107 votos a favor.",
+      "Proposición Legislativa 168, de la Comisión de Modernización, para modificar el Decreto Legislativo 1401 e incorporar bonificaciones meritocráticas, aprobada con 104 votos a favor.",
+      "La propuesta de la Comisión de Modernización establece que Servir tiene un plazo de 90 días para fijar los parámetros técnicos de la bonificación.",
+      "El presidente de la Comisión de Salud informó que existen poblaciones expuestas a metales pesados en 221 distritos de 21 departamentos y la provincia del Callao."
     ],
-    "generated_at": "2026-11-26T21:21:12Z",
-    "duracion_seg": 2692,
+    "generated_at": "2026-11-26T22:47:10Z",
+    "duracion_seg": 6740,
+    "agenda_cumplida": null
+  },
+  {
+    "video_id": "NtzGm7ShWn4",
+    "resumen": "La presidenta del Poder Judicial, la doctora Janet Tello Galarde, expuso sobre la carga procesal, las brechas presupuestales en programas judiciales y la necesidad de una ley de oralidad civil. La sesión se centró en el debate del predictamen sobre la suspensión de la prescripción de la acción penal y la aprobación de actas de sesiones anteriores.",
+    "ideas_clave": [
+      "Aprobación de las actas de la sexta sesión ordinaria y de la segunda sesión no ordinaria sin observaciones.",
+      "La presidenta del Poder Judicial informó que el programa EJE Penal requiere 77 millones de soles, pero solo se le asignaron 40 millones.",
+      "La presidenta del Poder Judicial informó que el programa EJE No Penal requiere 264 millones de soles, pero solo recibió 16 millones.",
+      "Debate del predictamen de la proposición legislativa 023-GiON-2026-SLASH sobre la suspensión del plazo de la prescripción de la acción penal.",
+      "El presidente de la comisión se comprometió a presentar el predictamen sobre extinción de dominio el 27 de noviembre por la tarde.",
+      "El plazo para dictaminar la propuesta de trámite urgente sobre la suspensión de la prescripción vence el viernes 27 de noviembre."
+    ],
+    "generated_at": "2026-11-26T22:35:32Z",
+    "duracion_seg": 8576,
     "agenda_cumplida": null
   }
 ]
