@@ -1,6 +1,5 @@
 {
  "alertados": [
-  "GjvpEAcW8KU",
   "6FM4tpVETaw",
   "5HiVff-ilkA",
   "HtWXfK0Zd8Y",
@@ -299,16 +298,10 @@
   "v4qwyKX3ots",
   "Isy7yU0E-Iw",
   "7FLPQt9SDJM",
-  "NtzGm7ShWn4"
+  "NtzGm7ShWn4",
+  "ZfHT-80TR2Q"
  ],
  "sesiones": [
-  {
-   "id": "GjvpEAcW8KU",
-   "titulo": "🔴EN VIVO: Comisión de Educación, Cultura y Deporte de la Cámara de Diputados | 16/09/2026",
-   "tipo": "Comision: Cultura",
-   "url": "https://www.youtube.com/watch?v=GjvpEAcW8KU",
-   "visto_at": "2026-09-16T22:05:50Z"
-  },
   {
    "id": "6FM4tpVETaw",
    "titulo": "🔴EN VIVO: Comisión de Trabajo y Seguridad Social de la Cámara de Diputados | 16/09/2026",
@@ -2681,6 +2674,14 @@
    "pais": "PE",
    "url": "https://www.youtube.com/watch?v=NtzGm7ShWn4",
    "visto_at": "2026-11-26T15:11:13Z"
+  },
+  {
+   "id": "ZfHT-80TR2Q",
+   "titulo": "🔴EN VIVO: Sesión del Pleno de la Cámara de Diputados l 26 DE NOVIEMBRE DEL 2026",
+   "tipo": "Pleno: Diputados",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=ZfHT-80TR2Q",
+   "visto_at": "2026-11-26T16:03:30Z"
   }
  ],
  "avisado": {
