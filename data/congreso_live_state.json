@@ -1,6 +1,5 @@
 {
  "alertados": [
-  "HtWXfK0Zd8Y",
   "Qyaeb9PW3rI",
   "L9k88r8uDKg",
   "TzXXoK43264",
@@ -299,16 +298,10 @@
   "NtzGm7ShWn4",
   "ZfHT-80TR2Q",
   "LzGTmgxZcyA",
-  "vZgadmzf5wI"
+  "vZgadmzf5wI",
+  "qS45kqiSf1I"
  ],
  "sesiones": [
-  {
-   "id": "HtWXfK0Zd8Y",
-   "titulo": "🔴EN VIVO: Sesión de la Comisión de Justicia y Derechos Humanos del Senado l 17/09/2026",
-   "tipo": "Comision: Justicia",
-   "url": "https://www.youtube.com/watch?v=HtWXfK0Zd8Y",
-   "visto_at": "2026-09-17T16:53:18Z"
-  },
   {
    "id": "Qyaeb9PW3rI",
    "titulo": "🔴EN VIVO: Sesión del Pleno de la Cámara de Diputados | 17/09/2026",
@@ -2684,6 +2677,14 @@
    "pais": "PE",
    "url": "https://www.youtube.com/watch?v=vZgadmzf5wI",
    "visto_at": "2026-11-26T20:05:43Z"
+  },
+  {
+   "id": "qS45kqiSf1I",
+   "titulo": "🔴EN VIVO: Comisión de Procedimientos Especiales | 26/11/2026",
+   "tipo": "Comision: Procedimientos Especiales",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=qS45kqiSf1I",
+   "visto_at": "2026-11-26T22:09:43Z"
   }
  ],
  "avisado": {
