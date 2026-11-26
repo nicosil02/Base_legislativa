@@ -1,7 +1,5 @@
 {
  "alertados": [
-  "HCzqFEPumnI",
-  "xag-BVcHbB4",
   "GjvpEAcW8KU",
   "6FM4tpVETaw",
   "5HiVff-ilkA",
@@ -299,23 +297,11 @@
   "aMfQSb_N7F8",
   "LWXE0J_rB7E",
   "v4qwyKX3ots",
-  "Isy7yU0E-Iw"
+  "Isy7yU0E-Iw",
+  "7FLPQt9SDJM",
+  "NtzGm7ShWn4"
  ],
  "sesiones": [
-  {
-   "id": "HCzqFEPumnI",
-   "titulo": "🔴EN VIVO: Mesa de trabajo de la Comisión de Justicia y Derechos Humanos | 16/09/2026",
-   "tipo": "Comision: Justicia",
-   "url": "https://www.youtube.com/watch?v=HCzqFEPumnI",
-   "visto_at": "2026-09-16T15:05:58Z"
-  },
-  {
-   "id": "xag-BVcHbB4",
-   "titulo": "🔴EN VIVO: Comisión de Modernización de la Gestión del Estado de la Cámara de Diputados | 16/09/2026",
-   "tipo": "Comision: Gestion Del Estado",
-   "url": "https://www.youtube.com/watch?v=xag-BVcHbB4",
-   "visto_at": "2026-09-16T19:08:15Z"
-  },
   {
    "id": "GjvpEAcW8KU",
    "titulo": "🔴EN VIVO: Comisión de Educación, Cultura y Deporte de la Cámara de Diputados | 16/09/2026",
@@ -2679,6 +2665,22 @@
    "pais": "PE",
    "url": "https://www.youtube.com/watch?v=Isy7yU0E-Iw",
    "visto_at": "2026-11-25T20:07:51Z"
+  },
+  {
+   "id": "7FLPQt9SDJM",
+   "titulo": "🔴EN VIVO: Comisión de Economía, Medio Ambiente y Defensa del Consumidor del Senado | 26/11/2026",
+   "tipo": "Comision: Defensa Del Consumidor",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=7FLPQt9SDJM",
+   "visto_at": "2026-11-26T15:11:13Z"
+  },
+  {
+   "id": "NtzGm7ShWn4",
+   "titulo": "🔴EN VIVO: Comisión de Justicia y Derechos Humanos del Senado de la República | 26/11/2026",
+   "tipo": "Comision: Justicia",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=NtzGm7ShWn4",
+   "visto_at": "2026-11-26T15:11:13Z"
   }
  ],
  "avisado": {
