@@ -8642,17 +8642,32 @@
   },
   {
     "video_id": "17ys7_mwz20",
-    "resumen": "La sesión del Senado abordó la sustentación del Proyecto de Ley 25 por parte del senador López Chau para ampliar el régimen de donaciones ante peligros inminentes de desastres naturales. Asimismo, se incluyeron en la agenda la solicitud de viaje de la presidenta Keiko Fujimori a Colombia y diversas prórrogas de estados de emergencia mediante decretos supremos.",
+    "resumen": "La sesión del Senado abordó la aprobación de proyectos de ley sobre la donación de alimentos en desastres y la prórroga de exoneraciones del Impuesto a la Renta para fundaciones. Asimismo, se debatió la derogación de la ley que crea el Colegio Profesional de Artistas del Perú y se aprobaron prórrogas de estados de emergencia en Pataz y Loreto.",
     "ideas_clave": [
-      "Proyecto de Ley 25, de la Comisión de Economía, que propone modificar la Ley 30.498 para ampliar el régimen de donaciones ante peligros inminentes.",
-      "Solicitud del Poder Ejecutivo para que la presidenta Keiko Fujimori viaje a Colombia el 3 de diciembre de 2026.",
-      "Decreto Supremo 137-2026, que prorroga el estado de emergencia en la provincia de Pataz hasta el 1 de diciembre.",
-      "Decreto Supremo 138-2026, que prorroga el estado de emergencia en las provincias de Putumayo y Mariscal Ramón Castilla hasta el 1 de diciembre.",
-      "Proyecto de Ley 28, que propone modificar la Ley del Impuesto a la Renta para prorrogar la vigencia de las exoneraciones.",
-      "Proyecto de Ley 18-2026-2031, de la Comisión de Salud, Educación, Cultura, Mujer y Desarrollo Social y Digital, que propone derogar la ley que crea el Colegio Profesional del Artista."
+      "Proyecto de Ley 25-2026-2031-S, sustentado por el senador López Chau, sobre la modificación de la ley de donación de alimentos en desastres: aprobado por unanimidad con 51 votos a favor.",
+      "Proyecto de Ley 28-2026-2031-S, sustentado por el senador López Chau, para prorrogar exoneraciones del Impuesto a la Renta hasta el 31 de diciembre de 2029: aprobado con 38 votos a favor, 10 en contra y 2 abstenciones.",
+      "El senador Morales manifestó que las exoneraciones para fundaciones y asociaciones representan más de 2.640 millones de soles para el país hasta el año 2029.",
+      "El Decreto Supremo 137-2026 prorroga el estado de emergencia en la provincia de Pataz con vencimiento el 1 de diciembre de 2026.",
+      "El Decreto Supremo 138-2026 prorroga el estado de emergencia en provincias y distritos de Loreto con vencimiento el 1 de diciembre de 2026.",
+      "La proposición legislativa 18-2026-2031-GS, que propone derogar la Ley 32-645 para evitar la creación del Colegio Profesional de Artistas del Perú, contó con el respaldo del Pleno."
     ],
-    "generated_at": "2026-11-27T15:46:21Z",
-    "duracion_seg": 1904,
+    "generated_at": "2026-11-27T17:07:58Z",
+    "duracion_seg": 5555,
+    "agenda_cumplida": null
+  },
+  {
+    "video_id": "CWGqmlROY5c",
+    "resumen": "La Comisión de Justicia y Derechos Humanos debatió la modificación del Código Penal y del Código de Responsabilidad Penal de Adolescentes mediante las Proposiciones Legislativas 007-2031-CD. La sesión se centró en endurecer las sanciones por la captación de menores para delitos graves y optimizar procesos procesales como la prisión preventiva. El predictamen fue aprobado con 11 votos a favor y una abstención.",
+    "ideas_clave": [
+      "Votación del predictamen de las Proposiciones Legislativas 007-2031-CD (y acumuladas): 11 votos a favor, 0 en contra y 1 abstención, resultando aprobado.",
+      "Proposición Legislativa 007-2031-CD: modifica el Código Penal para incorporar el delito de captación o utilización de menores para cometer delitos como sicariato, homicidio, secuestro y extorsión.",
+      "Proposición Legislativa 007-2031-CD: modifica el Código de Responsabilidad Penal de Adolescentes (Decreto Legislativo 1348) para fortalecer la respuesta ante delitos graves cometidos por adolescentes.",
+      "La propuesta establece penas de 20 a 30 años para los casos agravados de captación o utilización de menores para delinquir.",
+      "El predictamen propone reiterar el plazo de 72 horas para la realización de la audiencia de prisión preventiva en delitos graves.",
+      "La propuesta busca flexibilizar la motivación exigida al juez de investigación preparatoria para emitir el auto de detención preliminar judicial en casos de delitos graves."
+    ],
+    "generated_at": "2026-11-27T17:00:13Z",
+    "duracion_seg": 1560,
     "agenda_cumplida": null
   }
 ]
