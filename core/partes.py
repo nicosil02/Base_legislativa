@@ -103,6 +103,20 @@ def recortar_web(origen: Path, salida: Path) -> None:
     conn.close()
 
 
+def podar_tv(parte_tv: Path, dias: int = 30) -> None:
+    """Borra el texto completo de los programas de TV de hace mas de `dias`.
+    La fila queda (el monitor no los relee) y tv_menciones guarda el fragmento.
+    El 19/11/2026 la parte tv paso los 100 MB comprimida, GitHub la rechazo y
+    el monitor perdio 8 dias de menciones. Va despues de `unir`, que si no
+    repondria el texto largo de la version publicada."""
+    conn = sqlite3.connect(parte_tv)
+    conn.execute("UPDATE tv_vistos SET texto = NULL WHERE texto IS NOT NULL "
+                 "AND first_seen_at < datetime('now', ?)", (f"-{dias} days",))
+    conn.commit()
+    conn.execute("VACUUM")
+    conn.close()
+
+
 def _descomprimir(gz: Path, destino: Path) -> Path:
     with gzip.open(gz, "rb") as f_in, open(destino, "wb") as f_out:
         shutil.copyfileobj(f_in, f_out)
@@ -189,6 +203,8 @@ if __name__ == "__main__":
         extraer(Path(args[0]), args[1], Path(args[2]))
     elif cmd == "web":
         recortar_web(Path(args[0]), Path(args[1]))
+    elif cmd == "podar":
+        podar_tv(Path(args[0]))
     elif cmd == "unir":
         print(f"[partes] {unir(Path(args[0]), Path(args[1]), args[2])} fila(s) de otros workflows")
     else:

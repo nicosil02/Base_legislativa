@@ -123,3 +123,17 @@ def test_recortar_web_deja_solo_tv_reciente(tmp_path):
     c = sqlite3.connect(tmp_path / "tvweb.db")
     assert [r[0] for r in c.execute("SELECT video_id FROM tv_vistos")] == ["nuevo"]
     assert c.execute("SELECT COUNT(*) FROM tv_menciones").fetchone()[0] == 2
+
+
+def test_podar_tv_borra_solo_texto_viejo(tmp_path):
+    from core.partes import podar_tv
+    db = tmp_path / "tv.db"
+    c = sqlite3.connect(db)
+    c.execute("CREATE TABLE tv_vistos (video_id TEXT PRIMARY KEY, texto TEXT, first_seen_at TEXT)")
+    c.executemany("INSERT INTO tv_vistos VALUES (?,?,?)", [
+        ("viejo", "mucho texto", "2020-01-01T00:00:00Z"),
+        ("nuevo", "hola", "2999-01-01T00:00:00Z")])
+    c.commit(); c.close()
+    podar_tv(db)
+    filas = dict(sqlite3.connect(db).execute("SELECT video_id, texto FROM tv_vistos"))
+    assert filas == {"viejo": None, "nuevo": "hola"}  # la fila vieja queda: el monitor no la relee

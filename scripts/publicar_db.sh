@@ -59,6 +59,8 @@ for intento in 1 2 3 4 5 6; do
           python -X utf8 -m core.partes unir "$TMP/$ARCH" "$TMP/rv.db" "$parte"
         fi
       fi
+      # GitHub rechaza archivos de mas de 100 MB (19/11/2026, parte tv).
+      [ "$parte" = "tv" ] && python -X utf8 -m core.partes podar "$TMP/$ARCH"
       gzip -9nc "$TMP/$ARCH" > "$TMP/$ARCH.gz"
       git update-index --add --cacheinfo "100644,$(git hash-object -w "$TMP/$ARCH.gz"),data/$ARCH.gz"
       if [ "$parte" = "tv" ]; then
