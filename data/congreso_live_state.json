@@ -1,6 +1,5 @@
 {
  "alertados": [
-  "TzXXoK43264",
   "ZSZAGzP3fxI",
   "ywpo1nsCrAI",
   "Cz5LEnuU_VQ",
@@ -299,16 +298,10 @@
   "vZgadmzf5wI",
   "qS45kqiSf1I",
   "gH4sDqpzXhw",
-  "1q41Vo3zSRw"
+  "1q41Vo3zSRw",
+  "17ys7_mwz20"
  ],
  "sesiones": [
-  {
-   "id": "TzXXoK43264",
-   "titulo": "EN VIVO: Sesión del Pleno de la Cámara de Diputados | 17/09/2026",
-   "tipo": "Pleno: Diputados",
-   "url": "https://www.youtube.com/watch?v=TzXXoK43264",
-   "visto_at": "2026-09-17T21:57:08Z"
-  },
   {
    "id": "ZSZAGzP3fxI",
    "titulo": "🔴EN VIVO: Sesión de la Comisión Procedimientos Especiales del Senado de la República",
@@ -2687,6 +2680,14 @@
    "pais": "PE",
    "url": "https://www.youtube.com/watch?v=1q41Vo3zSRw",
    "visto_at": "2026-11-27T14:24:21Z"
+  },
+  {
+   "id": "17ys7_mwz20",
+   "titulo": "🔴EN VIVO: Sesión del Pleno del Senado de la República | 27 DE NOVIEMBRE DEL 2026",
+   "tipo": "Pleno: Senado",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=17ys7_mwz20",
+   "visto_at": "2026-11-27T14:49:50Z"
   }
  ],
  "avisado": {
