@@ -1,6 +1,5 @@
 {
  "alertados": [
-  "L9k88r8uDKg",
   "TzXXoK43264",
   "ZSZAGzP3fxI",
   "ywpo1nsCrAI",
@@ -299,16 +298,10 @@
   "LzGTmgxZcyA",
   "vZgadmzf5wI",
   "qS45kqiSf1I",
-  "gH4sDqpzXhw"
+  "gH4sDqpzXhw",
+  "1q41Vo3zSRw"
  ],
  "sesiones": [
-  {
-   "id": "L9k88r8uDKg",
-   "titulo": "🔴EN VIVO: Sesión Solemne del Pleno del Congreso: 204.° Aniversario del Parlamento Nacional",
-   "tipo": "Pleno: Congreso",
-   "url": "https://www.youtube.com/watch?v=L9k88r8uDKg",
-   "visto_at": "2026-09-17T21:19:52Z"
-  },
   {
    "id": "TzXXoK43264",
    "titulo": "EN VIVO: Sesión del Pleno de la Cámara de Diputados | 17/09/2026",
@@ -2686,6 +2679,14 @@
    "pais": "PE",
    "url": "https://www.youtube.com/watch?v=gH4sDqpzXhw",
    "visto_at": "2026-11-27T13:22:10Z"
+  },
+  {
+   "id": "1q41Vo3zSRw",
+   "titulo": "🔴EN VIVO: Foro «Cambio climático y los impactos en la seguridad alimentaria y la salud» | 27/11/2026",
+   "tipo": "Comision: Mesa de trabajo Salud",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=1q41Vo3zSRw",
+   "visto_at": "2026-11-27T14:24:21Z"
   }
  ],
  "avisado": {
