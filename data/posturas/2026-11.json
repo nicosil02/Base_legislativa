@@ -16546,5 +16546,353 @@
       }
     ],
     "url": "https://www.youtube.com/watch?v=qS45kqiSf1I"
+  },
+  "LzGTmgxZcyA": {
+    "fecha": "2026-11-26",
+    "organo": "Comisión de Control Político",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Aguilifaz",
+        "cargo": "legislador",
+        "sobre": "Informes sobre inseguridad en Cajamarca",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Pidió informes sobre las acciones de seguridad en Cajamarca.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ticona",
+        "cargo": "legislador",
+        "sobre": "Entrega de dictámenes con anticipación",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Solicitó recibir los dictámenes con 48 horas de anticipación.",
+        "proyecto": "",
+        "id": "senado:ticona cohaila"
+      },
+      {
+        "orador": "Bonifaz Carmona",
+        "cargo": "legislador",
+        "sobre": "Eficacia de los estados de emergencia",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Cuestionó la eficacia de los estados de emergencia actuales.",
+        "proyecto": "",
+        "id": "senado:bonifaz carmona"
+      },
+      {
+        "orador": "Lucero",
+        "cargo": "legislador",
+        "sobre": "Responsabilidad en la seguridad ciudadana",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Señaló la responsabilidad compartida entre el Ejecutivo y el Congreso.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Carla",
+        "cargo": "legislador",
+        "sobre": "Autonomía del partido Buen Gobierno",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Defendió la autonomía de posición del partido Buen Gobierno.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Messia Calo",
+        "cargo": "legislador",
+        "sobre": "Obstruccionismo del partido Buen Gobierno",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció el comportamiento obstruccionista del partido Buen Gobierno.",
+        "proyecto": "",
+        "id": "senado:mesia ramirez"
+      },
+      {
+        "orador": "Quito",
+        "cargo": "legislador",
+        "sobre": "Manejo de la inseguridad ciudadana",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Denunció el aumento de la criminalidad en el país.",
+        "proyecto": "",
+        "id": "senado:quito sarmiento"
+      },
+      {
+        "orador": "Messia Calo",
+        "cargo": "legislador",
+        "sobre": "Propuestas sobre minería ilegal",
+        "postura": "propone",
+        "tema": "Minería",
+        "dijo": "Exigió dictámenes formales para debatir sobre minería.",
+        "proyecto": "",
+        "id": "senado:mesia ramirez"
+      },
+      {
+        "orador": "Quito",
+        "cargo": "legislador",
+        "sobre": "Conocimiento de la Ley MAPE",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Cuestionó el conocimiento del senador sobre la Ley MAPE.",
+        "proyecto": "Ley MAPE",
+        "id": "senado:quito sarmiento"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=LzGTmgxZcyA"
+  },
+  "ZfHT-80TR2Q": {
+    "fecha": "2026-11-26",
+    "organo": "Pleno de Diputados",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Romina Uribe",
+        "cargo": "legislador",
+        "sobre": "Violencia contra las mujeres",
+        "postura": "comenta",
+        "tema": "Justicia",
+        "dijo": "Pidió priorizar propuestas legislativas sobre violencia de género.",
+        "proyecto": "",
+        "id": "diputados:uribe saenz"
+      },
+      {
+        "orador": "Armin",
+        "cargo": "legislador",
+        "sobre": "Interpelación al ministro de Estado",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso la moción 1126 para interpelar al ministro.",
+        "proyecto": "Moción 1126",
+        "id": null
+      },
+      {
+        "orador": "Felix Schan",
+        "cargo": "legislador",
+        "sobre": "Gestión del fenómeno del Niño",
+        "postura": "propone",
+        "tema": "Ambiente",
+        "dijo": "Propuso priorizar las obras en el norte.",
+        "proyecto": "",
+        "id": "diputados:chang apuy"
+      },
+      {
+        "orador": "Mery Infantes",
+        "cargo": "legislador",
+        "sobre": "Violencia contra la niñez",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Pidió respaldo del Ministerio Público para sancionar agresores.",
+        "proyecto": "",
+        "id": "diputados:infantes castaneda"
+      },
+      {
+        "orador": "González",
+        "cargo": "legislador",
+        "sobre": "Funcionamiento de la comisión del Niño",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció la falta de técnicos para la comisión.",
+        "proyecto": "",
+        "id": "diputados:fernandez gonzalez"
+      },
+      {
+        "orador": "Aldo Bravo",
+        "cargo": "legislador",
+        "sobre": "Terrorismo en Soras",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Denunció los asesinatos cometidos en Soras.",
+        "proyecto": "",
+        "id": "diputados:bravo quispe"
+      },
+      {
+        "orador": "Cristian Aranda",
+        "cargo": "legislador",
+        "sobre": "Debate de proyectos para mineros",
+        "postura": "propone",
+        "tema": "Minería",
+        "dijo": "Propuso exhortar a la Comisión de Energía y Minas.",
+        "proyecto": "",
+        "id": "diputados:aranda vasquez"
+      },
+      {
+        "orador": "Neri Fernández Nina",
+        "cargo": "legislador",
+        "sobre": "Participación en Escudo de las Américas",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso invitar al canciller para informar sobre compromisos.",
+        "proyecto": "Moción 11-05",
+        "id": "diputados:fernandez nina"
+      },
+      {
+        "orador": "Arturo Alegría",
+        "cargo": "legislador",
+        "sobre": "Admisión a debate de la moción",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Rechazó la citación al ministro por hostigamiento.",
+        "proyecto": "Moción 11-05",
+        "id": "diputados:alegria garcia"
+      },
+      {
+        "orador": "Yarró",
+        "cargo": "legislador",
+        "sobre": "Gestión del ministro de Relaciones Exteriores",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó la gestión del ministro de Relaciones Exteriores.",
+        "proyecto": "",
+        "id": "diputados:yarrow lumbreras"
+      },
+      {
+        "orador": "Fernando García",
+        "cargo": "legislador",
+        "sobre": "Conducta del ministro de Relaciones Exteriores",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó la conducta del ministro de Relaciones Exteriores.",
+        "proyecto": "",
+        "id": "diputados:garcia huby"
+      },
+      {
+        "orador": "Raúl Camargo",
+        "cargo": "legislador",
+        "sobre": "Gastos en la visita papal",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Cuestionó la diferencia de montos en contratos públicos.",
+        "proyecto": "",
+        "id": "diputados:camargo porta"
+      },
+      {
+        "orador": "César Manuel Revie Villanueva",
+        "cargo": "legislador",
+        "sobre": "el trato al ministro",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Rechazó que se ridiculice al ministro con adjetivos cómicos.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "César Manuel Revie Villanueva",
+        "cargo": "legislador",
+        "sobre": "el Escudo de las Américas",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Defendió el Escudo de las Américas como un gran logro.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Yair Manrique",
+        "cargo": "legislador",
+        "sobre": "la organización de la visita papal",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Cuestionó la improvisación en la organización de la visita papal.",
+        "proyecto": "",
+        "id": "diputados:manrique olivera"
+      },
+      {
+        "orador": "Yair Manrique",
+        "cargo": "legislador",
+        "sobre": "los términos del Escudo de las Américas",
+        "postura": "pregunta",
+        "tema": "Política y control político",
+        "dijo": "Preguntó por los términos del Escudo de las Américas.",
+        "proyecto": "",
+        "id": "diputados:manrique olivera"
+      },
+      {
+        "orador": "Yair Manrique",
+        "cargo": "legislador",
+        "sobre": "la censura del canciller",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Pidió la censura del canciller Carlos Espada.",
+        "proyecto": "",
+        "id": "diputados:manrique olivera"
+      },
+      {
+        "orador": "César Tito",
+        "cargo": "legislador",
+        "sobre": "el gasto de la misa papal",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Cuestionó la inversión de 11 millones en la misa papal.",
+        "proyecto": "",
+        "id": "diputados:tito rojas"
+      },
+      {
+        "orador": "César Tito",
+        "cargo": "legislador",
+        "sobre": "la injerencia externa",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció la injerencia externa en la política nacional.",
+        "proyecto": "",
+        "id": "diputados:tito rojas"
+      },
+      {
+        "orador": "César Tito",
+        "cargo": "legislador",
+        "sobre": "la compra de aviones",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Cuestionó el gasto de 1.200 millones en aviones estadounidenses.",
+        "proyecto": "",
+        "id": "diputados:tito rojas"
+      },
+      {
+        "orador": "Caterín Palomino",
+        "cargo": "legislador",
+        "sobre": "las contrataciones de la visita papal",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Denunció fallas de sonido en la misa del Papa.",
+        "proyecto": "",
+        "id": "diputados:palomino casavilca"
+      },
+      {
+        "orador": "Caterín Palomino",
+        "cargo": "legislador",
+        "sobre": "el Escudo de las Américas",
+        "postura": "pregunta",
+        "tema": "Política y control político",
+        "dijo": "Preguntó sobre compromisos militares del Escudo de las Américas.",
+        "proyecto": "",
+        "id": "diputados:palomino casavilca"
+      },
+      {
+        "orador": "Chacón de Vettori",
+        "cargo": "legislador",
+        "sobre": "la citación del canciller",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Informó que el canciller fue citado a comisión.",
+        "proyecto": "",
+        "id": "diputados:chacon de vettori"
+      },
+      {
+        "orador": "Chacón de Vettori",
+        "cargo": "legislador",
+        "sobre": "el éxito de la visita papal",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Defendió la visita del Papa como un evento exitoso.",
+        "proyecto": "",
+        "id": "diputados:chacon de vettori"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=ZfHT-80TR2Q"
   }
 }
