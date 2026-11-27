@@ -1,6 +1,5 @@
 {
  "alertados": [
-  "Qyaeb9PW3rI",
   "L9k88r8uDKg",
   "TzXXoK43264",
   "ZSZAGzP3fxI",
@@ -299,16 +298,10 @@
   "ZfHT-80TR2Q",
   "LzGTmgxZcyA",
   "vZgadmzf5wI",
-  "qS45kqiSf1I"
+  "qS45kqiSf1I",
+  "gH4sDqpzXhw"
  ],
  "sesiones": [
-  {
-   "id": "Qyaeb9PW3rI",
-   "titulo": "🔴EN VIVO: Sesión del Pleno de la Cámara de Diputados | 17/09/2026",
-   "tipo": "Pleno: Diputados",
-   "url": "https://www.youtube.com/watch?v=Qyaeb9PW3rI",
-   "visto_at": "2026-09-17T19:52:18Z"
-  },
   {
    "id": "L9k88r8uDKg",
    "titulo": "🔴EN VIVO: Sesión Solemne del Pleno del Congreso: 204.° Aniversario del Parlamento Nacional",
@@ -2685,6 +2678,14 @@
    "pais": "PE",
    "url": "https://www.youtube.com/watch?v=qS45kqiSf1I",
    "visto_at": "2026-11-26T22:09:43Z"
+  },
+  {
+   "id": "gH4sDqpzXhw",
+   "titulo": "🔴EN VIVO: Comisión de Justicia y Derechos Humanos del Senado de la República | 27/11/2026",
+   "tipo": "Comision: Justicia",
+   "pais": "PE",
+   "url": "https://www.youtube.com/watch?v=gH4sDqpzXhw",
+   "visto_at": "2026-11-27T13:22:10Z"
   }
  ],
  "avisado": {
