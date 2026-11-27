@@ -1,5 +1,5 @@
 {
-  "sin_correr:Quien habla (transcripciones por turnos)": "Quien habla (transcripciones por turnos): no corre desde 26/11 12:15 (tocaba 26/11 13:40)",
-  "falla:Quien habla (transcripciones por turnos)": "Quien habla (transcripciones por turnos): fallo 3 veces seguidas (https://github.com/nicosil02/Base_legislativa/actions/runs/45866165944)",
-  "falla:TV en vivo (RPP, America, Willax, Exitosa)": "TV en vivo (RPP, America, Willax, Exitosa): fallo 10 veces seguidas (https://github.com/nicosil02/Base_legislativa/actions/runs/45894918808)"
+  "sin_correr:Backfill automatico (sesiones perdidas)": "Backfill automatico (sesiones perdidas): no corre desde 26/11 16:43 (tocaba 26/11 19:20)",
+  "falla:Quien habla (transcripciones por turnos)": "Quien habla (transcripciones por turnos): fallo 4 veces seguidas (https://github.com/nicosil02/Base_legislativa/actions/runs/45925168621)",
+  "falla:TV en vivo (RPP, America, Willax, Exitosa)": "TV en vivo (RPP, America, Willax, Exitosa): fallo 10 veces seguidas (https://github.com/nicosil02/Base_legislativa/actions/runs/45930005963)"
 }
