@@ -1,4 +1,5 @@
 {
+  "sin_correr:Quien habla (transcripciones por turnos)": "Quien habla (transcripciones por turnos): no corre desde 26/11 20:53 (tocaba 27/11 04:40)",
   "falla:Quien habla (transcripciones por turnos)": "Quien habla (transcripciones por turnos): fallo 4 veces seguidas (https://github.com/nicosil02/Base_legislativa/actions/runs/45925168621)",
-  "falla:TV en vivo (RPP, America, Willax, Exitosa)": "TV en vivo (RPP, America, Willax, Exitosa): fallo 10 veces seguidas (https://github.com/nicosil02/Base_legislativa/actions/runs/45935820732)"
+  "falla:TV en vivo (RPP, America, Willax, Exitosa)": "TV en vivo (RPP, America, Willax, Exitosa): fallo 10 veces seguidas (https://github.com/nicosil02/Base_legislativa/actions/runs/45998863178)"
 }
