@@ -18330,5 +18330,1063 @@
       }
     ],
     "url": "https://www.youtube.com/watch?v=idj5rUvns_g"
+  },
+  "cc36Sgz0gH0": {
+    "fecha": "2026-10-24",
+    "organo": "Comisión de Presupuesto",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Lis Sharón Rebollar Cáceres",
+        "cargo": "ministro o autoridad",
+        "sobre": "Presupuesto 2027 de Madre de Dios",
+        "postura": "a favor",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Defendió el presupuesto institucional de Madre de Dios para el 2027.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Cahuana Machoque Hugo Isaac",
+        "cargo": "legislador",
+        "sobre": "Situación del Hospital Santa Rosa",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Denunció la precariedad del Hospital Santa Rosa de Puerto Maldonado.",
+        "proyecto": "",
+        "id": "senado:ccahuana aymachoque"
+      },
+      {
+        "orador": "Fernando Alberto García",
+        "cargo": "legislador",
+        "sobre": "Coherencia en representación política",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó la falta de coherencia en la representación del sur.",
+        "proyecto": "",
+        "id": "diputados:garcia huby"
+      },
+      {
+        "orador": "Absalón Vázquez",
+        "cargo": "legislador",
+        "sobre": "Proyectos de riego por goteo",
+        "postura": "propone",
+        "tema": "Agricultura",
+        "dijo": "Propuso el uso de energía solar para los sistemas de riego.",
+        "proyecto": "",
+        "id": "senado:vasquez villanueva"
+      },
+      {
+        "orador": "Francisco Gatica",
+        "cargo": "legislador",
+        "sobre": "Gestión de proyectos de salud",
+        "postura": "pregunta",
+        "tema": "Salud",
+        "dijo": "Preguntó por la falta de firma de convenios para salud.",
+        "proyecto": "",
+        "id": "diputados:gatica vega"
+      },
+      {
+        "orador": "Lis Sharón Rebollar Cáceres",
+        "cargo": "ministro o autoridad",
+        "sobre": "Infraestructura y servicios de salud",
+        "postura": "en contra",
+        "tema": "Salud",
+        "dijo": "Denunció las deficiencias de la infraestructura de salud regional.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Luis Fernando Galarreta Belarde",
+        "cargo": "ministro o autoridad",
+        "sobre": "Presupuesto 2027 de la PCM",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Presentó la propuesta presupuestal de la PCM para el 2027.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Fernando Alberto García Jubi",
+        "cargo": "legislador",
+        "sobre": "Pago de deuda fonavista",
+        "postura": "pregunta",
+        "tema": "Pensiones",
+        "dijo": "Preguntó sobre las previsiones para cumplir la deuda fonavista.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "José Moisés Chipana Chipana",
+        "cargo": "legislador",
+        "sobre": "Ejecución presupuestal de la PCM",
+        "postura": "con observaciones",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Cuestionó la baja ejecución de la transformación digital.",
+        "proyecto": "",
+        "id": "senado:chipana chipana"
+      },
+      {
+        "orador": "Carlos Alberto Cegarra Sánchez",
+        "cargo": "legislador",
+        "sobre": "Obras e infraestructura en Ica",
+        "postura": "propone",
+        "tema": "Infraestructura",
+        "dijo": "Solicitó mayor atención a obras de infraestructura en Ica.",
+        "proyecto": "",
+        "id": "diputados:zegarra sanchez"
+      },
+      {
+        "orador": "Juana Ticona",
+        "cargo": "legislador",
+        "sobre": "Seguridad y presupuesto en Tacna",
+        "postura": "en contra",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Denunció la falta de pagos policiales y recursos en Tacna.",
+        "proyecto": "",
+        "id": "senado:ticona cohaila"
+      },
+      {
+        "orador": "Wilfredo Verano Sar Arabia",
+        "cargo": "legislador",
+        "sobre": "Inversiones en prevención y Cusco",
+        "postura": "con observaciones",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Observó la reducción de presupuesto en prevención de riesgos.",
+        "proyecto": "",
+        "id": "senado:verano saravia"
+      },
+      {
+        "orador": "Irachi Pizarro Gloria Charito",
+        "cargo": "legislador",
+        "sobre": "Conflictos sociales y ejecución presupuestal",
+        "postura": "pregunta",
+        "tema": "Política y control político",
+        "dijo": "Preguntó sobre la resolución de conflictos y ejecución de saldos.",
+        "proyecto": "",
+        "id": "diputados:hirache pizarro"
+      },
+      {
+        "orador": "Carlos Alberto Domínguez Herrera",
+        "cargo": "legislador",
+        "sobre": "Gestión de la ANIN en Ancash",
+        "postura": "en contra",
+        "tema": "Infraestructura",
+        "dijo": "Cuestionó la gestión de la ANIN y obras en Ancash.",
+        "proyecto": "",
+        "id": "diputados:dominguez herrera"
+      },
+      {
+        "orador": "Absalón Vázquez Villanueva",
+        "cargo": "legislador",
+        "sobre": "Incendios forestales y sequía",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Informó sobre los incendios forestales y la sequía en la sierra.",
+        "proyecto": "",
+        "id": "senado:vasquez villanueva"
+      },
+      {
+        "orador": "Absalón Vázquez Villanueva",
+        "cargo": "legislador",
+        "sobre": "Incendios forestales y sequía",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Denunció los incendios forestales y la sequía en el sur.",
+        "proyecto": "",
+        "id": "senado:vasquez villanueva"
+      },
+      {
+        "orador": "Absalón Vázquez Villanueva",
+        "cargo": "legislador",
+        "sobre": "Gestión de la ANIN",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Cuestionó la falta de avances de la ANIN.",
+        "proyecto": "",
+        "id": "senado:vasquez villanueva"
+      },
+      {
+        "orador": "Gilmer Trujillo",
+        "cargo": "legislador",
+        "sobre": "Reducción presupuestal de la PCM",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Cuestionó la reducción de presupuesto de la PCM.",
+        "proyecto": "",
+        "id": "diputados:trujillo zegarra"
+      },
+      {
+        "orador": "Segundo Tapia Bernal",
+        "cargo": "legislador",
+        "sobre": "Presupuesto 2027 de la PCM",
+        "postura": "a favor",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Respaldó el presupuesto de la PCM para 2027.",
+        "proyecto": "",
+        "id": "senado:tapia bernal"
+      },
+      {
+        "orador": "Segundo Tapia Bernal",
+        "cargo": "legislador",
+        "sobre": "Seguimiento de la ANI",
+        "postura": "pregunta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Preguntó sobre el seguimiento de las obras de la ANI.",
+        "proyecto": "",
+        "id": "senado:tapia bernal"
+      },
+      {
+        "orador": "Héctor Guillén Valencia",
+        "cargo": "legislador",
+        "sobre": "Situación de Huancavelica",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Denunció el abandono y la pobreza en Huancavelica.",
+        "proyecto": "",
+        "id": "diputados:guillen valencia"
+      },
+      {
+        "orador": "Héctor Guillén Valencia",
+        "cargo": "legislador",
+        "sobre": "Carretera Huancavelica Santa Inés",
+        "postura": "propone",
+        "tema": "Transporte",
+        "dijo": "Pidió una reunión para abordar la carretera Huancavelica-Santa Inés.",
+        "proyecto": "",
+        "id": "diputados:guillen valencia"
+      },
+      {
+        "orador": "Vieta Palia Fernández González",
+        "cargo": "legislador",
+        "sobre": "Recortes en proyectos de inversión",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Cuestionó la reducción en proyectos de inversión pública.",
+        "proyecto": "",
+        "id": "diputados:fernandez gonzalez"
+      },
+      {
+        "orador": "Vieta Palia Fernández González",
+        "cargo": "legislador",
+        "sobre": "Crisis de agua en Tacna",
+        "postura": "pregunta",
+        "tema": "Saneamiento",
+        "dijo": "Preguntó por la dotación de agua en Tacna.",
+        "proyecto": "",
+        "id": "diputados:fernandez gonzalez"
+      },
+      {
+        "orador": "Fernando García",
+        "cargo": "legislador",
+        "sobre": "Emergencia en el distrito de Hayanca",
+        "postura": "propone",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Pidió extender la emergencia en el distrito de Hayanca.",
+        "proyecto": "",
+        "id": "diputados:garcia huby"
+      },
+      {
+        "orador": "Fernando García",
+        "cargo": "legislador",
+        "sobre": "Agricultura en el distrito de Hayanca",
+        "postura": "pregunta",
+        "tema": "Agricultura",
+        "dijo": "Preguntó por la falta de agua en Hayanca.",
+        "proyecto": "",
+        "id": "diputados:garcia huby"
+      },
+      {
+        "orador": "Diego Basán",
+        "cargo": "legislador",
+        "sobre": "Flexibilidad de la ley de presupuesto",
+        "postura": "propone",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Propuso mayor flexibilidad en la ley de presupuesto.",
+        "proyecto": "",
+        "id": "diputados:bazan calderon"
+      },
+      {
+        "orador": "Diego Basán",
+        "cargo": "legislador",
+        "sobre": "Hospital Leoncio Prado",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Pidió asegurar la continuidad del Hospital Leoncio Prado.",
+        "proyecto": "",
+        "id": "diputados:bazan calderon"
+      },
+      {
+        "orador": "Karina Beteta",
+        "cargo": "legislador",
+        "sobre": "Reducción presupuestal de la PCM",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Defendió la reducción del presupuesto de la PCM.",
+        "proyecto": "",
+        "id": "diputados:beteta rubin"
+      },
+      {
+        "orador": "Karina Beteta",
+        "cargo": "legislador",
+        "sobre": "Carreteras en Huánuco",
+        "postura": "comenta",
+        "tema": "Transporte",
+        "dijo": "Denunció el mal estado de carreteras en Huánuco.",
+        "proyecto": "",
+        "id": "diputados:beteta rubin"
+      },
+      {
+        "orador": "Luis Fernando Galarreta Belardi",
+        "cargo": "ministro o autoridad",
+        "sobre": "Respuesta a la comisión",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Respaldó las intervenciones de los senadores y diputados.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Galarreta",
+        "cargo": "ministro o autoridad",
+        "sobre": "Emergencia del río Motupe",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Mencionó la declaratoria de emergencia en el río Motupe para conversar con el ministro de Agricultura.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Galarreta",
+        "cargo": "ministro o autoridad",
+        "sobre": "Transformación digital y presupuesto",
+        "postura": "comenta",
+        "tema": "Tecnología",
+        "dijo": "Explicó que la transformación digital será orientada por una nueva agencia digital en la Presidencia.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Galarreta",
+        "cargo": "ministro o autoridad",
+        "sobre": "Combate de incendios forestales",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Informó sobre la adquisición de helicópteros para combatir los incendios forestales en el país.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Galarreta",
+        "cargo": "ministro o autoridad",
+        "sobre": "Problema hídrico en Puno",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Reconoció la importancia de resolver el problema de sequía en la región de Puno.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Galarreta",
+        "cargo": "ministro o autoridad",
+        "sobre": "Proyectos de la ANIN",
+        "postura": "comenta",
+        "tema": "Infraestructura",
+        "dijo": "Explicó que se realizaron transferencias para concluir proyectos avanzados de la ANIN.",
+        "proyecto": "San Alfonso",
+        "id": null
+      },
+      {
+        "orador": "Galarreta",
+        "cargo": "ministro o autoridad",
+        "sobre": "Presupuesto de la PCM",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Aclaró que la reducción de presupuesto en la PCM busca mejorar la capacidad operativa.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Galarreta",
+        "cargo": "ministro o autoridad",
+        "sobre": "Bonos para la policía",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Se comprometió a investigar el retraso en los pagos de los bonos policiales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Galarreta",
+        "cargo": "ministro o autoridad",
+        "sobre": "Gasoducto Sur Peruano",
+        "postura": "a favor",
+        "tema": "Energía",
+        "dijo": "Manifestó su apoyo al proyecto del gasoducto y al cambio de la matriz energética.",
+        "proyecto": "Gasoducto Sur Peruano",
+        "id": null
+      },
+      {
+        "orador": "Galarreta",
+        "cargo": "ministro o autoridad",
+        "sobre": "Demarcación territorial",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Indicó que la demarcación territorial se impulsará para evitar conflictos regionales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Galarreta",
+        "cargo": "ministro o autoridad",
+        "sobre": "Modernización del Estado",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso evitar que la PCM sea un depósito de diversas oficinas estatales.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Galarreta",
+        "cargo": "ministro o autoridad",
+        "sobre": "Reducción presupuestal del sector",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Explicó que la reducción presupuestal se debe a la culminación de proyectos de inversión.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Galarreta",
+        "cargo": "ministro o autoridad",
+        "sobre": "Situación del Tren Macho",
+        "postura": "comenta",
+        "tema": "Transporte",
+        "dijo": "Se comprometió a atender las preocupaciones sobre el orden en Huancavelica.",
+        "proyecto": "Tren Macho",
+        "id": null
+      },
+      {
+        "orador": "Galarreta",
+        "cargo": "ministro o autoridad",
+        "sobre": "Unidad de Cumplimiento de obras",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Detalló el funcionamiento de la nueva Unidad de Cumplimiento para la supervisión de obras.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Galarreta",
+        "cargo": "ministro o autoridad",
+        "sobre": "Lucha contra la criminalidad",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Destacó el respaldo gubernamental a la policía en la lucha contra el crimen.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Galarreta",
+        "cargo": "ministro o autoridad",
+        "sobre": "Hospital de Huamachuco",
+        "postura": "propone",
+        "tema": "Salud",
+        "dijo": "Ofreció coordinar con el sector pertinente para atender el hospital de Huamachuco.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Galarreta",
+        "cargo": "ministro o autoridad",
+        "sobre": "Carreteras en Huánuco",
+        "postura": "comenta",
+        "tema": "Transporte",
+        "dijo": "Indicó que el ministro de Transportes responderá sobre las obras en Huánuco.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Elmer Cuba Bustinza",
+        "cargo": "ministro o autoridad",
+        "sobre": "Presupuesto del sector economía 2027",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Detalló el presupuesto del sector economía para el 2027.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Fernando Alberto García Ju",
+        "cargo": "legislador",
+        "sobre": "Transferencias de recursos en el Callao",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Cuestionó la falta de transferencias en el Callao.",
+        "proyecto": "",
+        "id": "diputados:garcia huby"
+      },
+      {
+        "orador": "Segundo Tapia Bernal",
+        "cargo": "legislador",
+        "sobre": "Inversiones estratégicas para Cajamarca",
+        "postura": "con observaciones",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Pidió asegurar fondos para la represa Chonta y aeropuerto Jaén.",
+        "proyecto": "",
+        "id": "senado:tapia bernal"
+      },
+      {
+        "orador": "Wilfredo Verano Sarabia",
+        "cargo": "legislador",
+        "sobre": "Distribución de la reserva de contingencia",
+        "postura": "pregunta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Preguntó por los criterios de la reserva de contingencia.",
+        "proyecto": "",
+        "id": "senado:verano saravia"
+      },
+      {
+        "orador": "Carlos Alberto Domínguez Herrera",
+        "cargo": "legislador",
+        "sobre": "Proyectos estratégicos en Ancash",
+        "postura": "pregunta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Solicitó viabilidad para proyectos estratégicos en la región Ancash.",
+        "proyecto": "",
+        "id": "diputados:dominguez herrera"
+      },
+      {
+        "orador": "Juana Ticona",
+        "cargo": "legislador",
+        "sobre": "Infraestructura y salud en Tacna",
+        "postura": "pregunta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Requirió inversión para la represa Jarumas y hospitales en Tacna.",
+        "proyecto": "",
+        "id": "senado:ticona cohaila"
+      },
+      {
+        "orador": "Héctor Guillén",
+        "cargo": "legislador",
+        "sobre": "Continuidad de obras en Huancavelica",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Denunció la paralización de hospitales en la región Huancavelica.",
+        "proyecto": "",
+        "id": "diputados:guillen valencia"
+      },
+      {
+        "orador": "Elmer Cuba Bustinza",
+        "cargo": "ministro o autoridad",
+        "sobre": "Respuesta a las inquietudes legislativas",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Explicó que se priorizarán las obras con mayor avance.",
+        "proyecto": "",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=cc36Sgz0gH0"
+  },
+  "NNfSFqKV43o": {
+    "fecha": "2026-10-22",
+    "organo": "Comisión de Gestión del Estado",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Poma",
+        "cargo": "legislador",
+        "sobre": "Obras y servicios en Madre de Dios",
+        "postura": "propone",
+        "tema": "Educación",
+        "dijo": "Pidió informes sobre la escuela y conectividad en Madre de Dios.",
+        "proyecto": "",
+        "id": "diputados:poma huamani"
+      },
+      {
+        "orador": "Fernández",
+        "cargo": "legislador",
+        "sobre": "Gestión del gobernador de Tacna",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Solicitó la citación urgente del gobernador de Tacna.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ovando",
+        "cargo": "legislador",
+        "sobre": "Acceso a internet rural",
+        "postura": "propone",
+        "tema": "Telecomunicaciones",
+        "dijo": "Propuso una reunión con representantes de conectividad rural.",
+        "proyecto": "Ley 31878",
+        "id": null
+      },
+      {
+        "orador": "Aguirre",
+        "cargo": "legislador",
+        "sobre": "Sesión descentralizada en Satipo",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Solicitó una sesión descentralizada en la provincia de Satipo.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Marcelo",
+        "cargo": "legislador",
+        "sobre": "Estado de obras de la ANA",
+        "postura": "propone",
+        "tema": "Infraestructura",
+        "dijo": "Pidió citar al jefe de la ANA a la comisión.",
+        "proyecto": "",
+        "id": "diputados:marcelo salazar"
+      },
+      {
+        "orador": "Domínguez",
+        "cargo": "legislador",
+        "sobre": "Situación del colegio en Huaraz",
+        "postura": "propone",
+        "tema": "Educación",
+        "dijo": "Solicitó que la Contraloría investigue el colegio abandonado.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Aguirre",
+        "cargo": "legislador",
+        "sobre": "Invitación del contralor y Ásnam",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Pidió tratar la invitación del contralor y la municipalidad de Ásnam.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Yarrow",
+        "cargo": "legislador",
+        "sobre": "Gestión de emergencias climáticas",
+        "postura": "propone",
+        "tema": "Ambiente",
+        "dijo": "Propuso designar un ministro para las emergencias climáticas.",
+        "proyecto": "",
+        "id": "diputados:yarrow lumbreras"
+      },
+      {
+        "orador": "Marcelo",
+        "cargo": "legislador",
+        "sobre": "Modificación de la ley de control",
+        "postura": "propone",
+        "tema": "Justicia",
+        "dijo": "Planteó modificar la ley de control de la Contraloría.",
+        "proyecto": "",
+        "id": "diputados:marcelo salazar"
+      },
+      {
+        "orador": "García",
+        "cargo": "legislador",
+        "sobre": "Gestión en el Callao",
+        "postura": "en contra",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Denunció irregularidades en el Gobierno Regional del Callao.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Quispe",
+        "cargo": "legislador",
+        "sobre": "Servicios en Oxapampa",
+        "postura": "comenta",
+        "tema": "Infraestructura",
+        "dijo": "Informó sobre problemas de infraestructura en Oxapampa.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Poma",
+        "cargo": "legislador",
+        "sobre": "Servicios en Valparaíso",
+        "postura": "comenta",
+        "tema": "Saneamiento",
+        "dijo": "Expuso la falta de servicios básicos en Valparaíso.",
+        "proyecto": "",
+        "id": "diputados:poma huamani"
+      },
+      {
+        "orador": "Albañil",
+        "cargo": "legislador",
+        "sobre": "Drenaje en Piura",
+        "postura": "comenta",
+        "tema": "Infraestructura",
+        "dijo": "Informó sobre el mal funcionamiento de drenajes en Piura.",
+        "proyecto": "",
+        "id": "diputados:albanil carmona"
+      },
+      {
+        "orador": "Fernández",
+        "cargo": "legislador",
+        "sobre": "Fiscalización en Tacna",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Reiteró la necesidad de la comparecencia del gobernador.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Gamarra",
+        "cargo": "legislador",
+        "sobre": "Creación del distrito de San Pedro",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Solicitó datos del INI para la demarcación territorial.",
+        "proyecto": "",
+        "id": "diputados:gamarra pita"
+      },
+      {
+        "orador": "Diputada Fernández",
+        "cargo": "legislador",
+        "sobre": "Obra paralizada en colegio José Abelardo Quiñones",
+        "postura": "en contra",
+        "tema": "Educación",
+        "dijo": "Denunció el retraso y las malas condiciones de una obra educativa.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Diputada Gamarra",
+        "cargo": "legislador",
+        "sobre": "Creación del distrito de San Pedro",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Propuso agilizar la demarcación territorial y la asistencia del contralor.",
+        "proyecto": "",
+        "id": "diputados:gamarra pita"
+      },
+      {
+        "orador": "Diputado Domínguez",
+        "cargo": "legislador",
+        "sobre": "Orden de las intervenciones en la sesión",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Explicó el derecho de los diputados a expresarse.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Diputada Poma",
+        "cargo": "legislador",
+        "sobre": "Obra del colegio Juan Quiro Checa",
+        "postura": "propone",
+        "tema": "Educación",
+        "dijo": "Solicitó la presencia de la gobernadora por problemas en una obra.",
+        "proyecto": "",
+        "id": "diputados:poma huamani"
+      },
+      {
+        "orador": "Presidenta de la Comisión",
+        "cargo": "legislador",
+        "sobre": "Gestión de comisiones y la Contraloría",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Informó sobre retrasos en derivaciones y la respuesta de la Contraloría.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Diputado Celis",
+        "cargo": "legislador",
+        "sobre": "Participación del vicecontralor",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Sugirió que el vicecontralor asuma la participación en la sesión.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Diputada Quispe",
+        "cargo": "legislador",
+        "sobre": "Asistencia del vicecontralor",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Respaldó la necesidad de que el vicecontralor brinde informes.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Diputada Poma",
+        "cargo": "legislador",
+        "sobre": "Asistencia del vicecontralor",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Apoyó la solicitud de que asista el vicecontralor.",
+        "proyecto": "",
+        "id": "diputados:poma huamani"
+      },
+      {
+        "orador": "Diputado Aguirre",
+        "cargo": "legislador",
+        "sobre": "Participación del vicecontralor",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Instó a que el vicecontralor represente a la institución.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Diputada Gamarra",
+        "cargo": "legislador",
+        "sobre": "Participación del contralor encargado",
+        "postura": "a favor",
+        "tema": "Política y control político",
+        "dijo": "Solicitó la presencia del contralor encargado ante la emergencia.",
+        "proyecto": "",
+        "id": "diputados:gamarra pita"
+      },
+      {
+        "orador": "Diputado Domínguez",
+        "cargo": "legislador",
+        "sobre": "Fortalecimiento de la Contraloría",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Pidió que los informes de la Contraloría sean vinculantes.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Presidenta de la Comisión",
+        "cargo": "legislador",
+        "sobre": "Estado de salud del contralor",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Informó sobre la situación de salud y la programación del contralor.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Secretaria Técnica",
+        "cargo": "ministro o autoridad",
+        "sobre": "Gestión del riesgo de desastres",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Sustentó el dictamen sobre la gestión del riesgo de desastres.",
+        "proyecto": "PL 103 y 208",
+        "id": null
+      },
+      {
+        "orador": "Diputada Albañil",
+        "cargo": "legislador",
+        "sobre": "Gestión del riesgo de desastres",
+        "postura": "con observaciones",
+        "tema": "Ambiente",
+        "dijo": "Sugirió incluir la ejecución obligatoria de proyectos de inversión.",
+        "proyecto": "PL 103 y 208",
+        "id": "diputados:albanil carmona"
+      },
+      {
+        "orador": "Diputada Poma",
+        "cargo": "legislador",
+        "sobre": "Gestión del riesgo de desastres",
+        "postura": "a favor",
+        "tema": "Ambiente",
+        "dijo": "Respaldó la exigencia de experiencia y certificación en gestión de riesgos.",
+        "proyecto": "PL 103 y 208",
+        "id": "diputados:poma huamani"
+      },
+      {
+        "orador": "Diputado García",
+        "cargo": "legislador",
+        "sobre": "Estructura de oficinas de defensa civil",
+        "postura": "con observaciones",
+        "tema": "Ambiente",
+        "dijo": "Planteó elevar el rango jerárquico de las oficinas de defensa civil.",
+        "proyecto": "PL 103 y 208",
+        "id": null
+      },
+      {
+        "orador": "Secretaria Técnica",
+        "cargo": "ministro o autoridad",
+        "sobre": "Especialidad en gestión de riesgos",
+        "postura": "comenta",
+        "tema": "Ambiente",
+        "dijo": "Aclaró que la especialidad técnica ya está incluida en la propuesta.",
+        "proyecto": "PL 103 y 208",
+        "id": null
+      },
+      {
+        "orador": "Secretaria Técnica",
+        "cargo": "ministro o autoridad",
+        "sobre": "Incentivos para egresados de programas de extensión",
+        "postura": "comenta",
+        "tema": "Trabajo",
+        "dijo": "Presentó el dictamen sobre incentivos meritocráticos para egresados públicos.",
+        "proyecto": "PL 168",
+        "id": null
+      },
+      {
+        "orador": "Diputada Poma",
+        "cargo": "legislador",
+        "sobre": "Meritocracia en la contratación pública",
+        "postura": "con observaciones",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó el sistema de puntajes y la falta de meritocracia estatal.",
+        "proyecto": "PL 168",
+        "id": "diputados:poma huamani"
+      },
+      {
+        "orador": "Diputado García",
+        "cargo": "legislador",
+        "sobre": "Puntaje por cursos de SERVIR",
+        "postura": "con observaciones",
+        "tema": "Trabajo",
+        "dijo": "Cuestionó el puntaje asignado únicamente por realizar cursos de SERVIR.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Diputada Poma",
+        "cargo": "legislador",
+        "sobre": "Proyecto de ley 168",
+        "postura": "a favor",
+        "tema": "Trabajo",
+        "dijo": "Respaldó el proyecto 168 para incentivar el talento joven especializado.",
+        "proyecto": "PL 168",
+        "id": "diputados:poma huamani"
+      },
+      {
+        "orador": "Diputado Quispe",
+        "cargo": "legislador",
+        "sobre": "Perfeccionamiento de la PL 168",
+        "postura": "con observaciones",
+        "tema": "Trabajo",
+        "dijo": "Propuso otorgar la bonificación únicamente al tercio superior de alumnos.",
+        "proyecto": "PL 168",
+        "id": null
+      },
+      {
+        "orador": "Diputado García",
+        "cargo": "legislador",
+        "sobre": "Alcance de la PL 3021",
+        "postura": "pregunta",
+        "tema": "Otros",
+        "dijo": "Preguntó si los profesionales 276 están incluidos en la propuesta.",
+        "proyecto": "PL 3021",
+        "id": null
+      },
+      {
+        "orador": "Diputada Fernández",
+        "cargo": "legislador",
+        "sobre": "Voto a favor de la PL 3026",
+        "postura": "a favor",
+        "tema": "Otros",
+        "dijo": "Manifestó su voto a favor de la propuesta legislativa 3026.",
+        "proyecto": "PL 3026",
+        "id": null
+      },
+      {
+        "orador": "Diputada Norma",
+        "cargo": "legislador",
+        "sobre": "Debate de la PL 3021",
+        "postura": "con observaciones",
+        "tema": "Otros",
+        "dijo": "Propuso postergar la votación para recoger opiniones de las municipalidades.",
+        "proyecto": "PL 3021",
+        "id": null
+      },
+      {
+        "orador": "Diputado Celis",
+        "cargo": "legislador",
+        "sobre": "Estadísticas en el dictamen",
+        "postura": "propone",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Pidió incluir estadísticas detalladas en el dictamen para su análisis.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Carla Mónica Gaviño Macías",
+        "cargo": "invitado",
+        "sobre": "Gestión de las contrataciones públicas",
+        "postura": "comenta",
+        "tema": "Otros",
+        "dijo": "Informó sobre los pilares estratégicos de la nueva gestión de OS.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Diputada Poma",
+        "cargo": "legislador",
+        "sobre": "Gestión de OS",
+        "postura": "pregunta",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó la ineficiencia técnica y la transparencia en OS.",
+        "proyecto": "",
+        "id": "diputados:poma huamani"
+      },
+      {
+        "orador": "Diputado Domínguez",
+        "cargo": "legislador",
+        "sobre": "Acceso de jóvenes y proveedores",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Propuso crear un sistema nacional de alerta de proveedores.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Diputada Ovando",
+        "cargo": "legislador",
+        "sobre": "Barreras burocráticas en OS",
+        "postura": "propone",
+        "tema": "Otros",
+        "dijo": "Pidió identificar las barreras burocráticas más críticas de la institución.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Diputado Quispe",
+        "cargo": "legislador",
+        "sobre": "Combate a la corrupción",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Pidió a la entidad presentar propuestas para combatir la corrupción.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Quispe",
+        "cargo": "legislador",
+        "sobre": "Perfeccionamiento de normas estatales",
+        "postura": "propone",
+        "tema": "Política y control político",
+        "dijo": "Pidió perfeccionar las normas para evitar la corrupción.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Norma Yarro",
+        "cargo": "legislador",
+        "sobre": "Corrupción y barreras burocráticas",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Denunció la corrupción en las contrataciones del Estado.",
+        "proyecto": "",
+        "id": "diputados:yarrow lumbreras"
+      },
+      {
+        "orador": "Carla Gaviño Macías",
+        "cargo": "autoridad",
+        "sobre": "Gestión del proyecto BIT",
+        "postura": "comenta",
+        "tema": "Presupuesto y gasto público",
+        "dijo": "Informó sobre las medidas aplicadas al proyecto BIT.",
+        "proyecto": "proyecto BIT",
+        "id": null
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=NNfSFqKV43o"
   }
 }
