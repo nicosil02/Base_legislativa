@@ -18156,5 +18156,94 @@
       }
     ],
     "url": "https://www.youtube.com/watch?v=fzmH5T1uMu4"
+  },
+  "gH4sDqpzXhw": {
+    "fecha": "2026-11-27",
+    "organo": "Comisión de Justicia",
+    "pais": "PE",
+    "v": 4,
+    "dichos": [
+      {
+        "orador": "Muñantin",
+        "cargo": "legislador",
+        "sobre": "Ámbito y plazos de la extinción de dominio",
+        "postura": "pregunta",
+        "tema": "Justicia",
+        "dijo": "Preguntó sobre el ámbito de aplicación de la ley.",
+        "proyecto": "00024-2026",
+        "id": null
+      },
+      {
+        "orador": "Marta Chávez",
+        "cargo": "legislador",
+        "sobre": "Procedimiento de urgencia de los proyectos",
+        "postura": "en contra",
+        "tema": "Política y control político",
+        "dijo": "Cuestionó la falta de sustento de la urgencia.",
+        "proyecto": "00024-2026",
+        "id": "senado:chavez cossio"
+      },
+      {
+        "orador": "Marta Mollano",
+        "cargo": "legislador",
+        "sobre": "Definición de temas urgentes",
+        "postura": "comenta",
+        "tema": "Política y control político",
+        "dijo": "Coincidió en la importancia de definir temas urgentes.",
+        "proyecto": "",
+        "id": "senado:moyano delgado"
+      },
+      {
+        "orador": "Marat",
+        "cargo": "legislador",
+        "sobre": "Interrupción de la cuestión previa",
+        "postura": "pregunta",
+        "tema": "Política y control político",
+        "dijo": "Consultó si la cuestión previa interrumpiría la exposición.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Ibermaraví",
+        "cargo": "legislador",
+        "sobre": "Plazos legislativos y seguridad ciudadana",
+        "postura": "comenta",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Pidió equilibrar los plazos con la respuesta al crimen.",
+        "proyecto": "",
+        "id": null
+      },
+      {
+        "orador": "Lourdes Alcorta",
+        "cargo": "legislador",
+        "sobre": "Injusticias en la ley de extinción",
+        "postura": "a favor",
+        "tema": "Justicia",
+        "dijo": "Explicó las injusticias de la ley actual.",
+        "proyecto": "00024-2026",
+        "id": "senado:alcorta suero"
+      },
+      {
+        "orador": "Lourdes Alcorta",
+        "cargo": "legislador",
+        "sobre": "Exclusión de delitos de corrupción",
+        "postura": "en contra",
+        "tema": "Justicia",
+        "dijo": "Rechazó la exclusión de delitos de corrupción.",
+        "proyecto": "00024-2026",
+        "id": "senado:alcorta suero"
+      },
+      {
+        "orador": "Lourdes Alcorta",
+        "cargo": "legislador",
+        "sobre": "Inclusión del delito de sicariato",
+        "postura": "propone",
+        "tema": "Seguridad y orden interno",
+        "dijo": "Propuso incluir el sicariato en la ley.",
+        "proyecto": "00024-2026",
+        "id": "senado:alcorta suero"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=gH4sDqpzXhw"
   }
 }
